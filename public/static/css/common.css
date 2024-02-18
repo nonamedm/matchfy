@@ -1,0 +1,167 @@
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard-Bold";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+.body {
+  overflow-x: hidden;
+}
+.bg_color_theme {
+    background-color: #FF0267;
+}
+.text_white {
+    color: #fff !important
+}
+
+.content {
+  height: 1000px;
+  background-image: url("/static/images/main_bg.png");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content_no_img {
+  height: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main_bg_center_box {
+  width: 765px;
+  height: 208px;
+  text-align: center;
+}
+
+.main_bg_center_box h2 {
+  font-family: "Pretendard";
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 74px;
+  text-align: center;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+
+  color: #ffffff;
+}
+.main_bg_center_box p {
+  font-family: "Pretendard";
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+
+  color: #ffffff;
+}
+.main_bg_center_box h2 span {
+  color: #ff0267;
+}
+.main_bg_center_box button {
+  padding: 19px 61px;
+  color: #fff;
+  width: 220px;
+  height: 60px;
+  border: none;
+  background: #ff0267;
+  border-radius: 15px;
+
+  font-family: "Pretendard";
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+
+
+
+.main_cont_center_box {
+    width: 450px;
+    height: 350px;
+    text-align: left;
+}
+.main_cont_left_box {    
+    position: absolute;
+    left: 325px;
+}
+.main_cont_right_box {    
+    position: absolute;
+    right: 325px;
+}
+.main_cont_right_img {    
+    position: absolute;
+    right: 325px;
+}
+.main_cont_left_img {    
+    position: absolute;
+    left: 325px;
+}
+.main_cont_center_box h2 {
+    font-family: "Pretendard";
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 62px;
+    letter-spacing: -0.07em;
+    text-transform: capitalize;
+    margin: 10px 0;
+    color: #000;
+  }
+  .main_cont_center_box h3 {
+    font-family: "Pretendard";
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    letter-spacing: -0.01em;
+    text-transform: capitalize;
+  
+    color: #ff0267;
+  }
+  .main_cont_center_box p {
+    font-family: 'Pretendard';
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: -0.07em;
+    text-transform: capitalize;
+    
+    color: #555555;
+  }
+
+  .circle_h {
+    display: flex;
+    align-items: center;
+  }
+  .circle_h img {
+    margin-right: 5px;
+  }
+
+.login_btn {
+  align-items: center;
+  width: 98px;
+  display: flex;
+  height: 38px;
+  background: #ff0267;
+  border-radius: 10px;
+  color: white;
+  border: none;
+  font-family: "Pretendard-Bold";
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+  justify-content: center;
+}
+.login_btn p {
+  margin: 15px 5px;
+}
