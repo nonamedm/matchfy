@@ -165,3 +165,57 @@
 .login_btn p {
   margin: 15px 5px;
 }
+
+
+
+@media (max-width:1780px) {
+  .circle_h {
+    justify-content: center;
+  }
+  .main_cont_left_box {
+    text-align: center;
+    position: relative;
+    left:0px;
+  }
+  .main_cont_right_box {
+    text-align: center;
+    position: relative;
+    right:0px;
+  }
+  .main_cont_left_img {
+    position: relative;
+    left:0px;
+  }
+  .main_cont_right_img {
+    position: relative;
+    right:0px;
+  }
+  .content_no_img {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 968px) {
+  .main_bg_center_box h2 {
+    font-size: 36px;
+    line-height: 46px;
+  }
+  .main_bg_center_box h2 span {
+    white-space: nowrap;
+  }
+  .main_bg_center_box p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+  }
+  .main_bg_center_box button {    
+    padding: 14px 18px;
+    width: 220px;
+    height: 50px;
+  }
+  .main_cont_center_box h2{
+    font-size: 30px;
+    line-height: 40px;
+  }
+}
+}

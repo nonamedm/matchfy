@@ -276,13 +276,13 @@
     </div>
 
     <div class="content_no_img bg_color_theme">
-        <div class="main_cont_left_img">
-            <img src="/static/images/main_point_img.png"/>
-        </div>
         <div class="main_cont_center_box main_cont_right_box">
             <h3 class="circle_h text_white"><img src="/static/images/circle_2.png"/>매칭점수</h3>
             <h2 class="text_white">매칭점수 기반의<br/>멤버들 모아보기</h2>
             <p class="text_white">매칭점수가 70% 이상 일치하는 멤버들과 <br/>소통을 할 수 있어요</p>
+        </div>
+        <div class="main_cont_left_img">
+            <img src="/static/images/main_point_img.png"/>
         </div>
     </div>
 
