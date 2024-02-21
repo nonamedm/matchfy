@@ -297,27 +297,95 @@
         </div>
     </div>
 
+    <div class="content_no_img bg_color_theme2 content_chat_img">
+        <div class="main_cont">
+            <h2>매치파이 멤버들의 <br style="display:none">따끈따끈한 후기</h2>
+        </div>
+        <div class="main_cont chat_div chat_div_left">
+            <div class="chat_profile_div">
+                <img src="/static/images/chat_img_1.png"/>
+                <span>뽀로로님</span>
+            </div>
+            <div class="chat_talk_div">
+                <p>매치파이를 통해 운명의 상대를 만났어요! 성격이 비슷하니 싸울 일도 없어서 안정적이고 잔잔한 연애를 하고 있답니다</p>
+                <img src="/static/images/review_star.png" />
+                <img src="/static/images/review_star.png" />
+                <img src="/static/images/review_star.png" />
+                <img src="/static/images/review_star.png" />
+                <img src="/static/images/review_star.png" />
+            </div>
+        </div>
+        <div class="main_cont chat_div chat_div_right">
+            <div class="chat_profile_div">
+                <img src="/static/images/chat_img_2.png"/>
+                <span>홍길동님</span>
+            </div>
+            <div class="chat_talk_div">
+                <p>매치파이를 통해 운명의 상대를 만났어요! 성격이 비슷하니 싸울 일도 없어서 안정적이고 잔잔한 연애를 하고 있답니다</p>
+                <img src="/static/images/review_star.png" />
+                <img src="/static/images/review_star.png" />
+                <img src="/static/images/review_star.png" />
+                <img src="/static/images/review_star.png" />
+                <img src="/static/images/review_star.png" />
+            </div>
+        </div>
+        <div class="main_cont chat_div chat_div_left">
+            <div class="chat_profile_div">
+                <img src="/static/images/chat_img_3.png"/>
+                <span>손흥민님</span>
+            </div>
+            <div class="chat_talk_div">
+                <p>매치파이를 통해 운명의 상대를 만났어요! 성격이 비슷하니 싸울 일도 없어서 안정적이고 잔잔한 연애를 하고 있답니다</p>
+                <img src="/static/images/review_star.png" />
+                <img src="/static/images/review_star.png" />
+                <img src="/static/images/review_star.png" />
+                <img src="/static/images/review_star.png" />
+                <img src="/static/images/review_star.png" />
+            </div>
+        </div>
+        <div class="main_cont chat_div chat_div_right no_margin">
+            <div class="chat_profile_div">
+                <img src="/static/images/chat_img_4.png"/>
+                <span>김철수님</span>
+            </div>
+            <div class="chat_talk_div">
+                <p>매치파이를 통해 운명의 상대를 만났어요! 성격이 비슷하니 싸울 일도 없어서 안정적이고 잔잔한 연애를 하고 있답니다</p>
+                <img src="/static/images/review_star.png" />
+                <img src="/static/images/review_star.png" />
+                <img src="/static/images/review_star.png" />
+                <img src="/static/images/review_star.png" />
+                <img src="/static/images/review_star.png" />
+            </div>
+        </div>
+    </div>
+
+    <div class="content content_bottom">
+        <div class="main_bg_center_box ">
+            <h2>똑똑한 AI가 주선하는 찰떡궁합 소개팅</h2>
+            <p>지금 바로, 함께해요</p>
+            <button>로그인</button>
+        </div>
+    </div>
+
 
     <!-- FOOTER: DEBUG INFO + COPYRIGHTS -->
 
-    <footer>
-        <div class="environment">
+    <footer class="footer">       
 
-            <p>Page rendered in {elapsed_time} seconds</p>
-
-            <p>Environment:
-                <?= ENVIRONMENT ?>
-            </p>
-
+        <div class="footer_logo mb40">
+            matchfy
         </div>
-
-        <div class="copyrights">
-
-            <p>&copy;
-                <?= date('Y') ?> CodeIgniter Foundation. CodeIgniter is open source project released under the MIT
-                open source licence.
-            </p>
-
+        <div class="footer_link mb40">
+            <a href="#">회사정보</a>
+            <a href="#">개인정보 처리방침</a>
+            <a href="#">서비스 이용약관</a>
+        </div>
+        <div class="footer_info mb40">
+            <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
+            <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img src="/static/images/part_line.png" /> gildong@naver.com</span>
+        </div>
+        <div class="footer_copy">
+        COPYRIGHT 2023. ALL RIGHTS RESERVED.
         </div>
 
     </footer>

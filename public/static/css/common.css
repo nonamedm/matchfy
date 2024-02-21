@@ -1,14 +1,30 @@
 @font-face {
   font-family: "Pretendard-Regular";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+  src: url("/static/font/Pretendard/Pretendard-Regular.woff")
     format("woff");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
+  font-family: "Pretendard-SemiBold";
+  src: url("/static/font/Pretendard/Pretendard-SemiBold.woff")
+    format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
   font-family: "Pretendard-Bold";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+  src: url("/static/font/Pretendard/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Tium";
+  src: url("/static/font/Tium/TMONTium.woff")
     format("woff");
   font-weight: 700;
   font-style: normal;
@@ -18,10 +34,22 @@
   overflow-x: hidden;
 }
 .bg_color_theme {
-    background-color: #FF0267;
+  background-color: #ff0267;
+}
+.bg_color_theme2 {
+  background-color: #f5f5f5;
 }
 .text_white {
-    color: #fff !important
+  color: #fff !important;
+}
+.mt100 {
+  margin-top:100px;
+}
+.mb40 {
+  margin-bottom:40px;
+}
+.no_margin {
+  margin: 0 !important;
 }
 
 .content {
@@ -31,11 +59,95 @@
   justify-content: center;
   align-items: center;
 }
+.content_bottom {
+  height: 320px;
+  background-image: url("/static/images/main_bg_2.png");
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .content_no_img {
   height: 1000px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.content_chat_img {
+  display: block;
+  padding: 130px 320px;
+}
+
+.content_chat_img h2 {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 60px;
+  text-align: center;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+
+  color: #000000;
+}
+
+.chat_div {
+  display: flex;
+  margin-bottom: 40px;
+}
+.chat_div_left {
+  justify-content: flex-start;
+  width: 100%;
+}
+.chat_div_right {
+  flex-direction: row-reverse;
+  width: 100%;
+}
+.chat_div_right span{
+  margin-right: 12px;
+  margin-left: 0px !important;
+}
+.chat_div_right .chat_profile_div{
+  margin-left: 30px !important;
+}
+.chat_profile_div {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+.chat_talk_div {
+  background: #FFFFFF;
+  border: 1px solid #EEEEEE;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 40px 40px 40px 0px;
+  width: 700px;
+  height: 135px;
+  margin-left: 30px;
+  padding: 10px 100px 10px 50px;
+}
+.chat_talk_div p{
+  font-family: 'Pretendard-SemiBold';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+  /* or 156% */
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+  color: #111111;
+}
+
+.content_chat_img span {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+
+  color: #000000;
+  margin-left: 12px;
 }
 
 .main_bg_center_box {
@@ -54,6 +166,19 @@
   text-transform: capitalize;
 
   color: #ffffff;
+}
+
+.content_bottom .main_bg_center_box h2 {
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 52px;
+  text-align: center;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+
+  color: #FFFFFF;
 }
 .main_bg_center_box p {
   font-family: "Pretendard";
@@ -83,68 +208,71 @@
   line-height: 22px;
 }
 
-
-
-
 .main_cont_center_box {
-    width: 450px;
-    height: 350px;
-    text-align: left;
+  width: 450px;
+  height: 350px;
+  text-align: left;
 }
-.main_cont_left_box {    
-    position: absolute;
-    left: 325px;
+.main_cont_left_box {
+  position: absolute;
+  left: 325px;
 }
-.main_cont_right_box {    
-    position: absolute;
-    right: 325px;
+.main_cont_right_box {
+  position: absolute;
+  right: 325px;
 }
-.main_cont_right_img {    
-    position: absolute;
-    right: 325px;
+.main_cont_right_img {
+  position: absolute;
+  right: 325px;
 }
-.main_cont_left_img {    
-    position: absolute;
-    left: 325px;
+.main_cont_right_img img {
+  width: 100%;
+}
+.main_cont_left_img {
+  position: absolute;
+  left: 325px;
+}
+.main_cont_left_img img {
+  width: 100%;
 }
 .main_cont_center_box h2 {
-    font-family: "Pretendard";
-    font-weight: 700;
-    font-size: 50px;
-    line-height: 62px;
-    letter-spacing: -0.07em;
-    text-transform: capitalize;
-    margin: 10px 0;
-    color: #000;
-  }
-  .main_cont_center_box h3 {
-    font-family: "Pretendard";
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 29px;
-    letter-spacing: -0.01em;
-    text-transform: capitalize;
-  
-    color: #ff0267;
-  }
-  .main_cont_center_box p {
-    font-family: 'Pretendard';
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 30px;
-    letter-spacing: -0.07em;
-    text-transform: capitalize;
-    
-    color: #555555;
-  }
+  font-family: "Pretendard";
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 62px;
+  letter-spacing: -0.07em;
+  text-transform: capitalize;
+  margin: 10px 0;
+  color: #000;
+}
+.main_cont_center_box h3 {
+  font-family: "Pretendard";
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
 
-  .circle_h {
-    display: flex;
-    align-items: center;
-  }
-  .circle_h img {
-    margin-right: 5px;
-  }
+  color: #ff0267;
+}
+.main_cont_center_box p {
+  font-family: "Pretendard";
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: -0.07em;
+  text-transform: capitalize;
+
+  color: #555555;
+}
+
+.circle_h {
+  display: flex;
+  align-items: center;
+}
+.circle_h img {
+  margin-right: 5px;
+}
 
 .login_btn {
   align-items: center;
@@ -166,36 +294,108 @@
   margin: 15px 5px;
 }
 
+.footer {
+  padding: 60px 320px;
+  background-color: #111111;
+}
+.footer_logo {
+  font-family: 'Tium';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 37px;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+  text-align: left;
+}
+.footer_link {
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.01em;
+  text-transform: capitalize;
+  text-align: left;
+  color: #FFFFFF;
+}
+.footer_link a{
+  margin-right: 31px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.footer_info {
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: #AAAAAA;
+}
+.footer_info span {
+  display: block;
+  margin-bottom: 6px;
+}
+.footer_info img{
+  margin: 0 4px;
+}
+
+.footer_copy {
+  font-family: 'Pretendard-SemiBold';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: #555555;
+}
 
 
-@media (max-width:1780px) {
+@media (max-width: 1780px) {
   .circle_h {
     justify-content: center;
   }
   .main_cont_left_box {
     text-align: center;
     position: relative;
-    left:0px;
+    left: 0px;
   }
   .main_cont_right_box {
     text-align: center;
     position: relative;
-    right:0px;
+    right: 0px;
   }
   .main_cont_left_img {
     position: relative;
-    left:0px;
+    left: 0px;
   }
   .main_cont_right_img {
     position: relative;
-    right:0px;
+    right: 0px;
   }
   .content_no_img {
     display: flex;
     flex-direction: column;
-}
+  } 
+  .chat_div {
+    flex-wrap: wrap;
+  }
+  .content_chat_img {
+    padding: 20px 100px
+  }
+  .content_chat_img {
+    height: 100%;
+  }
 
+}
 @media (max-width: 968px) {
+  .content_chat_img {
+    padding: 10px 20px
+  }
   .main_bg_center_box h2 {
     font-size: 36px;
     line-height: 46px;
@@ -208,14 +408,33 @@
     font-size: 16px;
     line-height: 19px;
   }
-  .main_bg_center_box button {    
+  .main_bg_center_box button {
     padding: 14px 18px;
     width: 220px;
     height: 50px;
   }
-  .main_cont_center_box h2{
+  .main_cont_center_box h2 {
     font-size: 30px;
     line-height: 40px;
   }
-}
+  
+  .main_cont_left_img {
+    align-items: baseline;
+  }
+  .content_chat_img h2 {
+    font-size: 36px;
+    line-height: 46px;
+  }
+  .content_chat_img h2 br {
+    display: block !important;
+  }
+  .chat_talk_div p {
+    font-size: 14px;
+  }
+  .content_bottom {
+    display: none;
+  }
+  .footer {
+    padding: 30px 15px;
+  }
 }
