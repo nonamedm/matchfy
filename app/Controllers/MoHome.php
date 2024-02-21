@@ -2,10 +2,10 @@
 
 namespace App\Controllers;
 
-class Home extends BaseController
+class MoHome extends BaseController
 {
     public function index(): string
     {
-        return view('index');
+        return view('mo_index');
     }
 }

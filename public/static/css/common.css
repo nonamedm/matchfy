@@ -1,31 +1,27 @@
 @font-face {
   font-family: "Pretendard-Regular";
-  src: url("/static/font/Pretendard/Pretendard-Regular.woff")
-    format("woff");
+  src: url("/static/font/Pretendard/Pretendard-Regular.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Pretendard-SemiBold";
-  src: url("/static/font/Pretendard/Pretendard-SemiBold.woff")
-    format("woff");
+  src: url("/static/font/Pretendard/Pretendard-SemiBold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Pretendard-Bold";
-  src: url("/static/font/Pretendard/Pretendard-Regular.woff")
-    format("woff");
+  src: url("/static/font/Pretendard/Pretendard-Regular.woff") format("woff");
   font-weight: 900;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Tium";
-  src: url("/static/font/Tium/TMONTium.woff")
-    format("woff");
+  src: url("/static/font/Tium/TMONTium.woff") format("woff");
   font-weight: 700;
   font-style: normal;
 }
@@ -43,10 +39,10 @@
   color: #fff !important;
 }
 .mt100 {
-  margin-top:100px;
+  margin-top: 100px;
 }
 .mb40 {
-  margin-bottom:40px;
+  margin-bottom: 40px;
 }
 .no_margin {
   margin: 0 !important;
@@ -103,11 +99,11 @@
   flex-direction: row-reverse;
   width: 100%;
 }
-.chat_div_right span{
+.chat_div_right span {
   margin-right: 12px;
   margin-left: 0px !important;
 }
-.chat_div_right .chat_profile_div{
+.chat_div_right .chat_profile_div {
   margin-left: 30px !important;
 }
 .chat_profile_div {
@@ -116,8 +112,8 @@
   margin: 10px 0;
 }
 .chat_talk_div {
-  background: #FFFFFF;
-  border: 1px solid #EEEEEE;
+  background: #ffffff;
+  border: 1px solid #eeeeee;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
   border-radius: 40px 40px 40px 0px;
   width: 700px;
@@ -125,8 +121,8 @@
   margin-left: 30px;
   padding: 10px 100px 10px 50px;
 }
-.chat_talk_div p{
-  font-family: 'Pretendard-SemiBold';
+.chat_talk_div p {
+  font-family: "Pretendard-SemiBold";
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -169,7 +165,7 @@
 }
 
 .content_bottom .main_bg_center_box h2 {
-  font-family: 'Pretendard';
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
   font-size: 40px;
@@ -178,7 +174,7 @@
   letter-spacing: -0.01em;
   text-transform: capitalize;
 
-  color: #FFFFFF;
+  color: #ffffff;
 }
 .main_bg_center_box p {
   font-family: "Pretendard";
@@ -299,17 +295,17 @@
   background-color: #111111;
 }
 .footer_logo {
-  font-family: 'Tium';
+  font-family: "Tium";
   font-style: normal;
   font-weight: 700;
   font-size: 32px;
   line-height: 37px;
   letter-spacing: -0.01em;
-  color: #FFFFFF;
+  color: #ffffff;
   text-align: left;
 }
 .footer_link {
-  font-family: 'Pretendard';
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -317,34 +313,34 @@
   letter-spacing: -0.01em;
   text-transform: capitalize;
   text-align: left;
-  color: #FFFFFF;
+  color: #ffffff;
 }
-.footer_link a{
+.footer_link a {
   margin-right: 31px;
   text-decoration: none;
   color: #fff;
 }
 
 .footer_info {
-  font-family: 'Pretendard';
+  font-family: "Pretendard";
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
   line-height: 17px;
   letter-spacing: -0.01em;
   text-align: left;
-  color: #AAAAAA;
+  color: #aaaaaa;
 }
 .footer_info span {
   display: block;
   margin-bottom: 6px;
 }
-.footer_info img{
+.footer_info img {
   margin: 0 4px;
 }
 
 .footer_copy {
-  font-family: 'Pretendard-SemiBold';
+  font-family: "Pretendard-SemiBold";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -353,7 +349,6 @@
   text-align: left;
   color: #555555;
 }
-
 
 @media (max-width: 1780px) {
   .circle_h {
@@ -380,21 +375,20 @@
   .content_no_img {
     display: flex;
     flex-direction: column;
-  } 
+  }
   .chat_div {
     flex-wrap: wrap;
   }
   .content_chat_img {
-    padding: 20px 100px
+    padding: 20px 100px;
   }
   .content_chat_img {
     height: 100%;
   }
-
 }
 @media (max-width: 968px) {
   .content_chat_img {
-    padding: 10px 20px
+    padding: 10px 20px;
   }
   .main_bg_center_box h2 {
     font-size: 36px;
@@ -417,7 +411,7 @@
     font-size: 30px;
     line-height: 40px;
   }
-  
+
   .main_cont_left_img {
     align-items: baseline;
   }

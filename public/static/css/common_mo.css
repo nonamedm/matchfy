@@ -1,0 +1,216 @@
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("/static/font/Pretendard/Pretendard-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard-SemiBold";
+  src: url("/static/font/Pretendard/Pretendard-SemiBold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard-Bold";
+  src: url("/static/font/Pretendard/Pretendard-Regular.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Tium";
+  src: url("/static/font/Tium/TMONTium.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+.mo_wrap {
+  height: 100%;
+}
+
+.mo_wrap .wrap {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100%;
+}
+.mo_wrap .main_wrap:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url("/static/images/main_bg_mo.png") no-repeat top center / contain;
+  z-index: -2;
+}
+
+/* SUB */
+.mo_wrap .sub_wrap {
+  position: relative;
+  height: 100%;
+  padding-bottom: 80px;
+}
+
+.main_logo {
+  position: absolute;
+  width: 148px;
+  height: 46px;
+  left: calc(50% - 148px/2 + 0.5px);
+  top: 241px;
+
+  font-family: 'Tium';
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 46px;
+  text-align: center;
+  letter-spacing: -0.01em;
+  color: #FF0267;
+}
+
+.main_login_form {
+  position: absolute;
+  top: 365px;
+  left: calc(50% - 302px/2 + 0.5px);
+}
+
+.form_row input {
+  width: 301px;
+  height: 50px;
+  background: #FFFFFF;
+  border-radius: 15px;
+  border: none;
+  padding: 15px;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: -0.01em;
+
+  color: #999999;
+}
+
+
+/* chk_box */
+.mo_wrap .chk_box {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  margin: 17px 0px;
+}
+
+.mo_wrap .chk_box label {
+  display: block;
+  padding: 1px 0 1px 30px;
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.01em;
+  color: #FFFFFF;
+}
+
+.mo_wrap .chk_box input[type="radio"], .mo_wrap .chk_box input[type="checkbox"] {
+  border: none;
+  border-radius: 50%;
+}
+
+.mo_wrap .chk_box label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  z-index: 2;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.mo_wrap .chk_box input[type="checkbox"] + label:before {
+  background: url(/static/images/ico_chk_gray_20x20.png.png) no-repeat center / 20px;
+}
+
+.mo_wrap .chk_box input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+}
+
+.mo_wrap .chk_box input:checked + label::before,.mo_wrap .chk_box input:checked ~ label::before {
+  height: 20px;
+  background: url(/static/images/ico_chk_20x20.png) no-repeat center / 20px;
+  border: 0 none;
+}
+
+.mo_wrap .chk_box input[type="radio"] + label:before {
+  background: url(/static/images/ico_chk_gray_20x20.png.png) no-repeat center / 20px;
+}
+
+.mo_wrap .chk_box input[type="radio"]:checked + label::before,.mo_wrap .chk_box input[type="radio"]:checked ~ label::before {
+  background: url(../img/common/ico_chk_gray_20x20.png.png) no-repeat center / 20px;
+}
+
+.btn.type00 {
+  color: #fff;
+  width: 301px;
+  height: 50px;
+  border: 1px solid #FFFFFF;
+  border-radius: 15px;
+  background: transparent;
+  font-family: "Pretendard";
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 22px;
+}
+.btn.type01 {
+  color: #fff;
+  width: 301px;
+  height: 50px;
+  border: none;
+  background: #ff0267;
+  border-radius: 15px;
+  font-family: "Pretendard";
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 22px;
+}
+.btn.naver_login {
+  color: #fff;
+  width: 301px;
+  height: 50px;
+  border: none;
+  background: #03CF5D;
+  border-radius: 15px;
+  font-family: "Pretendard";
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 22px;
+  margin-top: 15px;
+}
+
+.blind {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  height: 0;
+  font-size: 1px;
+  line-height: 0;
+  text-indent: -9999em;
+  overflow: hidden;
+}
+

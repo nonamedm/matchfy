@@ -266,34 +266,34 @@
 
     <div class="content_no_img">
         <div class="main_cont_center_box main_cont_left_box">
-            <h3 class="circle_h"><img src="/static/images/circle_1.png"/>프로필</h3>
-            <h2>프로필 등록으로<br/> 매칭 99% 멤버찾기</h2>
-            <p>등록한 프로필로 매칭점수가 일치하는<br/> 멤버들을 찾을 수 있어요</p>
+            <h3 class="circle_h"><img src="/static/images/circle_1.png" />프로필</h3>
+            <h2>프로필 등록으로<br /> 매칭 99% 멤버찾기</h2>
+            <p>등록한 프로필로 매칭점수가 일치하는<br /> 멤버들을 찾을 수 있어요</p>
         </div>
         <div class="main_cont_right_img">
-            <img src="/static/images/main_profile_img.png"/>
+            <img src="/static/images/main_profile_img.png" />
         </div>
     </div>
 
     <div class="content_no_img bg_color_theme">
         <div class="main_cont_center_box main_cont_right_box">
-            <h3 class="circle_h text_white"><img src="/static/images/circle_2.png"/>매칭점수</h3>
-            <h2 class="text_white">매칭점수 기반의<br/>멤버들 모아보기</h2>
-            <p class="text_white">매칭점수가 70% 이상 일치하는 멤버들과 <br/>소통을 할 수 있어요</p>
+            <h3 class="circle_h text_white"><img src="/static/images/circle_2.png" />매칭점수</h3>
+            <h2 class="text_white">매칭점수 기반의<br />멤버들 모아보기</h2>
+            <p class="text_white">매칭점수가 70% 이상 일치하는 멤버들과 <br />소통을 할 수 있어요</p>
         </div>
         <div class="main_cont_left_img">
-            <img src="/static/images/main_point_img.png"/>
+            <img src="/static/images/main_point_img.png" />
         </div>
     </div>
 
     <div class="content_no_img">
         <div class="main_cont_center_box main_cont_left_box">
-            <h3 class="circle_h"><img src="/static/images/circle_3.png"/>제휴</h3>
-            <h2>오프라인 만남은<br/>제휴점에서 저렴하게</h2>
-            <p>소개팅 또는 모임활동시 소비하는 비용을<br/>제휴점 이용을 통해 절약할 수 있어요</p>
+            <h3 class="circle_h"><img src="/static/images/circle_3.png" />제휴</h3>
+            <h2>오프라인 만남은<br />제휴점에서 저렴하게</h2>
+            <p>소개팅 또는 모임활동시 소비하는 비용을<br />제휴점 이용을 통해 절약할 수 있어요</p>
         </div>
         <div class="main_cont_right_img">
-            <img src="/static/images/main_allience_img.png"/>
+            <img src="/static/images/main_allience_img.png" />
         </div>
     </div>
 
@@ -303,7 +303,7 @@
         </div>
         <div class="main_cont chat_div chat_div_left">
             <div class="chat_profile_div">
-                <img src="/static/images/chat_img_1.png"/>
+                <img src="/static/images/chat_img_1.png" />
                 <span>뽀로로님</span>
             </div>
             <div class="chat_talk_div">
@@ -317,7 +317,7 @@
         </div>
         <div class="main_cont chat_div chat_div_right">
             <div class="chat_profile_div">
-                <img src="/static/images/chat_img_2.png"/>
+                <img src="/static/images/chat_img_2.png" />
                 <span>홍길동님</span>
             </div>
             <div class="chat_talk_div">
@@ -331,7 +331,7 @@
         </div>
         <div class="main_cont chat_div chat_div_left">
             <div class="chat_profile_div">
-                <img src="/static/images/chat_img_3.png"/>
+                <img src="/static/images/chat_img_3.png" />
                 <span>손흥민님</span>
             </div>
             <div class="chat_talk_div">
@@ -345,7 +345,7 @@
         </div>
         <div class="main_cont chat_div chat_div_right no_margin">
             <div class="chat_profile_div">
-                <img src="/static/images/chat_img_4.png"/>
+                <img src="/static/images/chat_img_4.png" />
                 <span>김철수님</span>
             </div>
             <div class="chat_talk_div">
@@ -370,7 +370,7 @@
 
     <!-- FOOTER: DEBUG INFO + COPYRIGHTS -->
 
-    <footer class="footer">       
+    <footer class="footer">
 
         <div class="footer_logo mb40">
             matchfy
@@ -382,10 +382,11 @@
         </div>
         <div class="footer_info mb40">
             <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-            <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img src="/static/images/part_line.png" /> gildong@naver.com</span>
+            <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
+                    src="/static/images/part_line.png" /> gildong@naver.com</span>
         </div>
         <div class="footer_copy">
-        COPYRIGHT 2023. ALL RIGHTS RESERVED.
+            COPYRIGHT 2023. ALL RIGHTS RESERVED.
         </div>
 
     </footer>
