@@ -14,7 +14,7 @@
 
 @font-face {
   font-family: "Pretendard-Bold";
-  src: url("/static/font/Pretendard/Pretendard-Regular.woff") format("woff");
+  src: url("/static/font/Pretendard/Pretendard-Bold.woff") format("woff");
   font-weight: 900;
   font-style: normal;
 }
@@ -31,7 +31,7 @@
 }
 
 .mo_wrap .wrap {
-  max-width: 480px;
+  max-width: 375px;
   margin: 0 auto;
   min-height: 100%;
 }
@@ -47,6 +47,30 @@
   z-index: -2;
 }
 
+/* HEADER */
+header ul {
+  height: 22px;
+  list-style-type: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+}
+header .left_arrow {
+  position: relative;
+  left: 20px;
+  top: calc(50% - 22px/2);
+}
+header .header_title {
+  font-family: 'Pretendard-Bold';
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.01em;  
+  color: #111111;
+  margin-left: 50px;
+}
+
 /* SUB */
 .mo_wrap .sub_wrap {
   position: relative;
@@ -54,6 +78,35 @@
   padding-bottom: 80px;
 }
 
+.mo_wrap .sub_wrap .content_wrap {
+  padding: 50px 20px 0px 20px;
+}
+
+.mo_wrap .sub_wrap .content_wrap h2 {
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 29px;
+  letter-spacing: -0.01em;
+  color: #111111;
+}
+.mo_wrap .sub_wrap .content_wrap span {
+  color: #FF0267;
+}
+.mo_wrap .sub_wrap .content_wrap p {
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  color: #555555;
+}
+.content_body {
+  margin: 35px 0px;
+  text-align: center;
+}
 .main_logo {
   position: absolute;
   width: 148px;
@@ -115,6 +168,46 @@
   color: #FFFFFF;
 }
 
+.mo_wrap .chk_box label.totAgree_label {
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: -0.01em;
+  color: #111111;
+}
+.mo_wrap .chk_box label.agree_cont_label {
+  font-family: 'Pretendard-SemiBold';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: -0.01em;
+
+  color: #111111;
+}
+
+.agree_cont {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+.agree_cont textarea {
+  width: 335px;
+  height: 110px;
+  border: 1px solid #DDDDDD;
+  border-radius: 10px;
+
+  font-family: 'Pretendard';
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: -0.01em;
+
+  color: #777777;
+}
+
 .mo_wrap .chk_box input[type="radio"], .mo_wrap .chk_box input[type="checkbox"] {
   border: none;
   border-radius: 50%;
@@ -133,7 +226,7 @@
 }
 
 .mo_wrap .chk_box input[type="checkbox"] + label:before {
-  background: url(/static/images/ico_chk_gray_20x20.png.png) no-repeat center / 20px;
+  background: url(/static/images/ico_chk_gray_20x20.png) no-repeat center / 20px;
 }
 
 .mo_wrap .chk_box input {
@@ -158,11 +251,15 @@
 }
 
 .mo_wrap .chk_box input[type="radio"] + label:before {
-  background: url(/static/images/ico_chk_gray_20x20.png.png) no-repeat center / 20px;
+  background: url(/static/images/ico_chk_gray_20x20.png) no-repeat center / 20px;
 }
 
 .mo_wrap .chk_box input[type="radio"]:checked + label::before,.mo_wrap .chk_box input[type="radio"]:checked ~ label::before {
-  background: url(../img/common/ico_chk_gray_20x20.png.png) no-repeat center / 20px;
+  background: url(../img/common/ico_chk_gray_20x20.png) no-repeat center / 20px;
+}
+
+.btn_group {
+  text-align: center;
 }
 
 .btn.type00 {
@@ -203,6 +300,12 @@
   margin-top: 15px;
 }
 
+
+.hoz_part {
+  margin: 15px 0px 10px;
+  color: #eeeeee;
+  border: 1px solid;
+}
 .blind {
   position: absolute;
   left: -9999px;

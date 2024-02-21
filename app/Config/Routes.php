@@ -7,3 +7,5 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 $routes->get('/mo', 'MoHome::index');
+$routes->get('/mo/pass', 'MoHome::pass');
+$routes->get('/mo/agree', 'MoHome::agree');
