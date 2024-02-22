@@ -16,4 +16,8 @@ class MoHome extends BaseController
     {
         return view('mo_agree');
     }
+    public function signin(): string
+    {
+        return view('mo_signin');
+    }
 }

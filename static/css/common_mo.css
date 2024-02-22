@@ -128,7 +128,27 @@ header .header_title {
   top: 365px;
   left: calc(50% - 302px/2 + 0.5px);
 }
+.main_signin_form {
+  position: absolute;
+  top: 256px;
+}
+.signin_label {
+  font-family: 'Pretendard-SemiBold';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.01em;
+  color: #111111;
+  margin-bottom: 10px;
+}
 
+.form_row.signin_form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 335px;
+}
 .form_row input {
   width: 301px;
   height: 50px;
@@ -136,15 +156,51 @@ header .header_title {
   border-radius: 15px;
   border: none;
   padding: 15px;
-
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-SemiBold';
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
   line-height: 18px;
   letter-spacing: -0.01em;
-
   color: #999999;
+}
+
+.form_row.signin_form input {
+  border: 1px solid #dddddd;
+}
+.profile_photo_div {
+  display: flex;
+}
+.profile_photo_label {
+  font-family: 'Pretendard-SemiBold';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.01em;
+  color: #111111;
+  margin-bottom: 10px;
+}
+.form_row.signin_form .profile_photo_input {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #DDDDDD;
+  border-radius: 10px;
+  background: url('/static/images/input_img_plus.png') no-repeat center;
+}
+.form_row.signin_form .profile_photo_posted {
+  margin-left:10px;
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+}
+form input[type="file"] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
 }
 
 
@@ -260,8 +316,12 @@ header .header_title {
 
 .btn_group {
   text-align: center;
+  padding: 10px;
 }
-
+.btn_group.multy .btn {
+  width: 163px;
+  height: 50px;
+}
 .btn.type00 {
   color: #fff;
   width: 301px;
@@ -286,6 +346,20 @@ header .header_title {
   font-size: 14px;
   line-height: 22px;
 }
+
+.btn.type02 {
+  width: 301px;
+  height: 50px;
+  border: none;
+  background: #f2f2f2;
+  border-radius: 15px;
+  font-family: "Pretendard";
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: #333333;
+}
+
 .btn.naver_login {
   color: #fff;
   width: 301px;
