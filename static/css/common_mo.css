@@ -78,11 +78,40 @@ header .header_title {
 }
 
 .mo_wrap .sub_wrap .content_wrap {
-  padding: 50px 20px 0px 20px;
+  padding: 20px;
+}
+.mo_wrap .sub_wrap .content_wrap.center_wrap {
+  position: relative;
+  top: 200px;
+}
+.mo_wrap .sub_wrap .content_wrap.center_wrap .success_text p {
+  margin-top: 25px;
+  font-family: 'Pretendard-Bold';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: -0.01em;
+  color: #FF0267;
+}
+.mo_wrap .sub_wrap .content_wrap.center_wrap .success_text em {
+  font-family: 'Pretendard-Bold';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  color: #111111;
 }
 
-.mo_wrap .sub_wrap .content_wrap h2 {
-  font-family: 'Pretendard';
+.member_grade {
+  text-align:center;
+  font-size: 20px !important;
+  line-height: 28px !important;
+}
+
+.mo_wrap .sub_wrap .content_wrap .content_title h2 {
+  font-family: 'Pretendard-Bold';
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -90,11 +119,11 @@ header .header_title {
   letter-spacing: -0.01em;
   color: #111111;
 }
-.mo_wrap .sub_wrap .content_wrap span {
+.mo_wrap .sub_wrap .content_wrap .content_title span {
   color: #FF0267;
 }
-.mo_wrap .sub_wrap .content_wrap p {
-  font-family: 'Pretendard';
+.mo_wrap .sub_wrap .content_wrap .content_title p {
+  font-family: 'Pretendard-Regular';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -102,9 +131,112 @@ header .header_title {
   letter-spacing: -0.01em;
   color: #555555;
 }
-.content_body {
+.mo_wrap .sub_wrap .content_wrap .content_body {
   margin: 35px 0px;
   text-align: center;
+}
+
+.mo_wrap .sub_wrap .content_wrap .content_body .grade_box {
+  width: 335px;
+  border: 2px solid #EEEEEE;
+  border-radius: 15px;
+  margin-bottom: 10px;
+}
+
+.mo_wrap .sub_wrap .content_wrap .content_body .grade_box .grade_box_title {
+  padding: 19px 12px 0px 12px;
+  min-height: 41px;
+  text-align: left;
+}
+
+.mo_wrap .sub_wrap .content_wrap .content_body .grade_box .grade_box_title .grade_box_price {
+  padding: 10 0px 10px 30px;
+  height: 20px;
+}
+.mo_wrap .sub_wrap .content_wrap .content_body .grade_box .grade_box_title .grade_box_price img {
+  width: 65px;
+  height: 18px;
+  position: absolute;
+  left: 60px;
+}
+.mo_wrap .sub_wrap .content_wrap .content_body .grade_box .grade_box_title .grade_box_price .price_box {
+  display: flex;
+  flex-direction: row;
+  float: right;
+  align-items: baseline;
+}
+.mo_wrap .sub_wrap .content_wrap .content_body .grade_box .grade_box_title .grade_box_price .org_price {
+  font-family: 'Pretendard-SemiBold';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: -0.01em;
+  color: #AAAAAA;
+  margin: 0;
+  text-decoration: line-through;
+}
+.mo_wrap .sub_wrap .content_wrap .content_body .grade_box .grade_box_title .grade_box_price .tot_price {
+  font-family: 'Pretendard-Bold';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.01em;
+  color: #FF0267;
+  margin: 0;
+  margin-left: 15px;
+}
+
+.mo_wrap .sub_wrap .content_wrap .content_body .grade_box .grade_box_title span {
+  float:right;
+  font-family: 'Pretendard-SemiBold';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.01em;
+}
+
+.mo_wrap .sub_wrap .content_wrap .content_body .grade_box .grade_box_title h2 {
+  font-family: 'Pretendard-Bold';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.01em;
+  color: hsl(0, 0%, 7%);
+  margin: 0;
+  margin-top: -1px;
+}
+
+.mo_wrap .sub_wrap .content_wrap .content_body .grade_box .grade_box_cont {
+  border-top: 1px solid #EEEEEE;;
+  padding: 10px 12px 20px 12px;
+  min-height: 66px;
+  text-align: left;
+}
+.mo_wrap .sub_wrap .content_wrap .content_body .grade_box .grade_box_cont p {
+  font-family: 'Pretendard-Bold';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  color: #555555;
+  margin: 0 30px 10px 30px;
+  text-align: left;
+}
+.mo_wrap .sub_wrap .content_wrap .content_body .grade_box .grade_box_cont span {
+  font-family: 'Pretendard-Regular';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: -0.01em;
+  color: #999999;
+  margin: 0 30px;
+  text-align: left;
 }
 .main_logo {
   position: absolute;
@@ -157,9 +289,8 @@ header .header_title {
   height: 50px;
   background: #FFFFFF;
   border-radius: 15px;
-  border: none;
   padding: 15px;
-  font-family: 'Pretendard-SemiBold';
+  font-family: 'Pretendard-Regular';
   font-style: normal;
   font-weight: 400;
   font-size: 15px;
@@ -167,8 +298,36 @@ header .header_title {
   letter-spacing: -0.01em;
   color: #999999;
 }
+.form_row.signin_form .signin_form_div.input_btn input {
+  width: 250px;
+  height: 50px;
+  background: #FFFFFF;
+  border-radius: 15px;
+  padding: 15px;
+  font-family: 'Pretendard-Regular';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: -0.01em;
+  color: #999999;
+}
+.input_btn {
+  display: flex;
+  justify-content: space-between;
+}
+.btn_input_form {
+  width: 80px;
+  height: 50px;
+  background: #555555;
+  border-radius: 10px;
+  color:#fff;
+}
 
 .form_row.signin_form input {
+  border: 1px solid #dddddd;
+}
+.form_row.signin_form select {
   border: 1px solid #dddddd;
 }
 .profile_photo_div {
@@ -183,6 +342,16 @@ header .header_title {
   letter-spacing: -0.01em;
   color: #111111;
   margin-bottom: 10px;
+}
+.profile_photo_desc {
+  font-family: 'Pretendard-Regular';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.01em;
+  color: #555555;
+  margin: 0 0 10px;
 }
 .form_row.signin_form .profile_photo_input {
   width: 100px;
@@ -214,11 +383,14 @@ form input[type="file"] {
   vertical-align: top;
   margin: 17px 0px;
 }
+.mo_wrap .chk_box.radio_box {
+  margin: 0px 0px;
+}
 
 .mo_wrap .chk_box label {
   display: block;
   padding: 1px 0 1px 30px;
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-Regular';
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -228,7 +400,7 @@ form input[type="file"] {
 }
 
 .mo_wrap .chk_box label.totAgree_label {
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-Bold';
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -252,19 +424,32 @@ form input[type="file"] {
   flex-direction: column;
   margin-bottom: 50px;
 }
+.form_row select {
+  width: 335px;
+  height: 50px;
+  border-radius: 15px;
+  border: none;
+  padding: 15px;
+  font-family: 'Pretendard-Regular';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: -0.01em;
+  color: #999999;
+}
 .agree_cont textarea {
   width: 335px;
   height: 110px;
   border: 1px solid #DDDDDD;
   border-radius: 10px;
-
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-Regular';
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;
   letter-spacing: -0.01em;
-
   color: #777777;
+  padding: 15px;
 }
 
 .mo_wrap .chk_box input[type="radio"], .mo_wrap .chk_box input[type="checkbox"] {
@@ -279,6 +464,18 @@ form input[type="file"] {
   top: 0;
   width: 20px;
   height: 20px;
+  z-index: 2;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.mo_wrap .chk_box.radio_box label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 22px;
+  height: 22px;
   z-index: 2;
   border-radius: 50%;
   box-sizing: border-box;
@@ -310,11 +507,11 @@ form input[type="file"] {
 }
 
 .mo_wrap .chk_box input[type="radio"] + label:before {
-  background: url(/static/images/ico_chk_gray_20x20.png) no-repeat center / 20px;
+  background: url(/static/images/ico_chk_gray_22x22.png) no-repeat center / 22px;
 }
 
 .mo_wrap .chk_box input[type="radio"]:checked + label::before,.mo_wrap .chk_box input[type="radio"]:checked ~ label::before {
-  background: url(../img/common/ico_chk_gray_20x20.png) no-repeat center / 20px;
+  background: url(/static/images/ico_chk_22x22.png) no-repeat center / 22px;
 }
 
 .btn_group {
@@ -397,3 +594,28 @@ form input[type="file"] {
   overflow: hidden;
 }
 
+.footer .btn_group{
+  position: absolute;
+  bottom: 20px;
+  left: 30px;
+}
+
+
+
+
+
+
+
+select {
+  -webkit-appearance:none; /* for chrome */
+  -moz-appearance:none; /*for firefox*/
+  appearance:none;
+}
+
+select::-ms-expand{
+  display:none;/*for IE10,11*/
+}
+
+select {
+  background:url('/static/images/select_arrow.png') no-repeat 97% 50%/15px auto;
+}

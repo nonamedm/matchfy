@@ -20,4 +20,16 @@ class MoHome extends BaseController
     {
         return view('mo_signin');
     }
+    public function signinType(): string
+    {
+        return view('mo_signin_type');
+    }
+    public function signinSuccess(): string
+    {
+        return view('mo_signin_success');
+    }
+    public function signinRegular(): string
+    {
+        return view('mo_signin_regular');
+    }
 }
