@@ -14,6 +14,7 @@
 
 <body class="mo_wrap">
     <div class="wrap main_wrap">
+        <mobileheader style="height:44px; display: block;"></mobileheader>
         <!-- HEADER: MENU + HEROE SECTION -->
         <header>
 
@@ -45,20 +46,20 @@
                 <form class="main_login_form">                    
                     <legend></legend>
                     <div class="login_box">
-                        <div class="form_row">
+                        <div class="form_row" style="text-align:center;">
                             <label for="id" class="blind">아이디</label>
-                            <input id="id" type="text" value="" placeholder="휴대폰 번호 입력">
+                            <input id="id" type="text" value="" style="width: 301px;" placeholder="휴대폰 번호 입력">
                         </div>
-                        <div class="chk_box">
+                        <div class="chk_box" style="margin-left: 7px;">
                             <input type="checkbox" id="keep" name="chkDefault00" checked="">
                             <label for="keep">자동 로그인</label>
                         </div>
                         <div class="btn_group">
-                            <button type="button" class="btn type01">로그인</button>
+                            <button type="button" style="width: 301px;" class="btn type01">로그인</button>
                         </div>
                         <img src="/static/images/main_login_hr.png" style="margin: 40px 0px 30px 0px;"/>
                         <div class="btn_group">
-                            <button type="button" class="btn type00">휴대폰 번호로 회원가입</button>
+                            <button type="button" style="width: 301px;" class="btn type00">휴대폰 번호로 회원가입</button>
                         </div>
                         <div class="btn_group">
                             <button type="button" class="btn naver_login">네이버로 계속하기</button>

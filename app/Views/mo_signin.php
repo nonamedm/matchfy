@@ -43,42 +43,54 @@
                     <legend></legend>
                     <div class="">
                         <div class="form_row signin_form">
-                            <label for="name" class="signin_label">이름</label>
-                            <input id="name" type="text" value="" placeholder="이름을 입력하세요">
+                            <div class="signin_form_div">
+                                <label for="name" class="signin_label">이름</label>
+                                <input id="name" type="text" value="" placeholder="이름을 입력하세요">
+                            </div>
                         </div>
                         <div class="form_row signin_form">
-                            <label for="birth" class="signin_label">생년월일</label>
-                            <input id="birth" type="text" value="" placeholder="이름을 입력하세요">
+                            <div class="signin_form_div">
+                                <label for="birth" class="signin_label">생년월일</label>
+                                <input id="birth" type="text" value="" placeholder="이름을 입력하세요">
+                            </div>
                         </div>
                         <div class="form_row signin_form">
-                            <label for="gender" class="signin_label">성별</label>
-                            <input id="gender" type="text" value="" placeholder="이름을 입력하세요">
+                            <div class="signin_form_div">
+                                <label for="gender" class="signin_label">성별</label>
+                                <input id="gender" type="text" value="" placeholder="이름을 입력하세요">
+                            </div>
                         </div>
                         <div class="form_row signin_form">
-                            <label for="region" class="signin_label">지역</label>
-                            <input id="region" type="text" value="" placeholder="이름을 입력하세요">
+                            <div class="signin_form_div">
+                                <label for="region" class="signin_label">지역</label>
+                                <input id="region" type="text" value="" placeholder="이름을 입력하세요">
+                            </div>
                         </div>
                         <div class="form_row signin_form">
-                            <h4 class="profile_photo_label">사진 (1장 이상 필수)</h4>
-                            <div class="profile_photo_div">
-                                <label for="profile_photo" class="signin_label profile_photo_input"></label>
-                                <input id="profile_photo" type="file" value="" placeholder="">
-                                <div>
-                                    <img class="profile_photo_posted" src="/static/images/input_img_1.png" />
-                                    <img class="profile_photo_posted" src="/static/images/input_img_2.png" />
-                                    <!-- <img class="profile_photo_posted" src="/static/images/input_img_3.png" /> -->
+                            <div class="signin_form_div">
+                                <h4 class="profile_photo_label">사진 (1장 이상 필수)</h4>
+                                <div class="profile_photo_div">
+                                    <label for="profile_photo" class="signin_label profile_photo_input"></label>
+                                    <input id="profile_photo" type="file" value="" placeholder="">
+                                    <div>
+                                        <img class="profile_photo_posted" src="/static/images/input_img_1.png" />
+                                        <img class="profile_photo_posted" src="/static/images/input_img_2.png" />
+                                        <!-- <img class="profile_photo_posted" src="/static/images/input_img_3.png" /> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form_row signin_form">
-                            <h4 class="profile_photo_label">동영상 프로필 (권장)</h4>
-                            <div class="profile_photo_div">
-                                <label for="profile_mov" class="signin_label profile_photo_input"></label>
-                                <input id="profile_mov" type="file" value="" placeholder="">
-                                <div>
-                                    <img class="profile_photo_posted" src="/static/images/input_img_1.png" />
-                                    <img class="profile_photo_posted" src="/static/images/input_img_2.png" />
-                                    <!-- <img class="profile_photo_posted" src="/static/images/input_img_3.png" /> -->
+                            <div class="signin_form_div">
+                                <h4 class="profile_photo_label">동영상 프로필 (권장)</h4>
+                                <div class="profile_photo_div">
+                                    <label for="profile_mov" class="signin_label profile_photo_input"></label>
+                                    <input id="profile_mov" type="file" value="" placeholder="">
+                                    <div>
+                                        <img class="profile_photo_posted" src="/static/images/input_img_1.png" />
+                                        <img class="profile_photo_posted" src="/static/images/input_img_2.png" />
+                                        <!-- <img class="profile_photo_posted" src="/static/images/input_img_3.png" /> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>

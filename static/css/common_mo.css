@@ -75,7 +75,6 @@ header .header_title {
 .mo_wrap .sub_wrap {
   position: relative;
   height: 100%;
-  padding-bottom: 80px;
 }
 
 .mo_wrap .sub_wrap .content_wrap {
@@ -129,8 +128,8 @@ header .header_title {
   left: calc(50% - 302px/2 + 0.5px);
 }
 .main_signin_form {
-  position: absolute;
-  top: 256px;
+  /* position: absolute;
+  top: 256px; */
 }
 .signin_label {
   font-family: 'Pretendard-SemiBold';
@@ -144,13 +143,17 @@ header .header_title {
 }
 
 .form_row.signin_form {
+  padding: 20px 0px;
+}
+.form_row.signin_form .signin_form_div {
   display: flex;
   flex-direction: column;
-  padding: 20px;
   width: 335px;
+  margin: 0 auto;
 }
+
 .form_row input {
-  width: 301px;
+  width: 335px;
   height: 50px;
   background: #FFFFFF;
   border-radius: 15px;
@@ -316,7 +319,10 @@ form input[type="file"] {
 
 .btn_group {
   text-align: center;
-  padding: 10px;
+  /* padding: 10px; */
+}
+.btn_group.multy {
+  display: contents;
 }
 .btn_group.multy .btn {
   width: 163px;
@@ -324,7 +330,7 @@ form input[type="file"] {
 }
 .btn.type00 {
   color: #fff;
-  width: 301px;
+  width: 335px;
   height: 50px;
   border: 1px solid #FFFFFF;
   border-radius: 15px;
@@ -336,7 +342,7 @@ form input[type="file"] {
 }
 .btn.type01 {
   color: #fff;
-  width: 301px;
+  width: 335px;
   height: 50px;
   border: none;
   background: #ff0267;
@@ -348,7 +354,7 @@ form input[type="file"] {
 }
 
 .btn.type02 {
-  width: 301px;
+  width: 335px;
   height: 50px;
   border: none;
   background: #f2f2f2;
