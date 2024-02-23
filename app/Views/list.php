@@ -28,8 +28,11 @@
     <a href="/mo/signinRegular">정회원</a>
     <a href="/mo/signinPremium">프리미엄</a>
     <a href="/mo/signinPopup">팝업화면</a>
-    <a href="/mo/menu">메인</a>
+    <a href="/mo/menu">메뉴</a>
     <a href="/mo/notice">공지사항</a>
+    <a href="/mo/notice/view">공지사항 보기</a>
+    <a href="/mo/faq">FAQ</a>
+    <a href="/mo/terms">이용약관</a>
 
 </body>
 

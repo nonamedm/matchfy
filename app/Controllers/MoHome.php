@@ -48,4 +48,16 @@ class MoHome extends BaseController
     {
         return view('mo_notice');
     }
+    public function noticeView(): string
+    {
+        return view('mo_notice_view');
+    }
+    public function faq(): string
+    {
+        return view('mo_faq');
+    }
+    public function terms(): string
+    {
+        return view('mo_terms');
+    }
 }

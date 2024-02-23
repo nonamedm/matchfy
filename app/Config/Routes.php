@@ -18,4 +18,7 @@ $routes->get('/mo/signinPremium', 'MoHome::signinPremium');
 $routes->get('/mo/signinPopup', 'MoHome::signinPopup');
 $routes->get('/mo/menu', 'MoHome::menu');
 $routes->get('/mo/notice', 'MoHome::notice');
+$routes->get('/mo/notice/view', 'MoHome::noticeView');
+$routes->get('/mo/faq', 'MoHome::faq');
+$routes->get('/mo/terms', 'MoHome::terms');
 
