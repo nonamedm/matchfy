@@ -8,14 +8,14 @@
 @font-face {
   font-family: "Pretendard-SemiBold";
   src: url("/static/font/Pretendard/Pretendard-SemiBold.woff") format("woff");
-  font-weight: 700;
+  font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Pretendard-Bold";
   src: url("/static/font/Pretendard/Pretendard-Bold.woff") format("woff");
-  font-weight: 900;
+  font-weight: 700;
   font-style: normal;
 }
 
@@ -24,6 +24,13 @@
   src: url("/static/font/Tium/TMONTium.woff") format("woff");
   font-weight: 700;
   font-style: normal;
+}
+
+/* 기본 글꼴*/
+body {
+  font-family: "Pretendard-Regular";
+  font-style: normal;
+  font-weight: 400;
 }
 
 .mo_wrap {
@@ -138,9 +145,6 @@ header .header_title {
   color: #ff0267;
 }
 .mo_wrap .sub_wrap .content_wrap .content_title p {
-  font-family: "Pretendard-Regular";
-  font-style: normal;
-  font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   letter-spacing: -0.01em;
@@ -149,6 +153,11 @@ header .header_title {
 .mo_wrap .sub_wrap .content_wrap .content_body {
   margin: 35px 0px;
   text-align: center;
+}
+.mo_wrap .sub_wrap .content_wrap .content_body.content_mypage {
+  margin: 35px 0px;
+  text-align: left;
+  display: flex;
 }
 
 .mo_wrap .sub_wrap .content_wrap .content_body .grade_box {
@@ -283,8 +292,6 @@ header .header_title {
   text-align: left;
 }
 .mo_wrap .sub_wrap .content_wrap .content_body .grade_box .grade_box_cont span {
-  font-family: "Pretendard-Regular";
-  font-style: normal;
   font-weight: 500;
   font-size: 13px;
   line-height: 18px;
@@ -357,9 +364,6 @@ header .header_title {
   background: #ffffff;
   border-radius: 15px;
   padding: 15px;
-  font-family: "Pretendard-Regular";
-  font-style: normal;
-  font-weight: 400;
   font-size: 15px;
   line-height: 18px;
   letter-spacing: -0.01em;
@@ -371,9 +375,6 @@ header .header_title {
   background: #ffffff;
   border-radius: 15px;
   padding: 15px;
-  font-family: "Pretendard-Regular";
-  font-style: normal;
-  font-weight: 400;
   font-size: 15px;
   line-height: 18px;
   letter-spacing: -0.01em;
@@ -415,9 +416,6 @@ header .header_title {
   margin-bottom: 10px;
 }
 .profile_photo_desc {
-  font-family: "Pretendard-Regular";
-  font-style: normal;
-  font-weight: 400;
   font-size: 14px;
   line-height: 17px;
   letter-spacing: -0.01em;
@@ -460,9 +458,6 @@ form input[type="file"] {
 .mo_wrap .chk_box label {
   display: block;
   padding: 1px 0 1px 30px;
-  font-family: "Pretendard-Regular";
-  font-style: normal;
-  font-weight: 400;
   font-size: 14px;
   line-height: 17px;
   letter-spacing: -0.01em;
@@ -500,9 +495,6 @@ form input[type="file"] {
   border-radius: 15px;
   border: none;
   padding: 15px;
-  font-family: "Pretendard-Regular";
-  font-style: normal;
-  font-weight: 400;
   font-size: 15px;
   line-height: 18px;
   letter-spacing: -0.01em;
@@ -513,8 +505,6 @@ form input[type="file"] {
   height: 110px;
   border: 1px solid #dddddd;
   border-radius: 10px;
-  font-family: "Pretendard-Regular";
-  font-weight: 400;
   font-size: 12px;
   line-height: 14px;
   letter-spacing: -0.01em;
@@ -696,8 +686,14 @@ select {
 .sub_wrap .content_wrap .terms_cont .terms_cont_box {
   padding: 20px;
   background-color: #FFFFFF;
-  font-family: 'Pretendard-SemiBold';
+  font-family: 'Pretendard-Regular';
   font-weight: 700;
+}
+.sub_wrap .content_wrap .terms_cont .terms_cont_box p {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.01em;
+  color: #777777;
 }
 
 /* notice*/
@@ -712,7 +708,6 @@ select {
   background: transparent;
 }
 .notice_filter p {
-  font-family: "Pretendard-Regular";
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
@@ -723,8 +718,6 @@ select {
 }
 .notice_filter select {
   border: none;
-  font-family: "Pretendard-Regular";
-  font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
@@ -741,8 +734,6 @@ select {
 .notice_wrap .attatch_file_div a {
   border: 1px solid #ff0267;
   border-radius: 5px;
-  font-family: "Pretendard-Regular";
-  font-weight: 400;
   font-size: 12px;
   line-height: 14px;
   letter-spacing: -0.01em;
@@ -764,7 +755,7 @@ select {
 }
 
 .notice_list .notice_list_label h2 {
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard-SemiBold";
   font-weight: 600;
   font-size: 16px;
   line-height: 19px;
@@ -791,8 +782,6 @@ select {
   margin-right: 10px;
 }
 .notice_list .notice_list_label p {
-  font-family: "Pretendard-Regular";
-  font-weight: 400;
   font-size: 13px;
   line-height: 16px;
   letter-spacing: -0.01em;
@@ -801,7 +790,6 @@ select {
 }
 
 .notice_list .notice_view_label h2 {
-  font-family: "Pretendard-Regular";
   font-weight: 600;
   font-size: 16px;
   line-height: 19px;
@@ -810,8 +798,6 @@ select {
   margin: 0 0 10px 0;
 }
 .notice_list .notice_view_label p {
-  font-family: "Pretendard-Regular";
-  font-weight: 400;
   font-size: 13px;
   line-height: 16px;
   letter-spacing: -0.01em;
@@ -822,8 +808,6 @@ select {
   padding: 20px;
 }
 .notice_cont p {
-  font-family: "Pretendard-Regular";
-  font-weight: 400;
   font-size: 14px;
   line-height: 20px;
   letter-spacing: -0.01em;
@@ -836,7 +820,6 @@ select {
 }
 .sub_wrap .menu_wrap .menu_title {
   margin: 35px 0px;
-  font-family: "Pretendard-Regular";
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
@@ -846,7 +829,6 @@ select {
 .sub_wrap .menu_wrap .menu_cont p {
   width: 100%;
   margin: 20px 0;
-  font-family: "Pretendard-Regular";
   font-style: normal;
   font-weight: 600;
   font-size: 16px;
@@ -860,8 +842,6 @@ select {
   width: 375px;
   height: 80px;
   background-color: #d9d9d9;
-
-  font-family: "Pretendard-Regular";
   font-weight: 300;
   font-size: 14px;
   line-height: 17px;
@@ -929,7 +909,6 @@ select {
 }
 .mo_wrap .layerPopup.alert .layerPopup_content .notice_text {
   margin: 30px 20px;
-  font-family: "Pretendard-Regular";
   font-weight: 500;
   font-size: 13px;
   line-height: 18px;
@@ -967,8 +946,6 @@ select {
 }
 
 .mo_wrap .layerPopup.alert .layerPopup_content .desc {
-  font-family: "Pretendard-Regular";
-  font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;

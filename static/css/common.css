@@ -8,14 +8,14 @@
 @font-face {
   font-family: "Pretendard-SemiBold";
   src: url("/static/font/Pretendard/Pretendard-SemiBold.woff") format("woff");
-  font-weight: 700;
+  font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Pretendard-Bold";
-  src: url("/static/font/Pretendard/Pretendard-Regular.woff") format("woff");
-  font-weight: 900;
+  src: url("/static/font/Pretendard/Pretendard-Bold.woff") format("woff");
+  font-weight: 700;
   font-style: normal;
 }
 
@@ -28,6 +28,9 @@
 
 .body {
   overflow-x: hidden;
+  font-family: "Pretendard-Regular";
+  font-style: normal;
+  font-weight: 400;
 }
 .bg_color_theme {
   background-color: #ff0267;
@@ -75,7 +78,7 @@
 }
 
 .content_chat_img h2 {
-  font-family: "Pretendard";
+  font-family: "Pretendard-Bold";
   font-style: normal;
   font-weight: 700;
   font-size: 50px;
@@ -134,7 +137,7 @@
 }
 
 .content_chat_img span {
-  font-family: "Pretendard";
+  font-family: "Pretendard-Bold";
   font-style: normal;
   font-weight: 700;
   font-size: 20px;
@@ -153,7 +156,7 @@
 }
 
 .main_bg_center_box h2 {
-  font-family: "Pretendard";
+  font-family: "Pretendard-Bold";
   font-weight: 700;
   font-size: 50px;
   line-height: 74px;
@@ -165,7 +168,7 @@
 }
 
 .content_bottom .main_bg_center_box h2 {
-  font-family: "Pretendard";
+  font-family: "Pretendard-Bold";
   font-style: normal;
   font-weight: 700;
   font-size: 40px;
@@ -177,8 +180,6 @@
   color: #ffffff;
 }
 .main_bg_center_box p {
-  font-family: "Pretendard";
-  font-weight: 400;
   font-size: 20px;
   line-height: 24px;
   letter-spacing: -0.01em;
@@ -198,7 +199,7 @@
   background: #ff0267;
   border-radius: 15px;
 
-  font-family: "Pretendard";
+  font-family: "Pretendard-Bold";
   font-weight: 700;
   font-size: 14px;
   line-height: 22px;
@@ -232,7 +233,7 @@
   width: 100%;
 }
 .main_cont_center_box h2 {
-  font-family: "Pretendard";
+  font-family: "Pretendard-Bold";
   font-weight: 700;
   font-size: 50px;
   line-height: 62px;
@@ -242,7 +243,7 @@
   color: #000;
 }
 .main_cont_center_box h3 {
-  font-family: "Pretendard";
+  font-family: "Pretendard-Bold";
   font-weight: 700;
   font-size: 24px;
   line-height: 29px;
@@ -252,8 +253,6 @@
   color: #ff0267;
 }
 .main_cont_center_box p {
-  font-family: "Pretendard";
-  font-weight: 400;
   font-size: 20px;
   line-height: 30px;
   letter-spacing: -0.07em;
@@ -305,7 +304,7 @@
   text-align: left;
 }
 .footer_link {
-  font-family: "Pretendard";
+  font-family: "Pretendard-Bold";
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -322,7 +321,7 @@
 }
 
 .footer_info {
-  font-family: "Pretendard";
+  font-family: "Pretendard-SemiBold";
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
