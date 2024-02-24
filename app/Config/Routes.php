@@ -21,4 +21,17 @@ $routes->get('/mo/notice', 'MoHome::notice');
 $routes->get('/mo/notice/view', 'MoHome::noticeView');
 $routes->get('/mo/faq', 'MoHome::faq');
 $routes->get('/mo/terms', 'MoHome::terms');
+$routes->get('/mo/mypage', 'MoHome::mypage');
+$routes->get('/mo/mymsg/ai', 'MoHome::mymsgAi');
+$routes->get('/mo/mymsg', 'MoHome::mymsg');
+$routes->get('/mo/mymsg/list', 'MoHome::mymsgList');
+$routes->get('/mo/mymsg/menu', 'MoHome::mymsgMenu');
+$routes->get('/mo/mymsg/ai/profilePopup', 'MoHome::mymsgAiProfilePopup');
+$routes->get('/mo/mymsg/match/reviewPopup', 'MoHome::mymsgMatchReviewPopup');
+$routes->get('/mo/mymsg/memberPopup', 'MoHome::mymsgMemberPopup');
+$routes->get('/mo/reportPopup', 'MoHome::reportPopup');
+$routes->get('/mo/schedulePopup', 'MoHome::schedulePopup');
+$routes->get('/mo/schDepositPopup', 'MoHome::schDepositPopup');
+$routes->get('/mo/invite', 'MoHome::invite');
+$routes->get('/mo/invitePopup', 'MoHome::invitePopup');
 

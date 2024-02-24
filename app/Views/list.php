@@ -18,21 +18,38 @@
 <body>
 
     <!-- HEADER: MENU + HEROE SECTION -->
-    <a href="/index">메인</a>
-    <a href="/mo">모바일메인</a>
-    <a href="/mo/pass">인증</a>
-    <a href="/mo/agree">동의</a></a>
-    <a href="/mo/signin">회원가입</a>
-    <a href="/mo/signinType">가입유형</a>
-    <a href="/mo/signinSuccess">가입성공</a>
-    <a href="/mo/signinRegular">정회원</a>
-    <a href="/mo/signinPremium">프리미엄</a>
-    <a href="/mo/signinPopup">팝업화면</a>
-    <a href="/mo/menu">메뉴</a>
-    <a href="/mo/notice">공지사항</a>
-    <a href="/mo/notice/view">공지사항 보기</a>
-    <a href="/mo/faq">FAQ</a>
-    <a href="/mo/terms">이용약관</a>
+    <a href="/index">메인</a><br/>
+    <a href="/mo">모바일메인</a><br/>
+    <a href="/mo/pass">인증</a><br/>
+    <a href="/mo/agree">동의</a></a><br/>
+    <a href="/mo/signin">회원가입</a><br/><br/>
+
+    <a href="/mo/signinType">가입유형</a><br/>
+    <a href="/mo/signinSuccess">가입성공</a><br/>
+    <a href="/mo/signinRegular">정회원</a><br/>
+    <a href="/mo/signinPremium">프리미엄</a><br/>
+    <a href="/mo/signinPopup">팝업화면</a><br/><br/>
+
+    <a href="/mo/menu">메뉴</a><br/>
+    <a href="/mo/notice">공지사항</a><br/>
+    <a href="/mo/notice/view">공지사항 보기</a><br/>
+    <a href="/mo/faq">FAQ</a><br/>
+    <a href="/mo/terms">이용약관</a><br/><br/>
+
+    <a href="/mo/mypage">마이페이지</a><br/>
+    <a href="/mo/mymsg">마이메세지</a><br/>
+    <a href="/mo/mymsg/list">마이메세지함</a><br/>
+    <a href="/mo/mymsg/menu">마이메세지 메뉴</a><br/>
+    <a href="/mo/mymsg/memberPopup">단톡방멤버 팝업</a><br/>
+    <a href="/mo/mymsg/ai">AI메세지</a><br/><br/>
+
+    <a href="/mo/mymsg/ai/profilePopup">AI프로필 팝업</a><br/>
+    <a href="/mo/mymsg/match/reviewPopup">매치리뷰 팝업</a><br/>
+    <a href="/mo/reportPopup">신고 팝업</a><br/>
+    <a href="/mo/schedulePopup">약속 팝업</a><br/>
+    <a href="/mo/schDepositPopup">예약금송금 팝업</a><br/>
+    <a href="/mo/invite">친구초대</a><br/>
+    <a href="/mo/invitePopup">친구초대 팝업</a><br/>
 
 </body>
 
