@@ -112,4 +112,28 @@ class MoHome extends BaseController
     {
         return view('mo_invite_popup');
     }
+    public function mypageWallet(): string
+    {
+        return view('mo_mypage_wallet');
+    }
+    public function mypageWallet2(): string
+    {
+        return view('mo_mypage_wallet2');
+    }
+    public function mypageWalletCharge(): string
+    {
+        return view('mo_mypage_wallet_charge');
+    }
+    public function mypageGroupList(): string
+    {
+        return view('mo_mypage_group_list');
+    }
+    public function mypageGroupSearchList(): string
+    {
+        return view('mo_mypage_group_search_list');
+    }
+    public function mypageGroupDetail(): string
+    {
+        return view('mo_mypage_group_detail');
+    }
 }

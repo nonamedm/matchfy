@@ -34,4 +34,10 @@ $routes->get('/mo/schedulePopup', 'MoHome::schedulePopup');
 $routes->get('/mo/schDepositPopup', 'MoHome::schDepositPopup');
 $routes->get('/mo/invite', 'MoHome::invite');
 $routes->get('/mo/invitePopup', 'MoHome::invitePopup');
+$routes->get('/mo/mypage/wallet', 'MoHome::mypageWallet');
+$routes->get('/mo/mypage/wallet2', 'MoHome::mypageWallet2');
+$routes->get('/mo/mypage/wallet/charge', 'MoHome::mypageWalletCharge');
+$routes->get('/mo/mypage/group/list', 'MoHome::mypageGroupList');
+$routes->get('/mo/mypage/group/searchList', 'MoHome::mypageGroupSearchList');
+$routes->get('/mo/mypage/group/detail', 'MoHome::mypageGroupDetail');
 
