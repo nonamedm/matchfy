@@ -111,7 +111,7 @@
                     </div>  -->
                     <hr class="hoz_part" />
                     <div class="chat_input_box">
-                        <div style="padding:20px 15px;">
+                        <div style="padding:20px 8px;">
                             <img src="/static/images/hamberger_cancel.png" />
                         </div>
                         <div class="message_input_box_border">
@@ -128,7 +128,7 @@
                             <p>약속</p>
                         </div>
                         <div class="chat_menu_func"><img src="/static/images/chat_banking.png">
-                            <p>예약금<br/>송금</p>
+                            <p>예약금<br />송금</p>
                         </div>
                         <div class="chat_menu_func"><img src="/static/images/chat_quit.png">
                             <p>방나가기</p>
@@ -137,7 +137,7 @@
                             <p>신고/강퇴</p>
                         </div>
                         <div class="chat_menu_func"><img src="/static/images/chat_call.png">
-                            <p>안심번호<br/> 통화하기</p>
+                            <p>안심번호<br /> 통화하기</p>
                         </div>
                     </div>
                 </div>

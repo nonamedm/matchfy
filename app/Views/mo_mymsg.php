@@ -34,7 +34,7 @@
         <div class="sub_wrap">
             <div class="tab_wrap">
                 <ul>
-                    <li >
+                    <li>
                         AI 메시지
                     </li>
                     <li class="on">
@@ -80,7 +80,7 @@
                                 </p>
                             </div>
                             <div class="send_msg_area">
-                                <p>7시에 강남역에서 봐요<br/>맛있는거 먹어요</p>
+                                <p>7시에 강남역에서 봐요<br />맛있는거 먹어요</p>
                             </div>
                         </div>
                     </div>
@@ -109,10 +109,10 @@
                         <button type="button" class="btn type04">거절</button>
                         <button type="button" class="btn type05">보류</button>
                     </div>  -->
-                    <hr class="hoz_part"/>
+                    <hr class="hoz_part" />
                     <div class="chat_input_box">
-                        <div style="padding:20px 15px;">
-                            <img src="/static/images/hamberger_menu.png"/>
+                        <div style="padding:20px 8px;">
+                            <img src="/static/images/hamberger_menu.png" />
                         </div>
                         <div class="message_input_box_border">
                             <textarea type="text" placeholder="메세지를 입력하세요"></textarea>

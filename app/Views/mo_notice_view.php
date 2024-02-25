@@ -34,9 +34,6 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="notice_wrap">
-                    <div class="notice_filter no_bg">
-                        
-                    </div>
                     <div class="notice_list">
                         <div class="notice_view_label">
                             <div>
