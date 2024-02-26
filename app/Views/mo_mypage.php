@@ -121,7 +121,9 @@
                     </ul>
                 </div>
             </div>
-            <footer class="footer">
+            <div style="height: 50px;"></div>
+<footer class="footer">
+                
                 <button class="content_mypage_logout">로그아웃</button>
             </footer>
         </div>

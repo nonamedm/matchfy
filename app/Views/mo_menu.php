@@ -19,15 +19,15 @@
         <header>
 
             <div class="menu">
-            <ul>
-                <li class="left_arrow">
-                    <img src="/static/images/left_arrow.png"/>
-                </li>
-                <li class="header_title">
-                    전체 메뉴
-                </li>
-            </ul>
-        </div>
+                <ul>
+                    <li class="left_arrow">
+                        <img src="/static/images/left_arrow.png" />
+                    </li>
+                    <li class="header_title">
+                        전체 메뉴
+                    </li>
+                </ul>
+            </div>
 
         </header>
 
@@ -45,7 +45,7 @@
                         <p>제휴 신청</p>
                     </div>
                 </div>
-                <hr class="hoz_part"/>
+                <hr class="hoz_part" />
                 <div class="menu_wrap">
                     <div class="menu_title">
                         <span>고객센터</span>
@@ -59,9 +59,11 @@
                 </div>
             </div>
             <div class="commerce_banner">광고 배너 영역</div>
-            <footer class="footer">
+            <div style="height: 50px;"></div>
+<footer class="footer">
                 
-    
+
+
             </footer>
         </div>
 

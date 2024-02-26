@@ -64,7 +64,9 @@
                     </div>
                 </form>
 
-                <footer class="footer">
+                <div style="height: 50px;"></div>
+<footer class="footer">
+                    
                     <div class="btn_group">
                         <button type="button" class="btn type01">다음</button>
                     </div>

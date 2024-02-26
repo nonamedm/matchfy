@@ -1,0 +1,38 @@
+CRITICAL - 2024-02-26 13:24:08 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "mo_alertPopup.php"
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(216): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('mo_alertPopup.php')
+ 2 SYSTEMPATH\Common.php(1178): CodeIgniter\View\View->render('mo_alertPopup', [], true)
+ 3 APPPATH\Controllers\MoHome.php(193): view('mo_alertPopup')
+ 4 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\MoHome->alertPopup()
+ 5 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MoHome))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\Users\\pyo com\\Desktop\\매치파이\\www\\index.php')
+CRITICAL - 2024-02-26 13:24:10 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "mo_alertPopup.php"
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(216): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('mo_alertPopup.php')
+ 2 SYSTEMPATH\Common.php(1178): CodeIgniter\View\View->render('mo_alertPopup', [], true)
+ 3 APPPATH\Controllers\MoHome.php(193): view('mo_alertPopup')
+ 4 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\MoHome->alertPopup()
+ 5 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MoHome))
+ 6 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\Users\\pyo com\\Desktop\\매치파이\\www\\index.php')
+CRITICAL - 2024-02-26 14:26:14 --> Error: Call to a member function library() on null
+in APPPATH\Views\mo_alliance_detail.php on line 62.
+ 1 SYSTEMPATH\View\View.php(228): include()
+ 2 SYSTEMPATH\View\View.php(231): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 3 SYSTEMPATH\Common.php(1178): CodeIgniter\View\View->render('mo_alliance_detail', [], true)
+ 4 APPPATH\Controllers\MoHome.php(205): view('mo_alliance_detail')
+ 5 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\MoHome->allianceDetail()
+ 6 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MoHome))
+ 7 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\Users\\pyo com\\Desktop\\매치파이\\www\\index.php')
+CRITICAL - 2024-02-26 14:34:30 --> Error: Call to a member function library() on null
+in APPPATH\Controllers\MoHome.php on line 205.
+ 1 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\MoHome->allianceDetail()
+ 2 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MoHome))
+ 3 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\Users\\pyo com\\Desktop\\매치파이\\www\\index.php')

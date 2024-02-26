@@ -184,4 +184,24 @@ class MoHome extends BaseController
     {
         return view('mo_myfeed_view');
     }
+    public function myfeedViewProfile(): string
+    {
+        return view('mo_myfeed_view_profile');
+    }
+    public function alertPopup(): string
+    {
+        return view('mo_alert_popup');
+    }
+    public function allianceList(): string
+    {
+        return view('mo_alliance_list');
+    }
+    public function allianceRegionPopup(): string
+    {
+        return view('mo_alliance_region_popup');
+    }
+    public function allianceDetail(): string
+    {
+        return view('mo_alliance_detail');
+    }
 }

@@ -19,27 +19,27 @@
         <header>
 
             <div class="menu">
-            <ul>
-                <li class="left_arrow">
-                    <img src="/static/images/left_arrow.png"/>
-                </li>
-                <li class="header_title">
-                    프리미엄 프로필
-                </li>
-            </ul>
-        </div>
+                <ul>
+                    <li class="left_arrow">
+                        <img src="/static/images/left_arrow.png" />
+                    </li>
+                    <li class="header_title">
+                        프리미엄 프로필
+                    </li>
+                </ul>
+            </div>
 
         </header>
 
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="content_body">
-                    <img src="/static/images/profile_noimg.png"/>
+                    <img src="/static/images/profile_noimg.png" />
                 </div>
                 <div class="btn_group">
                     <button type="button" class="btn type02">프로필 사진수정</button>
                 </div>
-                <form class="main_signin_form">                    
+                <form class="main_signin_form">
                     <legend></legend>
                     <div class="">
 
@@ -201,8 +201,8 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div input_btn">
                                 <label for="religion" class="signin_label">소득구간</label>
-                                <p class="profile_photo_desc">소득금액증명을 업로드해주세요!    <a href="#"> [정부24가기 →]</a></p>
-                                
+                                <p class="profile_photo_desc">소득금액증명을 업로드해주세요! <a href="#"> [정부24가기 →]</a></p>
+
                                 <div class="input_btn">
                                     <select id="religion" class="custom_select" value="">
                                         <option>선택</option>
@@ -302,7 +302,7 @@
                         </div>
                         <div class="btn_group">
                             <button type="button" class="btn type01">가입</button>
-                        </div>                        
+                        </div>
                     </div>
                 </form>
             </div>
@@ -312,7 +312,9 @@
 
 
 
-        <footer class="footer">
+        <div style="height: 50px;"></div>
+<footer class="footer">
+            
             <!-- <div class="footer_logo mb40">
                 matchfy
             </div>

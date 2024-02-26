@@ -216,7 +216,9 @@
                 </div>
                 <hr class="hoz_part" />
             </div>
-            <footer class="footer">
+            <div style="height: 50px;"></div>
+<footer class="footer">
+                
 
             </footer>
         </div>

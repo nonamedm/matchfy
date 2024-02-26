@@ -28,7 +28,9 @@
                     </div>
                 </div>
             </div>
-            <footer class="footer">
+            <div style="height: 50px;"></div>
+<footer class="footer">
+                
                 <div class="btn_group">
                     <button type="button" class="btn type01">메인화면으로 이동</button>
                 </div>

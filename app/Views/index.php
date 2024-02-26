@@ -370,7 +370,9 @@
 
     <!-- FOOTER: DEBUG INFO + COPYRIGHTS -->
 
-    <footer class="footer">
+    <div style="height: 50px;"></div>
+<footer class="footer">
+        
 
         <div class="footer_logo mb40">
             matchfy

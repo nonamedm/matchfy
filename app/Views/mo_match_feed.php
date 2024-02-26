@@ -38,7 +38,8 @@
                         <img class="profile_img" src="/static/images/mypage_pfofile.png" />
                         <div class="content_mypage_info">
                             <div class="profile">
-                                <h2>장원영<span style="font-size:15px;"> 님</span></h2><span class="match_percent">99%</span>
+                                <h2>장원영<span style="font-size:15px;"> 님</span></h2><span
+                                    class="match_percent">99%</span>
                             </div>
                             <p>96 · 서울 강남 · ESTJ</p>
                         </div>
@@ -50,13 +51,14 @@
                         <img src="/static/images/feed_img_1.png" />
                     </div>
                 </div>
-                <hr class="hoz_part"/>
+                <hr class="hoz_part" />
                 <div class="contetn_feed_list">
                     <div class="content_mypage recieve_profile">
                         <img class="profile_img" src="/static/images/mypage_pfofile_1.png" />
                         <div class="content_mypage_info">
                             <div class="profile">
-                                <h2>김제니<span style="font-size:15px;"> 님</span></h2><span class="match_percent">99%</span>
+                                <h2>김제니<span style="font-size:15px;"> 님</span></h2><span
+                                    class="match_percent">99%</span>
                             </div>
                             <p>96 · 서울 강남 · ESTJ</p>
                         </div>
@@ -68,13 +70,14 @@
                         <img src="/static/images/feed_img_2.png" />
                     </div>
                 </div>
-                <hr class="hoz_part"/>
+                <hr class="hoz_part" />
                 <div class="contetn_feed_list">
                     <div class="content_mypage recieve_profile">
                         <img class="profile_img" src="/static/images/mypage_pfofile_2.png" />
                         <div class="content_mypage_info">
                             <div class="profile">
-                                <h2>임윤아<span style="font-size:15px;"> 님</span></h2><span class="match_percent">99%</span>
+                                <h2>임윤아<span style="font-size:15px;"> 님</span></h2><span
+                                    class="match_percent">99%</span>
                             </div>
                             <p>96 · 서울 강남 · ESTJ</p>
                         </div>
@@ -86,9 +89,11 @@
                         <img src="/static/images/feed_img_3.png" />
                     </div>
                 </div>
-                <hr class="hoz_part"/>
+                <hr class="hoz_part" />
             </div>
-            <footer class="footer">
+            <div style="height: 50px;"></div>
+<footer class="footer">
+                
 
                 <!-- <div class="message_input_box">
                 </div> -->

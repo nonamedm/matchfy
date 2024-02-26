@@ -91,7 +91,9 @@
                     </form>
                 </div>
             </div>
-            <footer class="footer">
+            <div style="height: 50px;"></div>
+<footer class="footer">
+
                 <div class="pay_agree_desc">
                     <div class="chk_box">
                         <input type="checkbox" id="agree01" name="chkDefault00" checked="">

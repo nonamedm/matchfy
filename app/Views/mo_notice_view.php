@@ -19,15 +19,15 @@
         <header>
 
             <div class="menu">
-            <ul>
-                <li class="left_arrow">
-                    <img src="/static/images/left_arrow.png"/>
-                </li>
-                <li class="header_title">
-                    공지사항
-                </li>
-            </ul>
-        </div>
+                <ul>
+                    <li class="left_arrow">
+                        <img src="/static/images/left_arrow.png" />
+                    </li>
+                    <li class="header_title">
+                        공지사항
+                    </li>
+                </ul>
+            </div>
 
         </header>
 
@@ -46,7 +46,7 @@
                     <div class="notice_cont">
                         <p>서비스 이용 시 도움이 필요하신 분들은 문의 주시기 바랍니다.</p>
                         <p>문의 안내: 02-111-1111</p>
-    
+
                     </div>
                     <hr class="hoz_part">
                     <div class="attatch_file_div">
@@ -55,10 +55,12 @@
                     </div>
                 </div>
             </div>
-            <footer class="footer">
+            <div style="height: 50px;"></div>
+<footer class="footer">
+                
                 <div class="btn_group">
                     <button type="button" class="btn type01">목록으로</button>
-                </div>    
+                </div>
             </footer>
         </div>
 
@@ -66,7 +68,9 @@
 
 
 
-        <footer class="footer">
+        <div style="height: 50px;"></div>
+<footer class="footer">
+            
             <!-- <div class="footer_logo mb40">
                 matchfy
             </div>

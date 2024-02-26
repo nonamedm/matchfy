@@ -71,8 +71,8 @@
                         <div class="grade_box_cont">
                             <p>기본정보 + 추가정보</p>
                             <span>결혼유무 / 흡연유무 / 음주회수(주) / 종교 /</span><br />
-                                <span>MBTI/키/ 스타일 / 학력 / 학교명 / 전공 /</span><br />
-                                <span>직업/ 자산구간 / 소득구간</span>
+                            <span>MBTI/키/ 스타일 / 학력 / 학교명 / 전공 /</span><br />
+                            <span>직업/ 자산구간 / 소득구간</span>
                         </div>
                     </div>
                     <div class="grade_box">
@@ -93,28 +93,30 @@
                         </div>
                         <div class="grade_box_cont">
                             <p>기본정보 + 추가정보 인증</p>
-                            <span>추가 정보 중</span><br/>
+                            <span>추가 정보 중</span><br />
                             <span>확인 가능한 정보 인증 </span>
                         </div>
                     </div>
                 </div>
-                <form class="main_signin_form">                    
-                        <div class="btn_group multy">
-                            <button type="button" class="btn type02">취소</button>
-                            <button type="button" class="btn type01">다음</button>
-                        </div>
-
+                <form class="main_signin_form">
+                    <div class="btn_group multy">
+                        <button type="button" class="btn type02">취소</button>
+                        <button type="button" class="btn type01">다음</button>
                     </div>
-                </form>
+
             </div>
+            </form>
         </div>
+    </div>
 
 
 
 
 
-        <footer class="footer">
-            <!-- <div class="footer_logo mb40">
+    <div style="height: 50px;"></div>
+<footer class="footer">
+        
+        <!-- <div class="footer_logo mb40">
                 matchfy
             </div>
             <div class="footer_link mb40">
@@ -131,7 +133,7 @@
                 COPYRIGHT 2023. ALL RIGHTS RESERVED.
             </div> -->
 
-        </footer>
+    </footer>
     </div>
 
 

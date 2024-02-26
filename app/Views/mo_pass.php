@@ -19,15 +19,15 @@
         <header>
 
             <div class="menu">
-            <ul>
-                <li class="left_arrow">
-                    <img src="/static/images/left_arrow.png"/>
-                </li>
-                <li class="header_title">
-                    휴대폰 본인인증
-                </li>
-            </ul>
-        </div>
+                <ul>
+                    <li class="left_arrow">
+                        <img src="/static/images/left_arrow.png" />
+                    </li>
+                    <li class="header_title">
+                        휴대폰 본인인증
+                    </li>
+                </ul>
+            </div>
 
         </header>
 
@@ -38,7 +38,7 @@
                     <p>원활한 서비스 이용을 위해 휴대전화 본인인증이 필요합니다. </p>
                 </div>
                 <div class="content_body">
-                    <img src="/static/images/pass_phone_img.png"/>
+                    <img src="/static/images/pass_phone_img.png" />
                 </div>
                 <div class="btn_group">
                     <button type="button" class="btn type01">휴대폰 본인인증</button>
@@ -50,7 +50,9 @@
 
 
 
-        <footer class="footer">
+        <div style="height: 50px;"></div>
+<footer class="footer">
+            
             <!-- <div class="footer_logo mb40">
                 matchfy
             </div>

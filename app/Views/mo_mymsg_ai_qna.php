@@ -65,7 +65,9 @@
                     </div>
                 </div>
             </div>
-            <footer class="footer">
+            <div style="height: 50px;"></div>
+<footer class="footer">
+                
                 <div class="btn_group multy ai_qna">
                     <button type="button" class="btn on">아주 좋아</button>
                     <button type="button" class="btn">좋아</button>

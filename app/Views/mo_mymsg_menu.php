@@ -102,7 +102,9 @@
                     </div>
                 </div>
             </div>
-            <footer class="footer">
+            <div style="height: 50px;"></div>
+<footer class="footer">
+                
                 <div class="message_input_box message_input_box_on">
                     <!-- <div class="btn_group multy ai_date_check">
                         <button type="button" class="btn type01">수락</button>

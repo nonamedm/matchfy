@@ -19,18 +19,18 @@
         <header>
 
             <div class="menu">
-            <ul>
-               
-                <li class="header_title">
-                    친구 초대
-                </li>
-            </ul>
-        </div>
+                <ul>
+
+                    <li class="header_title">
+                        친구 초대
+                    </li>
+                </ul>
+            </div>
 
         </header>
 
         <div class="sub_wrap">
-            <div class="content_wrap">                
+            <div class="content_wrap">
                 <div class="invite_wrap">
                     <div class="invite_img">
                         <img src="/static/images/invite_img.png" />
@@ -38,12 +38,14 @@
                     <div class="invite_code">
                         <a>
                             <h2>ZH5XVWUQS</h2>
-                            <p><img src="/static/images/ico_copy_14x14.png"/>초대링크 복사하기</p>
+                            <p><img src="/static/images/ico_copy_14x14.png" />초대링크 복사하기</p>
                         </a>
                     </div>
                 </div>
             </div>
-            <footer class="footer">
+            <div style="height: 50px;"></div>
+<footer class="footer">
+                
                 <div class="btn_group invite">
                     <button type="button" class="btn type01">친구에게 공유하기</button>
                 </div>
@@ -63,7 +65,7 @@
                 <div class="footer_copy">
                     COPYRIGHT 2023. ALL RIGHTS RESERVED.
                 </div> -->
-    
+
             </footer>
         </div>
 

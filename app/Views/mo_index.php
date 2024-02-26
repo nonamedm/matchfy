@@ -43,7 +43,7 @@
                 <div class="main_logo">
                     matchfy
                 </div>
-                <form class="main_login_form">                    
+                <form class="main_login_form">
                     <legend></legend>
                     <div class="login_box">
                         <div class="form_row" style="text-align:center;">
@@ -57,7 +57,7 @@
                         <div class="btn_group">
                             <button type="button" style="width: 301px;" class="btn type01">로그인</button>
                         </div>
-                        <img src="/static/images/main_login_hr.png" style="margin: 40px 0px 30px 0px;"/>
+                        <img src="/static/images/main_login_hr.png" style="margin: 40px 0px 30px 0px;" />
                         <div class="btn_group">
                             <button type="button" style="width: 301px;" class="btn type00">휴대폰 번호로 회원가입</button>
                         </div>
@@ -73,7 +73,9 @@
 
 
 
-        <footer class="footer">
+        <div style="height: 50px;"></div>
+<footer class="footer">
+            
             <!-- <div class="footer_logo mb40">
                 matchfy
             </div>

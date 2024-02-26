@@ -19,46 +19,50 @@
         <header>
 
             <div class="menu">
-            <ul>
-                <li class="left_arrow">
-                    <img src="/static/images/left_arrow.png"/>
-                </li>
-                <li class="header_title">
-                    FAQ
-                </li>
-            </ul>
-        </div>
+                <ul>
+                    <li class="left_arrow">
+                        <img src="/static/images/left_arrow.png" />
+                    </li>
+                    <li class="header_title">
+                        FAQ
+                    </li>
+                </ul>
+            </div>
 
         </header>
 
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="notice_filter no_bg">
-                    
+
                 </div>
                 <div class="notice_wrap">
-                    
+
                     <div class="notice_list">
                         <div class="notice_list_label">
                             <div>
                                 <h2><span class="question">Q</span>자주묻는질문 01</h2>
                             </div>
                             <div>
-                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999"
+                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                            </div>    
+                            </div>
                         </div>
                     </div>
-                    <hr class="hoz_part"/>
+                    <hr class="hoz_part" />
                     <div class="notice_list">
                         <div class="notice_list_label">
                             <div>
                                 <h2><span class="question">Q</span>자주묻는질문 02</h2>
                             </div>
                             <div>
-                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12.6569 9.34315L7 3.68629L1.34315 9.34315" stroke="#999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.6569 9.34315L7 3.68629L1.34315 9.34315" stroke="#999999"
+                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                             </div>
                         </div>
@@ -74,85 +78,97 @@
                             </div>
                         </div>
                     </div>
-                    <hr class="hoz_part"/>
+                    <hr class="hoz_part" />
                     <div class="notice_list">
                         <div class="notice_list_label">
                             <div>
                                 <h2><span class="question">Q</span>자주묻는질문 01</h2>
                             </div>
                             <div>
-                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999"
+                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                            </div>    
+                            </div>
                         </div>
                     </div>
-                    <hr class="hoz_part"/>
+                    <hr class="hoz_part" />
                     <div class="notice_list">
                         <div class="notice_list_label">
                             <div>
                                 <h2><span class="question">Q</span>자주묻는질문 01</h2>
                             </div>
                             <div>
-                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999"
+                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                            </div>    
+                            </div>
                         </div>
                     </div>
-                    <hr class="hoz_part"/>
+                    <hr class="hoz_part" />
                     <div class="notice_list">
                         <div class="notice_list_label">
                             <div>
                                 <h2><span class="question">Q</span>자주묻는질문 01</h2>
                             </div>
                             <div>
-                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999"
+                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                            </div>    
+                            </div>
                         </div>
                     </div>
-                    <hr class="hoz_part"/>
+                    <hr class="hoz_part" />
                     <div class="notice_list">
                         <div class="notice_list_label">
                             <div>
                                 <h2><span class="question">Q</span>자주묻는질문 01</h2>
                             </div>
                             <div>
-                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999"
+                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                            </div>    
+                            </div>
                         </div>
                     </div>
-                    <hr class="hoz_part"/>
+                    <hr class="hoz_part" />
                     <div class="notice_list">
                         <div class="notice_list_label">
                             <div>
                                 <h2><span class="question">Q</span>자주묻는질문 01</h2>
                             </div>
                             <div>
-                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999"
+                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                            </div>    
+                            </div>
                         </div>
                     </div>
-                    <hr class="hoz_part"/>
+                    <hr class="hoz_part" />
                     <div class="notice_list">
                         <div class="notice_list_label">
                             <div>
                                 <h2><span class="question">Q</span>자주묻는질문 01</h2>
                             </div>
                             <div>
-                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999"
+                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                            </div>    
+                            </div>
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
 
@@ -160,7 +176,9 @@
 
 
 
-        <footer class="footer">
+        <div style="height: 50px;"></div>
+<footer class="footer">
+            
             <!-- <div class="footer_logo mb40">
                 matchfy
             </div>

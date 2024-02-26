@@ -76,7 +76,9 @@
                     </form>
                 </div>
             </div>
-            <footer class="footer">
+            <div style="height: 50px;"></div>
+<footer class="footer">
+                
 
                 <!-- <div class="message_input_box">
                 </div> -->
