@@ -50,4 +50,6 @@ $routes->get('/mo/mymsg/ai/qna', 'MoHome::mymsgAiQna');
 $routes->get('/mo/myfeed', 'MoHome::myfeed');
 $routes->get('/mo/myfeed/detail', 'MoHome::myfeedDetail');
 $routes->get('/mo/myfeed/edit', 'MoHome::myfeedEdit');
+$routes->get('/mo/matchFeed', 'MoHome::matchFeed');
+$routes->get('/mo/myfeed/view', 'MoHome::myfeedView');
 

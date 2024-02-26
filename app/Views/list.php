@@ -67,7 +67,10 @@
     <a href="/mo/mymsg/ai/qna">AI문답</a><br />
     <a href="/mo/myfeed">내피드</a><br />
     <a href="/mo/myfeed/detail">피드상세</a><br />
-    <a href="/mo/myfeed/edit">피드수정</a><br />
+    <a href="/mo/myfeed/edit">피드수정</a><br /><br />
+
+    <a href="/mo/matchFeed">매치피드</a><br />
+    <a href="/mo/myfeed/view">피드보기</a><br />
 </body>
 
 </html>

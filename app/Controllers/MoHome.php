@@ -176,4 +176,12 @@ class MoHome extends BaseController
     {
         return view('mo_myfeed_edit');
     }
+    public function matchFeed(): string
+    {
+        return view('mo_match_feed');
+    }
+    public function myfeedView(): string
+    {
+        return view('mo_myfeed_view');
+    }
 }
