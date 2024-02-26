@@ -20,7 +20,7 @@
     <!-- HEADER: MENU + HEROE SECTION -->
     <a href="/index">메인</a><br />
     <a href="/mo">모바일메인</a><br />
-    <a href="/mo/pass">인증</a><br />
+    <a href="/mo/pass">본인인증</a><br />
     <a href="/mo/agree">동의</a></a><br />
     <a href="/mo/signin">회원가입</a><br /><br />
 
@@ -28,7 +28,7 @@
     <a href="/mo/signinSuccess">가입성공</a><br />
     <a href="/mo/signinRegular">정회원</a><br />
     <a href="/mo/signinPremium">프리미엄</a><br />
-    <a href="/mo/signinPopup">팝업화면</a><br /><br />
+    <a href="/mo/signinPopup">인증 팝업화면</a><br /><br />
 
     <a href="/mo/menu">메뉴</a><br />
     <a href="/mo/notice">공지사항</a><br />
@@ -57,6 +57,20 @@
     <a href="/mo/mypage/group/list">매칭모임</a><br />
     <a href="/mo/mypage/group/searchList">매칭모임 검색</a><br />
     <a href="/mo/mypage/group/detail">매칭모임 상세</a><br />
+    <a href="/mo/mypage/group/partcntPopup">매칭모임 참가자 팝업</a><br />
+    <a href="/mo/mypage/group/applyPopup">매칭모임 참가신청 팝업</a><br /><br />
+
+    <a href="/mo/mypage/group/create">모임등록</a><br />
+    <a href="/mo/mypage/mygroup/list">내 모임 리스트</a><br />
+    <a href="/mo/mypage/mygroup/list/edit">내 모임 리스트 편집</a><br />
+    <a href="/mo/mypage/group/searchPopup">모임 검색 팝업</a><br />
+    <a href="/mo/mymsg/ai/qna">AI문답</a><br />
+    <a href="/mo/myfeed">내피드</a><br />
+    <a href="/mo/myfeed/detail">피드상세</a><br />
+    <a href="/mo/myfeed/edit">피드수정</a><br /><br/>
+    
+    <a href="/mo/matchFeed">매치피드</a><br />
+    <a href="/mo/myfeed/view">피드보기</a><br />
 </body>
 
 </html>

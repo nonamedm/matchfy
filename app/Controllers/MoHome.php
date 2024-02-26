@@ -136,4 +136,52 @@ class MoHome extends BaseController
     {
         return view('mo_mypage_group_detail');
     }
+    public function mypageGroupPartcntPopup(): string
+    {
+        return view('mo_mypage_group_partcnt_popup');
+    }
+    public function mypageGroupApplyPopup(): string
+    {
+        return view('mo_mypage_group_apply_popup');
+    }
+    public function mypageGroupCreate(): string
+    {
+        return view('mo_mypage_group_create');
+    }
+    public function mypageMygroupList(): string
+    {
+        return view('mo_mypage_mygroup_list');
+    }
+    public function mypageMygroupListEdit(): string
+    {
+        return view('mo_mypage_mygroup_list_edit');
+    }
+    public function mypageGroupSearchPopup(): string
+    {
+        return view('mo_mypage_group_search_popup');
+    }
+    public function mymsgAiQna(): string
+    {
+        return view('mo_mymsg_ai_qna');
+    }
+    public function myfeed(): string
+    {
+        return view('mo_myfeed');
+    }
+    public function myfeedDetail(): string
+    {
+        return view('mo_myfeed_detail');
+    }
+    public function myfeedEdit(): string
+    {
+        return view('mo_myfeed_edit');
+    }
+    public function matchFeed(): string
+    {
+        return view('mo_match_feed');
+    }
+    public function myfeedView(): string
+    {
+        return view('mo_myfeed_view');
+    }
 }

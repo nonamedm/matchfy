@@ -175,6 +175,7 @@ header .menu_right.edit {
     display: flex;
     justify-content: space-around;
     padding: 0;
+    margin: 0;
 }
 
 .tab_wrap ul li.on {
@@ -1800,6 +1801,7 @@ input[type='number']::-webkit-inner-spin-button {
 }
 .content_wrap .content_mypage .profile_img {
     width: 60px;
+    border-radius: 50%;
 }
 .content_wrap .content_mypage {
     display: flex;
@@ -1838,6 +1840,33 @@ input[type='number']::-webkit-inner-spin-button {
     color: #ffffff;
     margin-left: 30px;
 }
+
+
+/* feed list */
+.feed_img_box img {
+    width: 335px;
+    height: 335px;
+    border-radius: 3px;
+}
+.sns_img_filter {
+    width: 335px;
+    height: 16px;
+    background: #FFECF0;
+    border-radius: 5px;
+    margin: 10px 0 ;
+    padding: 7px 0;
+    text-align: center;
+}
+.sns_img_filter p {
+    font-size: 13px;
+    line-height: 16px;
+    color: #333333;
+    margin: 0;
+}
+
+
+
+
 
 /* popup */
 .mo_wrap .layerPopup .layerPopup_wrap {
