@@ -32,17 +32,17 @@
         </header>
 
         <div class="sub_wrap">
-            <div class="tab_wrap">
-                <ul>
-                    <li>
-                        AI 메시지
-                    </li>
-                    <li class="on">
-                        메시지함
-                    </li>
-                </ul>
-            </div>
             <div class="content_wrap">
+                <div class="tab_wrap">
+                    <ul>
+                        <li>
+                            AI 메시지
+                        </li>
+                        <li class="on">
+                            메시지함
+                        </li>
+                    </ul>
+                </div>
                 <div class="chat_wrap">
                     <div class="receive_msg">
                         <div class="receive_profile">

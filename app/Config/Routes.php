@@ -40,4 +40,14 @@ $routes->get('/mo/mypage/wallet/charge', 'MoHome::mypageWalletCharge');
 $routes->get('/mo/mypage/group/list', 'MoHome::mypageGroupList');
 $routes->get('/mo/mypage/group/searchList', 'MoHome::mypageGroupSearchList');
 $routes->get('/mo/mypage/group/detail', 'MoHome::mypageGroupDetail');
+$routes->get('/mo/mypage/group/partcntPopup', 'MoHome::mypageGroupPartcntPopup');
+$routes->get('/mo/mypage/group/applyPopup', 'MoHome::mypageGroupApplyPopup');
+$routes->get('/mo/mypage/group/create', 'MoHome::mypageGroupCreate');
+$routes->get('/mo/mypage/mygroup/list', 'MoHome::mypageMygroupList');
+$routes->get('/mo/mypage/mygroup/list/edit', 'MoHome::mypageMygroupListEdit');
+$routes->get('/mo/mypage/group/searchPopup', 'MoHome::mypageGroupSearchPopup');
+$routes->get('/mo/mymsg/ai/qna', 'MoHome::mymsgAiQna');
+$routes->get('/mo/myfeed', 'MoHome::myfeed');
+$routes->get('/mo/myfeed/detail', 'MoHome::myfeedDetail');
+$routes->get('/mo/myfeed/edit', 'MoHome::myfeedEdit');
 

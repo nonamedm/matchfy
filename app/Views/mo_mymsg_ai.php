@@ -32,17 +32,17 @@
         </header>
 
         <div class="sub_wrap">
-            <div class="tab_wrap">
-                <ul>
-                    <li class="on">
-                        AI 메시지
-                    </li>
-                    <li>
-                        메시지함
-                    </li>
-                </ul>
-            </div>
             <div class="content_wrap">
+                <div class="tab_wrap">
+                    <ul>
+                        <li class="on">
+                            AI 메시지
+                        </li>
+                        <li>
+                            메시지함
+                        </li>
+                    </ul>
+                </div>
                 <div class="chat_wrap">
                     <div class="receive_msg">
                         <div class="receive_profile">
@@ -80,7 +80,7 @@
                                 </p>
                             </div>
                             <div class="send_msg_area">
-                                <p>무슨일인가요? 좋은소식있나요?  무슨일인가요? 좋은소식있나요?</p>
+                                <p>무슨일인가요? 좋은소식있나요? 무슨일인가요? 좋은소식있나요?</p>
                             </div>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
                                         <p>96 · 서울 강남 · ESTJ</p>
                                     </div>
                                 </div>
-                                <p class="receive_match_msg">띵동 AI 소개팅이 도착했어요<br/> 정보를 확인하실래요?</p>
+                                <p class="receive_match_msg">띵동 AI 소개팅이 도착했어요<br /> 정보를 확인하실래요?</p>
                                 <button class="receive_profile_view">정보보기</button>
                             </div>
                         </div>
@@ -119,8 +119,8 @@
                         <button type="button" class="btn type01">수락</button>
                         <button type="button" class="btn type04">거절</button>
                         <button type="button" class="btn type05">보류</button>
-                    </div> 
-                    <hr class="hoz_part"/>
+                    </div>
+                    <hr class="hoz_part" />
                     <div class="message_input_box_border">
                         <textarea type="text" placeholder="메세지를 입력하세요"></textarea>
                         <img style="position:absolute;" src="/static/images/message_send_btn.png" />

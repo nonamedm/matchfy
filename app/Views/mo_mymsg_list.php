@@ -32,17 +32,17 @@
         </header>
 
         <div class="sub_wrap">
-            <div class="tab_wrap">
-                <ul>
-                    <li >
-                        AI 메시지
-                    </li>
-                    <li class="on">
-                        메시지함
-                    </li>
-                </ul>
-            </div>
             <div class="content_wrap">
+                <div class="tab_wrap">
+                    <ul>
+                        <li>
+                            AI 메시지
+                        </li>
+                        <li class="on">
+                            메시지함
+                        </li>
+                    </ul>
+                </div>
                 <div class="chat_list_wrap">
                     <div class="chat_room_title">
                         <div class="receive_profile">
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <hr class="hoz_part"/>
+                <hr class="hoz_part" />
                 <div class="chat_list_wrap">
                     <div class="chat_room_title">
                         <div class="receive_profile">
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-                <hr class="hoz_part"/>
+                <hr class="hoz_part" />
                 <div class="chat_list_wrap">
                     <div class="chat_room_title">
                         <div class="receive_profile">
@@ -99,7 +99,7 @@
                         </div>
                     </div>
                 </div>
-                <hr class="hoz_part"/>
+                <hr class="hoz_part" />
                 <div class="chat_list_wrap">
                     <div class="chat_room_title">
                         <div class="receive_profile">
@@ -118,7 +118,7 @@
                         </div>
                     </div>
                 </div>
-                <hr class="hoz_part"/>
+                <hr class="hoz_part" />
                 <div class="chat_list_wrap">
                     <div class="chat_room_title">
                         <div class="receive_profile">
@@ -137,7 +137,7 @@
                         </div>
                     </div>
                 </div>
-                <hr class="hoz_part"/>
+                <hr class="hoz_part" />
                 <div class="chat_list_wrap">
                     <div class="chat_room_title">
                         <div class="receive_profile">
@@ -156,14 +156,15 @@
                         </div>
                     </div>
                 </div>
-                <hr class="hoz_part"/>
+                <hr class="hoz_part" />
                 <div class="chat_list_wrap">
                     <div class="chat_room_title">
                         <div class="receive_profile">
                             <img src="/static/images/group_chat_profile.png" />
                         </div>
                         <div class="receive_text">
-                            <p class="receive_profile_name">김솔이, 최지원, 이유라<span class="match_percent btw8090">89%</span></p>
+                            <p class="receive_profile_name">김솔이, 최지원, 이유라<span class="match_percent btw8090">89%</span>
+                            </p>
                             <div class="receive_msg_area">
                                 <p>모임 단톡방에 초대되었습니다.</p>
                             </div>
@@ -175,7 +176,7 @@
                         </div>
                     </div>
                 </div>
-                <hr class="hoz_part"/>
+                <hr class="hoz_part" />
                 <div class="chat_list_wrap">
                     <div class="chat_room_title">
                         <div class="receive_profile">
@@ -194,7 +195,7 @@
                         </div>
                     </div>
                 </div>
-                <hr class="hoz_part"/>
+                <hr class="hoz_part" />
                 <div class="chat_list_wrap">
                     <div class="chat_room_title">
                         <div class="receive_profile">
@@ -213,10 +214,10 @@
                         </div>
                     </div>
                 </div>
-                <hr class="hoz_part"/>
+                <hr class="hoz_part" />
             </div>
             <footer class="footer">
-                
+
             </footer>
         </div>
 

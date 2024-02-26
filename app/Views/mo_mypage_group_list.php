@@ -66,7 +66,7 @@
                         <option>인원많은순</option>
                         <option>...</option>
                     </select>
-                    <div class="group_create">
+                    <div class="group_create_btn">
                         <img src="/static/images/ico_btn_plus_8x8.png" />
                         <button class="btn type01 on">모임등록</button>
                     </div>
