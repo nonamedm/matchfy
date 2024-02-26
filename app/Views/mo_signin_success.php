@@ -16,12 +16,12 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        
+
 
         <div class="sub_wrap">
             <div class="content_wrap center_wrap">
-                <div class="content_body">
-                    <img src="/static/images/signup_success.png"/>
+                <div class="content_body" style="margin-top:235px">
+                    <img src="/static/images/signup_success.png" />
                     <div class="success_text">
                         <p>가입 완료!</p>
                         <em>준회원 가입을 축하합니다.</em>
@@ -48,7 +48,7 @@
                 <div class="footer_copy">
                     COPYRIGHT 2023. ALL RIGHTS RESERVED.
                 </div> -->
-    
+
             </footer>
         </div>
 

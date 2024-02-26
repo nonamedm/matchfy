@@ -111,7 +111,11 @@ header .menu_right.edit {
 /* SUB */
 .mo_wrap .sub_wrap {
     position: relative;
-    height: 850px;
+    height: 784px;
+}
+
+.mo_wrap .sub_wrap .content_wrap {
+    height: 100%;
 }
 
 .mo_wrap .sub_wrap .content_wrap {
@@ -119,7 +123,6 @@ header .menu_right.edit {
 }
 .mo_wrap .sub_wrap .content_wrap.center_wrap {
     position: relative;
-    top: 200px;
 }
 .mo_wrap .sub_wrap .content_wrap.center_wrap .success_text p {
     margin-top: 25px;
@@ -192,6 +195,49 @@ header .menu_right.edit {
     width: 50%;
     padding: 15px 0px;
     text-align: center;
+}
+
+/* profile */
+.profile_header h2 {
+    font-family: 'Pretendard-Bold';
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    margin: 0;
+}
+.profile_header p {
+    font-size: 13px;
+    line-height: 16px;
+    color: #777777;
+    margin: 5px 0px !important;
+}
+.content_mypage_list li.profile_header {
+    justify-content: space-between;
+}
+.content_mypage_list li.profile_body {
+    min-height: 130px;
+    display: inline-table;
+}
+.profile_content {
+    display: flex;
+    margin: 12px;
+}
+.profile_content h2 {
+    font-family: 'Pretendard-Bold';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    margin: 0;
+    width: 60px;
+}
+.profile_content p {
+    font-family: 'Pretendard-SemiBold';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #777777;
 }
 
 /* message */
@@ -1569,10 +1615,14 @@ form input[type='file'] {
 }
 
 .footer .btn_group {
+    position: relative;
+    bottom: 30px;
+}
+/* .footer .btn_group {
     position: absolute;
     bottom: 20px;
     left: 20px;
-}
+} */
 .footer .btn_group.invite {
     bottom: 152px;
     left: 20px;
@@ -1841,7 +1891,6 @@ input[type='number']::-webkit-inner-spin-button {
     margin-left: 30px;
 }
 
-
 /* feed list */
 .feed_img_box img {
     width: 335px;
@@ -1851,9 +1900,9 @@ input[type='number']::-webkit-inner-spin-button {
 .sns_img_filter {
     width: 335px;
     height: 16px;
-    background: #FFECF0;
+    background: #ffecf0;
     border-radius: 5px;
-    margin: 10px 0 ;
+    margin: 10px 0;
     padding: 7px 0;
     text-align: center;
 }
@@ -1863,10 +1912,6 @@ input[type='number']::-webkit-inner-spin-button {
     color: #333333;
     margin: 0;
 }
-
-
-
-
 
 /* popup */
 .mo_wrap .layerPopup .layerPopup_wrap {

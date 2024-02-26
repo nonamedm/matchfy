@@ -117,12 +117,12 @@
                                 내 상대
                             </p>
                         </li>
-                        <hr class="hoz_part" />
+
                     </ul>
                 </div>
             </div>
             <footer class="footer">
-                <button class="content_mypage_logout">로그아웃</button>    
+                <button class="content_mypage_logout">로그아웃</button>
             </footer>
         </div>
 
