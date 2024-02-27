@@ -59,4 +59,11 @@ $routes->get('/mo/alliance/regionPopup', 'MoHome::allianceRegionPopup');
 $routes->get('/mo/alliance/detail', 'MoHome::allianceDetail');
 $routes->get('/mo/alliance/detail2', 'MoHome::allianceDetail2');
 $routes->get('/mo/alliance/payment', 'MoHome::alliancePayment');
+$routes->get('/mo/alliance/schedule', 'MoHome::allianceSchedule');
+$routes->get('/mo/alliance/reservePopup', 'MoHome::allianceReservePopup');
+$routes->get('/mo/alliance/apply', 'MoHome::allianceApply');
+$routes->get('/mo/alliance/exchange', 'MoHome::allianceExchange');
+$routes->get('/mo/partner', 'MoHome::partner');
+$routes->get('/mo/partner/regular', 'MoHome::partnerRegular');
+$routes->get('/mo/partner/premium', 'MoHome::partnerPremium');
 

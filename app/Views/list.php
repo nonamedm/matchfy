@@ -18,7 +18,7 @@
 <body>
 
     <!-- HEADER: MENU + HEROE SECTION -->
-    전체수정필요 - FOOTER 고정<br/>
+    전체수정필요 항목 - FOOTER 하단 고정 (FOOTER > btn_group 공통태그 전환)<br />
     <a href="/index">메인</a><br />
     <a href="/mo">모바일메인</a><br />
     <a href="/mo/pass">본인인증</a><br />
@@ -76,9 +76,20 @@
     <a href="/mo/alertPopup">등업(알림팝업)</a><br />
     <a href="/mo/alliance/list">제휴</a><br />
     <a href="/mo/alliance/regionPopup">제휴 지역팝업</a><br />
-    <a href="/mo/alliance/detail">제휴 상세</a><br />
+    <a href="/mo/alliance/detail">제휴 상세</a><br /><br />
+
     <a href="/mo/alliance/detail2">제휴 상세2</a><br />
     <a href="/mo/alliance/payment">제휴 결제</a><br />
+    <a href="/mo/alliance/schedule">제휴 일정</a><br />
+    <a href="/mo/alliance/reservePopup">제휴 예약확인</a><br />
+    <a href="/mo/alliance/apply">제휴 신청</a><br />
+    <a href="#">주소검색 (카카오 또는 네이버 API 사용해야 하므로 CSS 수정불가)</a><br />
+    <a href="/mo/alliance/exchange">환전</a><br /><br />
+
+    <a href="/mo/partner">내 상대</a><br />
+    <a href="/mo/partner/regular">내 상대 (정회원)</a><br />
+    <a href="/mo/partner/premium">내 상대 (프리미엄)</a><br />
+
 </body>
 
 </html>

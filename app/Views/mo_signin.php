@@ -98,7 +98,6 @@
                             <button type="button" class="btn type02">취소</button>
                             <button type="button" class="btn type01">다음</button>
                         </div>
-
                     </div>
                 </form>
             </div>
@@ -109,8 +108,8 @@
 
 
         <div style="height: 50px;"></div>
-<footer class="footer">
-            
+        <footer class="footer">
+
             <!-- <div class="footer_logo mb40">
                 matchfy
             </div>
