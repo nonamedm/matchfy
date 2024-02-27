@@ -33,7 +33,7 @@
             <div class="content_wrap">
                 <div class="invite_wrap">
                     <div class="invite_img">
-                        <img src="/static/images/invite_img.png" />
+                        <img src="/static/images/invite_img.png" style="width:335px" />
                     </div>
                     <div class="invite_code">
                         <a>

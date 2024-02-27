@@ -204,4 +204,12 @@ class MoHome extends BaseController
     {
         return view('mo_alliance_detail');
     }
+    public function allianceDetail2(): string
+    {
+        return view('mo_alliance_detail2');
+    }
+    public function alliancePayment(): string
+    {
+        return view('mo_alliance_payment');
+    }
 }

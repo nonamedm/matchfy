@@ -18,6 +18,7 @@
 <body>
 
     <!-- HEADER: MENU + HEROE SECTION -->
+    전체수정필요 - FOOTER 고정<br/>
     <a href="/index">메인</a><br />
     <a href="/mo">모바일메인</a><br />
     <a href="/mo/pass">본인인증</a><br />
@@ -63,7 +64,7 @@
     <a href="/mo/mypage/group/create">모임등록</a><br />
     <a href="/mo/mypage/mygroup/list">내 모임 리스트</a><br />
     <a href="/mo/mypage/mygroup/list/edit">내 모임 리스트 편집</a><br />
-    <a href="/mo/mypage/group/searchPopup">모임 검색 팝업</a><br />
+    <a href="/mo/mypage/group/searchPopup">모임 검색 팝업(수정필요)</a><br />
     <a href="/mo/mymsg/ai/qna">AI문답</a><br />
     <a href="/mo/myfeed">내피드</a><br />
     <a href="/mo/myfeed/detail">피드상세</a><br />
@@ -76,6 +77,8 @@
     <a href="/mo/alliance/list">제휴</a><br />
     <a href="/mo/alliance/regionPopup">제휴 지역팝업</a><br />
     <a href="/mo/alliance/detail">제휴 상세</a><br />
+    <a href="/mo/alliance/detail2">제휴 상세2</a><br />
+    <a href="/mo/alliance/payment">제휴 결제</a><br />
 </body>
 
 </html>

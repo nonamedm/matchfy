@@ -80,15 +80,15 @@
 
                     </div>
                 </div>
+            </div>
+            <div style="height: 50px;"></div>
+            <footer class="footer">
                 <div class="btn_group">
                     <button type="button" class="btn type01">함께하기</button>
                 </div>
-            </div>
+                
+            </footer>
         </div>
-        <div style="height: 50px;"></div>
-<footer class="footer">
-            
-        </footer>
     </div>
 
 

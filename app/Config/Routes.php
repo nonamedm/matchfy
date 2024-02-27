@@ -57,4 +57,6 @@ $routes->get('/mo/alertPopup', 'MoHome::alertPopup');
 $routes->get('/mo/alliance/list', 'MoHome::allianceList');
 $routes->get('/mo/alliance/regionPopup', 'MoHome::allianceRegionPopup');
 $routes->get('/mo/alliance/detail', 'MoHome::allianceDetail');
+$routes->get('/mo/alliance/detail2', 'MoHome::allianceDetail2');
+$routes->get('/mo/alliance/payment', 'MoHome::alliancePayment');
 
