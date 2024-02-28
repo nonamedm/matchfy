@@ -12,4 +12,8 @@ class Home extends BaseController
     {
         return view('index');
     }
+    public function indexLogin(): string
+    {
+        return view('index_login');
+    }
 }

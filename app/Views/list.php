@@ -18,8 +18,9 @@
 <body>
 
     <!-- HEADER: MENU + HEROE SECTION -->
-    전체수정필요 항목 - FOOTER 하단 고정 (FOOTER > btn_group 공통태그 전환)<br />
+    논의 항목 - FOOTER 하단 고정 (FOOTER > btn_group 공통태그 전환)<br />
     <a href="/index">메인</a><br />
+    <a href="/index/login">메인-로그인</a><br />
     <a href="/mo">모바일메인</a><br />
     <a href="/mo/pass">본인인증</a><br />
     <a href="/mo/agree">동의</a></a><br />
@@ -64,7 +65,7 @@
     <a href="/mo/mypage/group/create">모임등록</a><br />
     <a href="/mo/mypage/mygroup/list">내 모임 리스트</a><br />
     <a href="/mo/mypage/mygroup/list/edit">내 모임 리스트 편집</a><br />
-    <a href="/mo/mypage/group/searchPopup">모임 검색 팝업(수정필요)</a><br />
+    <a href="/mo/mypage/group/searchPopup">모임 검색 팝업</a><br />
     <a href="/mo/mymsg/ai/qna">AI문답</a><br />
     <a href="/mo/myfeed">내피드</a><br />
     <a href="/mo/myfeed/detail">피드상세</a><br />

@@ -26,12 +26,18 @@
   font-style: normal;
 }
 
-.body {
+body {
   overflow-x: hidden;
   font-family: "Pretendard-Regular";
   font-style: normal;
   font-weight: 400;
+  letter-spacing: -0.01em;
+  color: #111111;
 }
+::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge 등 Webkit 기반 브라우저 */
+}
+
 .bg_color_theme {
   background-color: #ff0267;
 }
@@ -71,11 +77,202 @@
   justify-content: center;
   align-items: center;
 }
+.content_no_img.login_main {
+  height: 100%;
+}
+.content_banner_top {
+  height: 540px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content_banner_top img {
+  width:1280px;
+}
 
 .content_chat_img {
   display: block;
   padding: 130px 320px;
 }
+.content_no_img.login_main {
+  display: block;
+  padding: 130px 320px;
+}
+
+.content_no_img.login_main .login_main_title {
+  display: flex;
+  justify-content: space-between;
+}
+.content_no_img.login_main .login_main_title h2 {
+  font-family: 'Pretendard-Bold';
+  font-size: 50px;
+  line-height: 60px;
+  color: #000000;
+}
+.content_no_img.login_main .login_main_title .main_title_btn {
+  display: flex;
+}
+.content_no_img.login_main .login_main_title button {
+  font-family: 'Pretendard-Regular';
+  font-size: 20px;
+  line-height: 24px;
+  color: #999999;
+  border: none;
+  background-color: transparent;
+}
+.content_no_img.login_main .login_main_title button.on {
+  color: #ff0267;
+  text-decoration: underline;
+  text-underline-offset : 10px;
+}
+.content_no_img.login_main .login_main_list {
+  display: flex;
+  overflow-x: auto;
+}
+
+.content_no_img.login_main .ai_group_card img {
+    width: 400px;
+    height: 300px;
+    border-radius: 20px;
+    margin-right: 20px;
+
+}
+.content_no_img.login_main .ai_group_card .group_particpnt {
+    margin-top: 6px;
+    padding: 2px 4px;
+    text-align: center;
+    width: 72px;
+    height: 16px;
+    border: 1px solid #fadee6;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 130%;
+}
+.content_no_img.login_main .ai_group_card .group_particpnt span {
+    color: #ff0267;
+}
+.content_no_img.login_main .ai_group_card .group_location {
+  margin-top: 20px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 18px;
+}
+.content_no_img.login_main .ai_group_card .group_location img {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}
+.content_no_img.login_main .ai_group_card .schedule_row {
+  display: flex;  
+}
+.content_no_img.login_main .ai_group_card .schedule_row p {
+  font-family: 'Pretendard-Bold';
+  font-size: 15px;
+  line-height: 18px;
+  color: #777777;
+}
+.content_no_img.login_main .ai_group_card .schedule_row span {
+  font-family: 'Pretendard-Regular';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  color: #777777;
+}
+.content_no_img.login_main .ai_group_card .schedule_row span::before {
+  content: "|";
+  margin: 0 10px;
+  color: #777777;
+}
+
+
+.content_no_img.login_main .ai_mat_card {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+.content_no_img.login_main .ai_mat_card img {
+  width: 290px;
+  height: 290px;
+  border-radius: 15px;
+}
+.content_no_img.login_main .ai_mat_card h2 {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #000000;
+  margin: 10px 0;
+}
+.content_no_img.login_main .ai_mat_card .profile_row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+.content_no_img.login_main .ai_mat_card .mbti {
+  margin: 0;
+  box-sizing: border-box;
+  padding: 2px 8px;
+  width: 48px;
+  height: 21px;
+  border: 1px solid #AAAAAA;
+  border-radius: 3px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #999999;
+}
+.content_no_img.login_main .ai_mat_card .mat_percent {  
+  font-family: "Pretendard-Bold";  
+  font-size: 22px;
+  line-height: 26px;
+  color: #FF0267;
+  margin: 0;
+}
+.content_no_img.login_main .group_week {  
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #FF0267;
+  margin: 10px 0;
+}
+
+.content_no_img.login_main .group_row {
+  margin: 50px 0;
+}
+.content_no_img.login_main .group_type {
+  display: flex;
+  justify-content: space-between;
+}
+.content_no_img.login_main .group_type h2 {
+  margin: 10px 0 20px 0;
+  font-family: 'Pretendard-Bold';
+  font-size: 40px;
+  line-height: 48px;
+  color: #000000;
+}
+.content_no_img.login_main .group_type .main_title_btn button {
+  margin-top: 20px;
+  background: #333333;
+  border-radius: 30px;  
+  width: 44px;
+  height: 44px;
+  font-size: 15px;
+  line-height: 18px;
+  color: #FFFFFF;
+  border: none;
+}
+.content_no_img.login_main .group_type .main_title_btn button.total {
+  width: 92px;
+  background: #333333;
+  border-radius: 30px;
+  margin-right: 20px;
+}
+.content_no_img.login_main .group_type .main_title_btn button.disabled {
+  background: #dddddd;
+}
+
+
 
 .content_chat_img h2 {
   font-family: "Pretendard-Bold";
@@ -83,10 +280,6 @@
   font-weight: 700;
   font-size: 50px;
   line-height: 60px;
-  text-align: center;
-  letter-spacing: -0.01em;
-  text-transform: capitalize;
-
   color: #000000;
 }
 
@@ -371,23 +564,88 @@
     position: relative;
     right: 0px;
   }
-  .content_no_img {
-    display: flex;
-    flex-direction: column;
-  }
   .chat_div {
     flex-wrap: wrap;
   }
+  .content_no_img.login_main {
+    padding: 20px 100px;
+  }
   .content_chat_img {
     padding: 20px 100px;
+  }
+  .content_no_img.login_main {
+    height: 100%;
   }
   .content_chat_img {
     height: 100%;
   }
 }
+@media (max-width: 1280px) {
+  .content_banner_top {
+    height: 300px;
+  }
+  .content_banner_top img {
+    width:70%;
+    height: 180px;
+  }
+  .content_no_img.login_main .ai_mat_card img {
+    width: 240px;
+    height: 240px;
+  }
+}
 @media (max-width: 968px) {
+  .content_no_img.login_main .group_row {
+    margin: 0 0 20px 0;
+  }
+  .content_no_img.login_main .group_type .main_title_btn {
+    display: none;
+  }
+  .content_no_img.login_main .ai_mat_card h2 {
+    font-size: 15px;
+  }
+  .content_no_img.login_main .ai_mat_card .mat_percent {
+    font-size: 16px;
+  }
+  .content_no_img.login_main .ai_group_card .group_location {
+    font-size: 16px;
+  }
+  .content_no_img.login_main .ai_group_card .schedule_row p {
+    font-size: 12px;
+  }
+  .content_no_img.login_main .ai_group_card .schedule_row span {
+    font-size: 12px;
+  }
+  .content_no_img.login_main .ai_group_card img {
+    width: 210px;
+    height: 158px;
+  }
+  .content_no_img.login_main .ai_mat_card img {
+    width: 150px;
+    height: 150px;
+  }
+  .content_no_img.login_main .login_main_title h2 {
+    font-size: 24px;
+  }
+  .content_no_img.login_main .group_week {
+    font-size: 14px;
+    margin: 0;
+  }
+  .content_no_img.login_main .login_main_title button {
+    font-size: 15px;
+  }
+  .content_no_img.login_main .group_type h2 {
+    font-size: 18px;
+    margin: 0;
+  }
   .content_chat_img {
     padding: 10px 20px;
+  }  
+  .content_no_img.login_main {
+    padding: 10px 20px;
+  }  
+  .content_no_img {
+    display: flex;
+    flex-direction: column;
   }
   .main_bg_center_box h2 {
     font-size: 36px;
@@ -413,6 +671,10 @@
 
   .main_cont_left_img {
     align-items: baseline;
+  }
+  .content_no_img.login_main h2 {
+    font-size: 36px;
+    line-height: 46px;
   }
   .content_chat_img h2 {
     font-size: 36px;
