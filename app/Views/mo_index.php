@@ -10,6 +10,7 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -17,24 +18,6 @@
         <mobileheader style="height:44px; display: block;"></mobileheader>
         <!-- HEADER: MENU + HEROE SECTION -->
         <header>
-
-            <!-- <div class="menu">
-            <ul>
-                <li class="logo">
-                    <img src="/static/images/matchfy.png" />
-                </li>
-                <li class="menu-toggle">
-                    <button onclick="toggleMenu();">&#9776;</button>
-                </li>
-
-                <li class="menu_item">
-
-                    <button class="login_btn" href="#" target="_blank"><img src="/static/images/login_ico.png" />
-                        <p>로그인</p>
-                    </button>
-                </li>
-            </ul>
-        </div> -->
 
         </header>
 
@@ -59,7 +42,7 @@
                         </div>
                         <img src="/static/images/main_login_hr.png" style="margin: 40px 0px 30px 0px;" />
                         <div class="btn_group">
-                            <button type="button" style="width: 301px;" class="btn type00">휴대폰 번호로 회원가입</button>
+                            <button type="button" style="width: 301px;" class="btn type00" onclick="moveToUrl('/mo/pass')">휴대폰 번호로 회원가입</button>
                         </div>
                         <div class="btn_group">
                             <button type="button" class="btn naver_login">네이버로 계속하기</button>
