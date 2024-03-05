@@ -5,8 +5,8 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::list');
-$routes->get('/index', 'Home::index');
+$routes->get('/', 'Home::index');
+$routes->get('/publish', 'Home::list');
 $routes->get('/index/login', 'Home::indexLogin');
 $routes->get('/mo', 'MoHome::index');
 $routes->get('/mo/pass', 'MoHome::pass');

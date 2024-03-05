@@ -364,7 +364,7 @@
 
     <!-- FOOTER: DEBUG INFO + COPYRIGHTS -->
 
-    <div style="height: 50px;"></div>
+    <!-- <div style="height: 50px;"></div> -->
 <footer class="footer">
         
 
