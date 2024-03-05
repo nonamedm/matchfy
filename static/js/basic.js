@@ -89,6 +89,7 @@ const signIn = (postData) => {
             console.log(data)
             if (data) {
                 // 성공
+                location.href = '/mo/signinSuccess'
             } else {
                 alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
             }
