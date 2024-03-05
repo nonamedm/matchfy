@@ -41,23 +41,23 @@
                     <legend></legend>
                     <div class="login_box">
                         <div class="chk_box">
-                            <input type="checkbox" id="totAgree" name="" checked="">
+                            <input type="checkbox" id="totAgree" name="" onclick="totalAgree()" />
                             <label class="totAgree_label" for="totAgree">네, 모두 동의합니다</label>
                         </div>
                         <hr class="hoz_part" />
                         <div class="agree_cont">
                             <div class="chk_box">
-                                <input type="checkbox" id="agree1" name="agree1" checked="">
+                                <input type="checkbox" id="agree1" name="agree1" value="1" onclick="chkAgree()">
                                 <label class="agree_cont_label" for="agree1">이용약관 <span>(필수)</span></label>
                             </div>
                             <textarea placeholder="<?php echo $mobile_no ?>"></textarea>
                             <div class="chk_box">
-                                <input type="checkbox" id="agree2" name="agree2" checked="">
+                                <input type="checkbox" id="agree2" name="agree2" value="2" onclick="chkAgree()">
                                 <label class="agree_cont_label" for="agree2">개인정보 수집 이용 동의 <span>(필수)</span></label>
                             </div>
                             <textarea placeholder="<?php echo $name ?>"></textarea>
                             <div class="chk_box">
-                                <input type="checkbox" id="agree3" name="agree3" checked="">
+                                <input type="checkbox" id="agree3" name="agree3" value="3" onclick="chkAgree()">
                                 <label class="agree_cont_label" for="agree3">개인정보 제3자 제공동의 <span>(필수)</span></label>
                             </div>
                             <textarea placeholder="<?php echo $birthday ?>"></textarea>
@@ -72,15 +72,11 @@
                 <footer class="footer">
 
                     <div class="btn_group">
-                        <button type="button" class="btn type01" onclick="submitForm()">다음</button>
+                        <button type="button" class="btn type01" onclick="submitFormAgree()">다음</button>
                     </div>
                 </footer>
             </div>
         </div>
-
-
-
-
 
     </div>
 

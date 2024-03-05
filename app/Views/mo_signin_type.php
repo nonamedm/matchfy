@@ -95,12 +95,7 @@
                                 </div>
                             </div>
                             <div class="grade_box_cont">
-                                <p>기본정보 + 추가정보 인증
-                                    <?php foreach ($postData as $key => $value)
-                                    {
-                                        echo $key . ': ' . $value . '<br>';
-                                    } ?>
-                                </p>
+                                <p>기본정보 + 추가정보 인증</p>
                                 <span>추가 정보 중</span><br />
                                 <span>확인 가능한 정보 인증 </span>
                             </div>

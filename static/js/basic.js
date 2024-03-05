@@ -60,6 +60,22 @@ const certIdentify = () => {
 const submitForm = () => {
     document.querySelector('form').submit()
 }
+const submitFormAgree = () => {
+    const agree1 = document.getElementById('agree1')
+    const agree2 = document.getElementById('agree2')
+    const agree3 = document.getElementById('agree3')
+
+    // agree1, agree2, agree3의 체크 여부 확인
+    const isAllChecked = agree1.checked && agree2.checked && agree3.checked
+
+    // 모든 체크박스의 상태를 변경
+    if (isAllChecked) {
+        document.querySelector('form').submit()
+    } else {
+        alert('항목에 동의해 주세요')
+        return false
+    }
+}
 
 const signIn = (postData) => {
     var postData = postData
@@ -83,4 +99,31 @@ const signIn = (postData) => {
             console.log(err)
         },
     })
+}
+
+const totalAgree = () => {
+    // agree1, agree2, agree3 요소들을 가져옴
+    const agree1 = document.getElementById('agree1')
+    const agree2 = document.getElementById('agree2')
+    const agree3 = document.getElementById('agree3')
+
+    // agree1, agree2, agree3의 체크 여부 확인
+    const isAllChecked = agree1.checked && agree2.checked && agree3.checked
+
+    // 모든 체크박스의 상태를 변경
+    agree1.checked = !isAllChecked
+    agree2.checked = !isAllChecked
+    agree3.checked = !isAllChecked
+}
+
+const chkAgree = () => {
+    // agree1, agree2, agree3, totAgree 요소들을 가져옴
+    const agree1 = document.getElementById('agree1')
+    const agree2 = document.getElementById('agree2')
+    const agree3 = document.getElementById('agree3')
+    const totAgree = document.getElementById('totAgree')
+
+    // 모든 체크박스가 체크되어 있다면 totAgree도 체크
+    const allChecked = agree1.checked && agree2.checked && agree3.checked
+    totAgree.checked = allChecked
 }
