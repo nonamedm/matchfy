@@ -10,20 +10,29 @@ class MoHome extends BaseController
     }
     public function pass(): string
     {
-        $data['params'] = '전달값쓰'; 
-        return view('mo_pass',$data);
+        $data['params'] = '';
+        return view('mo_pass', $data);
     }
     public function agree(): string
     {
-        return view('mo_agree');
+        $postData = $this->request->getPost();
+
+        // 특정 키의 POST 값만 받아오기
+        $mobile_no = $this->request->getPost('mobile_no');
+        $name = $this->request->getPost('name');
+        $birthday = $this->request->getPost('birthday');
+
+        return view('mo_agree', $postData);
     }
     public function signin(): string
     {
-        return view('mo_signin');
+        $postData = $this->request->getPost();
+        return view('mo_signin', $postData);
     }
     public function signinType(): string
     {
-        return view('mo_signin_type');
+        $postData = $this->request->getPost();
+        return view('mo_signin_type', $postData);
     }
     public function signinSuccess(): string
     {

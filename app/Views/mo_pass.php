@@ -10,6 +10,7 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -47,12 +48,9 @@
         </div>
 
 
-
-
-
         <div style="height: 50px;"></div>
-<footer class="footer">
-            
+        <footer class="footer">
+
             <!-- <div class="footer_logo mb40">
                 matchfy
             </div>
@@ -77,32 +75,32 @@
     <!-- SCRIPTS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $.ajax({
-                url: "/ajax/delCmt",
-                type: "post",
-                data: { cmt_idx: '_cmt_idx', trgt_id: '_trgt_id', trgt_idx: '_trgt_idx' }, //
-                dataType: "json",
-                async: false,
-                success: function (data) {
-                    console.log(data);
-                    if (data) {
-                    // 성공
-                    //console.log('111');
-                    alert("정상처리");
-                    } else {
-                    // 삭제 성공
-                    //console.log('222');
-                    alert("오류가 발생하였습니다. \n다시 시도해 주세요.");
-                    }
-                    return false;
-                },
-                error: function (data, status, err) {
-                    alert("there was an error while fetching events!");
-                    console.log(err);
-                },
-            });
-        });
+        // $(document).ready(function () {
+        //     $.ajax({
+        //         url: "/ajax/delCmt",
+        //         type: "post",
+        //         data: { cmt_idx: '_cmt_idx', trgt_id: '_trgt_id', trgt_idx: '_trgt_idx' }, //
+        //         dataType: "json",
+        //         async: false,
+        //         success: function (data) {
+        //             console.log(data);
+        //             if (data) {
+        //                 // 성공
+        //                 //console.log('111');
+                        
+        //             } else {
+        //                 // 삭제 성공
+        //                 //console.log('222');
+        //                 alert("오류가 발생하였습니다. \n다시 시도해 주세요.");
+        //             }
+        //             return false;
+        //         },
+        //         error: function (data, status, err) {
+        //             alert("there was an error while fetching events!");
+        //             console.log(err);
+        //         },
+        //     });
+        // });
     </script>
 
     <!-- -->
