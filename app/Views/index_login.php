@@ -616,8 +616,8 @@
         </div>
         <div class="footer_link mb40">
             <a href="#">회사정보</a>
-            <a href="#">개인정보 처리방침</a>
-            <a href="#">서비스 이용약관</a>
+            <a href="/mo/privacy">개인정보 처리방침</a>
+            <a href="/mo/terms">서비스 이용약관</a>
         </div>
         <div class="footer_info mb40">
             <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
