@@ -60,3 +60,27 @@ const certIdentify = () => {
 const submitForm = () => {
     document.querySelector('form').submit()
 }
+
+const signIn = (postData) => {
+    var postData = postData
+    console.log(postData)
+    $.ajax({
+        url: '/ajax/signIn', // 추후 본인인증 연결
+        type: 'POST',
+        data: postData,
+        async: false,
+        success: function (data) {
+            console.log(data)
+            if (data) {
+                // 성공
+            } else {
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+            }
+            return false
+        },
+        error: function (data, status, err) {
+            alert('there was an error while fetching events!')
+            console.log(err)
+        },
+    })
+}

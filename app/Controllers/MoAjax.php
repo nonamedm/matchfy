@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\MemberModel;
+
 class MoAjax extends BaseController
 {
     public function delCmt()
@@ -20,7 +22,8 @@ class MoAjax extends BaseController
         }
     }
 
-    public function joinMatchPi() {
+    public function joinMatchfy()
+    {
 
         $postData = $this->request->getPost();
 
@@ -35,11 +38,14 @@ class MoAjax extends BaseController
         $gender = $this->request->getPost('gender');
         $city = $this->request->getPost('city');
         $town = $this->request->getPost('town');
-        
 
 
-        if($mobile_no && $ci && $agree1 && $agree2 && $agree3 
-                && $name && $birthday && $gender && $city && $town) {
+
+        if (
+            $mobile_no && $ci && $agree1 && $agree2 && $agree3
+            && $name && $birthday && $gender && $city && $town
+        )
+        {
 
             $memberModel = new MemberModel();
 
@@ -58,10 +64,12 @@ class MoAjax extends BaseController
             ];
 
             // 데이터 저장
-            if($memberModel->insert($data)) {
-                return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchPI successfully', 'data' => $data]);
-            } else {
-                return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchPI']);
+            if ($memberModel->insert($data))
+            {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
+            } else
+            {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy']);
             }
         }
     }

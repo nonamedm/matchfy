@@ -70,5 +70,6 @@ $routes->get('/mo/partner/premium', 'MoHome::partnerPremium');
 
 
 // ajax
-$routes->post('/ajax/(:any)', 'MoAjax::$1');
+// $routes->post('/ajax/(:any)', 'MoAjax::$1');
+$routes->post('/ajax/signIn', 'MoAjax::joinMatchfy');
 

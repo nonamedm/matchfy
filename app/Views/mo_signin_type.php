@@ -10,6 +10,8 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -36,7 +38,7 @@
                 <div class="content_title">
                     <h2 class="member_grade">멤버십 등급에 따라<br />혜택을 제공 받으세요</h2>
                 </div>
-                <form class="main_signin_form" method="post" action="/mo/signinSuccess">
+                <form class="main_signin_form" method="post" action="">
                     <div class="content_body">
                         <div class="grade_box">
                             <div class="grade_box_title">
@@ -93,7 +95,12 @@
                                 </div>
                             </div>
                             <div class="grade_box_cont">
-                                <p>기본정보 + 추가정보 인증</p>
+                                <p>기본정보 + 추가정보 인증
+                                    <?php foreach ($postData as $key => $value)
+                                    {
+                                        echo $key . ': ' . $value . '<br>';
+                                    } ?>
+                                </p>
                                 <span>추가 정보 중</span><br />
                                 <span>확인 가능한 정보 인증 </span>
                             </div>
@@ -103,9 +110,9 @@
 
                 <div class="btn_group multy">
                     <button type="button" class="btn type02">취소</button>
-                    <button type="button" class="btn type01">다음</button>
+                    <button type="button" class="btn type01"
+                        onclick='signIn(<?php echo json_encode($postData); ?>)'>다음</button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -141,13 +148,7 @@
     <!-- SCRIPTS -->
 
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
+
     </script>
 
     <!-- -->

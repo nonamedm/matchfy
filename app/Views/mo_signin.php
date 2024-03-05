@@ -46,26 +46,28 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="name" class="signin_label">이름</label>
-                                <input id="name" type="text" value="<?php echo $name ?>" placeholder="이름을 입력하세요">
+                                <input id="name" name="name" type="text" value="<?php echo $name ?>"
+                                    placeholder="이름을 입력하세요">
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="birthday" class="signin_label">생년월일</label>
-                                <input id="birthday" type="text" value="<?php echo $birthday ?>"
+                                <input id="birthday" name="birthday" type="text" value="<?php echo $birthday ?>"
                                     placeholder="이름을 입력하세요">
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="gender" class="signin_label">성별</label>
-                                <input id="gender" type="text" value="" placeholder="성별을 입력하세요">
+                                <input id="gender" name="gender" type="text" value="gender value"
+                                    placeholder="성별을 입력하세요">
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="city" class="signin_label">지역</label>
-                                <input id="city" type="text" value="" placeholder="이름을 입력하세요">
+                                <input id="city" name="city" type="text" value="city value" placeholder="이름을 입력하세요">
                             </div>
                         </div>
                         <div class="form_row signin_form">
@@ -96,6 +98,7 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" name="town" value="town value" />
                         <input type="hidden" name="mobile_no" value="<?php echo $mobile_no ?>" />
                         <div class="btn_group multy">
                             <button type="button" class="btn type02">취소</button>

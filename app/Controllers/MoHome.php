@@ -31,8 +31,14 @@ class MoHome extends BaseController
     }
     public function signinType(): string
     {
+        // POST로 전달된 데이터 받아오기
         $postData = $this->request->getPost();
-        return view('mo_signin_type', $postData);
+
+        // 모든 POST 데이터를 하나의 배열에 담기
+        $data['postData'] = $postData;
+
+        // view에 데이터 전달
+        return view('mo_signin_type', $data);
     }
     public function signinSuccess(): string
     {
