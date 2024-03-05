@@ -40,6 +40,7 @@
         </div>
         <div class="ad-con">
             <h2>개인정보처리방침</h2>
+            <a href="/ad/privacy/privacyList">목록으로 돌아가기</a></br>
                 <input type="hidden" id="privacy_id" name="privacy_id" value="<?= $privacy['id'] ?>"/>
                 <label for="title">제목:</label><br>
                 <p><?= $privacy['title'] ?></p><br>

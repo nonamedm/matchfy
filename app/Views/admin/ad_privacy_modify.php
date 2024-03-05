@@ -40,7 +40,7 @@
         </div>
         <div class="ad-con">
             <h2>개인정보처리방침 수정</h2>
-            
+            <a href="/ad/privacy/privacyList">목록으로 돌아가기</a>
             <form action="/ad/privacy/privacyUpdate" method="post">
                 <input type="hidden" id="privacy_id" name="privacy_id" value="<?= $privacy['id'] ?>"/>
                 <label for="title">제목:</label><br>

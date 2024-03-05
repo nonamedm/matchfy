@@ -41,7 +41,7 @@
         </div>
         <div class="ad-con">
             <h2>개인정보처리방침 작성</h2>
-            
+            <a href="/ad/privacy/privacyList">목록으로 돌아가기</a>
             <form action="/ad/privacy/privacyUpload" method="post">
                 <label for="title">제목:</label><br>
                 <input type="text" id="title" name="title"><br>
