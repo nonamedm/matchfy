@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controllers;
-
+use App\Models\BoardModel;
 class MoHome extends BaseController
 {
     public function index(): string
@@ -70,11 +70,27 @@ class MoHome extends BaseController
     }
     public function faq(): string
     {
-        return view('mo_faq');
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_faq');
+        $data['faqs'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
+
+        return view('mo_faq',$data);
     }
     public function terms(): string
     {
-        return view('mo_terms');
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_terms');
+        $terms = $BoardModel->orderBy('created_at', 'DESC')->first(); // 가장 최근의 데이터를 가져옵니다.
+
+        return view('mo_terms', ['terms' => $terms]);
+    }
+    public function privacy(): string
+    {
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_privacy');
+        $privacy = $BoardModel->orderBy('created_at', 'DESC')->first(); // 가장 최근의 데이터를 가져옵니다.
+
+        return view('mo_privacy', ['privacy' => $privacy]);
     }
     public function mypage(): string
     {

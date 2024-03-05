@@ -24,7 +24,7 @@
                         <img src="/static/images/left_arrow.png" />
                     </li>
                     <li class="header_title">
-                        이용약관
+                        개인정보처리방침
                     </li>
                 </ul>
             </div>
@@ -36,8 +36,8 @@
                 <div class="terms_cont">
                     <div class="terms_cont_box">
 
-                        <b><?= $terms['title'] ?></b>
-                        <p><?=nl2br($terms['content']); ?></p>
+                        <b><?= $privacy['title'] ?></b>
+                        <p><?=nl2br($privacy['content']); ?></p>
                         <!-- <p>제1조(목적)</p>
                         <p></p>
                         <p>본 약관은 등록한 약관을 보여주는 영역입니다. 약관은 회사마다, 서비스마다 다르기 때문에 사용하시는 약관으로 등록하여 보여주시면 됩니다. </p>
