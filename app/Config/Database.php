@@ -26,10 +26,10 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
-        'username'     => '',
-        'password'     => '',
-        'database'     => '',
+        'hostname'     => 'nonamedm18.mycafe24.com',
+        'username'     => 'nonamedm18',
+        'password'     => 'a8875142!!',
+        'database'     => 'nonamedm18',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,

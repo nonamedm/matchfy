@@ -40,9 +40,9 @@
             ?>
         </div>
         <div class="ad-con">
-            <h2>이용약관 작성</h2>
-
-            <form action="/ad/terms/termsUpload" method="post">
+            <h2>개인정보처리방침 작성</h2>
+            
+            <form action="/ad/privacy/privacyUpload" method="post">
                 <label for="title">제목:</label><br>
                 <input type="text" id="title" name="title"><br>
                 <label for="content">내용:</label><br>

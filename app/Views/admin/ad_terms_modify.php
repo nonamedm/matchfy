@@ -15,15 +15,15 @@
     ?>
     $(document).ready(function(){
         $('form').submit(function(){
-            var question = $('#question').val();
-            var answer = $('#answer').val();
+            var title = $('#title').val();
+            var content = $('#content').val();
 
-            if(question.trim() == '') {
+            if(title.trim() == '') {
                 alert('질문을 입력해주세요.');
                 return false;
             }
 
-            if(answer.trim() == '') {
+            if(content.trim() == '') {
                 alert('답변을 입력해주세요.');
                 return false; 
             }
@@ -43,10 +43,10 @@
             
             <form action="/ad/terms/termsUpdate" method="post">
                 <input type="hidden" id="terms_id" name="terms_id" value="<?= $terms['id'] ?>"/>
-                <label for="question">질문:</label><br>
-                <input type="text" id="question" name="question" value="<?= $terms['title'] ?>"><br>
-                <label for="answer">답변:</label><br>
-                <textarea id="answer" name="answer" rows="4" cols="50"><?=htmlspecialchars($terms['content']); ?></textarea><br><br>
+                <label for="title">제목:</label><br>
+                <input type="text" id="title" name="title" value="<?= $terms['title'] ?>"><br>
+                <label for="content">내용:</label><br>
+                <textarea id="content" name="content" rows="4" cols="50"><?=htmlspecialchars($terms['content']); ?></textarea><br><br>
                 <input type="submit" value="수정"/>
             </form>
         </div>

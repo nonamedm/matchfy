@@ -11,6 +11,95 @@ class AdminHome extends BaseController
         return view('admin/header');
     }
 
+    /*개인정보처리방침 확인*/
+    public function privacyEdit(): string
+    {
+        return view('admin/ad_privacy_edit');
+    }
+
+    public function privacyMenuSelect(){
+        
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_privacy');
+        $privacy = $BoardModel->orderBy('created_at', 'DESC')->first();
+
+        if ($privacy) {
+            // 데이터가 존재하는 경우
+            $insertedId = $privacy['id'];
+            return redirect()->to("/ad/privacy/privacyView/{$insertedId}");
+        } else {
+            // 데이터가 존재하지 않는 경우
+            return redirect()->to('/ad/privacy/privacyEdit');
+        }
+     
+    }
+
+    public function privacyUpload(){
+        $title = $this->request->getPost('title');
+        $content = $this->request->getPost('content');
+
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_privacy');
+        $data = [
+            'title' => $title,
+            'content' => $content,
+            'author' => 'admin',
+            'used' => 1
+        ];
+
+        $inserted = $BoardModel->insert($data);
+
+        if ($inserted) {
+            $insertedId = $BoardModel->insertID();
+            return redirect()->to("/ad/privacy/privacyView/{$insertedId}")->with('msg', '등록이 완료되었습니다.');
+        } else {
+            return redirect()->to('/ad/privacy/privacyEdit')->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
+        }
+    }
+
+    public function privacyView($id){
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_privacy');
+        $data['privacy'] = $BoardModel->find($id); // 해당 아이디로 데이터를 조회합니다.
+
+        return view('admin/ad_privacy_view', $data);
+    }
+
+    public function privacyModify($id){
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_privacy');
+        $data['privacy'] = $BoardModel->find($id); // 해당 아이디로 데이터를 조회합니다.
+
+        // 데이터가 없을 경우에 대한 처리
+        if ($data['privacy'] === null) {
+            return redirect()->to('/ad/privacy/privacyList')->with('msg', '해당 데이터를 찾을 수 없습니다.');
+        }
+
+        return view('admin/ad_privacy_modify', $data);
+    }
+
+    public function privacyUpdate(){
+        $id = $this->request->getPost('privacy_id');
+        $title = $this->request->getPost('title');
+        $content = $this->request->getPost('content');
+
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_privacy');
+
+        $updated = $BoardModel->update($id, [
+            'title' => $title,
+            'content' => $content,
+            'updated_at'=>'admin'
+        ]);
+
+        if ($updated) {
+            // 업데이트가 성공하면 수정된 데이터의 ID를 가져와서 해당 view 페이지로 리다이렉트합니다.
+            return redirect()->to("/ad/privacy/privacyView/{$id}")->with('msg', '수정이 완료되었습니다.');
+        } else {
+            return redirect()->to("/ad/privacy/privacyEdit/{$id}")->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
+        }
+    }
+
     /*terms 확인*/
     public function termsEdit(): string
     {
@@ -35,8 +124,8 @@ class AdminHome extends BaseController
     }
 
     public function termsUpload(){
-        $title = $this->request->getPost('question');
-        $content = $this->request->getPost('answer');
+        $title = $this->request->getPost('title');
+        $content = $this->request->getPost('content');
 
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_terms');
@@ -80,8 +169,8 @@ class AdminHome extends BaseController
 
     public function termsUpdate(){
         $id = $this->request->getPost('terms_id');
-        $title = $this->request->getPost('question');
-        $content = $this->request->getPost('answer');
+        $title = $this->request->getPost('title');
+        $content = $this->request->getPost('content');
 
         if (!$id || !is_numeric($id)) {
             return redirect()->to('/ad/terms/termsList')->with('msg', '잘못된 요청입니다.');
@@ -103,7 +192,7 @@ class AdminHome extends BaseController
             return redirect()->to("/ad/terms/termsEdit/{$id}")->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
         }
     }
-
+    
     /*faq 확인*/
     public function faqEdit(): string
     {

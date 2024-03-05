@@ -9,6 +9,6 @@
         <a href="/ad/terms/termsMenuSelect">이용약관</a>
     </li>
     <li class="menu-item">
-        <a href="#">개인정보처리방침</a>
+        <a href="/ad/privacy/privacyMenuSelect">개인정보처리방침</a>
     </li>
 </ul>

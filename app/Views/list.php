@@ -39,7 +39,8 @@
     <a href="/ad/faq/faqEdit">관리자 - FAQ 작성</a><br />
     <a href="/ad/faq/faqEdit">관리자 - FAQ 수정</a><br />
     <a href="/ad/faq/faqList">관리자 - FAQ 리스트</a><br />
-    <a href="/mo/terms">이용약관</a><br /><br />
+    <a href="/mo/terms">이용약관</a><br />
+    <a href="/mo/privacy">개인정보처리방침</a><br /><br />
 
     <a href="/mo/mypage">마이페이지</a><br />
     <a href="/mo/mymsg">마이메세지</a><br />

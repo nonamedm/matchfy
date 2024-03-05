@@ -15,15 +15,15 @@
     ?>
     $(document).ready(function(){
         $('form').submit(function(){
-            var question = $('#question').val();
-            var answer = $('#answer').val();
+            var title = $('#title').val();
+            var content = $('#content').val();
 
-            if(question.trim() == '') {
+            if(title.trim() == '') {
                 alert('질문을 입력해주세요.');
                 return false;
             }
 
-            if(answer.trim() == '') {
+            if(content.trim() == '') {
                 alert('답변을 입력해주세요.');
                 return false; 
             }
@@ -41,9 +41,9 @@
         <div class="ad-con">
             <h2>이용약관</h2>
                 <input type="hidden" id="terms_id" name="terms_id" value="<?= $terms['id'] ?>"/>
-                <label for="question">제목:</label><br>
+                <label for="title">제목:</label><br>
                 <p><?= $terms['title'] ?></p><br>
-                <label for="answer">내용:</label><br>
+                <label for="content">내용:</label><br>
                 <p><?=nl2br($terms['content']); ?></p>
                 <?php
                     if($terms['title']!=''){

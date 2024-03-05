@@ -68,6 +68,14 @@ class MoHome extends BaseController
 
         return view('mo_terms', ['terms' => $terms]);
     }
+    public function privacy(): string
+    {
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_privacy');
+        $privacy = $BoardModel->orderBy('created_at', 'DESC')->first(); // 가장 최근의 데이터를 가져옵니다.
+
+        return view('mo_privacy', ['privacy' => $privacy]);
+    }
     public function mypage(): string
     {
         return view('mo_mypage');
