@@ -10,7 +10,8 @@ class MoHome extends BaseController
     }
     public function pass(): string
     {
-        return view('mo_pass');
+        $data['params'] = '전달값쓰'; 
+        return view('mo_pass',$data);
     }
     public function agree(): string
     {

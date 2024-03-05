@@ -68,3 +68,7 @@ $routes->get('/mo/partner', 'MoHome::partner');
 $routes->get('/mo/partner/regular', 'MoHome::partnerRegular');
 $routes->get('/mo/partner/premium', 'MoHome::partnerPremium');
 
+
+// ajax
+$routes->post('/ajax/(:any)', 'MoAjax::$1');
+
