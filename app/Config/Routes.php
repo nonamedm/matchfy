@@ -68,3 +68,17 @@ $routes->get('/mo/partner', 'MoHome::partner');
 $routes->get('/mo/partner/regular', 'MoHome::partnerRegular');
 $routes->get('/mo/partner/premium', 'MoHome::partnerPremium');
 
+/*관리자페이지*/
+$routes->get('/ad/header', 'AdminHome::header');
+$routes->get('/ad/faq/faqEdit', 'AdminHome::faqEdit');
+$routes->post('/ad/faq/faqUpload', 'AdminHome::faqUpload');
+$routes->get('/ad/faq/faqList', 'AdminHome::faqList');
+$routes->get('/ad/faq/faqModify/(:num)', 'AdminHome::faqModify/$1');
+$routes->post('/ad/faq/faqUpdate', 'AdminHome::faqUpdate');
+$routes->post('/ad/faq/faqDelete', 'AdminHome::faqDelete');
+$routes->get('/ad/terms/termsMenuSelect', 'AdminHome::termsMenuSelect');
+$routes->get('/ad/terms/termsEdit', 'AdminHome::termsEdit');
+$routes->post('/ad/terms/termsUpload', 'AdminHome::termsUpload');
+$routes->get('/ad/terms/termsView/(:num)', 'AdminHome::termsView/$1');
+$routes->get('/ad/terms/termsModify/(:num)', 'AdminHome::termsModify/$1');
+$routes->post('/ad/terms/termsUpdate', 'AdminHome::termsUpdate');

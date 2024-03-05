@@ -1,0 +1,44 @@
+body{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+.ad-box{
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+.ad-con{
+    width: 95%;
+    padding-left: 5%;
+    overflow-x: scroll;
+}
+.menu-panel {
+    width: 250px;
+    height: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #555;
+    padding-left: 20px;
+}
+
+.menu-item:last-child {
+    border-bottom: none;
+}
+
+.menu-item a {
+    color: #fff;
+    text-decoration: none;
+}

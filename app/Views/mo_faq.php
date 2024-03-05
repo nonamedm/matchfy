@@ -9,6 +9,7 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
 </head>
 
@@ -37,13 +38,13 @@
 
                 </div>
                 <div class="notice_wrap">
-
+                    <?php foreach ($faqs as $faq): ?>
                     <div class="notice_list">
-                        <div class="notice_list_label">
+                        <div class="notice_list_label faq_question">
                             <div>
-                                <h2><span class="question">Q</span>자주묻는질문 01</h2>
+                                <h2><span class="question">Q</span><?= $faq['title'] ?></h2>
                             </div>
-                            <div>
+                            <div class="faq_list_icon">
                                 <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999"
@@ -51,123 +52,19 @@
                                 </svg>
                             </div>
                         </div>
-                    </div>
-                    <hr class="hoz_part" />
-                    <div class="notice_list">
-                        <div class="notice_list_label">
-                            <div>
-                                <h2><span class="question">Q</span>자주묻는질문 02</h2>
-                            </div>
-                            <div>
-                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12.6569 9.34315L7 3.68629L1.34315 9.34315" stroke="#999999"
-                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="notice_list_label">
+                        <div class="notice_list_label faq_answer" style="display:none;">
                             <div class="faq_answer">
                                 <h2><span class="answer">A</span></h2>
                                 <div class="">
-                                    <p>답변 내용 영역입니다.</p>
-                                    <p>관리자에서 등록한 답변 내용을 볼 수 있습니다. </p>
-                                    <p>모임등록은 매치모임 > 모임등록 버튼을 누르시면</p>
-                                    <p>등록 가능합니다. </p>
+                                    <p>
+                                        <?=nl2br($faq['content']); ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <hr class="hoz_part" />
-                    <div class="notice_list">
-                        <div class="notice_list_label">
-                            <div>
-                                <h2><span class="question">Q</span>자주묻는질문 01</h2>
-                            </div>
-                            <div>
-                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999"
-                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="hoz_part" />
-                    <div class="notice_list">
-                        <div class="notice_list_label">
-                            <div>
-                                <h2><span class="question">Q</span>자주묻는질문 01</h2>
-                            </div>
-                            <div>
-                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999"
-                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="hoz_part" />
-                    <div class="notice_list">
-                        <div class="notice_list_label">
-                            <div>
-                                <h2><span class="question">Q</span>자주묻는질문 01</h2>
-                            </div>
-                            <div>
-                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999"
-                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="hoz_part" />
-                    <div class="notice_list">
-                        <div class="notice_list_label">
-                            <div>
-                                <h2><span class="question">Q</span>자주묻는질문 01</h2>
-                            </div>
-                            <div>
-                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999"
-                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="hoz_part" />
-                    <div class="notice_list">
-                        <div class="notice_list_label">
-                            <div>
-                                <h2><span class="question">Q</span>자주묻는질문 01</h2>
-                            </div>
-                            <div>
-                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999"
-                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="hoz_part" />
-                    <div class="notice_list">
-                        <div class="notice_list_label">
-                            <div>
-                                <h2><span class="question">Q</span>자주묻는질문 01</h2>
-                            </div>
-                            <div>
-                                <svg width="14" height="12" viewBox="0 0 14 12" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999"
-                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
@@ -177,7 +74,7 @@
 
 
         <div style="height: 50px;"></div>
-<footer class="footer">
+            <footer class="footer">
             
             <!-- <div class="footer_logo mb40">
                 matchfy
@@ -203,12 +100,33 @@
     <!-- SCRIPTS -->
 
     <script>
+        var icon_bf = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"'+
+                        'xmlns="http://www.w3.org/2000/svg">'+
+                        '<path d="M12.6569 9.34315L7 3.68629L1.34315 9.34315" stroke="#999999"'+
+                        'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />'+
+                        '</svg>';
+
+        var icon_af = '<svg width="14" height="12" viewBox="0 0 14 12" fill="none"'+
+                        'xmlns="http://www.w3.org/2000/svg">'+
+                        '<path d="M12.6569 4.65685L7 10.3137L1.34315 4.65685" stroke="#999999"'+
+                        'stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />'+
+                        '</svg>';
+
+        $(document).ready(function() {
+            toggleMenu();
+        }); 
+
         function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
+            $('.faq_question').click(function () {
+                var $answer = $(this).next('.faq_answer');
+                if ($answer.is(':visible')) {
+                    $answer.slideUp();
+                    $(this).children(0).eq(1).html(icon_af);
+                } else {
+                    $answer.slideDown();
+                    $(this).children(0).eq(1).html(icon_bf);
+                }
+            });
         }
     </script>
 

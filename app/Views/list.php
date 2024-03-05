@@ -36,6 +36,9 @@
     <a href="/mo/notice">공지사항</a><br />
     <a href="/mo/notice/view">공지사항 보기</a><br />
     <a href="/mo/faq">FAQ</a><br />
+    <a href="/ad/faq/faqEdit">관리자 - FAQ 작성</a><br />
+    <a href="/ad/faq/faqEdit">관리자 - FAQ 수정</a><br />
+    <a href="/ad/faq/faqList">관리자 - FAQ 리스트</a><br />
     <a href="/mo/terms">이용약관</a><br /><br />
 
     <a href="/mo/mypage">마이페이지</a><br />
