@@ -44,7 +44,7 @@
             ?>
         </div>
         <div class="ad-con">
-            <h2>이용약관 목록</h2> 
+            <h2>개인정보처리방침 목록</h2> 
             <a href="/ad/privacy/privacyEdit">등록</a><br />
             <?php foreach ($privacys as $privacy): ?>
                 <p><strong><?= $privacy['id'] ?></strong><?= $privacy['title'] ?></p>
