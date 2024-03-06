@@ -1599,6 +1599,35 @@ td {
     border-radius: 10px;
     background: url('/static/images/input_img_plus.png') no-repeat center;
 }
+.profile_photo_view {
+    width: 235px;
+    display: flex;
+    overflow-x: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE, Edge */
+    overflow: -moz-scrollbars-none; /* Firefox */
+}
+.profile_mov_view {
+    width: 235px;
+    display: flex;
+    overflow-x: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE, Edge */
+    overflow: -moz-scrollbars-none; /* Firefox */
+}
+.posted_delete_button {
+    position: absolute;
+    top: 5;
+    right: 5;
+    border: none;
+    border-radius: 50%;
+    background-color: #222222;
+    color: #b3b3b3;
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    font-weight: 700;
+}
 .form_row.signin_form .profile_photo_input.group_photo_input {
     width: 335px;
     height: 220px;

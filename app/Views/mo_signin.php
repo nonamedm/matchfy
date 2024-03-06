@@ -10,6 +10,7 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/static/js/basic.js"></script>
 </head>
 
@@ -34,9 +35,9 @@
 
         <div class="sub_wrap">
             <div class="content_wrap">
-                <form class="main_signin_form" method="post" action="/mo/signinType">
+                <form class="main_signin_form" method="post" action="/mo/signinType" enctype="multipart/form-data">
                     <div class="content_body">
-                        <a onclick="editPhoto()">
+                        <a id="profileArea" onclick="editPhoto()">
                             <img src="/static/images/profile_noimg.png" />
                         </a>
                     </div>
@@ -78,11 +79,9 @@
                                 <h4 class="profile_photo_label">사진 (1장 이상 필수)</h4>
                                 <div class="profile_photo_div">
                                     <label for="profile_photo" class="signin_label profile_photo_input"></label>
-                                    <input id="profile_photo" name="profile_photo" type="file" value="" placeholder="">
-                                    <div id="profile_photo_view">
-                                        <img class="profile_photo_posted" src="/static/images/input_img_1.png" />
-                                        <img class="profile_photo_posted" src="/static/images/input_img_2.png" />
-                                        <!-- <img class="profile_photo_posted" src="/static/images/input_img_3.png" /> -->
+                                    <input id="profile_photo" name="profile_photo" type="file" value="" placeholder=""
+                                        multiple>
+                                    <div id="profile_photo_view" class="profile_photo_view">
                                     </div>
                                 </div>
                             </div>
@@ -92,11 +91,9 @@
                                 <h4 class="profile_photo_label">동영상 프로필 (권장)</h4>
                                 <div class="profile_photo_div">
                                     <label for="profile_mov" class="signin_label profile_photo_input"></label>
-                                    <input id="profile_mov" name="profile_mov" type="file" value="" placeholder="">
-                                    <div>
-                                        <img class="profile_photo_posted" src="/static/images/input_img_1.png" />
-                                        <img class="profile_photo_posted" src="/static/images/input_img_2.png" />
-                                        <!-- <img class="profile_photo_posted" src="/static/images/input_img_3.png" /> -->
+                                    <input id="profile_mov" name="profile_mov" type="file" value="" placeholder=""
+                                        multiple>
+                                    <div id="profile_mov_view" class="profile_mov_view">
                                     </div>
                                 </div>
                             </div>
@@ -143,13 +140,11 @@
     <!-- SCRIPTS -->
 
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
+        $(document).ready(function () {
+            editPhotoListner();
+            editPhotoListListner();
+            editMovListListner();
+        });        
     </script>
 
     <!-- -->
