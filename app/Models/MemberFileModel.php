@@ -4,25 +4,24 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class MemberModel extends Model
+class MemberFileModel extends Model
 {
-    // protected $tableName;
-    protected $table = 'members';
+    protected $table            = 'memberfiles';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields = ['mobile_no', 'ci', 'agree1', 'agree2', 'agree3',
-                                'name', 'birthday', 'gender', 'city', 'town'];
+    protected $allowedFields    = ['member_idx', 'file_name', 'org_name', 'ext', 'reg_dt', 'extra1', 'extra2', 'extra3'];
 
     protected bool $allowEmptyInserts = false;
 
     // Dates
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
 
     // Validation
     protected $validationRules      = [];
@@ -40,5 +39,4 @@ class MemberModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
-    
 }
