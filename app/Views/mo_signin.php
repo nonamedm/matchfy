@@ -34,13 +34,16 @@
 
         <div class="sub_wrap">
             <div class="content_wrap">
-                <div class="content_body">
-                    <img src="/static/images/profile_noimg.png" />
-                </div>
-                <div class="btn_group">
-                    <button type="button" class="btn type02">프로필 사진수정</button>
-                </div>
                 <form class="main_signin_form" method="post" action="/mo/signinType">
+                    <div class="content_body">
+                        <a onclick="editPhoto()">
+                            <img src="/static/images/profile_noimg.png" />
+                        </a>
+                    </div>
+                    <div class="btn_group">
+                        <button type="button" class="btn type02" onclick="editPhoto()">프로필 사진수정</button>
+                        <input type="file" id="main_photo" name="main_photo" style="display:none;" />
+                    </div>
                     <legend></legend>
                     <div class="">
                         <div class="form_row signin_form">
@@ -75,8 +78,8 @@
                                 <h4 class="profile_photo_label">사진 (1장 이상 필수)</h4>
                                 <div class="profile_photo_div">
                                     <label for="profile_photo" class="signin_label profile_photo_input"></label>
-                                    <input id="profile_photo" type="file" value="" placeholder="">
-                                    <div>
+                                    <input id="profile_photo" name="profile_photo" type="file" value="" placeholder="">
+                                    <div id="profile_photo_view">
                                         <img class="profile_photo_posted" src="/static/images/input_img_1.png" />
                                         <img class="profile_photo_posted" src="/static/images/input_img_2.png" />
                                         <!-- <img class="profile_photo_posted" src="/static/images/input_img_3.png" /> -->
@@ -89,7 +92,7 @@
                                 <h4 class="profile_photo_label">동영상 프로필 (권장)</h4>
                                 <div class="profile_photo_div">
                                     <label for="profile_mov" class="signin_label profile_photo_input"></label>
-                                    <input id="profile_mov" type="file" value="" placeholder="">
+                                    <input id="profile_mov" name="profile_mov" type="file" value="" placeholder="">
                                     <div>
                                         <img class="profile_photo_posted" src="/static/images/input_img_1.png" />
                                         <img class="profile_photo_posted" src="/static/images/input_img_2.png" />

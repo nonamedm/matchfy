@@ -25,19 +25,19 @@ const certIdentify = () => {
     var mobileNoInput = document.createElement('input')
     mobileNoInput.setAttribute('type', 'hidden')
     mobileNoInput.setAttribute('name', 'mobile_no')
-    mobileNoInput.setAttribute('value', '01026220923')
+    mobileNoInput.setAttribute('value', '01026220923') // todo : 추후 인증 결과값으로 변경
     form.appendChild(mobileNoInput)
 
     var nameInput = document.createElement('input')
     nameInput.setAttribute('type', 'hidden')
     nameInput.setAttribute('name', 'name')
-    nameInput.setAttribute('value', '서승표')
+    nameInput.setAttribute('value', '서승표') // todo : 추후 인증 결과값으로 변경
     form.appendChild(nameInput)
 
     var birthdayInput = document.createElement('input')
     birthdayInput.setAttribute('type', 'hidden')
     birthdayInput.setAttribute('name', 'birthday')
-    birthdayInput.setAttribute('value', '19890923')
+    birthdayInput.setAttribute('value', '19890923') // todo : 추후 인증 결과값으로 변경
     form.appendChild(birthdayInput)
 
     // 폼을 body에 추가 후 제출
@@ -55,6 +55,10 @@ const certIdentify = () => {
     //     console.log(err)
     // },
     // })
+}
+const editPhoto = () => {
+    const profile_photo_input = document.getElementById('main_photo')
+    profile_photo_input.click();
 }
 
 const submitForm = () => {
@@ -81,7 +85,7 @@ const signIn = (postData) => {
     var postData = postData
     console.log(postData)
     $.ajax({
-        url: '/ajax/signIn', // 추후 본인인증 연결
+        url: '/ajax/signIn', // todo : 추후 본인인증 연결
         type: 'POST',
         data: postData,
         async: false,
@@ -96,8 +100,8 @@ const signIn = (postData) => {
             return false
         },
         error: function (data, status, err) {
-            alert('there was an error while fetching events!')
             console.log(err)
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
         },
     })
 }
