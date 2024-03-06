@@ -141,7 +141,7 @@ const editPhotoListner = () => {
         // 이전에 추가된 이미지 요소들을 모두 제거
         if (main_photo_input.files.length > 0) {
             const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i
-            if (!allowedExtensions.exec(main_photo_input.files[i].name)) {
+            if (!allowedExtensions.exec(main_photo_input.files[0].name)) {
                 alert('이미지 파일만 업로드할 수 있습니다.')
                 // 입력한 파일을 초기화하여 업로드를 취소
                 this.value = ''
@@ -242,7 +242,7 @@ const editMovListListner = () => {
                     // 입력한 파일을 초기화하여 업로드를 취소
                     this.value = ''
                 } else {
-                    formData.append('profile_photos[]', profile_mov_input.files[i])
+                    formData.append('profile_movs[]', profile_mov_input.files[i])
                     // FileReader 객체 생성
                     const reader = new FileReader()
 
@@ -268,7 +268,7 @@ const editMovListListner = () => {
                             // 이미지 요소 제거
                             imageElement.remove()
                             // FormData에서도 해당 파일 제거
-                            formData.delete('profile_photos[]', profile_photo_input.files[i])
+                            formData.delete('profile_movs[]', profile_photo_input.files[i])
                         })
                         // 이미지 요소에 삭제 버튼 추가
                         imageElement.appendChild(deleteButton)
