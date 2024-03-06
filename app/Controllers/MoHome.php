@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\BoardModel;
+use App\Helpers\MoHelper;
+
 class MoHome extends BaseController
 {
     public function index(): string
@@ -31,8 +34,32 @@ class MoHome extends BaseController
     }
     public function signinType(): string
     {
+
         // POST로 전달된 데이터 받아오기
         $postData = $this->request->getPost();
+
+        // 파일 가져오기
+        $main_photo = $this->request->getFile('main_photo');
+        // 파일이 올바르게 업로드되었는지 확인
+        if ($main_photo && $main_photo->isValid() && !$main_photo->hasMoved())
+        {
+            // 파일명 가져오기 -> 확장자 분리
+            $orgName = $main_photo->getClientName();
+            $ext = pathinfo($orgName, PATHINFO_EXTENSION);
+
+            // 난수생성
+            $moHelper = new MoHelper();
+            $newName = $moHelper->generateRandomString();
+
+            // 데이터 저장
+            $postData['main_photo_org'] = $orgName;
+            $postData['main_photo_ext'] = $ext;
+            $postData['main_photo_file_name'] = $newName . '.' . $ext;
+
+
+            $uploadDir = 'uploads/file';
+            $main_photo->move($uploadDir, $newName . '.' . $ext);
+        }
 
         // 모든 POST 데이터를 하나의 배열에 담기
         $data['postData'] = $postData;
@@ -74,7 +101,7 @@ class MoHome extends BaseController
         $BoardModel->setTableName('wh_board_faq');
         $data['faqs'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
 
-        return view('mo_faq',$data);
+        return view('mo_faq', $data);
     }
     public function terms(): string
     {
