@@ -17,6 +17,15 @@ class AdminHome extends BaseController
         return view('admin/ad_privacy_edit');
     }
 
+    public function privacyList(){
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_privacy');
+
+        $data['privacys'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
+
+        return view('admin/ad_privacy_list',$data);
+    }
+    
     public function privacyMenuSelect(){
         
         $BoardModel = new BoardModel();
@@ -105,7 +114,16 @@ class AdminHome extends BaseController
     {
         return view('admin/ad_terms_edit');
     }
+    
+    public function termsList(){
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_terms');
 
+        $data['termss'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
+
+        return view('admin/ad_terms_list',$data);
+    }
+    
     public function termsMenuSelect(){
         
         $BoardModel = new BoardModel();

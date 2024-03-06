@@ -40,6 +40,7 @@
         </div>
         <div class="ad-con">
             <h2>이용약관</h2>
+                <a href="/ad/terms/termsList">목록으로 돌아가기</a>
                 <input type="hidden" id="terms_id" name="terms_id" value="<?= $terms['id'] ?>"/>
                 <label for="title">제목:</label><br>
                 <p><?= $terms['title'] ?></p><br>

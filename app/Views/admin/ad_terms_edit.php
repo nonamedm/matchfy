@@ -41,7 +41,7 @@
         </div>
         <div class="ad-con">
             <h2>이용약관 작성</h2>
-
+            <a href="/ad/terms/termsList">목록으로 돌아가기</a></br>
             <form action="/ad/terms/termsUpload" method="post">
                 <label for="title">제목:</label><br>
                 <input type="text" id="title" name="title"><br>
