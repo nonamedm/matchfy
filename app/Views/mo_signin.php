@@ -74,7 +74,7 @@
                                 <input id="city" name="city" type="text" value="city value" placeholder="이름을 입력하세요">
                             </div>
                         </div>
-                        <div class="form_row signin_form">
+                        <!-- <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <h4 class="profile_photo_label">사진 (1장 이상 필수)</h4>
                                 <div class="profile_photo_div">
@@ -97,9 +97,12 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <input type="hidden" name="town" value="town value" />
                         <input type="hidden" name="mobile_no" value="<?php echo $mobile_no ?>" />
+                        <div id="main_photo_uploaded" style="display:none;"></div>
+                        <!-- <div id="profile_photo_uploaded" style="display:none;"></div>
+                        <div id="profile_mov_uploaded" style="display:none;"></div> -->
                         <div class="btn_group multy">
                             <button type="button" class="btn type02">취소</button>
                             <button type="button" class="btn type01" onclick="submitForm()">다음</button>
@@ -142,8 +145,8 @@
     <script>
         $(document).ready(function () {
             editPhotoListner();
-            editPhotoListListner();
-            editMovListListner();
+            // editPhotoListListner();
+            // editMovListListner();
         });        
     </script>
 
