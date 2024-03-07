@@ -43,7 +43,7 @@ class MoAjax extends BaseController
     public function joinMatchfy()
     {
 
-        $postData = $this->request->getPost();
+        // $postData = $this->request->getPost();
 
         $mobile_no = $this->request->getPost('mobile_no');
         $ci = $this->request->getPost('ci');
@@ -73,8 +73,9 @@ class MoAjax extends BaseController
 
         // 데이터 저장
         $inserted = $MemberModel->insert($data);
-        
-        if($inserted) {
+
+        if ($inserted)
+        {
             return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
         } else
         {
@@ -83,7 +84,8 @@ class MoAjax extends BaseController
     }
 
     /* 사용자 파일 저장 */
-    public function memberUploadFiles() {
+    public function memberUploadFiles()
+    {
         $member_idx = $this->request->getPost('member_idx');
         $file_path = $this->request->getPost('file_path');
         $file_name = $this->request->getPost('file_name');
@@ -118,7 +120,8 @@ class MoAjax extends BaseController
     
 
     /* 회원 등급 업데이트 */
-    public function gradeUpdate() {
+    public function gradeUpdate()
+    {
         $member_idx = $this->request->getPost('member_idx');
         $grade = $this->request->getPost('grade');
 
@@ -137,7 +140,8 @@ class MoAjax extends BaseController
     }
 
     /* 정회원 및 프리미엄 등급 업데이트*/
-    public function updateMemberInfo($isPremium = false) {
+    public function updateMemberInfo($isPremium = false)
+    {
         $postData = [
             'married' => $this->request->getPost('married'),
             'smoker' => $this->request->getPost('smoker'),
@@ -153,8 +157,9 @@ class MoAjax extends BaseController
             'asset_range' => $this->request->getPost('asset_range'),
             'income_range' => $this->request->getPost('income_range'),
         ];
-    
-        if ($isPremium) {
+
+        if ($isPremium)
+        {
             // 프리미엄 회원에만 해당하는 추가 정보
             $premiumData = [
                 'father_birth_year' => $this->request->getPost('father_birth_year'),
@@ -166,14 +171,14 @@ class MoAjax extends BaseController
                 'residence2' => $this->request->getPost('residence2'),
                 'residence3' => $this->request->getPost('residence3'),
             ];
-    
+
             // 배열 병합
             $postData = array_merge($postData, $premiumData);
         }
-    
+
         $member_idx = $this->request->getPost('member_idx');
         $MemberModel = new MemberModel();
-    
+
         $updated = $MemberModel->update($member_idx, $postData);
 
         if($updated) {
@@ -183,14 +188,16 @@ class MoAjax extends BaseController
             return $this->response->setJSON(['status' => 'fail', 'message' => $isPremium ? "프리미엄 정보 업데이트 실패. $error" : "정회원 정보 업데이트 실패. $error"]);
         }
     }
-    
+
     // 정회원 업데이트를 위한 호출
-    public function StandardInfoUpdate() {
+    public function StandardInfoUpdate()
+    {
         $this->updateMemberInfo(false);
     }
-    
+
     // 프리미엄 회원 업데이트를 위한 호출
-    public function PremiumMemberInfoUpdate() {
+    public function PremiumMemberInfoUpdate()
+    {
         $this->updateMemberInfo(true);
     }
 }
