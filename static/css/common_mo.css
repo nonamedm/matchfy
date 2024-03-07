@@ -1716,7 +1716,7 @@ form input[type='file'] {
 
     color: #999999;
 }
-.agree_cont textarea {
+.agree_cont .textarea {
     width: 335px;
     height: 110px;
     border: 1px solid #dddddd;

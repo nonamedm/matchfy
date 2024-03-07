@@ -20,10 +20,12 @@ class MoHome extends BaseController
     {
         $postData = $this->request->getPost();
 
-        // 특정 키의 POST 값만 받아오기
-        $mobile_no = $this->request->getPost('mobile_no');
-        $name = $this->request->getPost('name');
-        $birthday = $this->request->getPost('birthday');
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_terms');
+        $postData['terms'] = $BoardModel->orderBy('created_at', 'DESC')->first();
+
+        $BoardModel->setTableName('wh_board_privacy');
+        $postData['privacy'] = $BoardModel->orderBy('created_at', 'DESC')->first();
 
         return view('mo_agree', $postData);
     }
