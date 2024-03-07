@@ -30,30 +30,26 @@ class AdminHome extends BaseController
     {
         $title = $this->request->getPost('title');
         $content = $this->request->getPost('content');
-        // 파일 업로드 처리
         $file = $this->request->getFile('userfile');
     
-        // 파일 업로드 라이브러리 설정
+    
         $uploadConfig = [
             'upload_path' => WRITEPATH . 'uploads', // 파일을 저장할 경로
-            'allowed_types' => 'gif|jpg|png|pdf', // 허용되는 파일 유형
+            'allowed_types' => 'gif|jpg|png|pdf|hwp|txt', // 허용되는 파일 유형
             'max_size' => 1024 * 8, // 최대 파일 크기 (8MB)
             'encrypt_name' => true // 파일명 암호화
         ];
-    
-        // 업로드 경로
+        
         $uploadPath = $uploadConfig['upload_path'];
     
-        // 파일이 올바르게 업로드되었는지 확인
+        
         if ($file->isValid()) {
-            // 파일명 생성
+            
             $fileName = $file->getRandomName();
-    
-            // 파일을 임시 경로에서 지정된 디렉토리로 이동
             $tempFilePath = $file->getTempName();
+            
             if (move_uploaded_file($tempFilePath, $uploadPath . '/' . $fileName)) {
-                // 파일 업로드 성공 시
-                // 게시글 정보를 데이터베이스에 저장합니다.
+                
                 $BoardModel = new BoardModel();
                 $BoardModel->setTableName('wh_board_notice');
 
@@ -69,8 +65,6 @@ class AdminHome extends BaseController
                 if ($boardId) {
                     $insertedData = $BoardModel->where('id', $boardId)->first();
                     $boardType = $insertedData['board_type'];
-                    
-                    // 파일 업로드 정보를 데이터베이스에 저장합니다.
                     $fileModel = new BoardFileModel();
                     $filePath = $uploadPath . '/' . $fileName;
                     
@@ -93,10 +87,6 @@ class AdminHome extends BaseController
             return redirect()->to("/ad/notice/noticeList")->with('msg', '에러');
         }
     }
-    
-
- 
-
 
     // public function noticeUpload(){
     //     $title = $this->request->getPost('title');
