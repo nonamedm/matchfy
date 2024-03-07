@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\BoardModel;
+use App\Models\BoardFileModel;
 
 class AdminHome extends BaseController
 {
@@ -10,8 +11,161 @@ class AdminHome extends BaseController
     {
         return view('admin/header');
     }
+    /*공지사항*/
+    public function noticeEdit(): string
+    {
+        return view('admin/ad_notice_edit');
+    }
 
-    /*개인정보처리방침 확인*/
+    public function noticeList(){
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_notice');
+
+        $data['notices'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
+
+        return view('admin/ad_notice_list',$data);
+    }
+
+    public function noticeUpload()
+    {
+        $title = $this->request->getPost('title');
+        $content = $this->request->getPost('content');
+        // 파일 업로드 처리
+        $file = $this->request->getFile('userfile');
+    
+        // 파일 업로드 라이브러리 설정
+        $uploadConfig = [
+            'upload_path' => WRITEPATH . 'uploads', // 파일을 저장할 경로
+            'allowed_types' => 'gif|jpg|png|pdf', // 허용되는 파일 유형
+            'max_size' => 1024 * 8, // 최대 파일 크기 (8MB)
+            'encrypt_name' => true // 파일명 암호화
+        ];
+    
+        // 업로드 경로
+        $uploadPath = $uploadConfig['upload_path'];
+    
+        // 파일이 올바르게 업로드되었는지 확인
+        if ($file->isValid()) {
+            // 파일명 생성
+            $fileName = $file->getRandomName();
+    
+            // 파일을 임시 경로에서 지정된 디렉토리로 이동
+            $tempFilePath = $file->getTempName();
+            if (move_uploaded_file($tempFilePath, $uploadPath . '/' . $fileName)) {
+                // 파일 업로드 성공 시
+                // 게시글 정보를 데이터베이스에 저장합니다.
+                $BoardModel = new BoardModel();
+                $BoardModel->setTableName('wh_board_notice');
+
+                $data = [
+                    'title' => $title,
+                    'content' => $content,
+                    'author' => 'admin',
+                    'board_type' => 'notice',
+                    'used' => 1
+                ];
+                $boardId = $BoardModel->insert($data);
+
+                if ($boardId) {
+                    $insertedData = $BoardModel->where('id', $boardId)->first();
+                    $boardType = $insertedData['board_type'];
+                    
+                    // 파일 업로드 정보를 데이터베이스에 저장합니다.
+                    $fileModel = new BoardFileModel();
+                    $filePath = $uploadPath . '/' . $fileName;
+                    
+                    $data = [
+                        'file_name' =>  $fileName,
+                        'file_path' =>  $filePath,
+                        'upload_date' => date('Y-m-d H:i:s'),
+                        'board_id' => $boardId,
+                        'board_type' => $boardType
+                    ];
+
+                    $fileModel->saveFileUpload($data);
+                    return redirect()->to("/ad/notice/noticeList")->with('msg', '등록이 완료되었습니다.');
+                }
+            } else {
+                return redirect()->to("/ad/notice/noticeList")->with('msg', '등록이 실패 되었습니다.');
+            }
+        } else {
+            // 업로드된 파일이 유효하지 않은 경우 에러 메시지를 표시합니다.
+            return redirect()->to("/ad/notice/noticeList")->with('msg', '에러');
+        }
+    }
+    
+
+ 
+
+
+    // public function noticeUpload(){
+    //     $title = $this->request->getPost('title');
+    //     $content = $this->request->getPost('content');
+
+    //     $BoardModel = new BoardModel();
+    //     $BoardModel->setTableName('wh_board_notice');
+    //     $data = [
+    //         'title' => $title,
+    //         'content' => $content,
+    //         'author' => 'admin',
+    //         'board_type' => 'notice',
+    //         'used' => 1
+    //     ];
+
+    //     $inserted = $BoardModel->insert($data);
+
+    //     if ($inserted) {
+    //         $insertedId = $BoardModel->insertID();
+    //         return redirect()->to("/ad/notice/noticeView/{$insertedId}")->with('msg', '등록이 완료되었습니다.');
+    //     } else {
+    //         return redirect()->to('/ad/notice/noticeEdit')->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
+    //     }
+    // }
+
+    public function noticeView($id){
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_notice');
+        $data['notice'] = $BoardModel->find($id); // 해당 아이디로 데이터를 조회합니다.
+
+        return view('admin/ad_notice_view', $data);
+    }
+
+    public function noticeModify($id){
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_notice');
+        $data['notice'] = $BoardModel->find($id); // 해당 아이디로 데이터를 조회합니다.
+
+        // 데이터가 없을 경우에 대한 처리
+        if ($data['notice'] === null) {
+            return redirect()->to('/ad/notice/noticeList')->with('msg', '해당 데이터를 찾을 수 없습니다.');
+        }
+
+        return view('admin/ad_notice_modify', $data);
+    }
+
+    public function noticeUpdate(){
+        $id = $this->request->getPost('notice_id');
+        $title = $this->request->getPost('title');
+        $content = $this->request->getPost('content');
+
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_notice');
+
+        $updated = $BoardModel->update($id, [
+            'title' => $title,
+            'content' => $content,
+            'updated_at'=>'admin'
+        ]);
+
+        if ($updated) {
+            // 업데이트가 성공하면 수정된 데이터의 ID를 가져와서 해당 view 페이지로 리다이렉트합니다.
+            return redirect()->to("/ad/notice/noticeView/{$id}")->with('msg', '수정이 완료되었습니다.');
+        } else {
+            return redirect()->to("/ad/notice/noticeEdit/{$id}")->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
+        }
+    }
+
+    /*개인정보처리방침*/
     public function privacyEdit(): string
     {
         return view('admin/ad_privacy_edit');
@@ -53,6 +207,7 @@ class AdminHome extends BaseController
             'title' => $title,
             'content' => $content,
             'author' => 'admin',
+            'board_type' => 'privacy',
             'used' => 1
         ];
 
@@ -151,6 +306,7 @@ class AdminHome extends BaseController
             'title' => $title,
             'content' => $content,
             'author' => 'admin',
+            'board_type' => 'terms',
             'used' => 1
         ];
 
@@ -227,6 +383,7 @@ class AdminHome extends BaseController
         $data = [
             'title' => $title,
             'content' => $content,
+            'board_type' => 'faq',
             'author' => 'admin',
 
         ];

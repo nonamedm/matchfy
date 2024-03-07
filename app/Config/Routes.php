@@ -91,3 +91,11 @@ $routes->get('/ad/privacy/privacyList', 'AdminHome::privacyList');
 $routes->get('/ad/privacy/privacyView/(:num)', 'AdminHome::privacyView/$1');
 $routes->get('/ad/privacy/privacyModify/(:num)', 'AdminHome::privacyModify/$1');
 $routes->post('/ad/privacy/privacyUpdate', 'AdminHome::privacyUpdate');
+
+$routes->get('/ad/notice/noticeMenuSelect', 'AdminHome::noticeMenuSelect');
+$routes->get('/ad/notice/noticeEdit', 'AdminHome::noticeEdit');
+$routes->post('/ad/notice/noticeUpload', 'AdminHome::noticeUpload');
+$routes->get('/ad/notice/noticeList', 'AdminHome::noticeList');
+$routes->get('/ad/notice/noticeView/(:num)', 'AdminHome::noticeView/$1');
+$routes->get('/ad/notice/noticeModify/(:num)', 'AdminHome::noticeModify/$1');
+$routes->post('/ad/notice/noticeUpdate', 'AdminHome::noticeUpdate');
