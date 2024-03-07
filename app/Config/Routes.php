@@ -69,9 +69,10 @@ $routes->get('/mo/partner', 'MoHome::partner');
 $routes->get('/mo/partner/regular', 'MoHome::partnerRegular');
 $routes->get('/mo/partner/premium', 'MoHome::partnerPremium');
 
+// file upload
+$routes->post('/upload', 'Upload::upload');
 
 // ajax
-// $routes->post('/ajax/(:any)', 'MoAjax::$1');
 $routes->post('/ajax/signIn', 'MoAjax::joinMatchfy');
 
 /*관리자페이지*/

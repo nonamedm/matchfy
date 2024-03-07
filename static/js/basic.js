@@ -137,7 +137,7 @@ const editPhoto = () => {
 const editPhotoListner = () => {
     const main_photo_input = document.getElementById('main_photo')
     const imgRegist = document.getElementById('profileArea')
-    main_photo_input.addEventListener('change', function () {
+    main_photo_input.addEventListener('change', function (e) {
         // 이전에 추가된 이미지 요소들을 모두 제거
         if (main_photo_input.files.length > 0) {
             const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i
@@ -169,6 +169,9 @@ const editPhotoListner = () => {
                 }
                 // 파일 읽기 시작
                 reader.readAsDataURL(latestFile)
+                
+                // 파일데이터를 담아서 함수에 전달, 리턴값 받기
+                fileUpload(latestFile)
             }
         } else {
         }
@@ -280,5 +283,31 @@ const editMovListListner = () => {
             }
         } else {
         }
+    })
+}
+
+const fileUpload = file => {
+    var formData = new FormData();
+    formData.append('file', file);
+    $.ajax({
+        url: '/upload', // todo : 추후 본인인증 연결
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        async: false,
+        success: function (res) {
+            if (res) {
+                // 성공시 res에서 return값을 받아와 저장하기 -> 다른 formData와 함께 전송
+                console.log(res);
+            } else {
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+            }
+            return false
+        },
+        error: function (res, status, err) {
+            console.log(err)
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+        },
     })
 }

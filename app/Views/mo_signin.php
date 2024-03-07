@@ -43,7 +43,7 @@
                     </div>
                     <div class="btn_group">
                         <button type="button" class="btn type02" onclick="editPhoto()">프로필 사진수정</button>
-                        <input type="file" id="main_photo" name="main_photo" style="display:none;" />
+                        <input type="file" id="main_photo" name="main_photo" style="display:none;" accept="image/*" />
                     </div>
                     <legend></legend>
                     <div class="">
@@ -80,7 +80,7 @@
                                 <div class="profile_photo_div">
                                     <label for="profile_photo" class="signin_label profile_photo_input"></label>
                                     <input id="profile_photo" name="profile_photo" type="file" value="" placeholder=""
-                                        multiple>
+                                        multiple accept="image/*">
                                     <div id="profile_photo_view" class="profile_photo_view">
                                     </div>
                                 </div>

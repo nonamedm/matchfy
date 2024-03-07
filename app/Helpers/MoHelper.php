@@ -14,11 +14,6 @@ class MoHelper
         // 반환
         return substr($randomString, 0, $length);
     }
-
-    public function uploadFile(): string
-    {
-
-    }
 }
 
 ?>
