@@ -70,7 +70,7 @@ const userLogin = () => {
             success: function (data) {
                 console.log(data)
                 if (data) {
-                    //location.href = '/index/login'
+                    location.href = '/index/login'
                 } else {
                     alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
                 }
