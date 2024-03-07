@@ -169,9 +169,24 @@ const editPhotoListner = () => {
                 }
                 // 파일 읽기 시작
                 reader.readAsDataURL(latestFile)
-                
-                // 파일데이터를 담아서 함수에 전달, 리턴값 받기
+
+                // javascript에서 fileUpload 호출
                 fileUpload(latestFile)
+                    .then((data) => {
+                        console.log('result : ', data)
+                        $('#main_photo_uploaded').html('')
+                        const org_name = $('<input type="hidden">').attr('name', 'org_name').val(data.org_name)
+                        $('#main_photo_uploaded').append(org_name)
+                        const file_name = $('<input type="hidden">').attr('name', 'file_name').val(data.file_name)
+                        $('#main_photo_uploaded').append(file_name)
+                        const file_path = $('<input type="hidden">').attr('name', 'file_path').val(data.file_path)
+                        $('#main_photo_uploaded').append(file_path)
+                        const ext = $('<input type="hidden">').attr('name', 'ext').val(data.ext)
+                        $('#main_photo_uploaded').append(ext)
+                    })
+                    .catch((error) => {
+                        console.error('error : ', error)
+                    })
             }
         } else {
         }
@@ -225,6 +240,15 @@ const editPhotoListListner = () => {
 
                     // 파일 읽기 시작
                     reader.readAsDataURL(profile_photo_input.files[i])
+
+                    // javascript에서 fileUpload 호출
+                    fileUpload(profile_photo_input.files[i])
+                        .then((data) => {
+                            console.log('result : ', data)
+                        })
+                        .catch((error) => {
+                            console.error('error : ', error)
+                        })
                 }
             }
         } else {
@@ -286,28 +310,33 @@ const editMovListListner = () => {
     })
 }
 
-const fileUpload = file => {
-    var formData = new FormData();
-    formData.append('file', file);
-    $.ajax({
-        url: '/upload', // todo : 추후 본인인증 연결
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        async: false,
-        success: function (res) {
-            if (res) {
-                // 성공시 res에서 return값을 받아와 저장하기 -> 다른 formData와 함께 전송
-                console.log(res);
-            } else {
+const fileUpload = (file) => {
+    console.log('전달값 확인 : ', file)
+    return new Promise((resolve, reject) => {
+        var formData = new FormData()
+        formData.append('file', file)
+        // console.log('첨부파일 확인 : ', formData.get('file'))
+        $.ajax({
+            url: '/upload', // todo : 추후 본인인증 연결
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function (res) {
+                if (res) {
+                    // console.log('result : ', res)
+                    resolve(res.data)
+                } else {
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+                    reject('오류가 발생하였습니다. \n다시 시도해 주세요.')
+                }
+            },
+            error: function (res, status, err) {
+                console.log(err)
                 alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
-            }
-            return false
-        },
-        error: function (res, status, err) {
-            console.log(err)
-            alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
-        },
+                reject('오류가 발생하였습니다. \n다시 시도해 주세요.')
+            },
+        })
     })
 }

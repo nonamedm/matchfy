@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Controllers;
 
 use CodeIgniter\Files\File;
@@ -16,48 +16,32 @@ class Upload extends BaseController
     public function upload()
     {
         // 파일 가져오기 -> input name 지정
-        $file = $this->request->getFiles();
+        $file = $this->request->getFile('file');
         // 파일이 올바르게 업로드되었는지 확인
-        if ($file && $file[0]->isValid() && !$file[0]->hasMoved())
+        if ($file && $file->isValid() && !$file->hasMoved())
         {
-            
+
             // 파일명 가져오기 -> 확장자 분리
-            $orgName = $file[0]->getClientName();
-            $ext = $file[0]->getClientExtension();
+            $orgName = $file->getClientName();
+            $ext = $file->getClientExtension();
 
             // 난수생성
-            $newName = $file[0]->getRandomName();
+            $newName = $file->getRandomName();
 
             // 데이터 저장
             $postData['org_name'] = $orgName;
             $postData['ext'] = $ext;
-            $postData['file_name'] = $newName . '.' . $ext;
+            $postData['file_name'] = $newName;
             $uploadDir = 'uploads/file';
             $postData['file_path'] = $uploadDir;
 
 
-            $file[0]->move(WRITEPATH . $uploadDir, $newName);
-        } else {
-            $postData['file_path'] = '나가리';
+            $file->move(WRITEPATH . $uploadDir, $newName);
+        } else
+        {
+            $postData['fail'] = '파일전송 실패';
         }
         return $this->response->setJSON(['status' => 'success', 'message' => 'upload success', 'data' => $postData]);
-    }
-    public function uploadMulty()
-    {
-        // 파일 가져오기 -> input name 지정
-        $files = $this->request->getFiles();
-        // 파일이 올바르게 업로드되었는지 확인
-        if ($files)
-        {
-            foreach ($files['input_name'] as $file) {
-                if ($file->isValid() && ! $file->hasMoved()) {
-                    $newName = $file->getRandomName();
-                    $file->move(WRITEPATH . 'uploads/file', $newName);
-                }
-            }
-
-
-        }
     }
 }
 
