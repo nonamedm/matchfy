@@ -186,38 +186,60 @@ const editPhotoListner = () => {
                 const reader = new FileReader()
 
                 // 파일 읽기가 완료되었을 때 실행되는 콜백 함수 정의
-                reader.onload = function (e) {
-                    // 이미지 요소 생성
-                    const imageElement = document.createElement('img')
-                    // 이미지 요소에 읽어온 파일의 URL 할당
-                    imageElement.src = e.target.result
-                    // 이미지에 스타일 적용
-                    imageElement.style.borderRadius = '50%'
-                    imageElement.style.width = '74px'
-                    imageElement.style.height = '74px'
-                    // 이미지를 이미지 컨테이너에 추가
-                    imgRegist.appendChild(imageElement)
-                }
-                // 파일 읽기 시작
-                reader.readAsDataURL(latestFile)
-
-                // javascript에서 fileUpload 호출
                 fileUpload(latestFile)
                     .then((data) => {
                         console.log('result : ', data)
-                        $('#main_photo_uploaded').html('')
-                        const org_name = $('<input type="hidden">').attr('name', 'org_name').val(data.org_name)
-                        $('#main_photo_uploaded').append(org_name)
-                        const file_name = $('<input type="hidden">').attr('name', 'file_name').val(data.file_name)
-                        $('#main_photo_uploaded').append(file_name)
-                        const file_path = $('<input type="hidden">').attr('name', 'file_path').val(data.file_path)
-                        $('#main_photo_uploaded').append(file_path)
-                        const ext = $('<input type="hidden">').attr('name', 'ext').val(data.ext)
-                        $('#main_photo_uploaded').append(ext)
+                        if (data.org_name) {
+                            $('#main_photo_uploaded').html('')
+                            const org_name = $('<input type="hidden">').attr('name', 'org_name').val(data.org_name)
+                            $('#main_photo_uploaded').append(org_name)
+                            const file_name = $('<input type="hidden">').attr('name', 'file_name').val(data.file_name)
+                            $('#main_photo_uploaded').append(file_name)
+                            const file_path = $('<input type="hidden">').attr('name', 'file_path').val(data.file_path)
+                            $('#main_photo_uploaded').append(file_path)
+                            const ext = $('<input type="hidden">').attr('name', 'ext').val(data.ext)
+                            $('#main_photo_uploaded').append(ext)
+
+                            // 첨부사진을 화면에 뿌림
+                            reader.onload = function (e) {
+                                // 이미지 요소 생성
+                                const imageElement = document.createElement('img')
+                                // 이미지 요소에 읽어온 파일의 URL 할당
+                                imageElement.src = e.target.result
+                                // 이미지에 스타일 적용
+                                imageElement.style.borderRadius = '50%'
+                                imageElement.style.width = '74px'
+                                imageElement.style.height = '74px'
+                                // 이미지를 이미지 컨테이너에 추가
+                                imgRegist.appendChild(imageElement)
+                            }
+                            // 파일 읽기 시작
+                            reader.readAsDataURL(latestFile)
+                        } else {
+                            const imageElement = document.createElement('img')
+                            // 이미지 요소에 읽어온 파일의 URL 할당
+                            imageElement.src = '/static/images/profile_noimg.png'
+                            // 이미지에 스타일 적용
+                            imageElement.style.borderRadius = '50%'
+                            imageElement.style.width = '74px'
+                            imageElement.style.height = '74px'
+                            // 이미지를 이미지 컨테이너에 추가
+                            imgRegist.appendChild(imageElement)
+                            alert('사진 사이즈가 너무 큽니다. \n다른 사진을 첨부해 주세요.')
+                        }
                     })
                     .catch((error) => {
                         console.error('error : ', error)
+                        const imageElement = document.createElement('img')
+                        // 이미지 요소에 읽어온 파일의 URL 할당
+                        imageElement.src = '/static/images/profile_noimg.png'
+                        // 이미지에 스타일 적용
+                        imageElement.style.borderRadius = '50%'
+                        imageElement.style.width = '74px'
+                        imageElement.style.height = '74px'
                     })
+
+                // javascript에서 fileUpload 호출
             }
         } else {
         }
