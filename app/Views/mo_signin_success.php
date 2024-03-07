@@ -10,6 +10,7 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -29,10 +30,10 @@
                 </div>
             </div>
             <div style="height: 50px;"></div>
-<footer class="footer">
-                
+            <footer class="footer">
+
                 <div class="btn_group">
-                    <button type="button" class="btn type01">메인화면으로 이동</button>
+                    <button type="button" class="btn type01" onclick='moveToUrl("/")'>메인화면으로 이동</button>
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy

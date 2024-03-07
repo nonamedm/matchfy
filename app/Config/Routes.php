@@ -10,9 +10,9 @@ $routes->get('/publish', 'Home::list');
 $routes->get('/index/login', 'Home::indexLogin');
 $routes->get('/mo', 'MoHome::index');
 $routes->get('/mo/pass', 'MoHome::pass');
-$routes->get('/mo/agree', 'MoHome::agree');
-$routes->get('/mo/signin', 'MoHome::signin');
-$routes->get('/mo/signinType', 'MoHome::signinType');
+$routes->post('/mo/agree', 'MoHome::agree');
+$routes->post('/mo/signin', 'MoHome::signin');
+$routes->post('/mo/signinType', 'MoHome::signinType');
 $routes->get('/mo/signinSuccess', 'MoHome::signinSuccess');
 $routes->get('/mo/signinRegular', 'MoHome::signinRegular');
 $routes->get('/mo/signinPremium', 'MoHome::signinPremium');
@@ -99,3 +99,8 @@ $routes->get('/ad/notice/noticeList', 'AdminHome::noticeList');
 $routes->get('/ad/notice/noticeView/(:num)', 'AdminHome::noticeView/$1');
 $routes->get('/ad/notice/noticeModify/(:num)', 'AdminHome::noticeModify/$1');
 $routes->post('/ad/notice/noticeUpdate', 'AdminHome::noticeUpdate');
+
+
+// ajax
+// $routes->post('/ajax/(:any)', 'MoAjax::$1');
+$routes->post('/ajax/signIn', 'MoAjax::joinMatchfy');

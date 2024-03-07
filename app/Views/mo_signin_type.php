@@ -10,6 +10,8 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -36,76 +38,77 @@
                 <div class="content_title">
                     <h2 class="member_grade">멤버십 등급에 따라<br />혜택을 제공 받으세요</h2>
                 </div>
-                <div class="content_body">
-                    <div class="grade_box">
-                        <div class="grade_box_title">
-                            <div class="chk_box radio_box">
-                                <input type="radio" id="grade01" name="grade" checked="">
-                                <label for="grade01">
-                                    <h2>준회원</h2>
-                                </label>
+                <form class="main_signin_form" method="post" action="">
+                    <div class="content_body">
+                        <div class="grade_box">
+                            <div class="grade_box_title">
+                                <div class="chk_box radio_box">
+                                    <input type="radio" id="grade01" name="grade" checked="">
+                                    <label for="grade01">
+                                        <h2>준회원</h2>
+                                    </label>
+                                </div>
+                                <span>Free</span>
                             </div>
-                            <span>Free</span>
-                        </div>
-                        <div class="grade_box_cont">
-                            <p>기본정보</p>
-                            <span>이름 / 생년월일 / 성별</span>
-                        </div>
-                    </div>
-                    <div class="grade_box">
-                        <div class="grade_box_title">
-                            <div class="chk_box radio_box">
-                                <input type="radio" id="grade02" name="grade" checked="">
-                                <label for="grade02">
-                                    <h2>정회원 등급 업그레이드</h2>
-                                </label>
+                            <div class="grade_box_cont">
+                                <p>기본정보</p>
+                                <span>이름 / 생년월일 / 성별</span>
                             </div>
-                            <div class="grade_box_price">
-                                <img src="/static/images/now_signin.png" />
-                                <div class="price_box">
-                                    <p class="org_price">109,900</p>
-                                    <p class="tot_price">99,000</p>
+                        </div>
+                        <div class="grade_box">
+                            <div class="grade_box_title">
+                                <div class="chk_box radio_box">
+                                    <input type="radio" id="grade02" name="grade" checked="">
+                                    <label for="grade02">
+                                        <h2>정회원 등급 업그레이드</h2>
+                                    </label>
+                                </div>
+                                <div class="grade_box_price">
+                                    <img src="/static/images/now_signin.png" />
+                                    <div class="price_box">
+                                        <p class="org_price">109,900</p>
+                                        <p class="tot_price">99,000</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="grade_box_cont">
-                            <p>기본정보 + 추가정보</p>
-                            <span>결혼유무 / 흡연유무 / 음주회수(주) / 종교 /</span><br />
-                            <span>MBTI/키/ 스타일 / 학력 / 학교명 / 전공 /</span><br />
-                            <span>직업/ 자산구간 / 소득구간</span>
-                        </div>
-                    </div>
-                    <div class="grade_box">
-                        <div class="grade_box_title">
-                            <div class="chk_box radio_box">
-                                <input type="radio" id="grade03" name="grade" checked="">
-                                <label for="grade03">
-                                    <h2>프리미엄 등급 업그레이드</h2>
-                                </label>
+                            <div class="grade_box_cont">
+                                <p>기본정보 + 추가정보</p>
+                                <span>결혼유무 / 흡연유무 / 음주회수(주) / 종교 /</span><br />
+                                <span>MBTI/키/ 스타일 / 학력 / 학교명 / 전공 /</span><br />
+                                <span>직업/ 자산구간 / 소득구간</span>
                             </div>
-                            <div class="grade_box_price">
-                                <img src="/static/images/now_signin.png" />
-                                <div class="price_box">
-                                    <p class="org_price">1,399,900</p>
-                                    <p class="tot_price">990,000</p>
+                        </div>
+                        <div class="grade_box">
+                            <div class="grade_box_title">
+                                <div class="chk_box radio_box">
+                                    <input type="radio" id="grade03" name="grade" checked="">
+                                    <label for="grade03">
+                                        <h2>프리미엄 등급 업그레이드</h2>
+                                    </label>
+                                </div>
+                                <div class="grade_box_price">
+                                    <img src="/static/images/now_signin.png" />
+                                    <div class="price_box">
+                                        <p class="org_price">1,399,900</p>
+                                        <p class="tot_price">990,000</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="grade_box_cont">
-                            <p>기본정보 + 추가정보 인증</p>
-                            <span>추가 정보 중</span><br />
-                            <span>확인 가능한 정보 인증 </span>
+                            <div class="grade_box_cont">
+                                <p>기본정보 + 추가정보 인증</p>
+                                <span>추가 정보 중</span><br />
+                                <span>확인 가능한 정보 인증 </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <form class="main_signin_form">
-                    <div class="btn_group multy">
-                        <button type="button" class="btn type02">취소</button>
-                        <button type="button" class="btn type01">다음</button>
-                    </div>
+                </form>
 
+                <div class="btn_group multy">
+                    <button type="button" class="btn type02">취소</button>
+                    <button type="button" class="btn type01"
+                        onclick='signIn(<?php echo json_encode($postData); ?>)'>다음</button>
+                </div>
             </div>
-            </form>
         </div>
     </div>
 
@@ -114,8 +117,8 @@
 
 
     <div style="height: 50px;"></div>
-<footer class="footer">
-        
+    <footer class="footer">
+
         <!-- <div class="footer_logo mb40">
                 matchfy
             </div>
@@ -140,13 +143,7 @@
     <!-- SCRIPTS -->
 
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
+
     </script>
 
     <!-- -->

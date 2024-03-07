@@ -10,6 +10,7 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -36,65 +37,48 @@
                 <div class="content_title">
                     <h2><span>매치파이</span>가 처음이시군요<br />약관 내용에 동의해주세요.</h2>
                 </div>
-                <form class="">
+                <form class="" method="post" action="/mo/signin">
                     <legend></legend>
                     <div class="login_box">
                         <div class="chk_box">
-                            <input type="checkbox" id="totAgree" name="chkDefault00" checked="">
+                            <input type="checkbox" id="totAgree" name="" onclick="totalAgree()" />
                             <label class="totAgree_label" for="totAgree">네, 모두 동의합니다</label>
                         </div>
                         <hr class="hoz_part" />
                         <div class="agree_cont">
                             <div class="chk_box">
-                                <input type="checkbox" id="agree01" name="chkDefault00" checked="">
-                                <label class="agree_cont_label" for="agree01">이용약관 <span>(필수)</span></label>
+                                <input type="checkbox" id="agree1" name="agree1" value="1" onclick="chkAgree()">
+                                <label class="agree_cont_label" for="agree1">이용약관 <span>(필수)</span></label>
                             </div>
-                            <textarea placeholder="상세 이용약관"></textarea>
+                            <textarea placeholder="<?php echo $mobile_no ?>"></textarea>
                             <div class="chk_box">
-                                <input type="checkbox" id="agree02" name="chkDefault00" checked="">
-                                <label class="agree_cont_label" for="agree02">개인정보 수집 이용 동의 <span>(필수)</span></label>
+                                <input type="checkbox" id="agree2" name="agree2" value="2" onclick="chkAgree()">
+                                <label class="agree_cont_label" for="agree2">개인정보 수집 이용 동의 <span>(필수)</span></label>
                             </div>
-                            <textarea placeholder="상세 이용약관"></textarea>
+                            <textarea placeholder="<?php echo $name ?>"></textarea>
                             <div class="chk_box">
-                                <input type="checkbox" id="agree03" name="chkDefault00" checked="">
-                                <label class="agree_cont_label" for="agree03">개인정보 제3자 제공동의 <span>(필수)</span></label>
+                                <input type="checkbox" id="agree3" name="agree3" value="3" onclick="chkAgree()">
+                                <label class="agree_cont_label" for="agree3">개인정보 제3자 제공동의 <span>(필수)</span></label>
                             </div>
-                            <textarea placeholder="상세 이용약관"></textarea>
+                            <textarea placeholder="<?php echo $birthday ?>"></textarea>
                         </div>
                     </div>
+                    <input type="hidden" name="mobile_no" value="<?php echo $mobile_no ?>" />
+                    <input type="hidden" name="name" value="<?php echo $name ?>" />
+                    <input type="hidden" name="birthday" value="<?php echo $birthday ?>" />
                 </form>
 
                 <div style="height: 50px;"></div>
-<footer class="footer">
-                    
+                <footer class="footer">
+
                     <div class="btn_group">
-                        <button type="button" class="btn type01">다음</button>
+                        <button type="button" class="btn type01" onclick="submitFormAgree()">다음</button>
                     </div>
                 </footer>
             </div>
         </div>
 
-
-
-
-
     </div>
-
-
-    <!-- SCRIPTS -->
-
-    <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
-    </script>
-
-    <!-- -->
-
 
 </body>
 
