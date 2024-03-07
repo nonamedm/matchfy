@@ -3,7 +3,7 @@
         <a href="/ad/faq/faqList">FAQ</a>
     </li>
     <li class="menu-item">
-        <a href="#">공지사항</a>
+        <a href="/ad/notice/noticeList">공지사항</a>
     </li>
     <li class="menu-item">
         <a href="/ad/terms/termsList">이용약관</a>

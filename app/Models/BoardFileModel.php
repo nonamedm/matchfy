@@ -4,24 +4,24 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class BoardModel extends Model
+class BoardFileModel extends Model
 {
-    // protected $tableName;
-    protected $table;
+    protected $table            = 'wh_board_files';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields = ['title', 'content', 'author', 'update_author', 'created_at', 'updated_at', 'used', 'hit', 'likes', 'bigo1', 'bigo2', 'bigo3', 'board_type'];
+    protected $allowedFields    = ['board_idx','file_name','file_path','org_name','ext','reg_dt','board_type','extra2','extra3'];
 
     protected bool $allowEmptyInserts = false;
 
     // Dates
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
 
     // Validation
     protected $validationRules      = [];
@@ -40,13 +40,9 @@ class BoardModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function setTableName($table)
-    {
-        $this->table = $table;
-    }
-
-    public function getTableName()
-    {
-        return $this->table;
-    }
+     // 파일 업로드 정보를 저장하는 메서드
+     public function saveFileUpload($data)
+     {
+         return $this->insert($data); // 파일 업로드 정보를 테이블에 삽입
+     }
 }
