@@ -10,6 +10,7 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/static/js/basic.js"></script>
 </head>
 
@@ -38,7 +39,7 @@
                             <label for="keep">자동 로그인</label>
                         </div>
                         <div class="btn_group">
-                            <button type="button" style="width: 301px;" class="btn type01">로그인</button>
+                            <button type="button" style="width: 301px;" class="btn type01" onclick="userLogin()">로그인</button>
                         </div>
                         <img src="/static/images/main_login_hr.png" style="margin: 40px 0px 30px 0px;" />
                         <div class="btn_group">

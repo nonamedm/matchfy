@@ -57,6 +57,37 @@ const certIdentify = () => {
     // })
 }
 
+const userLogin = () => {
+    const phoneNumber = document.getElementById('id').value;
+    console.log(phoneNumber);
+
+    if(phoneNumber.length != 0){
+        $.ajax({
+            url: '/ajax/login',
+            type: 'POST',
+            data: {'mobile_no': phoneNumber},
+            async: false,
+            success: function (data) {
+                console.log(data)
+                if (data) {
+                    //location.href = '/index/login'
+                } else {
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+                }
+                return false
+            },
+            error: function (data, status, err) {
+                console.log(err)
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+            },
+        })
+    } else {
+        console.log('전화번호를 입력해주세요.');
+        alert('전화번호를 입력해주세요.')
+    }
+}
+
+
 const submitForm = () => {
     document.querySelector('form').submit()
 }

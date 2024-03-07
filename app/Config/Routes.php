@@ -74,6 +74,7 @@ $routes->post('/upload', 'Upload::upload');
 
 // ajax
 $routes->post('/ajax/signIn', 'MoAjax::joinMatchfy');
+$routes->post('/ajax/login', 'MoAjax::login');
 
 /*관리자페이지*/
 $routes->get('/ad/header', 'AdminHome::header');

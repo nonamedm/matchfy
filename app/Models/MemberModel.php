@@ -19,7 +19,7 @@ class MemberModel extends Model
         'grade', 'status', 'sns_type', 'os_type', 'married', 'smoker', 'drinking', 'religion',
         'mbti', 'height', 'stylish', 'education', 'school', 'major', 'job', 'asset_range',
         'income_range', 'father_birth_year', 'father_job', 'mother_birth_year', 'mother_job',
-        'siblings', 'residence1', 'residence2', 'residence3', 'delete_yn', 'last_access_dt', 'reg_dt'
+        'siblings', 'residence1', 'residence2', 'residence3', 'delete_yn', 'last_access_dt'
     ];
                                 
     protected bool $allowEmptyInserts = false;
