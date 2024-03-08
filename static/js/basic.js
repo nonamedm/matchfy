@@ -57,6 +57,37 @@ const certIdentify = () => {
     // })
 }
 
+const userLogin = () => {
+    const phoneNumber = document.getElementById('id').value;
+    console.log(phoneNumber);
+
+    if(phoneNumber.length != 0){
+        $.ajax({
+            url: '/ajax/login',
+            type: 'POST',
+            data: {'mobile_no': phoneNumber},
+            async: false,
+            success: function (data) {
+                console.log(data)
+                if (data) {
+                    location.href = '/index/login'
+                } else {
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+                }
+                return false
+            },
+            error: function (data, status, err) {
+                console.log(err)
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+            },
+        })
+    } else {
+        console.log('전화번호를 입력해주세요.');
+        alert('전화번호를 입력해주세요.')
+    }
+}
+
+
 const submitForm = () => {
     document.querySelector('form').submit()
 }
@@ -77,19 +108,22 @@ const submitFormAgree = () => {
     }
 }
 
-const signIn = (postData) => {
-    var postData = postData
+const signUp = (postData) => {
+    var postData = new FormData(document.querySelector('form'))
     console.log(postData)
     $.ajax({
         url: '/ajax/signIn', // todo : 추후 본인인증 연결
         type: 'POST',
         data: postData,
+        processData: false,
+        contentType: false,
         async: false,
         success: function (data) {
             console.log(data)
             if (data) {
                 // 성공
-                location.href = '/mo/signinSuccess'
+                // location.href = '/mo/signinType'
+                document.querySelector('form').submit()
             } else {
                 alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
             }
@@ -100,6 +134,53 @@ const signIn = (postData) => {
             alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
         },
     })
+}
+const signInType = (postData) => {
+    var postData = postData
+    var grade = document.getElementsByName('grade')
+    for (var i = 0; i < grade.length; i++) {
+        var isSelected = grade[i].matches(':checked')
+        if (isSelected) {
+            postData['grade'] = grade[i].value
+        }
+    }
+    var url = ''
+    console.log(postData)
+    switch (postData.grade) {
+        case 'grade01':
+            url = '/mo/signinSuccess'
+            break
+        case 'grade02':
+            url = '/mo/signinRegular'
+            break
+        case 'grade03':
+            url = '/mo/signinPremium'
+            break
+        default:
+            url = '/mo/signinSuccess'
+    }
+
+    // todo : 추후 본인인증 연결
+    // $.ajax({
+    //     url: url,
+    //     type: 'POST',
+    //     data: postData,
+    //     async: false,
+    //     success: function (data) {
+    //         console.log(data)
+    //         if (data) {
+    // 성공
+    location.href = url
+    //         } else {
+    //             alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+    //         }
+    //         return false
+    //     },
+    //     error: function (data, status, err) {
+    //         console.log(err)
+    //         alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+    //     },
+    // })
 }
 
 const totalAgree = () => {
