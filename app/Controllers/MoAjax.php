@@ -40,7 +40,7 @@ class MoAjax extends BaseController
         }
     }
 
-    public function joinMatchfy()
+    public function signUp()
     {
 
         // $postData = $this->request->getPost();
@@ -73,6 +73,55 @@ class MoAjax extends BaseController
 
         // 데이터 저장
         $inserted = $MemberModel->insert($data);
+
+        if ($inserted)
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
+        } else
+        {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy']);
+        }
+    }
+
+    public function signUpdate()
+    {
+
+        // $postData = $this->request->getPost();
+
+        $married = $this->request->getPost('married');
+        $smoker = $this->request->getPost('smoker');
+        $drinking = $this->request->getPost('drinking');
+        $religion = $this->request->getPost('religion');
+        $mbti = $this->request->getPost('mbti');
+        $height = $this->request->getPost('height');
+        $stylish = $this->request->getPost('stylish');
+        $education = $this->request->getPost('education');
+        $major = $this->request->getPost('major');
+        $school = $this->request->getPost('school');
+        $job = $this->request->getPost('job');
+        $asset_range = $this->request->getPost('asset_range');
+        $income_range = $this->request->getPost('income_range');
+
+        $MemberModel = new MemberModel();
+
+        $data = [
+            'married' => $married ,
+            'smoker' => $smoker ,
+            'drinking' => $drinking ,
+            'religion' => $religion ,
+            'mbti' => $mbti ,
+            'height' => $height ,
+            'stylish' => $stylish ,
+            'education' => $education ,
+            'major' => $major ,
+            'school' => $school ,
+            'job' => $job ,
+            'asset_range' => $asset_range ,
+            'income_range' => $income_range 
+        ];
+
+        // 데이터 저장
+        $inserted = $MemberModel->update($id, $data);
 
         if ($inserted)
         {

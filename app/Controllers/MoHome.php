@@ -48,9 +48,11 @@ class MoHome extends BaseController
     {
         return view('mo_signin_success');
     }
-    public function signinRegular(): string
+    public function signinRegular()
     {
-        return view('mo_signin_regular');
+        $postData = $this->request->getPost();
+        echo $postData;
+        return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $postData]);
     }
     public function signinPremium(): string
     {

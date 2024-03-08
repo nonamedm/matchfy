@@ -10,6 +10,8 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -33,13 +35,16 @@
 
         <div class="sub_wrap">
             <div class="content_wrap">
-                <div class="content_body">
-                    <img src="/static/images/profile_noimg.png" />
-                </div>
-                <div class="btn_group">
-                    <button type="button" class="btn type02">프로필 사진수정</button>
-                </div>
                 <form class="main_signin_form">
+                <div class="content_body">
+                        <a id="profileArea" onclick="editPhoto()">
+                            <img src="/static/images/profile_noimg.png" />
+                        </a>
+                    </div>
+                    <div class="btn_group">
+                        <button type="button" class="btn type02" onclick="editPhoto()">프로필 사진수정</button>
+                        <input type="file" id="main_photo" name="main_photo" style="display:none;" accept="image/*" />
+                    </div>
                     <legend></legend>
                     <div class="">
                         <div class="form_row signin_form">
@@ -203,8 +208,9 @@
                                 </select>
                             </div>
                         </div>
+                        <div id="main_photo_uploaded" style="display:none;"></div>
                         <div class="btn_group">
-                            <button type="button" class="btn type01">가입</button>
+                            <button type="button" class="btn type01" onclick="signUpdate()">가입</button>
                         </div>
                     </div>
                 </form>
@@ -242,13 +248,11 @@
     <!-- SCRIPTS -->
 
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
+        $(document).ready(function () {
+            editPhotoListner();
+            // editPhotoListListner();
+            // editMovListListner();
+        });        
     </script>
 
     <!-- -->

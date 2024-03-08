@@ -101,18 +101,18 @@ const submitFormAgree = () => {
 
     // 모든 체크박스의 상태를 변경
     if (isAllChecked) {
-        document.querySelector('form').submit()
+        submitForm();
     } else {
         alert('항목에 동의해 주세요')
         return false
     }
 }
 
-const signUp = (postData) => {
+const signUp = () => {
     var postData = new FormData(document.querySelector('form'))
     console.log(postData)
     $.ajax({
-        url: '/ajax/signIn', // todo : 추후 본인인증 연결
+        url: '/ajax/signUp', // todo : 추후 본인인증 연결
         type: 'POST',
         data: postData,
         processData: false,
@@ -123,7 +123,34 @@ const signUp = (postData) => {
             if (data) {
                 // 성공
                 // location.href = '/mo/signinType'
-                document.querySelector('form').submit()
+                submitForm();
+            } else {
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+            }
+            return false
+        },
+        error: function (data, status, err) {
+            console.log(err)
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+        },
+    })
+}
+const signUpdate = (postData) => {
+    var postData = new FormData(document.querySelector('form'))
+    console.log(postData)
+    $.ajax({
+        url: '/ajax/signUpdate',
+        type: 'POST',
+        data: postData,
+        processData: false,
+        contentType: false,
+        async: false,
+        success: function (data) {
+            console.log(data)
+            if (data) {
+                // 성공
+                // location.href = '/mo/signinType'
+                submitForm();
             } else {
                 alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
             }
@@ -160,7 +187,7 @@ const signInType = (postData) => {
             url = '/mo/signinSuccess'
     }
 
-    // todo : 추후 본인인증 연결
+    // todo : 추후 정회원, 프리미엄이면 결제 연결
     // $.ajax({
     //     url: url,
     //     type: 'POST',
@@ -169,8 +196,15 @@ const signInType = (postData) => {
     //     success: function (data) {
     //         console.log(data)
     //         if (data) {
-    // 성공
-    location.href = url
+    
+    // 성공시
+    var formData = new FormData();
+    
+    formData.append(postData);
+    formData.setAttribute('method','post');
+    formData.setAttribute('action',url);
+    formData.submit;
+    
     //         } else {
     //             alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
     //         }
@@ -279,7 +313,6 @@ const editPhotoListner = () => {
                         }
                     })
                     .catch((error) => {
-                        console.error('error : ', error)
                         const imageElement = document.createElement('img')
                         // 이미지 요소에 읽어온 파일의 URL 할당
                         imageElement.src = '/static/images/profile_noimg.png'
@@ -287,6 +320,8 @@ const editPhotoListner = () => {
                         imageElement.style.borderRadius = '50%'
                         imageElement.style.width = '74px'
                         imageElement.style.height = '74px'
+                        imgRegist.appendChild(imageElement)
+                        console.error('error : ', error)
                     })
 
                 // javascript에서 fileUpload 호출
