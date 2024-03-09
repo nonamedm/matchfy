@@ -81,30 +81,40 @@ const userLogin = () => {
     const phoneNumber = document.getElementById('id').value;
     console.log(phoneNumber);
 
-    if(phoneNumber.length != 0){
-        $.ajax({
-            url: '/ajax/login',
-            type: 'POST',
-            data: {'mobile_no': phoneNumber},
-            async: false,
-            success: function (data) {
-                console.log(data)
-                if (data) {
-                    location.href = '/index/login'
-                } else {
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
-                }
-                return false
-            },
-            error: function (data, status, err) {
-                console.log(err)
-                alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
-            },
-        })
-    } else {
-        console.log('전화번호를 입력해주세요.');
-        alert('전화번호를 입력해주세요.')
+    // 빈 값 validation
+    if(phoneNumber.length === 0) {
+        alert('전화번호를 입력해 주세요.');
+        return;
     }
+
+    //휴대폰 번호 11자리 숫자로 validation
+    const phoneRegex = /^\d{11}$/;
+
+    if(!phoneRegex.test(phoneNumber)) {
+        alert('휴대폰 번호는 11자리 숫자여야 합니다.');
+        return;
+    }
+
+    $.ajax({
+        url: '/ajax/login',
+        type: 'POST',
+        data: {'mobile_no': phoneNumber},
+        async: false,
+        success: function (data) {
+            console.log(data)
+            if (data) {
+                moveToUrl('/index/login');
+                //location.href = '/index/login'
+            } else {
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            }
+            return false
+        },
+        error: function (data, status, err) {
+            console.log(err)
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    })
 }
 
 
@@ -165,6 +175,7 @@ const signUp = () => {
         },
     })
 }
+
 const signUpdate = (postData) => {
     var postData = new FormData(document.querySelector('form'))
     $.ajax({

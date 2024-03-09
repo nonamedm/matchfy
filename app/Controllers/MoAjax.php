@@ -33,7 +33,10 @@ class MoAjax extends BaseController
 
         if($user) {
             $session = session();
-            $session->set(['name' => $user['name']]);
+            $session->set([
+                'ci' => $user['ci'],
+                'isLoggedIn' => true //로그인 상태
+            ]);
 
             return $this->response->setJSON(['status' => 'success', 'message' => "로그인 성공"]);
         } else {
