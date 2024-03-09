@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\BoardModel;
 use App\Helpers\MoHelper;
+use CodeIgniter\Session\Session;
 
 class MoHome extends BaseController
 {
@@ -51,12 +52,38 @@ class MoHome extends BaseController
     public function signinRegular()
     {
         $postData = $this->request->getPost();
-        echo $postData;
-        return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $postData]);
+        $moAjax = new \App\Controllers\MoAjax();
+
+        $ci = $this->request->getPost('ci');
+        $grade = $this->request->getPost('grade');
+
+        // 등급부터 업그레이드 후 페이지 뷰
+        $result = $moAjax->gradeUpdate($ci,$grade);
+        if($result==='0') {
+            $postData['result'] = $result;       
+        } else {
+            // 오류일 때 이전 페이지로 리디렉션.
+        }
+
+        return view('mo_signin_regular',$postData);
     }
     public function signinPremium(): string
     {
-        return view('mo_signin_premium');
+        $postData = $this->request->getPost();
+        $moAjax = new \App\Controllers\MoAjax();
+
+        $ci = $this->request->getPost('ci');
+        $grade = $this->request->getPost('grade');
+
+        // 등급부터 업그레이드 후 페이지 뷰
+        $result = $moAjax->gradeUpdate($ci,$grade);
+        if($result==='0') {
+            $postData['result'] = $result;       
+        } else {
+            // 오류일 때 이전 페이지로 리디렉션.
+        }
+        
+        return view('mo_signin_premium',$postData);
     }
     public function signinPopup(): string
     {

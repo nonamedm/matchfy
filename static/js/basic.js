@@ -1,6 +1,26 @@
 /* 공통함수 */
-const moveToUrl = (url) => {
-    location.href = url
+const moveToUrl = (url, param) => {
+    if(!param) {
+        location.href = url
+    } else {
+        //json 형태의 param 전송 시         
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = url;
+
+        for (var key in param) {
+            if (param.hasOwnProperty(key)) {
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = param[key];
+                form.appendChild(input);
+            }
+        }        
+        document.body.appendChild(form);
+        
+        form.submit();
+    }
 }
 
 const certIdentify = () => {
@@ -110,7 +130,6 @@ const submitFormAgree = () => {
 
 const signUp = () => {
     var postData = new FormData(document.querySelector('form'))
-    console.log(postData)
     $.ajax({
         url: '/ajax/signUp', // todo : 추후 본인인증 연결
         type: 'POST',
@@ -122,7 +141,18 @@ const signUp = () => {
             console.log(data)
             if (data) {
                 // 성공
-                // location.href = '/mo/signinType'
+                var formData = document.querySelector('form');
+                for (var key in data.data) {
+                    if (data.data.hasOwnProperty(key)) {
+                        if(key==='ci') {
+                            var input = document.createElement('input');
+                            input.type = 'hidden'; // hidden 필드로 생성
+                            input.name = key;
+                            input.value = data.data[key];
+                            formData.appendChild(input);
+                        }
+                    }
+                  }
                 submitForm();
             } else {
                 alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
@@ -137,7 +167,6 @@ const signUp = () => {
 }
 const signUpdate = (postData) => {
     var postData = new FormData(document.querySelector('form'))
-    console.log(postData)
     $.ajax({
         url: '/ajax/signUpdate',
         type: 'POST',
@@ -149,8 +178,8 @@ const signUpdate = (postData) => {
             console.log(data)
             if (data) {
                 // 성공
-                // location.href = '/mo/signinType'
-                submitForm();
+                moveToUrl('/mo/signinSuccess')
+                // submitForm();
             } else {
                 alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
             }
@@ -172,7 +201,7 @@ const signInType = (postData) => {
         }
     }
     var url = ''
-    console.log(postData)
+    
     switch (postData.grade) {
         case 'grade01':
             url = '/mo/signinSuccess'
@@ -198,12 +227,7 @@ const signInType = (postData) => {
     //         if (data) {
     
     // 성공시
-    var formData = new FormData();
-    
-    formData.append(postData);
-    formData.setAttribute('method','post');
-    formData.setAttribute('action',url);
-    formData.submit;
+    moveToUrl(url, postData)
     
     //         } else {
     //             alert('오류가 발생하였습니다. \n다시 시도해 주세요.')

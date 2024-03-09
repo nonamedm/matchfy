@@ -8,7 +8,7 @@ class MemberModel extends Model
 {
     // protected $tableName;
     protected $table = 'members';
-    protected $primaryKey = 'idx';
+    protected $primaryKey = 'ci';
     protected $useAutoIncrement = true;
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
