@@ -124,14 +124,14 @@
                                 <label for="alliance_biztime" class="signin_label">영업시간</label>
                                 <div class="multy_select">
                                     <select id="alliance_biztime1" class="custom_select" value="">
-                                        <option>선택</option>
+                                        <option value="">선택</option>
                                         <option value="0">00시</option>
                                         <option value="1">01시</option>
                                         <option value="2">02시</option>
                                         <option value="3">03시</option>
                                     </select>
                                     <select id="alliance_biztime2" class="custom_select" value="">
-                                        <option>선택</option>
+                                        <option value="">선택</option>
                                         <option value="0">00시</option>
                                         <option value="1">01시</option>
                                         <option value="2">02시</option>

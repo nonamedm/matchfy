@@ -68,7 +68,7 @@
                                 <div class="signin_form_div">
                                     <label for="paymethod" class="signin_label">충전수단</label>
                                     <select id="paymethod" class="custom_select" value="">
-                                        <option>선택</option>
+                                        <option value="">선택</option>
                                         <option value="0">신용카드</option>
                                         <option value="1">간편결제</option>
                                         <option value="2">계좌이체</option>
