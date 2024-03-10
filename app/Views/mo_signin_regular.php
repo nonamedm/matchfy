@@ -36,9 +36,10 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <form class="main_signin_form">
-                <div class="content_body">
+                    <div class="content_body">
                         <a id="profileArea" onclick="editPhoto()">
-                            <img src="/static/images/profile_noimg.png" />
+                            <img src="/writable/<?= $file_path ?>/<?= $file_name ?>"
+                                style="border-radius: 50%; width: 74px; height: 74px;" />
                         </a>
                     </div>
                     <div class="btn_group">
@@ -166,7 +167,8 @@
                                 <p class="profile_photo_desc">최종학교 졸업증명서를 업로드해주세요!</p>
                                 <div class="input_btn">
                                     <input id="school" name="school" type="text" value="" placeholder="학교를 입력해 주세요">
-                                    <button class="btn btn_input_form">인증</button>
+                                    <button type="button" class="btn btn_input_form"
+                                        onclick="showPopupRgt('school')">인증</button>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +179,8 @@
                                 <p class="profile_photo_desc">명함 혹은 재직증명서를 업로드해주세요</p>
                                 <div class="input_btn">
                                     <input id="job" name="job" type="text" value="" placeholder="직업을 입력해 주세요">
-                                    <button class="btn btn_input_form">인증</button>
+                                    <button type="button" class="btn btn_input_form"
+                                        onclick="showPopupRgt('job')">인증</button>
                                 </div>
                             </div>
                         </div>
@@ -218,14 +221,14 @@
                 </form>
             </div>
         </div>
-
+        <?php include 'mo_signin_popup.php'; ?>
 
 
 
 
         <div style="height: 50px;"></div>
-<footer class="footer">
-            
+        <footer class="footer">
+
             <!-- <div class="footer_logo mb40">
                 matchfy
             </div>
