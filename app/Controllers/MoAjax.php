@@ -94,17 +94,21 @@ class MoAjax extends BaseController
             $file_name = $this->request->getPost('file_name');
             $file_path = $this->request->getPost('file_path');
             $ext = $this->request->getPost('ext');
-            $data2 = [
-                'member_ci' => $ci,
-                'org_name' => $org_name,
-                'file_name' => $file_name,
-                'file_path' => $file_path,
-                'ext' => $ext,
-                'board_type' => 'main_photo',
-            ];
-            $data = array_merge($data, $data2);
-            $insertedFile = $MemberFileModel->insert($data2);
-            if ($insertedFile)
+            if ($org_name)
+            {
+                // 프로필 첨부 있을때만 file db 저장
+                $data2 = [
+                    'member_ci' => $ci,
+                    'org_name' => $org_name,
+                    'file_name' => $file_name,
+                    'file_path' => $file_path,
+                    'ext' => $ext,
+                    'board_type' => 'main_photo',
+                ];
+                $data = array_merge($data, $data2);
+                $MemberFileModel->insert($data2);
+            }
+            if ($inserted)
             {
                 return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
             } else

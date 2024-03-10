@@ -151,6 +151,12 @@ const signUp = () => {
             if (data) {
                 // 성공
                 var formData = document.querySelector('form');
+                if (!data.data.org_name) {
+                    data.data.org_name = 'profile_noimg.png';
+                    data.data.file_name = 'profile_noimg.png';
+                    data.data.file_path = 'static/images/';
+                    data.data.ext = 'png';
+                }
                 for (var key in data.data) {
                     if (data.data.hasOwnProperty(key)) {
                         if (key === 'ci') {
