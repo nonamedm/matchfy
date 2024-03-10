@@ -60,14 +60,16 @@ class MoHome extends BaseController
         $grade = $this->request->getPost('grade');
 
         // 등급부터 업그레이드 후 페이지 뷰
-        $result = $moAjax->gradeUpdate($ci,$grade);
-        if($result==='0') {
-            $postData['result'] = $result;       
-        } else {
+        $result = $moAjax->gradeUpdate($ci, $grade);
+        if ($result === '0')
+        {
+            $postData['result'] = $result;
+        } else
+        {
             // 오류일 때 이전 페이지로 리디렉션.
         }
 
-        return view('mo_signin_regular',$postData);
+        return view('mo_signin_regular', $postData);
     }
     public function signinPremium(): string
     {
@@ -78,14 +80,16 @@ class MoHome extends BaseController
         $grade = $this->request->getPost('grade');
 
         // 등급부터 업그레이드 후 페이지 뷰
-        $result = $moAjax->gradeUpdate($ci,$grade);
-        if($result==='0') {
-            $postData['result'] = $result;       
-        } else {
+        $result = $moAjax->gradeUpdate($ci, $grade);
+        if ($result === '0')
+        {
+            $postData['result'] = $result;
+        } else
+        {
             // 오류일 때 이전 페이지로 리디렉션.
         }
-        
-        return view('mo_signin_premium',$postData);
+
+        return view('mo_signin_premium', $postData);
     }
     public function signinPopup(): string
     {
