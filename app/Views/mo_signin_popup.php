@@ -27,6 +27,8 @@
                     <button type="button" class="btn type01" onclick="submitFile()">확인</button>
                 </div>
             </div>
+            <input id="ci" type="hidden" value="" />
+            <input id="type" type="hidden" value="" />
         </div>
     </div>
 </div>
@@ -84,6 +86,24 @@
                                 };
                                 // 파일 읽기 시작
                                 reader.readAsDataURL(latestFile);
+
+                                // upload 파일 db에 저장하기
+                                const typeValue = $("#type").val();
+                                $.ajax({
+                                    type: "post",
+                                    url: "/ajax/mbrFileRegUp",
+                                    data: { ci: $("#ci").val(), org_name: data.org_name, file_name: data.file_name, file_path: data.file_path, ext: data.ext, board_type: typeValue },
+                                    success: function (data) {
+                                        console.log(data);
+                                        if (data.data.board_type === 'school' || data.data.board_type === 'job')
+                                            $("#" + typeValue).val(data.data.org_name);
+                                    },
+                                    error: function (xhr, status, error) {
+                                        console.log(error);
+                                    }
+                                });
+
+
                             } else {
                                 // 기존에 추가된 이미지
                                 var previousImage = document.getElementById('newImage');

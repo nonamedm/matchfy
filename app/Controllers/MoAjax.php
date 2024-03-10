@@ -94,8 +94,7 @@ class MoAjax extends BaseController
             $file_name = $this->request->getPost('file_name');
             $file_path = $this->request->getPost('file_path');
             $ext = $this->request->getPost('ext');
-            $data = [
-                $data,
+            $data2 = [
                 'member_ci' => $ci,
                 'org_name' => $org_name,
                 'file_name' => $file_name,
@@ -103,7 +102,8 @@ class MoAjax extends BaseController
                 'ext' => $ext,
                 'board_type' => 'main_photo',
             ];
-            $insertedFile = $MemberFileModel->insert($data);
+            $data = array_merge($data, $data2);
+            $insertedFile = $MemberFileModel->insert($data2);
             if ($insertedFile)
             {
                 return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
@@ -199,41 +199,47 @@ class MoAjax extends BaseController
     }
 
     /* 사용자 파일 저장 */
-    public function memberFileRegUpload()
+    public function mbrFileRegUp()
     {
-        $member_idx = $this->request->getPost('member_idx');
+        $member_ci = $this->request->getPost('ci');
         $file_path = $this->request->getPost('file_path');
         $file_name = $this->request->getPost('file_name');
         $org_name = $this->request->getPost('org_name');
         $ext = $this->request->getPost('ext');
-        $extra1 = $this->request->getPost('extra1');
-        $extra2 = $this->request->getPost('extra2');
-        $extra3 = $this->request->getPost('extra3');
+        $board_type = $this->request->getPost('board_type');
 
         $MemberFileModel = new MemberFileModel();
 
+        // 기존에 첨부된 파일은 delete_yn 처리하기
         $data = [
-            'member_idx' => $member_idx,
-            'file_path' => $file_path,
-            'file_name' => $file_name,
-            'org_name' => $org_name,
-            'ext' => $ext,
-            'extra1' => $extra1,
-            'extra2' => $extra2,
-            'extra3' => $extra3,
+            'delete_yn' => 'y',
         ];
-
-        $inserted = $MemberFileModel->insert($data);
-        
-
-        if ($inserted)
+        $condition = ['board_type' => $board_type, 'member_ci' => $member_ci];
+        $updated = $MemberFileModel->where($condition)->update($member_ci, $data);
+        if ($updated)
         {
-            return $this->response->setJSON(['status' => 'success', 'message' => "파일이 성공적으로 저장되었습니다.", 'inserted_id' => $inserted]);
-        } else
-        {
-            $error = $MemberFileModel->getError();
-            return $this->response->setJSON(['status' => 'fail', 'message' => "파일 저장에 실패했습니다. $error"]);
+            $data = [
+                'member_ci' => $member_ci,
+                'file_path' => $file_path,
+                'file_name' => $file_name,
+                'org_name' => $org_name,
+                'ext' => $ext,
+                'board_type' => $board_type
+            ];
+
+            $inserted = $MemberFileModel->insert($data);
+            if ($inserted)
+            {
+                return $this->response->setJSON(['status' => 'success', 'message' => "파일이 성공적으로 저장되었습니다.", 'data' => $data]);
+            } else
+            {
+                $error = $MemberFileModel->getError();
+                return $this->response->setJSON(['status' => 'fail', 'message' => "파일 저장에 실패했습니다. $error"]);
+            }
         }
+
+
+
     }
 
 

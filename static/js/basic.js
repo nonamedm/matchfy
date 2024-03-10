@@ -516,7 +516,8 @@ const fileUpload = (file) => {
     });
 };
 
-const showPopupRgt = (contents) => {
+const showPopupRgt = (contents, ci) => {
+    console.log(contents, ci);
     // image input 초기화
     const imgRegist = document.getElementById('profile_regist_label');
     imgRegist.style.display = 'block';
@@ -524,6 +525,8 @@ const showPopupRgt = (contents) => {
     if (previousImage) {
         previousImage.parentNode.removeChild(previousImage);
     }
+    $('#ci').val(ci);
+    $('#type').val(contents);
 
     var title = '';
     switch (contents) {
@@ -532,6 +535,15 @@ const showPopupRgt = (contents) => {
             break;
         case 'job':
             title = '명함/재직증명서';
+            break;
+        case 'marital':
+            title = '혼인관계증명서';
+            break;
+        case 'asset_range':
+            title = '잔고증명/등기부등본';
+            break;
+        case 'income_range':
+            title = '소득금액증명';
             break;
         default:
             title = '졸업증명서';
@@ -548,6 +560,7 @@ const submitFile = () => {
     const agree1 = document.getElementById('totAgree');
 
     if (agree1.checked) {
+        $('.layerPopup').css('display', 'none');
     } else {
         alert('항목에 동의해 주세요');
         return false;

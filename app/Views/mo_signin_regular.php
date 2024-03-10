@@ -38,8 +38,16 @@
                 <form class="main_signin_form">
                     <div class="content_body">
                         <a id="profileArea" onclick="editPhoto()">
-                            <img src="/writable/<?= $file_path ?>/<?= $file_name ?>"
-                                style="border-radius: 50%; width: 74px; height: 74px;" />
+                            <?php
+                            if ($file_path)
+                            {
+                                echo '<img src="/writable/' . $file_path . '/' . $file_name . '" style="border-radius: 50%; width: 74px; height: 74px;" />';
+                            } else
+                            {
+                                echo '<img src="/static/images/profile_noimg.png" style="border-radius: 50%; width: 74px; height: 74px;" />';
+                            }
+                            ?>
+
                         </a>
                     </div>
                     <div class="btn_group">
@@ -168,7 +176,7 @@
                                 <div class="input_btn">
                                     <input id="school" name="school" type="text" value="" placeholder="학교를 입력해 주세요">
                                     <button type="button" class="btn btn_input_form"
-                                        onclick="showPopupRgt('school')">인증</button>
+                                        onclick="showPopupRgt('school','<?php echo $ci ?>')">인증</button>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +188,7 @@
                                 <div class="input_btn">
                                     <input id="job" name="job" type="text" value="" placeholder="직업을 입력해 주세요">
                                     <button type="button" class="btn btn_input_form"
-                                        onclick="showPopupRgt('job')">인증</button>
+                                        onclick="showPopupRgt('job','<?php echo $ci ?>')">인증</button>
                                 </div>
                             </div>
                         </div>

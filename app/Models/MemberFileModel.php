@@ -7,12 +7,12 @@ use CodeIgniter\Model;
 class MemberFileModel extends Model
 {
     protected $table = 'member_files';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'member_ci';
     protected $useAutoIncrement = true;
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $protectFields = true;
-    protected $allowedFields = ['member_ci', 'file_path', 'file_name', 'org_name', 'ext', 'board_type', 'extra1', 'extra2', 'extra3'];
+    protected $allowedFields = ['member_ci', 'file_path', 'file_name', 'org_name', 'ext', 'board_type', 'extra1', 'extra2', 'extra3', 'delete_yn'];
 
     protected bool $allowEmptyInserts = false;
 
