@@ -3,7 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\MemberModel;
-use App\Models\MEmberFileModel;
+use App\Models\MemberFileModel;
+use App\Config\Encryption;
 
 class MoAjax extends BaseController
 {
@@ -32,7 +33,10 @@ class MoAjax extends BaseController
 
         if($user) {
             $session = session();
-            $session->set(['name' => $user['name']]);
+            $session->set([
+                'ci' => $user['ci'],
+                'isLoggedIn' => true //로그인 상태
+            ]);
 
             return $this->response->setJSON(['status' => 'success', 'message' => "로그인 성공"]);
         } else {
@@ -40,13 +44,16 @@ class MoAjax extends BaseController
         }
     }
 
-    public function joinMatchfy()
+    public function signUp()
     {
 
         // $postData = $this->request->getPost();
 
         $mobile_no = $this->request->getPost('mobile_no');
-        $ci = $this->request->getPost('ci');
+        $encrypter = \Config\Services::encrypter();
+        $ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 32]));
+        
+        // $ci = $this->request->getPost('ci');
         $agree1 = $this->request->getPost('agree1');
         $agree2 = $this->request->getPost('agree2');
         $agree3 = $this->request->getPost('agree3');
@@ -55,6 +62,7 @@ class MoAjax extends BaseController
         $gender = $this->request->getPost('gender');
         $city = $this->request->getPost('city');
         $town = $this->request->getPost('town');
+        // $town = $encrypter->decrypt(base64_decode($ci), ['key' => 'nonamedm', 'blockSize' => 32]);
 
         $MemberModel = new MemberModel();
 
@@ -81,6 +89,82 @@ class MoAjax extends BaseController
         {
             return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy']);
         }
+    }
+
+    public function signUpdate()
+    {
+
+        // $postData = $this->request->getPost();
+
+        $ci = $this->request->getPost('ci');
+        $grade = $this->request->getPost('grade');
+        $married = $this->request->getPost('marital');
+        $smoker = $this->request->getPost('smoking');
+        $drinking = $this->request->getPost('drinking');
+        $religion = $this->request->getPost('religion');
+        $mbti = $this->request->getPost('mbti');
+        $height = $this->request->getPost('height');
+        $stylish = $this->request->getPost('personal_style');
+        $education = $this->request->getPost('education');
+        $major = $this->request->getPost('major');
+        $school = $this->request->getPost('school');
+        $job = $this->request->getPost('job');
+        $asset_range = $this->request->getPost('asset_range');
+        $income_range = $this->request->getPost('income_range');
+
+        $MemberModel = new MemberModel();
+
+        $data = [
+            'grade' => $grade,
+            'married' => $married ,
+            'smoker' => $smoker ,
+            'drinking' => $drinking ,
+            'religion' => $religion ,
+            'mbti' => $mbti ,
+            'height' => $height ,
+            'stylish' => $stylish ,
+            'education' => $education ,
+            'major' => $major ,
+            'school' => $school ,
+            'job' => $job ,
+            'asset_range' => $asset_range ,
+            'income_range' => $income_range 
+        ];
+
+        if ($grade==='grade03')
+        {
+            // 프리미엄 회원에만 해당하는 추가 정보
+            $premiumData = [
+                'father_birth_year' => $this->request->getPost('father_birth_year'),
+                'father_job' => $this->request->getPost('father_job'),
+                'mother_birth_year' => $this->request->getPost('mother_birth_year'),
+                'mother_job' => $this->request->getPost('mother_job'),
+                'siblings' => $this->request->getPost('siblings'),
+                'residence1' => $this->request->getPost('residence1'),
+                'residence2' => $this->request->getPost('residence2'),
+                'residence3' => $this->request->getPost('residence3'),
+            ];
+
+            // 배열 병합
+            $data = array_merge($data, $premiumData);
+        }
+
+        // CI조회
+        $existingData = $MemberModel->where('ci', $ci)->first();
+
+        // 데이터 존재 시
+        if ($existingData) {
+            $inserted = $MemberModel->update($ci,$data);
+            
+            if ($inserted) {
+                return $this->response->setJSON(['status' => 'success', 'message' => '데이터가 업데이트되었습니다', 'data' => $data]);
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'message' => '데이터를 업데이트하는 중 오류가 발생했습니다']);
+            }
+        } else {
+            return $this->response->setJSON(['status' => 'error', 'message' => '업데이트할 데이터가 존재하지 않습니다']);
+        }
+
     }
 
     /* 사용자 파일 저장 */
@@ -120,84 +204,32 @@ class MoAjax extends BaseController
     
 
     /* 회원 등급 업데이트 */
-    public function gradeUpdate()
+    public function gradeUpdate($ci,$grade)
     {
-        $member_idx = $this->request->getPost('member_idx');
-        $grade = $this->request->getPost('grade');
-
         $MemberModel = new MemberModel();
 
-        $updated = $MemberModel->update($member_idx, [
-            'grade' => $grade
-        ]);
-
-        if($updated) {
-            return $this->response->setJSON(['status' => 'success', 'message' => "회원 등급 업데이트 완료", 'updated_id' => $updated]);
-        } else {
-            $error = $MemberModel->getError();
-            return $this->response->setJSON(['status' => 'fail', 'message' => "회원 등급 업데이트 실패. $error"]);
-        }
-    }
-
-    /* 정회원 및 프리미엄 등급 업데이트*/
-    public function updateMemberInfo($isPremium = false)
-    {
-        $postData = [
-            'married' => $this->request->getPost('married'),
-            'smoker' => $this->request->getPost('smoker'),
-            'drinking' => $this->request->getPost('drinking'),
-            'religion' => $this->request->getPost('religion'),
-            'mbti' => $this->request->getPost('mbti'),
-            'height' => $this->request->getPost('height'),
-            'stylish' => $this->request->getPost('stylish'),
-            'education' => $this->request->getPost('education'),
-            'school' => $this->request->getPost('school'),
-            'major' => $this->request->getPost('major'),
-            'job' => $this->request->getPost('job'),
-            'asset_range' => $this->request->getPost('asset_range'),
-            'income_range' => $this->request->getPost('income_range'),
+        $data = [
+            'grade' => $grade,
         ];
 
-        if ($isPremium)
-        {
-            // 프리미엄 회원에만 해당하는 추가 정보
-            $premiumData = [
-                'father_birth_year' => $this->request->getPost('father_birth_year'),
-                'father_job' => $this->request->getPost('father_job'),
-                'mother_birth_year' => $this->request->getPost('mother_birth_year'),
-                'mother_job' => $this->request->getPost('mother_job'),
-                'siblings' => $this->request->getPost('siblings'),
-                'residence1' => $this->request->getPost('residence1'),
-                'residence2' => $this->request->getPost('residence2'),
-                'residence3' => $this->request->getPost('residence3'),
-            ];
+        // CI조회
+        $existingData = $MemberModel->where('ci', $ci)->first();
+        // 데이터 존재 시
+        if ($existingData) {
+            $inserted = $MemberModel->update($ci,$data);
 
-            // 배열 병합
-            $postData = array_merge($postData, $premiumData);
-        }
-
-        $member_idx = $this->request->getPost('member_idx');
-        $MemberModel = new MemberModel();
-
-        $updated = $MemberModel->update($member_idx, $postData);
-
-        if($updated) {
-            return $this->response->setJSON(['status' => 'success', 'message' => $isPremium ? '프리미엄 회원 정보 업데이트 완료' : '정회원 정보 업데이트 완료', 'updated_id' => $updated]);
+            if ($inserted) {
+                // return $this->response->setJSON(['status' => 'success', 'message' => '데이터가 업데이트되었습니다', 'data' => $data]);
+                return '0';
+            } else {
+                // return $this->response->setJSON(['status' => 'error', 'message' => '데이터를 업데이트하는 중 오류가 발생했습니다']);
+                return '1';
+            }
         } else {
-            $error = $MemberModel->getError();
-            return $this->response->setJSON(['status' => 'fail', 'message' => $isPremium ? "프리미엄 정보 업데이트 실패. $error" : "정회원 정보 업데이트 실패. $error"]);
+            // return $this->response->setJSON(['status' => 'error', 'message' => '업데이트할 데이터가 존재하지 않습니다']);
+            return '2';
         }
+
     }
 
-    // 정회원 업데이트를 위한 호출
-    public function StandardInfoUpdate()
-    {
-        $this->updateMemberInfo(false);
-    }
-
-    // 프리미엄 회원 업데이트를 위한 호출
-    public function PremiumMemberInfoUpdate()
-    {
-        $this->updateMemberInfo(true);
-    }
 }

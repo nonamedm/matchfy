@@ -1,6 +1,26 @@
 /* 공통함수 */
-const moveToUrl = (url) => {
-    location.href = url
+const moveToUrl = (url, param) => {
+    if(!param) {
+        location.href = url
+    } else {
+        //json 형태의 param 전송 시         
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = url;
+
+        for (var key in param) {
+            if (param.hasOwnProperty(key)) {
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = param[key];
+                form.appendChild(input);
+            }
+        }        
+        document.body.appendChild(form);
+        
+        form.submit();
+    }
 }
 
 const certIdentify = () => {
@@ -61,30 +81,40 @@ const userLogin = () => {
     const phoneNumber = document.getElementById('id').value;
     console.log(phoneNumber);
 
-    if(phoneNumber.length != 0){
-        $.ajax({
-            url: '/ajax/login',
-            type: 'POST',
-            data: {'mobile_no': phoneNumber},
-            async: false,
-            success: function (data) {
-                console.log(data)
-                if (data) {
-                    location.href = '/index/login'
-                } else {
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
-                }
-                return false
-            },
-            error: function (data, status, err) {
-                console.log(err)
-                alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
-            },
-        })
-    } else {
-        console.log('전화번호를 입력해주세요.');
-        alert('전화번호를 입력해주세요.')
+    // 빈 값 validation
+    if(phoneNumber.length === 0) {
+        alert('전화번호를 입력해 주세요.');
+        return;
     }
+
+    //휴대폰 번호 11자리 숫자로 validation
+    const phoneRegex = /^\d{11}$/;
+
+    if(!phoneRegex.test(phoneNumber)) {
+        alert('휴대폰 번호는 11자리 숫자여야 합니다.');
+        return;
+    }
+
+    $.ajax({
+        url: '/ajax/login',
+        type: 'POST',
+        data: {'mobile_no': phoneNumber},
+        async: false,
+        success: function (data) {
+            console.log(data)
+            if (data) {
+                moveToUrl('/index/login');
+                //location.href = '/index/login'
+            } else {
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            }
+            return false
+        },
+        error: function (data, status, err) {
+            console.log(err)
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    })
 }
 
 
@@ -101,18 +131,17 @@ const submitFormAgree = () => {
 
     // 모든 체크박스의 상태를 변경
     if (isAllChecked) {
-        document.querySelector('form').submit()
+        submitForm();
     } else {
         alert('항목에 동의해 주세요')
         return false
     }
 }
 
-const signUp = (postData) => {
+const signUp = () => {
     var postData = new FormData(document.querySelector('form'))
-    console.log(postData)
     $.ajax({
-        url: '/ajax/signIn', // todo : 추후 본인인증 연결
+        url: '/ajax/signUp', // todo : 추후 본인인증 연결
         type: 'POST',
         data: postData,
         processData: false,
@@ -122,8 +151,46 @@ const signUp = (postData) => {
             console.log(data)
             if (data) {
                 // 성공
-                // location.href = '/mo/signinType'
-                document.querySelector('form').submit()
+                var formData = document.querySelector('form');
+                for (var key in data.data) {
+                    if (data.data.hasOwnProperty(key)) {
+                        if(key==='ci') {
+                            var input = document.createElement('input');
+                            input.type = 'hidden'; // hidden 필드로 생성
+                            input.name = key;
+                            input.value = data.data[key];
+                            formData.appendChild(input);
+                        }
+                    }
+                  }
+                submitForm();
+            } else {
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+            }
+            return false
+        },
+        error: function (data, status, err) {
+            console.log(err)
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+        },
+    })
+}
+
+const signUpdate = (postData) => {
+    var postData = new FormData(document.querySelector('form'))
+    $.ajax({
+        url: '/ajax/signUpdate',
+        type: 'POST',
+        data: postData,
+        processData: false,
+        contentType: false,
+        async: false,
+        success: function (data) {
+            console.log(data)
+            if (data) {
+                // 성공
+                moveToUrl('/mo/signinSuccess')
+                // submitForm();
             } else {
                 alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
             }
@@ -145,7 +212,7 @@ const signInType = (postData) => {
         }
     }
     var url = ''
-    console.log(postData)
+    
     switch (postData.grade) {
         case 'grade01':
             url = '/mo/signinSuccess'
@@ -160,7 +227,7 @@ const signInType = (postData) => {
             url = '/mo/signinSuccess'
     }
 
-    // todo : 추후 본인인증 연결
+    // todo : 추후 정회원, 프리미엄이면 결제 연결
     // $.ajax({
     //     url: url,
     //     type: 'POST',
@@ -169,8 +236,10 @@ const signInType = (postData) => {
     //     success: function (data) {
     //         console.log(data)
     //         if (data) {
-    // 성공
-    location.href = url
+    
+    // 성공시
+    moveToUrl(url, postData)
+    
     //         } else {
     //             alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
     //         }
@@ -279,7 +348,6 @@ const editPhotoListner = () => {
                         }
                     })
                     .catch((error) => {
-                        console.error('error : ', error)
                         const imageElement = document.createElement('img')
                         // 이미지 요소에 읽어온 파일의 URL 할당
                         imageElement.src = '/static/images/profile_noimg.png'
@@ -287,6 +355,8 @@ const editPhotoListner = () => {
                         imageElement.style.borderRadius = '50%'
                         imageElement.style.width = '74px'
                         imageElement.style.height = '74px'
+                        imgRegist.appendChild(imageElement)
+                        console.error('error : ', error)
                     })
 
                 // javascript에서 fileUpload 호출

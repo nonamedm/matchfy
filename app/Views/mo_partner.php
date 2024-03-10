@@ -49,7 +49,7 @@
                             <div class="signin_form_div">
                                 <label for="appear_type" class="signin_label">외모유형</label>
                                 <select id="appear_type" value="">
-                                    <option>선택</option>
+                                    <option value="">선택</option>
                                     <option value="0">강아지상</option>
                                     <option value="1">고양이상</option>
                                     <option value="2">여우상</option>

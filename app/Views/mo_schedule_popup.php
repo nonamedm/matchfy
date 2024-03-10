@@ -38,10 +38,10 @@
                         </div>
                         <div class="schedule_calendar multy_select">
                             <select>
-                                <option>선택</option>
+                                <option value="">선택</option>
                             </select>
                             <select>
-                                <option>선택</option>
+                                <option value="">선택</option>
                             </select>
                         </div>
                     </div>
