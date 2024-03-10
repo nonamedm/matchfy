@@ -37,6 +37,7 @@ class MoAjax extends BaseController
             $session = session();
             $session->set([
                 'ci' => $user['ci'],
+                'name' => $user['name'],
                 'isLoggedIn' => true //로그인 상태
             ]);
 
@@ -45,6 +46,15 @@ class MoAjax extends BaseController
         {
             return $this->response->setJSON(['status' => 'error', 'message' => '일치하는 회원 정보가 없습니다.']);
         }
+    }
+
+    public function logout()
+    {
+        $session = session();
+        $session->remove('ci');
+        $session->remove('name');
+        $session->remove('isLoggedIn');
+        return $this->response->setJSON(['status' => 'success', 'message' => "로그아웃 성공"]);
     }
 
     public function signUp()

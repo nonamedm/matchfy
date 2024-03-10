@@ -76,6 +76,7 @@ $routes->post('/upload', 'Upload::upload');
 $routes->post('/ajax/signUp', 'MoAjax::signUp');
 $routes->post('/ajax/signUpdate', 'MoAjax::signUpdate');
 $routes->post('/ajax/login', 'MoAjax::login');
+$routes->post('/ajax/logout', 'MoAjax::logout');
 $routes->post('/ajax/mbrFileRegUp', 'MoAjax::mbrFileRegUp');
 
 /*관리자페이지*/

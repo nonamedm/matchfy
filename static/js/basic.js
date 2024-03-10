@@ -103,7 +103,7 @@ const userLogin = () => {
         success: function (data) {
             console.log(data);
             if (data) {
-                moveToUrl('/index/login');
+                moveToUrl('/');
                 //location.href = '/index/login'
             } else {
                 alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
@@ -115,6 +115,24 @@ const userLogin = () => {
             alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
         },
     });
+};
+const userLogout = () => {
+    if (confirm('로그아웃 하시겠습니까?')) {
+        $.ajax({
+            url: '/ajax/logout',
+            type: 'POST',
+            async: false,
+            success: function (data) {
+                console.log(data);
+                location.reload();
+                alert('로그아웃 되었습니다.');
+            },
+            error: function (data, status, err) {
+                console.log(err);
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            },
+        });
+    }
 };
 
 const submitForm = () => {
