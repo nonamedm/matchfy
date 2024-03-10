@@ -189,9 +189,7 @@ const signUp = () => {
                 submitForm();
             } else if (data.status === 'error') {
                 // 한번만 출력되게 함
-                $('input').each(function() {
-                    $(this).next('.alert-validation').remove();
-                });
+                $('.alert-validation').remove();
                 // 오류 메시지 표시
                 Object.keys(data.errors).forEach(function(key, index) {
                     var field = $('[name="' + key + '"]');
@@ -203,7 +201,7 @@ const signUp = () => {
                     }
                     // 처음 validation 포커스
                     if (index === 0) {
-                        input.focus();
+                        field.focus();
                     }
                 });
             } else {
