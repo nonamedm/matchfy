@@ -36,10 +36,22 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="content_body">
-                    <img src="/static/images/profile_noimg.png" />
+                    <a id="profileArea" onclick="editPhoto()">
+                        <?php
+                        if ($file_path)
+                        {
+                            echo '<img src="/writable/' . $file_path . '/' . $file_name . '" style="border-radius: 50%; width: 74px; height: 74px;" />';
+                        } else
+                        {
+                            echo '<img src="/static/images/profile_noimg.png" style="border-radius: 50%; width: 74px; height: 74px;" />';
+                        }
+                        ?>
+
+                    </a>
                 </div>
                 <div class="btn_group">
-                    <button type="button" class="btn type02">프로필 사진수정</button>
+                    <button type="button" class="btn type02" onclick="editPhoto()">프로필 사진수정</button>
+                    <input type="file" id="main_photo" name="main_photo" style="display:none;" accept="image/*" />
                 </div>
                 <form class="main_signin_form">
                     <legend></legend>
@@ -55,7 +67,8 @@
                                         <option value="0">유</option>
                                         <option value="1">무</option>
                                     </select>
-                                    <button class="btn btn_input_form">인증</button>
+                                    <button type="button" class="btn btn_input_form"
+                                        onclick="showPopupRgt('marital','<?php echo $ci ?>')">인증</button>
                                 </div>
                             </div>
                         </div>
@@ -168,7 +181,8 @@
                                 <p class="profile_photo_desc">최종학교 졸업증명서를 업로드해주세요!</p>
                                 <div class="input_btn">
                                     <input id="school" name="school" type="text" value="" placeholder="학교를 입력해 주세요">
-                                    <button class="btn btn_input_form">인증</button>
+                                    <button type="button" class="btn btn_input_form"
+                                        onclick="showPopupRgt('school','<?php echo $ci ?>')">인증</button>
                                 </div>
                             </div>
                         </div>
@@ -176,10 +190,11 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div input_btn">
                                 <h4 class="profile_photo_label">직업</h4>
-                                <p class="profile_photo_desc">재직증명서 혹은 건강보험 자격득실확인서를 업로드해주세요</p>
+                                <p class="profile_photo_desc">명함 혹은 재직증명서를 업로드해주세요</p>
                                 <div class="input_btn">
                                     <input id="job" name="job" type="text" value="" placeholder="직업을 입력해 주세요">
-                                    <button class="btn btn_input_form">인증</button>
+                                    <button type="button" class="btn btn_input_form"
+                                        onclick="showPopupRgt('job','<?php echo $ci ?>')">인증</button>
                                 </div>
                             </div>
                         </div>
@@ -195,7 +210,8 @@
                                         <option value="1">2천만원~1억이하</option>
                                         <option value="2">1억이상~</option>
                                     </select>
-                                    <button class="btn btn_input_form">인증</button>
+                                    <button type="button" class="btn btn_input_form"
+                                        onclick="showPopupRgt('asset_range','<?php echo $ci ?>')">인증</button>
                                 </div>
                             </div>
                         </div>
@@ -215,7 +231,8 @@
                                         <option value="4">소득구간5</option>
                                         <option value="5">소득구간6</option>
                                     </select>
-                                    <button class="btn btn_input_form">인증</button>
+                                    <button type="button" class="btn btn_input_form"
+                                        onclick="showPopupRgt('income_range','<?php echo $ci ?>')">인증</button>
                                 </div>
                             </div>
                         </div>
@@ -224,7 +241,8 @@
                             <div class="signin_form_div">
                                 <label for="parents" class="signin_label">부</label>
                                 <div class="multy_select">
-                                    <select id="father_birth_year" name="father_birth_year" class="custom_select" value="">
+                                    <select id="father_birth_year" name="father_birth_year" class="custom_select"
+                                        value="">
                                         <option value="">선택</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
@@ -245,7 +263,8 @@
                             <div class="signin_form_div">
                                 <label for="parents" class="signin_label">모</label>
                                 <div class="multy_select">
-                                    <select id="mother_birth_year" name="mother_birth_year" class="custom_select" value="">
+                                    <select id="mother_birth_year" name="mother_birth_year" class="custom_select"
+                                        value="">
                                         <option value="">선택</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
@@ -312,14 +331,12 @@
                 </form>
             </div>
         </div>
-
-
-
+        <?php include 'mo_signin_popup.php'; ?>
 
 
         <div style="height: 50px;"></div>
-<footer class="footer">
-            
+        <footer class="footer">
+
             <!-- <div class="footer_logo mb40">
                 matchfy
             </div>
@@ -344,13 +361,12 @@
     <!-- SCRIPTS -->
 
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
+        $(document).ready(function () {
+            editPhotoListner();
+            // editPhotoListListner();
+            // editMovListListner();
+        });
+
     </script>
 
     <!-- -->

@@ -37,13 +37,6 @@
             <div class="content_wrap">
                 <div class="content_title">
                     <h2 class="member_grade">멤버십 등급에 따라<br />혜택을 제공 받으세요</h2>
-
-                    <p>전달값 확인하기 :<br />
-                        <?php foreach ($postData as $key => $value)
-                        {
-                            echo $key . ': ' . $value . '<br>';
-                        } ?>
-                    </p>
                 </div>
                 <form class="main_signin_form" method="post" action="">
                     <div class="content_body">

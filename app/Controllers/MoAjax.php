@@ -24,14 +24,16 @@ class MoAjax extends BaseController
         }
     }
 
-    public function login() {
+    public function login()
+    {
         $mobile_no = $this->request->getPost('mobile_no');
 
         $MemberModel = new MemberModel();
 
         $user = $MemberModel->where('mobile_no', $mobile_no)->first();
 
-        if($user) {
+        if ($user)
+        {
             $session = session();
             $session->set([
                 'ci' => $user['ci'],
@@ -39,7 +41,8 @@ class MoAjax extends BaseController
             ]);
 
             return $this->response->setJSON(['status' => 'success', 'message' => "로그인 성공"]);
-        } else {
+        } else
+        {
             return $this->response->setJSON(['status' => 'error', 'message' => '일치하는 회원 정보가 없습니다.']);
         }
     }
@@ -99,7 +102,7 @@ class MoAjax extends BaseController
             $mobile_no = $this->request->getPost('mobile_no');
             $encrypter = \Config\Services::encrypter();
             $ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 32]));
-            
+    
             // $ci = $this->request->getPost('ci');
             $agree1 = $this->request->getPost('agree1');
             $agree2 = $this->request->getPost('agree2');
@@ -129,9 +132,37 @@ class MoAjax extends BaseController
             // 데이터 저장
             $inserted = $MemberModel->insert($data);
 
+            // 회원가입 완료 되었을 떄
             if ($inserted)
             {
-                return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
+                // 프로필 사진 DB 업로드
+                $MemberFileModel = new MemberFileModel();
+                $org_name = $this->request->getPost('org_name');
+                $file_name = $this->request->getPost('file_name');
+                $file_path = $this->request->getPost('file_path');
+                $ext = $this->request->getPost('ext');
+                if ($org_name)
+                {
+                    // 프로필 첨부 있을때만 file db 저장
+                    $data2 = [
+                        'member_ci' => $ci,
+                        'org_name' => $org_name,
+                        'file_name' => $file_name,
+                        'file_path' => $file_path,
+                        'ext' => $ext,
+                        'board_type' => 'main_photo',
+                    ];
+                    $data = array_merge($data, $data2);
+                    $MemberFileModel->insert($data2);
+                }
+                if ($inserted)
+                {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
+                } else
+                {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
+                }
+
             } else
             {
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy']);
@@ -319,36 +350,36 @@ class MoAjax extends BaseController
 
             $MemberModel = new MemberModel();
 
-            $data = [
-                'grade' => $grade,
-                'married' => $married ,
-                'smoker' => $smoker ,
-                'drinking' => $drinking ,
-                'religion' => $religion ,
-                'mbti' => $mbti ,
-                'height' => $height ,
-                'stylish' => $stylish ,
-                'education' => $education ,
-                'major' => $major ,
-                'school' => $school ,
-                'job' => $job ,
-                'asset_range' => $asset_range ,
-                'income_range' => $income_range 
-            ];
+        $data = [
+            'grade' => $grade,
+            'married' => $married,
+            'smoker' => $smoker,
+            'drinking' => $drinking,
+            'religion' => $religion,
+            'mbti' => $mbti,
+            'height' => $height,
+            'stylish' => $stylish,
+            'education' => $education,
+            'major' => $major,
+            'school' => $school,
+            'job' => $job,
+            'asset_range' => $asset_range,
+            'income_range' => $income_range
+        ];
 
-            if ($grade==='grade03')
-            {
-                // 프리미엄 회원에만 해당하는 추가 정보
-                $premiumData = [
-                    'father_birth_year' => $this->request->getPost('father_birth_year'),
-                    'father_job' => $this->request->getPost('father_job'),
-                    'mother_birth_year' => $this->request->getPost('mother_birth_year'),
-                    'mother_job' => $this->request->getPost('mother_job'),
-                    'siblings' => $this->request->getPost('siblings'),
-                    'residence1' => $this->request->getPost('residence1'),
-                    'residence2' => $this->request->getPost('residence2'),
-                    'residence3' => $this->request->getPost('residence3'),
-                ];
+        if ($grade === 'grade03')
+        {
+            // 프리미엄 회원에만 해당하는 추가 정보
+            $premiumData = [
+                'father_birth_year' => $this->request->getPost('father_birth_year'),
+                'father_job' => $this->request->getPost('father_job'),
+                'mother_birth_year' => $this->request->getPost('mother_birth_year'),
+                'mother_job' => $this->request->getPost('mother_job'),
+                'siblings' => $this->request->getPost('siblings'),
+                'residence1' => $this->request->getPost('residence1'),
+                'residence2' => $this->request->getPost('residence2'),
+                'residence3' => $this->request->getPost('residence3'),
+            ];
 
                 // 배열 병합
                 $data = array_merge($data, $premiumData);
@@ -358,58 +389,72 @@ class MoAjax extends BaseController
             $existingData = $MemberModel->where('ci', $ci)->first();
 
             // 데이터 존재 시
-            if ($existingData) {
-                $inserted = $MemberModel->update($ci,$data);
-                
-                if ($inserted) {
+            if ($existingData)
+            {
+                $inserted = $MemberModel->update($ci, $data);
+
+                if ($inserted)
+                {
                     return $this->response->setJSON(['status' => 'success', 'message' => '데이터가 업데이트되었습니다', 'data' => $data]);
-                } else {
+                } else
+                {
                     return $this->response->setJSON(['status' => 'error', 'message' => '데이터를 업데이트하는 중 오류가 발생했습니다']);
                 }
-            } else {
+            } else
+            {
                 return $this->response->setJSON(['status' => 'error', 'message' => '업데이트할 데이터가 존재하지 않습니다']);
             }
         }
+
     }
 
     /* 사용자 파일 저장 */
-    public function memberUploadFiles()
+    public function mbrFileRegUp()
     {
-        $member_idx = $this->request->getPost('member_idx');
+        $member_ci = $this->request->getPost('ci');
         $file_path = $this->request->getPost('file_path');
         $file_name = $this->request->getPost('file_name');
         $org_name = $this->request->getPost('org_name');
         $ext = $this->request->getPost('ext');
-        $extra1 = $this->request->getPost('extra1');
-        $extra2 = $this->request->getPost('extra2');
-        $extra3 = $this->request->getPost('extra3');
+        $board_type = $this->request->getPost('board_type');
 
         $MemberFileModel = new MemberFileModel();
 
+        // 기존에 첨부된 파일은 delete_yn 처리하기
         $data = [
-            'member_idx' => $member_idx,
-            'file_path' => $file_path,
-            'file_name' => $file_name,
-            'org_name' => $org_name,
-            'ext' => $ext,
-            'extra1' => $extra1,
-            'extra2' => $extra2,
-            'extra3' => $extra3,
+            'delete_yn' => 'y',
         ];
+        $condition = ['board_type' => $board_type, 'member_ci' => $member_ci];
+        $updated = $MemberFileModel->where($condition)->update($member_ci, $data);
+        if ($updated)
+        {
+            $data = [
+                'member_ci' => $member_ci,
+                'file_path' => $file_path,
+                'file_name' => $file_name,
+                'org_name' => $org_name,
+                'ext' => $ext,
+                'board_type' => $board_type
+            ];
 
-        $inserted = $MemberFileModel->insert($data);
-
-        if($inserted) {
-            return $this->response->setJSON(['status' => 'success', 'message' => "파일이 성공적으로 저장되었습니다.", 'inserted_id' => $inserted]);
-        } else {
-            $error = $MemberFileModel->getError();
-            return $this->response->setJSON(['status' => 'fail', 'message' => "파일 저장에 실패했습니다. $error"]);
+            $inserted = $MemberFileModel->insert($data);
+            if ($inserted)
+            {
+                return $this->response->setJSON(['status' => 'success', 'message' => "파일이 성공적으로 저장되었습니다.", 'data' => $data]);
+            } else
+            {
+                $error = $MemberFileModel->getError();
+                return $this->response->setJSON(['status' => 'fail', 'message' => "파일 저장에 실패했습니다. $error"]);
+            }
         }
+
+
+
     }
-    
+
 
     /* 회원 등급 업데이트 */
-    public function gradeUpdate($ci,$grade)
+    public function gradeUpdate($ci, $grade)
     {
         $MemberModel = new MemberModel();
 
@@ -420,17 +465,21 @@ class MoAjax extends BaseController
         // CI조회
         $existingData = $MemberModel->where('ci', $ci)->first();
         // 데이터 존재 시
-        if ($existingData) {
-            $inserted = $MemberModel->update($ci,$data);
+        if ($existingData)
+        {
+            $inserted = $MemberModel->update($ci, $data);
 
-            if ($inserted) {
+            if ($inserted)
+            {
                 // return $this->response->setJSON(['status' => 'success', 'message' => '데이터가 업데이트되었습니다', 'data' => $data]);
                 return '0';
-            } else {
+            } else
+            {
                 // return $this->response->setJSON(['status' => 'error', 'message' => '데이터를 업데이트하는 중 오류가 발생했습니다']);
                 return '1';
             }
-        } else {
+        } else
+        {
             // return $this->response->setJSON(['status' => 'error', 'message' => '업데이트할 데이터가 존재하지 않습니다']);
             return '2';
         }
