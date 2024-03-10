@@ -1,0 +1,80 @@
+CRITICAL - 2024-03-07 15:31:20 --> BadMethodCallException: Call to undefined method App\Models\MemberModel::getUserByMobileNo
+in SYSTEMPATH\Model.php on line 874.
+ 1 APPPATH\Controllers\MoAjax.php(31): CodeIgniter\Model->__call('getUserByMobileNo', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\MoAjax->login()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MoAjax))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\matchpi\\matchfy\\index.php')
+CRITICAL - 2024-03-07 15:32:14 --> BadMethodCallException: Call to undefined method App\Models\MemberModel::getUserByMobileNo
+in SYSTEMPATH\Model.php on line 874.
+ 1 APPPATH\Controllers\MoAjax.php(31): CodeIgniter\Model->__call('getUserByMobileNo', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\MoAjax->login()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MoAjax))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\matchpi\\matchfy\\index.php')
+CRITICAL - 2024-03-07 15:33:03 --> BadMethodCallException: Call to undefined method App\Models\MemberModel::getUserByMobileNo
+in SYSTEMPATH\Model.php on line 874.
+ 1 APPPATH\Controllers\MoAjax.php(31): CodeIgniter\Model->__call('getUserByMobileNo', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\MoAjax->login()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MoAjax))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\matchpi\\matchfy\\index.php')
+CRITICAL - 2024-03-07 15:33:31 --> BadMethodCallException: Call to undefined method App\Models\MemberModel::getUserByMobileNo
+in SYSTEMPATH\Model.php on line 874.
+ 1 APPPATH\Controllers\MoAjax.php(31): CodeIgniter\Model->__call('getUserByMobileNo', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\MoAjax->login()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MoAjax))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\matchpi\\matchfy\\index.php')
+CRITICAL - 2024-03-07 15:34:10 --> BadMethodCallException: Call to undefined method App\Models\MemberModel::getUserByMobileNo
+in SYSTEMPATH\Model.php on line 874.
+ 1 APPPATH\Controllers\MoAjax.php(31): CodeIgniter\Model->__call('getUserByMobileNo', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\MoAjax->login()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MoAjax))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\matchpi\\matchfy\\index.php')
+CRITICAL - 2024-03-07 15:34:53 --> BadMethodCallException: Call to undefined method App\Models\MemberModel::getUserByMobileNo
+in SYSTEMPATH\Model.php on line 874.
+ 1 APPPATH\Controllers\MoAjax.php(31): CodeIgniter\Model->__call('getUserByMobileNo', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\MoAjax->login()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MoAjax))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\matchpi\\matchfy\\index.php')
+CRITICAL - 2024-03-07 15:36:09 --> BadMethodCallException: Call to undefined method App\Models\MemberModel::getUserByMobileNo
+in SYSTEMPATH\Model.php on line 874.
+ 1 APPPATH\Controllers\MoAjax.php(31): CodeIgniter\Model->__call('getUserByMobileNo', [...])
+ 2 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\MoAjax->login()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MoAjax))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\matchpi\\matchfy\\index.php')
+CRITICAL - 2024-03-07 16:11:33 --> BadMethodCallException: Call to undefined method App\Models\MemberModel::getError
+in SYSTEMPATH\Model.php on line 874.
+ 1 APPPATH\Controllers\MoAjax.php(39): CodeIgniter\Model->__call('getError', [])
+ 2 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\MoAjax->login()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MoAjax))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\matchpi\\matchfy\\index.php')
+CRITICAL - 2024-03-07 16:11:40 --> BadMethodCallException: Call to undefined method App\Models\MemberModel::getError
+in SYSTEMPATH\Model.php on line 874.
+ 1 APPPATH\Controllers\MoAjax.php(39): CodeIgniter\Model->__call('getError', [])
+ 2 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\MoAjax->login()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MoAjax))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\matchpi\\matchfy\\index.php')
+CRITICAL - 2024-03-07 16:16:05 --> BadMethodCallException: Call to undefined method App\Models\MemberModel::getError
+in SYSTEMPATH\Model.php on line 874.
+ 1 APPPATH\Controllers\MoAjax.php(41): CodeIgniter\Model->__call('getError', [])
+ 2 SYSTEMPATH\CodeIgniter.php(941): App\Controllers\MoAjax->login()
+ 3 SYSTEMPATH\CodeIgniter.php(502): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\MoAjax))
+ 4 SYSTEMPATH\CodeIgniter.php(361): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(79): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('C:\\matchpi\\matchfy\\index.php')

@@ -64,8 +64,7 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="gender" class="signin_label">성별</label>
-                                <input id="gender" name="gender" type="text" value="gender value"
-                                    placeholder="성별을 입력하세요">
+                                <input id="gender" name="gender" type="text" value="M" placeholder="성별을 입력하세요">
                             </div>
                         </div>
                         <div class="form_row signin_form">
@@ -105,7 +104,7 @@
                         <div id="profile_mov_uploaded" style="display:none;"></div> -->
                         <div class="btn_group multy">
                             <button type="button" class="btn type02">취소</button>
-                            <button type="button" class="btn type01" onclick="submitForm()">다음</button>
+                            <button type="button" class="btn type01" onclick="signUp()">다음</button>
                         </div>
                     </div>
                 </form>
