@@ -118,5 +118,5 @@ $routes->get('/ad/notice/noticeView/(:num)', 'AdminHome::noticeView/$1');
 $routes->get('/ad/notice/noticeModify/(:num)', 'AdminHome::noticeModify/$1');
 $routes->post('/ad/notice/noticeUpdate', 'AdminHome::noticeUpdate');
 $routes->post('/ad/notice/noticeDelete', 'AdminHome::noticeDelete');
-$routes->post('/ad/FileDelete', 'AdminHome::FileDelete');
+$routes->post('/ad/FileDelete', 'AdminHome::fileDelete');
 

@@ -58,7 +58,8 @@ function fn_clickFileDelete(fileId) {
             data: { fileId: fileId },
             success: function(response) {
                 alert('삭제 되었습니다.');
-                location.reload();
+                $('.file_org_name').hide();
+                
             },
             error: function(xhr, status, error) {
                 alert('삭제 중 오류가 발생 하였습니다.');

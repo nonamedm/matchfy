@@ -179,7 +179,7 @@ class AdminHome extends BaseController
         }
     }
 
-    public function FileDelete(){
+    public function fileDelete(){
         $fileId = $this->request->getPost('fileId');
 
         $BoardFileModel = new BoardFileModel();
@@ -187,9 +187,9 @@ class AdminHome extends BaseController
         $deleted = $BoardFileModel->delete($fileId);
 
         if ($deleted) {
-            return redirect()->back()->withInput()->with('msg', '삭제 되었습니다.');
+            return $this->response->setJSON(['success' => true]);
         } else {
-            return redirect()->back()->with('msg', '삭제에 실패하였습니다.');
+            return $this->response->setJSON(['success' => false]);
         }
     }
 

@@ -39,8 +39,8 @@
                 <input type="file" id="userfile" name="userfile"><br>
 
                 <?php if ($file): ?>
-                    <?= $file['org_name'] ?>
-                    <input type="button" value="파일 삭제" Onclick="fn_clickFileDelete('<?= $file['id']?>')"/>
+                    <p class="file_org_name"><?= $file['org_name'] ?>
+                    <input type="button" value="파일 삭제" Onclick="fn_clickFileDelete('<?= $file['id']?>')"/></p>
                 <?php endif; ?>
 
                 <br>
