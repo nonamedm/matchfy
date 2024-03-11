@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static/js/ad_board.js"></script>
     <link rel="stylesheet" href="/static/css/common_admin.css">
     <link rel="stylesheet" href="/static/css/common.css">
     <title>Matchfy 관리자페이지</title>
@@ -13,22 +14,6 @@
             echo "alert('" . session('msg') . "');";
         }
     ?>
-    $(document).ready(function(){
-        $('form').submit(function(){
-            var title = $('#title').val();
-            var content = $('#content').val();
-
-            if(title.trim() == '') {
-                alert('질문을 입력해주세요.');
-                return false;
-            }
-
-            if(content.trim() == '') {
-                alert('답변을 입력해주세요.');
-                return false; 
-            }
-        });
-    });
     </script>
 </head>
 <body>
@@ -40,21 +25,17 @@
         </div>
         <div class="ad-con">
             <h2>개인정보처리방침</h2>
-            <a href="/ad/privacy/privacyList">목록으로 돌아가기</a></br>
-                <input type="hidden" id="privacy_id" name="privacy_id" value="<?= $privacy['id'] ?>"/>
-                <label for="title">제목:</label><br>
-                <p><?= $privacy['title'] ?></p><br>
-                <label for="content">내용:</label><br>
-                <p><?=nl2br($privacy['content']); ?></p>
-                <?php
-                    if($privacy['title']!=''){
-                        echo '<a href="/ad/privacy/privacyModify/'. $privacy['id'] .'">수정</a>';
-                    }else{
-                        echo '<a href="/ad/privacy/privacyEdit/">등록</a>';
-                    }
-                
-                ?>
-                
+            <input type="button" value="목록으로 돌아가기" Onclick="fn_clickList('privacy')"/><br>
+            <input type="hidden" id="privacy_id" name="privacy_id" value="<?= $privacy['id'] ?>"/>
+            <strong><label for="title">제목:</label></strong><br>
+            <p><?= $privacy['title'] ?></p><br>
+            <strong><label for="content">내용:</label></strong><br>
+            <p><?=nl2br($privacy['content']); ?></p>
+            
+            <div class="btn-up-del-box">
+                <input type="button" value="수정" Onclick="fn_clickUpdate('privacy','<?= $privacy['id']?>')"/>
+                <input type="button" value="삭제"  Onclick="fn_clickDelete('<?= $privacy['id']?>','privacy')"/>
+            </div>
             
         </div>
     </div>

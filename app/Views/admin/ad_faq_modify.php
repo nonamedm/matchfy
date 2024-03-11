@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static/js/ad_board.js"></script>
     <link rel="stylesheet" href="/static/css/common_admin.css">
     <link rel="stylesheet" href="/static/css/common.css">
     <title>Matchfy 관리자페이지</title>
@@ -13,22 +15,6 @@
             echo "alert('" . session('msg') . "');";
         }
     ?>
-    $(document).ready(function(){
-        $('form').submit(function(){
-            var question = $('#question').val();
-            var answer = $('#answer').val();
-
-            if(question.trim() == '') {
-                alert('질문을 입력해주세요.');
-                return false;
-            }
-
-            if(answer.trim() == '') {
-                alert('답변을 입력해주세요.');
-                return false; 
-            }
-        });
-    });
     </script>
 </head>
 <body>
@@ -40,13 +26,13 @@
         </div>
         <div class="ad-con">
             <h2>FAQ 수정</h2>
-            <a href="/ad/faq/faqList">목록으로 돌아가기</a>
+            <input type="button" value="목록으로 돌아가기" Onclick="fn_clickList('faq')"/><br>
             <form action="/ad/faq/faqUpdate" method="post">
                 <input type="hidden" id="faq_id" name="faq_id" value="<?= $faq['id'] ?>"/>
-                <label for="question">질문:</label><br>
-                <input type="text" id="question" name="question" value="<?= $faq['title'] ?>"><br>
-                <label for="answer">답변:</label><br>
-                <textarea id="answer" name="answer" rows="4" cols="50"><?=htmlspecialchars($faq['content']); ?></textarea><br><br>
+                <label for="title">질문:</label><br>
+                <input type="text" id="title" name="title" value="<?= $faq['title'] ?>"><br>
+                <label for="content">답변:</label><br>
+                <textarea id="content" name="content" rows="4" cols="50"><?=htmlspecialchars($faq['content']); ?></textarea><br><br>
                 <input type="submit" value="수정"/>
             </form>
         </div>

@@ -19,7 +19,7 @@ $routes->get('/mo/signinPremium', 'MoHome::signinPremium');
 $routes->get('/mo/signinPopup', 'MoHome::signinPopup');
 $routes->get('/mo/menu', 'MoHome::menu');
 $routes->get('/mo/notice', 'MoHome::notice');
-$routes->get('/mo/notice/view', 'MoHome::noticeView');
+$routes->get('/mo/notice/view/(:num)', 'MoHome::noticeView/$1');
 $routes->get('/mo/faq', 'MoHome::faq');
 $routes->get('/mo/terms', 'MoHome::terms');
 $routes->get('/mo/privacy', 'MoHome::privacy');
@@ -76,13 +76,18 @@ $routes->post('/upload', 'Upload::upload');
 $routes->post('/ajax/signIn', 'MoAjax::joinMatchfy');
 
 /*관리자페이지*/
+$routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');
+$routes->post('/ad/BoardDelete', 'AdminHome::BoardDelete');
+
 $routes->get('/ad/header', 'AdminHome::header');
 $routes->get('/ad/faq/faqEdit', 'AdminHome::faqEdit');
 $routes->post('/ad/faq/faqUpload', 'AdminHome::faqUpload');
 $routes->get('/ad/faq/faqList', 'AdminHome::faqList');
+$routes->get('/ad/faq/faqView/(:num)', 'AdminHome::faqView/$1');
 $routes->get('/ad/faq/faqModify/(:num)', 'AdminHome::faqModify/$1');
 $routes->post('/ad/faq/faqUpdate', 'AdminHome::faqUpdate');
-$routes->post('/ad/faq/faqDelete', 'AdminHome::faqDelete');
+
+
 $routes->get('/ad/terms/termsMenuSelect', 'AdminHome::termsMenuSelect');
 $routes->get('/ad/terms/termsEdit', 'AdminHome::termsEdit');
 $routes->post('/ad/terms/termsUpload', 'AdminHome::termsUpload');
@@ -90,6 +95,8 @@ $routes->get('/ad/terms/termsList', 'AdminHome::termsList');
 $routes->get('/ad/terms/termsView/(:num)', 'AdminHome::termsView/$1');
 $routes->get('/ad/terms/termsModify/(:num)', 'AdminHome::termsModify/$1');
 $routes->post('/ad/terms/termsUpdate', 'AdminHome::termsUpdate');
+
+
 $routes->get('/ad/privacy/privacyMenuSelect', 'AdminHome::privacyMenuSelect');
 $routes->get('/ad/privacy/privacyEdit', 'AdminHome::privacyEdit');
 $routes->post('/ad/privacy/privacyUpload', 'AdminHome::privacyUpload');
@@ -98,6 +105,7 @@ $routes->get('/ad/privacy/privacyView/(:num)', 'AdminHome::privacyView/$1');
 $routes->get('/ad/privacy/privacyModify/(:num)', 'AdminHome::privacyModify/$1');
 $routes->post('/ad/privacy/privacyUpdate', 'AdminHome::privacyUpdate');
 
+
 $routes->get('/ad/notice/noticeMenuSelect', 'AdminHome::noticeMenuSelect');
 $routes->get('/ad/notice/noticeEdit', 'AdminHome::noticeEdit');
 $routes->post('/ad/notice/noticeUpload', 'AdminHome::noticeUpload');
@@ -105,6 +113,8 @@ $routes->get('/ad/notice/noticeList', 'AdminHome::noticeList');
 $routes->get('/ad/notice/noticeView/(:num)', 'AdminHome::noticeView/$1');
 $routes->get('/ad/notice/noticeModify/(:num)', 'AdminHome::noticeModify/$1');
 $routes->post('/ad/notice/noticeUpdate', 'AdminHome::noticeUpdate');
+$routes->post('/ad/notice/noticeDelete', 'AdminHome::noticeDelete');
+$routes->post('/ad/FileDelete', 'AdminHome::FileDelete');
 
 
 // ajax
