@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\BoardModel;
+use App\Models\BoardFileModel;
 use App\Helpers\MoHelper;
 use CodeIgniter\Session\Session;
 
@@ -99,14 +100,79 @@ class MoHome extends BaseController
     {
         return view('mo_menu');
     }
-    public function notice(): string
+    public function notice()
     {
-        return view('mo_notice');
+        $value = $this->request->getGet('value');
+        $fileData = new BoardFileModel();
+        $query = $fileData
+                ->select('bo.id AS notice_id,
+                        bo.title AS title,
+                        bo.content AS content,
+                        bo.author AS author,
+                        bo.update_author AS update_author,
+                        bo.created_at AS created_at,
+                        bo.updated_at AS updated_at,
+                        bo.hit AS hit,
+                        bo.board_type AS board_type,
+                        bf.id AS file_id,
+                        bf.board_idx AS board_idx,
+                        bf.board_type AS file_board_type,
+                        bf.file_name AS file_name,
+                        bf.file_path AS file_path,
+                        bf.org_name AS org_name,
+                        (SELECT CONCAT(DATE_FORMAT(MIN(created_at), "%y.%m.%d"), " ~ ", DATE_FORMAT(MAX(created_at), "%y.%m.%d")) FROM wh_board_notice) AS created_at_range')
+                ->from('wh_board_notice bo')
+                ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
+                ->groupBy('bo.id');
+        if ($value == 'recent') {
+            $query->orderBy('bo.id', 'DESC');
+        } else if ($value == 'popular') {
+            $query->orderBy('bo.hit', 'DESC');
+        } else {
+            $query->orderBy('bo.id', 'DESC');
+        }
+
+        $data['datas'] = $query->get()->getResultArray(); 
+
+        //날짜조회
+    
+        // $BoardModel = new BoardModel();
+        // $BoardModel->setTableName('wh_board_notice');
+        // $min_date = $BoardModel->min('created_at');
+
+        
+        // $max_date = $BoardModel->max('created_at');
+
+        // $data['min_date'] = $min_date;
+        // $data['max_date'] = $max_date;
+   
+        // // $data['datas2'] = $query2->getResultArray();
+        
+        // echo $BoardModel->getLastQuery();
+
+        if ($this->request->isAJAX()) {
+            return $this->response->setJSON($data);
+        } else {
+            return view('mo_notice', $data);
+        }
     }
-    public function noticeView(): string
+
+
+    public function noticeView($id)
     {
-        return view('mo_notice_view');
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_notice');
+        $data['notice'] = $BoardModel->find($id);
+        
+        $BoardModel->increaseHit($id);
+
+        $fileData = new BoardFileModel();
+        $data['file'] = $fileData->where('board_idx', $id)->first();
+        
+        
+        return view('mo_notice_view',$data);
     }
+
     public function faq(): string
     {
         $BoardModel = new BoardModel();

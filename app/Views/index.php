@@ -9,7 +9,7 @@
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
 
     <link rel="stylesheet" href="/static/css/common.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/basic.js"></script>
     <!-- STYLES -->
 

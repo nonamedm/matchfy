@@ -9,6 +9,8 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static/js/board.js"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
 </head>
 
@@ -20,8 +22,10 @@
 
             <div class="menu">
                 <ul>
-                    <li class="left_arrow">
-                        <img src="/static/images/left_arrow.png" />
+                    <li class="left_arrow" >
+                        <a href="/mo/notice">
+                            <img src="/static/images/left_arrow.png" />
+                        </a>
                     </li>
                     <li class="header_title">
                         공지사항
@@ -37,29 +41,30 @@
                     <div class="notice_list">
                         <div class="notice_view_label">
                             <div>
-                                <h2>매치파이 앱이 오픈되었습니다.</h2>
-                                <p>2024-01-12 19:55</p>
+                                <h2><?= $notice['title'] ?></h2>
+                                <p><?= $notice['created_at'] ?></p>
                             </div>
                         </div>
                     </div>
                     <hr class="hoz_part">
                     <div class="notice_cont">
-                        <p>서비스 이용 시 도움이 필요하신 분들은 문의 주시기 바랍니다.</p>
-                        <p>문의 안내: 02-111-1111</p>
+                        <p><?= $notice['content'] ?></p>
 
                     </div>
                     <hr class="hoz_part">
-                    <div class="attatch_file_div">
-                        <a class="attatch_file">파일첨부01.jpg</a>
-                        <a class="attatch_file">파일첨부02.jpg</a>
-                    </div>
+                    <?php if ($file): ?>    
+                        <div class="attatch_file_div">
+                            <a class="attatch_file" href="/downloadFile/<?= $file['id'] ?>"><?= $file['org_name'] ?><?= $data['org_name'] ?></a>
+                        </div>
+                    <?php endif?>
+                        
                 </div>
             </div>
             <div style="height: 50px;"></div>
-<footer class="footer">
+                <footer class="footer">
                 
                 <div class="btn_group">
-                    <button type="button" class="btn type01">목록으로</button>
+                    <button type="button" class="btn type01" onclick="fn_clickList('notice');">목록으로</button>
                 </div>
             </footer>
         </div>
