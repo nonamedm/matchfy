@@ -24,7 +24,7 @@
                     </div>
                     <div class="report_category">
                         <select>
-                            <option>선택</option>
+                            <option value="">선택</option>
                             <option>욕설</option>
                             <option>도용</option>
                             <option>허위계정</option>

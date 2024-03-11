@@ -14,8 +14,8 @@ $routes->post('/mo/agree', 'MoHome::agree');
 $routes->post('/mo/signin', 'MoHome::signin');
 $routes->post('/mo/signinType', 'MoHome::signinType');
 $routes->get('/mo/signinSuccess', 'MoHome::signinSuccess');
-$routes->get('/mo/signinRegular', 'MoHome::signinRegular');
-$routes->get('/mo/signinPremium', 'MoHome::signinPremium');
+$routes->post('/mo/signinRegular', 'MoHome::signinRegular');
+$routes->post('/mo/signinPremium', 'MoHome::signinPremium');
 $routes->get('/mo/signinPopup', 'MoHome::signinPopup');
 $routes->get('/mo/menu', 'MoHome::menu');
 $routes->get('/mo/notice', 'MoHome::notice');
@@ -73,7 +73,11 @@ $routes->get('/mo/partner/premium', 'MoHome::partnerPremium');
 $routes->post('/upload', 'Upload::upload');
 
 // ajax
-$routes->post('/ajax/signIn', 'MoAjax::joinMatchfy');
+$routes->post('/ajax/signUp', 'MoAjax::signUp');
+$routes->post('/ajax/signUpdate', 'MoAjax::signUpdate');
+$routes->post('/ajax/login', 'MoAjax::login');
+$routes->post('/ajax/logout', 'MoAjax::logout');
+$routes->post('/ajax/mbrFileRegUp', 'MoAjax::mbrFileRegUp');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');
@@ -116,7 +120,3 @@ $routes->post('/ad/notice/noticeUpdate', 'AdminHome::noticeUpdate');
 $routes->post('/ad/notice/noticeDelete', 'AdminHome::noticeDelete');
 $routes->post('/ad/FileDelete', 'AdminHome::FileDelete');
 
-
-// ajax
-// $routes->post('/ajax/(:any)', 'MoAjax::$1');
-$routes->post('/ajax/signIn', 'MoAjax::joinMatchfy');

@@ -10,6 +10,8 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -33,20 +35,32 @@
 
         <div class="sub_wrap">
             <div class="content_wrap">
-                <div class="content_body">
-                    <img src="/static/images/profile_noimg.png" />
-                </div>
-                <div class="btn_group">
-                    <button type="button" class="btn type02">프로필 사진수정</button>
-                </div>
                 <form class="main_signin_form">
+                    <div class="content_body">
+                        <a id="profileArea" onclick="editPhoto()">
+                            <?php
+                            if ($file_path)
+                            {
+                                echo '<img src="/writable/' . $file_path . '/' . $file_name . '" style="border-radius: 50%; width: 74px; height: 74px;" />';
+                            } else
+                            {
+                                echo '<img src="/static/images/profile_noimg.png" style="border-radius: 50%; width: 74px; height: 74px;" />';
+                            }
+                            ?>
+
+                        </a>
+                    </div>
+                    <div class="btn_group">
+                        <button type="button" class="btn type02" onclick="editPhoto()">프로필 사진수정</button>
+                        <input type="file" id="main_photo" name="main_photo" style="display:none;" accept="image/*" />
+                    </div>
                     <legend></legend>
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="marital" class="signin_label">결혼유무</label>
-                                <select id="marital" class="custom_select" value="">
-                                    <option>선택</option>
+                                <select id="marital" name="marital" class="custom_select" value="">
+                                    <option value="">선택</option>
                                     <option value="0">유</option>
                                     <option value="1">무</option>
                                 </select>
@@ -55,8 +69,8 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="smoking" class="signin_label">흡연유무</label>
-                                <select id="smoking" class="custom_select" value="">
-                                    <option>선택</option>
+                                <select id="smoking" name="smoking" class="custom_select" value="">
+                                    <option value="">선택</option>
                                     <option value="0">유</option>
                                     <option value="1">무</option>
                                 </select>
@@ -65,8 +79,8 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="drinking" class="signin_label">음주 횟수</label>
-                                <select id="drinking" class="custom_select" value="">
-                                    <option>선택</option>
+                                <select id="drinking" name="drinking" class="custom_select" value="">
+                                    <option value="">선택</option>
                                     <option value="0">0</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -77,8 +91,8 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="religion" class="signin_label">종교</label>
-                                <select id="religion" class="custom_select" value="">
-                                    <option>선택</option>
+                                <select id="religion" name="religion" class="custom_select" value="">
+                                    <option value="">선택</option>
                                     <option value="0">무교</option>
                                     <option value="1">기독교</option>
                                     <option value="2">불교</option>
@@ -91,8 +105,8 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="mbti" class="signin_label">MBTI</label>
-                                <select id="mbti" class="custom_select" value="">
-                                    <option>선택</option>
+                                <select id="mbti" name="mbti" class="custom_select" value="">
+                                    <option value="">선택</option>
                                     <option value="0">ENFP</option>
                                     <option value="1">ENFJ</option>
                                     <option value="2">ENTP</option>
@@ -116,15 +130,15 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="height" class="signin_label">키</label>
-                                <input id="height" type="text" value="" placeholder="키 입력">
+                                <input id="height" name="height" type="text" value="" placeholder="키 입력">
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="personal_style" class="signin_label">스타일</label>
-                                <select id="personal_style" class="custom_select" value="">
-                                    <option>선택</option>
+                                <select id="personal_style" name="personal_style" class="custom_select" value="">
+                                    <option value="">선택</option>
                                     <option value="0">강인</option>
                                     <option value="1">댄디</option>
                                     <option value="2">너드</option>
@@ -137,8 +151,8 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="education" class="signin_label">학력</label>
-                                <select id="education" class="custom_select" value="">
-                                    <option>선택</option>
+                                <select id="education" name="education" class="custom_select" value="">
+                                    <option value="">선택</option>
                                     <option value="0">고등학교졸업</option>
                                     <option value="1">대학교재학</option>
                                     <option value="2">대학교졸업</option>
@@ -151,7 +165,7 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="major" class="signin_label">전공</label>
-                                <input id="major" type="text" value="" placeholder="전공을 입력해주세요">
+                                <input id="major" name="major" type="text" value="" placeholder="전공을 입력해주세요">
                             </div>
                         </div>
 
@@ -160,8 +174,9 @@
                                 <h4 class="profile_photo_label">학교명</h4>
                                 <p class="profile_photo_desc">최종학교 졸업증명서를 업로드해주세요!</p>
                                 <div class="input_btn">
-                                    <input id="school" type="text" value="" placeholder="학교를 입력해 주세요">
-                                    <button class="btn btn_input_form">인증</button>
+                                    <input id="school" name="school" type="text" value="" placeholder="학교를 입력해 주세요">
+                                    <button type="button" class="btn btn_input_form"
+                                        onclick="showPopupRgt('school','<?php echo $ci ?>')">인증</button>
                                 </div>
                             </div>
                         </div>
@@ -171,17 +186,18 @@
                                 <h4 class="profile_photo_label">직업</h4>
                                 <p class="profile_photo_desc">명함 혹은 재직증명서를 업로드해주세요</p>
                                 <div class="input_btn">
-                                    <input id="job" type="text" value="" placeholder="직업을 입력해 주세요">
-                                    <button class="btn btn_input_form">인증</button>
+                                    <input id="job" name="job" type="text" value="" placeholder="직업을 입력해 주세요">
+                                    <button type="button" class="btn btn_input_form"
+                                        onclick="showPopupRgt('job','<?php echo $ci ?>')">인증</button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="religion" class="signin_label">자산구간</label>
-                                <select id="religion" class="custom_select" value="">
-                                    <option>선택</option>
+                                <label for="asset_range" class="signin_label">자산구간</label>
+                                <select id="asset_range" name="asset_range" class="custom_select" value="">
+                                    <option value="">선택</option>
                                     <option value="0">2천만원 이하</option>
                                     <option value="1">2천만원~1억이하</option>
                                     <option value="2">1억이상~</option>
@@ -191,9 +207,9 @@
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="religion" class="signin_label">소득구간</label>
-                                <select id="religion" class="custom_select" value="">
-                                    <option>선택</option>
+                                <label for="income_range" class="signin_label">소득구간</label>
+                                <select id="income_range" name="income_range" class="custom_select" value="">
+                                    <option value="">선택</option>
                                     <option value="0">소득구간1</option>
                                     <option value="1">소득구간2</option>
                                     <option value="2">소득구간3</option>
@@ -203,21 +219,24 @@
                                 </select>
                             </div>
                         </div>
+                        <input type="hidden" name="ci" value="<?php echo $ci ?>" />
+                        <input type="hidden" name="grade" value="<?php echo $grade ?>" />
+                        <div id="main_photo_uploaded" style="display:none;"></div>
                         <div class="btn_group">
-                            <button type="button" class="btn type01">가입</button>
+                            <button type="button" class="btn type01" onclick="signUpdate()">가입</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-
+        <?php include 'mo_signin_popup.php'; ?>
 
 
 
 
         <div style="height: 50px;"></div>
-<footer class="footer">
-            
+        <footer class="footer">
+
             <!-- <div class="footer_logo mb40">
                 matchfy
             </div>
@@ -242,13 +261,11 @@
     <!-- SCRIPTS -->
 
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
+        $(document).ready(function () {
+            editPhotoListner();
+            // editPhotoListListner();
+            // editMovListListner();
+        });        
     </script>
 
     <!-- -->

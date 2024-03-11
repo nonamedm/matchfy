@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\BoardModel;
 use App\Models\BoardFileModel;
 use App\Helpers\MoHelper;
+use CodeIgniter\Session\Session;
 
 class MoHome extends BaseController
 {
@@ -21,10 +22,12 @@ class MoHome extends BaseController
     {
         $postData = $this->request->getPost();
 
-        // 특정 키의 POST 값만 받아오기
-        $mobile_no = $this->request->getPost('mobile_no');
-        $name = $this->request->getPost('name');
-        $birthday = $this->request->getPost('birthday');
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_terms');
+        $postData['terms'] = $BoardModel->orderBy('created_at', 'DESC')->first();
+
+        $BoardModel->setTableName('wh_board_privacy');
+        $postData['privacy'] = $BoardModel->orderBy('created_at', 'DESC')->first();
 
         return view('mo_agree', $postData);
     }
@@ -49,13 +52,45 @@ class MoHome extends BaseController
     {
         return view('mo_signin_success');
     }
-    public function signinRegular(): string
+    public function signinRegular()
     {
-        return view('mo_signin_regular');
+        $postData = $this->request->getPost();
+        $moAjax = new \App\Controllers\MoAjax();
+
+        $ci = $this->request->getPost('ci');
+        $grade = $this->request->getPost('grade');
+
+        // 등급부터 업그레이드 후 페이지 뷰
+        $result = $moAjax->gradeUpdate($ci, $grade);
+        if ($result === '0')
+        {
+            $postData['result'] = $result;
+        } else
+        {
+            // 오류일 때 이전 페이지로 리디렉션.
+        }
+
+        return view('mo_signin_regular', $postData);
     }
     public function signinPremium(): string
     {
-        return view('mo_signin_premium');
+        $postData = $this->request->getPost();
+        $moAjax = new \App\Controllers\MoAjax();
+
+        $ci = $this->request->getPost('ci');
+        $grade = $this->request->getPost('grade');
+
+        // 등급부터 업그레이드 후 페이지 뷰
+        $result = $moAjax->gradeUpdate($ci, $grade);
+        if ($result === '0')
+        {
+            $postData['result'] = $result;
+        } else
+        {
+            // 오류일 때 이전 페이지로 리디렉션.
+        }
+
+        return view('mo_signin_premium', $postData);
     }
     public function signinPopup(): string
     {

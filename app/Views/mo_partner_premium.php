@@ -49,7 +49,7 @@
                             <div class="signin_form_div">
                                 <label for="appear_type" class="signin_label">외모유형</label>
                                 <select id="appear_type" value="">
-                                    <option>선택</option>
+                                    <option value="">선택</option>
                                     <option value="0">강아지상</option>
                                     <option value="1">고양이상</option>
                                     <option value="2">여우상</option>
@@ -85,7 +85,7 @@
                             <div class="signin_form_div">
                                 <h4 class="profile_photo_label">결혼유무</h4>
                                 <select id="marital" class="custom_select" value="">
-                                    <option>선택</option>
+                                    <option value="">선택</option>
                                     <option value="0">유</option>
                                     <option value="1">무</option>
                                 </select>
@@ -95,7 +95,7 @@
                             <div class="signin_form_div">
                                 <label for="smoking" class="signin_label">흡연유무</label>
                                 <select id="smoking" class="custom_select" value="">
-                                    <option>선택</option>
+                                    <option value="">선택</option>
                                     <option value="0">유</option>
                                     <option value="1">무</option>
                                 </select>
@@ -105,7 +105,7 @@
                             <div class="signin_form_div">
                                 <label for="drinking" class="signin_label">음주 횟수</label>
                                 <select id="drinking" class="custom_select" value="">
-                                    <option>선택</option>
+                                    <option value="">선택</option>
                                     <option value="0">0</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -117,7 +117,7 @@
                             <div class="signin_form_div">
                                 <label for="religion" class="signin_label">종교</label>
                                 <select id="religion" class="custom_select" value="">
-                                    <option>선택</option>
+                                    <option value="">선택</option>
                                     <option value="0">무교</option>
                                     <option value="1">기독교</option>
                                     <option value="2">불교</option>
@@ -131,7 +131,7 @@
                             <div class="signin_form_div">
                                 <label for="mbti" class="signin_label">MBTI</label>
                                 <select id="mbti" class="custom_select" value="">
-                                    <option>선택</option>
+                                    <option value="">선택</option>
                                     <option value="0">ENFP</option>
                                     <option value="1">ENFJ</option>
                                     <option value="2">ENTP</option>
@@ -163,7 +163,7 @@
                             <div class="signin_form_div">
                                 <label for="personal_style" class="signin_label">스타일</label>
                                 <select id="personal_style" class="custom_select" value="">
-                                    <option>선택</option>
+                                    <option value="">선택</option>
                                     <option value="0">강인</option>
                                     <option value="1">댄디</option>
                                     <option value="2">너드</option>
@@ -177,7 +177,7 @@
                             <div class="signin_form_div">
                                 <label for="education" class="signin_label">학력</label>
                                 <select id="education" class="custom_select" value="">
-                                    <option>선택</option>
+                                    <option value="">선택</option>
                                     <option value="0">고등학교졸업</option>
                                     <option value="1">대학교재학</option>
                                     <option value="2">대학교졸업</option>
@@ -222,7 +222,7 @@
                                 <p class="profile_photo_desc">잔고증명, 부동산 등기부 등본을 업로드해 주세요</p>
                                 <div class="input_btn">
                                     <select id="religion" class="custom_select" value="">
-                                        <option>선택</option>
+                                        <option value="">선택</option>
                                         <option value="0">2천만원 이하</option>
                                         <option value="1">2천만원~1억이하</option>
                                         <option value="2">1억이상~</option>
@@ -239,7 +239,7 @@
 
                                 <div class="input_btn">
                                     <select id="religion" class="custom_select" value="">
-                                        <option>선택</option>
+                                        <option value="">선택</option>
                                         <option value="0">소득구간1</option>
                                         <option value="1">소득구간2</option>
                                         <option value="2">소득구간3</option>
@@ -257,14 +257,14 @@
                                 <label for="parents" class="signin_label">부</label>
                                 <div class="multy_select">
                                     <select id="parents1" class="custom_select" value="">
-                                        <option>선택</option>
+                                        <option value="">선택</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                     </select>
                                     <select id="parents2" class="custom_select" value="">
-                                        <option>선택</option>
+                                        <option value="">선택</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -278,14 +278,14 @@
                                 <label for="parents" class="signin_label">모</label>
                                 <div class="multy_select">
                                     <select id="parents3" class="custom_select" value="">
-                                        <option>선택</option>
+                                        <option value="">선택</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                     </select>
                                     <select id="parents4" class="custom_select" value="">
-                                        <option>선택</option>
+                                        <option value="">선택</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -298,7 +298,7 @@
                             <div class="signin_form_div">
                                 <label for="brother" class="signin_label">형제</label>
                                 <select id="brother" class="custom_select" value="">
-                                    <option>선택</option>
+                                    <option value="">선택</option>
                                     <option value="0">0</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -311,21 +311,21 @@
                                 <label for="parents" class="signin_label">거주형태</label>
                                 <div class="multy_select_three">
                                     <select id="parents3" class="custom_select" value="">
-                                        <option>선택</option>
+                                        <option value="">선택</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                     </select>
                                     <select id="parents4" class="custom_select" value="">
-                                        <option>선택</option>
+                                        <option value="">선택</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
                                     </select>
                                     <select id="parents4" class="custom_select" value="">
-                                        <option>선택</option>
+                                        <option value="">선택</option>
                                         <option value="0">0</option>
                                         <option value="1">1</option>
                                         <option value="2">2</option>

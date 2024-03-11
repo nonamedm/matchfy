@@ -10,7 +10,7 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/basic.js"></script>
 </head>
 
@@ -37,18 +37,13 @@
             <div class="content_wrap">
                 <div class="content_title">
                     <h2 class="member_grade">멤버십 등급에 따라<br />혜택을 제공 받으세요</h2>
-
-                    <p>전달값 확인하기 :<br/> <?php foreach ($postData as $key => $value)
-                                    {
-                                        echo $key . ': ' . $value . '<br>';
-                                    } ?></p>
                 </div>
                 <form class="main_signin_form" method="post" action="">
                     <div class="content_body">
                         <div class="grade_box">
                             <div class="grade_box_title">
                                 <div class="chk_box radio_box">
-                                    <input type="radio" id="grade01" name="grade" checked="">
+                                    <input type="radio" id="grade01" name="grade" value="grade01" checked>
                                     <label for="grade01">
                                         <h2>준회원</h2>
                                     </label>
@@ -63,7 +58,7 @@
                         <div class="grade_box">
                             <div class="grade_box_title">
                                 <div class="chk_box radio_box">
-                                    <input type="radio" id="grade02" name="grade" checked="">
+                                    <input type="radio" id="grade02" name="grade" value="grade02">
                                     <label for="grade02">
                                         <h2>정회원 등급 업그레이드</h2>
                                     </label>
@@ -86,7 +81,7 @@
                         <div class="grade_box">
                             <div class="grade_box_title">
                                 <div class="chk_box radio_box">
-                                    <input type="radio" id="grade03" name="grade" checked="">
+                                    <input type="radio" id="grade03" name="grade" value="grade03">
                                     <label for="grade03">
                                         <h2>프리미엄 등급 업그레이드</h2>
                                     </label>
@@ -111,7 +106,7 @@
                 <div class="btn_group multy">
                     <button type="button" class="btn type02">취소</button>
                     <button type="button" class="btn type01"
-                        onclick='signIn(<?php echo json_encode($postData); ?>)'>다음</button>
+                        onclick='signInType(<?php echo json_encode($postData); ?>)'>다음</button>
                 </div>
             </div>
         </div>

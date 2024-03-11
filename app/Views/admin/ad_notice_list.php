@@ -6,6 +6,7 @@
     <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/static/js/ad_board.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
     <title>Matchfy 관리자 페이지</title>
     <link rel="stylesheet" href="/static/css/common_admin.css">
     <link rel="stylesheet" href="/static/css/common.css">

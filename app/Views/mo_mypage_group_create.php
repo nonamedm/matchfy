@@ -55,7 +55,7 @@
                             <div class="signin_form_div">
                                 <label for="group_category" class="signin_label">카테고리</label>
                                 <select id="group_category" class="custom_select" value="">
-                                    <option>선택</option>
+                                    <option value="">선택</option>
                                     <option value="0">등산</option>
                                     <option value="1">스포츠</option>
                                     <option value="2">여행</option>
@@ -97,7 +97,7 @@
                             <div class="signin_form_div">
                                 <label for="group_personnel" class="signin_label">인원</label>
                                 <select id="group_personnel" class="custom_select" value="">
-                                    <option>선택</option>
+                                    <option value="">선택</option>
                                     <option value="0">~5명</option>
                                     <option value="1">5~10명</option>
                                     <option value="2">10명 이상</option>
@@ -109,14 +109,14 @@
                                 <label for="group_age" class="signin_label">나이</label>
                                 <div class="multy_select">
                                     <select id="group_age1" class="custom_select" value="">
-                                        <option>선택</option>
+                                        <option value="">선택</option>
                                         <option value="0">20대</option>
                                         <option value="1">30대</option>
                                         <option value="2">40대</option>
                                         <option value="2">50대 이상</option>
                                     </select>
                                     <select id="group_age2" class="custom_select" value="">
-                                        <option>선택</option>
+                                        <option value="">선택</option>
                                         <option value="0">20대</option>
                                         <option value="1">30대</option>
                                         <option value="2">40대</option>
@@ -129,7 +129,7 @@
                             <div class="signin_form_div">
                                 <label for="group_percent" class="signin_label">매칭률</label>
                                 <select id="group_percent" class="custom_select" value="">
-                                    <option>선택</option>
+                                    <option value="">선택</option>
                                     <option value="0">~50%</option>
                                     <option value="1">50~60%</option>
                                     <option value="2">60~70%</option>

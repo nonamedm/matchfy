@@ -50,22 +50,43 @@
                                 <input type="checkbox" id="agree1" name="agree1" value="1" onclick="chkAgree()">
                                 <label class="agree_cont_label" for="agree1">이용약관 <span>(필수)</span></label>
                             </div>
-                            <textarea placeholder="<?php echo $mobile_no ?>"></textarea>
+                            <div class="textarea">
+                                <b>
+                                    <?= $terms['title'] ?>
+                                </b>
+                                <p>
+                                    <?= nl2br($terms['content']); ?>
+                                </p>
+                            </div>
                             <div class="chk_box">
                                 <input type="checkbox" id="agree2" name="agree2" value="2" onclick="chkAgree()">
                                 <label class="agree_cont_label" for="agree2">개인정보 수집 이용 동의 <span>(필수)</span></label>
                             </div>
-                            <textarea placeholder="<?php echo $name ?>"></textarea>
+                            <div class="textarea">
+                                <b>
+                                    <?= $privacy['title'] ?>
+                                </b>
+                                <p>
+                                    <?= nl2br($privacy['content']); ?>
+                                </p>
+                            </div>
                             <div class="chk_box">
                                 <input type="checkbox" id="agree3" name="agree3" value="3" onclick="chkAgree()">
                                 <label class="agree_cont_label" for="agree3">개인정보 제3자 제공동의 <span>(필수)</span></label>
                             </div>
-                            <textarea placeholder="<?php echo $birthday ?>"></textarea>
+                            <div class="textarea">
+                                <b>
+                                    <?= $privacy['title'] ?>
+                                </b>
+                                <p>
+                                    <?= nl2br($privacy['content']); ?>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <input type="hidden" name="mobile_no" value="<?php echo $mobile_no ?>" />
-                    <input type="hidden" name="name" value="<?php echo $name ?>" />
-                    <input type="hidden" name="birthday" value="<?php echo $birthday ?>" />
+                    <input type="hidden" name="mobile_no" value="<?= $mobile_no ?>" />
+                    <input type="hidden" name="name" value="<?= $name ?>" />
+                    <input type="hidden" name="birthday" value="<?= $birthday ?>" />
                 </form>
 
                 <div style="height: 50px;"></div>
@@ -79,7 +100,6 @@
         </div>
 
     </div>
-
 </body>
 
 </html>
