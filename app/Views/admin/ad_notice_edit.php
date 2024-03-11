@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/static/css/common_admin.css">
     <link rel="stylesheet" href="/static/css/common.css">
     <!-- jQuery 스크립트 추가 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
 </head>
 <body>
     <div class="ad-box">
