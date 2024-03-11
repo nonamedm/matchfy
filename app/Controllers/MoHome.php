@@ -100,7 +100,7 @@ class MoHome extends BaseController
     {
         return view('mo_menu');
     }
-    public function notice() :string
+    public function notice()
     {
         $value = $this->request->getGet('value');
         $fileData = new BoardFileModel();
@@ -134,7 +134,6 @@ class MoHome extends BaseController
 
         $data['datas'] = $query->get()->getResultArray(); 
 
-        //날짜조회
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_notice');
         
