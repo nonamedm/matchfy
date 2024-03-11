@@ -37,7 +37,7 @@
             <div class="content_wrap">
                 <div class="notice_filter">
                     <?= $data['data2'] ?>
-                    <p id="searchDate"><?= $min_date ?></p>
+                    <p id="searchDate"><?= $min_date ?> ~ <?= $max_date ?></p>
                     <select id="sort-select">
                         <option value="recent">최근순</option>
                         <option value="popular">조회순</option>

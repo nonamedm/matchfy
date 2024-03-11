@@ -100,7 +100,7 @@ class MoHome extends BaseController
     {
         return view('mo_menu');
     }
-    public function notice()
+    public function notice() :string
     {
         $value = $this->request->getGet('value');
         $fileData = new BoardFileModel();
@@ -135,20 +135,20 @@ class MoHome extends BaseController
         $data['datas'] = $query->get()->getResultArray(); 
 
         //날짜조회
-    
-        // $BoardModel = new BoardModel();
-        // $BoardModel->setTableName('wh_board_notice');
-        // $min_date = $BoardModel->min('created_at');
-
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_notice');
         
-        // $max_date = $BoardModel->max('created_at');
-
-        // $data['min_date'] = $min_date;
-        // $data['max_date'] = $max_date;
-   
-        // // $data['datas2'] = $query2->getResultArray();
+        $min_date_query = $BoardModel->query('SELECT MIN(created_at) AS min_date FROM wh_board_notice');
+        $max_date_query = $BoardModel->query('SELECT MAX(created_at) AS max_date FROM wh_board_notice');
         
-        // echo $BoardModel->getLastQuery();
+        $min_date_row = $min_date_query->getRow();
+        $max_date_row = $max_date_query->getRow();
+        
+        $min_date = date('y.m.d', strtotime($min_date_row->min_date));
+        $max_date = date('y.m.d', strtotime($max_date_row->max_date));
+        
+        $data['min_date'] = $min_date;
+        $data['max_date'] = $max_date;
 
         if ($this->request->isAJAX()) {
             return $this->response->setJSON($data);
@@ -185,7 +185,7 @@ class MoHome extends BaseController
     {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_terms');
-        $terms = $BoardModel->orderBy('created_at', 'DESC')->first(); // 가장 최근의 데이터를 가져옵니다.
+        $terms = $BoardModel->orderBy('created_at', 'DESC')->first();
 
         return view('mo_terms', ['terms' => $terms]);
     }
@@ -193,7 +193,7 @@ class MoHome extends BaseController
     {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_privacy');
-        $privacy = $BoardModel->orderBy('created_at', 'DESC')->first(); // 가장 최근의 데이터를 가져옵니다.
+        $privacy = $BoardModel->orderBy('created_at', 'DESC')->first();
 
         return view('mo_privacy', ['privacy' => $privacy]);
     }
