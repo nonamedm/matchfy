@@ -19,14 +19,14 @@ class MoHome extends BaseController
     }
     public function agree(): string
     {
-        $postData = $this->request->getPost();
 
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_terms');
         $postData['terms'] = $BoardModel->orderBy('created_at', 'DESC')->first();
 
-        $BoardModel->setTableName('wh_board_privacy');
-        $postData['privacy'] = $BoardModel->orderBy('created_at', 'DESC')->first();
+        $BoardModel2 = new BoardModel();
+        $BoardModel2->setTableName('wh_board_privacy');
+        $postData['privacy'] = $BoardModel2->orderBy('created_at', 'DESC')->first();
 
         return view('mo_agree', $postData);
     }
