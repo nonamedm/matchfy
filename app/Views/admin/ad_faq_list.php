@@ -3,21 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/static/js/jquery.min.js"></script>
-    <title>Matchfy 관리자 페이지</title>
     <script src="/static/js/ad_board.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/css/common_admin.css">
     <link rel="stylesheet" href="/static/css/common.css">
-
+    <title>Matchfy 관리자페이지</title>
 </head>
 <body>
-    <div class="ad-box">
+    <div class="ad_box">
         <div>
             <?php
                 include 'header.php';
             ?>
         </div>
-        <div class="ad-con">
+        <div class="ad_con">
             <h2>FAQ 목록</h2> 
             <input type="button" value="등록" Onclick="fn_EditClick('faq');"/>
             <?php foreach ($faqs as $faq): ?>
@@ -39,7 +38,7 @@
 
                         <p><?= $content ?></p>
                     </a>
-                    <div class="btn-up-del-box">
+                    <div class="btn_up_del_box">
                         <input type="button" value="수정" Onclick="fn_clickUpdate('faq','<?= $faq['id']?>')"/>
                         <input type="button" value="삭제"  Onclick="fn_clickDelete('<?= $faq['id']?>','faq')"/>
                     </div>

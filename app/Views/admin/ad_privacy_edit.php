@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
     <script src="/static/js/ad_board.js"></script>
-
     <script src="/static/js/jquery.min.js"></script>
-
     <link rel="stylesheet" href="/static/css/common_admin.css">
     <link rel="stylesheet" href="/static/css/common.css">
     <title>Matchfy 관리자페이지</title>
@@ -23,13 +19,13 @@
 
 </script>
 <body>
-<div class="ad-box">
+<div class="ad_box">
         <div>
             <?php
                 include 'header.php';
             ?>
         </div>
-        <div class="ad-con">
+        <div class="ad_con">
             <h2>개인정보처리방침 작성</h2>
             <input type="button" value="목록으로 돌아가기" Onclick="fn_clickList('privacy')"/>
             <form action="/ad/privacy/privacyUpload" method="post">

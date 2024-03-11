@@ -173,9 +173,9 @@ class AdminHome extends BaseController
         }
 
         if ($deleted) {
-            return redirect()->to("/ad/notice/noticeList")->with('msg', '삭제 되었습니다.');    
+            return $this->response->setJSON(['success' => true]);
         } else {
-            return redirect()->to("/ad/notice/noticeList")->with('msg', '삭제 되지 않았습니다.');    
+            return $this->response->setJSON(['success' => false]);
         }
     }
 

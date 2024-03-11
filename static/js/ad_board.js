@@ -39,7 +39,16 @@ function fn_clickDelete(id,boardName) {
                 },
             success: function(response) {
                 alert('삭제 되었습니다.');
-                location.reload();
+                if(boardName=='faq'){
+                    window.location.href = '/ad/faq/faqList';
+                }else if(boardName=='terms'){
+                    window.location.href = '/ad/terms/termsList';
+                }else if(boardName=='privacy'){
+                    window.location.href = '/ad/privacy/privacyList';
+                }else{
+                    window.location.href = '/ad/faq/faqList';
+                }
+                
             },
             error: function(xhr, status, error) {
                 alert('삭제 중 오류가 발생 하였습니다.');
@@ -80,7 +89,7 @@ function fn_clickBoFileDelete(BoardId,fileId) {
                 fileId:fileId},
             success: function(response) {
                 alert('삭제 되었습니다.');
-                location.reload();
+                window.location.href = '/ad/notice/noticeList';
             },
             error: function(xhr, status, error) {
                 alert('삭제 중 오류가 발생 하였습니다.');

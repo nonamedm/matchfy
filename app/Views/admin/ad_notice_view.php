@@ -3,22 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/static/js/ad_board.js"></script>
     <script src="/static/js/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/css/common_admin.css">
     <link rel="stylesheet" href="/static/css/common.css">
     <title>Matchfy 관리자페이지</title>
-
 </head>
 <body>
-    <div class="ad-box">
+    <div class="ad_box">
         <div>
             <?php
                 include 'header.php';
             ?>
         </div>
-        <div class="ad-con">
+        <div class="ad_con">
             <h2>공지사항</h2>
             <input type="button" value="목록으로 돌아가기" Onclick="fn_clickList('notice')"/></br>
             <input type="hidden" id="notice_id" name="notice_id" value="<?= $notice['id'] ?>"/>
@@ -29,7 +27,7 @@
             <?php if ($file): ?>
                 <p><strong>파일 : </strong><a href="/downloadFile/<?= $file['id'] ?>"><?= $file['org_name'] ?></a></p>
             <?php endif?>
-            <div class="btn-up-del-box">
+            <div class="btn_up_del_box">
                 <input type="button" value="삭제" Onclick="fn_clickBoFileDelete('<?= $notice['id']?>','<?= $file['id']?>')"/>
                 <input type="button" value="수정" Onclick="fn_clickUpdate('notice','<?= $notice['id']?>')"/>
             </div>

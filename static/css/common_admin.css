@@ -7,18 +7,18 @@ body,a{
     vertical-align: baseline;
     text-decoration: none;
 }
-.ad-box{
+.ad_box{
     display: flex;
     width: 100%;
     height: 100vh;
 }
-.ad-con{
+.ad_con{
     width: 90%;
     padding-left: 5%;
     padding-right: 5%;
     overflow-x: scroll;
 }
-.menu-panel {
+.menu_panel {
     width: 250px;
     height: 100%;
     background-color: #333;
@@ -30,25 +30,25 @@ body,a{
     padding: 0;
 }
 
-.menu-item {
+.menu_item {
     padding: 10px 0;
     border-bottom: 1px solid #555;
     padding-left: 20px;
 }
 
-.menu-item:last-child {
+.menu_item:last-child {
     border-bottom: none;
 }
 
-.menu-item a {
+.menu_item a {
     color: #fff;
     text-decoration: none;
 }
-.btn-up-del-box{
+.btn_up_del_box{
     position: relative;
     float:right;
 }
-.btn-update{
+.btn_update{
     float:right;
 }
 .list_li{
