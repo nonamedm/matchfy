@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\MemberModel;
 use App\Models\MemberFileModel;
+use App\Models\UniversityModel;
 use App\Config\Encryption;
 
 class MoAjax extends BaseController
@@ -27,6 +28,7 @@ class MoAjax extends BaseController
     public function login()
     {
         $mobile_no = $this->request->getPost('mobile_no');
+        $auto_login = $this->request->getPost('auto_login', FILTER_VALIDATE_BOOLEAN);
 
         $MemberModel = new MemberModel();
 
@@ -41,6 +43,10 @@ class MoAjax extends BaseController
                 'isLoggedIn' => true //로그인 상태
             ]);
 
+            if ($auto_login) {
+                $session->setTempdata('ci', true, 2592000);
+            }
+ 
             return $this->response->setJSON(['status' => 'success', 'message' => "로그인 성공"]);
         } else
         {
@@ -507,6 +513,24 @@ class MoAjax extends BaseController
             return '2';
         }
 
+    }
+
+    public function searchUniversity()
+    {
+        $term = $this->request->getVar('term');
+
+        $UniversityModel = new UniversityModel();
+
+        $res = $UniversityModel->like('name', $term)->where('delete_yn', 'Y')->findAll();
+
+        $results = array_map(function ($row) {
+            return [
+                'label' => $row['name'],
+                'value' => $row['name']
+            ];
+        }, $res);
+
+        return $this->response->setJSON($results);
     }
 
     /* 회원 추가사진/동영상 프로필 업데이트 */

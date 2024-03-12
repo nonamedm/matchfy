@@ -79,6 +79,7 @@ $routes->post('/ajax/signUpdate', 'MoAjax::signUpdate');
 $routes->post('/ajax/login', 'MoAjax::login');
 $routes->post('/ajax/logout', 'MoAjax::logout');
 $routes->post('/ajax/mbrFileRegUp', 'MoAjax::mbrFileRegUp');
+$routes->post('/ajax/searchUniversity', 'MoAjax::searchUniversity');
 $routes->post('/ajax/updtUserData', 'MoAjax::updtUserData');
 
 /*관리자페이지*/
