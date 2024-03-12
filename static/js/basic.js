@@ -79,7 +79,8 @@ const certIdentify = () => {
 
 const userLogin = () => {
     const phoneNumber = document.getElementById('id').value;
-    console.log(phoneNumber);
+    const autoLogin = document.getElementById('keep').checked;
+    console.log(autoLogin);
 
     // 빈 값 validation
     if (phoneNumber.length === 0) {
@@ -98,7 +99,8 @@ const userLogin = () => {
     $.ajax({
         url: '/ajax/login',
         type: 'POST',
-        data: { mobile_no: phoneNumber },
+        data: { mobile_no: phoneNumber, 
+                auto_login: autoLogin },
         async: false,
         success: function (data) {
             console.log(data);
@@ -230,6 +232,9 @@ const signUpdate = (postData) => {
             console.log(data);
             if (data.status === 'success') {
                 // 성공
+                var gradeText = (data.data.grade === 'grade02') ? '정회원' : '프리미엄회원'; 
+                localStorage.setItem('gradeText', gradeText);
+
                 moveToUrl('/mo/signinSuccess');
                 // submitForm();
             } else if (data.status === 'error') {
@@ -238,7 +243,7 @@ const signUpdate = (postData) => {
                 // 오류 메시지 표시
                 Object.keys(data.errors).forEach(function (key, index) {
                     var field = $('[name="' + key + '"]');
-                    var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div 선택
+                    var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div
 
                     // 오류 메시지 추가
                     if (!topMostDiv.next().hasClass('alert_validation')) {

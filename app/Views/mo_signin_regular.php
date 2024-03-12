@@ -10,8 +10,10 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/basic.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -297,7 +299,30 @@
             editPhotoListner();
             // editPhotoListListner();
             // editMovListListner();
-        });        
+        });
+        
+        $(document).ready(function() {
+            $("#school").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        url: "/ajax/searchUniversity",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            term: request.term
+                        },
+                        success: function(data) {
+                            response(data);
+                        }
+                    });
+                },
+                minLength: 2, // 최소 문자 수
+                select: function(event, ui) {
+                    // 아이템 선택 시 동작
+                    //console.log(ui.item.value); // 선택된 학교명
+                }
+            });
+        });
     </script>
 
     <!-- -->
