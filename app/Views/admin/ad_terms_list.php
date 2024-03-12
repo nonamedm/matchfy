@@ -4,54 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/static/js/jquery.min.js"></script>
-    <title>Matchfy 관리자 페이지</title>
+    <script src="/static/js/ad_board.js"></script>
     <link rel="stylesheet" href="/static/css/common_admin.css">
     <link rel="stylesheet" href="/static/css/common.css">
-    <script>
-    <?php
-        if(session()->has('msg')) {
-            echo "alert('" . session('msg') . "');";
-        }
-    ?>
-
-    function fn_clickDelete(value) {
-        var confirmed = confirm('삭제하시겠습니까?');
-        console.log(value);
-        if (confirmed) {
-            $.ajax({
-                type: "post",
-                url: "/ad/terms/termsDelete",
-                data: { id: value },
-                success: function(response) {
-                    alert('삭제 되었습니다.');
-                    location.reload();
-                },
-                error: function(xhr, status, error) {
-                    alert('삭제 중 오류가 발생 하였습니다.');
-                    console.log(error);
-                }
-            });
-        }
-    }
-    
-</script>
+    <title>Matchfy 관리자페이지</title>
 </head>
 <body>
-    <div class="ad-box">
+    <div class="ad_box">
         <div>
             <?php
                 include 'header.php';
             ?>
         </div>
-        <div class="ad-con">
+        <div class="ad_con">
             <h2>이용약관 목록</h2> 
-            <a href="/ad/terms/termsEdit">등록</a><br />
+            <input type="button" value="등록" Onclick="fn_EditClick('terms');"/><br>
             <?php foreach ($termss as $terms): ?>
-                <p><strong><?= $terms['id'] ?></strong><?= $terms['title'] ?></p>
-                <p><?=nl2br($terms['content']); ?></p>
-                <a href="/ad/terms/termsModify/<?= $terms['id'] ?>">수정</a>
-                <input type="button" value="삭제"  Onclick="fn_clickDelete('<?= $terms['id']?>')"/>
-                <hr>
+                <div class="list_li">
+                    <a href="/ad/terms/termsView/<?= $terms['id'] ?>">
+                        <p><strong><?= $terms['id'] ?></strong>
+                        <p><strong><?= $terms['title'] ?></strong></p>
+                        <?php
+                            $content = $terms['content'];
+                            $max_length = 30; 
+
+                            if (mb_strlen($content) > $max_length) {
+                                $content = mb_substr($content, 0, $max_length);
+                                $content = preg_replace('/\s+[^ ]*$/', '', $content);
+                                $content = preg_replace('/\r?\n|\r/', '', $content);
+                                $content .= '...';
+                            }
+                        ?>
+
+                        <p><?= $content ?></p>
+                    </a>
+                    <div class="btn_up_del_box">
+                        <input type="button" value="수정" Onclick="fn_clickUpdate('terms','<?= $terms['id']?>')"/>
+                        <input type="button" value="삭제"  Onclick="fn_clickDelete('<?= $terms['id']?>','terms')"/>
+                    </div>
+                </div>
             <?php endforeach; ?>
         </div>
     </div>

@@ -12,7 +12,7 @@ class BoardFileModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['board_idx','file_name','file_path','org_name','ext','reg_dt','board_type','extra2','extra3'];
+    protected $allowedFields    = ['board_idx','file_name','file_path','org_name','ext','reg_dt','board_type','extra2','extra3','created_at_range'];
 
     protected bool $allowEmptyInserts = false;
 

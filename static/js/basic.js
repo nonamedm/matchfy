@@ -165,7 +165,7 @@ const signUp = () => {
         contentType: false,
         async: false,
         success: function (data) {
-            console.log(data)
+            console.log(data);
             if (data.status === 'success') {
                 // 성공
                 var formData = document.querySelector('form');
@@ -189,15 +189,16 @@ const signUp = () => {
                 submitForm();
             } else if (data.status === 'error') {
                 // 한번만 출력되게 함
-                $('.alert-validation').remove();
+                $('.alert_validation').remove();
                 // 오류 메시지 표시
-                Object.keys(data.errors).forEach(function(key, index) {
+                Object.keys(data.errors).forEach(function (key, index) {
                     var field = $('[name="' + key + '"]');
                     var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div 선택
 
                     // 오류 메시지 추가
-                    if (!topMostDiv.next().hasClass('alert-validation')) { // 이미 오류 메시지가 있는지 확인
-                        topMostDiv.after('<div class="alert alert-validation">' + data.errors[key] + '</div>');
+                    if (!topMostDiv.next().hasClass('alert_validation')) {
+                        // 이미 오류 메시지가 있는지 확인
+                        topMostDiv.after('<div class="alert alert_validation">' + data.errors[key] + '</div>');
                     }
                     // 처음 validation 포커스
                     if (index === 0) {
@@ -205,7 +206,7 @@ const signUp = () => {
                     }
                 });
             } else {
-                alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.')
+                alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
             }
             return false;
         },
@@ -226,22 +227,23 @@ const signUpdate = (postData) => {
         contentType: false,
         async: false,
         success: function (data) {
-            console.log(data)
+            console.log(data);
             if (data.status === 'success') {
                 // 성공
                 moveToUrl('/mo/signinSuccess');
                 // submitForm();
-            }  else if (data.status === 'error') {
+            } else if (data.status === 'error') {
                 // 한번만 출력되게 함
-                $('.alert-validation').remove();
+                $('.alert_validation').remove();
                 // 오류 메시지 표시
-                Object.keys(data.errors).forEach(function(key, index) {
+                Object.keys(data.errors).forEach(function (key, index) {
                     var field = $('[name="' + key + '"]');
                     var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div 선택
 
                     // 오류 메시지 추가
-                    if (!topMostDiv.next().hasClass('alert-validation')) { // 이미 오류 메시지가 있는지 확인
-                        topMostDiv.after('<div class="alert alert-validation">' + data.errors[key] + '</div>');
+                    if (!topMostDiv.next().hasClass('alert_validation')) {
+                        // 이미 오류 메시지가 있는지 확인
+                        topMostDiv.after('<div class="alert alert_validation">' + data.errors[key] + '</div>');
                     }
                     // 처음 validation 포커스
                     if (index === 0) {

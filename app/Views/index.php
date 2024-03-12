@@ -297,7 +297,7 @@
                     <div class="main_title_btn">
                         <button class="total">전체보기</button>
                         <button class="disabled">
-                            << /button>
+                            < </button>
                                 <button>></button>
                     </div>
                 </div>
@@ -366,7 +366,7 @@
                     <div class="main_title_btn">
                         <button class="total">전체보기</button>
                         <button class="disabled">
-                            << /button>
+                            < </button>
                                 <button>></button>
                     </div>
                 </div>
@@ -440,7 +440,7 @@
                     <div class="main_title_btn">
                         <button class="total">전체보기</button>
                         <button class="disabled">
-                            << /button>
+                            < </button>
                                 <button>></button>
                     </div>
                 </div>
@@ -509,7 +509,7 @@
                     <div class="main_title_btn">
                         <button class="total">전체보기</button>
                         <button class="disabled">
-                            << /button>
+                            < </button>
                                 <button>></button>
                     </div>
                 </div>
