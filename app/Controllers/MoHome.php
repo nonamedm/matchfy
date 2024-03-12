@@ -36,9 +36,17 @@ class MoHome extends BaseController
         $postData = $this->request->getPost();
         return view('mo_signin', $postData);
     }
+    public function signinPhoto(): string
+    {
+        $postData = $this->request->getPost();
+
+        // 모든 POST 데이터를 하나의 배열에 담기
+        $data['postData'] = $postData;
+
+        return view('mo_signin_photo', $data);
+    }
     public function signinType(): string
     {
-
         // POST로 전달된 데이터 받아오기
         $postData = $this->request->getPost();
 
@@ -105,7 +113,7 @@ class MoHome extends BaseController
         $value = $this->request->getGet('value');
         $fileData = new BoardFileModel();
         $query = $fileData
-                ->select('bo.id AS notice_id,
+            ->select('bo.id AS notice_id,
                         bo.title AS title,
                         bo.content AS content,
                         bo.author AS author,
@@ -121,37 +129,42 @@ class MoHome extends BaseController
                         bf.file_path AS file_path,
                         bf.org_name AS org_name,
                         (SELECT CONCAT(DATE_FORMAT(MIN(created_at), "%y.%m.%d"), " ~ ", DATE_FORMAT(MAX(created_at), "%y.%m.%d")) FROM wh_board_notice) AS created_at_range')
-                ->from('wh_board_notice bo')
-                ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
-                ->groupBy('bo.id');
-        if ($value == 'recent') {
+            ->from('wh_board_notice bo')
+            ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
+            ->groupBy('bo.id');
+        if ($value == 'recent')
+        {
             $query->orderBy('bo.id', 'DESC');
-        } else if ($value == 'popular') {
+        } else if ($value == 'popular')
+        {
             $query->orderBy('bo.hit', 'DESC');
-        } else {
+        } else
+        {
             $query->orderBy('bo.id', 'DESC');
         }
 
-        $data['datas'] = $query->get()->getResultArray(); 
+        $data['datas'] = $query->get()->getResultArray();
 
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_notice');
-        
+
         $min_date_query = $BoardModel->query('SELECT MIN(created_at) AS min_date FROM wh_board_notice');
         $max_date_query = $BoardModel->query('SELECT MAX(created_at) AS max_date FROM wh_board_notice');
-        
+
         $min_date_row = $min_date_query->getRow();
         $max_date_row = $max_date_query->getRow();
-        
+
         $min_date = date('y.m.d', strtotime($min_date_row->min_date));
         $max_date = date('y.m.d', strtotime($max_date_row->max_date));
-        
+
         $data['min_date'] = $min_date;
         $data['max_date'] = $max_date;
 
-        if ($this->request->isAJAX()) {
+        if ($this->request->isAJAX())
+        {
             return $this->response->setJSON($data);
-        } else {
+        } else
+        {
             return view('mo_notice', $data);
         }
     }
@@ -162,14 +175,14 @@ class MoHome extends BaseController
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_notice');
         $data['notice'] = $BoardModel->find($id);
-        
+
         $BoardModel->increaseHit($id);
 
         $fileData = new BoardFileModel();
         $data['file'] = $fileData->where('board_idx', $id)->first();
-        
-        
-        return view('mo_notice_view',$data);
+
+
+        return view('mo_notice_view', $data);
     }
 
     public function faq(): string

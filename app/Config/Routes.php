@@ -12,6 +12,7 @@ $routes->get('/mo', 'MoHome::index');
 $routes->get('/mo/pass', 'MoHome::pass');
 $routes->post('/mo/agree', 'MoHome::agree');
 $routes->post('/mo/signin', 'MoHome::signin');
+$routes->post('/mo/signinPhoto', 'MoHome::signinPhoto');
 $routes->post('/mo/signinType', 'MoHome::signinType');
 $routes->get('/mo/signinSuccess', 'MoHome::signinSuccess');
 $routes->post('/mo/signinRegular', 'MoHome::signinRegular');
@@ -78,6 +79,7 @@ $routes->post('/ajax/signUpdate', 'MoAjax::signUpdate');
 $routes->post('/ajax/login', 'MoAjax::login');
 $routes->post('/ajax/logout', 'MoAjax::logout');
 $routes->post('/ajax/mbrFileRegUp', 'MoAjax::mbrFileRegUp');
+$routes->post('/ajax/updtUserData', 'MoAjax::updtUserData');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');
