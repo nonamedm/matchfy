@@ -61,8 +61,8 @@
                                 <label for="marital" class="signin_label">결혼유무</label>
                                 <select id="marital" name="marital" class="custom_select" value="">
                                     <option value="">선택</option>
-                                    <option value="0">유</option>
-                                    <option value="1">무</option>
+                                    <option value="0">미혼</option>
+                                    <option value="1">기혼</option>
                                 </select>
                             </div>
                         </div>
@@ -71,8 +71,10 @@
                                 <label for="smoking" class="signin_label">흡연유무</label>
                                 <select id="smoking" name="smoking" class="custom_select" value="">
                                     <option value="">선택</option>
-                                    <option value="0">유</option>
-                                    <option value="1">무</option>
+                                    <option value="0">전혀안함</option>
+                                    <option value="1">하루 1~2회</option>
+                                    <option value="2">하루 3~5회</option>
+                                    <option value="3">하루 5회 이상</option>
                                 </select>
                             </div>
                         </div>
@@ -81,10 +83,10 @@
                                 <label for="drinking" class="signin_label">음주 횟수</label>
                                 <select id="drinking" name="drinking" class="custom_select" value="">
                                     <option value="">선택</option>
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
+                                    <option value="0">전혀 안함</option>
+                                    <option value="1">주 1~2병</option>
+                                    <option value="2">주 3~5병</option>
+                                    <option value="3">주 5병 이상</option>
                                 </select>
                             </div>
                         </div>
@@ -95,10 +97,9 @@
                                     <option value="">선택</option>
                                     <option value="0">무교</option>
                                     <option value="1">기독교</option>
-                                    <option value="2">불교</option>
-                                    <option value="3">천주교</option>
-                                    <option value="4">원불교</option>
-                                    <option value="5">이슬람</option>
+                                    <option value="2">천주교</option>
+                                    <option value="3">불교</option>
+                                    <option value="4">기타</option>
                                 </select>
                             </div>
                         </div>
@@ -153,11 +154,13 @@
                                 <label for="education" class="signin_label">학력</label>
                                 <select id="education" name="education" class="custom_select" value="">
                                     <option value="">선택</option>
-                                    <option value="0">고등학교졸업</option>
-                                    <option value="1">대학교재학</option>
-                                    <option value="2">대학교졸업</option>
-                                    <option value="3">대학원재학</option>
-                                    <option value="4">대학원졸업이상</option>
+                                    <option value="0">초등학교이하</option>
+                                    <option value="1">중학교</option>
+                                    <option value="2">고등학교</option>
+                                    <option value="3">대학교(2/3년제)</option>
+                                    <option value="4">대학교(4년제)</option>
+                                    <option value="5">대학원(석사)</option>
+                                    <option value="6">대학원(박사)</option>
                                 </select>
                             </div>
                         </div>
@@ -186,7 +189,33 @@
                                 <h4 class="profile_photo_label">직업</h4>
                                 <p class="profile_photo_desc">명함 혹은 재직증명서를 업로드해주세요</p>
                                 <div class="input_btn">
-                                    <input id="job" name="job" type="text" value="" placeholder="직업을 입력해 주세요">
+                                <select id="job" name="job" class="custom_select" value="">
+                                        <option value="">선택</option>
+                                        <option value="0">사업관리</option>
+                                        <option value="1">경영/회계/사무</option>
+                                        <option value="2">금융보험</option>
+                                        <option value="3">교육직</option>
+                                        <option value="4">법률직</option>
+                                        <option value="5">보건의료직</option>
+                                        <option value="6">사회복지/종교</option>
+                                        <option value="7">문화/예술</option>
+                                        <option value="8">운전/운송</option>
+                                        <option value="9">영업/판매</option>
+                                        <option value="10">경비/청소</option>
+                                        <option value="11">숙박/여행</option>
+                                        <option value="12">음식/서비스</option>
+                                        <option value="13">건설, 기계</option>
+                                        <option value="14">재료</option>
+                                        <option value="15">화학/바이오</option>
+                                        <option value="16">섬유/의복</option>
+                                        <option value="17">전기/전자</option>
+                                        <option value="18">정보통신</option>
+                                        <option value="19">식품가공</option>
+                                        <option value="20">인쇄/목재</option>
+                                        <option value="21">환경/에너지</option>
+                                        <option value="22">농업</option>
+                                        <option value="23">기타</option>
+                                    </select>
                                     <button type="button" class="btn btn_input_form"
                                         onclick="showPopupRgt('job','<?php echo $ci ?>')">인증</button>
                                 </div>
@@ -198,9 +227,12 @@
                                 <label for="asset_range" class="signin_label">자산구간</label>
                                 <select id="asset_range" name="asset_range" class="custom_select" value="">
                                     <option value="">선택</option>
-                                    <option value="0">2천만원 이하</option>
-                                    <option value="1">2천만원~1억이하</option>
-                                    <option value="2">1억이상~</option>
+                                    <option value="0">1000만원 이하</option>
+                                    <option value="1">1000~2000만원</option>
+                                    <option value="2">2000~3000만원</option>
+                                    <option value="3">3000~4000만원</option>
+                                    <option value="4">4000~5000만원</option>
+                                    <option value="5">5000만원 이상</option>
                                 </select>
                             </div>
                         </div>
@@ -210,12 +242,12 @@
                                 <label for="income_range" class="signin_label">소득구간</label>
                                 <select id="income_range" name="income_range" class="custom_select" value="">
                                     <option value="">선택</option>
-                                    <option value="0">소득구간1</option>
-                                    <option value="1">소득구간2</option>
-                                    <option value="2">소득구간3</option>
-                                    <option value="3">소득구간4</option>
-                                    <option value="4">소득구간5</option>
-                                    <option value="5">소득구간6</option>
+                                    <option value="0">1000만원 이하</option>
+                                    <option value="1">1000~2000만원</option>
+                                    <option value="2">2000~3000만원</option>
+                                    <option value="3">3000~4000만원</option>
+                                    <option value="4">4000~5000만원</option>
+                                    <option value="5">5000만원 이상</option>
                                 </select>
                             </div>
                         </div>
