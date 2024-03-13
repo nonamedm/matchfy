@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\BoardModel;
 use App\Models\BoardFileModel;
+use App\Models\MemberModel;
+use App\Models\MemberFileModel;
 use App\Helpers\MoHelper;
 use CodeIgniter\Session\Session;
 
@@ -315,7 +317,24 @@ class MoHome extends BaseController
     }
     public function myfeed(): string
     {
-        return view('mo_myfeed');
+        $session = session();
+        $ci = $session->get('ci');
+        $name = $session->get('name');
+
+        $MemberModel = new MemberModel();
+        $MemberFileModel = new MemberFileModel();
+
+        $user = $MemberModel->where('ci', $ci)->first();
+        $condition = ['board_type' => 'main_photo', 'member_ci' => $ci, 'delete_yn' => 'n'];
+        $userFile = $MemberFileModel->where($condition)->first();
+        $data = [
+            'ci' => $ci,
+            'name' => $name,
+            'user' => $user,
+        ];
+        $data = array_merge($data, $userFile);
+
+        return view('mo_myfeed', $data);
     }
     public function myfeedDetail(): string
     {

@@ -10,6 +10,8 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -28,19 +30,24 @@
                     </li>
                 </ul>
             </div>
-
         </header>
-
         <div class="sub_wrap">
             <div class="content_wrap">
 
-                <div class="content_mypage">
-                    <img class="profile_img" src="/static/images/mypage_pfofile.png" />
+                <div class="content_body content_mypage">
+                    <!-- <img class="profile_img" src="/static/images/mypage_pfofile.png" /> -->
+                    <img class="profile_img" src="/writable/<?= $file_path ?>/<?= $file_name ?>" />
                     <div class="content_mypage_info">
                         <div class="profile">
-                            <h2>장원영<span style="font-size:15px;"> 님</span></h2>
+                            <h2>
+                                <?= $name ?><span style="font-size:15px;"> 님</span>
+                            </h2>
                         </div>
-                        <p>96 · 서울 강남 · ESTJ</p>
+                        <p>
+                            <?= substr($user['birthday'], 0, 4); ?> ·
+                            <?= $user['city'] ?> ·
+                            <?= $user['mbti'] ?>
+                        </p>
                     </div>
                     <div>
                         <button class="popup_view_profile">프로필</button>
@@ -77,31 +84,22 @@
                 </div>
             </div>
             <div style="height: 50px;"></div>
-<footer class="footer">
-                
+            <footer class="footer">
+
 
                 <!-- <div class="message_input_box">
                 </div> -->
             </footer>
         </div>
-
-
-
-
-
     </div>
 
 
     <!-- SCRIPTS -->
 
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
+        $(document).ready(function () {
+            editPhotoListListner();
+        });
     </script>
 
     <!-- -->
