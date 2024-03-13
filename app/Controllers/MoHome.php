@@ -4,8 +4,11 @@ namespace App\Controllers;
 
 use App\Models\BoardModel;
 use App\Models\BoardFileModel;
+use App\Models\MemberModel;
+use App\Models\MemberFileModel;
 use App\Helpers\MoHelper;
 use CodeIgniter\Session\Session;
+
 
 class MoHome extends BaseController
 {
@@ -211,7 +214,28 @@ class MoHome extends BaseController
     }
     public function mypage(): string
     {
-        return view('mo_mypage');
+        $session = session();
+        $ci = $session->get('ci');
+
+        $MemberModel = new MemberModel();
+        $user = $MemberModel->where('ci', $ci)->first();
+
+        $MemberFileModel = new MemberFileModel();
+        $imageInfo = $MemberFileModel
+                        ->where('member_ci', $ci)
+                        ->where('board_type', 'main_photo')
+                        ->where('delete_yn', 'y') 
+                        ->first();
+
+        $data = [
+            'name' => $user['name'],
+            'birthday' => substr($user['birthday'], 0, 4),
+            'city' => $user['city'],
+            'mbti' => $user['mbti'],
+            'image' => $imageInfo
+        ];
+
+        return view('mo_mypage', $data);
     }
     public function mymsg(): string
     {
