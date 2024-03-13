@@ -68,6 +68,15 @@
                 menuItem.classList.toggle("hidden");
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var gradeText = localStorage.getItem('gradeText');
+
+            if (gradeText) {
+                document.querySelector('.success_text em').textContent = `${gradeText} 가입을 축하합니다.`;
+                localStorage.removeItem('gradeText');//localstorage 비우기
+            }
+        });
     </script>
 
     <!-- -->

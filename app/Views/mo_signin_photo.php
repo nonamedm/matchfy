@@ -35,45 +35,12 @@
 
         <div class="sub_wrap">
             <div class="content_wrap">
-                <form class="main_signin_form" method="post" action="/mo/signinPhoto" enctype="multipart/form-data">
-                    <div class="content_body">
-                        <a id="profileArea" onclick="editPhoto()">
-                            <img src="/static/images/profile_noimg.png" />
-                        </a>
-                    </div>
-                    <div class="btn_group">
-                        <button type="button" class="btn type02" onclick="editPhoto()">프로필 사진수정</button>
-                        <input type="file" id="main_photo" name="main_photo" style="display:none;" accept="image/*" />
-                    </div>
-                    <legend></legend>
+                <div class="content_title">
+                    <h2><span>사진</span> 추가등록 또는<br><span>동영상</span>프로필 등록.</h2>
+                </div>
+                <form class="main_signin_form" method="post" action="/mo/signinType" enctype="multipart/form-data">
                     <div class="">
                         <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="name" class="signin_label">이름</label>
-                                <input id="name" name="name" type="text" value="<?php echo $name ?>"
-                                    placeholder="이름을 입력하세요">
-                            </div>
-                        </div>
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="birthday" class="signin_label">생년월일</label>
-                                <input id="birthday" name="birthday" type="text" value="<?php echo $birthday ?>"
-                                    placeholder="이름을 입력하세요">
-                            </div>
-                        </div>
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="gender" class="signin_label">성별</label>
-                                <input id="gender" name="gender" type="text" value="M" placeholder="성별을 입력하세요">
-                            </div>
-                        </div>
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="city" class="signin_label">지역</label>
-                                <input id="city" name="city" type="text" value="city value" placeholder="이름을 입력하세요">
-                            </div>
-                        </div>
-                        <!-- <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <h4 class="profile_photo_label">사진 (1장 이상 필수)</h4>
                                 <div class="profile_photo_div">
@@ -96,23 +63,21 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> -->
-                        <input type="hidden" name="town" value="town value" />
-                        <input type="hidden" name="mobile_no" value="<?php echo $mobile_no ?>" />
-                        <div id="main_photo_uploaded" style="display:none;"></div>
-                        <!-- <div id="profile_photo_uploaded" style="display:none;"></div>
-                        <div id="profile_mov_uploaded" style="display:none;"></div> -->
+                        </div>
+                        <input type="hidden" name="mobile_no" value="<?php echo $postData['mobile_no'] ?>" />
+                        <input type="hidden" name="ci" value="<?php echo $postData['ci'] ?>" />
+                        <input type="hidden" name="file_path" value="<?php echo $postData['file_path'] ?>" />
+                        <input type="hidden" name="file_name" value="<?php echo $postData['file_name'] ?>" />
+                        <div id="profile_photo_uploaded" style="display:none;"></div>
+                        <div id="profile_mov_uploaded" style="display:none;"></div>
                         <div class="btn_group multy">
-                            <button type="button" class="btn type02">취소</button>
-                            <button type="button" class="btn type01" onclick="signUp()">회원가입</button>
+                            <button type="button" class="btn type02">건너뛰기</button>
+                            <button type="submit" class="btn type01">저장</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-
-
-
 
 
         <div style="height: 50px;"></div>
@@ -143,9 +108,7 @@
 
     <script>
         $(document).ready(function () {
-            editPhotoListner();
-            // editPhotoListListner();
-            // editMovListListner();
+            editPhotoListListner();
         });        
     </script>
 

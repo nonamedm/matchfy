@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\MemberModel;
 use App\Models\MemberFileModel;
+use App\Models\UniversityModel;
 use App\Config\Encryption;
 
 class MoAjax extends BaseController
@@ -27,6 +28,7 @@ class MoAjax extends BaseController
     public function login()
     {
         $mobile_no = $this->request->getPost('mobile_no');
+        $auto_login = $this->request->getPost('auto_login', FILTER_VALIDATE_BOOLEAN);
 
         $MemberModel = new MemberModel();
 
@@ -41,6 +43,10 @@ class MoAjax extends BaseController
                 'isLoggedIn' => true //로그인 상태
             ]);
 
+            if ($auto_login) {
+                $session->setTempdata('ci', true, 2592000);
+            }
+ 
             return $this->response->setJSON(['status' => 'success', 'message' => "로그인 성공"]);
         } else
         {
@@ -101,18 +107,20 @@ class MoAjax extends BaseController
             ],
         ];
 
-        if (!$this->validate($rules)) {
+        if (!$this->validate($rules))
+        {
             return $this->response->setJSON([
                 'status' => 'error',
                 'errors' => $this->validator->getErrors(),
             ]);
-        } else {
+        } else
+        {
             // $postData = $this->request->getPost();
 
             $mobile_no = $this->request->getPost('mobile_no');
             $encrypter = \Config\Services::encrypter();
             $ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 32]));
-    
+
             // $ci = $this->request->getPost('ci');
             $agree1 = $this->request->getPost('agree1');
             $agree2 = $this->request->getPost('agree2');
@@ -281,55 +289,64 @@ class MoAjax extends BaseController
         ];
 
         // 프리미엄 회원
-        if ($this->request->getPost('grade') === 'grade03') {
+        if ($this->request->getPost('grade') === 'grade03')
+        {
             $rules['father_birth_year'] = [
-                    'label' => 'father_birth_year',
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => '(부) 출생년도를 선택해주세요.',
-                    ]];
+                'label' => 'father_birth_year',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '(부) 출생년도를 선택해주세요.',
+                ]
+            ];
             $rules['father_job'] = [
-                    'label' => 'father_job',
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => '(부) 직업을 선택해주세요.',
-                    ]];
+                'label' => 'father_job',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '(부) 직업을 선택해주세요.',
+                ]
+            ];
             $rules['mother_birth_year'] = [
-                    'label' => 'mother_birth_year',
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => '(모) 출생년도를 선택해주세요.',
-                    ]];
+                'label' => 'mother_birth_year',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '(모) 출생년도를 선택해주세요.',
+                ]
+            ];
             $rules['mother_job'] = [
-                    'label' => 'mother_job',
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => '(모) 직업을 선택해주세요.',
-                    ]];
+                'label' => 'mother_job',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '(모) 직업을 선택해주세요.',
+                ]
+            ];
             $rules['siblings'] = [
-                    'label' => 'siblings',
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => '형제관계를 선택해주세요.',
-                    ]];
+                'label' => 'siblings',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '형제관계를 선택해주세요.',
+                ]
+            ];
             $rules['residence1'] = [
-                    'label' => 'residence1',
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => '거주형태1을 선택해주세요.',
-                    ]];
+                'label' => 'residence1',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '거주형태1을 선택해주세요.',
+                ]
+            ];
             $rules['residence2'] = [
-                    'label' => 'residence2',
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => '거주형태2를 선택해주세요.',
-                    ]];
+                'label' => 'residence2',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '거주형태2를 선택해주세요.',
+                ]
+            ];
             $rules['residence3'] = [
-                    'label' => 'residence3',
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => '거주형태3을 선택해주세요.',
-                    ]];
+                'label' => 'residence3',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '거주형태3을 선택해주세요.',
+                ]
+            ];
         }
 
 
@@ -351,45 +368,47 @@ class MoAjax extends BaseController
         $asset_range = $this->request->getPost('asset_range');
         $income_range = $this->request->getPost('income_range');
 
-        if (!$this->validate($rules)) {
+        if (!$this->validate($rules))
+        {
             return $this->response->setJSON([
                 'status' => 'error',
                 'errors' => $this->validator->getErrors(),
             ]);
-        } else {
+        } else
+        {
 
             $MemberModel = new MemberModel();
 
-        $data = [
-            'grade' => $grade,
-            'married' => $married,
-            'smoker' => $smoker,
-            'drinking' => $drinking,
-            'religion' => $religion,
-            'mbti' => $mbti,
-            'height' => $height,
-            'stylish' => $stylish,
-            'education' => $education,
-            'major' => $major,
-            'school' => $school,
-            'job' => $job,
-            'asset_range' => $asset_range,
-            'income_range' => $income_range
-        ];
-
-        if ($grade === 'grade03')
-        {
-            // 프리미엄 회원에만 해당하는 추가 정보
-            $premiumData = [
-                'father_birth_year' => $this->request->getPost('father_birth_year'),
-                'father_job' => $this->request->getPost('father_job'),
-                'mother_birth_year' => $this->request->getPost('mother_birth_year'),
-                'mother_job' => $this->request->getPost('mother_job'),
-                'siblings' => $this->request->getPost('siblings'),
-                'residence1' => $this->request->getPost('residence1'),
-                'residence2' => $this->request->getPost('residence2'),
-                'residence3' => $this->request->getPost('residence3'),
+            $data = [
+                'grade' => $grade,
+                'married' => $married,
+                'smoker' => $smoker,
+                'drinking' => $drinking,
+                'religion' => $religion,
+                'mbti' => $mbti,
+                'height' => $height,
+                'stylish' => $stylish,
+                'education' => $education,
+                'major' => $major,
+                'school' => $school,
+                'job' => $job,
+                'asset_range' => $asset_range,
+                'income_range' => $income_range
             ];
+
+            if ($grade === 'grade03')
+            {
+                // 프리미엄 회원에만 해당하는 추가 정보
+                $premiumData = [
+                    'father_birth_year' => $this->request->getPost('father_birth_year'),
+                    'father_job' => $this->request->getPost('father_job'),
+                    'mother_birth_year' => $this->request->getPost('mother_birth_year'),
+                    'mother_job' => $this->request->getPost('mother_job'),
+                    'siblings' => $this->request->getPost('siblings'),
+                    'residence1' => $this->request->getPost('residence1'),
+                    'residence2' => $this->request->getPost('residence2'),
+                    'residence3' => $this->request->getPost('residence3'),
+                ];
 
                 // 배열 병합
                 $data = array_merge($data, $premiumData);
@@ -492,6 +511,103 @@ class MoAjax extends BaseController
         {
             // return $this->response->setJSON(['status' => 'error', 'message' => '업데이트할 데이터가 존재하지 않습니다']);
             return '2';
+        }
+
+    }
+
+    public function searchUniversity()
+    {
+        $term = $this->request->getVar('term');
+
+        $UniversityModel = new UniversityModel();
+
+        $res = $UniversityModel->like('name', $term)->where('delete_yn', 'Y')->findAll();
+
+        $results = array_map(function ($row) {
+            return [
+                'label' => $row['name'],
+                'value' => $row['name']
+            ];
+        }, $res);
+
+        return $this->response->setJSON($results);
+    }
+
+    /* 회원 추가사진/동영상 프로필 업데이트 */
+    public function updtUserData()
+    {
+        $MemberFileModel = new MemberFileModel();
+
+        $postData = $this->request->getPost('uploadedFiles');
+        $postData2 = $this->request->getPost('uploadedMovs');
+        $ci = $this->request->getPost('ci');
+        $file_path = $this->request->getPost('file_path');
+        $file_name = $this->request->getPost('file_name');
+
+        $insertedData = [];
+
+        if (!empty($postData))
+        {
+            // $postData 배열을 반복하여 데이터베이스에 삽입
+            foreach ($postData as $fileInfo)
+            {
+                // $fileInfo에서 필요한 데이터를 추출하여 데이터베이스에 삽입
+                $org_name = $fileInfo['org_name'];
+                $file_name = $fileInfo['file_name'];
+                $file_path = $fileInfo['file_path'];
+                $ext = $fileInfo['ext'];
+                $data = [
+                    'member_ci' => $ci,
+                    'org_name' => $org_name,
+                    'file_name' => $file_name,
+                    'file_path' => $file_path,
+                    'ext' => $ext,
+                    'board_type' => 'photos',
+                ];
+                $inserted = $MemberFileModel->insert($data);
+                if ($inserted)
+                {
+                    $insertedData[] = $data;
+                }
+            }
+        }
+        if (!empty($postData2))
+        {
+            // $postData 배열을 반복하여 데이터베이스에 삽입
+            foreach ($postData2 as $fileInfo)
+            {
+                // $fileInfo에서 필요한 데이터를 추출하여 데이터베이스에 삽입
+                $org_name = $fileInfo['org_name'];
+                $file_name = $fileInfo['file_name'];
+                $file_path = $fileInfo['file_path'];
+                $ext = $fileInfo['ext'];
+                $data = [
+                    'member_ci' => $ci,
+                    'org_name' => $org_name,
+                    'file_name' => $file_name,
+                    'file_path' => $file_path,
+                    'ext' => $ext,
+                    'board_type' => 'movs',
+                ];
+                $inserted = $MemberFileModel->insert($data);
+                if ($inserted)
+                {
+                    $insertedData[] = $data;
+                }
+            }
+        }
+        $return = [
+            'ci' => $ci,
+            'file_path' => $file_path,
+            'file_name' => $file_name,
+            'insertedData' => $insertedData
+        ];
+        if (!empty($insertedData))
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
+        } else
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
         }
 
     }

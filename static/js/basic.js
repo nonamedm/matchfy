@@ -79,7 +79,8 @@ const certIdentify = () => {
 
 const userLogin = () => {
     const phoneNumber = document.getElementById('id').value;
-    console.log(phoneNumber);
+    const autoLogin = document.getElementById('keep').checked;
+    console.log(autoLogin);
 
     // 빈 값 validation
     if (phoneNumber.length === 0) {
@@ -98,7 +99,8 @@ const userLogin = () => {
     $.ajax({
         url: '/ajax/login',
         type: 'POST',
-        data: { mobile_no: phoneNumber },
+        data: { mobile_no: phoneNumber, 
+                auto_login: autoLogin },
         async: false,
         success: function (data) {
             console.log(data);
@@ -230,6 +232,9 @@ const signUpdate = (postData) => {
             console.log(data);
             if (data.status === 'success') {
                 // 성공
+                var gradeText = (data.data.grade === 'grade02') ? '정회원' : '프리미엄회원'; 
+                localStorage.setItem('gradeText', gradeText);
+
                 moveToUrl('/mo/signinSuccess');
                 // submitForm();
             } else if (data.status === 'error') {
@@ -238,7 +243,7 @@ const signUpdate = (postData) => {
                 // 오류 메시지 표시
                 Object.keys(data.errors).forEach(function (key, index) {
                     var field = $('[name="' + key + '"]');
-                    var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div 선택
+                    var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div
 
                     // 오류 메시지 추가
                     if (!topMostDiv.next().hasClass('alert_validation')) {
@@ -430,8 +435,12 @@ const editPhotoListner = () => {
 };
 const editPhotoListListner = () => {
     const profile_photo_input = document.getElementById('profile_photo');
+    const profile_mov_input = document.getElementById('profile_mov');
     const imgRegist = document.getElementById('profile_photo_view');
-    const formData = new FormData(document.querySelector('.main_signin_form'));
+    const imgRegist2 = document.getElementById('profile_mov_view');
+    // 파일 정보 저장할 배열
+    let uploadedFiles = [];
+    let uploadedMovs = [];
 
     profile_photo_input.addEventListener('change', function () {
         if (profile_photo_input.files.length > 0) {
@@ -442,7 +451,6 @@ const editPhotoListListner = () => {
                     // 입력한 파일을 초기화하여 업로드를 취소
                     this.value = '';
                 } else {
-                    formData.append('profile_photos[]', profile_photo_input.files[i]);
                     // FileReader 객체 생성
                     const reader = new FileReader();
 
@@ -459,42 +467,44 @@ const editPhotoListListner = () => {
                         img.classList.add('profile_photo_posted');
                         imageElement.appendChild(img);
 
-                        // 삭제 버튼 생성
-                        const deleteButton = document.createElement('button');
-                        deleteButton.textContent = 'X';
-                        deleteButton.classList.add('posted_delete_button');
-                        // 삭제 버튼에 클릭 이벤트 추가
-                        deleteButton.addEventListener('click', function () {
-                            // 이미지 요소 제거
-                            imageElement.remove();
-                            // FormData에서도 해당 파일 제거
-                            formData.delete('profile_photos[]', profile_photo_input.files[i]);
-                        });
-                        // 이미지 요소에 삭제 버튼 추가
-                        imageElement.appendChild(deleteButton);
-                    };
+                        // javascript에서 fileUpload 호출
+                        fileUpload(profile_photo_input.files[i])
+                            .then((data) => {
+                                console.log('result', data);
+                                const fileInfo = {
+                                    org_name: data.org_name,
+                                    file_name: data.file_name,
+                                    file_path: data.file_path,
+                                    ext: data.ext,
+                                };
+                                uploadedFiles.push(fileInfo);
 
+                                // 삭제 버튼 생성
+                                const deleteButton = document.createElement('button');
+                                deleteButton.textContent = 'X';
+                                deleteButton.classList.add('posted_delete_button');
+                                // 삭제 버튼에 클릭 이벤트 추가
+                                deleteButton.addEventListener('click', function () {
+                                    // 이미지 요소 제거
+                                    imageElement.remove();
+                                    uploadedFiles = uploadedFiles.filter(
+                                        (file) => file.file_name !== fileInfo.file_name,
+                                    );
+                                });
+                                // 이미지 요소에 삭제 버튼 추가
+                                imageElement.appendChild(deleteButton);
+                            })
+                            .catch((error) => {
+                                console.error('error : ', error);
+                            });
+                    };
                     // 파일 읽기 시작
                     reader.readAsDataURL(profile_photo_input.files[i]);
-
-                    // javascript에서 fileUpload 호출
-                    fileUpload(profile_photo_input.files[i])
-                        .then((data) => {
-                            console.log('result : ', data);
-                        })
-                        .catch((error) => {
-                            console.error('error : ', error);
-                        });
                 }
             }
         } else {
         }
     });
-};
-const editMovListListner = () => {
-    const profile_mov_input = document.getElementById('profile_mov');
-    const imgRegist = document.getElementById('profile_mov_view');
-    const formData = new FormData(document.querySelector('.main_signin_form'));
 
     profile_mov_input.addEventListener('change', function () {
         if (profile_mov_input.files.length > 0) {
@@ -505,7 +515,6 @@ const editMovListListner = () => {
                     // 입력한 파일을 초기화하여 업로드를 취소
                     this.value = '';
                 } else {
-                    formData.append('profile_movs[]', profile_mov_input.files[i]);
                     // FileReader 객체 생성
                     const reader = new FileReader();
 
@@ -514,7 +523,7 @@ const editMovListListner = () => {
                         // 이미지 요소 생성
                         const imageElement = document.createElement('div');
                         imageElement.style.position = 'relative';
-                        imgRegist.prepend(imageElement);
+                        imgRegist2.prepend(imageElement);
 
                         // 이미지 요소에 이미지 추가
                         const img = document.createElement('img');
@@ -522,27 +531,82 @@ const editMovListListner = () => {
                         img.classList.add('profile_photo_posted');
                         imageElement.appendChild(img);
 
-                        // 삭제 버튼 생성
-                        const deleteButton = document.createElement('button');
-                        deleteButton.textContent = 'X';
-                        deleteButton.classList.add('posted_delete_button');
-                        // 삭제 버튼에 클릭 이벤트 추가
-                        deleteButton.addEventListener('click', function () {
-                            // 이미지 요소 제거
-                            imageElement.remove();
-                            // FormData에서도 해당 파일 제거
-                            formData.delete('profile_movs[]', profile_photo_input.files[i]);
-                        });
-                        // 이미지 요소에 삭제 버튼 추가
-                        imageElement.appendChild(deleteButton);
-                    };
+                        // javascript에서 fileUpload 호출
+                        fileUpload(profile_mov_input.files[i])
+                            .then((data) => {
+                                const fileInfo = {
+                                    org_name: data.org_name,
+                                    file_name: data.file_name,
+                                    file_path: data.file_path,
+                                    ext: data.ext,
+                                };
+                                uploadedMovs.push(fileInfo);
 
+                                // 삭제 버튼 생성
+                                const deleteButton = document.createElement('button');
+                                deleteButton.textContent = 'X';
+                                deleteButton.classList.add('posted_delete_button');
+                                // 삭제 버튼에 클릭 이벤트 추가
+                                deleteButton.addEventListener('click', function () {
+                                    // 이미지 요소 제거
+                                    imageElement.remove();
+                                    uploadedMovs = uploadedMovs.filter((file) => file.file_name !== fileInfo.file_name);
+                                });
+                                // 이미지 요소에 삭제 버튼 추가
+                                imageElement.appendChild(deleteButton);
+                            })
+                            .catch((error) => {
+                                console.error('error : ', error);
+                            });
+                    };
                     // 파일 읽기 시작
                     reader.readAsDataURL(profile_mov_input.files[i]);
                 }
             }
         } else {
         }
+    });
+
+    document.querySelector('.main_signin_form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData();
+
+        // 기존의 input 요소의 값을 FormData에 추가
+        const inputElements = document.querySelectorAll('.main_signin_form input');
+        inputElements.forEach((input) => {
+            formData.append(input.name, input.value);
+        });
+        uploadedFiles.forEach((file, index) => {
+            for (const key in file) {
+                formData.append(`uploadedFiles[${index}][${key}]`, file[key]);
+            }
+        });
+        uploadedMovs.forEach((file, index) => {
+            for (const key in file) {
+                formData.append(`uploadedMovs[${index}][${key}]`, file[key]);
+            }
+        });
+
+        // 수정된 FormData를 서버로 전송
+        fetch('/ajax/updtUserData', {
+            method: 'POST',
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Upload success', data);
+                moveToUrl('/mo/signinType', {
+                    ci: data.data.ci,
+                    file_path: data.data.file_path,
+                    file_name: data.data.file_name,
+                });
+                // 성공한 경우, 필요에 따라 리다이렉션 또는 메시지 표시 등의 작업 수행
+            })
+            .catch((error) => {
+                console.error('Upload failed', error);
+                // 실패한 경우, 오류 메시지 표시 등의 작업 수행
+            });
     });
 };
 
