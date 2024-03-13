@@ -951,6 +951,7 @@ td {
     border: 2px solid #ff0267;
     border-radius: 10px;
     text-align: center;
+    cursor: pointer;
 }
 .content_wrap .mypage_wallet.charge .charge_select1 p {
     font-weight: 700;
@@ -966,7 +967,7 @@ td {
     background: '#ffffff';
     border-radius: 10px;
     text-align: center;
-    margin-top: 10px;
+    cursor: pointer;
 }
 .content_wrap .mypage_wallet.charge .charge_select2 p {
     font-size: 16px;

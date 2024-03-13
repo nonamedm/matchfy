@@ -9,7 +9,13 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/wallet.js"></script>
+    <script src="https://pay.nicepay.co.kr/v1/js/"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script>
+        
+        </script>
 </head>
 
 <body class="mo_wrap">
@@ -21,7 +27,7 @@
             <div class="menu">
                 <ul>
                     <li class="left_arrow">
-                        <img src="/static/images/left_arrow.png" />
+                        <a href="/mo/mypage/wallet"><img src="/static/images/left_arrow.png" /></a>
                     </li>
                     <li class="header_title">
                         내지갑
@@ -44,23 +50,21 @@
                         <div class="">
                             <div class="mypage_wallet_select">
                                 <p>구매포인트</p>
-                                <div class="charge_select1">
-                                    <p>5,000P (5,500원)</p>
+                                <div class="charge_select1 selected" >
+                                    <p data-points="5000" data-price="5500">5,000P (5,500원)</p>
                                 </div>
-                                <div class="charge_select2">
-                                    <p>100,000P (100,000원)</p>
+                                <div class="charge_select2" style="margin-top: 10px;">
+                                    <p data-points="100000" data-price="100000">100,000P (100,000원)</p>
                                 </div>
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="quantity" class="signin_label">구매수량</label>
                                     <div style="display: flex; align-items: center;">
-                                        <input id="quantity" type="number" value="" style="width:225px;"
-                                            placeholder="수량입력" />
+                                        <input id="quantity" type="number" value="1" min="1" style="width:225px;" placeholder="수량입력" />
                                         <p style="margin-left:8px; font-size: 15px;">개</p>
-                                        <a style="margin-left:15px;"><img src="/static/images/ico_plus_30x30.png" /></a>
-                                        <a style="margin-left:12px;"><img
-                                                src="/static/images/ico_minus_30x30.png" /></a>
+                                        <a class="quantity_plus" style="margin-left:15px;"><img src="/static/images/ico_plus_30x30.png" /></a>
+                                        <a class="quantity_minus" style="margin-left:12px;"><img src="/static/images/ico_minus_30x30.png" /></a>
                                     </div>
                                 </div>
                             </div>
@@ -82,8 +86,8 @@
                                         <h2>총 결제금액</h2>
                                     </div>
                                     <div class="amount_pay_right">
-                                        <p>신용카드 결제</p>
-                                        <h2>1,000,000</h2>
+                                        <p id="selected_pay_type">결재선택</p>
+                                        <h2 id="total_price">5,000</h2>
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +107,8 @@
                         자동 소멸됩니다.</p>
                 </div>
                 <div class="btn_group">
-                    <button type="button" class="btn type01">충전하기</button>
+                    <button type="button" class="btn type01" onclick="serverAuth()">충전하기</button>
+                    
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy

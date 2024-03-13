@@ -9,6 +9,8 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/wallet.js"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
 </head>
 
@@ -40,17 +42,17 @@
                     </div>
                     <div class="mypage_wallet_charge">
                         <div class="btn_group multy">
-                            <button class="btn type01">포인트 충전</button>
+                            <button class="btn type01" onclick="pointCharge();">포인트 충전</button>
                             <button class="btn type03">환전</button>
                         </div>
                     </div>
                     <div class="tab_wrap">
                         <ul>
                             <li>
-                                입금 내역
+                                <a href="/mo/mypage/wallet">입금 내역</a>
                             </li>
                             <li class="on">
-                                사용 내역
+                                <a href="/mo/mypage/wallet2">사용 내역</a>
                             </li>
                         </ul>
                     </div>
