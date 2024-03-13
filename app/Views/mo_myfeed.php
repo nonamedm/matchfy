@@ -33,7 +33,6 @@
         </header>
         <div class="sub_wrap">
             <div class="content_wrap">
-
                 <div class="content_body content_mypage">
                     <!-- <img class="profile_img" src="/static/images/mypage_pfofile.png" /> -->
                     <img class="profile_img" src="/writable/<?= $file_path ?>/<?= $file_name ?>" />
@@ -57,10 +56,9 @@
                     <form class="main_signin_form">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <div class="myfeed_list">
+                                <div id="feed_photo_view" class="myfeed_list">
                                     <div class="profile_photo_div">
-                                        <label for="profile_mov" class="signin_label profile_photo_input"></label>
-                                        <input id="profile_mov" type="file" value="" placeholder="">
+                                        <div id="feed_photo" class="feed_photo" onclick="addMyFeed();"></div>
                                     </div>
                                     <img src="/static/images/profile_img_1.png" />
                                     <img src="/static/images/profile_img_2.png" />
@@ -76,7 +74,6 @@
                                     <img src="/static/images/profile_img_11.png" />
                                     <img src="/static/images/profile_img_12.png" />
                                     <img src="/static/images/profile_img_13.png" />
-
                                 </div>
                             </div>
                         </div>
@@ -92,14 +89,17 @@
             </footer>
         </div>
     </div>
-
+    <?php include 'mo_myfeed_edit.php'; ?>
 
     <!-- SCRIPTS -->
 
     <script>
         $(document).ready(function () {
-            editPhotoListListner();
+
         });
+        function addMyFeed() {
+            showFeedPopup();
+        }
     </script>
 
     <!-- -->

@@ -99,8 +99,7 @@ const userLogin = () => {
     $.ajax({
         url: '/ajax/login',
         type: 'POST',
-        data: { mobile_no: phoneNumber, 
-                auto_login: autoLogin },
+        data: { mobile_no: phoneNumber, auto_login: autoLogin },
         async: false,
         success: function (data) {
             console.log(data);
@@ -232,7 +231,7 @@ const signUpdate = (postData) => {
             console.log(data);
             if (data.status === 'success') {
                 // 성공
-                var gradeText = (data.data.grade === 'grade02') ? '정회원' : '프리미엄회원'; 
+                var gradeText = data.data.grade === 'grade02' ? '정회원' : '프리미엄회원';
                 localStorage.setItem('gradeText', gradeText);
 
                 moveToUrl('/mo/signinSuccess');
@@ -673,6 +672,12 @@ const showPopupRgt = (contents, ci) => {
             title = '졸업증명서';
     }
     $('#type').text(title);
+    $('.layerPopup').css('display', 'flex');
+};
+
+const showFeedPopup = (contents, ci) => {
+    console.log(contents, ci);
+
     $('.layerPopup').css('display', 'flex');
 };
 
