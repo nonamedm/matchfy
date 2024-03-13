@@ -122,8 +122,6 @@ class AdminHome extends BaseController
         $title = $this->request->getPost('title');
         $content = $this->request->getPost('content');
         $newFile = $this->request->getFile('userfile');
-
-        // 파일이있을경우
         
         if ($newFile->isValid()) {
             $upload= new Upload();
@@ -480,7 +478,7 @@ class AdminHome extends BaseController
         return view('admin/ad_faq_view', $data);
     }
 
-    public function BoardDelete(){
+    public function boardDelete(){
         $id = $this->request->getPost('id');
         $board_name = $this->request->getPost('boardName');
         

@@ -81,7 +81,7 @@ $routes->post('/ajax/mbrFileRegUp', 'MoAjax::mbrFileRegUp');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');
-$routes->post('/ad/BoardDelete', 'AdminHome::BoardDelete');
+$routes->post('/ad/BoardDelete', 'AdminHome::boardDelete');
 
 $routes->get('/ad/header', 'AdminHome::header');
 $routes->get('/ad/faq/faqEdit', 'AdminHome::faqEdit');
