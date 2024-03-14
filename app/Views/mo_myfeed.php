@@ -95,7 +95,7 @@
 
     <script>
         $(document).ready(function () {
-
+            myfeedPhotoListner();
         });
         function addMyFeed() {
             showFeedPopup();

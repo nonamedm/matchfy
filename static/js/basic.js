@@ -639,6 +639,77 @@ const fileUpload = (file) => {
     });
 };
 
+const myfeedPhotoListner = () => {
+    const feed_photo_input = document.getElementById('feed_photo_insert');
+    const imgRegist = document.getElementById('myfeed_file_posted');
+    // 파일 정보 저장할 배열
+    let uploadedFiles = [];
+
+    feed_photo_input.addEventListener('change', function () {
+        if (feed_photo_input.files.length > 0) {
+            for (let i = 0; i < feed_photo_input.files.length; i++) {
+                const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i;
+                if (!allowedExtensions.exec(feed_photo_input.files[i].name)) {
+                    alert('이미지 파일만 업로드할 수 있습니다.');
+                    // 입력한 파일을 초기화하여 업로드를 취소
+                    this.value = '';
+                } else {
+                    // FileReader 객체 생성
+                    const reader = new FileReader();
+
+                    // 파일 읽기가 완료되었을 때 실행되는 콜백 함수 정의
+                    reader.onload = function (e) {
+                        // 이미지 요소 생성
+                        const imageElement = document.createElement('div');
+                        imageElement.style.position = 'relative';
+                        imgRegist.prepend(imageElement);
+
+                        // 이미지 요소에 이미지 추가
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.classList.add('profile_photo_posted');
+                        imageElement.appendChild(img);
+
+                        // javascript에서 fileUpload 호출
+                        fileUpload(feed_photo_input.files[i])
+                            .then((data) => {
+                                console.log('result', data);
+                                const fileInfo = {
+                                    org_name: data.org_name,
+                                    file_name: data.file_name,
+                                    file_path: data.file_path,
+                                    ext: data.ext,
+                                };
+                                uploadedFiles.push(fileInfo);
+
+                                // 삭제 버튼 생성
+                                const deleteButton = document.createElement('button');
+                                deleteButton.textContent = 'X';
+                                deleteButton.classList.add('posted_delete_button');
+                                // 삭제 버튼에 클릭 이벤트 추가
+                                deleteButton.addEventListener('click', function () {
+                                    // 이미지 요소 제거
+                                    imageElement.remove();
+                                    uploadedFiles = uploadedFiles.filter(
+                                        (file) => file.file_name !== fileInfo.file_name,
+                                    );
+                                });
+                                // 이미지 요소에 삭제 버튼 추가
+                                imageElement.appendChild(deleteButton);
+                            })
+                            .catch((error) => {
+                                console.error('error : ', error);
+                            });
+                    };
+                    // 파일 읽기 시작
+                    reader.readAsDataURL(feed_photo_input.files[i]);
+                }
+            }
+        } else {
+        }
+    });
+};
+
 const showPopupRgt = (contents, ci) => {
     console.log(contents, ci);
     // image input 초기화

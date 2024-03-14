@@ -7,8 +7,11 @@
             <p class="txt">피드 등록</p>
             <div class="">
                 <div class="regist_file myfeed_file">
-                    <label for="profile_mov" class="signin_label profile_photo_input"></label>
-                    <input id="profile_mov" type="file" value="" placeholder="">
+                    <label for="feed_photo_insert" class="signin_label profile_photo_input"></label>
+                    <input id="feed_photo_insert" type="file" value="" placeholder="">
+                </div>
+                <div id="myfeed_file_posted" class="regist_file myfeed_file_posted">
+                    
                 </div>
             </div>
             <div class="myfeed_text">
