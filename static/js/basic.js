@@ -643,9 +643,9 @@ const myfeedPhotoListner = () => {
     const feed_photo_input = document.getElementById('feed_photo_insert');
     const imgRegist = document.getElementById('myfeed_file_posted');
     // 파일 정보 저장할 배열
-    let uploadedFiles = [];
+    let uploadedFeeds = [];
 
-    feed_photo_input.addEventListener('change', function () {
+    feed_photo_input.addEventListener('change', function (e) {
         if (feed_photo_input.files.length > 0) {
             for (let i = 0; i < feed_photo_input.files.length; i++) {
                 const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i;
@@ -656,7 +656,6 @@ const myfeedPhotoListner = () => {
                 } else {
                     // FileReader 객체 생성
                     const reader = new FileReader();
-
                     // 파일 읽기가 완료되었을 때 실행되는 콜백 함수 정의
                     reader.onload = function (e) {
                         // 이미지 요소 생성
@@ -664,6 +663,9 @@ const myfeedPhotoListner = () => {
                         imageElement.style.position = 'relative';
                         imgRegist.prepend(imageElement);
 
+                        // label 숨기기
+                        const input_label = document.getElementById('feed_photo_label');
+                        input_label.style.display = 'none';
                         // 이미지 요소에 이미지 추가
                         const img = document.createElement('img');
                         img.src = e.target.result;
@@ -680,7 +682,7 @@ const myfeedPhotoListner = () => {
                                     file_path: data.file_path,
                                     ext: data.ext,
                                 };
-                                uploadedFiles.push(fileInfo);
+                                uploadedFeeds.push(fileInfo);
 
                                 // 삭제 버튼 생성
                                 const deleteButton = document.createElement('button');
@@ -688,9 +690,11 @@ const myfeedPhotoListner = () => {
                                 deleteButton.classList.add('posted_delete_button');
                                 // 삭제 버튼에 클릭 이벤트 추가
                                 deleteButton.addEventListener('click', function () {
+                                    // label 숨김해제
+                                    input_label.style.display = 'block';
                                     // 이미지 요소 제거
                                     imageElement.remove();
-                                    uploadedFiles = uploadedFiles.filter(
+                                    uploadedFeeds = uploadedFeeds.filter(
                                         (file) => file.file_name !== fileInfo.file_name,
                                     );
                                 });
@@ -707,6 +711,45 @@ const myfeedPhotoListner = () => {
             }
         } else {
         }
+    });
+
+    document.querySelector('.main_signin_form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData();
+
+        // 기존의 input 요소의 값을 FormData에 추가
+        const inputElements = document.querySelectorAll('.main_signin_form input');
+        inputElements.forEach((input) => {
+            formData.append(input.name, input.value);
+        });
+        const feed_cont = document.getElementsByName('feed_cont')[0];
+        formData.append(feed_cont.name, feed_cont.value);
+        uploadedFeeds.forEach((file, index) => {
+            for (const key in file) {
+                formData.append(`uploadedFeeds[${index}][${key}]`, file[key]);
+            }
+        });
+
+        // 수정된 FormData를 서버로 전송
+        fetch('/ajax/updtFeedData', {
+            method: 'POST',
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Upload success', data);
+                // moveToUrl('/mo/signinType', {
+                //     ci: data.data.ci,
+                //     file_path: data.data.file_path,
+                //     file_name: data.data.file_name,
+                // });
+                // 성공한 경우, 필요에 따라 리다이렉션 또는 메시지 표시 등의 작업 수행
+            })
+            .catch((error) => {
+                console.error('Upload failed', error);
+                // 실패한 경우, 오류 메시지 표시 등의 작업 수행
+            });
     });
 };
 

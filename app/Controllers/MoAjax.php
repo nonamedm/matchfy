@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\MemberModel;
 use App\Models\MemberFileModel;
+use App\Models\MemberFeedModel;
+use App\Models\MemberFeedFileModel;
 use App\Models\UniversityModel;
 use App\Config\Encryption;
 
@@ -43,10 +45,11 @@ class MoAjax extends BaseController
                 'isLoggedIn' => true //로그인 상태
             ]);
 
-            if ($auto_login) {
+            if ($auto_login)
+            {
                 $session->setTempdata('ci', true, 2592000);
             }
- 
+
             return $this->response->setJSON(['status' => 'success', 'message' => "로그인 성공"]);
         } else
         {
@@ -541,8 +544,6 @@ class MoAjax extends BaseController
         $postData = $this->request->getPost('uploadedFiles');
         $postData2 = $this->request->getPost('uploadedMovs');
         $ci = $this->request->getPost('ci');
-        $file_path = $this->request->getPost('file_path');
-        $file_name = $this->request->getPost('file_name');
 
         $insertedData = [];
 
@@ -609,6 +610,69 @@ class MoAjax extends BaseController
         {
             return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
         }
+
+    }
+    public function updtFeedData()
+    {
+        $MemberFeedModel = new MemberFeedModel();
+        $MemberFeedFileModel = new MemberFeedFileModel();
+        $feed_cont = $this->request->getPost('feed_cont');
+        $public_yn = $this->request->getPost('public_yn');
+        $member_ci = $this->request->getPost('member_ci');
+        $postData = $this->request->getPost('uploadedFeeds');
+        $insertedData = [];
+
+        $data = [
+            'member_ci' => $member_ci,
+            'feed_cont' => $feed_cont,
+            'public_yn' => $public_yn,
+        ];
+        $inserted = $MemberFeedModel->insert($data);
+        if ($inserted)
+        {
+            $feed_idx = $MemberFeedModel->insertID();
+            if (!empty($postData))
+            {
+                // $postData 배열을 반복하여 데이터베이스에 삽입
+                foreach ($postData as $fileInfo)
+                {
+                    // $fileInfo에서 필요한 데이터를 추출하여 데이터베이스에 삽입
+                    $org_name = $fileInfo['org_name'];
+                    $file_name = $fileInfo['file_name'];
+                    $file_path = $fileInfo['file_path'];
+                    $ext = $fileInfo['ext'];
+                    $data = [
+                        'feed_idx' => $feed_idx,
+                        'member_ci' => $member_ci,
+                        'org_name' => $org_name,
+                        'file_name' => $file_name,
+                        'file_path' => $file_path,
+                        'ext' => $ext,
+                        'board_type' => 'feeds',
+                    ];
+                    $inserted = $MemberFeedFileModel->insert($data);
+                    if ($inserted)
+                    {
+                        $insertedData[] = $data;
+                    }
+                }
+            }
+            $return = [
+                'member_ci' => $member_ci,
+                'file_path' => $file_path,
+                'file_name' => $file_name,
+                'insertedData' => $insertedData
+            ];
+            if (!empty($insertedData))
+            {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
+            } else
+            {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
+            }
+
+        }
+
 
     }
 

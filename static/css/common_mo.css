@@ -2430,6 +2430,11 @@ input[type='number']::-webkit-inner-spin-button {
     width: 295px;
     height: 295px;
 }
+.mo_wrap .layerPopup.alert .layerPopup_content .regist_file.myfeed_file_posted img {
+    width: 295px;
+    height: 295px;
+    margin: 20px;
+}
 .mo_wrap .layerPopup.alert .layerPopup_content .regist_file input[type='file'] {
     position: absolute;
     width: 0;

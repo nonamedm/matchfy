@@ -53,31 +53,29 @@
                     </div>
                 </div>
                 <div class="profile_img_box">
-                    <form class="main_signin_form">
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <div id="feed_photo_view" class="myfeed_list">
-                                    <div class="profile_photo_div">
-                                        <div id="feed_photo" class="feed_photo" onclick="addMyFeed();"></div>
-                                    </div>
-                                    <img src="/static/images/profile_img_1.png" />
-                                    <img src="/static/images/profile_img_2.png" />
-                                    <img src="/static/images/profile_img_3.png" />
-                                    <img src="/static/images/profile_img_4.png" />
-                                    <img src="/static/images/profile_img_5.png" />
-                                    <img src="/static/images/profile_img_private.png" />
-                                    <img src="/static/images/profile_img_6.png" />
-                                    <img src="/static/images/profile_img_7.png" />
-                                    <img src="/static/images/profile_img_8.png" />
-                                    <img src="/static/images/profile_img_9.png" />
-                                    <img src="/static/images/profile_img_10.png" />
-                                    <img src="/static/images/profile_img_11.png" />
-                                    <img src="/static/images/profile_img_12.png" />
-                                    <img src="/static/images/profile_img_13.png" />
+                    <div class="form_row signin_form">
+                        <div class="signin_form_div">
+                            <div id="feed_photo_view" class="myfeed_list">
+                                <div class="profile_photo_div">
+                                    <div id="feed_photo" class="feed_photo" onclick="addMyFeed();"></div>
                                 </div>
+                                <img src="/static/images/profile_img_1.png" />
+                                <img src="/static/images/profile_img_2.png" />
+                                <img src="/static/images/profile_img_3.png" />
+                                <img src="/static/images/profile_img_4.png" />
+                                <img src="/static/images/profile_img_5.png" />
+                                <img src="/static/images/profile_img_private.png" />
+                                <img src="/static/images/profile_img_6.png" />
+                                <img src="/static/images/profile_img_7.png" />
+                                <img src="/static/images/profile_img_8.png" />
+                                <img src="/static/images/profile_img_9.png" />
+                                <img src="/static/images/profile_img_10.png" />
+                                <img src="/static/images/profile_img_11.png" />
+                                <img src="/static/images/profile_img_12.png" />
+                                <img src="/static/images/profile_img_13.png" />
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
             <div style="height: 50px;"></div>
