@@ -359,7 +359,61 @@ class MoHome extends BaseController
     }
     public function myfeedViewProfile(): string
     {
-        return view('mo_myfeed_view_profile');
+        $session = session();
+        $ci = $session->get('ci');
+
+        $MemberModel = new MemberModel();
+        $user = $MemberModel->where('ci', $ci)->first();
+
+        $MemberFileModel = new MemberFileModel();
+        $imageInfo = $MemberFileModel
+                        ->where('member_ci', 'QIdXG1fNMwYsP2lA6sIU+wcI8qq3jduQDHSxj5r9b/Tc36VtNvM+uVkQHQ8ry+zldd+CNxLF0m/fS5t2Uqp7oVrJpVbur8aPGYr0qIcVYJA=')
+                        ->where('board_type', 'main_photo')
+                        ->where('delete_yn', 'n') 
+                        ->first();
+
+        $data = [
+            'name' => $user['name'],
+            'birthday' => $user['birthday'],
+            'gender' => $user['gender'],
+            'city' => $user['city'],
+            'town' => $user['town'],
+            'mobile_no' => $user['mobile_no'],
+            'image' => $imageInfo
+        ];
+
+        if($user['grade'] == 'grade02' || $user['grade'] == 'grade03') {
+            $data = array_merge($data, [
+                'married' => $user['married'],
+                'smoker' => $user['smoker'],
+                'drinking' => $user['drinking'],
+                'religion' => $user['religion'],
+                'mbti' => $user['mbti'],
+                'height' => $user['height'],
+                'stylish' => $user['stylish'],
+                'education' => $user['education'],
+                'school' => $user['school'],
+                'major' => $user['major'],
+                'job' => $user['job'],
+                'asset_range' => $user['asset_range'],
+                'income_range' => $user['income_range']
+            ]);
+        };
+
+        if($user['grade'] == 'grade03') {
+            $data = array_merge($data, [
+                'father_birth_year' => $user['father_birth_year'],
+                'father_job' => $user['father_job'],
+                'mother_birth_year' => $user['mother_birth_year'],
+                'mother_job' => $user['mother_job'],
+                'siblings' => $user['siblings'],
+                'residence1' => $user['residence1'],
+                'residence2' => $user['residence2'],
+                'residence3' => $user['residence3']
+            ]);
+        };
+
+        return view('mo_myfeed_view_profile', $data);
     }
     public function alertPopup(): string
     {
