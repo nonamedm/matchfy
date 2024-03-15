@@ -13,14 +13,14 @@
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/basic.js"></script>
 </head>
-
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
         <header>
-
+            
             <div class="menu">
+                <?php echo print_r($feed_file) ?><br/>
                 <ul>
                     <li class="left_arrow">
                         <img src="/static/images/left_arrow.png" />
@@ -59,7 +59,15 @@
                                 <div class="profile_photo_div">
                                     <div id="feed_photo" class="feed_photo" onclick="addMyFeed();"></div>
                                 </div>
-                                <img src="/static/images/profile_img_1.png" />
+                                <?php 
+                                    if(count($feed_list)>0) {
+                                ?>
+                                    <?php foreach ($feed_list as $feed): ?>
+                                        <img src="/writable/<?= $feed_file[0]['file_path']?>/<?= $feed_file[0]['file_name']?>" />
+                                    <?php endforeach; ?>
+                                <?php
+                                    };
+                                ?>
                                 <img src="/static/images/profile_img_2.png" />
                                 <img src="/static/images/profile_img_3.png" />
                                 <img src="/static/images/profile_img_4.png" />
