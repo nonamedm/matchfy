@@ -74,7 +74,7 @@
                     <button onclick="toggleMenu();">&#9776;</button>
                 </li> -->
 
-                <li class="menu_item">
+                <li class="menu_item" style="display: inline-flex">
                     <?php
                     $session = session();
                     $ci = $session->get('ci');

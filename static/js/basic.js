@@ -779,29 +779,37 @@ const myFeedDelete = () => {
 
 const myFeedModify = () => {
     const feed_idx = $("#feed_idx").val();
-    if (confirm('피드를 삭제하시겠습니까?')) {
-        $.ajax({
-            url: '/ajax/myFeedDelete',
-            type: 'POST',
-            data: { feed_idx: feed_idx },
-            async: false,
-            success: function (data) {
-                console.log(data);
-                if (data.data) {
-                    alert('피드가 삭제되었습니다.');
-                    closePopup();
-                    location.reload();
-                } else {
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-                }
-                return false;
-            },
-            error: function (data, status, err) {
-                console.log(err);
-                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-            },
-        });       
-    }
+    closePopup();
+    showFeedPopup('modMyFeed',feed_idx);
+
+    // 피드 수정-> insert했을 때 나오는 image 정보를 보고 여기서는 조회한 후 뿌리기.
+    // 그리고 update에 대한 controller 만들어주기
+
+
+
+    // if (confirm('피드를 삭제하시겠습니까?')) {
+    //     $.ajax({
+    //         url: '/ajax/myFeedDelete',
+    //         type: 'POST',
+    //         data: { feed_idx: feed_idx },
+    //         async: false,
+    //         success: function (data) {
+    //             console.log(data);
+    //             if (data.data) {
+    //                 alert('피드가 삭제되었습니다.');
+    //                 closePopup();
+    //                 location.reload();
+    //             } else {
+    //                 alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+    //             }
+    //             return false;
+    //         },
+    //         error: function (data, status, err) {
+    //             console.log(err);
+    //             alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+    //         },
+    //     });       
+    // }
 
 }
 
