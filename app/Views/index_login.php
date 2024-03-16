@@ -75,8 +75,12 @@
 
                 <li class="menu_item">
 
-                    <button class="login_btn" href="#" target="_blank"><img src="/static/images/login_ico.png" />
+                    <!-- <button class="login_btn" href="#" target="_blank"><img src="/static/images/login_ico.png" />
                         <p>로그인</p>
+                    </button> -->
+                    <button class="login_btn" onclick="moveToUrl('/mo/mypage')">
+                        <img src="/static/images/login_ico.png"/>
+                        <p>my</p>
                     </button>
                 </li>
             </ul>

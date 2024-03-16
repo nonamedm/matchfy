@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF_8">
-    <meta name="viewport" content="width=device_width, initial_scale=1.0">
-    <title>Matchfy 관리자페이지</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/ad_board.js"></script>
     <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
     <link rel="stylesheet" href="/static/css/common_admin.css">
     <link rel="stylesheet" href="/static/css/common.css">
-    <script src="/static/js/jquery.min.js"></script>
-
+    <title>Matchfy 관리자페이지</title>
 </head>
 <body>
     <div class="ad_box">
