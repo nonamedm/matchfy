@@ -390,7 +390,7 @@ class MoHome extends BaseController
 
         $MemberFileModel = new MemberFileModel();
         $imageInfo = $MemberFileModel
-                        ->where('member_ci', 'QIdXG1fNMwYsP2lA6sIU+wcI8qq3jduQDHSxj5r9b/Tc36VtNvM+uVkQHQ8ry+zldd+CNxLF0m/fS5t2Uqp7oVrJpVbur8aPGYr0qIcVYJA=')
+                        ->where('member_ci', $ci)
                         ->where('board_type', 'main_photo')
                         ->where('delete_yn', 'n') 
                         ->first();

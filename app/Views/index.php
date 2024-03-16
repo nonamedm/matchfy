@@ -87,6 +87,10 @@
                                 <?= $name ?> 로그아웃
                             </p>
                         </button>
+                        <button class="login_btn" onclick="moveToUrl('/mo/mypage')">
+                            <img src="/static/images/login_ico.png"/>
+                            <p>my</p>
+                        </button>
                         <?php
                     } else
                     { ?>
