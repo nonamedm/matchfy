@@ -718,11 +718,10 @@ const myfeedPhotoListner = () => {
 
         const formData = new FormData();
 
-        // 기존의 input 요소의 값을 FormData에 추가
-        const inputElements = document.querySelectorAll('.main_signin_form input');
-        inputElements.forEach((input) => {
-            formData.append(input.name, input.value);
-        });
+        // 라디오 버튼 요소의 값을 FormData에 추가
+        var selectedRadio = document.querySelector('input[name="public_yn"]:checked');
+        formData.append(selectedRadio.name, selectedRadio.value);
+
         const feed_cont = document.getElementsByName('feed_cont')[0];
         formData.append(feed_cont.name, feed_cont.value);
         uploadedFeeds.forEach((file, index) => {
@@ -739,12 +738,9 @@ const myfeedPhotoListner = () => {
             .then((response) => response.json())
             .then((data) => {
                 console.log('Upload success', data);
-                // moveToUrl('/mo/signinType', {
-                //     ci: data.data.ci,
-                //     file_path: data.data.file_path,
-                //     file_name: data.data.file_name,
-                // });
-                // 성공한 경우, 필요에 따라 리다이렉션 또는 메시지 표시 등의 작업 수행
+                alert('피드가 등록되었습니다.');
+                    closePopup();
+                    location.reload();
             })
             .catch((error) => {
                 console.error('Upload failed', error);
@@ -752,6 +748,62 @@ const myfeedPhotoListner = () => {
             });
     });
 };
+
+const myFeedDelete = () => {
+    const feed_idx = $("#feed_idx").val();
+    if (confirm('피드를 삭제하시겠습니까?')) {
+        $.ajax({
+            url: '/ajax/myFeedDelete',
+            type: 'POST',
+            data: { feed_idx: feed_idx },
+            async: false,
+            success: function (data) {
+                console.log(data);
+                if (data.data) {
+                    alert('피드가 삭제되었습니다.');
+                    closePopup();
+                    location.reload();
+                } else {
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                }
+                return false;
+            },
+            error: function (data, status, err) {
+                console.log(err);
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            },
+        });       
+    }
+
+}
+
+const myFeedModify = () => {
+    const feed_idx = $("#feed_idx").val();
+    if (confirm('피드를 삭제하시겠습니까?')) {
+        $.ajax({
+            url: '/ajax/myFeedDelete',
+            type: 'POST',
+            data: { feed_idx: feed_idx },
+            async: false,
+            success: function (data) {
+                console.log(data);
+                if (data.data) {
+                    alert('피드가 삭제되었습니다.');
+                    closePopup();
+                    location.reload();
+                } else {
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                }
+                return false;
+            },
+            error: function (data, status, err) {
+                console.log(err);
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            },
+        });       
+    }
+
+}
 
 const showPopupRgt = (contents, ci) => {
     console.log(contents, ci);
@@ -789,10 +841,48 @@ const showPopupRgt = (contents, ci) => {
     $('.layerPopup').css('display', 'flex');
 };
 
-const showFeedPopup = (contents, ci) => {
-    console.log(contents, ci);
+const showFeedPopup = (contents, feedIdx) => {
+    console.log(contents, feedIdx);
+    var title = '';
+    switch (contents) {
+        case 'addMyFeed':
+            title = '피드 등록';
+            break;
+        case 'modMyFeed':
+            title = '피드 수정';
+            break;
+        default:
+            title = '피드 등록';
+    }
+    $('#feed_title').text(title);
 
-    $('.layerPopup').css('display', 'flex');
+    $('.layerPopup.edit').css('display', 'flex');
+};
+const showFeedDetail = (contents, feedIdx) => {
+    console.log(contents, feedIdx);
+    $.ajax({
+        url: '/ajax/showFeedDetail',
+        type: 'POST',
+        data: { feed_idx: feedIdx },
+        async: false,
+        success: function (data) {
+            console.log(data);
+            if (data.data) {
+                $("#myfeed_detail_img").attr("src", "/writable/"+data.data.thumb_filepath+"/"+data.data.thumb_filename);
+                $("#myfeed_cont").text(data.data.feed_cont)
+                $("#feed_idx").val(data.data.idx)
+            } else {
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            }
+            return false;
+        },
+        error: function (data, status, err) {
+            console.log(err);
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
+
+    $('.layerPopup.detail').css('display', 'flex');
 };
 
 const closePopup = () => {

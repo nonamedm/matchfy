@@ -618,7 +618,8 @@ class MoAjax extends BaseController
         $MemberFeedFileModel = new MemberFeedFileModel();
         $feed_cont = $this->request->getPost('feed_cont');
         $public_yn = $this->request->getPost('public_yn');
-        $member_ci = $this->request->getPost('member_ci');
+        $session = session();
+        $member_ci = $session->get('ci');
         $postData = $this->request->getPost('uploadedFeeds');
         $insertedData = [];
 
@@ -626,6 +627,8 @@ class MoAjax extends BaseController
             'member_ci' => $member_ci,
             'feed_cont' => $feed_cont,
             'public_yn' => $public_yn,
+            'thumb_filename' => $postData[0]['file_name'],
+            'thumb_filepath' => $postData[0]['file_path'],
         ];
         $inserted = $MemberFeedModel->insert($data);
         if ($inserted)
@@ -671,6 +674,51 @@ class MoAjax extends BaseController
                 return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
             }
 
+        }
+
+
+    }
+    public function showFeedDetail()
+    {
+        $MemberFeedModel = new MemberFeedModel();
+        $feed_idx = $this->request->getPost('feed_idx');
+        $session = session();
+        $member_ci = $session->get('ci');
+        $condition = [
+            'member_ci' => $member_ci,
+            'idx' => $feed_idx,
+        ];
+        $result = $MemberFeedModel->where($condition)->first();
+        if ($result)
+        {
+            
+            return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
+                
+        } else
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
+        }
+
+
+    }
+    public function myFeedDelete()
+    {
+        $MemberFeedModel = new MemberFeedModel();
+        $feed_idx = $this->request->getPost('feed_idx');
+        $session = session();
+        $member_ci = $session->get('ci');
+        $condition = [
+            'idx' => $feed_idx,
+            'member_ci' => $member_ci,
+        ];
+        $result = $MemberFeedModel->where($condition)->delete();
+        if ($result)
+        {            
+            return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
+                
+        } else
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
         }
 
 

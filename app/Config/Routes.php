@@ -82,6 +82,8 @@ $routes->post('/ajax/mbrFileRegUp', 'MoAjax::mbrFileRegUp');
 $routes->post('/ajax/searchUniversity', 'MoAjax::searchUniversity');
 $routes->post('/ajax/updtUserData', 'MoAjax::updtUserData');
 $routes->post('/ajax/updtFeedData', 'MoAjax::updtFeedData');
+$routes->post('/ajax/showFeedDetail', 'MoAjax::showFeedDetail');
+$routes->post('/ajax/myFeedDelete', 'MoAjax::myFeedDelete');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

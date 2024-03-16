@@ -14,7 +14,6 @@ class MemberFeedModel extends Model
     protected $useSoftDeletes = false;
     protected $protectFields = true;
     protected $allowedFields = [
-        // 준회원 구간
         'idx',
         'member_ci',
         'feed_cont',
@@ -23,6 +22,8 @@ class MemberFeedModel extends Model
         'last_access_dt',
         'created_at',
         'updated_at',
+        'thumb_filename',
+        'thumb_filepath',
     ];
 
     protected bool $allowEmptyInserts = false;

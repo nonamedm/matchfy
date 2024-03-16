@@ -20,7 +20,6 @@
         <header>
             
             <div class="menu">
-                <?php echo print_r($feed_file) ?><br/>
                 <ul>
                     <li class="left_arrow">
                         <img src="/static/images/left_arrow.png" />
@@ -62,25 +61,20 @@
                                 <?php 
                                     if(count($feed_list)>0) {
                                 ?>
+                                    <!-- todo: 추후 10개만 출력하고 더보기 구현 -->
                                     <?php foreach ($feed_list as $feed): ?>
-                                        <img src="/writable/<?= $feed_file[0]['file_path']?>/<?= $feed_file[0]['file_name']?>" />
+                                        <a onclick="showFeedDetail('feedDetail', '<?= $feed['idx'] ?>') ">
+                                            <?php if($feed['public_yn']==='0') { ?>
+                                                <img src="/writable/<?= $feed['thumb_filepath']?>/<?= $feed['thumb_filename']?>" />
+
+                                            <?php } else { ?>
+                                                <img src="/static/images/profile_img_private.png" />
+                                            <?php } ?>
+                                        </a>
                                     <?php endforeach; ?>
                                 <?php
                                     };
                                 ?>
-                                <img src="/static/images/profile_img_2.png" />
-                                <img src="/static/images/profile_img_3.png" />
-                                <img src="/static/images/profile_img_4.png" />
-                                <img src="/static/images/profile_img_5.png" />
-                                <img src="/static/images/profile_img_private.png" />
-                                <img src="/static/images/profile_img_6.png" />
-                                <img src="/static/images/profile_img_7.png" />
-                                <img src="/static/images/profile_img_8.png" />
-                                <img src="/static/images/profile_img_9.png" />
-                                <img src="/static/images/profile_img_10.png" />
-                                <img src="/static/images/profile_img_11.png" />
-                                <img src="/static/images/profile_img_12.png" />
-                                <img src="/static/images/profile_img_13.png" />
                             </div>
                         </div>
                     </div>
@@ -96,6 +90,7 @@
         </div>
     </div>
     <?php include 'mo_myfeed_edit.php'; ?>
+    <?php include 'mo_myfeed_detail.php'; ?>
 
     <!-- SCRIPTS -->
 
@@ -104,7 +99,7 @@
             myfeedPhotoListner();
         });
         function addMyFeed() {
-            showFeedPopup();
+            showFeedPopup('addMyFeed');
         }
     </script>
 

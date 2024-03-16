@@ -326,11 +326,11 @@ class MoHome extends BaseController
         $MemberModel = new MemberModel();
         $MemberFileModel = new MemberFileModel();
         $MemberFeedModel = new MemberFeedModel();
-        $MemberFeedFileModel = new MemberFeedFileModel();
+        // $MemberFeedFileModel = new MemberFeedFileModel();
 
         $user = $MemberModel->where('ci', $ci)->first();
         $feedList = $MemberFeedModel->where('member_ci', $ci)->findAll();
-        $feedFile = $MemberFeedFileModel->where('member_ci', $ci)->findAll();
+        // $feedFile = $MemberFeedFileModel->where('member_ci', $ci)->findAll();
         $condition = ['board_type' => 'main_photo', 'member_ci' => $ci, 'delete_yn' => 'n'];
         $userFile = $MemberFileModel->where($condition)->first();
         $data = [
@@ -338,7 +338,6 @@ class MoHome extends BaseController
             'name' => $name,
             'user' => $user,
             'feed_list' => $feedList,
-            'feed_file' => $feedFile,
         ];
         $data = array_merge($data, $userFile);
         return view('mo_myfeed', $data);
