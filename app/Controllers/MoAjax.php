@@ -618,6 +618,8 @@ class MoAjax extends BaseController
         $MemberFeedFileModel = new MemberFeedFileModel();
         $feed_cont = $this->request->getPost('feed_cont');
         $public_yn = $this->request->getPost('public_yn');
+        $edit_type = $this->request->getPost('edit_type');
+        
         $session = session();
         $member_ci = $session->get('ci');
         $postData = $this->request->getPost('uploadedFeeds');
@@ -712,6 +714,28 @@ class MoAjax extends BaseController
             'member_ci' => $member_ci,
         ];
         $result = $MemberFeedModel->where($condition)->delete();
+        if ($result)
+        {            
+            return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
+                
+        } else
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
+        }
+
+
+    }
+    public function myFeedUpdate()
+    {
+        $MemberFeedModel = new MemberFeedModel();
+        $feed_idx = $this->request->getPost('feed_idx');
+        $session = session();
+        $member_ci = $session->get('ci');
+        $condition = [
+            'idx' => $feed_idx,
+            'member_ci' => $member_ci,
+        ];
+        $result = $MemberFeedModel->where($condition)->first();
         if ($result)
         {            
             return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);

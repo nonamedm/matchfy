@@ -779,8 +779,55 @@ const myFeedDelete = () => {
 
 const myFeedModify = () => {
     const feed_idx = $("#feed_idx").val();
-    closePopup();
-    showFeedPopup('modMyFeed',feed_idx);
+    $.ajax({
+        url: '/ajax/myFeedUpdate',
+        type: 'POST',
+        data: { feed_idx: feed_idx },
+        async: false,
+        success: function (data) {
+            console.log(data);
+            if (data.data) {
+                closePopup();
+                $("#feed_cont").val(data.data.feed_cont);
+                const imgRegist = document.getElementById('myfeed_file_posted');
+                const imageElement = document.createElement('div');
+                imageElement.style.position = 'relative';
+                imgRegist.prepend(imageElement);
+            
+                // label 숨기기
+                const input_label = document.getElementById('feed_photo_label');
+                input_label.style.display = 'none';
+                // 이미지 요소에 이미지 추가
+                const img = document.createElement('img');
+                img.src = '/writable/'+data.data.thumb_filepath+'/'+data.data.thumb_filename;
+                img.classList.add('profile_photo_posted');
+                imageElement.appendChild(img);
+
+                // 삭제 버튼 생성
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'X';
+                deleteButton.classList.add('posted_delete_button');
+                // 삭제 버튼에 클릭 이벤트 추가
+                deleteButton.addEventListener('click', function () {
+                    // label 숨김해제
+                    input_label.style.display = 'block';
+                    // 이미지 요소 제거
+                    imageElement.remove();
+                });
+                // 이미지 요소에 삭제 버튼 추가
+                imageElement.appendChild(deleteButton);
+                showFeedPopup('modMyFeed',feed_idx);
+                
+            } else {
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            }
+            return false;
+        },
+        error: function (data, status, err) {
+            console.log(err);
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });       
 
     // 피드 수정-> insert했을 때 나오는 image 정보를 보고 여기서는 조회한 후 뿌리기.
     // 그리고 update에 대한 controller 만들어주기
@@ -788,27 +835,6 @@ const myFeedModify = () => {
 
 
     // if (confirm('피드를 삭제하시겠습니까?')) {
-    //     $.ajax({
-    //         url: '/ajax/myFeedDelete',
-    //         type: 'POST',
-    //         data: { feed_idx: feed_idx },
-    //         async: false,
-    //         success: function (data) {
-    //             console.log(data);
-    //             if (data.data) {
-    //                 alert('피드가 삭제되었습니다.');
-    //                 closePopup();
-    //                 location.reload();
-    //             } else {
-    //                 alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-    //             }
-    //             return false;
-    //         },
-    //         error: function (data, status, err) {
-    //             console.log(err);
-    //             alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-    //         },
-    //     });       
     // }
 
 }
@@ -855,13 +881,17 @@ const showFeedPopup = (contents, feedIdx) => {
     switch (contents) {
         case 'addMyFeed':
             title = '피드 등록';
+            $("#feed_photo_label").css("display","block");
+            $("#feed_cont").val("");
+            $("#myfeed_file_posted").html("");
             break;
         case 'modMyFeed':
             title = '피드 수정';
             break;
         default:
             title = '피드 등록';
-    }
+        }
+    $("#edit_type").val(contents);
     $('#feed_title').text(title);
 
     $('.layerPopup.edit').css('display', 'flex');

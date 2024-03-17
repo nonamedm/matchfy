@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="myfeed_text">
-                    <textarea name="feed_cont" placeholder="내용을 입력하세요"></textarea>
+                    <textarea id="feed_cont" name="feed_cont" placeholder="내용을 입력하세요"></textarea>
                 </div>
 
                 <div class="schedule_calendar" style="height: 75px; text-align: center;">
@@ -39,7 +39,7 @@
                 <!-- <div class="report_text">
                     <textarea placeholder="기타 의견을 입력해주세요."></textarea>
                 </div> -->
-
+                <input id="edit_type" name="edit_type" type="hidden" value="">
                 <div class="layerPopup_bottom">
                     <div class="btn_group multy">
                         <button class="btn type02" onclick="closePopup()">취소</button>
