@@ -40,6 +40,12 @@ $routes->get('/mo/invitePopup', 'MoHome::invitePopup');
 $routes->get('/mo/mypage/wallet', 'MoHome::mypageWallet');
 $routes->get('/mo/mypage/wallet2', 'MoHome::mypageWallet2');
 $routes->get('/mo/mypage/wallet/charge', 'MoHome::mypageWalletCharge');
+$routes->get('/mo/mypage/wallet/success', 'MoHome::mypageSeccess');
+$routes->post('/mo/mypage/mypageAddPoint/(:num)/(:num)', 'MoHome::mypageAddPoint/$1/$2');
+$routes->get('/mo/mypage/getPoint', 'MoHome::mypageGetPoint');
+$routes->post('/mo/mypage/selectPoint', 'MoHome::mypageSelectPoint');
+//포인트사용시
+$routes->post('/mo/usePoint', 'MoHome::usePoint');
 $routes->get('/mo/mypage/group/list', 'MoHome::mypageGroupList');
 $routes->get('/mo/mypage/group/searchList', 'MoHome::mypageGroupSearchList');
 $routes->get('/mo/mypage/group/detail', 'MoHome::mypageGroupDetail');
@@ -69,6 +75,7 @@ $routes->get('/mo/alliance/exchange', 'MoHome::allianceExchange');
 $routes->get('/mo/partner', 'MoHome::partner');
 $routes->get('/mo/partner/regular', 'MoHome::partnerRegular');
 $routes->get('/mo/partner/premium', 'MoHome::partnerPremium');
+
 
 // file upload
 $routes->post('/upload', 'Upload::upload');

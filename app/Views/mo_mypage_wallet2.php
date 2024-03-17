@@ -38,7 +38,7 @@
                 <div class="mypage_wallet">
                     <div class="mypage_wallet_point">
                         <p>보유포인트</p>
-                        <h2>1,000,000</h2>
+                        <h2 class="current_points"></h2>
                     </div>
                     <div class="mypage_wallet_charge">
                         <div class="btn_group multy">
@@ -58,34 +58,38 @@
                     </div>
                     <div class="mypage_wallet_list">
                         <div class="mypage_wallet_filter">
-                            <select class="small">
-                                <option>최신순</option>
-                                <option>오래된순</option>
-                                <option>금액많은순</option>
-                                <option>금액적은순</option>
+                            <select class="point_order small use">
+                                <option value="latest"> 최신순</option>
+                                <option value="oldest"> 오래된순</option>
+                                <option value="highest_amount"> 금액많은순</option>
+                                <option value="lowest_amount"> 금액적은순</option>
                             </select>
                             <div class="mypage_wallet_period">
                                 <div class="btn_group multy">
-                                    <button class="btn type01 on">1주일</button>
-                                    <button class="btn type01">1개월</button>
-                                    <button class="btn type01">3개월</button>
+                                <button class="1week point_date btn type01 on" onclick="getPointSearch($('.point_order').val(),'1week','use')">1주일</button>
+                                    <button class="1month point_date btn type01" onclick="getPointSearch($('.point_order').val(),'1month','use')">1개월</button>
+                                    <button class="3month point_date btn type01" onclick="getPointSearch($('.point_order').val(),'3month','use')">3개월</button>
                                 </div>
                             </div>
                         </div>
                         <hr class="hoz_part" />
-                        <div class="mypage_wallet_detail">
-                            <div class="date">
-                                <p>2024.01.06</p>
-                            </div>
-                            <div class="desc">
-                                <p>성춘향</p>
-                            </div>
-                            <div class="price">
-                                <p>- 30,000</p>
-                            </div>
+                        <div id="point_content">
+                            <?php foreach ($points as $point): ?>
+                                <div class="mypage_wallet_detail">
+                                    <div class="date">
+                                        <p><?= date('Y.m.d', strtotime($point['create_at'])) ?></p>
+                                    </div>
+                                    <div class="desc">
+                                        <p><?= $point['point_details'] ?></p>
+                                    </div>
+                                    <div class="price">
+                                        <p>- <?= number_format($point['use_point']) ?></p>
+                                    </div>
+                                </div>
+                            <hr class="hoz_part" />
+                            <?php endforeach?>
                         </div>
-                        <hr class="hoz_part" />
-                        <div class="mypage_wallet_detail">
+                        <!-- <div class="mypage_wallet_detail">
                             <div class="date">
                                 <p>2024.01.06</p>
                             </div>
@@ -156,7 +160,7 @@
                                 <p>- 30,000</p>
                             </div>
                         </div>
-                        <hr class="hoz_part" />
+                        <hr class="hoz_part" /> -->
                     </div>
                 </div>
             </div>

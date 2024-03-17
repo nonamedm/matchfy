@@ -31,7 +31,6 @@ $(document).ready(function() {
                     html += '</a>';
                 }
                 $('.notice_wrap').html(html);
-                console.log(html);
             },
             error: function(xhr, status, error) {
                 console.error('Request failed. Status:', status);

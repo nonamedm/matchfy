@@ -42,7 +42,7 @@
                 <div class="mypage_wallet charge">
                     <div class="mypage_wallet_point">
                         <p>보유포인트</p>
-                        <h2>1,000,000</h2>
+                        <h2 class="current_points"></h2>
                     </div>
                     <hr class="hoz_part" />
                     <form class="main_signin_form">
@@ -73,10 +73,10 @@
                                     <label for="paymethod" class="signin_label">충전수단</label>
                                     <select id="paymethod" class="custom_select" value="">
                                         <option value="">선택</option>
-                                        <option value="0">신용카드</option>
-                                        <option value="1">간편결제</option>
-                                        <option value="2">계좌이체</option>
-                                        <option value="3">무통장입금</option>
+                                        <option value="card">신용카드</option>
+                                        <option value="kakaopayCard">간편결제</option>
+                                        <option value="bank">계좌이체</option>
+                                        <option value="cellphone">핸드폰결제</option>
                                     </select>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                                     </div>
                                     <div class="amount_pay_right">
                                         <p id="selected_pay_type">결재선택</p>
-                                        <h2 id="total_price">5,000</h2>
+                                        <h2 id="total_price">5,500</h2>
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
 
                 <div class="pay_agree_desc">
                     <div class="chk_box">
-                        <input type="checkbox" id="agree01" name="chkDefault00" checked="">
+                        <input type="checkbox" id="agree01" name="chkDefault00" >
                         <label class="agree_cont_label" for="agree01">위 구매조건 확인 및 결제진행에 동의</label>
                     </div>
                     <p>· 회원탈퇴 시 회원정보가 삭제됨으로 구매하신 포인트는
