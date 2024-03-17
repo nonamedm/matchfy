@@ -23,7 +23,7 @@
             <div class="menu">
                 <ul>
                     <li class="left_arrow">
-                        <a href="/index/login">
+                        <a href="/">
                             <img src="/static/images/left_arrow.png" />
                         </a>
                     </li>

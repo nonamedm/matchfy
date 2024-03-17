@@ -225,8 +225,8 @@ class MoHome extends BaseController
         $MemberFileModel = new MemberFileModel();
         $imageInfo = $MemberFileModel
                         ->where('member_ci', $ci)
-                        ->where('board_type', 'main_photo')
-                        ->where('delete_yn', 'y') 
+                        ->where('board_type', 'photos')
+                        ->where('delete_yn', 'n') 
                         ->first();
 
         $data = [
@@ -391,7 +391,7 @@ class MoHome extends BaseController
         $MemberFileModel = new MemberFileModel();
         $imageInfo = $MemberFileModel
                         ->where('member_ci', $ci)
-                        ->where('board_type', 'main_photo')
+                        ->where('board_type', 'photos')
                         ->where('delete_yn', 'n') 
                         ->first();
 

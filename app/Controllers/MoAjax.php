@@ -47,7 +47,7 @@ class MoAjax extends BaseController
 
             if ($auto_login)
             {
-                $session->setTempdata('ci', true, 2592000);
+                $session->setTempdata('ci', $user['ci'], 2592000);
             }
 
             return $this->response->setJSON(['status' => 'success', 'message' => "로그인 성공"]);

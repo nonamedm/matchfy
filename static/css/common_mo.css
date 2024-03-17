@@ -3038,6 +3038,13 @@ input[type='number']::-webkit-inner-spin-button {
     color: #999999;
 }
 
+/* profile */
+.content_wrap .content_profile .profile_img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
 /* validation */
 .alert_validation {
     padding: 0px;
