@@ -31,7 +31,7 @@
                             <?php
                             if ($file_path)
                             {
-                                echo '<img src="/' . $file_path . '/' . $file_name . '" style="border-radius: 50%; width: 74px; height: 74px;" />';
+                                echo '<img src="/' . $file_path . $file_name . '" style="border-radius: 50%; width: 74px; height: 74px;" />';
                             } else
                             {
                                 echo '<img src="/static/images/profile_noimg.png" style="border-radius: 50%; width: 74px; height: 74px;" />';
@@ -179,7 +179,7 @@
                                 <h4 class="profile_photo_label">직업</h4>
                                 <p class="profile_photo_desc">명함 혹은 재직증명서를 업로드해주세요</p>
                                 <div class="input_btn">
-                                <select id="job" name="job" class="custom_select" value="">
+                                    <select id="job" name="job" class="custom_select" value="">
                                         <option value="">선택</option>
                                         <option value="0">사업관리</option>
                                         <option value="1">경영/회계/사무</option>
@@ -288,10 +288,10 @@
             // editPhotoListListner();
             // editMovListListner();
         });
-        
-        $(document).ready(function() {
+
+        $(document).ready(function () {
             $("#school").autocomplete({
-                source: function(request, response) {
+                source: function (request, response) {
                     $.ajax({
                         url: "/ajax/searchUniversity",
                         type: "POST",
@@ -299,13 +299,13 @@
                         data: {
                             term: request.term
                         },
-                        success: function(data) {
+                        success: function (data) {
                             response(data);
                         }
                     });
                 },
                 minLength: 2, // 최소 문자 수
-                select: function(event, ui) {
+                select: function (event, ui) {
                     // 아이템 선택 시 동작
                     //console.log(ui.item.value); // 선택된 학교명
                 }
