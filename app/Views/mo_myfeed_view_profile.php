@@ -28,7 +28,7 @@
                         </a>
                     </li>
                     <li class="header_title">
-                        피드보기
+                        프로필
                     </li>
                 </ul>
             </div>

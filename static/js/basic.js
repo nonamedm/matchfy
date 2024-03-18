@@ -654,6 +654,7 @@ const myfeedPhotoListner = () => {
                     // 입력한 파일을 초기화하여 업로드를 취소
                     this.value = '';
                 } else {
+                    $("#edit_photo_type").val('addMyFeed'); // 등록한 이미지 값을 받아오기 위한 trigger
                     // FileReader 객체 생성
                     const reader = new FileReader();
                     // 파일 읽기가 완료되었을 때 실행되는 콜백 함수 정의
@@ -723,12 +724,18 @@ const myfeedPhotoListner = () => {
         formData.append(selectedRadio.name, selectedRadio.value);
 
         const feed_cont = document.getElementsByName('feed_cont')[0];
+        const edit_type = document.getElementById('edit_type');
+        const feed_idx = document.getElementById('feed_idx');
         formData.append(feed_cont.name, feed_cont.value);
-        uploadedFeeds.forEach((file, index) => {
-            for (const key in file) {
-                formData.append(`uploadedFeeds[${index}][${key}]`, file[key]);
-            }
-        });
+        formData.append(edit_type.name, edit_type.value);
+        formData.append(feed_idx.name, feed_idx.value);
+        if($("#edit_photo_type").val()==='addMyFeed') { // 사진 변경했을 때만 값 받아오기
+            uploadedFeeds.forEach((file, index) => {
+                for (const key in file) {
+                    formData.append(`uploadedFeeds[${index}][${key}]`, file[key]);
+                }
+            });
+        }
 
         // 수정된 FormData를 서버로 전송
         fetch('/ajax/updtFeedData', {
@@ -892,7 +899,9 @@ const showFeedPopup = (contents, feedIdx) => {
             title = '피드 등록';
         }
     $("#edit_type").val(contents);
+    $("#feed_idx").val(feedIdx);
     $('#feed_title').text(title);
+    $("#edit_photo_type").val(contents);
 
     $('.layerPopup.edit').css('display', 'flex');
 };

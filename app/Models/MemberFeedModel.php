@@ -8,7 +8,7 @@ class MemberFeedModel extends Model
 {
     // protected $tableName;
     protected $table = 'wh_member_feed';
-    protected $primaryKey = 'member_ci';
+    protected $primaryKey = 'idx';
     protected $useAutoIncrement = true;
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
@@ -18,7 +18,7 @@ class MemberFeedModel extends Model
         'member_ci',
         'feed_cont',
         'public_yn',
-        'delet_yn',
+        'delete_yn',
         'last_access_dt',
         'created_at',
         'updated_at',

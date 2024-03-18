@@ -40,9 +40,11 @@
                     <textarea placeholder="기타 의견을 입력해주세요."></textarea>
                 </div> -->
                 <input id="edit_type" name="edit_type" type="hidden" value="">
+                <input id="feed_idx" name="feed_idx" type="hidden" value="">
+                <input id="edit_photo_type" name="edit_photo_type" type="hidden" value="">
                 <div class="layerPopup_bottom">
                     <div class="btn_group multy">
-                        <button class="btn type02" onclick="closePopup()">취소</button>
+                        <button type="button" class="btn type02" onclick="closePopup()">취소</button>
                         <button type="submit" class="btn type01">등록</button>
                     </div>
                 </div>

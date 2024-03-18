@@ -351,7 +351,11 @@ class MoHome extends BaseController
         // $MemberFeedFileModel = new MemberFeedFileModel();
 
         $user = $MemberModel->where('ci', $ci)->first();
-        $feedList = $MemberFeedModel->where('member_ci', $ci)->findAll();
+        $selectFeed = [
+            'member_ci' => $ci,
+            'delete_yn' => 'n',
+        ];
+        $feedList = $MemberFeedModel->where($selectFeed)->findAll();
         // $feedFile = $MemberFeedFileModel->where('member_ci', $ci)->findAll();
         $condition = ['board_type' => 'main_photo', 'member_ci' => $ci, 'delete_yn' => 'n'];
         $userFile = $MemberFileModel->where($condition)->first();
@@ -391,7 +395,7 @@ class MoHome extends BaseController
         $MemberFileModel = new MemberFileModel();
         $imageInfo = $MemberFileModel
                         ->where('member_ci', $ci)
-                        ->where('board_type', 'photos')
+                        ->where('board_type', 'main_photo')
                         ->where('delete_yn', 'n') 
                         ->first();
 
