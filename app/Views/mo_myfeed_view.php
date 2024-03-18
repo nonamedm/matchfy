@@ -16,20 +16,9 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        <header>
+        
+        <?php $title = "피드보기"; include 'header.php'; ?>
 
-            <div class="menu">
-                <ul>
-                    <li class="left_arrow">
-                        <img src="/static/images/left_arrow.png" />
-                    </li>
-                    <li class="header_title">
-                        피드보기
-                    </li>
-                </ul>
-            </div>
-
-        </header>
 
         <div class="sub_wrap">
             <div class="content_wrap">
