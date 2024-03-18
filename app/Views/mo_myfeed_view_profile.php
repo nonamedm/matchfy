@@ -60,6 +60,7 @@
                                 <p> </p>
                             </div>
                         </li>
+                        <?php if (isset($grade) && ($grade === 'grade02' || $grade === 'grade03')): ?>
                         <hr class="hoz_part" />
                         <li class="profile_body">
                             <div class="profile_content">
@@ -91,6 +92,8 @@
                                 <p><?=$stylish?></p>
                             </div>
                         </li>
+                        <?php endif; ?>
+                        <?php if (isset($grade) && ($grade === 'grade02' || $grade === 'grade03')): ?>
                         <hr class="hoz_part" />
                         <li class="profile_body">
                             <div class="profile_content">
@@ -126,6 +129,8 @@
                                 <p></p>
                             </div>
                         </li>
+                        <?php endif; ?>
+                        <?php if (isset($grade) && $grade === 'grade03'): ?>
                         <hr class="hoz_part" />
                         <li class="profile_body">
                             <div class="profile_content">
@@ -145,6 +150,7 @@
                                 <p><?=$residence1?>/<?=$residence2?>(<?=$residence3?>) </p>
                             </div>
                         </li>
+                        <?php endif; ?>
                         <!-- <hr class="hoz_part" />
                         <li class="profile_body">
                             

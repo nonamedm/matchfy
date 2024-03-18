@@ -406,6 +406,7 @@ class MoHome extends BaseController
             'city' => $user['city'],
             'town' => $user['town'],
             'mobile_no' => $user['mobile_no'],
+            'grade' => $user['grade'],
             'image' => $imageInfo
         ];
 
