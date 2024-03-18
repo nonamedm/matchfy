@@ -35,7 +35,7 @@
             <div class="content_wrap">
                 <div class="content_body content_mypage">
                     <!-- <img class="profile_img" src="/static/images/mypage_pfofile.png" /> -->
-                    <img class="profile_img" src="/static/<?= $file_path ?>/<?= $file_name ?>" />
+                    <img class="profile_img" src="/<?= $file_path ?>/<?= $file_name ?>" />
                     <div class="content_mypage_info">
                         <div class="profile">
                             <h2>
