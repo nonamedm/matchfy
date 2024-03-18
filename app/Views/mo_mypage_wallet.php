@@ -43,7 +43,7 @@
                     <div class="mypage_wallet_charge">
                         <div class="btn_group multy">
                             <button class="btn type01" onclick="pointCharge();">포인트 충전</button>
-                            <button class="btn type03">환전</button>
+                            <button class="btn type03" onclick="pointExchange();">환전</button>
                         </div>
                     </div>
                     <div class="tab_wrap">
@@ -77,7 +77,7 @@
                             <?php foreach ($points as $point): ?>
                                 <div class="mypage_wallet_detail">
                                     <div class="date">
-                                        <p><?= date('Y.m.d', strtotime($point['create_at'])) ?></p>
+                                        <p><?= date('Y-m-d', strtotime($point['create_at'])) ?></p>
                                     </div>
                                     <div class="desc">
                                         <p><?= $point['point_details'] ?></p>

@@ -1,9 +1,13 @@
 var pointValue="5000";
-
+var totalMyPoint='';
 $(document).ready(function() {
     getMyPoint();
     chargePoint();
     getPointDateSearch();
+    $('#alliance_exchange_amount').on('change', function() {
+        pointsValue();
+    });
+    
     $('.point_order').change(function() {
         var value = $(this).val();
         var type="";
@@ -26,6 +30,18 @@ $(document).ready(function() {
         getPointSearch(value,date,type);
     });
 }); 
+
+function pointCharge(){
+    window.location="/mo/mypage/wallet/charge";
+}
+
+function pointExchange(){
+    window.location="/mo/alliance/exchange";
+}
+
+function WalletLocation(){
+    window.location="/mo/mypage/wallet";
+}
 
 function chargePoint(){
     $('.mypage_wallet_select > div').click(function() {
@@ -138,22 +154,19 @@ function getMyPoint(){
         url: '/mo/mypage/getPoint',
         type: 'get',
         success: function(data) {
-            var number = parseInt(data);
-            var formattedNumber = number.toLocaleString();
-            $(".current_points").text(formattedNumber);
+            if(data!=""){
+                var number = parseInt(data);
+                var formattedNumber = number.toLocaleString();
+                $(".current_points").text(formattedNumber);
+                totalMyPoint=Number(formattedNumber.replaceAll(',',''));
+            }else{
+                $(".current_points").text("0");
+            }
         },
         error: function(xhr, status, error) {
             console.log(error);
         }
     });
-}
-
-function pointCharge(){
-    window.location="/mo/mypage/wallet/charge";
-}
-
-function WalletLocation(){
-    window.location="/mo/mypage/wallet";
 }
 
 function getPointDateSearch(){
@@ -167,6 +180,7 @@ function getPointDateSearch(){
        
     });
 }
+
 function getPointSearch(value,date,type){
     $.ajax({
         url: '/mo/mypage/selectPoint',
@@ -219,3 +233,77 @@ function usePoint(){
         }
     });
 }
+
+function isValidAccountNumber(accountNumber) {
+    var regex = /^[0-9]{11}$/;
+    return regex.test(accountNumber);
+}
+
+function exchangeCheck(){
+    var amount = $('#alliance_exchange_amount').val();
+    var bank = $('#alliance_exchange_bank').val();
+    var account_number = $('#alliance_exchange_account').val();
+
+    if(!amount){
+        alert('환불금액을 입력해주세요.');
+        return false;
+    }
+
+    if(bank=='0'){
+        alert('은행을 선택 해주세요.');
+        return false;
+    }
+
+    if (!isValidAccountNumber(account_number)) {
+        alert('올바른 계좌번호를 입력해주세요.');
+        return false;
+    }
+
+    if (!$('#agree02').prop('checked')) {
+        alert('위 구매조건 확인 및 결제진행에 동의에 체크 하여주세요.');
+        return false;
+    }
+
+    return true;
+}
+
+function pointsValue() {
+    var amount = parseInt($('#alliance_exchange_amount').val()); // 입력된 환전 금액
+
+    if (amount > totalMyPoint) {
+        alert('총 보유 포인트보다 크거나 같은 금액을 입력할 수 없습니다.');
+        $('#alliance_exchange_amount').val(totalMyPoint);
+        $('#exchange_pay').text(totalMyPoint.toLocaleString() +'원');
+    }else{
+        $('#exchange_pay').text(amount.toLocaleString() +'원');
+    }
+}
+
+function exchangePoint(){
+    var amount = $('#alliance_exchange_amount').val();
+    var bank = $('#alliance_exchange_bank').val();
+    var account_number = $('#alliance_exchange_account').val();
+    if(exchangeCheck()==true){
+
+        $.ajax({
+            url: '/mo/alliance/exchangepoint',
+            data:{
+                amount:amount,
+                bank:bank,
+                acount_number:account_number,
+            },
+            type: 'post',
+            success: function(data) {
+                if(data.success == true){
+                    window.location='/mo_mypage_excharge_success';
+                }else{
+                    window.location='/mo_mypage_excharge_fail';
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+}
+

@@ -72,6 +72,9 @@ $routes->get('/mo/alliance/schedule', 'MoHome::allianceSchedule');
 $routes->get('/mo/alliance/reservePopup', 'MoHome::allianceReservePopup');
 $routes->get('/mo/alliance/apply', 'MoHome::allianceApply');
 $routes->get('/mo/alliance/exchange', 'MoHome::allianceExchange');
+$routes->post('/mo/alliance/exchangepoint', 'MoHome::allianceExchangePoint');
+$routes->get('/mo_mypage_excharge_success', 'MoHome::exchangePoint_success');
+$routes->get('/mo_mypage_excharge_fail', 'MoHome::exchangePoint_fail');
 $routes->get('/mo/partner', 'MoHome::partner');
 $routes->get('/mo/partner/regular', 'MoHome::partnerRegular');
 $routes->get('/mo/partner/premium', 'MoHome::partnerPremium');
@@ -130,3 +133,5 @@ $routes->post('/ad/notice/noticeUpdate', 'AdminHome::noticeUpdate');
 $routes->post('/ad/notice/noticeDelete', 'AdminHome::noticeDelete');
 $routes->post('/ad/FileDelete', 'AdminHome::fileDelete');
 
+$routes->get('/ad/exchange/exchangeList', 'AdminHome::exchangeList');
+$routes->post('/ad/exchangeCheck', 'AdminHome::exchangeCheck');

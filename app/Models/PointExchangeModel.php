@@ -4,29 +4,29 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class PointModel extends Model
+class PointExchangeModel extends Model
 {
-    protected $table            = 'wh_points';
+    protected $table            = 'wh_points_exchange';
     protected $primaryKey       = 'idx';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-    'member_ci',
-    'my_point',
-    'add_point',
-    'use_point',
-    'point_details',
-    'create_at',
-    'update_at',
-    'point_type',
-    'delete_yn',
-    'extra1',
-    'extra2',
-    'extra3'];
-    
-    
+        'member_ci',
+        'point_exchange',
+        'bank',
+        'bank_number',
+        'create_at',
+        'update_at',
+        'exchange_type',
+        'exchange_level',
+        'delete_yn',
+        'extra1',
+        'extra2',
+        'extra3'
+    ];
+
     protected bool $allowEmptyInserts = false;
 
     // Dates

@@ -6,6 +6,7 @@ use App\Models\BoardModel;
 use App\Models\BoardFileModel;
 use App\Models\MemberModel;
 use App\Models\PointModel;
+use App\Models\PointExchangeModel;
 use App\Helpers\MoHelper;
 use CodeIgniter\Session\Session;
 
@@ -415,6 +416,11 @@ class MoHome extends BaseController
             
             $my_point_value = isset($my_point['my_point']) ? $my_point['my_point'] : 0;
             
+            if($pointValue == '5000'){
+                $amount=5000*$quantityNum;
+            }else{
+                $amount;
+            }
             $data = [
                 'member_ci' => $ci,
                 'my_point' => $my_point_value + $amount,
@@ -541,7 +547,66 @@ class MoHome extends BaseController
     }
     public function allianceExchange(): string
     {
-        return view('mo_alliance_exchange');
+        $my_point_value = $this->mypageGetPoint();
+        return view('mo_alliance_exchange', ['my_point' => $my_point_value]);
+    }
+
+    public function allianceExchangePoint()
+    {
+        $session = session();
+        $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
+        
+        $amount = $this->request->getPost('amount');
+        $bank = $this->request->getPost('bank');
+        $acount_number = $this->request->getPost('acount_number');
+        
+        $pointExchange = new PointExchangeModel();
+        $data = [
+            'member_ci' => $ci,
+            'point_exchange' => $amount,
+            'bank' => $bank,
+            'bank_number' => $acount_number,
+            'create_at' => date('Y-m-d H:i:s'),
+            'exchange_level'=>'0',
+            'exchange_type' => 'E',
+        ];
+
+        $result = $pointExchange->insert($data);
+
+        $point = new PointModel();
+        $my_point = $point ->select('my_point')
+                                    ->where('member_ci', $ci)
+                                    ->orderBy('create_at', 'DESC')
+                                    ->first();
+            
+        $my_point_value = isset($my_point['my_point']) ? $my_point['my_point'] : 0;
+        
+        $data = [
+            'member_ci' => $ci,
+            'my_point' => $my_point_value - $amount,
+            'use_point' => $amount,
+            'point_details' => '환전신청',
+            'create_at' => date('Y-m-d H:i:s'),
+            'point_type' => 'U',
+        ];
+    
+        $result2 = $point->insert($data);
+
+        if ($result) {
+            return $this->response->setJSON(['success' => true]);
+        } else {
+            return $this->response->setJSON(['success' => false]);
+        }
+    }
+
+    public function exchangePoint_success(): string
+    {
+        return view('mo_mypage_excharge_success');
+    }
+
+    public function exchangePoint_fail(): string
+    {
+        return view('mo_mypage_excharge_fail');
     }
     public function partner(): string
     {
