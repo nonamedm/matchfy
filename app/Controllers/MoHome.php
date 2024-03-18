@@ -25,7 +25,7 @@ class MoHome extends BaseController
     }
     public function agree(): string
     {
-
+        $postData = $this->request->getPost();
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_terms');
         $postData['terms'] = $BoardModel->orderBy('created_at', 'DESC')->first();

@@ -58,7 +58,7 @@
                             <div class="signin_form_div">
                                 <label for="birthday" class="signin_label">생년월일</label>
                                 <input id="birthday" name="birthday" type="text" value="<?php echo $birthday ?>"
-                                    placeholder="이름을 입력하세요">
+                                    placeholder="생년월일을 입력하세요">
                             </div>
                         </div>
                         <div class="form_row signin_form">
@@ -98,7 +98,7 @@
                             </div>
                         </div> -->
                         <input type="hidden" name="town" value="town value" />
-                        <input type="hidden" name="mobile_no" value="<?php echo $mobile_no ?>" />
+                        <input type="hidden" name="mobile_no" value="<?= $mobile_no ?>" />
                         <div id="main_photo_uploaded" style="display:none;"></div>
                         <!-- <div id="profile_photo_uploaded" style="display:none;"></div>
                         <div id="profile_mov_uploaded" style="display:none;"></div> -->

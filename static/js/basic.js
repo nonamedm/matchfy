@@ -37,32 +37,56 @@ const certIdentify = () => {
     // 성공
 
     // 폼 생성
-    var form = document.createElement('form');
-    form.setAttribute('action', '/mo/agree');
-    form.setAttribute('method', 'post');
+    // var form = document.createElement('form');
+    // form.setAttribute('action', '/mo/agree');
+    // form.setAttribute('method', 'post');
 
-    // hidden input 요소 생성
-    var mobileNoInput = document.createElement('input');
-    mobileNoInput.setAttribute('type', 'hidden');
-    mobileNoInput.setAttribute('name', 'mobile_no');
-    mobileNoInput.setAttribute('value', '01026220923'); // todo : 추후 인증 결과값으로 변경
-    form.appendChild(mobileNoInput);
+    // // hidden input 요소 생성
+    // var mobileNoInput = document.createElement('input');
+    // mobileNoInput.setAttribute('type', 'hidden');
+    // mobileNoInput.setAttribute('name', 'mobile_no');
+    // mobileNoInput.setAttribute('value', '01026220923'); // todo : 추후 인증 결과값으로 변경
+    // form.appendChild(mobileNoInput);
 
-    var nameInput = document.createElement('input');
-    nameInput.setAttribute('type', 'hidden');
-    nameInput.setAttribute('name', 'name');
-    nameInput.setAttribute('value', '서승표'); // todo : 추후 인증 결과값으로 변경
-    form.appendChild(nameInput);
+    // var nameInput = document.createElement('input');
+    // nameInput.setAttribute('type', 'hidden');
+    // nameInput.setAttribute('name', 'name');
+    // nameInput.setAttribute('value', '서승표'); // todo : 추후 인증 결과값으로 변경
+    // form.appendChild(nameInput);
 
-    var birthdayInput = document.createElement('input');
-    birthdayInput.setAttribute('type', 'hidden');
-    birthdayInput.setAttribute('name', 'birthday');
-    birthdayInput.setAttribute('value', '19890923'); // todo : 추후 인증 결과값으로 변경
-    form.appendChild(birthdayInput);
+    // var birthdayInput = document.createElement('input');
+    // birthdayInput.setAttribute('type', 'hidden');
+    // birthdayInput.setAttribute('name', 'birthday');
+    // birthdayInput.setAttribute('value', '19890923'); // todo : 추후 인증 결과값으로 변경
+    // form.appendChild(birthdayInput);
 
-    // 폼을 body에 추가 후 제출
-    document.body.appendChild(form);
-    form.submit();
+    // // 폼을 body에 추가 후 제출
+    // document.body.appendChild(form);
+    // form.submit();
+    let tempValidation = false;
+    if ($('#input_name').val() === '') {
+        alert('이름을 입력해 주세요');
+        tempValidation = false;
+        $('#input_name').focus();
+    }
+    if ($('#input_mobile_no').val() === '') {
+        alert('전화번호를 입력해 주세요');
+        tempValidation = false;
+        $('#input_mobile_no').focus();
+    }
+    if ($('#input_birthday').val() === '') {
+        alert('생년월일을 입력해 주세요');
+        tempValidation = false;
+        $('#input_birthday').focus();
+    }
+    if ($('#input_name').val() !== '' && $('#input_mobile_no').val() !== '' && $('#input_birthday').val() !== '') {
+        tempValidation = true;
+    }
+    if (tempValidation) {
+        submitForm();
+    } else {
+    }
+
     //     } else {
     //         // 삭제 성공
     //         //console.log('222');
@@ -597,8 +621,8 @@ const editPhotoListListner = () => {
                 console.log('Upload success', data);
                 moveToUrl('/mo/signinType', {
                     ci: data.data.ci,
-                    file_path: data.data.file_path,
-                    file_name: data.data.file_name,
+                    file_path: $('#file_path').val(),
+                    file_name: $('#file_name').val(),
                 });
                 // 성공한 경우, 필요에 따라 리다이렉션 또는 메시지 표시 등의 작업 수행
             })
@@ -610,7 +634,7 @@ const editPhotoListListner = () => {
 };
 
 const fileUpload = (file) => {
-    if(file) {
+    if (file) {
         return new Promise((resolve, reject) => {
             var formData = new FormData();
             formData.append('file', file);
@@ -640,8 +664,6 @@ const fileUpload = (file) => {
         });
     }
 };
-
-
 
 const showPopupRgt = (contents, ci) => {
     console.log(contents, ci);
