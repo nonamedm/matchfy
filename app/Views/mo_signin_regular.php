@@ -43,7 +43,7 @@
                             <?php
                             if ($file_path)
                             {
-                                echo '<img src="/writable/' . $file_path . '/' . $file_name . '" style="border-radius: 50%; width: 74px; height: 74px;" />';
+                                echo '<img src="/' . $file_path . '/' . $file_name . '" style="border-radius: 50%; width: 74px; height: 74px;" />';
                             } else
                             {
                                 echo '<img src="/static/images/profile_noimg.png" style="border-radius: 50%; width: 74px; height: 74px;" />';

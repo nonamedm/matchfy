@@ -23,7 +23,7 @@
             <div class="menu">
                 <ul>
                     <li class="left_arrow">
-                        <a href="/mo/mypage">
+                        <a href="<?php echo previous_url() ?>">
                             <img src="/static/images/left_arrow.png" />
                         </a>
                     </li>
@@ -39,7 +39,7 @@
             <div class="content_wrap">
                 <div class="content_body content_profile">
                     <?php if ($image): ?>
-                        <img class="profile_img" src="/writable/<?= $image['file_path'] ?>/<?= $image['file_name'] ?>" />
+                        <img class="profile_img" src="/<?= $image['file_path'] ?>/<?= $image['file_name'] ?>" />
                     <?php else: ?>
                         <img class="profile_img" src="/static/images/mypage_pfofile.png" />
                     <?php endif; ?>

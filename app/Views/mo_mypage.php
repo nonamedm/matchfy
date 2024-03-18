@@ -39,7 +39,7 @@
             <div class="content_wrap">
                 <div class="content_body content_mypage">
                     <?php if ($image): ?>
-                        <img class="profile_img" src="/writable/<?= $image['file_path'] ?>/<?= $image['file_name'] ?>" />
+                        <img class="profile_img" src="/<?= $image['file_path'] ?>/<?= $image['file_name'] ?>" />
                     <?php else: ?>
                         <img class="profile_img" src="/static/images/mypage_pfofile.png" />
                     <?php endif; ?>

@@ -19,26 +19,25 @@ class Upload extends BaseController
     {
         // 파일 가져오기 -> input name 지정
         $file = $this->request->getFile('file');
+        // 파일명 가져오기 -> 확장자 분리
+        $orgName = $file->getClientName();
+        $ext = $file->getClientExtension();
+        
+        // 난수생성
+        $newName = $file->getRandomName();
+        
+        // 데이터 저장
+        $postData['org_name'] = $orgName;
+        $postData['ext'] = $ext;
+        $postData['file_name'] = $newName;
+        $uploadDir = 'static/files/uploads/';
+        $postData['file_path'] = $uploadDir;
+
         // 파일이 올바르게 업로드되었는지 확인
         if ($file && $file->isValid() && !$file->hasMoved())
         {
-
-            // 파일명 가져오기 -> 확장자 분리
-            $orgName = $file->getClientName();
-            $ext = $file->getClientExtension();
-
-            // 난수생성
-            $newName = $file->getRandomName();
-
-            // 데이터 저장
-            $postData['org_name'] = $orgName;
-            $postData['ext'] = $ext;
-            $postData['file_name'] = $newName;
-            $uploadDir = 'uploads/file';
-            $postData['file_path'] = $uploadDir;
-
-
-            $file->move(WRITEPATH . $uploadDir, $newName);
+            $file->move(ROOTPATH.$uploadDir, $newName);
+            // $file->move(WRITEPATH . $uploadDir, $newName);
         } else
         {
             $postData['fail'] = '파일전송 실패';
@@ -65,11 +64,12 @@ class Upload extends BaseController
             $postData['org_name'] = $orgName;
             $postData['ext'] = $ext;
             $postData['file_name'] = $newName;
-            $uploadDir = 'uploads/file';
+            $uploadDir = 'static/files/uploads/';
             $postData['file_path'] = $uploadDir;
 
 
-            $file->move(WRITEPATH . $uploadDir, $newName);
+            $file->move(ROOTPATH.$uploadDir, $newName);
+            // $file->move(WRITEPATH . $uploadDir, $newName);
 
             //테이블 데이터 삽입
             $BoardModel = new BoardModel();
@@ -125,10 +125,11 @@ class Upload extends BaseController
             $postData['org_name'] = $orgName;
             $postData['ext'] = $ext;
             $postData['file_name'] = $newName;
-            $uploadDir = 'uploads/file';
+            $uploadDir = 'static/files/uploads/';
             $postData['file_path'] = $uploadDir;
 
-            $newfile->move(WRITEPATH . $uploadDir, $newName);
+            $newfile->move(ROOTPATH.$uploadDir, $newName);
+            // $newfile->move(WRITEPATH . $uploadDir, $newName);
 
             //테이블 데이터 갱신
             $BoardModel = new BoardModel();

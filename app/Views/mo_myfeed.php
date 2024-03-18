@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/static/css/common_mo.css">
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/basic.js"></script>
+    <script src="/static/js/myfeed.js"></script>
 </head>
 <body class="mo_wrap">
     <div class="wrap">
@@ -34,7 +35,7 @@
             <div class="content_wrap">
                 <div class="content_body content_mypage">
                     <!-- <img class="profile_img" src="/static/images/mypage_pfofile.png" /> -->
-                    <img class="profile_img" src="/writable/<?= $file_path ?>/<?= $file_name ?>" />
+                    <img class="profile_img" src="/static/<?= $file_path ?>/<?= $file_name ?>" />
                     <div class="content_mypage_info">
                         <div class="profile">
                             <h2>
@@ -48,7 +49,7 @@
                         </p>
                     </div>
                     <div>
-                        <button class="popup_view_profile">프로필</button>
+                        <button class="popup_view_profile" onclick="moveToUrl('/mo/myfeed/view/profile')">프로필</button>
                     </div>
                 </div>
                 <div class="profile_img_box">
@@ -65,7 +66,7 @@
                                     <?php foreach ($feed_list as $feed): ?>
                                         <a onclick="showFeedDetail('feedDetail', '<?= $feed['idx'] ?>') ">
                                             <?php if($feed['public_yn']==='0') { ?>
-                                                <img src="/writable/<?= $feed['thumb_filepath']?>/<?= $feed['thumb_filename']?>" />
+                                                <img src="/<?= $feed['thumb_filepath']?>/<?= $feed['thumb_filename']?>" />
 
                                             <?php } else { ?>
                                                 <img src="/static/images/profile_img_private.png" />

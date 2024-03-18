@@ -1324,7 +1324,7 @@ td {
     font-size: 20px;
     line-height: 24px;
     text-align: center;
-
+    cursor: pointer;
     color: #000000;
     margin: 0;
 }
