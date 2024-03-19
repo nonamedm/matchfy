@@ -355,9 +355,17 @@ class MoHome extends BaseController
         } else if ($value == 'oldest') {
             $points->orderBy('create_at', 'ASC');
         } else if ($value == 'highest_amount') {
-            $points->orderBy('add_point', 'DESC');
+            if($type=='add'){
+                $points->orderBy('add_point', 'DESC');
+            }else{
+                $points->orderBy('use_point', 'DESC');
+            }
         } else if ($value == 'lowest_amount') {
-            $points->orderBy('add_point', 'ASC');
+            if($type=='add'){
+                $points->orderBy('add_point', 'ASC');
+            }else{
+                $points->orderBy('use_point', 'ASC');
+            }
         } else {
             $points->orderBy('create_at', 'DESC');
         }
@@ -375,7 +383,6 @@ class MoHome extends BaseController
     {
         $session = session();
         $ci = $session->get('ci');
-        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
         $pointModel = new PointModel();
         
         $points = $pointModel->where('member_ci', $ci)
@@ -390,7 +397,6 @@ class MoHome extends BaseController
     {
         $session = session();
         $ci = $session->get('ci');
-        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
         $pointModel = new PointModel();
         
         $points = $pointModel->where('member_ci', $ci)
@@ -399,6 +405,27 @@ class MoHome extends BaseController
                             ->findAll();
 
         return view('mo_mypage_wallet2', ['points' => $points]);
+    }
+
+    public function walletList()
+    {
+        $session = session();
+        $ci = $session->get('ci');
+        $walletType = $this->request->getPost('walletType');
+        $pointModel = new PointModel();
+        
+        if($walletType =="add"){
+            $points = $pointModel->where('member_ci', $ci)
+                            ->where('point_type', 'A')
+                            ->orderBy('create_at', 'DESC')
+                            ->findAll();
+        }else{
+            $points = $pointModel->where('member_ci', $ci)
+                            ->where('point_type', 'U')
+                            ->orderBy('create_at', 'DESC')
+                            ->findAll();
+        }
+        return $this->response->setJSON(['success' => true, 'points' => $points]);
     }
 
     public function mypageWalletCharge()
@@ -410,7 +437,6 @@ class MoHome extends BaseController
     public function mypageGetPoint(){
         $session = session();
         $ci = $session->get('ci');
-        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
         $pointModel = new PointModel();
         
         $my_point = $pointModel ->select('my_point')
@@ -425,7 +451,6 @@ class MoHome extends BaseController
     public function mypageAddPoint($pointValue,$quantityNum){
         $session = session();
         $ci = $session->get('ci');
-        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
         $authResultCode = $this->request->getPost('authResultCode');
 
         if($authResultCode=='0000'){ //인증성공
@@ -660,7 +685,6 @@ class MoHome extends BaseController
     {
         $session = session();
         $ci = $session->get('ci');
-        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
         
         $amount = $this->request->getPost('amount');
         $bank = $this->request->getPost('bank');

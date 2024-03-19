@@ -44,6 +44,7 @@ $routes->get('/mo/mypage/wallet/success', 'MoHome::mypageSeccess');
 $routes->post('/mo/mypage/mypageAddPoint/(:num)/(:num)', 'MoHome::mypageAddPoint/$1/$2');
 $routes->get('/mo/mypage/getPoint', 'MoHome::mypageGetPoint');
 $routes->post('/mo/mypage/selectPoint', 'MoHome::mypageSelectPoint');
+$routes->post('/mo/mypage/walletList', 'MoHome::walletList');
 //포인트사용시
 $routes->post('/mo/usePoint', 'MoHome::usePoint');
 $routes->get('/mo/mypage/group/list', 'MoHome::mypageGroupList');

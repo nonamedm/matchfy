@@ -1,5 +1,6 @@
 var pointValue="5000";
 var totalMyPoint='';
+var walletType ='add';
 $(document).ready(function() {
     getMyPoint();
     chargePoint();
@@ -10,7 +11,6 @@ $(document).ready(function() {
     
     $('.point_order').change(function() {
         var value = $(this).val();
-        var type="";
         var date="";
         
         if($('.1week').hasClass('on')){
@@ -21,13 +21,7 @@ $(document).ready(function() {
             date = '3month';
         }
 
-        if($(this).hasClass('add')){
-            type="add";
-        }else{
-            type="use";
-        }
-
-        getPointSearch(value,date,type);
+        getPointSearch(value,date,walletType);
     });
 }); 
 
@@ -181,14 +175,15 @@ function getPointDateSearch(){
     });
 }
 
-function getPointSearch(value,date,type){
+function getPointSearch(date){
+    var point_order = $('.point_order').val();
     $.ajax({
         url: '/mo/mypage/selectPoint',
         type: 'post',
         data:{
-            value:value,
+            value:point_order,
             date:date,
-            type:type,
+            type:walletType,
         },
         success: function(data) {
             var data = data.points;
@@ -202,10 +197,10 @@ function getPointSearch(value,date,type){
                 html += '<p>'+data[i]['point_details']+'</p>';
                 html += '</div>';
                 html += '<div class="price">';
-                if(type=='add'){
-                    html += '<p>'+Number(data[i]['add_point']).toLocaleString()+'</p>';
+                if(walletType=='add'){
+                    html += '<p>+ '+Number(data[i]['add_point']).toLocaleString()+'</p>';
                 }else{
-                    html += '<p>'+Number(data[i]['use_point']).toLocaleString()+'</p>';
+                    html += '<p>- '+Number(data[i]['use_point']).toLocaleString()+'</p>';
                 }
                 html += '</div>';
                 html += '</div>';
@@ -307,3 +302,50 @@ function exchangePoint(){
     }
 }
 
+function WalletPage(type){
+    var btn_html = '';
+    walletType = type;
+
+    $("#wallet_tab ul li").removeClass("on");
+
+    if (type === 'add') {
+        $("#wallet_tab ul li:nth-child(1)").addClass("on");
+    } else {
+        $("#wallet_tab ul li:nth-child(2)").addClass("on");
+    }
+
+    $.ajax({
+        url: '/mo/mypage/walletList',
+        type: 'post',
+        data:{
+            walletType:type
+        },
+        success: function(data) {
+            var data = data.points;
+            var html="";
+            for(var i=0;i<data.length;i++){
+                html += '<div class="mypage_wallet_detail">'
+                html += '<div class="date">';
+                html += '<p>'+data[i]['create_at'].split(' ')[0]+'</p>';
+                html += '</div>';
+                html += '<div class="desc">';
+                html += '<p>'+data[i]['point_details']+'</p>';
+                html += '</div>';
+                html += '<div class="price">';
+                if(type=='add'){
+                    html += '<p>+ '+Number(data[i]['add_point']).toLocaleString()+'</p>';
+                }else{
+                    html += '<p>- '+Number(data[i]['use_point']).toLocaleString()+'</p>';
+                }
+                html += '</div>';
+                html += '</div>';
+                html += '<hr class="hoz_part" />';
+            }
+            $('#point_content').html(html);
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+
+}
