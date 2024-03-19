@@ -39,14 +39,14 @@
                             <div class="signin_form_div">
                                 <label for="name" class="signin_label">이름</label>
                                 <input id="name" name="name" type="text" value="<?php echo $name ?>"
-                                    placeholder="이름을 입력하세요">
+                                    placeholder="이름을 입력하세요" readonly>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="birthday" class="signin_label">생년월일</label>
                                 <input id="birthday" name="birthday" type="text" value="<?php echo $birthday ?>"
-                                    placeholder="생년월일을 입력하세요">
+                                    placeholder="생년월일을 입력하세요" readonly>
                             </div>
                         </div>
                         <div class="form_row signin_form">

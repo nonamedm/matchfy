@@ -12,6 +12,19 @@
     <link rel="stylesheet" href="/static/css/common_mo.css">
     <script src="/static/js/basic.js"></script>
 </head>
+<style>
+.temp_input_text {
+    border: 1px solid #dddddd;
+    width: 335px;
+    height: 50px;
+    background: #ffffff;
+    border-radius: 15px;
+    font-size: 15px;
+    color: #999999;
+    margin: 10px;
+    padding: 10px;
+}
+</style>
 
 <body class="mo_wrap">
     <div class="wrap">
@@ -34,9 +47,12 @@
                     <button type="button" class="btn type01" onclick="certIdentify()">휴대폰 본인인증</button>
                 </div>
             </div>
-                <input id="input_name" type="text" name="name" placeholder="이름 입력"/>
-                <input id="input_mobile_no" type="text" name="mobile_no" placeholder="전화번호 입력"/>
-                <input id="input_birthday" type="text" name="birthday" placeholder="생년월일 입력"/>
+            <div class="content_title">
+                <p>* 추후 본인인증 서비스를 연결할 때 까지는 개인정보 직접입력이 필요합니다.</p>
+            </div>
+                <input id="input_name" class="temp_input_text" type="text" name="name" placeholder="이름 입력"/>
+                <input id="input_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="전화번호 입력"/>
+                <input id="input_birthday" class="temp_input_text" type="text" name="birthday" placeholder="생년월일 입력"/>
             </form>
         </div>
 

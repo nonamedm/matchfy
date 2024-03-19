@@ -540,6 +540,8 @@ class MoAjax extends BaseController
     public function updtUserData()
     {
         $MemberFileModel = new MemberFileModel();
+        $MemberFeedModel = new MemberFeedModel();
+        $MemberFeedFileModel = new MemberFeedFileModel();
 
         $postData = $this->request->getPost('uploadedFiles');
         $postData2 = $this->request->getPost('uploadedMovs');
@@ -559,15 +561,25 @@ class MoAjax extends BaseController
                 $ext = $fileInfo['ext'];
                 $data = [
                     'member_ci' => $ci,
-                    'org_name' => $org_name,
-                    'file_name' => $file_name,
-                    'file_path' => $file_path,
-                    'ext' => $ext,
-                    'board_type' => 'photos',
+                    'feed_cont' => '신규 회원가입을 축하합니다',
+                    'public_yn' => '0',
+                    'thumb_filename' => $file_name,
+                    'thumb_filepath' => $file_path,
                 ];
-                $inserted = $MemberFileModel->insert($data);
+                $inserted = $MemberFeedModel->insert($data);
                 if ($inserted)
                 {
+                    $feed_idx = $MemberFeedModel->insertID();
+                    $data = [
+                        'feed_idx' => $feed_idx,
+                        'member_ci' => $ci,
+                        'org_name' => $org_name,
+                        'file_name' => $file_name,
+                        'file_path' => $file_path,
+                        'ext' => $ext,
+                        'board_type' => 'feeds',
+                    ];
+                    $inserted = $MemberFeedFileModel->insert($data);
                     $insertedData[] = $data;
                 }
             }
@@ -584,15 +596,25 @@ class MoAjax extends BaseController
                 $ext = $fileInfo['ext'];
                 $data = [
                     'member_ci' => $ci,
-                    'org_name' => $org_name,
-                    'file_name' => $file_name,
-                    'file_path' => $file_path,
-                    'ext' => $ext,
-                    'board_type' => 'movs',
+                    'feed_cont' => '신규 회원가입을 축하합니다',
+                    'public_yn' => '0',
+                    'thumb_filename' => $file_name,
+                    'thumb_filepath' => $file_path,
                 ];
-                $inserted = $MemberFileModel->insert($data);
+                $inserted = $MemberFeedModel->insert($data);
                 if ($inserted)
                 {
+                    $feed_idx = $MemberFeedModel->insertID();
+                    $data = [
+                        'feed_idx' => $feed_idx,
+                        'member_ci' => $ci,
+                        'org_name' => $org_name,
+                        'file_name' => $file_name,
+                        'file_path' => $file_path,
+                        'ext' => $ext,
+                        'board_type' => 'feeds',
+                    ];
+                    $inserted = $MemberFeedFileModel->insert($data);
                     $insertedData[] = $data;
                 }
             }
