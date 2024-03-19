@@ -17,20 +17,8 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        <header>
 
-            <div class="menu">
-                <ul>
-                    <li class="left_arrow">
-                        <img src="/static/images/left_arrow.png" />
-                    </li>
-                    <li class="header_title">
-                        약관동의
-                    </li>
-                </ul>
-            </div>
-
-        </header>
+        <?php $title = "약관동의"; include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">

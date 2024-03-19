@@ -10,37 +10,35 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
     <div class="wrap" style="background-color:#f9f9f9;">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        <header>
-
-            <div class="menu">
-                <ul>
-                    <li class="left_arrow">
-                        <img src="/static/images/left_arrow.png" />
-                    </li>
-                    <li class="header_title">
-                        마이페이지
-                    </li>
-                </ul>
-            </div>
-
-        </header>
+        
+        <?php $title = "마이페이지"; include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="content_body content_mypage">
-                    <img src="/static/images/mypage_pfofile.png" />
+                    <?php if ($image): ?>
+                        <img class="profile_img" src="/<?= $image['file_path'] ?>/<?= $image['file_name'] ?>" />
+                    <?php else: ?>
+                        <img class="profile_img" src="/static/images/mypage_pfofile.png" />
+                    <?php endif; ?>
                     <div class="content_mypage_info">
                         <div class="profile">
-                            <h2>장원영<span style="font-size:15px;"> 님</span></h2>
+                            <h2  onclick="moveToUrl('/mo/myfeed/view/profile')"><?= $name ?><span style="font-size:15px;"> 님</span></h2>
                             <button class="myinfo_level">Lv.10</button>
                         </div>
-                        <p>96 · 서울 강남 · ESTJ</p>
+                        <p>
+                            <?= $birthday ?> · 
+                            <?= $city ?>
+                            <?php echo (!is_null($mbti)) ? ' · ' . $mbti : ''; ?>
+                        </p>
                     </div>
                 </div>
                 <div class="line_banner">
@@ -63,7 +61,7 @@
 
                 <div class="content_mypage_list">
                     <ul>
-                        <li>
+                        <li onclick="moveToUrl('/mo/mypage/wallet')">
                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -80,7 +78,7 @@
                             </p>
                         </li>
                         <hr class="hoz_part" />
-                        <li>
+                        <li onclick="moveToUrl('/mo/myfeed')">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <rect x="0.75" y="0.75" width="14.5" height="14.5" rx="2.25" stroke="#111111"
@@ -92,7 +90,7 @@
                             </p>
                         </li>
                         <hr class="hoz_part" />
-                        <li>
+                        <li onclick="moveToUrl('/mo/mypage/mygroup/list')">
                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -106,7 +104,7 @@
                             </p>
                         </li>
                         <hr class="hoz_part" />
-                        <li>
+                        <li onclick="moveToUrl('/mo/partner')">
                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -122,9 +120,11 @@
                 </div>
             </div>
             <div style="height: 50px;"></div>
-<footer class="footer">
-                
-                <button class="content_mypage_logout">로그아웃</button>
+
+            <footer class="footer">
+                <button class="content_mypage_logout" onclick="userLogout()">
+                    로그아웃
+                </button>
             </footer>
         </div>
 

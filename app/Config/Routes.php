@@ -40,6 +40,12 @@ $routes->get('/mo/invitePopup', 'MoHome::invitePopup');
 $routes->get('/mo/mypage/wallet', 'MoHome::mypageWallet');
 $routes->get('/mo/mypage/wallet2', 'MoHome::mypageWallet2');
 $routes->get('/mo/mypage/wallet/charge', 'MoHome::mypageWalletCharge');
+$routes->get('/mo/mypage/wallet/success', 'MoHome::mypageSeccess');
+$routes->post('/mo/mypage/mypageAddPoint/(:num)/(:num)', 'MoHome::mypageAddPoint/$1/$2');
+$routes->get('/mo/mypage/getPoint', 'MoHome::mypageGetPoint');
+$routes->post('/mo/mypage/selectPoint', 'MoHome::mypageSelectPoint');
+//포인트사용시
+$routes->post('/mo/usePoint', 'MoHome::usePoint');
 $routes->get('/mo/mypage/group/list', 'MoHome::mypageGroupList');
 $routes->get('/mo/mypage/group/searchList', 'MoHome::mypageGroupSearchList');
 $routes->get('/mo/mypage/group/detail', 'MoHome::mypageGroupDetail');
@@ -66,9 +72,13 @@ $routes->get('/mo/alliance/schedule', 'MoHome::allianceSchedule');
 $routes->get('/mo/alliance/reservePopup', 'MoHome::allianceReservePopup');
 $routes->get('/mo/alliance/apply', 'MoHome::allianceApply');
 $routes->get('/mo/alliance/exchange', 'MoHome::allianceExchange');
+$routes->post('/mo/alliance/exchangepoint', 'MoHome::allianceExchangePoint');
+$routes->get('/mo_mypage_excharge_success', 'MoHome::exchangePoint_success');
+$routes->get('/mo_mypage_excharge_fail', 'MoHome::exchangePoint_fail');
 $routes->get('/mo/partner', 'MoHome::partner');
 $routes->get('/mo/partner/regular', 'MoHome::partnerRegular');
 $routes->get('/mo/partner/premium', 'MoHome::partnerPremium');
+
 
 // file upload
 $routes->post('/upload', 'Upload::upload');
@@ -81,6 +91,10 @@ $routes->post('/ajax/logout', 'MoAjax::logout');
 $routes->post('/ajax/mbrFileRegUp', 'MoAjax::mbrFileRegUp');
 $routes->post('/ajax/searchUniversity', 'MoAjax::searchUniversity');
 $routes->post('/ajax/updtUserData', 'MoAjax::updtUserData');
+$routes->post('/ajax/updtFeedData', 'MoAjax::updtFeedData');
+$routes->post('/ajax/showFeedDetail', 'MoAjax::showFeedDetail');
+$routes->post('/ajax/myFeedDelete', 'MoAjax::myFeedDelete');
+$routes->post('/ajax/myFeedUpdate', 'MoAjax::myFeedUpdate');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');
@@ -123,3 +137,5 @@ $routes->post('/ad/notice/noticeUpdate', 'AdminHome::noticeUpdate');
 $routes->post('/ad/notice/noticeDelete', 'AdminHome::noticeDelete');
 $routes->post('/ad/FileDelete', 'AdminHome::fileDelete');
 
+$routes->get('/ad/exchange/exchangeList', 'AdminHome::exchangeList');
+$routes->post('/ad/exchangeCheck', 'AdminHome::exchangeCheck');

@@ -15,12 +15,12 @@ class Download extends BaseController
 
         if (!$file) {
             echo "파일을 찾을 수 없습니다." . $id;
-            echo WRITEPATH . $file['file_path'] . '/' . $file['file_name'];
+            echo ROOTPATH . $file['file_path'] . '/' . $file['file_name'];
             return;
         }
 
         // 파일 경로 설정
-        $filePath = WRITEPATH . $file['file_path'] . '/' . $file['file_name'];
+        $filePath = ROOTPATH . $file['file_path'] . '/' . $file['file_name'];
 
         // 파일이 존재하는지 확인
         if (!file_exists($filePath)) {

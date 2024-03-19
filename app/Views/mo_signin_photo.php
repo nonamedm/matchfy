@@ -18,20 +18,8 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        <header>
 
-            <div class="menu">
-                <ul>
-                    <li class="left_arrow">
-                        <img src="/static/images/left_arrow.png" />
-                    </li>
-                    <li class="header_title">
-                        준회원 프로필
-                    </li>
-                </ul>
-            </div>
-
-        </header>
+        <?php $title = "준회원 프로필"; include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
@@ -66,8 +54,10 @@
                         </div>
                         <input type="hidden" name="mobile_no" value="<?php echo $postData['mobile_no'] ?>" />
                         <input type="hidden" name="ci" value="<?php echo $postData['ci'] ?>" />
-                        <input type="hidden" name="file_path" value="<?php echo $postData['file_path'] ?>" />
-                        <input type="hidden" name="file_name" value="<?php echo $postData['file_name'] ?>" />
+                        <input type="hidden" id="file_path" name="file_path"
+                            value="<?php echo $postData['file_path'] ?>" />
+                        <input type="hidden" id="file_name" name="file_name"
+                            value="<?php echo $postData['file_name'] ?>" />
                         <div id="profile_photo_uploaded" style="display:none;"></div>
                         <div id="profile_mov_uploaded" style="display:none;"></div>
                         <div class="btn_group multy">

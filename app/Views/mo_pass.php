@@ -17,23 +17,12 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        <header>
 
-            <div class="menu">
-                <ul>
-                    <li class="left_arrow">
-                        <img src="/static/images/left_arrow.png" />
-                    </li>
-                    <li class="header_title">
-                        휴대폰 본인인증
-                    </li>
-                </ul>
-            </div>
-
-        </header>
+        <?php $title = "휴대폰 본인인증"; include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
+                <form class="temp_input" action="/mo/agree" method="post">
                 <div class="content_title">
                     <h2>휴대폰 본인인증</h2>
                     <p>원활한 서비스 이용을 위해 휴대전화 본인인증이 필요합니다. </p>
@@ -45,6 +34,10 @@
                     <button type="button" class="btn type01" onclick="certIdentify()">휴대폰 본인인증</button>
                 </div>
             </div>
+                <input id="input_name" type="text" name="name" placeholder="이름 입력"/>
+                <input id="input_mobile_no" type="text" name="mobile_no" placeholder="전화번호 입력"/>
+                <input id="input_birthday" type="text" name="birthday" placeholder="생년월일 입력"/>
+            </form>
         </div>
 
 

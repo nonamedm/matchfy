@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\Upload;
 use App\Models\BoardModel;
 use App\Models\BoardFileModel;
+use App\Models\PointModel;
+use App\Models\PointExchangeModel;
 
 class AdminHome extends BaseController
 {
@@ -504,5 +506,64 @@ class AdminHome extends BaseController
         } else {
             return redirect()->back()->with('msg', '삭제에 실패하였습니다.');
         }
+    }
+
+    public function exchangeList()
+    {
+        $exchangePoint = new PointExchangeModel();
+        $query = $exchangePoint
+                ->select('e.idx as idx,
+                        e.member_ci as member_ci,
+                        m.name as name,
+                        m.mobile_no as mobile_no,
+                        e.point_exchange as point_exchange,
+                        e.bank as bank,
+                        e.bank_number as bank_number,
+                        e.exchange_type as exchange_type,
+                        e.exchange_level as exchange_level,
+                        e.create_at as create_at')
+                ->from('wh_points_exchange e')
+                ->join('members m', 'e.member_ci = m.ci', 'left')
+                ->orderBy('e.exchange_level', 'asc')
+                ->orderBy('e.create_at', 'DESC')
+                ->get();
+            $results = $query->getResultArray();
+            // 중복된 데이터 제거
+            $uniqueResults = [];
+            $uniqueIdxs = [];
+            foreach ($results as $result) {
+                if (!in_array($result['idx'], $uniqueIdxs)) {
+                    $uniqueResults[] = $result;
+                    $uniqueIdxs[] = $result['idx'];
+                }
+            }
+
+            $data['datas'] = $uniqueResults;
+
+        return view('admin/ad_exchange_list', $data);
+    }
+
+    public function exchangeCheck(){
+        $exchange_level = $this->request->getPost('exchange_level');
+        $idx = $this->request->getPost('idx');
+
+        $exchangePoint = new PointExchangeModel();
+
+        $updated = $exchangePoint->update($idx, [
+            'exchange_type' => 'E',
+            'exchange_level' => $exchange_level,
+            'updated_at'=>date('Y-m-d H:i:s')
+        ]);
+    
+        if ($updated) {
+            if($exchange_level =='1'){
+                return $this->response->setJSON(['success' => true, 'msg' => '환전 승인 되었습니다.']);
+            }else if($exchange_level =='2'){
+                return $this->response->setJSON(['success' => true, 'msg' => '환전 완료 되었습니다.']);
+            }
+        } else {
+            return $this->response->setJSON(['error' => true, 'msg' => '환전 실패 되었습니다.']);
+        }
+
     }
 }

@@ -74,7 +74,7 @@
                     <button onclick="toggleMenu();">&#9776;</button>
                 </li> -->
 
-                <li class="menu_item">
+                <li class="menu_item" style="display: inline-flex">
                     <?php
                     $session = session();
                     $ci = $session->get('ci');
@@ -86,6 +86,10 @@
                             <p>
                                 <?= $name ?> 로그아웃
                             </p>
+                        </button>
+                        <button class="login_btn" onclick="moveToUrl('/mo/mypage')">
+                            <img src="/static/images/login_ico.png"/>
+                            <p>my</p>
                         </button>
                         <?php
                     } else

@@ -9,6 +9,8 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/wallet.js"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
 </head>
 
@@ -16,27 +18,15 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        <header>
-
-            <div class="menu">
-                <ul>
-                    <li class="left_arrow">
-                        <img src="/static/images/left_arrow.png" />
-                    </li>
-                    <li class="header_title">
-                        환전
-                    </li>
-                </ul>
-            </div>
-
-        </header>
+        
+        <?php $title = "환전"; include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="alliance_payment">
                     <div class="alliance_payment_point">
                         <p>보유포인트</p>
-                        <h2>1,000,000</h2>
+                        <h2 class="current_points"></h2>
                     </div>
                     <div class="form_row signin_form">
                         <div class="signin_form_div">
@@ -53,11 +43,23 @@
                             <div class="signin_form_div">
                                 <label for="alliance_exchange_bank" class="signin_label">은행</label>
                                 <select id="alliance_exchange_bank" class="custom_select" value="">
-                                    <option>은행 선택</option>
-                                    <option value="0">신한</option>
-                                    <option value="1">국민</option>
-                                    <option value="2">부산</option>
-                                    <option value="3">경남</option>
+                                    <option value="0">은행 선택</option>
+                                    <option value="한국은행">한국은행</option>
+                                    <option value="신한은행">신한은행</option>
+                                    <option value="국민은행">국민은행</option>
+                                    <option value="우리은행">우리은행</option>
+                                    <option value="하나은행">하나은행</option>
+                                    <option value="농협은행">농협은행</option>
+                                    <option value="기업은행">기업은행</option>
+                                    <option value="SC제일은행">SC제일은행</option>
+                                    <option value="KEB하나은행">KEB하나은행</option>
+                                    <option value="부산은행">부산은행</option>
+                                    <option value="대구은행">대구은행</option>
+                                    <option value="전북은행">전북은행</option>
+                                    <option value="제주은행">제주은행</option>
+                                    <option value="수협은행">수협은행</option>
+                                    <option value="신협은행">신협은행</option>
+                                    <option value="카카오뱅크">카카오뱅크</option>
                                 </select>
                             </div>
                         </div>
@@ -74,7 +76,7 @@
                                 <h2>총 환전금액</h2>
                             </div>
                             <div class="amount_pay_right">
-                                <h2>40,000 원</h2>
+                                <h2 id="exchange_pay">0원</h2>
                             </div>
                         </div>
                     </div>
@@ -87,13 +89,13 @@
 
                 <div class="pay_agree_desc">
                     <div class="chk_box">
-                        <input type="checkbox" id="agree01" name="chkDefault00" checked="">
-                        <label class="agree_cont_label" for="agree01">위 구매조건 확인 및 결제진행에 동의</label>
+                        <input type="checkbox" id="agree02" name="chkDefault00">
+                        <label class="agree_cont_label" for="agree02">위 구매조건 확인 및 결제진행에 동의</label>
                     </div>
                     <p>· 환전 신청 후 3~5 영업일 이내에 본인계좌에 입급됩니다.</p>
                 </div>
                 <div class="btn_group">
-                    <button type="button" class="btn type01">환전하기</button>
+                    <button type="button" class="btn type01" onclick="exchangePoint();">환전하기</button>
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy

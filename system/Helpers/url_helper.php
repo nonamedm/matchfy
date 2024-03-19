@@ -94,8 +94,10 @@ if (! function_exists('previous_url')) {
 
         // Otherwise, grab a sanitized version from $_SERVER.
         $referer ??= request()->getServer('HTTP_REFERER', FILTER_SANITIZE_URL) ?? site_url('/');
+        $newReferer = str_replace('index.php/', '', $referer);
 
-        return $returnObject ? new URI($referer) : $referer;
+
+        return $returnObject ? new URI($newReferer) : $newReferer;
     }
 }
 
