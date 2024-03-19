@@ -84,12 +84,11 @@
                         ?>
                         <button class="login_btn" onclick="userLogout()">
                             <p>
-                                <?= $name ?> 로그아웃
+                                <?= $name ?> <br/>로그아웃
                             </p>
                         </button>
                         <button class="login_btn" onclick="moveToUrl('/mo/mypage')">
-                            <img src="/static/images/login_ico.png"/>
-                            <p>my</p>
+                            <p>mypage</p>
                         </button>
                         <?php
                     } else
