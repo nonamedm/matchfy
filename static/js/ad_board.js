@@ -1,5 +1,14 @@
 $(document).ready(function(){
+    $('.btn00').click(function() {
+        var value = $(this).text();
+        var exchange_level = $(this).data('exchange-level');
+        var idx =$(this).data('idx');
+
+        exchangeSubmit(exchange_level,idx);
+    });
+
     CKEDITOR.replace('content');
+ 
     $('form').submit(function(){
         var title = $('#title').val();
         var content = CKEDITOR.instances.content.getData().trim();
@@ -14,6 +23,7 @@ $(document).ready(function(){
             return false; 
         }
     });
+
 });
 function fn_clickList(board){
     if(board=='notice'){
@@ -121,4 +131,23 @@ function fn_EditClick(board) {
     }else if(board=='privacy'){
         window.location.href = "/ad/privacy/privacyEdit";
     }
+}
+
+function exchangeSubmit(exchange_level,idx){
+    
+    $.ajax({
+        url: '/ad/exchangeCheck',
+        data:{
+            exchange_level:exchange_level,
+            idx:idx,
+        },
+        type: 'post',
+        success: function(data) {
+            alert(data.msg);
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
 }

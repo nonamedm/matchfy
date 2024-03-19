@@ -8,6 +8,8 @@ use App\Models\MemberModel;
 use App\Models\MemberFileModel;
 use App\Models\MemberFeedModel;
 use App\Models\MemberFeedFileModel;
+use App\Models\PointModel;
+use App\Models\PointExchangeModel;
 use App\Helpers\MoHelper;
 use CodeIgniter\Session\Session;
 
@@ -117,23 +119,22 @@ class MoHome extends BaseController
     {
         $value = $this->request->getGet('value');
         $fileData = new BoardFileModel();
-        $query = $fileData
-            ->select('bo.id AS notice_id,
-                        bo.title AS title,
-                        bo.content AS content,
-                        bo.author AS author,
-                        bo.update_author AS update_author,
-                        bo.created_at AS created_at,
-                        bo.updated_at AS updated_at,
-                        bo.hit AS hit,
-                        bo.board_type AS board_type,
-                        bf.id AS file_id,
-                        bf.board_idx AS board_idx,
-                        bf.board_type AS file_board_type,
-                        bf.file_name AS file_name,
-                        bf.file_path AS file_path,
-                        bf.org_name AS org_name,
-                        (SELECT CONCAT(DATE_FORMAT(MIN(created_at), "%y.%m.%d"), " ~ ", DATE_FORMAT(MAX(created_at), "%y.%m.%d")) FROM wh_board_notice) AS created_at_range')
+        $query = $fileData->select('bo.id AS notice_id,
+                                    bo.title AS title,
+                                    bo.content AS content,
+                                    bo.author AS author,
+                                    bo.update_author AS update_author,
+                                    bo.created_at AS created_at,
+                                    bo.updated_at AS updated_at,
+                                    bo.hit AS hit,
+                                    bo.board_type AS board_type,
+                                    bf.id AS file_id,
+                                    bf.board_idx AS board_idx,
+                                    bf.board_type AS file_board_type,
+                                    bf.file_name AS file_name,
+                                    bf.file_path AS file_path,
+                                    bf.org_name AS org_name,
+                                    (SELECT CONCAT(DATE_FORMAT(MIN(created_at), "%y.%m.%d"), " ~ ", DATE_FORMAT(MAX(created_at), "%y.%m.%d")) FROM wh_board_notice) AS created_at_range')
             ->from('wh_board_notice bo')
             ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
             ->groupBy('bo.id');
@@ -287,18 +288,188 @@ class MoHome extends BaseController
     {
         return view('mo_invite_popup');
     }
-    public function mypageWallet(): string
-    {
-        return view('mo_mypage_wallet');
+
+    public function usePoint(){
+        $session = session();
+        // $ci = $session->get('ci');
+        $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
+        $point = $this->request->getPost('point');
+        $pointModel = new PointModel();
+
+        $my_point = $pointModel ->select('my_point')
+                                ->where('member_ci', $ci)
+                                ->orderBy('create_at', 'DESC')
+                                ->first();
+        
+        $my_point_value = isset($my_point['my_point']) ? $my_point['my_point'] : 0;
+        
+        if($my_point_value < $point){
+            return $this->response->setJSON(['success' => false , 'msg' => '충전후 사용해주세요.']);
+        }
+
+        $data = [
+            'member_ci' => $ci,
+            'my_point' => $my_point_value - $point,
+            'use_point' => $point,
+            'point_details' => '사용한 포인트 내역',
+            'create_at' => date('Y-m-d H:i:s'),
+            'point_type' => 'U',
+        ];
+    
+        $result = $pointModel->insert($data);
+
+        if ($result) {
+            return $this->response->setJSON(['success' => true, 'msg' => '결제 완료 되었습니다.']);
+        } else {
+            return $this->response->setJSON(['success' => false, 'msg' => '결제가 되지 않았습니다.']);
+        }
     }
+
+    public function mypageSelectPoint(){
+        $session = session();
+        // $ci = $session->get('ci');
+        $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
+        $type = $this->request->getPost('type');
+        $date = $this->request->getPost('date');
+        $value = $this->request->getPost('value');
+        $pointModel = new PointModel();
+        
+        $points = $pointModel->where('member_ci', $ci);
+        
+        if($type =='add'){
+            $points->where('point_type', 'A');
+        }else{
+            $points->where('point_type', 'U');
+        }
+        
+        if($date == '1week'){
+            $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 week')));
+        } else if($date == '1month'){
+            $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 month')));
+        } else if($date == '3month'){
+            $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-3 month')));
+        }
+
+        if ($value == 'latest') {
+            $points->orderBy('create_at', 'DESC');
+        } else if ($value == 'oldest') {
+            $points->orderBy('create_at', 'ASC');
+        } else if ($value == 'highest_amount') {
+            $points->orderBy('add_point', 'DESC');
+        } else if ($value == 'lowest_amount') {
+            $points->orderBy('add_point', 'ASC');
+        } else {
+            $points->orderBy('create_at', 'DESC');
+        }
+        
+        $points = $points->findAll();
+        
+        if ($points) {
+            return $this->response->setJSON(['success' => true, 'points' => $points]);
+        } else {
+            return $this->response->setJSON(['success' => false]);
+        }
+    }
+
+    public function mypageWallet()
+    {
+        $session = session();
+        // $ci = $session->get('ci');
+        $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
+        $pointModel = new PointModel();
+        
+        $points = $pointModel->where('member_ci', $ci)
+                            ->where('point_type', 'A')
+                            ->orderBy('create_at', 'DESC')
+                            ->findAll();
+
+        return view('mo_mypage_wallet', ['points' => $points]);
+    }
+
     public function mypageWallet2(): string
     {
-        return view('mo_mypage_wallet2');
+        $session = session();
+        // $ci = $session->get('ci');
+        $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
+        $pointModel = new PointModel();
+        
+        $points = $pointModel->where('member_ci', $ci)
+                            ->where('point_type', 'U')
+                            ->orderBy('create_at', 'DESC')
+                            ->findAll();
+
+        return view('mo_mypage_wallet2', ['points' => $points]);
     }
-    public function mypageWalletCharge(): string
+
+    public function mypageWalletCharge()
     {
-        return view('mo_mypage_wallet_charge');
+        $my_point_value = $this->mypageGetPoint();
+        return view('mo_mypage_wallet_charge', ['my_point' => $my_point_value]);
     }
+
+    public function mypageGetPoint(){
+        $session = session();
+        // $ci = $session->get('ci');
+        $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
+        $pointModel = new PointModel();
+        
+        $my_point = $pointModel ->select('my_point')
+                                ->where('member_ci', $ci)
+                                ->orderBy('create_at', 'DESC')
+                                ->first();
+        
+        $my_point_value = isset($my_point['my_point']) ? $my_point['my_point'] : 0;
+        return $my_point_value;
+    }
+
+    public function mypageAddPoint($pointValue,$quantityNum){
+        $session = session();
+        // $ci = $session->get('ci');
+        $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
+        $authResultCode = $this->request->getPost('authResultCode');
+
+        if($authResultCode=='0000'){ //인증성공
+            $amount = $this->request->getPost('amount');
+            $clientId = $this->request->getPost('clientId');
+            $orderId = $this->request->getPost('orderId');
+            $pointModel = new PointModel();
+    
+            $my_point = $pointModel ->select('my_point')
+                                    ->where('member_ci', $ci)
+                                    ->orderBy('create_at', 'DESC')
+                                    ->first();
+            
+            $my_point_value = isset($my_point['my_point']) ? $my_point['my_point'] : 0;
+            
+            if($pointValue == '5000'){
+                $amount=5000*$quantityNum;
+            }else{
+                $amount;
+            }
+            $data = [
+                'member_ci' => $ci,
+                'my_point' => $my_point_value + $amount,
+                'add_point' => $pointValue == '5000'?5000*$quantityNum:$amount,
+                'point_details' => '포인트 충전',
+                'create_at' => date('Y-m-d H:i:s'),
+                'point_type' => 'A',
+                'extra1' => $clientId,
+                'extra1' => $$orderId,
+            ];
+        
+            $result = $pointModel->insert($data);
+    
+            if ($result) {
+                return view('mo_mypage_charge_success',['msg' => '포인트 충전이 되었습니다.']);
+            } else {
+                return view('mo_mypage_charge_fail',['msg' => '포인트 충전을 다시 해주세요.']);
+            }
+
+        }else{ // 카드에 돈이 없어서 돈이 입금 되지않았을 경우
+            return view('mo_mypage_charge_fail',['msg' => '다시 시도 해주세요.']);
+        }
+    }
+
     public function mypageGroupList(): string
     {
         return view('mo_mypage_group_list');
@@ -480,7 +651,66 @@ class MoHome extends BaseController
     }
     public function allianceExchange(): string
     {
-        return view('mo_alliance_exchange');
+        $my_point_value = $this->mypageGetPoint();
+        return view('mo_alliance_exchange', ['my_point' => $my_point_value]);
+    }
+
+    public function allianceExchangePoint()
+    {
+        $session = session();
+        $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
+        
+        $amount = $this->request->getPost('amount');
+        $bank = $this->request->getPost('bank');
+        $acount_number = $this->request->getPost('acount_number');
+        
+        $pointExchange = new PointExchangeModel();
+        $data = [
+            'member_ci' => $ci,
+            'point_exchange' => $amount,
+            'bank' => $bank,
+            'bank_number' => $acount_number,
+            'create_at' => date('Y-m-d H:i:s'),
+            'exchange_level'=>'0',
+            'exchange_type' => 'E',
+        ];
+
+        $result = $pointExchange->insert($data);
+
+        $point = new PointModel();
+        $my_point = $point ->select('my_point')
+                                    ->where('member_ci', $ci)
+                                    ->orderBy('create_at', 'DESC')
+                                    ->first();
+            
+        $my_point_value = isset($my_point['my_point']) ? $my_point['my_point'] : 0;
+        
+        $data = [
+            'member_ci' => $ci,
+            'my_point' => $my_point_value - $amount,
+            'use_point' => $amount,
+            'point_details' => '환전신청',
+            'create_at' => date('Y-m-d H:i:s'),
+            'point_type' => 'U',
+        ];
+    
+        $result2 = $point->insert($data);
+
+        if ($result) {
+            return $this->response->setJSON(['success' => true]);
+        } else {
+            return $this->response->setJSON(['success' => false]);
+        }
+    }
+
+    public function exchangePoint_success(): string
+    {
+        return view('mo_mypage_excharge_success');
+    }
+
+    public function exchangePoint_fail(): string
+    {
+        return view('mo_mypage_excharge_fail');
     }
     public function partner(): string
     {

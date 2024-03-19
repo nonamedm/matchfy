@@ -951,6 +951,7 @@ td {
     border: 2px solid #ff0267;
     border-radius: 10px;
     text-align: center;
+    cursor: pointer;
 }
 .content_wrap .mypage_wallet.charge .charge_select1 p {
     font-weight: 700;
@@ -966,7 +967,7 @@ td {
     background: '#ffffff';
     border-radius: 10px;
     text-align: center;
-    margin-top: 10px;
+    cursor: pointer;
 }
 .content_wrap .mypage_wallet.charge .charge_select2 p {
     font-size: 16px;
@@ -1004,7 +1005,7 @@ td {
 }
 .content_wrap .mypage_wallet .mypage_wallet_list .mypage_wallet_filter select {
     font-family: 'Pretendard-Regular';
-    width: 60px;
+    width: 80px;
     height: 16px;
     font-weight: 500;
     font-size: 13px;
@@ -1040,7 +1041,7 @@ td {
     color: #777777;
 }
 .content_wrap .mypage_wallet .mypage_wallet_list .mypage_wallet_detail .desc {
-    width: 210px;
+    width: 190px;
 }
 .content_wrap .mypage_wallet .mypage_wallet_list .mypage_wallet_detail .desc p {
     font-weight: 400;

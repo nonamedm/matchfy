@@ -11,4 +11,7 @@
     <li class="menu_item">
         <a href="/ad/privacy/privacyList">개인정보처리방침</a>
     </li>
+    <li class="menu_item">
+        <a href="/ad/exchange/exchangeList">환전내역 신청리스트</a>
+    </li>
 </ul>
