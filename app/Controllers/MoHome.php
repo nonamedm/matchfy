@@ -27,7 +27,7 @@ class MoHome extends BaseController
     }
     public function agree(): string
     {
-
+        $postData = $this->request->getPost();
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_terms');
         $postData['terms'] = $BoardModel->orderBy('created_at', 'DESC')->first();
@@ -577,6 +577,7 @@ class MoHome extends BaseController
             'city' => $user['city'],
             'town' => $user['town'],
             'mobile_no' => $user['mobile_no'],
+            'grade' => $user['grade'],
             'image' => $imageInfo
         ];
 

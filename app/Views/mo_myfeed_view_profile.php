@@ -18,22 +18,8 @@
     <div class="wrap" style="background-color:#f9f9f9;">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        <header>
-
-            <div class="menu">
-                <ul>
-                    <li class="left_arrow">
-                        <a href="<?php echo previous_url() ?>">
-                            <img src="/static/images/left_arrow.png" />
-                        </a>
-                    </li>
-                    <li class="header_title">
-                        프로필
-                    </li>
-                </ul>
-            </div>
-
-        </header>
+        
+        <?php $title = "프로필"; include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
@@ -74,6 +60,7 @@
                                 <p> </p>
                             </div>
                         </li>
+                        <?php if (isset($grade) && ($grade === 'grade02' || $grade === 'grade03')): ?>
                         <hr class="hoz_part" />
                         <li class="profile_body">
                             <div class="profile_content">
@@ -105,6 +92,8 @@
                                 <p><?=$stylish?></p>
                             </div>
                         </li>
+                        <?php endif; ?>
+                        <?php if (isset($grade) && ($grade === 'grade02' || $grade === 'grade03')): ?>
                         <hr class="hoz_part" />
                         <li class="profile_body">
                             <div class="profile_content">
@@ -140,6 +129,8 @@
                                 <p></p>
                             </div>
                         </li>
+                        <?php endif; ?>
+                        <?php if (isset($grade) && $grade === 'grade03'): ?>
                         <hr class="hoz_part" />
                         <li class="profile_body">
                             <div class="profile_content">
@@ -159,6 +150,7 @@
                                 <p><?=$residence1?>/<?=$residence2?>(<?=$residence3?>) </p>
                             </div>
                         </li>
+                        <?php endif; ?>
                         <!-- <hr class="hoz_part" />
                         <li class="profile_body">
                             

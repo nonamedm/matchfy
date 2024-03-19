@@ -18,20 +18,8 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        <header>
-
-            <div class="menu">
-                <ul>
-                    <li class="left_arrow">
-                        <img src="/static/images/left_arrow.png" />
-                    </li>
-                    <li class="header_title">
-                        프리미엄 프로필
-                    </li>
-                </ul>
-            </div>
-
-        </header>
+        
+        <?php $title = "프리미엄 프로필"; include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
@@ -40,7 +28,7 @@
                         <?php
                         if ($file_path)
                         {
-                            echo '<img src="/' . $file_path . '/' . $file_name . '" style="border-radius: 50%; width: 74px; height: 74px;" />';
+                            echo '<img src="/' . $file_path . $file_name . '" style="border-radius: 50%; width: 74px; height: 74px;" />';
                         } else
                         {
                             echo '<img src="/static/images/profile_noimg.png" style="border-radius: 50%; width: 74px; height: 74px;" />';
@@ -277,11 +265,12 @@
                                         value="">
                                         <option value="">선택</option>
                                         <?php
-                                            $nowYear = date('Y');
-                                            $pastYear = 1945;
-                                            for ($year = $nowYear; $year >= $pastYear; $year--) {
-                                                echo '<option value="' . $year . '">' . $year . '</option>';
-                                            }
+                                        $nowYear = date('Y');
+                                        $pastYear = 1945;
+                                        for ($year = $nowYear; $year >= $pastYear; $year--)
+                                        {
+                                            echo '<option value="' . $year . '">' . $year . '</option>';
+                                        }
                                         ?>
                                     </select>
                                     <select id="father_job" name="father_job" class="custom_select" value="">
@@ -303,11 +292,12 @@
                                         value="">
                                         <option value="">선택</option>
                                         <?php
-                                            $nowYear = date('Y');
-                                            $pastYear = 1945;
-                                            for ($year = $nowYear; $year >= $pastYear; $year--) {
-                                                echo '<option value="' . $year . '">' . $year . '</option>';
-                                            }
+                                        $nowYear = date('Y');
+                                        $pastYear = 1945;
+                                        for ($year = $nowYear; $year >= $pastYear; $year--)
+                                        {
+                                            echo '<option value="' . $year . '">' . $year . '</option>';
+                                        }
                                         ?>
                                     </select>
                                     <select id="mother_job" name="mother_job" class="custom_select" value="">

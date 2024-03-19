@@ -22,20 +22,8 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        <header>
 
-            <div class="menu">
-                <ul>
-                    <li class="left_arrow">
-                        <a href="/mo/mypage/wallet"><img src="/static/images/left_arrow.png" /></a>
-                    </li>
-                    <li class="header_title">
-                        내지갑
-                    </li>
-                </ul>
-            </div>
-
-        </header>
+        <?php $title = "내지갑"; include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
