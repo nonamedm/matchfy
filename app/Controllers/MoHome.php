@@ -407,7 +407,7 @@ class MoHome extends BaseController
         return view('mo_mypage_wallet2', ['points' => $points]);
     }
 
-    public function walletList()
+    public function walletTypeList()
     {
         $session = session();
         $ci = $session->get('ci');

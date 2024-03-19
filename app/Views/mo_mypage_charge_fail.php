@@ -35,7 +35,7 @@
             <footer class="footer">
 
                 <div class="btn_group">
-                    <button type="button" class="btn type01" onclick='WalletLocation()'>포인트 충전 다시하기</button>
+                    <button type="button" class="btn type01" onclick='loc_WalletLocation()'>포인트 충전 다시하기</button>
                     <button type="button" class="btn type01">메인으로</button>
                 </div>
                 <!-- <div class="footer_logo mb40">

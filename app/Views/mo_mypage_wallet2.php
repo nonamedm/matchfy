@@ -30,8 +30,8 @@
                     </div>
                     <div class="mypage_wallet_charge">
                         <div class="btn_group multy">
-                            <button class="btn type01" onclick="pointCharge();">포인트 충전</button>
-                            <button class="btn type03" onclick="pointExchange();">환전</button>
+                            <button class="btn type01" onclick="loc_pointCharge();">포인트 충전</button>
+                            <button class="btn type03" onclick="loc_pointExchange();">환전</button>
                         </div>
                     </div>
                     <div class="tab_wrap">

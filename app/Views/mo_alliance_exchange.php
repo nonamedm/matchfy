@@ -95,7 +95,7 @@
                     <p>· 환전 신청 후 3~5 영업일 이내에 본인계좌에 입급됩니다.</p>
                 </div>
                 <div class="btn_group">
-                    <button type="button" class="btn type01" onclick="exchangePoint();">환전하기</button>
+                    <button type="button" class="btn type01" onclick="exchangePointSubmit();">환전하기</button>
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy

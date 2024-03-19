@@ -37,6 +37,7 @@ $routes->get('/mo/schedulePopup', 'MoHome::schedulePopup');
 $routes->get('/mo/schDepositPopup', 'MoHome::schDepositPopup');
 $routes->get('/mo/invite', 'MoHome::invite');
 $routes->get('/mo/invitePopup', 'MoHome::invitePopup');
+
 $routes->get('/mo/mypage/wallet', 'MoHome::mypageWallet');
 $routes->get('/mo/mypage/wallet2', 'MoHome::mypageWallet2');
 $routes->get('/mo/mypage/wallet/charge', 'MoHome::mypageWalletCharge');
@@ -44,7 +45,7 @@ $routes->get('/mo/mypage/wallet/success', 'MoHome::mypageSeccess');
 $routes->post('/mo/mypage/mypageAddPoint/(:num)/(:num)', 'MoHome::mypageAddPoint/$1/$2');
 $routes->get('/mo/mypage/getPoint', 'MoHome::mypageGetPoint');
 $routes->post('/mo/mypage/selectPoint', 'MoHome::mypageSelectPoint');
-$routes->post('/mo/mypage/walletList', 'MoHome::walletList');
+$routes->post('/mo/mypage/walletTypeList', 'MoHome::walletTypeList');
 //포인트사용시
 $routes->post('/mo/usePoint', 'MoHome::usePoint');
 $routes->get('/mo/mypage/group/list', 'MoHome::mypageGroupList');
@@ -73,7 +74,7 @@ $routes->get('/mo/alliance/schedule', 'MoHome::allianceSchedule');
 $routes->get('/mo/alliance/reservePopup', 'MoHome::allianceReservePopup');
 $routes->get('/mo/alliance/apply', 'MoHome::allianceApply');
 $routes->get('/mo/alliance/exchange', 'MoHome::allianceExchange');
-$routes->post('/mo/alliance/exchangepoint', 'MoHome::allianceExchangePoint');
+$routes->post('/mo/alliance/exchangepointSubmit', 'MoHome::allianceExchangePoint');
 $routes->get('/mo_mypage_excharge_success', 'MoHome::exchangePoint_success');
 $routes->get('/mo_mypage_excharge_fail', 'MoHome::exchangePoint_fail');
 $routes->get('/mo/partner', 'MoHome::partner');
