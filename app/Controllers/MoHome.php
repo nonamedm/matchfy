@@ -291,8 +291,8 @@ class MoHome extends BaseController
 
     public function usePoint(){
         $session = session();
-        // $ci = $session->get('ci');
-        $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
+        $ci = $session->get('ci');
+        //$ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
         $point = $this->request->getPost('point');
         $pointModel = new PointModel();
 
@@ -327,8 +327,8 @@ class MoHome extends BaseController
 
     public function mypageSelectPoint(){
         $session = session();
-        // $ci = $session->get('ci');
-        $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
+        $ci = $session->get('ci');
+        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
         $type = $this->request->getPost('type');
         $date = $this->request->getPost('date');
         $value = $this->request->getPost('value');
@@ -374,8 +374,8 @@ class MoHome extends BaseController
     public function mypageWallet()
     {
         $session = session();
-        // $ci = $session->get('ci');
-        $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
+        $ci = $session->get('ci');
+        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
         $pointModel = new PointModel();
         
         $points = $pointModel->where('member_ci', $ci)
@@ -389,8 +389,8 @@ class MoHome extends BaseController
     public function mypageWallet2(): string
     {
         $session = session();
-        // $ci = $session->get('ci');
-        $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
+        $ci = $session->get('ci');
+        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
         $pointModel = new PointModel();
         
         $points = $pointModel->where('member_ci', $ci)
@@ -409,8 +409,8 @@ class MoHome extends BaseController
 
     public function mypageGetPoint(){
         $session = session();
-        // $ci = $session->get('ci');
-        $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
+        $ci = $session->get('ci');
+        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
         $pointModel = new PointModel();
         
         $my_point = $pointModel ->select('my_point')
@@ -424,8 +424,8 @@ class MoHome extends BaseController
 
     public function mypageAddPoint($pointValue,$quantityNum){
         $session = session();
-        // $ci = $session->get('ci');
-        $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
+        $ci = $session->get('ci');
+        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
         $authResultCode = $this->request->getPost('authResultCode');
 
         if($authResultCode=='0000'){ //인증성공
@@ -659,7 +659,8 @@ class MoHome extends BaseController
     public function allianceExchangePoint()
     {
         $session = session();
-        $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
+        $ci = $session->get('ci');
+        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
         
         $amount = $this->request->getPost('amount');
         $bank = $this->request->getPost('bank');
