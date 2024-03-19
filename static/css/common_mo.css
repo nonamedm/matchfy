@@ -3060,3 +3060,16 @@ input[type='number']::-webkit-inner-spin-button {
     border-radius: 4px;
     color: red;
 }
+
+/*loading*/
+.loading{
+    position: absolute;
+    left: 40%;
+    top: 50%;
+    width: 20%;
+    height: 10%;
+    display: none;
+}
+.loading img{
+    width: 100%;
+}

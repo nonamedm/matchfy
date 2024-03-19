@@ -127,7 +127,7 @@ function chk_pointChargeSubmit(){
 function serverAuth() {
     var quantityNum = $('#quantity').val();
     if (chk_pointChargeSubmit() == true) {
-
+        $('.loading').hide();
         AUTHNICE.requestPay({
             clientId: 'S2_41a14a007a4a44da9618ae765ad0338c',
             method: $('#paymethod').val(),
@@ -179,6 +179,7 @@ function getPointDateSearch(){
 
 /* week month 서치 */
 function getPointSearch(date){
+    $('.loading').show();
     var point_order = $('.point_order').val();
     $.ajax({
         url: '/mo/mypage/selectPoint',
@@ -210,6 +211,7 @@ function getPointSearch(date){
                 html += '<hr class="hoz_part" />';
             }
             $('#point_content').html(html);
+            $('.loading').hide();
         },
         error: function(xhr, status, error) {
             console.log(error);
@@ -287,6 +289,7 @@ function pointsValueCheck() {
 
 /*환전 submit */
 function exchangePointSubmit(){
+    $('.loading').show();
     var amount = $('#alliance_exchange_amount').val();
     var bank = $('#alliance_exchange_bank').val();
     var account_number = $('#alliance_exchange_account').val();
@@ -301,6 +304,7 @@ function exchangePointSubmit(){
             },
             type: 'post',
             success: function(data) {
+                $('.loading').hide();
                 if(data.success == true){
                     window.location='/mo_mypage_excharge_success';
                 }else{
@@ -316,8 +320,8 @@ function exchangePointSubmit(){
 
 /*입금,사용 페이지 전환*/
 function WalletPage(type){
+    $('.loading').show();
     walletType = type;
-
     $("#wallet_tab ul li").removeClass("on");
 
     if (type === 'add') {
@@ -354,6 +358,7 @@ function WalletPage(type){
                 html += '<hr class="hoz_part" />';
             }
             $('#point_content').html(html);
+            $('.loading').hide();
         },
         error: function(xhr, status, error) {
             console.log(error);

@@ -22,6 +22,7 @@
         <?php $title = "내지갑"; include 'header.php'; ?>
 
         <div class="sub_wrap">
+            <div class="loading"><img src="/static/images/loading.gif"/></div>
             <div class="content_wrap">
                 <div class="mypage_wallet">
                     <div class="mypage_wallet_point">
