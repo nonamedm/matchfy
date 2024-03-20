@@ -73,7 +73,7 @@
                                                 <?php if(isMobileDevice()&&preg_match($patternOnlyMov,$feed['thumb_filename'])) { ?>
                                                     <img src="/<?= $feed['thumb_filepath']?><?= $feed['thumb_filename']?>"/>
                                                 <?php } else if (preg_match($patternMov,$feed['thumb_filename'])) { ?>
-                                                    <video src="/<?= $feed['thumb_filepath']?><?= $feed['thumb_filename']?>"></video>
+                                                    <video src="/<?= $feed['thumb_filepath']?><?= $feed['thumb_filename']?>" autoplay="autoplay" muted="muted" playsinline></video>
                                                 <?php } else if (preg_match($patternImg,$feed['thumb_filename'])) { ?>
                                                     <img src="/<?= $feed['thumb_filepath']?><?= $feed['thumb_filename']?>" />
                                                 <?php } ?>
