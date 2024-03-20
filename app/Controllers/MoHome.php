@@ -292,7 +292,6 @@ class MoHome extends BaseController
     public function usePoint(){
         $session = session();
         $ci = $session->get('ci');
-        //$ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
         $point = $this->request->getPost('point');
         $pointModel = new PointModel();
 
@@ -325,13 +324,14 @@ class MoHome extends BaseController
         }
     }
 
-    public function mypageSelectPoint(){
+    public function walletTypeList(){
         $session = session();
         $ci = $session->get('ci');
-        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
-        $type = $this->request->getPost('type');
+        $type = $this->request->getPost('walletType');
         $date = $this->request->getPost('date');
         $value = $this->request->getPost('value');
+        $page = intval($this->request->getPost('page'));
+        $perPage = intval($this->request->getPost('perPage'));
         $pointModel = new PointModel();
         
         $points = $pointModel->where('member_ci', $ci);
@@ -370,7 +370,8 @@ class MoHome extends BaseController
             $points->orderBy('create_at', 'DESC');
         }
         
-        $points = $points->findAll();
+        $points = $points->findAll($perPage*$page, 0);
+        // $sql = $pointModel->getLastQuery();
         
         if ($points) {
             return $this->response->setJSON(['success' => true, 'points' => $points]);
@@ -383,12 +384,16 @@ class MoHome extends BaseController
     {
         $session = session();
         $ci = $session->get('ci');
+        $page = 1;
+        $perPage = 6;
+
         $pointModel = new PointModel();
-        
-        $points = $pointModel->where('member_ci', $ci)
-                            ->where('point_type', 'A')
-                            ->orderBy('create_at', 'DESC')
-                            ->findAll();
+
+        $points = $pointModel->where('member_ci', $ci);
+        $points->where('point_type', 'A');
+        $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 week')));
+        $points->orderBy('create_at', 'DESC');
+        $points = $points->findAll($perPage*$page, 0);
 
         return view('mo_mypage_wallet', ['points' => $points]);
     }
@@ -407,26 +412,42 @@ class MoHome extends BaseController
         return view('mo_mypage_wallet2', ['points' => $points]);
     }
 
-    public function walletTypeList()
-    {
+    public function pageClac($pointType){
         $session = session();
         $ci = $session->get('ci');
-        $walletType = $this->request->getPost('walletType');
         $pointModel = new PointModel();
         
-        if($walletType =="add"){
-            $points = $pointModel->where('member_ci', $ci)
-                            ->where('point_type', 'A')
-                            ->orderBy('create_at', 'DESC')
-                            ->findAll();
-        }else{
-            $points = $pointModel->where('member_ci', $ci)
-                            ->where('point_type', 'U')
-                            ->orderBy('create_at', 'DESC')
-                            ->findAll();
-        }
-        return $this->response->setJSON(['success' => true, 'points' => $points]);
+        $count = $pointModel->where('member_ci', $ci)
+                            ->where('point_type', $pointType)
+                            ->countAllResults();
+        return $count;
     }
+
+    // public function walletTypeList()
+    // {
+    //     $session = session();
+    //     $ci = $session->get('ci');
+    //     $walletType = $this->request->getPost('walletType');
+    //     $page = intval($this->request->getPost('page')); //1
+    //     $perPage = intval($this->request->getPost('perPage'));//10
+    //     $pointModel = new PointModel();
+
+    //     $count = $this->pageClac($walletType);
+
+    //     if ($walletType == "add") {
+    //         $points = $pointModel->where('member_ci', $ci)
+    //             ->where('point_type', 'A')
+    //             ->orderBy('create_at', 'DESC')
+    //             ->findAll($perPage*$page, 0);
+    //     } else {
+    //         $points = $pointModel->where('member_ci', $ci)
+    //             ->where('point_type', 'U')
+    //             ->orderBy('create_at', 'DESC')
+    //             ->findAll($perPage*$page, 0);
+    //     }
+
+    //     return $this->response->setJSON(['success' => true, 'points' => $points]);
+    // }
 
     public function mypageWalletCharge()
     {

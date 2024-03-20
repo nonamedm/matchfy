@@ -3063,11 +3063,12 @@ input[type='number']::-webkit-inner-spin-button {
 
 /*loading*/
 .loading{
-    position: absolute;
-    left: 40%;
+    position: fixed;
+    left: 50%;
     top: 50%;
-    width: 20%;
-    height: 10%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 5%;
     display: none;
 }
 .loading img{
