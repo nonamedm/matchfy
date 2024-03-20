@@ -1,6 +1,4 @@
 function meetingMemberList(idx){
-    //text
-    idx=1;
     $.ajax({
         url: '/mo/mypage/group/partcntPopup',
         data:{
