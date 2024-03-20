@@ -65,21 +65,18 @@
                                     <?php foreach ($feed_list as $feed): ?>
                                         <a onclick="showFeedDetail('feedDetail', '<?= $feed['feed_idx'] ?>') ">
                                             <?php if($feed['public_yn']==='0') { ?>
-                                            <?php 
-                                                function isMobileDevice() {
-                                                    return preg_match('/(android|iphone|ipod|ipad|windows phone|iemobile|opera mini)/i', $_SERVER['HTTP_USER_AGENT']);
-                                                }
-                                                $patternImg = "/\.(jpg|jpeg|png|gif|bmp|tiff|tif|webp|svg)$/i";
-                                                $patternMov = "/\.(mp4|avi|mov|mkv|flv|wmv|webm)$/i";
-                                                $patternOnlyMov = "/\.(mov)$/i";
-                                            ?>
-                                            <?php if(isMobileDevice()&&preg_match($patternOnlyMov,$feed['thumb_filename'])) { ?>
-                                                <img src="/<?= $feed['thumb_filepath']?><?= $feed['thumb_filename']?>"/>
-                                            <?php } else if (preg_match($patternMov,$feed['thumb_filename'])) { ?>
-                                                <video src="/<?= $feed['thumb_filepath']?><?= $feed['thumb_filename']?>" autoplay></video>
-                                            <?php } else if (preg_match($patternImg,$feed['thumb_filename'])) { ?>
-                                                <img src="/<?= $feed['thumb_filepath']?><?= $feed['thumb_filename']?>" />
-                                            <?php } ?>
+                                                <?php 
+                                                    $patternImg = "/\.(jpg|jpeg|png|gif|bmp|tiff|tif|webp|svg)$/i";
+                                                    $patternMov = "/\.(mp4|avi|mov|mkv|flv|wmv|webm)$/i";
+                                                    $patternOnlyMov = "/\.(mov)$/i";
+                                                ?>
+                                                <?php if(isMobileDevice()&&preg_match($patternOnlyMov,$feed['thumb_filename'])) { ?>
+                                                    <img src="/<?= $feed['thumb_filepath']?><?= $feed['thumb_filename']?>"/>
+                                                <?php } else if (preg_match($patternMov,$feed['thumb_filename'])) { ?>
+                                                    <video src="/<?= $feed['thumb_filepath']?><?= $feed['thumb_filename']?>"></video>
+                                                <?php } else if (preg_match($patternImg,$feed['thumb_filename'])) { ?>
+                                                    <img src="/<?= $feed['thumb_filepath']?><?= $feed['thumb_filename']?>" />
+                                                <?php } ?>
 
                                             <?php } else { ?>
                                                 <img src="/static/images/profile_img_private.png" />
