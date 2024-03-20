@@ -27,7 +27,7 @@
                     <?php if ($image): ?>
                         <img class="profile_img" src="/<?= $image['file_path'] ?>/<?= $image['file_name'] ?>" />
                     <?php else: ?>
-                        <img class="profile_img" src="/static/images/mypage_pfofile.png" />
+                        <img class="profile_img" src="/static/images/profile_noimg.png" />
                     <?php endif; ?>
                     <div class="content_mypage_info">
                         <div class="profile">

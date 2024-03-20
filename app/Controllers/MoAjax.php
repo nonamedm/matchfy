@@ -801,11 +801,11 @@ class MoAjax extends BaseController
         $session = session();
         $member_ci = $session->get('ci');
         $condition = [
-            'member_ci' => $member_ci,
-            'idx' => $feed_idx,
-            'delete_yn' => 'n',
+            'wh_member_feed.member_ci' => $member_ci,
+            'wh_member_feed.idx' => $feed_idx,
+            'wh_member_feed.delete_yn' => 'n',
         ];
-        $result = $MemberFeedModel->where($condition)->first();
+        $result = $MemberFeedModel->where($condition)->join('wh_member_feed_files', 'wh_member_feed_files.feed_idx = wh_member_feed.idx')->first();
         if ($result)
         {
             

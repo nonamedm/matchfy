@@ -7,9 +7,11 @@ const myfeedPhotoListner = () => {
     feed_photo_input.addEventListener('change', function (e) {
         if (feed_photo_input.files.length > 0) {
             for (let i = 0; i < feed_photo_input.files.length; i++) {
-                const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i;
+                const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg|\.mp4|\.avi|\.mov|\.mkv|\.flv|\.wmv|\.webm)$/i;
+                const allowedExtensionsImg = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i;
+                const allowedExtensionsMov = /(\.mp4|\.avi|\.mov|\.mkv|\.flv|\.wmv|\.webm)$/i;
                 if (!allowedExtensions.exec(feed_photo_input.files[i].name)) {
-                    alert('이미지 파일만 업로드할 수 있습니다.');
+                    alert('이미지 또는 영상만 업로드할 수 있습니다.');
                     // 입력한 파일을 초기화하여 업로드를 취소
                     this.value = '';
                 } else {
@@ -26,11 +28,32 @@ const myfeedPhotoListner = () => {
                         // label 숨기기
                         const input_label = document.getElementById('feed_photo_label');
                         input_label.style.display = 'none';
-                        // 이미지 요소에 이미지 추가
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        img.classList.add('profile_photo_posted');
-                        imageElement.appendChild(img);
+
+                        var fileName = feed_photo_input.files[i].name;
+                        const temp_ext = fileName.split('.').pop();
+
+                        if(allowedExtensionsImg.exec(feed_photo_input.files[i].name)) {
+                            // 이미지 요소에 이미지 추가
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.classList.add('profile_photo_posted');
+                            imageElement.appendChild(img);
+                        } else if(allowedExtensionsMov.exec(feed_photo_input.files[i].name)) {
+                            // 이미지 요소에 이미지 추가
+                            const img = document.createElement('video');
+                            img.src = e.target.result;
+                            img.setAttribute('width', '100%');
+                            img.setAttribute('height', '100%');
+                            img.addEventListener('click',function() {
+                                if (img.paused) {
+                                    img.play();
+                                } else {
+                                    img.pause();
+                                }
+                            });
+                            img.classList.add('profile_photo_posted');
+                            imageElement.appendChild(img);
+                        }
 
                         // javascript에서 fileUpload 호출
                         fileUpload(feed_photo_input.files[i])
@@ -163,11 +186,31 @@ const myFeedModify = () => {
                 // label 숨기기
                 const input_label = document.getElementById('feed_photo_label');
                 input_label.style.display = 'none';
-                // 이미지 요소에 이미지 추가
-                const img = document.createElement('img');
-                img.src = '/' + data.data.thumb_filepath + '/' + data.data.thumb_filename;
-                img.classList.add('profile_photo_posted');
-                imageElement.appendChild(img);
+
+                // 이미지/영상 분기
+                const allowedExtensionsImg = /(jpg|jpeg|png|gif|bmp|tiff|tif|webp|svg)$/i;
+                const allowedExtensionsMov = /(mp4|avi|mov|mkv|flv|wmv|webm)$/i;
+                if(allowedExtensionsImg.exec(data.data.ext)) {
+                    // 이미지 요소에 이미지 추가
+                    const img = document.createElement('img');
+                    img.src = '/' + data.data.thumb_filepath + '/' + data.data.thumb_filename;
+                    img.classList.add('profile_photo_posted');
+                    imageElement.appendChild(img);
+                } else if(allowedExtensionsMov.exec(data.data.ext)) {
+                    const img = document.createElement('video');
+                    img.src = '/' + data.data.thumb_filepath + '/' + data.data.thumb_filename;
+                    img.setAttribute('width', '100%');
+                    img.setAttribute('height', '100%');
+                    img.classList.add('profile_photo_posted');
+                    img.addEventListener('click',function() {
+                        if (img.paused) {
+                            img.play();
+                        } else {
+                            img.pause();
+                        }
+                    })
+                    imageElement.appendChild(img);
+                }
 
                 // 삭제 버튼 생성
                 const deleteButton = document.createElement('button');
@@ -193,12 +236,6 @@ const myFeedModify = () => {
             alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
         },
     });
-
-    // 피드 수정-> insert했을 때 나오는 image 정보를 보고 여기서는 조회한 후 뿌리기.
-    // 그리고 update에 대한 controller 만들어주기
-
-    // if (confirm('피드를 삭제하시겠습니까?')) {
-    // }
 };
 
 const showFeedPopup = (contents, feedIdx) => {
@@ -226,6 +263,10 @@ const showFeedPopup = (contents, feedIdx) => {
 };
 
 const showFeedDetail = (contents, feedIdx) => {
+    var myfeedDetailImg = $("#myfeed_detail_img");
+    var myfeedDetailMov = document.getElementById("myfeed_detail_mov");
+    myfeedDetailImg.attr('style','display:none');
+    myfeedDetailMov.style.display = 'none';
     console.log(contents, feedIdx);
     $.ajax({
         url: '/ajax/showFeedDetail',
@@ -235,9 +276,27 @@ const showFeedDetail = (contents, feedIdx) => {
         success: function (data) {
             console.log(data);
             if (data.data) {
-                $('#myfeed_detail_img').attr('src', '/' + data.data.thumb_filepath + '/' + data.data.thumb_filename);
-                $('#myfeed_cont').text(data.data.feed_cont);
-                $('#feed_idx').val(data.data.idx);
+                const allowedExtensionsImg = /(jpg|jpeg|png|gif|bmp|tiff|tif|webp|svg)$/i;
+                const allowedExtensionsMov = /(mp4|avi|mov|mkv|flv|wmv|webm)$/i;
+                if(allowedExtensionsImg.exec(data.data.ext)) {
+                    myfeedDetailImg.attr('style','display:inline-block');
+                    myfeedDetailImg.attr('src', '/' + data.data.thumb_filepath + '/' + data.data.thumb_filename);
+                    $('#myfeed_cont').text(data.data.feed_cont);
+                    $('#feed_idx').val(data.data.feed_idx);
+                } else if(allowedExtensionsMov.exec(data.data.ext)) {
+                    myfeedDetailMov.style.display = 'inline-block';
+                    myfeedDetailMov.addEventListener('click',function() {
+                        if (myfeedDetailMov.paused) {
+                            myfeedDetailMov.play();
+                        } else {
+                            myfeedDetailMov.pause();
+                        }
+                    })
+                    myfeedDetailMov.setAttribute('src', '/' + data.data.thumb_filepath + '/' + data.data.thumb_filename);
+                    $('#myfeed_cont').text(data.data.feed_cont);
+                    $('#feed_idx').val(data.data.feed_idx);
+
+                }
             } else {
                 alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
             }

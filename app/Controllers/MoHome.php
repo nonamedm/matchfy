@@ -523,10 +523,10 @@ class MoHome extends BaseController
 
         $user = $MemberModel->where('ci', $ci)->first();
         $selectFeed = [
-            'member_ci' => $ci,
-            'delete_yn' => 'n',
+            'wh_member_feed.member_ci' => $ci,
+            'wh_member_feed.delete_yn' => 'n',
         ];
-        $feedList = $MemberFeedModel->where($selectFeed)->findAll();
+        $feedList = $MemberFeedModel->where($selectFeed)->join('wh_member_feed_files', 'wh_member_feed_files.feed_idx = wh_member_feed.idx')->orderBy('wh_member_feed.created_at', 'DESC')->findAll();
         // $feedFile = $MemberFeedFileModel->where('member_ci', $ci)->findAll();
         $condition = ['board_type' => 'main_photo', 'member_ci' => $ci, 'delete_yn' => 'n'];
         $userFile = $MemberFileModel->where($condition)->first();
@@ -536,7 +536,11 @@ class MoHome extends BaseController
             'user' => $user,
             'feed_list' => $feedList,
         ];
-        $data = array_merge($data, $userFile);
+        if(!empty($userFile)) {
+            $data = array_merge($data, $userFile);
+        } else {
+            $data = array_merge($data, ['file_path' => 'static/images/', 'file_name' => 'profile_noimg.png']);
+        }
         return view('mo_myfeed', $data);
     }
     public function myfeedDetail(): string

@@ -7,7 +7,8 @@
             <p id="feed_title" class="txt">피드 상세</p>
 
             <div class="myfeed_detail">
-                <img id="myfeed_detail_img" src="/static/images/profile_img_detail.png" />
+                <img id="myfeed_detail_img" src="/static/images/profile_img_detail.png" style="display:none"/>
+                <video id="myfeed_detail_mov" src="/static/images/profile_img_detail.png" style="display:none"></video>
             </div>
             <div class="myfeed_cont">
                 <p id="myfeed_cont">

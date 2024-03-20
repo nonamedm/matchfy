@@ -532,7 +532,7 @@ const editPhotoListListner = () => {
     profile_mov_input.addEventListener('change', function () {
         if (profile_mov_input.files.length > 0) {
             for (let i = 0; i < profile_mov_input.files.length; i++) {
-                const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i;
+                const allowedExtensions = /(\.mp4|\.avi|\.mov|\.mkv|\.flv|\.wmv|\.webm)$/i;
                 if (!allowedExtensions.exec(profile_mov_input.files[i].name)) {
                     alert('이미지 파일만 업로드할 수 있습니다.');
                     // 입력한 파일을 초기화하여 업로드를 취소
@@ -549,8 +549,17 @@ const editPhotoListListner = () => {
                         imgRegist2.prepend(imageElement);
 
                         // 이미지 요소에 이미지 추가
-                        const img = document.createElement('img');
+                        const img = document.createElement('video');
                         img.src = e.target.result;
+                        img.setAttribute('width', '100%');
+                        img.setAttribute('height', '100%');
+                        img.addEventListener('click',function() {
+                            if (img.paused) {
+                                img.play();
+                            } else {
+                                img.pause();
+                            }
+                        })
                         img.classList.add('profile_photo_posted');
                         imageElement.appendChild(img);
 

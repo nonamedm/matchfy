@@ -12,7 +12,7 @@
                         <label id="feed_photo_label" for="feed_photo_insert"
                             class="signin_label profile_photo_input"></label>
                         <input id="feed_photo_insert" name="feed_photo_insert" type="file" value="" placeholder=""
-                            accept="image/*" />
+                            accept="image/*, video/*" />
                     </div>
                     <div id="myfeed_file_posted" class="regist_file myfeed_file_posted">
 

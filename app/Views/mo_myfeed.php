@@ -54,9 +54,13 @@
                                 ?>
                                     <!-- todo: 추후 10개만 출력하고 더보기 구현 -->
                                     <?php foreach ($feed_list as $feed): ?>
-                                        <a onclick="showFeedDetail('feedDetail', '<?= $feed['idx'] ?>') ">
+                                        <a onclick="showFeedDetail('feedDetail', '<?= $feed['feed_idx'] ?>') ">
                                             <?php if($feed['public_yn']==='0') { ?>
-                                                <img src="/<?= $feed['thumb_filepath']?>/<?= $feed['thumb_filename']?>" />
+                                                <?php if ($feed['ext']==='mp4') {?>
+                                                    <video src="/<?= $feed['thumb_filepath']?><?= $feed['thumb_filename']?>"></video>
+                                                    <?php } else { ?>
+                                                        <img src="/<?= $feed['thumb_filepath']?><?= $feed['thumb_filename']?>" />
+                                                <?php } ?>
 
                                             <?php } else { ?>
                                                 <img src="/static/images/profile_img_private.png" />

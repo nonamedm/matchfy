@@ -46,7 +46,7 @@
                                 <div class="profile_photo_div">
                                     <label for="profile_mov" class="signin_label profile_photo_input"></label>
                                     <input id="profile_mov" name="profile_mov" type="file" value="" placeholder=""
-                                        multiple>
+                                        multiple accept="video/mp4,video/mkv, video/x-m4v,video/*" >
                                     <div id="profile_mov_view" class="profile_mov_view">
                                     </div>
                                 </div>
