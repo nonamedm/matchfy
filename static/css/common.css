@@ -479,6 +479,7 @@ input[type='checkbox'] + label:hover {
     height: 38px;
     background: #ff0267;
     border-radius: 10px;
+    margin-left: 10px;
     color: white;
     border: none;
     font-family: 'Pretendard-Bold';

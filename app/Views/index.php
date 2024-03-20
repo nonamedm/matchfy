@@ -84,7 +84,7 @@
                         ?>
                         <button class="login_btn" onclick="userLogout()">
                             <p>
-                                <?= $name ?> <br/>로그아웃
+                                로그아웃
                             </p>
                         </button>
                         <button class="login_btn" onclick="moveToUrl('/mo/mypage')">
