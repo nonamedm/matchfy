@@ -48,7 +48,7 @@
 
                     <div class="mypage_wallet_list">
                         <div class="mypage_wallet_filter">
-                            <select class="point_order small">
+                            <select id="point_order" class="small">
                                 <option value="latest"> 최신순</option>
                                 <option value="oldest"> 오래된순</option>
                                 <option value="highest_amount"> 금액많은순</option>

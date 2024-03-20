@@ -9,6 +9,8 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/meeting_member.js"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
 </head>
 
@@ -72,7 +74,8 @@
             <div style="height: 50px;"></div>
             <footer class="footer">
                 <div class="btn_group">
-                    <button type="button" class="btn type01">함께하기</button>
+                                                                <!-- meeting_idx 값을 안에 넣어주면됨 -->
+                    <button type="button" class="btn type01" onclick="meetingMemberList('1')">함께하기</button>
                 </div>
                 
             </footer>

@@ -10,6 +10,7 @@ use App\Models\MemberFeedModel;
 use App\Models\MemberFeedFileModel;
 use App\Models\PointModel;
 use App\Models\PointExchangeModel;
+use App\Models\MeetingMembersModel;
 use App\Helpers\MoHelper;
 use CodeIgniter\Session\Session;
 
@@ -371,8 +372,7 @@ class MoHome extends BaseController
         }
         
         $points = $points->findAll($perPage*$page, 0);
-        // $sql = $pointModel->getLastQuery();
-        
+
         if ($points) {
             return $this->response->setJSON(['success' => true, 'points' => $points]);
         } else {
@@ -398,20 +398,6 @@ class MoHome extends BaseController
         return view('mo_mypage_wallet', ['points' => $points]);
     }
 
-    public function mypageWallet2(): string
-    {
-        $session = session();
-        $ci = $session->get('ci');
-        $pointModel = new PointModel();
-        
-        $points = $pointModel->where('member_ci', $ci)
-                            ->where('point_type', 'U')
-                            ->orderBy('create_at', 'DESC')
-                            ->findAll();
-
-        return view('mo_mypage_wallet2', ['points' => $points]);
-    }
-
     public function pageClac($pointType){
         $session = session();
         $ci = $session->get('ci');
@@ -422,32 +408,6 @@ class MoHome extends BaseController
                             ->countAllResults();
         return $count;
     }
-
-    // public function walletTypeList()
-    // {
-    //     $session = session();
-    //     $ci = $session->get('ci');
-    //     $walletType = $this->request->getPost('walletType');
-    //     $page = intval($this->request->getPost('page')); //1
-    //     $perPage = intval($this->request->getPost('perPage'));//10
-    //     $pointModel = new PointModel();
-
-    //     $count = $this->pageClac($walletType);
-
-    //     if ($walletType == "add") {
-    //         $points = $pointModel->where('member_ci', $ci)
-    //             ->where('point_type', 'A')
-    //             ->orderBy('create_at', 'DESC')
-    //             ->findAll($perPage*$page, 0);
-    //     } else {
-    //         $points = $pointModel->where('member_ci', $ci)
-    //             ->where('point_type', 'U')
-    //             ->orderBy('create_at', 'DESC')
-    //             ->findAll($perPage*$page, 0);
-    //     }
-
-    //     return $this->response->setJSON(['success' => true, 'points' => $points]);
-    // }
 
     public function mypageWalletCharge()
     {
@@ -528,9 +488,42 @@ class MoHome extends BaseController
     {
         return view('mo_mypage_group_detail');
     }
-    public function mypageGroupPartcntPopup(): string
+    public function mypageGroupPartcntPopup()
     {
-        return view('mo_mypage_group_partcnt_popup');
+        $session = session();
+        $ci = $session->get('ci');
+        $meeting_idx = $this->request->getPost('meetingIdx');
+
+        $meeting_members = new MeetingMembersModel();
+        $query = $meeting_members->distinct()
+                                ->select('
+                                    a.idx as idx,
+                                    a.meeting_idx as meeting_idx,
+                                    a.delete_yn as delete_yn,
+                                    a.meeting_master as meeting_master,
+                                    d.file_path as file_path,
+                                    d.file_name as file_name,
+                                    c.name as name,
+                                    c.city as city,
+                                    c.birthday as birthday,
+                                    c.mbti as mbti'
+                                )
+                                ->from('wh_meeting_members a')
+                                ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+                                ->join('members c', 'a.member_ci = c.ci', 'left')
+                                ->join('member_files d', 'c.ci = d.member_ci', 'left')
+                                ->where('b.idx', '1')
+                                ->where('a.delete_yn', 'N')
+                                ->orderBy('a.meeting_master')
+                                ->orderBy('a.create_at')
+                                ->get();
+        $result = $query->getResult();
+
+        if($result){
+            return $this->response->setJSON(['success' => true, 'data' => $result]);
+        }else{
+            return $this->response->setJSON(['success' => false,]);
+        }
     }
     public function mypageGroupApplyPopup(): string
     {

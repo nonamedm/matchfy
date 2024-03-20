@@ -16,9 +16,7 @@ $(document).ready(function() {
         pointsValueCheck();
     });
     
-    $('.point_order').change(function() {
-        var value = $(this).val();
-        
+    $('.point_date').change(function() {
         if($('.1week').hasClass('on')){
             point_date = '1week';
         }else if($('.1month').hasClass('on')){
@@ -26,9 +24,12 @@ $(document).ready(function() {
         }else{
             point_date = '3month';
         }
-
-        getPointSearch(value,point_date,walletType);
     });
+    
+    $('#point_order').change(function() {
+        getPointSearch(point_date);
+    });
+
 }); 
 
 /* 페이지 이동 */
@@ -185,7 +186,6 @@ function getPointDateSearch(){
             if($(this).hasClass(arr[i])){
                 point_date = arr[i];
                 point_page = 1;
-                console.log(point_date);
                 return false;
             }
         }
@@ -195,9 +195,10 @@ function getPointDateSearch(){
 
 /* week month 서치 */
 function getPointSearch(date){
+    getPointDateSearch();
     point_page = 1;
     point_date = date;
-    point_order = $('.point_order').val();
+    point_order = $('#point_order').val();
     WalletPage(walletType);
 }
 // function getPointSearch(date){
@@ -205,7 +206,7 @@ function getPointSearch(date){
 //     perpoint_page = 8;
 //     $('.loading').show();
 //     loading = true;
-//     var point_order = $('.point_order').val();
+//     var point_order = $('#point_order').val();
 //     $.ajax({
 //         url: '/mo/mypage/selectPoint',
 //         type: 'post',
@@ -356,7 +357,7 @@ function WalletPage(type){
     loading = true;
     walletType = type;
     $('.loading').show();
-    point_order = $('.point_order').val();
+    point_order = $('#point_order').val();
     $("#wallet_tab ul li").removeClass("on");
 
     if (type === 'add') {
