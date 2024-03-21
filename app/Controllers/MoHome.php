@@ -230,6 +230,7 @@ class MoHome extends BaseController
                         ->first();
 
         $data = [
+            'nickname' => $user['nickname'],
             'name' => $user['name'],
             'birthday' => substr($user['birthday'], 0, 4),
             'city' => $user['city'],
@@ -552,28 +553,50 @@ class MoHome extends BaseController
     }
     public function matchFeed(): string
     {
-        return view('mo_match_feed');
+        $MemberFeedModel = new MemberFeedModel();
+        $datas = $MemberFeedModel
+        ->query(
+        'SELECT 	wmf.idx,
+                    wmf.feed_cont,
+                    wmff.file_path as feed_filepath,
+                    wmff.file_name as feed_filename,
+                    wmff.ext,
+                    mb.name,
+                    mb.nickname,
+                    SUBSTRING(mb.birthday, 1, 4) as birthyear,
+                    mb.city,
+                    mb.mbti,
+                    mf.file_path,
+                    mf.file_name
+            FROM    wh_member_feed wmf
+            LEFT JOIN members mb on wmf.member_ci = mb.ci
+            LEFT JOIN member_files mf on mb.ci = mf.member_ci
+            LEFT JOIN wh_member_feed_files wmff on wmf.idx = wmff.feed_idx 
+        ')->getResultArray();
+        $data['feeds'] = $datas;
+        return view('mo_match_feed',$data);
     }
     public function myfeedView(): string
     {
         return view('mo_myfeed_view');
     }
-    public function myfeedViewProfile(): string
+    public function myfeedViewProfile($id)
     {
         $session = session();
         $ci = $session->get('ci');
 
         $MemberModel = new MemberModel();
-        $user = $MemberModel->where('ci', $ci)->first();
+        $user = $MemberModel->where('nickname', $id)->first();
 
         $MemberFileModel = new MemberFileModel();
         $imageInfo = $MemberFileModel
-                        ->where('member_ci', $ci)
+                        ->where('member_ci', $user['ci'])
                         ->where('board_type', 'main_photo')
                         ->where('delete_yn', 'n') 
                         ->first();
 
         $data = [
+            'nickname' => $user['nickname'],
             'name' => $user['name'],
             'birthday' => $user['birthday'],
             'gender' => $user['gender'],

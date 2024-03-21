@@ -31,7 +31,7 @@
                     <?php endif; ?>
                     <div class="content_mypage_info">
                         <div class="profile">
-                            <h2  onclick="moveToUrl('/mo/myfeed/view/profile')"><?= $name ?><span style="font-size:15px;"> 님</span></h2>
+                            <h2  onclick="moveToUrl('/mo/myfeed/view/profile/<?= $nickname ?>')"><?= $nickname ?><span style="font-size:15px;"> 님</span></h2>
                             <button class="myinfo_level">Lv.10</button>
                         </div>
                         <p>

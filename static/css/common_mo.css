@@ -251,6 +251,13 @@ header .menu_right.edit {
     color: #777777;
     margin: 5px 0px !important;
 }
+.content_feed_list {
+    margin: 20px 0;
+}
+.content_feed_list .profile_btn {
+    position: absolute;
+    right: 20px;
+}
 .content_mypage_list li {
     cursor: pointer;
 }
@@ -1321,14 +1328,14 @@ td {
     color: #ffffff;
 }
 .mo_wrap .sub_wrap .content_wrap .content_body.content_mypage .content_mypage_info {
-    padding: 15px 20px;
+    padding: 15px 0px 15px 20px;
     display: flex;
     flex-direction: column;
 }
 .mo_wrap .sub_wrap .content_wrap .content_body.content_mypage .content_mypage_info h2 {
     font-family: 'Pretendard-Bold';
     font-weight: 700;
-    font-size: 20px;
+    font-size: 15px;
     line-height: 24px;
     text-align: center;
     cursor: pointer;
@@ -2211,8 +2218,8 @@ input[type='number']::-webkit-inner-spin-button {
     cursor: pointer;
 }
 .content_wrap .content_mypage .profile_img {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
 }
 .content_wrap .content_mypage {
@@ -2226,7 +2233,7 @@ input[type='number']::-webkit-inner-spin-button {
 }
 .content_wrap .content_mypage_info h2 {
     font-family: 'Pretendard-Bold';
-    font-size: 18px;
+    font-size: 15px;
     line-height: 22px;
     text-align: center;
     color: #000000;
@@ -2255,6 +2262,11 @@ input[type='number']::-webkit-inner-spin-button {
 
 /* feed list */
 .feed_img_box img {
+    width: 335px;
+    height: 335px;
+    border-radius: 3px;
+}
+.feed_img_box video {
     width: 335px;
     height: 335px;
     border-radius: 3px;

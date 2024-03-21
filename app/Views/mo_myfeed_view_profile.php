@@ -27,14 +27,14 @@
                     <?php if ($image): ?>
                         <img class="profile_img" src="/<?= $image['file_path'] ?>/<?= $image['file_name'] ?>" />
                     <?php else: ?>
-                        <img class="profile_img" src="/static/images/mypage_pfofile.png" />
+                        <img class="profile_img" src="/static/images/profile_noimg.png" />
                     <?php endif; ?>
                 </div>
             
                 <div class="content_mypage_list">
                     <ul>
                         <li class="profile_header">
-                            <h2><?=$name?></h2>
+                            <h2><?=$nickname?></h2>
                             <p><?=substr($birthday, 0, 4)?> · <?=$city?> · <?=$mbti?></p>
                         </li>
                         <hr class="hoz_part" />

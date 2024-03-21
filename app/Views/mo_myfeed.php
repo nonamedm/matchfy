@@ -38,7 +38,7 @@
                     <div class="content_mypage_info">
                         <div class="profile">
                             <h2>
-                                <?= $name ?><span style="font-size:15px;"> 님</span>
+                                <?= $user['nickname'] ?><span style="font-size:15px;"> 님</span>    
                             </h2>
                         </div>
                         <p>
@@ -55,9 +55,12 @@
                     <div class="form_row signin_form">
                         <div class="signin_form_div">
                             <div id="feed_photo_view" class="myfeed_list">
+
+                                <!-- 본인계정일 때만 add 활성 -->
                                 <div class="profile_photo_div">
                                     <div id="feed_photo" class="feed_photo" onclick="addMyFeed();"></div>
                                 </div>
+
                                 <?php 
                                     if(count($feed_list)>0) {
                                 ?>

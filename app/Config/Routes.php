@@ -61,7 +61,7 @@ $routes->get('/mo/myfeed/detail', 'MoHome::myfeedDetail');
 $routes->get('/mo/myfeed/edit', 'MoHome::myfeedEdit');
 $routes->get('/mo/matchFeed', 'MoHome::matchFeed');
 $routes->get('/mo/myfeed/view', 'MoHome::myfeedView');
-$routes->get('/mo/myfeed/view/profile', 'MoHome::myfeedViewProfile');
+$routes->get('/mo/myfeed/view/profile/(:any)', 'MoHome::myfeedViewProfile/$1');
 $routes->get('/mo/alertPopup', 'MoHome::alertPopup');
 $routes->get('/mo/alliance/list', 'MoHome::allianceList');
 $routes->get('/mo/alliance/regionPopup', 'MoHome::allianceRegionPopup');
