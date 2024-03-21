@@ -18,8 +18,9 @@
     <div class="wrap" style="background-color:#f9f9f9;">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        
-        <?php $title = "마이페이지"; include 'header.php'; ?>
+
+        <?php $title = "마이페이지";
+        include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
@@ -31,11 +32,13 @@
                     <?php endif; ?>
                     <div class="content_mypage_info">
                         <div class="profile">
-                            <h2  onclick="moveToUrl('/mo/myfeed/view/profile/<?= $nickname ?>')"><?= $nickname ?><span style="font-size:15px;"> 님</span></h2>
+                            <h2 onclick="moveToUrl('/mo/viewProfile/<?= $nickname ?>')">
+                                <?= $nickname ?><span style="font-size:15px;"> 님</span>
+                            </h2>
                             <button class="myinfo_level">Lv.10</button>
                         </div>
                         <p>
-                            <?= $birthday ?> · 
+                            <?= $birthday ?> ·
                             <?= $city ?>
                             <?php echo (!is_null($mbti)) ? ' · ' . $mbti : ''; ?>
                         </p>

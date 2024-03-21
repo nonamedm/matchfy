@@ -1,14 +1,16 @@
 <html lang="ko">
-<?php     function isMobileDevice() {
-        return preg_match('/(android|iphone|ipod|ipad|windows phone|iemobile|opera mini)/i', $_SERVER['HTTP_USER_AGENT']);
-    }
+<?php function isMobileDevice()
+{
+    return preg_match('/(android|iphone|ipod|ipad|windows phone|iemobile|opera mini)/i', $_SERVER['HTTP_USER_AGENT']);
+}
 
-    // if (isMobileDevice()) {
-    //     echo "현재 접속 기기는 모바일입니다.";
-    // } else {
-    //     echo "현재 접속 기기는 PC입니다.";
-    // }
+// if (isMobileDevice()) {
+//     echo "현재 접속 기기는 모바일입니다.";
+// } else {
+//     echo "현재 접속 기기는 PC입니다.";
+// }
 ?>
+
 <head>
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -23,12 +25,14 @@
     <script src="/static/js/basic.js"></script>
     <script src="/static/js/myfeed.js"></script>
 </head>
+
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        
-        <?php $title = "내피드"; include 'header.php'; ?>
+
+        <?php $title = "내피드";
+        include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
@@ -38,7 +42,7 @@
                     <div class="content_mypage_info">
                         <div class="profile">
                             <h2>
-                                <?= $user['nickname'] ?><span style="font-size:15px;"> 님</span>    
+                                <?= $user['nickname'] ?><span style="font-size:15px;"> 님</span>
                             </h2>
                         </div>
                         <p>
@@ -48,7 +52,8 @@
                         </p>
                     </div>
                     <div>
-                        <button class="popup_view_profile" onclick="moveToUrl('/mo/myfeed/view/profile/<?= $user['nickname'] ?>')">프로필</button>
+                        <button class="popup_view_profile"
+                            onclick="moveToUrl('/mo/viewProfile/<?= $user['nickname'] ?>')">프로필</button>
                     </div>
                 </div>
                 <div class="profile_img_box">
@@ -57,46 +62,55 @@
                             <div id="feed_photo_view" class="myfeed_list">
 
                                 <!-- 본인계정일 때만 add 활성 -->
-                                <?php 
+                                <?php
                                 $session = $session = session();
                                 $ci = $session->get('ci');
-                                    if($user['ci'] === $ci) {
-                                ?>
+                                if ($user['ci'] === $ci)
+                                {
+                                    ?>
                                     <div class="profile_photo_div">
                                         <div id="feed_photo" class="feed_photo" onclick="addMyFeed();"></div>
                                     </div>
 
-                                <?php
-                                    }
+                                    <?php
+                                }
                                 ?>
 
-                                <?php 
-                                    if(count($feed_list)>0) {
-                                ?>
+                                <?php
+                                if (count($feed_list) > 0)
+                                {
+                                    ?>
                                     <!-- todo: 추후 10개만 출력하고 더보기 구현 -->
                                     <?php foreach ($feed_list as $feed): ?>
                                         <a onclick="showFeedDetail('feedDetail', '<?= $feed['feed_idx'] ?>') ">
-                                            <?php if($feed['public_yn']==='0') { ?>
-                                                <?php 
-                                                    $patternImg = "/\.(jpg|jpeg|png|gif|bmp|tiff|tif|webp|svg)$/i";
-                                                    $patternMov = "/\.(mp4|avi|mov|mkv|flv|wmv|webm)$/i";
-                                                    $patternOnlyMov = "/\.(mov)$/i";
+                                            <?php if ($feed['public_yn'] === '0')
+                                            { ?>
+                                                <?php
+                                                $patternImg = "/\.(jpg|jpeg|png|gif|bmp|tiff|tif|webp|svg)$/i";
+                                                $patternMov = "/\.(mp4|avi|mov|mkv|flv|wmv|webm)$/i";
+                                                $patternOnlyMov = "/\.(mov)$/i";
                                                 ?>
-                                                <?php if(isMobileDevice()&&preg_match($patternOnlyMov,$feed['thumb_filename'])) { ?>
-                                                    <img src="/<?= $feed['thumb_filepath']?><?= $feed['thumb_filename']?>"/>
-                                                <?php } else if (preg_match($patternMov,$feed['thumb_filename'])) { ?>
-                                                    <video src="/<?= $feed['thumb_filepath']?><?= $feed['thumb_filename']?>" autoplay="autoplay" muted="muted" playsinline></video>
-                                                <?php } else if (preg_match($patternImg,$feed['thumb_filename'])) { ?>
-                                                    <img src="/<?= $feed['thumb_filepath']?><?= $feed['thumb_filename']?>" />
+                                                <?php if (isMobileDevice() && preg_match($patternOnlyMov, $feed['thumb_filename']))
+                                                { ?>
+                                                    <img src="/<?= $feed['thumb_filepath'] ?><?= $feed['thumb_filename'] ?>" />
+                                                <?php } else if (preg_match($patternMov, $feed['thumb_filename']))
+                                                { ?>
+                                                        <video src="/<?= $feed['thumb_filepath'] ?><?= $feed['thumb_filename'] ?>"
+                                                            autoplay="autoplay" muted="muted" playsinline></video>
+                                                <?php } else if (preg_match($patternImg, $feed['thumb_filename']))
+                                                { ?>
+                                                            <img src="/<?= $feed['thumb_filepath'] ?><?= $feed['thumb_filename'] ?>" />
                                                 <?php } ?>
 
-                                            <?php } else { ?>
+                                            <?php } else
+                                            { ?>
                                                 <img src="/static/images/profile_img_private.png" />
                                             <?php } ?>
                                         </a>
                                     <?php endforeach; ?>
-                                <?php
-                                    };
+                                    <?php
+                                }
+                                ;
                                 ?>
                             </div>
                         </div>

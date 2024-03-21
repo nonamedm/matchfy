@@ -77,7 +77,7 @@
 
     <a href="/mo/matchFeed">매치피드</a><br />
     <a href="/mo/myfeed/view">피드보기</a><br />
-    <a href="/mo/myfeed/view/profile">피드 프로필보기</a><br />
+    <a href="/mo/viewProfile">피드 프로필보기</a><br />
     <a href="/mo/alertPopup">등업(알림팝업)</a><br />
     <a href="/mo/alliance/list">제휴</a><br />
     <a href="/mo/alliance/regionPopup">제휴 지역팝업</a><br />
