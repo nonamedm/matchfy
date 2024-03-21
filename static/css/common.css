@@ -489,6 +489,10 @@ input[type='checkbox'] + label:hover {
     text-transform: capitalize;
     justify-content: center;
 }
+.login_btn.mypage_icon {
+    width: 45px;
+    background: transparent;
+}
 .login_btn p {
     margin: 15px 5px;
 }
@@ -553,6 +557,17 @@ input[type='checkbox'] + label:hover {
     color: #555555;
 }
 
+.menu_left {
+    display: flex;
+    position: absolute;
+    left: 10px;
+    top: 20px;
+}
+.menu_left button {
+    border: none;
+    background-color: transparent;
+}
+
 @media (max-width: 1780px) {
     .circle_h {
         justify-content: center;
@@ -591,7 +606,20 @@ input[type='checkbox'] + label:hover {
         height: 100%;
     }
 }
+
+@media (min-width: 1281px) {
+    header .logo {
+        float: left;
+    }
+}
 @media (max-width: 1280px) {
+    header ul {
+        text-align: center !important;
+    }
+    header .menu_item {
+        position: absolute;
+        right: 10px;
+    }
     .content_banner_top {
         height: 300px;
     }
@@ -604,7 +632,21 @@ input[type='checkbox'] + label:hover {
         height: 240px;
     }
 }
+@media (min-width: 969px) {
+    .login_btn.mypage_icon {
+        display: none;
+    }
+    .menu_left {
+        display: none !important;
+    }
+}
 @media (max-width: 968px) {
+    .login_btn {
+        display: none;
+    }
+    .login_btn.mypage_icon {
+        display: flex;
+    }
     .content_no_img.login_main .group_row {
         margin: 0 0 20px 0;
     }

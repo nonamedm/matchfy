@@ -720,7 +720,18 @@ class MoHome extends BaseController
     }
     public function partner(): string
     {
-        return view('mo_partner');
+        $session = session();
+        $ci = $session->get('ci');
+
+        $MemberModel = new MemberModel();
+        $user = $MemberModel->where('ci', $ci)->first();
+
+        $data = [
+            'name' => $user['name'],
+            'grade' => $user['grade'],
+        ];
+
+        return view('mo_partner', $data);
     }
     public function partnerRegular(): string
     {
