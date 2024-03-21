@@ -117,9 +117,20 @@ class MoAjax extends BaseController
                 'errors' => $this->validator->getErrors(),
             ]);
         } else
-        {
-            // $postData = $this->request->getPost();
-
+        {            
+            $MemberModel = new MemberModel();
+            
+            $is_duplicate = true;
+            $random_word = '';
+            // 닉네임 중복확인
+            while ($is_duplicate) {
+                // 닉네임 랜덤 생성
+                $word_file_path = APPPATH . 'data/RandomWord.php';
+                require($word_file_path);
+                $random_word = $randomadj[array_rand($randomadj)].$randomword[array_rand($randomword)].'@'.mt_rand(100000, 999999);
+                $is_duplicate = $MemberModel->where(['nickname'=>$random_word])->first();
+            }
+            
             $mobile_no = $this->request->getPost('mobile_no');
             $encrypter = \Config\Services::encrypter();
             $ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 32]));
@@ -135,7 +146,6 @@ class MoAjax extends BaseController
             $town = $this->request->getPost('town');
             // $town = $encrypter->decrypt(base64_decode($ci), ['key' => 'nonamedm', 'blockSize' => 32]);
 
-            $MemberModel = new MemberModel();
 
             $data = [
                 'mobile_no' => $mobile_no,
@@ -148,6 +158,7 @@ class MoAjax extends BaseController
                 'gender' => $gender,
                 'city' => $city,
                 'town' => $town,
+                'nickname' => $random_word,
             ];
 
             // 데이터 저장
