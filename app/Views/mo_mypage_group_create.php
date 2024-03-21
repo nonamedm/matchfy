@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/static/css/datepicker.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfeedb645765a4f5e27cfb8dda43a2c8&libraries=services"></script>
 </head>
 
 <body class="mo_wrap">
@@ -26,28 +27,29 @@
 
         <div class="sub_wrap">
             <div class="content_wrap">
-                <form class="main_signin_form group_create">
+                <form class="main_signin_form group_create" action="/mo/mypage/group/detail" method="post" enctype="multipart/form-data">
                     <legend></legend>
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <h4 class="profile_photo_label">대표사진</h4>
                                 <div class="profile_photo_div">
-                                    <label for="group_photo"
-                                        class="signin_label profile_photo_input group_photo_input"></label>
-                                    <input id="group_photo" type="file" value="" placeholder="">
+                                    <label for="group_photo" class="signin_label profile_photo_input group_photo_input"></label>
+                                    <input id="group_photo" name="meeting_photo" type="file" value="" placeholder=""
+                                        multiple accept="image/*">
+                                        <!-- <div id="profile_photo_view" class="profile_photo_view"> -->
                                 </div>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="group_category" class="signin_label">카테고리</label>
-                                <select id="group_category" class="custom_select" value="">
+                                <label for="category" class="signin_label">카테고리</label>
+                                <select id="category" name="category" class="custom_select" value="">
                                     <option value="">선택</option>
-                                    <option value="0">등산</option>
-                                    <option value="1">스포츠</option>
-                                    <option value="2">여행</option>
-                                    <option value="3">...</option>
+                                    <option value="01">주중모임</option>
+                                    <option value="02">주중여행</option>
+                                    <option value="03">주말모임</option>
+                                    <option value="04">주말여행</option>
                                 </select>
                             </div>
                         </div>
@@ -57,10 +59,10 @@
                                 <div class="schedule_calendar multy_select">
                                     <div class="schedule_calendar">
                                         <div class="schedule_calendar_div">
-                                            <input type="text" id="datepicker" />
+                                            <input type="text" id="datepicker" name="recruitment_start_date"/>
                                         </div>
                                         <div class="schedule_calendar_div" style="margin-left: 8px;">
-                                            <input type="text" id="datepicker1" />
+                                            <input type="text" id="datepicker1" name="recruitment_end_date"/>
                                         </div>
                                     </div>
                                 </div>
@@ -72,10 +74,10 @@
                                 <div class="schedule_calendar multy_select">
                                     <div class="schedule_calendar">
                                         <div class="schedule_calendar_div">
-                                            <input type="text" id="datepicker2" />
+                                            <input type="text" id="datepicker2" name="meeting_start_date"/>
                                         </div>
                                         <div class="schedule_calendar_div" style="margin-left: 8px;">
-                                            <input type="text" id="datepicker3" />
+                                            <input type="text" id="datepicker3" name="meeting_end_date"/>
                                         </div>
                                     </div>
                                 </div>
@@ -83,16 +85,12 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="group_personnel" class="signin_label">인원</label>
-                                <select id="group_personnel" class="custom_select" value="">
-                                    <option value="">선택</option>
-                                    <option value="0">~5명</option>
-                                    <option value="1">5~10명</option>
-                                    <option value="2">10명 이상</option>
-                                </select>
+                                <label for="number_of_people" class="signin_label">인원</label>
+                                <input id="number_of_people" name="number_of_people" type="text" value="<?php echo $name ?>"
+                                    placeholder="모집 인원을 입력하세요" >
                             </div>
                         </div>
-                        <div class="form_row signin_form">
+                        <!-- <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="group_age" class="signin_label">나이</label>
                                 <div class="multy_select">
@@ -112,56 +110,57 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="group_percent" class="signin_label">매칭률</label>
-                                <select id="group_percent" class="custom_select" value="">
+                                <label for="matching_rate" class="signin_label">매칭률</label>
+                                <select id="matching_rate" class="custom_select" name="matching_rate" value="">
                                     <option value="">선택</option>
-                                    <option value="0">~50%</option>
-                                    <option value="1">50~60%</option>
-                                    <option value="2">60~70%</option>
-                                    <option value="3">70~70%</option>
-                                    <option value="4">80~70%</option>
-                                    <option value="5">90% 이상</option>
+                                    <option value="01">~50%</option>
+                                    <option value="02">50~60%</option>
+                                    <option value="03">60~70%</option>
+                                    <option value="04">70~80%</option>
+                                    <option value="05">80~70%</option>
+                                    <option value="06">90% 이상</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="group_detail" class="signin_label">모임상세</label>
-                                <input id="group_title" type="text" value="" placeholder="제목을 입력하세요"><br />
-                                <textarea id="group_cont" value="" placeholder="내용을 입력하세요"></textarea></br />
-                                <select id="group_revervation_list" class="custom_select" value="">
+                                <input id="title" type="text" name="title" value="" placeholder="제목을 입력하세요"><br />
+                                <textarea id="content" name="content" value="" placeholder="내용을 입력하세요"></textarea></br />
+                                <select id="reservation_previous" class="custom_select" value="">
                                     <option>예약 내역 선택</option>
                                     <option value="0">20대</option>
                                     <option value="1">30대</option>
                                     <option value="2">40대</option>
                                     <option value="2">50대 이상</option>
+                                    <!-- 이전 예약 내역 불러오는 걸로 수정필요 -->
                                 </select>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="group_address" class="signin_label">모임장소</label>
+                                <label for="meeting_place" class="signin_label">모임장소</label>
                                 <div class="input_ico_search">
-                                    <input id="group_address" type="text" value="" placeholder="주소검색">
-                                    <img src="/static/images/ico_search_18x18.png" />
+                                    <input id="meeting_place" type="text" name="meeting_place" value="" placeholder="주소검색">
+                                    <img src="/static/images/ico_search_18x18.png" onclick="searchPlaces()"/>
                                 </div>
-                                <img class="group_create_map" src="/static/images/group_naver_map.png" />
+                                <div id="map" style="width:335px;height:175px;margin-top: 20px;"></div>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="group_fee" class="signin_label">회비</label>
+                                <label for="membership_fee" class="signin_label">회비</label>
                                 <div class="input_ico_search">
-                                    <input id="group_fee" type="text" value="" placeholder="">
+                                    <input id="membership_fee" type="text" name="membership_fee" value="" placeholder="">
                                 </div>
                             </div>
                         </div>
                         <div class="btn_group multy">
                             <button type="button" class="btn type02">취소</button>
-                            <button type="button" class="btn type01">저장</button>
+                            <button type="submit" class="btn type01">저장</button>
                         </div>
 
                     </div>
@@ -296,6 +295,57 @@
             //초기값을 오늘 날짜로 설정
             $('#datepicker3').datepicker('setDate', '+1D'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
         });
+
+
+        /* 카카오 맵 */ 
+        var mapContainer = document.getElementById('map'), 
+            mapOption = {
+                center: new kakao.maps.LatLng(33.450701, 126.570667), 
+                level: 3 
+            }; 
+
+        // 지도 생성
+        var map = new kakao.maps.Map(mapContainer, mapOption); 
+        
+        // 장소 검색 객체 생성
+        var ps = new kakao.maps.services.Places();  
+    
+        function searchPlaces() {
+            var keyword = document.getElementById('meeting_place').value;
+
+            if (!keyword.replace(/^\s+|\s+$/g, '')) {
+                alert('키워드를 입력해주세요!');
+                return false;
+            }
+
+            // 키워드로 장소 검색
+            ps.keywordSearch(keyword, placesSearchCB); 
+        }
+
+        //앤터 추가
+        document.getElementById('meeting_place').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { 
+                searchPlaces();
+            }
+        });
+
+        function placesSearchCB(data, status, pagination) {
+            if (status === kakao.maps.services.Status.OK) {
+
+                var coords = new kakao.maps.LatLng(data[0].y, data[0].x);//위치 이동
+                console.log(coords);
+                map.setCenter(coords);
+                
+                //마커
+                var marker = new kakao.maps.Marker({
+                    map: map,
+                    position: coords
+                });
+            } else {
+                alert('검색 결과가 없습니다.');
+            }
+        }
+
     </script>
     <!-- -->
 

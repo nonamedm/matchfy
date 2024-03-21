@@ -26,7 +26,7 @@
                 </div>
                 <div class="group_detail_info">
                     <div class="group_detail_header">
-                        <div class="group_detail_type">주중 모임</div>
+                        <div class="group_detail_type">주중 모임 <?php $postData ?></div>
                         <p>매칭률 <span>90%</span> 이상</p>
                     </div>
                     <div class="group_detail_title">
