@@ -31,7 +31,7 @@
                     <?php endif; ?>
                     <div class="content_mypage_info">
                         <div class="profile">
-                            <h2  onclick="moveToUrl('/mo/myfeed/view/profile')"><?= $name ?><span style="font-size:15px;"> 님</span></h2>
+                            <h2  onclick="moveToUrl('/mo/myfeed/view/profile/<?= $nickname ?>')"><?= $nickname ?><span style="font-size:15px;"> 님</span></h2>
                             <button class="myinfo_level">Lv.10</button>
                         </div>
                         <p>
@@ -78,7 +78,7 @@
                             </p>
                         </li>
                         <hr class="hoz_part" />
-                        <li onclick="moveToUrl('/mo/myfeed')">
+                        <li onclick="moveToUrl('/mo/myfeed/<?= $nickname ?>')">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <rect x="0.75" y="0.75" width="14.5" height="14.5" rx="2.25" stroke="#111111"
