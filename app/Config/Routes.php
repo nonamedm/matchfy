@@ -56,7 +56,7 @@ $routes->get('/mo/mypage/mygroup/list', 'MoHome::mypageMygroupList');
 $routes->get('/mo/mypage/mygroup/list/edit', 'MoHome::mypageMygroupListEdit');
 $routes->get('/mo/mypage/group/searchPopup', 'MoHome::mypageGroupSearchPopup');
 $routes->get('/mo/mymsg/ai/qna', 'MoHome::mymsgAiQna');
-$routes->get('/mo/myfeed', 'MoHome::myfeed');
+$routes->get('/mo/myfeed/(:any)', 'MoHome::myfeed/$1');
 $routes->get('/mo/myfeed/detail', 'MoHome::myfeedDetail');
 $routes->get('/mo/myfeed/edit', 'MoHome::myfeedEdit');
 $routes->get('/mo/matchFeed', 'MoHome::matchFeed');

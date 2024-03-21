@@ -510,7 +510,7 @@ class MoHome extends BaseController
     {
         return view('mo_mymsg_ai_qna');
     }
-    public function myfeed(): string
+    public function myfeed($id)
     {
         $session = session();
         $ci = $session->get('ci');
@@ -521,17 +521,17 @@ class MoHome extends BaseController
         $MemberFeedModel = new MemberFeedModel();
         // $MemberFeedFileModel = new MemberFeedFileModel();
 
-        $user = $MemberModel->where('ci', $ci)->first();
+        $user = $MemberModel->where('nickname', $id)->first();
         $selectFeed = [
-            'wh_member_feed.member_ci' => $ci,
+            'wh_member_feed.member_ci' => $user['ci'],
             'wh_member_feed.delete_yn' => 'n',
         ];
         $feedList = $MemberFeedModel->where($selectFeed)->join('wh_member_feed_files', 'wh_member_feed_files.feed_idx = wh_member_feed.idx')->orderBy('wh_member_feed.created_at', 'DESC')->findAll();
         // $feedFile = $MemberFeedFileModel->where('member_ci', $ci)->findAll();
-        $condition = ['board_type' => 'main_photo', 'member_ci' => $ci, 'delete_yn' => 'n'];
+        $condition = ['board_type' => 'main_photo', 'member_ci' => $user['ci'], 'delete_yn' => 'n'];
         $userFile = $MemberFileModel->where($condition)->first();
         $data = [
-            'ci' => $ci,
+            'ci' => $user['ci'],
             'name' => $name,
             'user' => $user,
             'feed_list' => $feedList,

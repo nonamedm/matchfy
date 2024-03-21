@@ -48,6 +48,7 @@
                             </div>
                         </div>
                         <div class="feed_img_box">
+                            <a onclick="moveToUrl('/mo/myfeed/<?= $feed['nickname'] ?>')">
                             <?php 
                                 $patternImg = "/\.(jpg|jpeg|png|gif|bmp|tiff|tif|webp|svg)$/i";
                                 $patternMov = "/\.(mp4|avi|mov|mkv|flv|wmv|webm)$/i";
@@ -60,6 +61,7 @@
                             <?php } else if (preg_match($patternImg,$feed['feed_filename'])) { ?>
                                 <img src="/<?= $feed['feed_filepath']?><?= $feed['feed_filename']?>" />
                             <?php } ?>
+                            </a>
                         </div>
                     </div>
                 <?php
