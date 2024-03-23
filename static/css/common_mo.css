@@ -2308,6 +2308,10 @@ input[type='number']::-webkit-inner-spin-button {
     top: 20px;
     right: 24px;
 }
+.mo_wrap .layerPopup.bottom .btn_close {
+    top: 20px;
+    right: 24px;
+}
 .mo_wrap .layerPopup.bottom .layerPopup_content .title {
     font-family: 'Pretendard-Bold';
     font-size: 18px;
@@ -2326,6 +2330,17 @@ input[type='number']::-webkit-inner-spin-button {
 .mo_wrap .layerPopup .layerPopup_heading .btn_close {
     position: absolute;
     top: 22px;
+    right: 20px;
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+    text-indent: -999rem;
+    background: url(/static/images/ico_close_20x20.png) no-repeat center / 20px;
+    outline: none;
+    z-index: 2;
+}
+.mo_wrap .layerPopup .btn_close {
+    position: absolute;
     right: 20px;
     width: 24px;
     height: 24px;

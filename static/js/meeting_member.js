@@ -16,7 +16,10 @@ function meetingMemberList(idx){
                     html += '<div class="meetingMemPopup layerPopup alert middle">';
                     html += '<div class="layerPopup_wrap">';
                     html += '<div class="layerPopup_content medium">';
-                    html += '<p class="txt">참석 멤버</p>';
+                    html += '<div style="position: relative;display: flex;">';
+                    html += '<p class="txt" style="width: 90%;padding-left: 5%;">참석멤버</p>';
+                    html += '<a href="#" class="btn_close"  onclick="alertClose();" style="float: right;">닫기</a>';
+                    html += '</div>';
                     html += '<div class="scroll_body">';
                     for(var i=0; i<data.length;i++){
                         
@@ -92,7 +95,11 @@ function meetingApplication(idx){
                     html += '<div class="layerPopup alert middle">';
                     html += '<div id="meetAppliPopup" class="layerPopup_wrap">';
                     html += '<div class="layerPopup_content medium">';
-                    html += '<p class="txt">알림</p>';
+                    // html += '<p class="txt">모임신청</p>';
+                    html += '<div style="position: relative;display: flex;">';
+                    html += '<p class="txt" style="width: 90%;padding-left: 5%;">모임신청</p>';
+                    html += '<a href="#" class="btn_close" onclick="alertClose();" style="float: right;">닫기</a>';
+                    html += '</div>';
                     html += '<div class="apply_group">';
                     html += '<div style="padding:20px;">';
                     html += '<div class="apply_group_detail">';
