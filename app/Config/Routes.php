@@ -52,7 +52,7 @@ $routes->get('/mo/mypage/group/list', 'MoHome::mypageGroupList');
 $routes->get('/mo/mypage/group/searchList', 'MoHome::mypageGroupSearchList');
 $routes->get('/mo/mypage/group/detail', 'MoHome::mypageGroupDetail');
 $routes->post('/mo/mypage/group/partcntPopup', 'MoHome::mypageGroupPartcntPopup');
-$routes->get('/mo/mypage/group/applyPopup', 'MoHome::mypageGroupApplyPopup');
+$routes->post('/mo/mypage/group/applyPopup', 'MoHome::mypageGroupApplyPopup');
 $routes->get('/mo/mypage/group/create', 'MoHome::mypageGroupCreate');
 $routes->get('/mo/mypage/mygroup/list', 'MoHome::mypageMygroupList');
 $routes->get('/mo/mypage/mygroup/list/edit', 'MoHome::mypageMygroupListEdit');

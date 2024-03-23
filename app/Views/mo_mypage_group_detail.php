@@ -35,7 +35,7 @@
                         <h2>금요일에 남산타워 갈 멤버 구해요 !</h2>
                         <p class="group_detail_schedule">2023.03.22 (금) 모임</p>
                         <p class="group_detail_period">2023.03.04~2023.03.21 까지 모집중</p>
-                        <div class="group_particpnt">
+                        <div class="group_particpnt" onclick="meetingMemberList('1')">
                             <span>신청 2</span>/4명
                         </div>
                     </div>
@@ -74,8 +74,8 @@
             <div style="height: 50px;"></div>
             <footer class="footer">
                 <div class="btn_group">
-                                                                <!-- meeting_idx 값을 안에 넣어주면됨 -->
-                    <button type="button" class="btn type01" onclick="meetingMemberList('1')">함께하기</button>
+                                                             
+                    <button type="button" class="btn type01" onclick="meetingApplication('1')">함께하기</button>
                 </div>
                 
             </footer>

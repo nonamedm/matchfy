@@ -810,6 +810,7 @@ td {
     font-weight: 500;
     font-size: 11px;
     line-height: 130%;
+    cursor: pointer;
 }
 .group_particpnt span {
     color: #ff0267;
@@ -2401,6 +2402,10 @@ input[type='number']::-webkit-inner-spin-button {
     min-height: 150px;
 }
 
+.mo_wrap .layerPopup.alert .layerPopup_content.msmall {
+    min-height: 180px;
+}
+
 .mo_wrap .layerPopup.alert .layerPopup_content.medium {
     min-height: 400px;
     padding-top: 20px;
@@ -2411,6 +2416,33 @@ input[type='number']::-webkit-inner-spin-button {
     left: 20px;
     margin: 0 20px 0 0;
 }
+
+.mo_wrap .layerPopup.alert .layerPopup_content .scroll_body {
+    overflow-y: scroll;
+    height: 270px;
+}
+
+.scroll_body::-webkit-scrollbar {
+    width: 10px;
+}
+.scroll_body::-webkit-scrollbar-track { 
+    background-color: #fff;
+}
+.scroll_body::-webkit-scrollbar-thumb { 
+    /* background-color: #ff0267; */
+    background-color: #fff;
+}
+.scroll_body::-webkit-scrollbar-button {
+    display: none;
+}
+
+
+/* 코너에 라운드 효과 */
+.scroll_body::-webkit-scrollbar-track,
+.scroll_body::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+}
+
 .mo_wrap .layerPopup.alert .layerPopup_content .notice_box {
     padding: 16px 0;
     text-align: center;
