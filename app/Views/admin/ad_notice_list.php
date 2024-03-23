@@ -16,6 +16,7 @@
         }
     ?>
 </script>
+
 <body>
     <div class="ad_box">
         <div>
@@ -25,35 +26,56 @@
         </div>
         <div class="ad_con">
             <h2>공지사항 목록</h2> 
-            <input type="button" value="등록" Onclick="fn_EditClick('notice');"/>
-            <?php foreach ($datas as $data): ?>
-                <div class="list_li">
-                    <a href="/ad/notice/noticeView/<?= $data['notice_id']?>">
-                        <p><strong><?= $data['notice_id'] ?></strong></p>
-                        <p><strong><?= $data['title'] ?></strong></p>
-                        <?php
-                            $content = $data['content'];
-                            $max_length = 30; 
+            <input class="btn type01 edit" type="button" value="등록" Onclick="fn_EditClick('notice');"/>
+            <table>
+                <thead>
+                    <tr class="tr">
+                        <th class="th" style="width:5%;">번호</th>
+                        <th class="th text_left" style="width:20%;">제목</th>
+                        <th class="th text_left" style="width:50%;">내용</th>
+                        <th class="th" style="width:15%;">파일</th>
+                        <th class="th" style="width:5%;">수정</th>
+                        <th class="th" style="width:5%;">삭제</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($datas as $data): ?>
+                        <tr class="tr">
+                            <td class="td"><strong><?= $data['notice_id'] ?></strong></td>
+                            <td class="td text_left">
+                                <a href="/ad/notice/noticeView/<?= $data['notice_id']?>">
+                                    <strong><?= $data['title'] ?></strong>
+                                </a>
+                            </td>
+                            <?php
+                                $content = $data['content'];
+                                $max_length = 30; 
 
-                            if (mb_strlen($content) > $max_length) {
-                                $content = mb_substr($content, 0, $max_length);
-                                $content = preg_replace('/\s+[^ ]*$/', '', $content);
-                                $content = preg_replace('/\r?\n|\r/', '', $content);
-                                $content .= '...';
-                            }
-                        ?>
-
-                        <p><?= $content ?></p>
-                        <?php if ($data['file_id']): ?>
-                            <span>파일 : <a href="/downloadFile/<?= $data['file_id'] ?>"><?= $data['org_name'] ?></a></span>
-                        <?php endif?>
-                    </a>    
-                    <div class="btn_up_del_box">
-                        <input type="button" value="수정" Onclick="fn_clickUpdate('notice','<?= $data['notice_id']?>')"/>
-                        <input type="button" value="삭제" Onclick="fn_clickBoFileDelete('<?= $data['notice_id']?>','<?= $data['file_id']?>')"/>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+                                if (mb_strlen($content) > $max_length) {
+                                    $content = mb_substr($content, 0, $max_length);
+                                    $content = preg_replace('/\s+[^ ]*$/', '', $content);
+                                    $content = preg_replace('/\r?\n|\r/', '', $content);
+                                    $content .= '...';
+                                }
+                            ?>
+                            <td class="td text_left">
+                                <a href="/ad/notice/noticeView/<?= $data['notice_id']?>"><?= $content ?></a>
+                            </td>
+                            <td class="td">
+                                <?php if ($data['file_id']): ?>
+                                <span class="attatch_file_div"><a class="attatch_file" href="/downloadFile/<?= $data['file_id'] ?>"><?= $data['org_name'] ?></a></span>
+                                <?php endif?>
+                            </td>
+                            <td class="td">
+                                <input type="button" class="btn type01" value="수정" Onclick="fn_clickUpdate('notice','<?= $data['notice_id']?>')"/>
+                            </td>
+                            <td class="td">
+                                <input type="button" class="btn type02" value="삭제" Onclick="fn_clickBoFileDelete('<?= $data['notice_id']?>','<?= $data['file_id']?>')"/>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>

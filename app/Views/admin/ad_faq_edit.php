@@ -25,13 +25,18 @@
             ?>
         </div>
         <div class="ad_con">
-            <h2>FAQ 작성</h2>
+            <div class="page_header">
+                <ul>
+                    <li><a href="#" Onclick="fn_clickList('faq')"><img src="/static/images/left_arrow.png"></a></li>
+                    <li><h2>FAQ 작성</h2></li>
+                </ul>
+            </div>
             <form action="/ad/faq/faqUpload" method="post">
                 <label for="title">질문:</label><br>
-                <input type="text" id="title" name="title"><br>
+                <input type="text" class="temp_input_text" id="title" name="title"><br>
                 <label for="content">답변:</label><br>
                 <textarea id="content" name="content" rows="4" cols="50"></textarea><br><br>
-                <input type="submit" value="등록">
+                <input type="submit" class="btn type01 edit" value="등록">
             </form>
         </div>
     </div>

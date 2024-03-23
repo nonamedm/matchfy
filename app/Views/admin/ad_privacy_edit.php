@@ -26,14 +26,19 @@
             ?>
         </div>
         <div class="ad_con">
-            <h2>개인정보처리방침 작성</h2>
-            <input type="button" value="목록으로 돌아가기" Onclick="fn_clickList('privacy')"/>
+            <div class="page_header">
+                <ul>
+                    <li><a href="#" Onclick="fn_clickList('privacy')"><img src="/static/images/left_arrow.png"></a></li>
+                    <li><h2>개인정보처리방침 작성</h2></li>
+                </ul>
+            </div>
+            
             <form action="/ad/privacy/privacyUpload" method="post">
                 <label for="title">제목:</label><br>
-                <input type="text" id="title" name="title"><br>
+                <input type="text" class="temp_input_text" id="title" name="title"><br>
                 <label for="content">내용:</label><br>
                 <textarea id="content" name="content" rows="4" cols="50"></textarea><br><br>
-                <input type="submit" value="등록">
+                <input type="submit" class="btn type01 edit" value="등록">
             </form>
         </div>
     </div>

@@ -18,29 +18,39 @@
         </div>
         <div class="ad_con">
             <h2>FAQ 목록</h2> 
-            <input type="button" value="등록" Onclick="fn_EditClick('faq');"/>
+            <input type="button" class="btn type01 edit" value="등록" Onclick="fn_EditClick('faq');"/>
+            
             <?php foreach ($faqs as $faq): ?>
-                <div class="list_li">
+                <div class="notice_list">
                     <a href="/ad/faq/faqView/<?= $faq['id'] ?>">
-                        <p><strong><?= $faq['id'] ?></strong></p>
-                        <p><strong><?= $faq['title'] ?></strong></p>
-                        <?php
-                            $content = $faq['content'];
-                            $max_length = 30; 
+                        <div class="notice_list_label faq_question">
+                            <div>
+                                <h2><span class="question">Q</span><?= $faq['title'] ?></h2>
+                            </div>
+                        </div>
+                        <div class="notice_list_label faq_answer" style="">
+                            <div class="faq_answer">
+                                <h2><span class="answer">A</span></h2>
+                                <div class="">
+                                    <?php
+                                        $content = $faq['content'];
+                                        $max_length = 30; 
 
-                            if (mb_strlen($content) > $max_length) {
-                                $content = mb_substr($content, 0, $max_length);
-                                $content = preg_replace('/\s+[^ ]*$/', '', $content);
-                                $content = preg_replace('/\r?\n|\r/', '', $content);
-                                $content .= '...';
-                            }
-                        ?>
-
-                        <p><?= $content ?></p>
+                                        if (mb_strlen($content) > $max_length) {
+                                            $content = mb_substr($content, 0, $max_length);
+                                            $content = preg_replace('/\s+[^ ]*$/', '', $content);
+                                            $content = preg_replace('/\r?\n|\r/', '', $content);
+                                            $content .= '...';
+                                        }
+                                    ?>
+                                    <p><?= $content; ?></p><br>
+                                </div>
+                            </div>
+                        </div>
                     </a>
                     <div class="btn_up_del_box">
-                        <input type="button" value="수정" Onclick="fn_clickUpdate('faq','<?= $faq['id']?>')"/>
-                        <input type="button" value="삭제"  Onclick="fn_clickDelete('<?= $faq['id']?>','faq')"/>
+                        <input type="button" class="btn type01" value="수정" Onclick="fn_clickUpdate('faq','<?= $faq['id']?>')"/>
+                        <input type="button" class="btn type02" value="삭제"  Onclick="fn_clickDelete('<?= $faq['id']?>','faq')"/>
                     </div>
                 </div>
             <?php endforeach; ?>

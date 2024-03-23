@@ -24,19 +24,24 @@
             ?>
         </div>
         <div class="ad_con">
-            <h2>공지사항</h2>
-            <input type="button" value="목록으로 돌아가기" Onclick="fn_clickList('notice')"/></br>
+            <div class="page_header">
+                <ul>
+                    <li><a href="#" Onclick="fn_clickList('notice')"><img src="/static/images/left_arrow.png"></a></li>
+                    <li><h2>공지사항 작성</h2></li>
+                </ul>
+            </div>
             <input type="hidden" id="notice_id" name="notice_id" value="<?= $notice['id'] ?>"/>
             <strong><label for="title">제목:</label></strong><br>
             <p><?= $notice['title'] ?></p><br>
             <strong><label for="content">내용:</label></strong><br>
             <p><?= nl2br($notice['content']); ?></p>
             <?php if ($file): ?>
-                <p><strong>파일 : </strong><a href="/downloadFile/<?= $file['id'] ?>"><?= $file['org_name'] ?></a></p>
+                <span class="attatch_file_div"><a class="attatch_file" href="/downloadFile/<?= $file['id'] ?>"><?= $file['org_name'] ?></a></span>
+                
             <?php endif?>
             <div class="btn_up_del_box">
-                <input type="button" value="삭제" Onclick="fn_clickBoFileDelete('<?= $notice['id']?>','<?= $file['id']?>')"/>
-                <input type="button" value="수정" Onclick="fn_clickUpdate('notice','<?= $notice['id']?>')"/>
+                <input type="button"  class="btn type02" value="삭제" Onclick="fn_clickBoFileDelete('<?= $notice['id']?>','<?= $file['id']?>')"/>
+                <input type="button"  class="btn type01" value="수정" Onclick="fn_clickUpdate('notice','<?= $notice['id']?>')"/>
             </div>
         </div>
     </div>

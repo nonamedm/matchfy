@@ -25,15 +25,19 @@
             ?>
         </div>
         <div class="ad_con">
-            <h2>FAQ 수정</h2>
-            <input type="button" value="목록으로 돌아가기" Onclick="fn_clickList('faq')"/><br>
+            <div class="page_header">
+                <ul>
+                    <li><a href="#" Onclick="fn_clickList('faq')"><img src="/static/images/left_arrow.png"></a></li>
+                    <li><h2>FAQ 수정</h2></li>
+                </ul>
+            </div>
             <form action="/ad/faq/faqUpdate" method="post">
                 <input type="hidden" id="faq_id" name="faq_id" value="<?= $faq['id'] ?>"/>
                 <label for="title">질문:</label><br>
-                <input type="text" id="title" name="title" value="<?= $faq['title'] ?>"><br>
+                <input type="text" class="temp_input_text" id="title" name="title" value="<?= $faq['title'] ?>"><br>
                 <label for="content">답변:</label><br>
-                <textarea id="content" name="content" rows="4" cols="50"><?=htmlspecialchars($faq['content']); ?></textarea><br><br>
-                <input type="submit" value="수정"/>
+                <textarea id="content"  name="content" rows="4" cols="50"><?=htmlspecialchars($faq['content']); ?></textarea><br><br>
+                <input class="btn type01 edit" type="submit" value="수정"/>
             </form>
         </div>
     </div>
