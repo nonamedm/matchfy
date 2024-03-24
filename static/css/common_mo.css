@@ -1704,6 +1704,59 @@ form input[type='file'] {
 
     color: #ffffff;
 }
+.mo_wrap .chk_box.partner {
+    width: 150px;
+}
+.mo_wrap .chk_box.partner label {
+    display: block;
+    padding: 1px 0 1px 30px;
+    font-size: 14px;
+    line-height: 17px;
+    color: #111111;
+}
+.mo_wrap .animal_type_module {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.mo_wrap .animal_type_module .chk_box {
+    width: 110px;
+}
+.mo_wrap .chk_box.animal_type_chk label {
+    display: block;
+    padding: 1px 0 1px 30px;
+    font-size: 14px;
+    line-height: 17px;
+    color: #111111;
+}
+.mo_wrap .signin_form_div #ranked {
+    display: flex;
+    margin: 0px 0px 20px 0px;
+    list-style: none;
+}
+.mo_wrap .signin_form_div #ranked li {
+    width: 110px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 10px;
+}
+.mo_wrap .chk_box.partner label h2 {
+    margin: 0;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 10px;
+}
+.mo_wrap .chk_box.animal_type_chk label h2 {
+    margin: 0;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 10px;
+}
 
 .mo_wrap .chk_box label.totAgree_label {
     font-family: 'Pretendard-Bold';

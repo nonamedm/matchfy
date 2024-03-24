@@ -10,6 +10,8 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -38,14 +40,116 @@
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
+                                <label for="appear_type" class="signin_label">파트너 성별</label>
+                                <div>
+                                    <div class="chk_box radio_box partner">
+                                        <input type="radio" id="female" name="partner_mf" value="0" checked="">
+                                        <label for="female">
+                                            <h2>여성</h2>
+                                        </label>
+                                    </div>
+                                    <div class="chk_box radio_box partner">
+                                        <input type="radio" id="male" name="partner_mf" value="1">
+                                        <label for="male">
+                                            <h2>남성</h2>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form_row signin_form">
+                            <div class="signin_form_div">
                                 <label for="appear_type" class="signin_label">외모유형</label>
-                                <select id="appear_type" value="">
-                                    <option value="">선택</option>
-                                    <option value="0">강아지상</option>
-                                    <option value="1">고양이상</option>
-                                    <option value="2">여우상</option>
-                                    <option value="3">기타</option>
-                                </select>
+                                <div id="ranked"></div>
+                                <div class="animal_type_module">
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type0" name="animal_type" class="animal_type" value="0"><label for="animal_type0"><h2>다람쥐상</h2></label>                                        
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type1" name="animal_type" class="animal_type" value="1"><label for="animal_type1"><h2>쿼카상</h2></label>                                       
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">                                        
+                                        <input type="checkbox" id="animal_type2" name="animal_type" class="animal_type" value="2"><label for="animal_type2"><h2>햄스터상</h2></label>                                     
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">                                        
+                                        <input type="checkbox" id="animal_type3" name="animal_type" class="animal_type" value="3"><label for="animal_type3"><h2>소상</h2></label>                                    
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type4" name="animal_type" class="animal_type" value="4"><label for="animal_type4"><h2>호랑이상</h2></label>                                    
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type5" name="animal_type" class="animal_type" value="5"><label for="animal_type5"><h2>토끼상</h2></label>                                     
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type6" name="animal_type" class="animal_type" value="6"><label for="animal_type6"><h2>용상</h2></label>                                 
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type7" name="animal_type" class="animal_type" value="7"><label for="animal_type7"><h2>공룡상</h2></label>                                 
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type8" name="animal_type" class="animal_type" value="8"><label for="animal_type8"><h2>뱀상</h2></label>                                    
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type9" name="animal_type" class="animal_type" value="9"><label for="animal_type9"><h2>거북이상</h2></label>       
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type10" name="animal_type" class="animal_type" value="10"><label for="animal_type10"><h2>말상</h2></label>                                
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type11" name="animal_type" class="animal_type" value="11"><label for="animal_type11"><h2>양상</h2></label>                                
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type12" name="animal_type" class="animal_type" value="12"><label for="animal_type12"><h2>원숭이상</h2></label>                                  
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type13" name="animal_type" class="animal_type" value="13"><label for="animal_type13"><h2>닭상</h2></label>                             
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type14" name="animal_type" class="animal_type" value="14"><label for="animal_type14"><h2>강아지상</h2></label>                                     
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type15" name="animal_type" class="animal_type" value="15"><label for="animal_type15"><h2>곰상</h2></label>                                 
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type16" name="animal_type" class="animal_type" value="16"><label for="animal_type16"><h2>늑대상</h2></label>                                  
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type17" name="animal_type" class="animal_type" value="17"><label for="animal_type17"><h2>여우상</h2></label>                                 
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type18" name="animal_type" class="animal_type" value="18"><label for="animal_type18"><h2>돼지상</h2></label>                                     
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type19" name="animal_type" class="animal_type" value="19"><label for="animal_type19"><h2>고양이상</h2></label>                                    
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type20" name="animal_type" class="animal_type" value="20"><label for="animal_type20"><h2>사자상</h2></label>                               
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type21" name="animal_type" class="animal_type" value="21"><label for="animal_type21"><h2>너구리상</h2></label>                                    
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type22" name="animal_type" class="animal_type" value="22"><label for="animal_type22"><h2>사슴상</h2></label>                                     
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type23" name="animal_type" class="animal_type" value="23"><label for="animal_type23"><h2>개구리상</h2></label>                                   
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type24" name="animal_type" class="animal_type" value="24"><label for="animal_type24"><h2>두꺼비상</h2></label>                                   
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type25" name="animal_type" class="animal_type" value="25"><label for="animal_type25"><h2>상어상</h2></label>                                  
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type26" name="animal_type" class="animal_type" value="26"><label for="animal_type26"><h2>물고기상</h2></label>                                     
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type27" name="animal_type" class="animal_type" value="27"><label for="animal_type27"><h2>오리상</h2></label>                                     
+                                    </div>
+                                    <div class="chk_box radio_box animal_type_chk">
+                                        <input type="checkbox" id="animal_type28" name="animal_type" class="animal_type" value="28"><label for="animal_type28"><h2>펭귄상</h2></label>                                     
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form_row signin_form">
@@ -368,13 +472,40 @@
     <!-- SCRIPTS -->
 
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
+        $(document).ready(function() {
+            // 
+            const rankedItemsList = $('#ranked');
+            let rankedItems = [];
+            $('.animal_type').click(function() {
+                const checkedCount = $('.animal_type:checked').length;
+                if (checkedCount > 3) {
+                    $(this).prop('checked', false);
+                    return;
+                }
+
+                const item = $(this).parent().text().trim();
+                const order = parseInt($(this).attr('data-order'));
+
+                if ($(this).prop('checked')) {
+                    rankedItems.push({item: item, order: order});
+                } else {
+                    const index = rankedItems.findIndex(obj => obj.item === item);
+                    if (index !== -1) {
+                        rankedItems.splice(index, 1);
+                    }
+                }
+
+                rankedItems.sort((a, b) => {
+                    return a.order - b.order;
+                });
+
+                // Display the ranked items
+                rankedItemsList.empty();
+                rankedItems.forEach((obj, index) => {
+                    rankedItemsList.append(`<li>${index + 1}순위: ${obj.item}</li>`);
+                });
+            });
+        }); 
     </script>
 
     <!-- -->
