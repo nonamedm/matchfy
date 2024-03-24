@@ -56,22 +56,24 @@
                     </select>
                     <div class="group_create_btn">
                         <img src="/static/images/ico_btn_plus_8x8.png" />
-                        <button class="btn type01 on">모임등록</button>
+                        <button class="btn type01 on" onclick="moveToUrl('/mo/mypage/group/create')">모임등록</button>
                     </div>
                 </div>
                 <div class="group_search_list">
+                <?php foreach ($meetings as $meeting): ?>
                     <div class="group_list_item">
                         <img src="/static/images/group_list_1.png" />
                         <div class="group_particpnt">
-                            <span>신청 2</span>/4명
+                            <span>신청 (변경필요)</span>/<?= $meeting['number_of_people'] ?>명
                         </div>
                         <div class="group_location">
                             <img src="/static/images/ico_location_16x16.png" />
-                            서울/강남구
+                            <?= $meeting['meeting_place'] ?>
                         </div>
-                        <p class="group_price">20,000원</p>
-                        <p class="group_schedule">2024.02.14(수) 20:00</p>
+                        <p class="group_price"><?= $meeting['membership_fee'] ?>원</p>
+                        <p class="group_schedule"><?= $meeting['meeting_start_date'] ?></p>
                     </div>
+                <?php endforeach; ?>
                     <div class="group_list_item">
                         <img src="/static/images/group_list_2.png" />
                         <div class="group_particpnt">
@@ -83,30 +85,6 @@
                         </div>
                         <p class="group_price">25,000원</p>
                         <p class="group_schedule">2024. 02. 24(토) 19:30 </p>
-                    </div>
-                    <div class="group_list_item">
-                        <img src="/static/images/group_list_3.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/6명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png" />
-                            서울/도봉구
-                        </div>
-                        <p class="group_price">20,000원</p>
-                        <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                    </div>
-                    <div class="group_list_item">
-                        <img src="/static/images/group_list_4.png" />
-                        <div class="group_particpnt">
-                            <span>신청 4</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png" />
-                            경기/분당
-                        </div>
-                        <p class="group_price">20,000원</p>
-                        <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
                     </div>
                 </div>
             </div>
