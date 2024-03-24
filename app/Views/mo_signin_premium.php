@@ -327,7 +327,7 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="parents" class="signin_label">거주형태</label>
+                                <label for="residence" class="signin_label">거주형태</label>
                                 <div class="multy_select_three">
                                     <select id="residence1" name="residence1" class="custom_select" value="">
                                         <option value="">선택</option>

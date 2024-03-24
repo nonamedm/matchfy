@@ -1009,6 +1009,7 @@ td {
     text-align: center;
     height: 46px;
     margin: 0 auto;
+    margin-bottom: 20px;
 }
 .content_wrap .mypage_wallet .mypage_wallet_list .mypage_wallet_filter {
     display: flex;

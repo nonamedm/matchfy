@@ -43,13 +43,15 @@
                                 <label for="appear_type" class="signin_label">파트너 성별</label>
                                 <div>
                                     <div class="chk_box radio_box partner">
-                                        <input type="radio" id="female" name="partner_mf" value="0" checked="">
+                                        <input type="radio" id="female" name="partner_mf" value="0" checked=""
+                                            onclick="selectGender(this)">
                                         <label for="female">
                                             <h2>여성</h2>
                                         </label>
                                     </div>
                                     <div class="chk_box radio_box partner">
-                                        <input type="radio" id="male" name="partner_mf" value="1">
+                                        <input type="radio" id="male" name="partner_mf" value="1"
+                                            onclick="selectGender(this)">
                                         <label for="male">
                                             <h2>남성</h2>
                                         </label>
@@ -62,381 +64,332 @@
                                 <label for="appear_type" class="signin_label">외모유형</label>
                                 <div id="ranked"></div>
                                 <div class="animal_type_module">
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type0" name="animal_type" class="animal_type" value="0"><label for="animal_type0"><h2>다람쥐상</h2></label>                                        
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type1" name="animal_type" class="animal_type" value="1"><label for="animal_type1"><h2>쿼카상</h2></label>                                       
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">                                        
-                                        <input type="checkbox" id="animal_type2" name="animal_type" class="animal_type" value="2"><label for="animal_type2"><h2>햄스터상</h2></label>                                     
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">                                        
-                                        <input type="checkbox" id="animal_type3" name="animal_type" class="animal_type" value="3"><label for="animal_type3"><h2>소상</h2></label>                                    
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type4" name="animal_type" class="animal_type" value="4"><label for="animal_type4"><h2>호랑이상</h2></label>                                    
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type5" name="animal_type" class="animal_type" value="5"><label for="animal_type5"><h2>토끼상</h2></label>                                     
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type6" name="animal_type" class="animal_type" value="6"><label for="animal_type6"><h2>용상</h2></label>                                 
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type7" name="animal_type" class="animal_type" value="7"><label for="animal_type7"><h2>공룡상</h2></label>                                 
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type8" name="animal_type" class="animal_type" value="8"><label for="animal_type8"><h2>뱀상</h2></label>                                    
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type9" name="animal_type" class="animal_type" value="9"><label for="animal_type9"><h2>거북이상</h2></label>       
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type10" name="animal_type" class="animal_type" value="10"><label for="animal_type10"><h2>말상</h2></label>                                
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type11" name="animal_type" class="animal_type" value="11"><label for="animal_type11"><h2>양상</h2></label>                                
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type12" name="animal_type" class="animal_type" value="12"><label for="animal_type12"><h2>원숭이상</h2></label>                                  
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type13" name="animal_type" class="animal_type" value="13"><label for="animal_type13"><h2>닭상</h2></label>                             
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type14" name="animal_type" class="animal_type" value="14"><label for="animal_type14"><h2>강아지상</h2></label>                                     
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type15" name="animal_type" class="animal_type" value="15"><label for="animal_type15"><h2>곰상</h2></label>                                 
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type16" name="animal_type" class="animal_type" value="16"><label for="animal_type16"><h2>늑대상</h2></label>                                  
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type17" name="animal_type" class="animal_type" value="17"><label for="animal_type17"><h2>여우상</h2></label>                                 
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type18" name="animal_type" class="animal_type" value="18"><label for="animal_type18"><h2>돼지상</h2></label>                                     
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type19" name="animal_type" class="animal_type" value="19"><label for="animal_type19"><h2>고양이상</h2></label>                                    
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type20" name="animal_type" class="animal_type" value="20"><label for="animal_type20"><h2>사자상</h2></label>                               
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type21" name="animal_type" class="animal_type" value="21"><label for="animal_type21"><h2>너구리상</h2></label>                                    
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type22" name="animal_type" class="animal_type" value="22"><label for="animal_type22"><h2>사슴상</h2></label>                                     
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type23" name="animal_type" class="animal_type" value="23"><label for="animal_type23"><h2>개구리상</h2></label>                                   
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type24" name="animal_type" class="animal_type" value="24"><label for="animal_type24"><h2>두꺼비상</h2></label>                                   
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type25" name="animal_type" class="animal_type" value="25"><label for="animal_type25"><h2>상어상</h2></label>                                  
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type26" name="animal_type" class="animal_type" value="26"><label for="animal_type26"><h2>물고기상</h2></label>                                     
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type27" name="animal_type" class="animal_type" value="27"><label for="animal_type27"><h2>오리상</h2></label>                                     
-                                    </div>
-                                    <div class="chk_box radio_box animal_type_chk">
-                                        <input type="checkbox" id="animal_type28" name="animal_type" class="animal_type" value="28"><label for="animal_type28"><h2>펭귄상</h2></label>                                     
+                                    <?php
+                                    $word_file_path = APPPATH . 'data/MemberCode.php';
+                                    require ($word_file_path);
+                                    foreach ($animalType as $item)
+                                    {
+                                        ?>
+                                        <div class="chk_box radio_box animal_type_chk">
+                                            <input type="checkbox" id="<?= $item['id'] ?>" name="animal_type"
+                                                class="animal_type" value="<?= $item['value'] ?>"><label
+                                                for="<?= $item['id'] ?>">
+                                                <h2>
+                                                    <?= $item['name'] ?>
+                                                </h2>
+                                            </label>
+                                        </div>
+
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="form_row signin_form">
+                                <div class="signin_form_div">
+                                    <label for="region1" class="signin_label">지역</label>
+                                    <select id="region1" value="">
+                                        <option>시/군/구</option>
+                                        <option value="0">서울특별시</option>
+                                        <option value="1">경기도</option>
+                                        <option value="2">인천광역시</option>
+                                        <option value="3">기타</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form_row signin_form">
+                                <div class="signin_form_div">
+                                    <label for="region2" class="signin_label">지역</label>
+                                    <select id="region2" value="">
+                                        <option>시/군/구</option>
+                                        <option value="0">서울특별시</option>
+                                        <option value="1">경기도</option>
+                                        <option value="2">인천광역시</option>
+                                        <option value="3">기타</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <?php if (isset ($grade) && ($grade === 'grade02' || $grade === 'grade03')): ?>
+
+                                <div class="form_row signin_form">
+                                    <div class="signin_form_div">
+                                        <label for="height" class="signin_label">키</label>
+                                        <select id="height" class="custom_select" value="">
+                                            <option value="">선택</option>
+                                            <option value="0">150 미만</option>
+                                            <option value="1">150 이상 ~ 160 미만</option>
+                                            <option value="2">160 이상 ~ 170 미만</option>
+                                            <option value="3">170 이상 ~ 180 미만</option>
+                                            <option value="4">180 이상</option>
+                                        </select>
                                     </div>
                                 </div>
+
+                                <div class="form_row signin_form">
+                                    <div class="signin_form_div">
+                                        <label for="personal_style" class="signin_label">스타일</label>
+                                        <select id="personal_style" class="custom_select" value="">
+                                            <option value="">선택</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form_row signin_form">
+                                    <div class="signin_form_div">
+                                        <h4 class="profile_photo_label">결혼유무</h4>
+                                        <select id="marital" class="custom_select" value="">
+                                            <option value="">선택</option>
+                                            <option value="0">유</option>
+                                            <option value="1">무</option>
+                                            <option value="2">관계없음</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form_row signin_form">
+                                    <div class="signin_form_div">
+                                        <label for="smoking" class="signin_label">흡연유무</label>
+                                        <select id="smoking" class="custom_select" value="">
+                                            <option value="">선택</option>
+                                            <option value="0">유</option>
+                                            <option value="1">무</option>
+                                            <option value="1">관계없음</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form_row signin_form">
+                                    <div class="signin_form_div">
+                                        <label for="drinking" class="signin_label">음주 횟수</label>
+                                        <select id="drinking" name="drinking" class="custom_select" value="">
+                                            <option value="">선택</option>
+                                            <option value="0">전혀 안함</option>
+                                            <option value="1">주 1~2병</option>
+                                            <option value="2">주 3~5병</option>
+                                            <option value="3">주 5병 이상</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form_row signin_form">
+                                    <div class="signin_form_div">
+                                        <label for="religion" class="signin_label">종교</label>
+                                        <select id="religion" name="religion" class="custom_select" value="">
+                                            <option value="">선택</option>
+                                            <option value="0">무교</option>
+                                            <option value="1">기독교</option>
+                                            <option value="2">천주교</option>
+                                            <option value="3">불교</option>
+                                            <option value="4">기타</option>
+                                            <option value="5">관계없음</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form_row signin_form">
+                                    <div class="signin_form_div">
+                                        <label for="mbti" class="signin_label">MBTI</label>
+                                        <select id="mbti" class="custom_select" value="">
+                                            <option value="">선택</option>
+                                            <option value="0">ENFP</option>
+                                            <option value="1">ENFJ</option>
+                                            <option value="2">ENTP</option>
+                                            <option value="3">ENTJ</option>
+                                            <option value="4">ESFP</option>
+                                            <option value="5">ESFJ</option>
+                                            <option value="6">ESTP</option>
+                                            <option value="7">ESTJ</option>
+                                            <option value="8">INFP</option>
+                                            <option value="9">INFJ</option>
+                                            <option value="10">INTP</option>
+                                            <option value="11">INTJ</option>
+                                            <option value="12">ISFP</option>
+                                            <option value="13">ISFJ</option>
+                                            <option value="14">ISTP</option>
+                                            <option value="15">ISTJ</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form_row signin_form">
+                                    <div class="signin_form_div">
+                                        <label for="education" class="signin_label">학력</label>
+                                        <select id="education" class="custom_select" value="">
+                                            <option value="">선택</option>
+                                            <option value="0">고등학교졸업</option>
+                                            <option value="1">대학교재학</option>
+                                            <option value="2">대학교졸업</option>
+                                            <option value="3">대학원재학</option>
+                                            <option value="4">대학원졸업이상</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="form_row signin_form">
+                                    <div class="signin_form_div">
+                                        <label for="major" class="signin_label">전공</label>
+                                        <input id="major" type="text" value="" placeholder="전공을 입력해주세요">
+                                    </div>
+                                </div> -->
+
+                                <!-- <div class="form_row signin_form">
+                                    <div class="signin_form_div input_btn">
+                                        <h4 class="profile_photo_label">학교명</h4>
+                                        <div class="input_btn">
+                                            <input id="school" type="text" value="" placeholder="학교를 입력해 주세요">
+                                            <button class="btn btn_input_form">인증</button>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <div class="form_row signin_form">
+                                    <div class="signin_form_div">
+                                        <label for="job" class="signin_label">직업군</label>
+                                        <select id="job" class="custom_select" value="">
+                                            <option value="">선택</option>
+                                            <option value="0">1군 : 중소기업 회사원/자영업/프리랜서 등 기타</option>
+                                            <option value="1">2군 : 상장사, 대기업 회사원/기업대표/공무원/공기업</option>
+                                            <option value="2">3군 : 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form_row signin_form">
+                                    <div class="signin_form_div">
+                                        <label for="asset_range" class="signin_label">자산구간</label>
+                                        <div class="input_btn">
+                                            <select id="asset_range" name="asset_range" class="custom_select" value="">
+                                                <option value="">선택</option>
+                                                <option value="0">1000만원 이하</option>
+                                                <option value="1">1000~2000만원</option>
+                                                <option value="2">2000~3000만원</option>
+                                                <option value="3">3000~4000만원</option>
+                                                <option value="4">4000~5000만원</option>
+                                                <option value="5">5000만원 이상</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form_row signin_form">
+                                    <div class="signin_form_div">
+                                        <label for="income_range" class="signin_label">소득구간</label>
+                                        <div class="input_btn">
+                                            <select id="income_range" name="income_range" class="custom_select" value="">
+                                                <option value="">선택</option>
+                                                <option value="0">1000만원 이하</option>
+                                                <option value="1">1000~2000만원</option>
+                                                <option value="2">2000~3000만원</option>
+                                                <option value="3">3000~4000만원</option>
+                                                <option value="4">4000~5000만원</option>
+                                                <option value="5">5000만원 이상</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (isset ($grade) && ($grade === 'grade03')): ?>
+                                <div class="form_row signin_form">
+                                    <div class="signin_form_div">
+                                        <label for="parents" class="signin_label">부</label>
+                                        <div class="multy_select">
+                                            <select id="father_birth_year" name="father_birth_year" class="custom_select"
+                                                value="">
+                                                <option value="">선택</option>
+                                                <?php
+                                                $nowYear = date('Y');
+                                                $pastYear = 1945;
+                                                for ($year = $nowYear; $year >= $pastYear; $year--)
+                                                {
+                                                    echo '<option value="' . $year . '">' . $year . '</option>';
+                                                }
+                                                ?>
+                                            </select>
+                                            <select id="father_job" name="father_job" class="custom_select" value="">
+                                                <option value="">선택</option>
+                                                <option value="0">회사원</option>
+                                                <option value="1">사업가</option>
+                                                <option value="2">자영업</option>
+                                                <option value="3">무직</option>
+                                                <option value="4">기타</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form_row signin_form">
+                                    <div class="signin_form_div">
+                                        <label for="parents" class="signin_label">모</label>
+                                        <div class="multy_select">
+                                            <select id="mother_birth_year" name="mother_birth_year" class="custom_select"
+                                                value="">
+                                                <option value="">선택</option>
+                                                <?php
+                                                $nowYear = date('Y');
+                                                $pastYear = 1945;
+                                                for ($year = $nowYear; $year >= $pastYear; $year--)
+                                                {
+                                                    echo '<option value="' . $year . '">' . $year . '</option>';
+                                                }
+                                                ?>
+                                            </select>
+                                            <select id="mother_job" name="mother_job" class="custom_select" value="">
+                                                <option value="">선택</option>
+                                                <option value="0">회사원</option>
+                                                <option value="1">사업가</option>
+                                                <option value="2">자영업</option>
+                                                <option value="3">주부</option>
+                                                <option value="4">기타</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form_row signin_form">
+                                    <div class="signin_form_div">
+                                        <label for="siblings" class="signin_label">형제</label>
+                                        <select id="siblings" name="siblings" class="custom_select" value="">
+                                            <option value="">선택</option>
+                                            <option value="0">외동</option>
+                                            <option value="1">1남1녀</option>
+                                            <option value="2">2남1녀</option>
+                                            <option value="3">1남2녀</option>
+                                            <option value="4">2남2녀</option>
+                                            <option value="5">기타</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form_row signin_form">
+                                    <div class="signin_form_div">
+                                        <label for="residence" class="signin_label">거주형태</label>
+                                        <div class="multy_select_three">
+                                            <select id="residence1" name="residence1" class="custom_select" value="">
+                                                <option value="">선택</option>
+                                                <option value="0">아파트</option>
+                                                <option value="1">단독주택</option>
+                                                <option value="2">주상복합</option>
+                                                <option value="3">오피스텔</option>
+                                                <option value="4">다가구주택</option>
+                                                <option value="5">기타</option>
+                                            </select>
+                                            <select id="residence2" name="residence2" class="custom_select" value="">
+                                                <option value="">선택</option>
+                                                <option value="0">자가</option>
+                                                <option value="1">전세</option>
+                                                <option value="2">월세</option>
+                                                <option value="3">기타</option>
+                                            </select>
+                                            <select id="residence3" name="residence3" class="custom_select" value="">
+                                                <option value="">선택</option>
+                                                <option value="0">소유주 부</option>
+                                                <option value="1">소유주 모</option>
+                                                <option value="2">소유주 본인</option>
+                                                <option value="3">소유주 기타</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <div class="btn_group">
+                                <button type="button" class="btn type01">저장</button>
                             </div>
                         </div>
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="region1" class="signin_label">지역</label>
-                                <select id="region1" value="">
-                                    <option>시/군/구</option>
-                                    <option value="0">서울특별시</option>
-                                    <option value="1">경기도</option>
-                                    <option value="2">인천광역시</option>
-                                    <option value="3">기타</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="region2" class="signin_label">지역</label>
-                                <select id="region2" value="">
-                                    <option>시/군/구</option>
-                                    <option value="0">서울특별시</option>
-                                    <option value="1">경기도</option>
-                                    <option value="2">인천광역시</option>
-                                    <option value="3">기타</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <?php if (isset ($grade) && ($grade === 'grade02' || $grade === 'grade03')): ?>
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div">
-                                    <h4 class="profile_photo_label">결혼유무</h4>
-                                    <select id="marital" class="custom_select" value="">
-                                        <option value="">선택</option>
-                                        <option value="0">유</option>
-                                        <option value="1">무</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div">
-                                    <label for="smoking" class="signin_label">흡연유무</label>
-                                    <select id="smoking" class="custom_select" value="">
-                                        <option value="">선택</option>
-                                        <option value="0">유</option>
-                                        <option value="1">무</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div">
-                                    <label for="drinking" class="signin_label">음주 횟수</label>
-                                    <select id="drinking" class="custom_select" value="">
-                                        <option value="">선택</option>
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div">
-                                    <label for="religion" class="signin_label">종교</label>
-                                    <select id="religion" class="custom_select" value="">
-                                        <option value="">선택</option>
-                                        <option value="0">무교</option>
-                                        <option value="1">기독교</option>
-                                        <option value="2">불교</option>
-                                        <option value="3">천주교</option>
-                                        <option value="4">원불교</option>
-                                        <option value="5">이슬람</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div">
-                                    <label for="mbti" class="signin_label">MBTI</label>
-                                    <select id="mbti" class="custom_select" value="">
-                                        <option value="">선택</option>
-                                        <option value="0">ENFP</option>
-                                        <option value="1">ENFJ</option>
-                                        <option value="2">ENTP</option>
-                                        <option value="3">ENTJ</option>
-                                        <option value="4">ESFP</option>
-                                        <option value="5">ESFJ</option>
-                                        <option value="6">ESTP</option>
-                                        <option value="7">ESTJ</option>
-                                        <option value="8">INFP</option>
-                                        <option value="9">INFJ</option>
-                                        <option value="10">INTP</option>
-                                        <option value="11">INTJ</option>
-                                        <option value="12">ISFP</option>
-                                        <option value="13">ISFJ</option>
-                                        <option value="14">ISTP</option>
-                                        <option value="15">ISTJ</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div">
-                                    <label for="height" class="signin_label">키</label>
-                                    <input id="height" type="text" value="" placeholder="키 입력">
-                                </div>
-                            </div>
-
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div">
-                                    <label for="personal_style" class="signin_label">스타일</label>
-                                    <select id="personal_style" class="custom_select" value="">
-                                        <option value="">선택</option>
-                                        <option value="0">강인</option>
-                                        <option value="1">댄디</option>
-                                        <option value="2">너드</option>
-                                        <option value="3">프리</option>
-                                        <option value="4">등등...</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div">
-                                    <label for="education" class="signin_label">학력</label>
-                                    <select id="education" class="custom_select" value="">
-                                        <option value="">선택</option>
-                                        <option value="0">고등학교졸업</option>
-                                        <option value="1">대학교재학</option>
-                                        <option value="2">대학교졸업</option>
-                                        <option value="3">대학원재학</option>
-                                        <option value="4">대학원졸업이상</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div">
-                                    <label for="major" class="signin_label">전공</label>
-                                    <input id="major" type="text" value="" placeholder="전공을 입력해주세요">
-                                </div>
-                            </div>
-
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div input_btn">
-                                    <h4 class="profile_photo_label">학교명</h4>
-                                    <p class="profile_photo_desc">최종학교 졸업증명서를 업로드해주세요!</p>
-                                    <div class="input_btn">
-                                        <input id="school" type="text" value="" placeholder="학교를 입력해 주세요">
-                                        <button class="btn btn_input_form">인증</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div input_btn">
-                                    <h4 class="profile_photo_label">직업</h4>
-                                    <p class="profile_photo_desc">재직증명서 혹은 건강보험 자격득실확인서를 업로드해주세요</p>
-                                    <div class="input_btn">
-                                        <input id="job" type="text" value="" placeholder="직업을 입력해 주세요">
-                                        <button class="btn btn_input_form">인증</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div input_btn">
-                                    <label for="religion" class="signin_label">자산구간</label>
-                                    <p class="profile_photo_desc">잔고증명, 부동산 등기부 등본을 업로드해 주세요</p>
-                                    <div class="input_btn">
-                                        <select id="religion" class="custom_select" value="">
-                                            <option value="">선택</option>
-                                            <option value="0">2천만원 이하</option>
-                                            <option value="1">2천만원~1억이하</option>
-                                            <option value="2">1억이상~</option>
-                                        </select>
-                                        <button class="btn btn_input_form">인증</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div input_btn">
-                                    <label for="religion" class="signin_label">소득구간</label>
-                                    <p class="profile_photo_desc">소득금액증명을 업로드해주세요! <a href="#"> [정부24가기 →]</a></p>
-
-                                    <div class="input_btn">
-                                        <select id="religion" class="custom_select" value="">
-                                            <option value="">선택</option>
-                                            <option value="0">소득구간1</option>
-                                            <option value="1">소득구간2</option>
-                                            <option value="2">소득구간3</option>
-                                            <option value="3">소득구간4</option>
-                                            <option value="4">소득구간5</option>
-                                            <option value="5">소득구간6</option>
-                                        </select>
-                                        <button class="btn btn_input_form">인증</button>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                        <?php if (isset ($grade) && ($grade === 'grade03')): ?>
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div">
-                                    <label for="parents" class="signin_label">부</label>
-                                    <div class="multy_select">
-                                        <select id="parents1" class="custom_select" value="">
-                                            <option value="">선택</option>
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                        </select>
-                                        <select id="parents2" class="custom_select" value="">
-                                            <option value="">선택</option>
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div">
-                                    <label for="parents" class="signin_label">모</label>
-                                    <div class="multy_select">
-                                        <select id="parents3" class="custom_select" value="">
-                                            <option value="">선택</option>
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                        </select>
-                                        <select id="parents4" class="custom_select" value="">
-                                            <option value="">선택</option>
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div">
-                                    <label for="brother" class="signin_label">형제</label>
-                                    <select id="brother" class="custom_select" value="">
-                                        <option value="">선택</option>
-                                        <option value="0">0</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form_row signin_form">
-                                <div class="signin_form_div">
-                                    <label for="parents" class="signin_label">거주형태</label>
-                                    <div class="multy_select_three">
-                                        <select id="parents3" class="custom_select" value="">
-                                            <option value="">선택</option>
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                        </select>
-                                        <select id="parents4" class="custom_select" value="">
-                                            <option value="">선택</option>
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                        </select>
-                                        <select id="parents4" class="custom_select" value="">
-                                            <option value="">선택</option>
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endif; ?>
-                        <div class="btn_group">
-                            <button type="button" class="btn type01">저장</button>
-                        </div>
-                    </div>
                 </form>
             </div>
         </div>
@@ -472,11 +425,32 @@
     <!-- SCRIPTS -->
 
     <script>
-        $(document).ready(function() {
+        const selectGender = (e) => {
+            console.log(e.value);
+            $('#personal_style').empty();
+            $('#personal_style').html("<option>선택</option>");
+            if (e.value === '0') {
+                <?php
+                foreach ($femaleStyle as $item)
+                { ?>
+                    $("#personal_style").append("<option value='<?= $item['value'] ?>'><?= $item['name'] ?></option>")
+                    console.log("<?php echo 'abc' ?>");
+                <?php } ?>
+            } else {
+                <?php
+                foreach ($maleStyle as $item)
+                { ?>
+                    $("#personal_style").append("<option value='<?= $item['value'] ?>'><?= $item['name'] ?></option>")
+                    console.log("<?php echo 'abc' ?>");
+                <?php } ?>
+            }
+
+        }
+        $(document).ready(function () {
             // 
             const rankedItemsList = $('#ranked');
             let rankedItems = [];
-            $('.animal_type').click(function() {
+            $('.animal_type').click(function () {
                 const checkedCount = $('.animal_type:checked').length;
                 if (checkedCount > 3) {
                     $(this).prop('checked', false);
@@ -487,7 +461,7 @@
                 const order = parseInt($(this).attr('data-order'));
 
                 if ($(this).prop('checked')) {
-                    rankedItems.push({item: item, order: order});
+                    rankedItems.push({ item: item, order: order });
                 } else {
                     const index = rankedItems.findIndex(obj => obj.item === item);
                     if (index !== -1) {
