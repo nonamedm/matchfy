@@ -4,7 +4,8 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -42,13 +43,15 @@
                                 <label for="appear_type" class="signin_label">파트너 성별</label>
                                 <div>
                                     <div class="chk_box radio_box partner">
-                                        <input type="radio" id="female" name="partner_mf" value="0" checked="" onclick="selectGender(this)">
+                                        <input type="radio" id="female" name="partner_mf" value="0" checked=""
+                                            onclick="selectGender(this)">
                                         <label for="female">
                                             <h2>여성</h2>
                                         </label>
                                     </div>
                                     <div class="chk_box radio_box partner">
-                                        <input type="radio" id="male" name="partner_mf" value="1" onclick="selectGender(this)">
+                                        <input type="radio" id="male" name="partner_mf" value="1"
+                                            onclick="selectGender(this)">
                                         <label for="male">
                                             <h2>남성</h2>
                                         </label>
@@ -63,20 +66,23 @@
                                 <div class="animal_type_module">
                                     <?php
                                     $word_file_path = APPPATH . 'data/MemberCode.php';
-                                    require($word_file_path);
-                                    foreach ($animalType as $item) {
-                                    ?>
+                                    require ($word_file_path);
+                                    foreach ($animalType as $item)
+                                    {
+                                        ?>
                                         <div class="chk_box radio_box animal_type_chk">
-                                            <input type="checkbox" id="<?= $item['id'] ?>" name="animal_type" class="animal_type" value="<?= $item['value'] ?>" <?php if ($item['value'] === $animal_type1 || $item['value'] === $animal_type2 || $item['value'] === $animal_type3) {
-                                                                                                                                                                ?> checked <?php
-                                                                                                                                                                        } ?>><label for="<?= $item['id'] ?>">
+                                            <input type="checkbox" id="<?= $item['id'] ?>" name="animal_type"
+                                                class="animal_type" value="<?= $item['value'] ?>" <?php if ($item['value'] === $animal_type1 || $item['value'] === $animal_type2 || $item['value'] === $animal_type3)
+                                                  {
+                                                      ?> checked <?php
+                                                  } ?>><label for="<?= $item['id'] ?>">
                                                 <h2>
                                                     <?= $item['name'] ?>
                                                 </h2>
                                             </label>
                                         </div>
 
-                                    <?php
+                                        <?php
                                     }
                                     ?>
                                 </div>
@@ -106,7 +112,7 @@
                                 </div>
                             </div>
 
-                            <?php if (isset($grade) && ($grade === 'grade02' || $grade === 'grade03')) : ?>
+                            <?php if (isset ($grade) && ($grade === 'grade02' || $grade === 'grade03')): ?>
 
                                 <div class="form_row signin_form">
                                     <div class="signin_form_div">
@@ -282,17 +288,19 @@
                                     </div>
                                 </div>
                             <?php endif; ?>
-                            <?php if (isset($grade) && ($grade === 'grade03')) : ?>
+                            <?php if (isset ($grade) && ($grade === 'grade03')): ?>
                                 <div class="form_row signin_form">
                                     <div class="signin_form_div">
                                         <label for="parents" class="signin_label">부</label>
                                         <div class="multy_select">
-                                            <select id="father_birth_year" name="father_birth_year" class="custom_select" value="">
+                                            <select id="father_birth_year" name="father_birth_year" class="custom_select"
+                                                value="">
                                                 <option value="">선택</option>
                                                 <?php
                                                 $nowYear = date('Y');
                                                 $pastYear = 1945;
-                                                for ($year = $nowYear; $year >= $pastYear; $year--) {
+                                                for ($year = $nowYear; $year >= $pastYear; $year--)
+                                                {
                                                     echo '<option value="' . $year . '">' . $year . '</option>';
                                                 }
                                                 ?>
@@ -312,12 +320,14 @@
                                     <div class="signin_form_div">
                                         <label for="parents" class="signin_label">모</label>
                                         <div class="multy_select">
-                                            <select id="mother_birth_year" name="mother_birth_year" class="custom_select" value="">
+                                            <select id="mother_birth_year" name="mother_birth_year" class="custom_select"
+                                                value="">
                                                 <option value="">선택</option>
                                                 <?php
                                                 $nowYear = date('Y');
                                                 $pastYear = 1945;
-                                                for ($year = $nowYear; $year >= $pastYear; $year--) {
+                                                for ($year = $nowYear; $year >= $pastYear; $year--)
+                                                {
                                                     echo '<option value="' . $year . '">' . $year . '</option>';
                                                 }
                                                 ?>
@@ -423,18 +433,20 @@
             $('#personal_style').html('<option value="">선택</option>');
             if (e.value === '0') {
                 <?php
-                foreach ($femaleStyle as $item) { ?>
+                foreach ($femaleStyle as $item)
+                { ?>
                     $("#personal_style").append("<option value='<?= $item['value'] ?>'><?= $item['name'] ?></option>")
                 <?php } ?>
             } else {
                 <?php
-                foreach ($maleStyle as $item) { ?>
+                foreach ($maleStyle as $item)
+                { ?>
                     $("#personal_style").append("<option value='<?= $item['value'] ?>'><?= $item['name'] ?></option>")
                 <?php } ?>
             }
 
         }
-        $(document).ready(function() {
+        $(document).ready(function () {
             selectGender(0);
 
             var partnerGender = <?php echo json_encode($partner_gender); ?>;
@@ -521,12 +533,12 @@
             if (residence3 !== "" || residence3 !== null) {
                 $("#residence3").val(residence3);
             }
-            
-            
-            
+
+
+
             const rankedItemsList = $('#ranked');
             let rankedItems = [];
-            $('.animal_type').click(function() {
+            $('.animal_type').click(function () {
                 const checkedCount = $('.animal_type:checked').length;
                 if (checkedCount > 3) {
                     $(this).prop('checked', false);
@@ -562,52 +574,58 @@
             });
             <?php
             $word_file_path = APPPATH . 'data/MemberCode.php';
-            require($word_file_path);
+            require ($word_file_path);
             ?>
             if (animalType1 !== "" || animalType1 !== null) {
-                <?php foreach ($animalType as $item) {
-                    if ($item['value'] === $animal_type1) {
-                ?>
+                <?php foreach ($animalType as $item)
+                {
+                    if ($item['value'] === $animal_type1)
+                    {
+                        ?>
                         rankedItems.push({
                             item: "<?= $item['name'] ?>",
                             order: 0,
                             value: <?= $item['value'] ?>
                         });
-                    <?php
-                    } 
-                    
+                        <?php
+                    }
+
                 }
                 ?>
                 rankedItemsList.append(`<li data-value="<?= $animal_type1 ?>">1순위: ` + rankedItems[0].item + `</li>`);
             }
             if (animalType2 !== "" || animalType2 !== null) {
-                <?php foreach ($animalType as $item) {
-                    if ($item['value'] === $animal_type2) {
-                ?>
+                <?php foreach ($animalType as $item)
+                {
+                    if ($item['value'] === $animal_type2)
+                    {
+                        ?>
                         rankedItems.push({
                             item: "<?= $item['name'] ?>",
                             order: 0,
                             value: <?= $item['value'] ?>
                         });
-                    <?php
-                    } 
-                    
+                        <?php
+                    }
+
                 }
                 ?>
                 rankedItemsList.append(`<li data-value="<?= $animal_type2 ?>">2순위: ` + rankedItems[1].item + `</li>`);
             }
             if (animalType3 !== "" || animalType3 !== null) {
-                <?php foreach ($animalType as $item) {
-                    if ($item['value'] === $animal_type3) {
-                ?>
+                <?php foreach ($animalType as $item)
+                {
+                    if ($item['value'] === $animal_type3)
+                    {
+                        ?>
                         rankedItems.push({
                             item: "<?= $item['name'] ?>",
                             order: 0,
                             value: <?= $item['value'] ?>
                         });
-                    <?php
-                    } 
-                    
+                        <?php
+                    }
+
                 }
                 ?>
                 rankedItemsList.append(`<li data-value="<?= $animal_type3 ?>">3순위: ` + rankedItems[2].item + `</li>`);
@@ -616,7 +634,7 @@
 
         function savePartnerInfo() {
             var postData = new FormData($('form')[0]);
-            $('#ranked li').each(function(index, li) {
+            $('#ranked li').each(function (index, li) {
                 var value = $(li).data('value');
                 postData.append('animal_type' + (index + 1), value);
             });
@@ -628,11 +646,12 @@
                 processData: false,
                 contentType: false,
                 async: false,
-                success: function(data) {
+                success: function (data) {
                     console.log(data);
                     if (data.status === 'success') {
                         // 성공                        
                         console.log('저장', data);
+                        moveToURl('/mo/factorInfo');
                     } else if (data.status === 'error') {
                         console.log('실패', data);
                     } else {
@@ -640,7 +659,7 @@
                     }
                     return false;
                 },
-                error: function(data, status, err) {
+                error: function (data, status, err) {
                     console.log(err);
                     alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
