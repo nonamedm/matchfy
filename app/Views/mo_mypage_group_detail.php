@@ -28,28 +28,20 @@
                 </div>
                 <div class="group_detail_info">
                     <div class="group_detail_header">
-                        <div class="group_detail_type">주중 모임</div>
-                        <p>매칭률 <span>90%</span> 이상</p>
+                        <div class="group_detail_type"><?=$catetory?><?php $postData ?></div>
+                        <p>매칭률 <span><?=$matching_rate?></span></p>
                     </div>
                     <div class="group_detail_title">
-                        <h2>금요일에 남산타워 갈 멤버 구해요 !</h2>
-                        <p class="group_detail_schedule">2023.03.22 (금) 모임</p>
-                        <p class="group_detail_period">2023.03.04~2023.03.21 까지 모집중</p>
+                        <h2><?=$title?></h2>
+                        <p class="group_detail_schedule"><?=$meeting_start_date?> ~ <?=$meeting_end_date?> 모임</p>
+                        <p class="group_detail_period"><?=$recruitment_start_date?> ~ <?=$recruitment_end_date?> 까지 모집중</p>
                         <div class="group_particpnt" onclick="meetingMemberList('1')">
-                            <span>신청 2</span>/4명
+                            <span>신청 2</span>/<?=$number_of_people?>명
                         </div>
                     </div>
                     <hr class="hoz_part" />
                     <div class="group_detail_cont">
-                        <p>안녕하세요 홍길동 입니다. </p>
-
-                        <p>3/22 금요일에 모여서<br />
-                            남산타워가실 분 만나요!</p>
-
-                        <p>7시쯤에 명동역 5번출구 앞에서 만나서<br />
-                            다같이 가면 좋겠습니다. </p>
-
-                        <p>다녀와서 저녁식사 같이해요! </p>
+                    <?=$content?>
                         <div class="group_detail_location">
                             <div>
                                 <img src="/static/images/group_location_detail.png" />
@@ -57,10 +49,10 @@
                             <div style="padding: 10px 0 0 20px;">
                                 <div class="group_location">
                                     <img src="/static/images/ico_location_16x16.png" />
-                                    광장시장 자매 육회
+                                    <?=$meeting_place?>
                                 </div>
-                                <p class="group_location_schedule">2023.03.22 (금) 20시 </p>
-                                <p class="group_location_fee"><span>30,000원</span></p>
+                                <p class="group_location_schedule"><?=$meeting_start_date?> (금) 20시 </p>
+                                <p class="group_location_fee"><span><?=$meeting_fee?>원</span></p>
                             </div>
                         </div>
                     </div>

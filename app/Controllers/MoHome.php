@@ -11,6 +11,8 @@ use App\Models\MemberFeedFileModel;
 use App\Models\MatchPartnerModel;
 use App\Models\PointModel;
 use App\Models\PointExchangeModel;
+use App\Models\MeetingModel;
+use App\Models\MeetingFileModel;
 use App\Models\MeetingMembersModel;
 use App\Helpers\MoHelper;
 use App\Models\MeetModel;
@@ -461,7 +463,12 @@ class MoHome extends BaseController
 
     public function mypageGroupList(): string
     {
-        return view('mo_mypage_group_list');
+        $MeetingModel = new MeetingModel();
+        $MeetingFileModel = new MeetingFileModel();
+
+        $Meeting['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
+
+        return view('mo_mypage_group_list', $Meeting);
     }
     public function mypageGroupSearchList(): string
     {
@@ -469,7 +476,37 @@ class MoHome extends BaseController
     }
     public function mypageGroupDetail(): string
     {
-        return view('mo_mypage_group_detail');
+        $session = session();
+        $ci = $session->get('ci');
+        $name = $session->get('name');
+        //$meetingIdx = $this->request->getPost('idx');
+
+
+        $MeetingModel = new MeetingModel();
+        $MeetingFileModel = new MeetingFileModel();
+
+        $Meeting = $MeetingModel->where('idx', $idx)->first();
+
+        $data = [
+            'category' => $Meeting['category'],
+            'recruitment_start_date' => $Meeting['recruitment_start_date'],
+            'recruitment_end_date' => $Meeting['recruitment_end_date'],
+            'meeting_start_date' => $Meeting['meeting_start_date'],
+            'meeting_end_date' => $Meeting['meeting_end_date'],
+            'number_of_people' => $Meeting['number_of_people'], //현재 모집된 인원 수 필요
+            'matching_rate' => $Meeting['matching_rate'],
+            'title' => $Meeting['title'],
+            'content' => $Meeting['content'],
+            'meeting_place' => $Meeting['meeting_place'],
+            'membership_fee' => $Meeting['membership_fee']
+        ];
+
+        // if(!empty($userFile)) {
+        //     $data = array_merge($data, $userFile);
+        // } else {
+        //     $data = array_merge($data, ['file_path' => 'static/images/', 'file_name' => 'profile_noimg.png']);
+        // }
+        return view('mo_mypage_group_detail', $data);
     }
     public function mypageGroupPartcntPopup()
     {
@@ -676,7 +713,58 @@ class MoHome extends BaseController
     }
     public function mypageGroupCreate(): string
     {
-        return view('mo_mypage_group_create');
+        // $file = $this->request->getFile('userfile');
+   
+        // if ($file->isValid()) {
+        //     $upload= new Upload();
+        //     $fileData = $upload->Boardupload($file,'wh_board_notice','notice',$title,$content);
+            
+        //     if ($fileData) {
+        //         return redirect()->to("/ad/notice/noticeList")->with('msg', '등록이 완료되었습니다.');    
+        //     } else {
+        //         return redirect()->to("/ad/notice/noticeList")->with('msg', '등록이 실패 되었습니다.');
+        //     }
+        // } else {
+
+            //사진 추가
+            $category = $this->request->getPost('category');
+            $recruitment_start_date = $this->request->getPost('recruitment_start_date');
+            $recruitment_end_date = $this->request->getPost('recruitment_end_date');
+            $meeting_start_date = $this->request->getPost('meeting_start_date');
+            $meeting_end_date = $this->request->getPost('meeting_end_date');
+            $number_of_people = $this->request->getPost('number_of_people');
+            $matching_rate = $this->request->getPost('matching_rate');
+            $title = $this->request->getPost('title');
+            $content = $this->request->getPost('content');
+            $town = $this->request->getPost('reservation_previous');
+            $meeting_place = $this->request->getPost('meeting_place');
+            $membership_fee = $this->request->getPost('membership_fee');
+
+            // $town = $encrypter->decrypt(base64_decode($ci), ['key' => 'nonamedm', 'blockSize' => 32]);
+
+            $MeetingModel = new MeetingModel();
+
+            $data = [
+                'category' => $category,
+                'recruitment_start_date' => $recruitment_start_date,
+                'recruitment_end_date' => $recruitment_end_date,
+                'meeting_start_date' => $meeting_start_date,
+                'meeting_end_date' => $meeting_end_date,
+                'number_of_people' => $number_of_people,
+                'matching_rate' => $matching_rate,
+                'title' => $title,
+                'content' => $content,
+                'reservation_previous' => $reservation_previous,
+                'meeting_place' => $meeting_place,
+                'membership_fee' => $membership_fee,
+            ];
+
+            // 데이터 저장
+            $inserted = $MeetingModel->insert($data);
+
+
+            return view('mo_mypage_group_create');
+        // }
     }
     public function mypageMygroupList(): string
     {
