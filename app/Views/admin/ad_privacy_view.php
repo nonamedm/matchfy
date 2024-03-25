@@ -24,8 +24,13 @@
             ?>
         </div>
         <div class="ad_con">
-            <h2>개인정보처리방침</h2>
-            <input type="button" value="목록으로 돌아가기" Onclick="fn_clickList('privacy')"/><br>
+            <div class="page_header">
+                <ul>
+                    <li><a href="#" Onclick="fn_clickList('privacy')"><img src="/static/images/left_arrow.png"></a></li>
+                    <li><h2>개인정보처리방침 작성</h2></li>
+                </ul>
+            </div>
+            
             <input type="hidden" id="privacy_id" name="privacy_id" value="<?= $privacy['id'] ?>"/>
             <strong><label for="title">제목:</label></strong><br>
             <p><?= $privacy['title'] ?></p><br>

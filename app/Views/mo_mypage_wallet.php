@@ -22,6 +22,7 @@
         <?php $title = "내지갑"; include 'header.php'; ?>
 
         <div class="sub_wrap">
+            <div class="loading"><img src="/static/images/loading.gif"/></div>
             <div class="content_wrap">
                 <div class="mypage_wallet">
                     <div class="mypage_wallet_point">
@@ -30,23 +31,24 @@
                     </div>
                     <div class="mypage_wallet_charge">
                         <div class="btn_group multy">
-                            <button class="btn type01" onclick="pointCharge();">포인트 충전</button>
-                            <button class="btn type03" onclick="pointExchange();">환전</button>
+                            <button class="btn type01" onclick="loc_pointCharge();">포인트 충전</button>
+                            <button class="btn type03" onclick="loc_pointExchange();">환전</button>
                         </div>
                     </div>
-                    <div class="tab_wrap">
+                    <div id="wallet_tab" class="tab_wrap">
                         <ul>
                             <li class="on">
-                                <a href="/mo/mypage/wallet">입금 내역</a>
+                                <a href="#" onclick="WalletPage('add');">입금 내역</a>
                             </li>
                             <li>
-                                <a href="/mo/mypage/wallet2">사용 내역</a>
+                                <a href="#" onclick="WalletPage('use');">사용 내역</a>
                             </li>
                         </ul>
                     </div>
+
                     <div class="mypage_wallet_list">
                         <div class="mypage_wallet_filter">
-                            <select class="point_order small add">
+                            <select id="point_order" class="small">
                                 <option value="latest"> 최신순</option>
                                 <option value="oldest"> 오래된순</option>
                                 <option value="highest_amount"> 금액많은순</option>
@@ -54,9 +56,9 @@
                             </select>
                             <div class="mypage_wallet_period">
                                 <div class="btn_group multy">
-                                    <button class="1week point_date btn type01 on" onclick="getPointSearch($('.point_order').val(),'1week','add')">1주일</button>
-                                    <button class="1month point_date btn type01" onclick="getPointSearch($('.point_order').val(),'1month','add')">1개월</button>
-                                    <button class="3month point_date btn type01" onclick="getPointSearch($('.point_order').val(),'3month','add')">3개월</button>
+                                    <button class="1week point_date btn type01 on" onclick="getPointSearch('1week')">1주일</button>
+                                    <button class="1month point_date btn type01" onclick="getPointSearch('1month')">1개월</button>
+                                    <button class="3month point_date btn type01" onclick="getPointSearch('3month')">3개월</button>
                                 </div>
                             </div>
                         </div>
@@ -77,80 +79,8 @@
                                 <hr class="hoz_part" />
                             <?php endforeach ?>
                         </div>
-                       
-                        <!-- <div class="mypage_wallet_detail">
-                            <div class="date">
-                                <p>2024.01.06</p>
-                            </div>
-                            <div class="desc">
-                                <p>포인트 충전</p>
-                            </div>
-                            <div class="price">
-                                <p>+ 30,000</p>
-                            </div>
-                        </div>
-                        <hr class="hoz_part" />
-                        <div class="mypage_wallet_detail">
-                            <div class="date">
-                                <p>2024.01.06</p>
-                            </div>
-                            <div class="desc">
-                                <p>전지현</p>
-                            </div>
-                            <div class="price">
-                                <p>+ 30,000</p>
-                            </div>
-                        </div>
-                        <hr class="hoz_part" />
-                        <div class="mypage_wallet_detail">
-                            <div class="date">
-                                <p>2024.01.06</p>
-                            </div>
-                            <div class="desc">
-                                <p>포인트 충전</p>
-                            </div>
-                            <div class="price">
-                                <p>+ 30,000</p>
-                            </div>
-                        </div>
-                        <hr class="hoz_part" />
-                        <div class="mypage_wallet_detail">
-                            <div class="date">
-                                <p>2024.01.06</p>
-                            </div>
-                            <div class="desc">
-                                <p>전지현</p>
-                            </div>
-                            <div class="price">
-                                <p>+ 30,000</p>
-                            </div>
-                        </div>
-                        <hr class="hoz_part" />
-                        <div class="mypage_wallet_detail">
-                            <div class="date">
-                                <p>2024.01.06</p>
-                            </div>
-                            <div class="desc">
-                                <p>성춘향</p>
-                            </div>
-                            <div class="price">
-                                <p>+ 30,000</p>
-                            </div>
-                        </div>
-                        <hr class="hoz_part" />
-                        <div class="mypage_wallet_detail">
-                            <div class="date">
-                                <p>2024.01.06</p>
-                            </div>
-                            <div class="desc">
-                                <p>성춘향</p>
-                            </div>
-                            <div class="price">
-                                <p>+ 30,000</p>
-                            </div>
-                        </div>
-                        <hr class="hoz_part" /> -->
                     </div>
+
                 </div>
             </div>
         </div>

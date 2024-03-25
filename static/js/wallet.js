@@ -1,49 +1,52 @@
 var pointValue="5000";
 var totalMyPoint='';
+var walletType ='add';
+var point_page = 1; // 현재 페이지
+var point_perPage = 6; // 페이지 당 아이템 수
+var loading = false; // 데이터 로드 중 여부
+var point_date='1week';
+var point_order='latest';
+
 $(document).ready(function() {
     getMyPoint();
-    chargePoint();
+    chk_formChargePoint();
     getPointDateSearch();
+
     $('#alliance_exchange_amount').on('change', function() {
-        pointsValue();
+        pointsValueCheck();
     });
     
-    $('.point_order').change(function() {
-        var value = $(this).val();
-        var type="";
-        var date="";
-        
+    $('.point_date').change(function() {
         if($('.1week').hasClass('on')){
-            date = '1week';
+            point_date = '1week';
         }else if($('.1month').hasClass('on')){
-            date = '1month';
+            point_date = '1month';
         }else{
-            date = '3month';
+            point_date = '3month';
         }
-
-        if($(this).hasClass('add')){
-            type="add";
-        }else{
-            type="use";
-        }
-
-        getPointSearch(value,date,type);
     });
+    
+    $('#point_order').change(function() {
+        getPointSearch(point_date);
+    });
+
 }); 
 
-function pointCharge(){
+/* 페이지 이동 */
+function loc_pointCharge(){
     window.location="/mo/mypage/wallet/charge";
 }
 
-function pointExchange(){
+function loc_pointExchange(){
     window.location="/mo/alliance/exchange";
 }
 
-function WalletLocation(){
+function loc_WalletLocation(){
     window.location="/mo/mypage/wallet";
 }
 
-function chargePoint(){
+/* 포인트 충전시 form 체크 */
+function chk_formChargePoint(){
     $('.mypage_wallet_select > div').click(function() {
         $('.mypage_wallet_select > div').removeClass('charge_select1 charge_select2 selected');
 
@@ -64,7 +67,7 @@ function chargePoint(){
         var quantity = parseInt($('#quantity').val());
         quantity++;
         $('#quantity').val(quantity);
-        updateTotalPrice();
+        totalPrice();
     });
 
     // 수량 감소 버튼 이벤트 처리
@@ -73,12 +76,12 @@ function chargePoint(){
         if (quantity > 1) {
             quantity--;
             $('#quantity').val(quantity);
-            updateTotalPrice();
+            totalPrice();
         }
     });
 
     $('#quantity').on('change', function() {
-        updateTotalPrice();
+        totalPrice();
     });
 
     $('#paymethod').change(function() {
@@ -92,15 +95,16 @@ function chargePoint(){
     });
 }
 
-function updateTotalPrice() {
+/* 합계금액 */
+function totalPrice() {
     var points = parseInt($('.mypage_wallet_select .selected p').data('price'));
     var quantity = parseInt($('#quantity').val());
     var totalPrice = points * quantity;
     $('#total_price').text(totalPrice.toLocaleString());
 }
 
-function pointCheck(){
-    
+/*충전 체크*/
+function chk_pointChargeSubmit(){
     var selectedOption = $("#paymethod").val();
     if (selectedOption === '') {
         alert('충전수단을 선택해주세요.');
@@ -125,10 +129,11 @@ function pointCheck(){
 //         signature: '99ea68bf15681741e793ece56ab87891b9bdc94cd54abdcb55b2884f4336155a'
 //         };
 
+/* 포인트결재 */
 function serverAuth() {
     var quantityNum = $('#quantity').val();
-    if (pointCheck() == true) {
-
+    if (chk_pointChargeSubmit() == true) {
+        $('.loading').hide();
         AUTHNICE.requestPay({
             clientId: 'S2_41a14a007a4a44da9618ae765ad0338c',
             method: $('#paymethod').val(),
@@ -140,7 +145,7 @@ function serverAuth() {
                 // 결제 성공 시 처리
                 console.log('결제가 성공적으로 이루어졌습니다.');
                 console.log('결제 정보:', result);
-                // resultUrl에서 필요한 데이터를 받아와 사용할 수 있습니다.
+
             },
             fnError: function(result) {
                 console.log(result.errorMsg)
@@ -149,6 +154,7 @@ function serverAuth() {
     }
 }
 
+/*보유포인트 */
 function getMyPoint(){
     $.ajax({
         url: '/mo/mypage/getPoint',
@@ -169,77 +175,41 @@ function getMyPoint(){
     });
 }
 
+/* week month click color */
 function getPointDateSearch(){
+    var arr = ['1week','1month','3month'];
     $('.point_date').click(function(){
-        $('.point_date').removeClass('on'); // 모든 버튼의 'on' 클래스 제거
-        $(this).addClass('on'); // 클릭된 버튼에 'on' 클래스 추가
-        
-        var buttonText = $(this).text();
-        console.log("Clicked button text:", buttonText);
-        
-       
-    });
-}
-
-function getPointSearch(value,date,type){
-    $.ajax({
-        url: '/mo/mypage/selectPoint',
-        type: 'post',
-        data:{
-            value:value,
-            date:date,
-            type:type,
-        },
-        success: function(data) {
-            var data = data.points;
-            var html="";
-            for(var i=0;i<data.length;i++){
-                html += '<div class="mypage_wallet_detail">'
-                html += '<div class="date">';
-                html += '<p>'+data[i]['create_at'].split(' ')[0]+'</p>';
-                html += '</div>';
-                html += '<div class="desc">';
-                html += '<p>'+data[i]['point_details']+'</p>';
-                html += '</div>';
-                html += '<div class="price">';
-                if(type=='add'){
-                    html += '<p>'+Number(data[i]['add_point']).toLocaleString()+'</p>';
-                }else{
-                    html += '<p>'+Number(data[i]['use_point']).toLocaleString()+'</p>';
-                }
-                html += '</div>';
-                html += '</div>';
-                html += '<hr class="hoz_part" />';
+        $('.point_date').removeClass('on');
+        $(this).addClass('on');
+        // console.log($(this));
+        for(var i=0;i<arr.length;i++){
+            if($(this).hasClass(arr[i])){
+                point_date = arr[i];
+                point_page = 1;
+                return false;
             }
-            $('#point_content').html(html);
-        },
-        error: function(xhr, status, error) {
-            console.log(error);
         }
+        
     });
 }
 
-function usePoint(){
-    $.ajax({
-        url: '/mo/usePoint',
-        data:{point:'2000'},
-        type: 'post',
-        success: function(data) {
-            alert(data.msg);
-        },
-        error: function(xhr, status, error) {
-            alert('zz');
-            console.log(error);
-        }
-    });
+/* week month 서치 */
+function getPointSearch(date){
+    getPointDateSearch();
+    point_page = 1;
+    point_date = date;
+    point_order = $('#point_order').val();
+    WalletPage(walletType);
 }
 
+/*계좌번호 11자리 */
 function isValidAccountNumber(accountNumber) {
     var regex = /^[0-9]{11}$/;
     return regex.test(accountNumber);
 }
 
-function exchangeCheck(){
+/*환전시 예외처리*/
+function chk_exchangeCheck(){
     var amount = $('#alliance_exchange_amount').val();
     var bank = $('#alliance_exchange_bank').val();
     var account_number = $('#alliance_exchange_account').val();
@@ -267,26 +237,34 @@ function exchangeCheck(){
     return true;
 }
 
-function pointsValue() {
-    var amount = parseInt($('#alliance_exchange_amount').val()); // 입력된 환전 금액
+/*환전 금액 이벤트 */
+function pointsValueCheck() {
+    var amount = parseInt($('#alliance_exchange_amount').val());
 
-    if (amount > totalMyPoint) {
+    if (amount < 10000) {
+        alert('환전 금액은 10,000원 이상이어야 합니다.');
+        $('#alliance_exchange_amount').val('');
+        $('#exchange_pay').text('');
+    } else if (amount > totalMyPoint) {
         alert('총 보유 포인트보다 크거나 같은 금액을 입력할 수 없습니다.');
         $('#alliance_exchange_amount').val(totalMyPoint);
         $('#exchange_pay').text(totalMyPoint.toLocaleString() +'원');
-    }else{
+    } else {
         $('#exchange_pay').text(amount.toLocaleString() +'원');
     }
 }
 
-function exchangePoint(){
+/*환전 submit */
+function exchangePointSubmit(){
+
+    $('.loading').show();
     var amount = $('#alliance_exchange_amount').val();
     var bank = $('#alliance_exchange_bank').val();
     var account_number = $('#alliance_exchange_account').val();
-    if(exchangeCheck()==true){
+    if(chk_exchangeCheck()==true){
 
         $.ajax({
-            url: '/mo/alliance/exchangepoint',
+            url: '/mo/alliance/exchangepointSubmit',
             data:{
                 amount:amount,
                 bank:bank,
@@ -294,6 +272,7 @@ function exchangePoint(){
             },
             type: 'post',
             success: function(data) {
+                $('.loading').hide();
                 if(data.success == true){
                     window.location='/mo_mypage_excharge_success';
                 }else{
@@ -307,3 +286,76 @@ function exchangePoint(){
     }
 }
 
+/*입금,사용 페이지 전환*/
+function WalletPage(type){
+    loading = true;
+    walletType = type;
+    $('.loading').show();
+    point_order = $('#point_order').val();
+    $("#wallet_tab ul li").removeClass("on");
+
+    if (type === 'add') {
+        $("#wallet_tab ul li:nth-child(1)").addClass("on");
+    } else {
+        $("#wallet_tab ul li:nth-child(2)").addClass("on");
+    }
+
+    $.ajax({
+        url: '/mo/mypage/walletTypeList',
+        type: 'post',
+        data:{
+            value:point_order,
+            date:point_date,
+            walletType:type,
+            page: point_page,
+            perPage: point_perPage,
+
+        },
+        success: function(data) {
+            var data = data.points;
+            var html="";
+            if(data){
+                for(var i=0;i<data.length;i++){
+                    html += '<div class="mypage_wallet_detail">'
+                    html += '<div class="date">';
+                    html += '<p>'+data[i]['create_at'].split(' ')[0]+'</p>';
+                    html += '</div>';
+                    html += '<div class="desc">';
+                    html += '<p>'+data[i]['point_details']+'</p>';
+                    html += '</div>';
+                    html += '<div class="price">';
+                    if(type=='add'){
+                        html += '<p>+ '+Number(data[i]['add_point']).toLocaleString()+'</p>';
+                    }else{
+                        html += '<p>- '+Number(data[i]['use_point']).toLocaleString()+'</p>';
+                    }
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<hr class="hoz_part" />';
+                }
+                point_page++; // 페이지 업데이트
+            }
+            $('#point_content').html(html);
+            $('.loading').hide();
+            loading = false;
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+            loading = false;
+        }
+    });
+
+}
+
+// 스크롤 이벤트 핸들러 css 추가도 해두기
+// $('#point_content').scroll(function() {
+//     if ($(this).scrollTop() + $(this).height() >= $(this)[0].scrollHeight && !loading) {
+//         WalletPage(walletType);
+//     }
+// });
+
+$(window).on('scroll', function() {
+    if ($(window).scrollTop() + $(window).height() >= $(document).height() && !loading) {
+        WalletPage(walletType);
+    }
+});

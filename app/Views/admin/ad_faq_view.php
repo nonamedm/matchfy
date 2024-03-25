@@ -24,9 +24,12 @@
             ?>
         </div>
         <div class="ad_con">
-            <h2>faq</h2>
-            <input type="button" value="목록으로 돌아가기" Onclick="fn_clickList('faq')"/><br>
-            </br>
+            <div class="page_header">
+                <ul>
+                    <li><a href="#" Onclick="fn_clickList('faq')"><img src="/static/images/left_arrow.png"></a></li>
+                    <li><h2>FAQ 목록</h2></li>
+                </ul>
+            </div>
             <input type="hidden" id="faq_id" name="faq_id" value="<?= $faq['id'] ?>"/>
             <strong><label for="title">제목:</label></strong>
             <p><?= $faq['title'] ?></p><br>

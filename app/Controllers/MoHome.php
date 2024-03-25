@@ -11,6 +11,9 @@ use App\Models\MemberFeedFileModel;
 use App\Models\MatchPartnerModel;
 use App\Models\PointModel;
 use App\Models\PointExchangeModel;
+use App\Models\MeetingMembersModel;
+use App\Helpers\MoHelper;
+use App\Models\MeetModel;
 use CodeIgniter\Session\Session;
 
 
@@ -290,54 +293,14 @@ class MoHome extends BaseController
         return view('mo_invite_popup');
     }
 
-    public function usePoint()
-    {
+    public function walletTypeList(){
         $session = session();
         $ci = $session->get('ci');
-        //$ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
-        $point = $this->request->getPost('point');
-        $pointModel = new PointModel();
-
-        $my_point = $pointModel->select('my_point')
-            ->where('member_ci', $ci)
-            ->orderBy('create_at', 'DESC')
-            ->first();
-
-        $my_point_value = isset ($my_point['my_point']) ? $my_point['my_point'] : 0;
-
-        if ($my_point_value < $point)
-        {
-            return $this->response->setJSON(['success' => false, 'msg' => '충전후 사용해주세요.']);
-        }
-
-        $data = [
-            'member_ci' => $ci,
-            'my_point' => $my_point_value - $point,
-            'use_point' => $point,
-            'point_details' => '사용한 포인트 내역',
-            'create_at' => date('Y-m-d H:i:s'),
-            'point_type' => 'U',
-        ];
-
-        $result = $pointModel->insert($data);
-
-        if ($result)
-        {
-            return $this->response->setJSON(['success' => true, 'msg' => '결제 완료 되었습니다.']);
-        } else
-        {
-            return $this->response->setJSON(['success' => false, 'msg' => '결제가 되지 않았습니다.']);
-        }
-    }
-
-    public function mypageSelectPoint()
-    {
-        $session = session();
-        $ci = $session->get('ci');
-        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
-        $type = $this->request->getPost('type');
+        $type = $this->request->getPost('walletType');
         $date = $this->request->getPost('date');
         $value = $this->request->getPost('value');
+        $page = intval($this->request->getPost('page'));
+        $perPage = intval($this->request->getPost('perPage'));
         $pointModel = new PointModel();
 
         $points = $pointModel->where('member_ci', $ci);
@@ -367,21 +330,25 @@ class MoHome extends BaseController
         } else if ($value == 'oldest')
         {
             $points->orderBy('create_at', 'ASC');
-        } else if ($value == 'highest_amount')
-        {
-            $points->orderBy('add_point', 'DESC');
-        } else if ($value == 'lowest_amount')
-        {
-            $points->orderBy('add_point', 'ASC');
-        } else
-        {
+        } else if ($value == 'highest_amount') {
+            if($type=='add'){
+                $points->orderBy('add_point', 'DESC');
+            }else{
+                $points->orderBy('use_point', 'DESC');
+            }
+        } else if ($value == 'lowest_amount') {
+            if($type=='add'){
+                $points->orderBy('add_point', 'ASC');
+            }else{
+                $points->orderBy('use_point', 'ASC');
+            }
+        } else {
             $points->orderBy('create_at', 'DESC');
         }
+        
+        $points = $points->findAll($perPage*$page, 0);
 
-        $points = $points->findAll();
-
-        if ($points)
-        {
+        if ($points) {
             return $this->response->setJSON(['success' => true, 'points' => $points]);
         } else
         {
@@ -393,30 +360,29 @@ class MoHome extends BaseController
     {
         $session = session();
         $ci = $session->get('ci');
-        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
+        $page = 1;
+        $perPage = 6;
+
         $pointModel = new PointModel();
 
-        $points = $pointModel->where('member_ci', $ci)
-            ->where('point_type', 'A')
-            ->orderBy('create_at', 'DESC')
-            ->findAll();
+        $points = $pointModel->where('member_ci', $ci);
+        $points->where('point_type', 'A');
+        $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 week')));
+        $points->orderBy('create_at', 'DESC');
+        $points = $points->findAll($perPage*$page, 0);
 
         return view('mo_mypage_wallet', ['points' => $points]);
     }
 
-    public function mypageWallet2(): string
-    {
+    public function pageClac($pointType){
         $session = session();
         $ci = $session->get('ci');
-        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
         $pointModel = new PointModel();
-
-        $points = $pointModel->where('member_ci', $ci)
-            ->where('point_type', 'U')
-            ->orderBy('create_at', 'DESC')
-            ->findAll();
-
-        return view('mo_mypage_wallet2', ['points' => $points]);
+        
+        $count = $pointModel->where('member_ci', $ci)
+                            ->where('point_type', $pointType)
+                            ->countAllResults();
+        return $count;
     }
 
     public function mypageWalletCharge()
@@ -429,7 +395,6 @@ class MoHome extends BaseController
     {
         $session = session();
         $ci = $session->get('ci');
-        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
         $pointModel = new PointModel();
 
         $my_point = $pointModel->select('my_point')
@@ -445,7 +410,6 @@ class MoHome extends BaseController
     {
         $session = session();
         $ci = $session->get('ci');
-        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
         $authResultCode = $this->request->getPost('authResultCode');
 
         if ($authResultCode == '0000')
@@ -477,7 +441,6 @@ class MoHome extends BaseController
                 'create_at' => date('Y-m-d H:i:s'),
                 'point_type' => 'A',
                 'extra1' => $clientId,
-                'extra1' => $$orderId,
             ];
 
             $result = $pointModel->insert($data);
@@ -508,13 +471,208 @@ class MoHome extends BaseController
     {
         return view('mo_mypage_group_detail');
     }
-    public function mypageGroupPartcntPopup(): string
+    public function mypageGroupPartcntPopup()
     {
-        return view('mo_mypage_group_partcnt_popup');
+        $session = session();
+        $ci = $session->get('ci');
+        $meeting_idx = $this->request->getPost('meetingIdx');
+
+        $meeting_members = new MeetingMembersModel();
+        $query = $meeting_members->distinct()
+                                ->select('
+                                    a.idx as idx,
+                                    a.meeting_idx as meeting_idx,
+                                    a.delete_yn as delete_yn,
+                                    a.meeting_master as meeting_master,
+                                    d.file_path as file_path,
+                                    d.file_name as file_name,
+                                    c.name as name,
+                                    c.city as city,
+                                    c.birthday as birthday,
+                                    c.mbti as mbti'
+                                )
+                                ->from('wh_meeting_members a')
+                                ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+                                ->join('members c', 'a.member_ci = c.ci', 'left')
+                                ->join('member_files d', 'c.ci = d.member_ci', 'left')
+                                ->where('b.idx', $meeting_idx)
+                                ->where('a.delete_yn', 'N')
+                                ->orderBy('a.meeting_master')
+                                ->orderBy('a.create_at')
+                                ->get();
+                                
+        $result = $query->getResult();
+
+        if($result){
+            return $this->response->setJSON(['success' => true, 'data' => $result]);
+        }else{
+            return $this->response->setJSON(['success' => false,]);
+        }
     }
-    public function mypageGroupApplyPopup(): string
+
+    public function getMemberCount($meeting_idx){
+        
+        $MeetingMembersModel = new MeetingMembersModel();
+        $memCount = $MeetingMembersModel
+            ->where('meeting_idx', $meeting_idx)
+            ->countAllResults();
+
+        $meetModel = new MeetModel();
+        $peapleCountQuery = $meetModel
+            ->select('m.number_of_people as number_of_people')
+            ->from('wh_meetings m')
+            ->where('m.idx', $meeting_idx);
+        
+        $peapleCountResult = $peapleCountQuery->get()->getRow();
+        $number_of_people = $peapleCountResult->number_of_people;
+        
+        // 값 비교
+        if ($number_of_people - $memCount > 0) {
+            return 1; // 조건 충족
+        } else {
+            return -1; // 조건 미충족
+        }
+
+    }
+
+    /*결재 시 모임에 이미 등록되어있는지 판단 */
+    public function getMemberConfirm($ci) {
+        $MeetingMembersModel = new MeetingMembersModel();
+        $total = $MeetingMembersModel
+            ->where('member_ci', $ci)
+            ->countAllResults();
+        // echo $total;
+        if ($total > 0) {
+            return -1 ; // 이미 등록되어 있음
+        } else {
+            return 1 ; // 등록되어 있지 않음
+        }
+    }
+
+    /* 모임 결재 */
+    public function usePoint(){
+        $session = session();
+        $ci = $session->get('ci');
+        $point = intval($this->request->getPost('point'));
+        $meeting_idx = intval($this->request->getPost('meetingIdx'));
+        $mypoint = intval($this->request->getPost('mypoint'));
+        $pointModel = new PointModel();
+
+        $getMemberCount = $this->getMemberCount($meeting_idx);
+        $getMemberConfirm = $this->getMemberConfirm($ci);
+        
+        if($getMemberCount == 1){
+            if($mypoint < $point){//보유포인트가 모자랄 경우
+                return $this->response->setJSON(['success' => true , 'msg' => '충전후 사용해주세요.']);
+            }else{
+                if($getMemberConfirm == 1){ //통과!
+                    //마스터 유저                  
+                    $masterMember = new MemberModel();
+                    $meetingMaster = $masterMember
+                                    ->distinct()
+                                    ->select('m.name as name, m.ci as ci, wp.my_point as k_point')
+                                    ->from('members m')
+                                    ->join('wh_points wp', 'wp.member_ci = m.ci', 'left')
+                                    ->join('wh_meeting_members wmm', 'm.ci = wmm.member_ci', 'left')
+                                    ->where('wmm.meeting_idx', $meeting_idx)
+                                    ->where('wmm.meeting_master', 'K')
+                                    ->orderBy('wp.create_at', 'desc')
+                                    ->get()
+                                    ->getRow();
+
+                    //참석한 멤버 포인트 사용
+                    $mydata = [
+                        'member_ci' => $ci,
+                        'my_point' => $mypoint - $point,
+                        'use_point' => $point,
+                        'point_details' => $meetingMaster->name."(모임회비)",
+                        'create_at' => date('Y-m-d H:i:s'),
+                        'point_type' => 'U',
+                    ];
+                    $result = $pointModel->insert($mydata);
+                    
+                    //참석 멤버 추가
+                    $meetMemdata = [
+                        'meeting_idx' =>$meeting_idx,
+                        'member_ci' => $ci,
+                        'meeting_master' =>'M',
+                        'create_at' => date('Y-m-d H:i:s'),
+                    ];
+                    $meeting_members = new MeetingMembersModel();
+                    $meeting_members->insert($meetMemdata);
+
+                    //나의 유저
+                    $memberName = new MemberModel();
+                    $meetingUser = $memberName
+                                    ->distinct()
+                                    ->select('m.name as name')
+                                    ->from('members m')
+                                    ->where('m.ci', $ci)
+                                    ->get()
+                                    ->getRow();
+
+                    //방장한테 포인트 가도록
+                    $masterdata = [
+                        'member_ci' => $meetingMaster->ci,
+                        'my_point' => $meetingMaster->k_point + $point,
+                        'add_point' => $point,
+                        'point_details' => $meetingUser->name."(모임회비)",
+                        'create_at' => date('Y-m-d H:i:s'),
+                        'point_type' => 'A',
+                    ];
+
+                    $pointModel->insert($masterdata);
+                    
+                    if ($result) {
+                        return $this->response->setJSON(['success' => true, 'msg' => '포인트 결재 완료 되었습니다.']);
+                    } else {
+                        return $this->response->setJSON(['success' => false, 'msg' => '포인트 결재가 실패 하였습니다.']);
+                    }
+
+                }else{//이미 참석된 멤버 일 경우
+                    return $this->response->setJSON(['success' => true , 'msg' => '이미 참석된 멤버 입니다.']);
+                }
+            }
+        }else{//참석멤버수가 다 찼을 경우
+            return $this->response->setJSON(['success' => true , 'msg' => '참석멤버수가 다 찼습니다.']);
+        }
+
+        
+    }
+
+    public function mypageGroupApplyPopup()
     {
-        return view('mo_mypage_group_apply_popup');
+        $session = session();
+        $ci = $session->get('ci');
+        $meeting_idx = $this->request->getPost('meetingIdx');
+
+        $meeting_members = new MeetingMembersModel();
+        $query = $meeting_members->distinct()
+                        ->select('a.idx, 
+                                a.category, 
+                                a.meeting_start_date, 
+                                a.meeting_end_date, 
+                                a.number_of_people, 
+                                (select count(*) from wh_meeting_members c where c.meeting_idx = ' . $meeting_idx . ') as meet_members, 
+                                a.meeting_place, 
+                                a.membership_fee, 
+                                b.file_path, 
+                                b.file_name')
+                        ->from('wh_meetings a')
+                        ->join('wh_meetings_files b', 'a.idx = b.meeting_idx', 'left')
+                        ->where('a.idx', $meeting_idx)
+                        ->get();
+                                   
+        $result = $query->getResult();
+
+        $my_point_value = $this->mypageGetPoint();
+        
+        if($result){
+            return $this->response->setJSON(['success' => true, 'data' => $result,'my_point' => $my_point_value]);
+        }else{
+            return $this->response->setJSON(['success' => false,]);
+        }
+        // return view('mo_mypage_group_apply_popup');
     }
     public function mypageGroupCreate(): string
     {
@@ -718,8 +876,7 @@ class MoHome extends BaseController
     {
         $session = session();
         $ci = $session->get('ci');
-        // $ci = '8BSLoU9LjHKfmhCn1Ex707JlDfqta/AGnQEZfTb3HyZEfJgol/0tKsxvd7VJsCljrByN6ct/+9v7xDUhaG/Rk2322EJu3+gSXDgZ75BZNLc=';
-
+        
         $amount = $this->request->getPost('amount');
         $bank = $this->request->getPost('bank');
         $acount_number = $this->request->getPost('acount_number');

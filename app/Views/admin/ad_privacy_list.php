@@ -18,32 +18,51 @@
         </div>
         <div class="ad_con">
             <h2>개인정보처리방침 목록</h2> 
-            <input type="button" value="등록" Onclick="fn_EditClick('privacy');"/>
-            <?php foreach ($privacys as $privacy): ?>
-                <div class="list_li">
-                    <a href="/ad/privacy/privacyView/<?= $privacy['id'] ?>">
-                        <p><strong><?= $privacy['id'] ?></strong></p>
-                        <p><strong><?= $privacy['title'] ?></strong></p>
-                        <?php
-                            $content = $privacy['content'];
-                            $max_length = 30; 
+            <input class="edit btn type01" type="button" value="등록" Onclick="fn_EditClick('privacy');"/>
+            <table>
+                <thead>
+                    <tr class="tr">
+                        <th class="th" style="width:5%;">번호</th>
+                        <th class="th text_left" style="width:20%;">제목</th>
+                        <th class="th text_left" style="width:65%;">내용</th>
+                        <th class="th" style="width:5%;">수정</th>
+                        <th class="th" style="width:5%;">삭제</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($privacys as $privacy): ?>
+                        <tr class="tr">
+                            <td class="td"><strong><?= $privacy['id']?></strong></td>
+                            <td class="td text_left">
+                                <a href="/ad/privacy/privacyView/<?= $privacy['id'] ?>">
+                                    <strong><?= $privacy['title'] ?></strong>
+                                </a>
+                            </td>
+                            <?php
+                                $content = $privacy['content'];
+                                $max_length = 30; 
 
-                            if (mb_strlen($content) > $max_length) {
-                                $content = mb_substr($content, 0, $max_length);
-                                $content = preg_replace('/\s+[^ ]*$/', '', $content);
-                                $content = preg_replace('/\r?\n|\r/', '', $content);
-                                $content .= '...';
-                            }
-                        ?>
-
-                        <p><?= $content ?></p>
-                    </a>
-                    <div class="btn_up_del_box">
-                        <input type="button" value="수정" Onclick="fn_clickUpdate('privacy','<?= $privacy['id']?>')"/>
-                        <input type="button" value="삭제"  Onclick="fn_clickDelete('<?= $privacy['id']?>','privacy')"/>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+                                if (mb_strlen($content) > $max_length) {
+                                    $content = mb_substr($content, 0, $max_length);
+                                    $content = preg_replace('/\s+[^ ]*$/', '', $content);
+                                    $content = preg_replace('/\r?\n|\r/', '', $content);
+                                    $content .= '...';
+                                }
+                            ?>
+                            <td class="td text_left">
+                                <a href="/ad/privacy/privacyView/<?= $privacy['id'] ?>"><?= $content ?></a>
+                            </td>
+                            
+                            <td class="td">
+                                <input type="button" class="btn type01" value="수정" Onclick="fn_clickUpdate('privacy','<?= $privacy['id']?>')"/>
+                            </td>
+                            <td class="td">
+                                <input type="button" class="btn type02" value="삭제"  Onclick="fn_clickDelete('<?= $privacy['id']?>','privacy')"/>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>

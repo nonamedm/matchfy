@@ -35,7 +35,7 @@
             <footer class="footer">
 
                 <div class="btn_group">
-                    <button type="button" class="btn type01" onclick='pointExchange()'>다시 환전하기</button>
+                    <button type="button" class="btn type01" onclick='loc_pointExchange()'>다시 환전하기</button>
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy

@@ -1,4 +1,4 @@
-body,a{
+body,a,ul,li{
     margin: 0;
     padding: 0;
     border: 0;
@@ -6,6 +6,7 @@ body,a{
     font: inherit;
     vertical-align: baseline;
     text-decoration: none;
+    list-style: none;
 }
 .ad_box{
     display: flex;
@@ -28,11 +29,12 @@ body,a{
     list-style: none;
     margin: 0;
     padding: 0;
+    border-right: 1px solid #ccc;
 }
 
 .menu_item {
     padding: 10px 0;
-    border-bottom: 1px solid #555;
+    border-bottom:1px solid #3d3d3d;
     padding-left: 20px;
 }
 
@@ -42,8 +44,22 @@ body,a{
 
 .menu_item a {
     color: #fff;
+    font-size: 17px;
     text-decoration: none;
 }
+.page_header{
+    display: flex;
+}
+
+.page_header ul{
+    display: flex;
+}
+
+.page_header ul li:nth-child(1){
+    width:50px;
+    line-height: 114px;
+}
+
 .btn_up_del_box{
     position: relative;
     float:right;
@@ -55,4 +71,188 @@ body,a{
     width: 100%;
     height: 220px;
     border-bottom: 1px solid #333;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem auto;
+    border: 1px solid #ddd;
+    background-color: white;
+    }
+
+/* 테이블 행 */
+.th, .td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    width:13%;
+}
+
+.th {
+    background-color: #eee;
+    color: #333;
+}
+.th .num{
+    width: 5%;
+}
+.td:nth-child(8){
+    width:21%;
+    display: flex;
+}
+.th{
+    font-size: 13px;
+    font-weight: 300;
+}
+.td{
+    font-size: 12px;
+}
+.text_left{
+    text-align: left;
+}
+.btn00{
+    width: 40px;
+    height: 30px;
+    font-size: 13px;
+    background: #fff;
+    color:#fff;
+}
+.ad_btn001{
+    background-color: #5e97ed;
+    border: 1px solid #ddd;
+}
+
+.ad_btn002{
+    background-color: #212121;
+    border: 1px solid #ddd;
+}
+
+.ad_btn003{
+    background-color: #f98171;
+    border: 1px solid #ddd;
+}
+.btn{
+    width: 60px;
+    height: 40px;
+}
+.btn.type01 {
+    color: #fff;
+    border: none;
+    background: #ff0267;
+    border-radius: 15px;
+    font-family: 'Pretendard';
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 22px;
+}
+.btn.type01.edit{
+    float:right;
+    margin-bottom: 30px;
+}
+
+.btn.type02 {
+    border: none;
+    background: #f2f2f2;
+    border-radius: 15px;
+    font-family: 'Pretendard';
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #333333;
+}
+
+.exc_text{
+    font-weight: 900;
+}
+
+.attatch_file_div a {
+    border: 1px solid #ff0267;
+    border-radius: 5px;
+    font-size: 12px;
+    line-height: 14px;
+    color: #ff0267;
+    padding: 4px;
+}
+
+.temp_input_text {
+    border: 1px solid #dddddd;
+    width: 100%;
+    height: 50px;
+    background: #ffffff;
+    border-radius: 15px;
+    font-size: 15px;
+    color: #999999;
+    margin: 10px;
+    padding: 10px;
+}
+.notice_list{
+    top: 50px;
+    position: relative;
+    width: 100%;
+    height: 100px;
+    background: #fff;
+    border-bottom: 1px solid #ccc;
+    padding: 50px 0px;
+}
+.notice_list .notice_list_label {
+    /* padding: 20px; */
+    display: flex;
+    justify-content: space-between;
+}
+.notice_list .notice_list_label .faq_answer {
+    display: flex;
+}
+.notice_list .notice_view_label {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.notice_list .notice_list_label h2 {
+    font-family: 'Pretendard-SemiBold';
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+
+    margin: 0 0 10px 0;
+}
+.notice_list .notice_list_label h2 .question {
+    font-family: 'Pretendard-SemiBold';
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #ff0267;
+    margin-right: 10px;
+}
+.notice_list .notice_list_label h2 .answer {
+    font-family: 'Pretendard-SemiBold';
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #777777;
+    margin-right: 10px;
+}
+.notice_list .notice_list_label p {
+    font-size: 13px;
+    line-height: 16px;
+
+    color: #999999;
+    margin: 0;
+}
+
+.notice_list .notice_view_label h2 {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+
+    margin: 0 0 10px 0;
+}
+.notice_list .notice_view_label p {
+    font-size: 13px;
+    line-height: 16px;
+
+    color: #999999;
+    margin: 0;
 }

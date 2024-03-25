@@ -24,8 +24,13 @@
             ?>
         </div>
         <div class="ad_con">
-            <h2>이용약관</h2>
-            <input type="button" value="목록으로 돌아가기" Onclick="fn_clickList('terms')"/><br>
+            <div class="page_header">
+                <ul>
+                    <li><a href="#" Onclick="fn_clickList('terms')"><img src="/static/images/left_arrow.png"></a></li>
+                    <li><h2>이용약관</h2></li>
+                </ul>
+            </div>
+
             <input type="hidden" id="terms_id" name="terms_id" value="<?= $terms['id'] ?>"/>
             <strong><label for="title">제목:</label></strong><br>
             <p><?= $terms['title'] ?></p><br>

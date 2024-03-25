@@ -817,6 +817,7 @@ td {
     font-weight: 500;
     font-size: 11px;
     line-height: 130%;
+    cursor: pointer;
 }
 .group_particpnt span {
     color: #ff0267;
@@ -2383,6 +2384,10 @@ input[type='number']::-webkit-inner-spin-button {
     top: 20px;
     right: 24px;
 }
+.mo_wrap .layerPopup.bottom .btn_close {
+    top: 20px;
+    right: 24px;
+}
 .mo_wrap .layerPopup.bottom .layerPopup_content .title {
     font-family: 'Pretendard-Bold';
     font-size: 18px;
@@ -2401,6 +2406,17 @@ input[type='number']::-webkit-inner-spin-button {
 .mo_wrap .layerPopup .layerPopup_heading .btn_close {
     position: absolute;
     top: 22px;
+    right: 20px;
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+    text-indent: -999rem;
+    background: url(/static/images/ico_close_20x20.png) no-repeat center / 20px;
+    outline: none;
+    z-index: 2;
+}
+.mo_wrap .layerPopup .btn_close {
+    position: absolute;
     right: 20px;
     width: 24px;
     height: 24px;
@@ -2477,6 +2493,10 @@ input[type='number']::-webkit-inner-spin-button {
     min-height: 150px;
 }
 
+.mo_wrap .layerPopup.alert .layerPopup_content.msmall {
+    min-height: 180px;
+}
+
 .mo_wrap .layerPopup.alert .layerPopup_content.medium {
     min-height: 400px;
     padding-top: 20px;
@@ -2487,6 +2507,33 @@ input[type='number']::-webkit-inner-spin-button {
     left: 20px;
     margin: 0 20px 0 0;
 }
+
+.mo_wrap .layerPopup.alert .layerPopup_content .scroll_body {
+    overflow-y: scroll;
+    height: 270px;
+}
+
+.scroll_body::-webkit-scrollbar {
+    width: 10px;
+}
+.scroll_body::-webkit-scrollbar-track { 
+    background-color: #fff;
+}
+.scroll_body::-webkit-scrollbar-thumb { 
+    /* background-color: #ff0267; */
+    background-color: #fff;
+}
+.scroll_body::-webkit-scrollbar-button {
+    display: none;
+}
+
+
+/* 코너에 라운드 효과 */
+.scroll_body::-webkit-scrollbar-track,
+.scroll_body::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+}
+
 .mo_wrap .layerPopup.alert .layerPopup_content .notice_box {
     padding: 16px 0;
     text-align: center;
@@ -3144,4 +3191,18 @@ input[type='number']::-webkit-inner-spin-button {
     border: 1px solid transparent;
     border-radius: 4px;
     color: red;
+}
+
+/*loading*/
+.loading{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 5%;
+    display: none;
+}
+.loading img{
+    width: 100%;
 }

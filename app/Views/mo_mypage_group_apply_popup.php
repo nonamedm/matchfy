@@ -53,8 +53,7 @@
                 </div>
             </div>
         </div>
-
-
+    </div>
         <!-- SCRIPTS -->
 
         <script>

@@ -25,15 +25,20 @@
             ?>
         </div>
         <div class="ad_con">
-            <h2>공지사항 수정</h2>
-            <input type="button" value="목록으로 돌아가기" Onclick="fn_clickList('notice')"/><br>
+            <div class="page_header">
+                <ul>
+                    <li><a href="#" Onclick="fn_clickList('notice')"><img src="/static/images/left_arrow.png"></a></li>
+                    <li><h2>공지사항 수정</h2></li>
+                </ul>
+            </div>
+           
             <form action="/ad/notice/noticeUpdate" method="post" enctype="multipart/form-data">
                 <input type="hidden" id="notice_id" name="notice_id" value="<?= $notice['id'] ?>"/>
                 <input type="hidden" id="notice_id" name="board_type" value="<?= $notice['board_type'] ?>"/>
                 <input type="hidden" id="file_id" name="file_id" value="<?= $file['id'] ?>"/>
                 <br>
                 <label for="title">제목:</label><br>
-                <input type="text" id="title" name="title" value="<?= $notice['title'] ?>"><br>
+                <input type="text" id="title" class="temp_input_text" name="title" value="<?= $notice['title'] ?>"><br>
                 <label for="content">내용:</label><br>
                 <textarea id="content" name="content"><?=htmlspecialchars($notice['content']); ?></textarea><br>
             
@@ -42,12 +47,12 @@
                 <input type="file" id="userfile" name="userfile"><br>
 
                 <?php if ($file): ?>
-                    <p class="file_org_name"><?= $file['org_name'] ?>
+                    <span class="attatch_file_div"><a class="attatch_file"><?= $file['org_name'] ?></a></span>
                     <input type="button" value="파일 삭제" Onclick="fn_clickFileDelete('<?= $file['id']?>')"/></p>
                 <?php endif; ?>
 
                 <br>
-                <input type="submit" value="수정" class="btn_update"/>
+                <input type="submit" value="수정" class="btn_update btn type01 edit"/>
             </form>
         </div>
     </div>

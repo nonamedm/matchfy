@@ -26,15 +26,20 @@
             ?>
         </div>
         <div class="ad_con">
-            <h2>이용약관 수정</h2>
-            <input type="button" value="목록으로 돌아가기" Onclick="fn_clickList('terms')"/><br>
+            <div class="page_header">
+                <ul>
+                    <li><a href="#" Onclick="fn_clickList('terms')"><img src="/static/images/left_arrow.png"></a></li>
+                    <li><h2>이용약관 수정</h2></li>
+                </ul>
+            </div>
+            
             <form action="/ad/terms/termsUpdate" method="post">
                 <input type="hidden" id="terms_id" name="terms_id" value="<?= $terms['id'] ?>"/>
                 <label for="title">제목:</label><br>
-                <input type="text" id="title" name="title" value="<?= $terms['title'] ?>"><br>
+                <input type="text" class="temp_input_text" id="title" name="title" value="<?= $terms['title'] ?>"><br>
                 <label for="content">내용:</label><br>
                 <textarea id="content" name="content" rows="4" cols="50"><?=htmlspecialchars($terms['content']); ?></textarea><br><br>
-                <input type="submit" value="수정"/>
+                <input type="submit" class="btn type01 edit" value="수정"/>
             </form>
         </div>
     </div>
