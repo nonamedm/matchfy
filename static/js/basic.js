@@ -724,3 +724,47 @@ const submitFile = () => {
         return false;
     }
 };
+
+const meetingSave = (postData) => {
+    var postData = new FormData(document.querySelector('form'));
+    $.ajax({
+        url: '/ajax/meetingSave',
+        type: 'POST',
+        data: postData,
+        processData: false,
+        contentType: false,
+        async: false,
+        success: function (data) {
+            console.log(data);
+            if (data.status === 'success') {
+                // 성공
+                moveToUrl('/mo/mypage/group/detail/' + data.inserted_id);
+            } else if (data.status === 'error') {
+                // 한번만 출력되게 함
+                $('.alert_validation').remove();
+                // 오류 메시지 표시
+                Object.keys(data.errors).forEach(function (key, index) {
+                    var field = $('[name="' + key + '"]');
+                    var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div
+
+                    // 오류 메시지 추가
+                    if (!topMostDiv.next().hasClass('alert_validation')) {
+                        // 이미 오류 메시지가 있는지 확인
+                        topMostDiv.after('<div class="alert alert_validation">' + data.errors[key] + '</div>');
+                    }
+                    // 처음 validation 포커스
+                    if (index === 0) {
+                        field.focus();
+                    }
+                });
+            } else {
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            }
+            return false;
+        },
+        error: function (data, status, err) {
+            console.log(err);
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
+};

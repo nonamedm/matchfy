@@ -7,6 +7,8 @@ use App\Models\MemberFileModel;
 use App\Models\MemberFeedModel;
 use App\Models\MemberFeedFileModel;
 use App\Models\UniversityModel;
+use App\Models\MeetingModel;
+use App\Models\MeetingFileModel;
 use App\Config\Encryption;
 
 class MoAjax extends BaseController
@@ -181,7 +183,7 @@ class MoAjax extends BaseController
                     return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
                 } else
                 {
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy fail', 'data' => $data]);
                 }
 
             } else
@@ -630,7 +632,7 @@ class MoAjax extends BaseController
             return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
         } else
         {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy fail', 'data' => $return]);
         }
 
     }
@@ -698,7 +700,7 @@ class MoAjax extends BaseController
                     return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
                 } else
                 {
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy fail', 'data' => $return]);
                 }
     
             }
@@ -865,6 +867,191 @@ class MoAjax extends BaseController
         }
 
 
+    }
+
+    public function meetingSave()
+    {
+        $rules = [
+            'category' => [
+                'label' => 'category',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '카테고리를 선택해주세요.',
+                ]
+            ],
+            'recruitment_start_date' => [
+                'label' => 'recruitment_start_date',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '모집기간을 입력해주세요.',
+                ]
+            ],
+            'recruitment_end_date' => [
+                'label' => 'recruitment_end_date',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '모집기간을 입력해주세요.',
+                ]
+            ],
+            'meeting_start_date' => [
+                'label' => 'meeting_start_date',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '모임일자를 입력해주세요.',
+                ]
+            ],
+            'meeting_end_date' => [
+                'label' => 'meeting_end_date',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '모임일자를 입력해주세요.',
+                ]
+            ],
+            'number_of_people' => [
+                'label' => 'number_of_people',
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => '모집 인원을 입력해주세요.',
+                    'numeric' => '모집 인원은 숫자만 입력 가능합니다.'
+                ]
+            ],
+            'matching_rate' => [
+                'label' => 'matching_rate',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '매칭률을 선택해주세요.',
+                ]
+            ],
+            'title' => [
+                'label' => 'title',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '제목을 입력해주세요.',
+                ]
+            ],
+            'content' => [
+                'label' => 'content',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '내용을 입력해주세요.',
+                ]
+            ],
+            'meeting_place' => [
+                'label' => 'meeting_place',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '모임장소를 입력해주세요.',
+                ]
+            ],
+            'membership_fee' => [
+                'label' => 'membership_fee',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '회비를 입력해주세요.',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules))
+        {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'errors' => $this->validator->getErrors(),
+            ]);
+        } 
+        else
+        {
+
+            $file = $this->request->getFile('meeting_photo');
+            $category = $this->request->getPost('category');
+            $recruitment_start_date = $this->request->getPost('recruitment_start_date');
+            $recruitment_end_date = $this->request->getPost('recruitment_end_date');
+            $meeting_start_date = $this->request->getPost('meeting_start_date');
+            $meeting_end_date = $this->request->getPost('meeting_end_date');
+            $number_of_people = $this->request->getPost('number_of_people');
+            $matching_rate = $this->request->getPost('matching_rate');
+            $title = $this->request->getPost('title');
+            $content = $this->request->getPost('content');
+            $reservation_previous = $this->request->getPost('reservation_previous');
+            $meeting_place = $this->request->getPost('meeting_place');
+            $membership_fee = $this->request->getPost('membership_fee');
+            
+            // CI조회
+            $session = session();
+            $member_ci = $session->get('ci');
+
+            $data = [
+                'member_ci' => $member_ci,
+                'category' => $category,
+                'recruitment_start_date' => $recruitment_start_date,
+                'recruitment_end_date' => $recruitment_end_date,
+                'meeting_start_date' => $meeting_start_date,
+                'meeting_end_date' => $meeting_end_date,
+                'number_of_people' => $number_of_people,
+                'matching_rate' => $matching_rate,
+                'title' => $title,
+                'content' => $content,
+                'reservation_previous' => $reservation_previous,
+                'meeting_place' => $meeting_place,
+                'membership_fee' => $membership_fee,
+            ];
+
+            $MeetingModel = new MeetingModel();
+
+            // 데이터 저장
+            $inserted = $MeetingModel->insert($data);
+
+            if ($inserted)
+            {
+                // 프로필 사진 DB 업로드
+                // $MeetingFileModel = new MeetingFileModel();
+                // $org_name = $this->request->getPost('org_name');
+                // $file_name = $this->request->getPost('file_name');
+                // $file_path = $this->request->getPost('file_path');
+                // $ext = $this->request->getPost('ext');
+                // if ($org_name)
+                // {
+                //     // 프로필 첨부 있을때만 file db 저장
+                //     $data2 = [
+                //         'member_ci' => $ci,
+                //         'org_name' => $org_name,
+                //         'file_name' => $file_name,
+                //         'file_path' => $file_path,
+                //         'ext' => $ext,
+                //         // 'board_type' => 'main_photo',
+                //     ];
+                //     $data = array_merge($data, $data2);
+                //     $MeetingFileModel->insert($data2);
+                // }
+                
+            
+                if ($inserted)
+                {
+                    $inserted_id = $MeetingModel->getInsertID();
+
+                    $upload= new Upload();
+                    $fileData = $upload->meetingUpload($file, $inserted_id, $member_ci);
+
+                    return $this->response->setJSON([
+                        'status' => 'success', 
+                        'message' => 'Save Meeting successfully', 
+                        'data' => $data,
+                        'inserted_id' => $inserted_id
+                    ]);
+                } else
+                {
+                    return $this->response->setJSON([
+                        'status' => 'success', 
+                        'message' => 'Save Meeting fail', 
+                        'data' => $data
+                    ]);
+                }
+            }
+            else
+            {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to save meeting']);
+            }
+        }
     }
 
 }

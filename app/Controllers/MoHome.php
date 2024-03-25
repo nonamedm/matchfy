@@ -477,33 +477,51 @@ class MoHome extends BaseController
         $MeetingModel = new MeetingModel();
         $MeetingFileModel = new MeetingFileModel();
 
-        $Meeting['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
+        $data['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
 
-        return view('mo_mypage_group_list', $Meeting);
+        return view('mo_mypage_group_list', $data);
     }
     public function mypageGroupSearchList(): string
     {
         return view('mo_mypage_group_search_list');
     }
-    public function mypageGroupDetail(): string
+    // public function noticeView($id)
+    // {
+    //     $BoardModel = new BoardModel();
+    //     $BoardModel->setTableName('wh_board_notice');
+    //     $data['notice'] = $BoardModel->find($id);
+
+    //     $BoardModel->increaseHit($id);
+
+    //     $fileData = new BoardFileModel();
+    //     $data['file'] = $fileData->where('board_idx', $id)->first();
+
+
+    //     return view('mo_notice_view', $data);
+    // }
+    public function mypageGroupDetail($idx): string
     {
-        $session = session();
-        $ci = $session->get('ci');
-        $name = $session->get('name');
-        //$meetingIdx = $this->request->getPost('idx');
-
-
         $MeetingModel = new MeetingModel();
-        $MeetingFileModel = new MeetingFileModel();
 
         $Meeting = $MeetingModel->where('idx', $idx)->first();
 
+        $recruitStartTime = date("Y.m.d", strtotime($Meeting['recruitment_start_date']));
+        $recruitEndTime = date("Y.m.d", strtotime($Meeting['recruitment_end_date']));
+
+        //모임 일자 - 요일
+        $meetingDateTimestamp = strtotime($Meeting['meeting_start_date']);
+        $meetingDateTime = date("Y.m.d H:i", $meetingDateTimestamp);
+        $meetingDay = date("w", $meetingDateTimestamp); 
+
+        $days = ['일', '월', '화', '수', '목', '금', '토'];
+        $meetingDateTime .= ' (' . $days[$meetingDay] . ')';
+
         $data = [
             'category' => $Meeting['category'],
-            'recruitment_start_date' => $Meeting['recruitment_start_date'],
-            'recruitment_end_date' => $Meeting['recruitment_end_date'],
-            'meeting_start_date' => $Meeting['meeting_start_date'],
-            'meeting_end_date' => $Meeting['meeting_end_date'],
+            'recruitment_start_date' => $recruitStartTime,
+            'recruitment_end_date' => $recruitEndTime,
+            'meeting_start_date' => $meetingDateTime, //$Meeting['meeting_start_date'],
+            //'meeting_end_date' => $Meeting['meeting_end_date'],
             'number_of_people' => $Meeting['number_of_people'], //현재 모집된 인원 수 필요
             'matching_rate' => $Meeting['matching_rate'],
             'title' => $Meeting['title'],
@@ -529,58 +547,7 @@ class MoHome extends BaseController
     }
     public function mypageGroupCreate(): string
     {
-        // $file = $this->request->getFile('userfile');
-   
-        // if ($file->isValid()) {
-        //     $upload= new Upload();
-        //     $fileData = $upload->Boardupload($file,'wh_board_notice','notice',$title,$content);
-            
-        //     if ($fileData) {
-        //         return redirect()->to("/ad/notice/noticeList")->with('msg', '등록이 완료되었습니다.');    
-        //     } else {
-        //         return redirect()->to("/ad/notice/noticeList")->with('msg', '등록이 실패 되었습니다.');
-        //     }
-        // } else {
-
-            //사진 추가
-            $category = $this->request->getPost('category');
-            $recruitment_start_date = $this->request->getPost('recruitment_start_date');
-            $recruitment_end_date = $this->request->getPost('recruitment_end_date');
-            $meeting_start_date = $this->request->getPost('meeting_start_date');
-            $meeting_end_date = $this->request->getPost('meeting_end_date');
-            $number_of_people = $this->request->getPost('number_of_people');
-            $matching_rate = $this->request->getPost('matching_rate');
-            $title = $this->request->getPost('title');
-            $content = $this->request->getPost('content');
-            $town = $this->request->getPost('reservation_previous');
-            $meeting_place = $this->request->getPost('meeting_place');
-            $membership_fee = $this->request->getPost('membership_fee');
-
-            // $town = $encrypter->decrypt(base64_decode($ci), ['key' => 'nonamedm', 'blockSize' => 32]);
-
-            $MeetingModel = new MeetingModel();
-
-            $data = [
-                'category' => $category,
-                'recruitment_start_date' => $recruitment_start_date,
-                'recruitment_end_date' => $recruitment_end_date,
-                'meeting_start_date' => $meeting_start_date,
-                'meeting_end_date' => $meeting_end_date,
-                'number_of_people' => $number_of_people,
-                'matching_rate' => $matching_rate,
-                'title' => $title,
-                'content' => $content,
-                'reservation_previous' => $reservation_previous,
-                'meeting_place' => $meeting_place,
-                'membership_fee' => $membership_fee,
-            ];
-
-            // 데이터 저장
-            $inserted = $MeetingModel->insert($data);
-
-
-            return view('mo_mypage_group_create');
-        // }
+        return view('mo_mypage_group_create');
     }
     public function mypageMygroupList(): string
     {

@@ -61,31 +61,21 @@
                 </div>
                 <div class="group_search_list">
                 <?php foreach ($meetings as $meeting): ?>
-                    <div class="group_list_item">
-                        <img src="/static/images/group_list_1.png" />
-                        <div class="group_particpnt">
-                            <span>신청 (변경필요)</span>/<?= $meeting['number_of_people'] ?>명
+                    <a href="/mo/mypage/group/detail/<?= $meeting['idx'] ?>">
+                        <div class="group_list_item">
+                            <img src="/static/images/group_list_1.png" />
+                            <div class="group_particpnt">
+                                <span>신청 1</span>/<?= $meeting['number_of_people'] ?>명
+                            </div>
+                            <div class="group_location">
+                                <img src="/static/images/ico_location_16x16.png" />
+                                <?= $meeting['meeting_place'] ?>
+                            </div>
+                            <p class="group_price"><?= number_format($meeting['membership_fee']) ?>원</p>
+                            <p class="group_schedule"><?= $meeting['meeting_start_date'] ?></p>
                         </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png" />
-                            <?= $meeting['meeting_place'] ?>
-                        </div>
-                        <p class="group_price"><?= $meeting['membership_fee'] ?>원</p>
-                        <p class="group_schedule"><?= $meeting['meeting_start_date'] ?></p>
-                    </div>
+                    </a>
                 <?php endforeach; ?>
-                    <div class="group_list_item">
-                        <img src="/static/images/group_list_2.png" />
-                        <div class="group_particpnt">
-                            <span>신청 5</span>/6명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png" />
-                            서울/성동구
-                        </div>
-                        <p class="group_price">25,000원</p>
-                        <p class="group_schedule">2024. 02. 24(토) 19:30 </p>
-                    </div>
                 </div>
             </div>
         </div>
