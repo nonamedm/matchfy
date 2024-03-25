@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -35,7 +34,7 @@
                     </div>
                     <img src="/static/images/partner.png" />
                 </div>
-                <form class="main_signin_form">
+                <form class="main_signin_form" enctype="multipart/form-data">
                     <legend></legend>
                     <div class="">
                         <div class="form_row signin_form">
@@ -43,15 +42,13 @@
                                 <label for="appear_type" class="signin_label">파트너 성별</label>
                                 <div>
                                     <div class="chk_box radio_box partner">
-                                        <input type="radio" id="female" name="partner_mf" value="0" checked=""
-                                            onclick="selectGender(this)">
+                                        <input type="radio" id="female" name="partner_mf" value="0" checked="" onclick="selectGender(this)">
                                         <label for="female">
                                             <h2>여성</h2>
                                         </label>
                                     </div>
                                     <div class="chk_box radio_box partner">
-                                        <input type="radio" id="male" name="partner_mf" value="1"
-                                            onclick="selectGender(this)">
+                                        <input type="radio" id="male" name="partner_mf" value="1" onclick="selectGender(this)">
                                         <label for="male">
                                             <h2>남성</h2>
                                         </label>
@@ -61,26 +58,25 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="appear_type" class="signin_label">외모유형</label>
+                                <label for="appear_type" class="signin_label">외모유형 (최대 3개 선택)</label>
                                 <div id="ranked"></div>
                                 <div class="animal_type_module">
                                     <?php
                                     $word_file_path = APPPATH . 'data/MemberCode.php';
-                                    require ($word_file_path);
-                                    foreach ($animalType as $item)
-                                    {
-                                        ?>
+                                    require($word_file_path);
+                                    foreach ($animalType as $item) {
+                                    ?>
                                         <div class="chk_box radio_box animal_type_chk">
-                                            <input type="checkbox" id="<?= $item['id'] ?>" name="animal_type"
-                                                class="animal_type" value="<?= $item['value'] ?>"><label
-                                                for="<?= $item['id'] ?>">
+                                            <input type="checkbox" id="<?= $item['id'] ?>" name="animal_type" class="animal_type" value="<?= $item['value'] ?>" <?php if ($item['value'] === $animal_type1 || $item['value'] === $animal_type2 || $item['value'] === $animal_type3) {
+                                                                                                                                                                ?> checked <?php
+                                                                                                                                                                        } ?>><label for="<?= $item['id'] ?>">
                                                 <h2>
                                                     <?= $item['name'] ?>
                                                 </h2>
                                             </label>
                                         </div>
 
-                                        <?php
+                                    <?php
                                     }
                                     ?>
                                 </div>
@@ -88,8 +84,8 @@
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="region1" class="signin_label">지역</label>
-                                    <select id="region1" value="">
-                                        <option>시/군/구</option>
+                                    <select id="region1" name="region1">
+                                        <option value="">시/군/구</option>
                                         <option value="0">서울특별시</option>
                                         <option value="1">경기도</option>
                                         <option value="2">인천광역시</option>
@@ -100,8 +96,8 @@
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="region2" class="signin_label">지역</label>
-                                    <select id="region2" value="">
-                                        <option>시/군/구</option>
+                                    <select id="region2" name="region2">
+                                        <option value="">시/군/구</option>
                                         <option value="0">서울특별시</option>
                                         <option value="1">경기도</option>
                                         <option value="2">인천광역시</option>
@@ -110,12 +106,12 @@
                                 </div>
                             </div>
 
-                            <?php if (isset ($grade) && ($grade === 'grade02' || $grade === 'grade03')): ?>
+                            <?php if (isset($grade) && ($grade === 'grade02' || $grade === 'grade03')) : ?>
 
                                 <div class="form_row signin_form">
                                     <div class="signin_form_div">
                                         <label for="height" class="signin_label">키</label>
-                                        <select id="height" class="custom_select" value="">
+                                        <select id="height" name="height" class="custom_select">
                                             <option value="">선택</option>
                                             <option value="0">150 미만</option>
                                             <option value="1">150 이상 ~ 160 미만</option>
@@ -129,7 +125,7 @@
                                 <div class="form_row signin_form">
                                     <div class="signin_form_div">
                                         <label for="personal_style" class="signin_label">스타일</label>
-                                        <select id="personal_style" class="custom_select" value="">
+                                        <select id="personal_style" name="personal_style" class="custom_select">
                                             <option value="">선택</option>
 
                                         </select>
@@ -139,7 +135,7 @@
                                 <div class="form_row signin_form">
                                     <div class="signin_form_div">
                                         <h4 class="profile_photo_label">결혼유무</h4>
-                                        <select id="marital" class="custom_select" value="">
+                                        <select id="marital" name="marital" class="custom_select" value="">
                                             <option value="">선택</option>
                                             <option value="0">유</option>
                                             <option value="1">무</option>
@@ -150,7 +146,7 @@
                                 <div class="form_row signin_form">
                                     <div class="signin_form_div">
                                         <label for="smoking" class="signin_label">흡연유무</label>
-                                        <select id="smoking" class="custom_select" value="">
+                                        <select id="smoking" name="smoking" class="custom_select" value="">
                                             <option value="">선택</option>
                                             <option value="0">유</option>
                                             <option value="1">무</option>
@@ -187,7 +183,7 @@
                                 <div class="form_row signin_form">
                                     <div class="signin_form_div">
                                         <label for="mbti" class="signin_label">MBTI</label>
-                                        <select id="mbti" class="custom_select" value="">
+                                        <select id="mbti" name="mbti" class="custom_select" value="">
                                             <option value="">선택</option>
                                             <option value="0">ENFP</option>
                                             <option value="1">ENFJ</option>
@@ -212,7 +208,7 @@
                                 <div class="form_row signin_form">
                                     <div class="signin_form_div">
                                         <label for="education" class="signin_label">학력</label>
-                                        <select id="education" class="custom_select" value="">
+                                        <select id="education" name="education" class="custom_select" value="">
                                             <option value="">선택</option>
                                             <option value="0">고등학교졸업</option>
                                             <option value="1">대학교재학</option>
@@ -243,7 +239,7 @@
                                 <div class="form_row signin_form">
                                     <div class="signin_form_div">
                                         <label for="job" class="signin_label">직업군</label>
-                                        <select id="job" class="custom_select" value="">
+                                        <select id="job" name="job" class="custom_select" value="">
                                             <option value="">선택</option>
                                             <option value="0">1군 : 중소기업 회사원/자영업/프리랜서 등 기타</option>
                                             <option value="1">2군 : 상장사, 대기업 회사원/기업대표/공무원/공기업</option>
@@ -286,19 +282,17 @@
                                     </div>
                                 </div>
                             <?php endif; ?>
-                            <?php if (isset ($grade) && ($grade === 'grade03')): ?>
+                            <?php if (isset($grade) && ($grade === 'grade03')) : ?>
                                 <div class="form_row signin_form">
                                     <div class="signin_form_div">
                                         <label for="parents" class="signin_label">부</label>
                                         <div class="multy_select">
-                                            <select id="father_birth_year" name="father_birth_year" class="custom_select"
-                                                value="">
+                                            <select id="father_birth_year" name="father_birth_year" class="custom_select" value="">
                                                 <option value="">선택</option>
                                                 <?php
                                                 $nowYear = date('Y');
                                                 $pastYear = 1945;
-                                                for ($year = $nowYear; $year >= $pastYear; $year--)
-                                                {
+                                                for ($year = $nowYear; $year >= $pastYear; $year--) {
                                                     echo '<option value="' . $year . '">' . $year . '</option>';
                                                 }
                                                 ?>
@@ -318,14 +312,12 @@
                                     <div class="signin_form_div">
                                         <label for="parents" class="signin_label">모</label>
                                         <div class="multy_select">
-                                            <select id="mother_birth_year" name="mother_birth_year" class="custom_select"
-                                                value="">
+                                            <select id="mother_birth_year" name="mother_birth_year" class="custom_select" value="">
                                                 <option value="">선택</option>
                                                 <?php
                                                 $nowYear = date('Y');
                                                 $pastYear = 1945;
-                                                for ($year = $nowYear; $year >= $pastYear; $year--)
-                                                {
+                                                for ($year = $nowYear; $year >= $pastYear; $year--) {
                                                     echo '<option value="' . $year . '">' . $year . '</option>';
                                                 }
                                                 ?>
@@ -387,7 +379,7 @@
                                 </div>
                             <?php endif; ?>
                             <div class="btn_group">
-                                <button type="button" class="btn type01">저장</button>
+                                <button type="button" class="btn type01" onclick="savePartnerInfo()">저장</button>
                             </div>
                         </div>
                 </form>
@@ -428,29 +420,113 @@
         const selectGender = (e) => {
             console.log(e.value);
             $('#personal_style').empty();
-            $('#personal_style').html("<option>선택</option>");
+            $('#personal_style').html('<option value="">선택</option>');
             if (e.value === '0') {
                 <?php
-                foreach ($femaleStyle as $item)
-                { ?>
+                foreach ($femaleStyle as $item) { ?>
                     $("#personal_style").append("<option value='<?= $item['value'] ?>'><?= $item['name'] ?></option>")
-                    console.log("<?php echo 'abc' ?>");
                 <?php } ?>
             } else {
                 <?php
-                foreach ($maleStyle as $item)
-                { ?>
+                foreach ($maleStyle as $item) { ?>
                     $("#personal_style").append("<option value='<?= $item['value'] ?>'><?= $item['name'] ?></option>")
-                    console.log("<?php echo 'abc' ?>");
                 <?php } ?>
             }
 
         }
-        $(document).ready(function () {
-            // 
+        $(document).ready(function() {
+            selectGender(0);
+
+            var partnerGender = <?php echo json_encode($partner_gender); ?>;
+            var animalType1 = <?php echo json_encode($animal_type1); ?>;
+            var animalType2 = <?php echo json_encode($animal_type2); ?>;
+            var animalType3 = <?php echo json_encode($animal_type3); ?>;
+            var height = "<?php echo $height; ?>";
+            var personalStyle = "<?php echo $stylish; ?>";
+            var marital = "<?php echo $married; ?>";
+            var smoking = "<?php echo $smoker; ?>";
+            var drinking = "<?php echo $drinking; ?>";
+            var religion = "<?php echo $religion; ?>";
+            var mbti = "<?php echo $mbti; ?>";
+            var education = "<?php echo $education; ?>";
+            var job = "<?php echo $job; ?>";
+            var assetRange = "<?php echo $asset_range; ?>";
+            var incomeRange = "<?php echo $income_range; ?>";
+            var fatherBirthYear = "<?php echo $father_birth_year; ?>";
+            var fatherJob = "<?php echo $father_job; ?>";
+            var motherBirthYear = "<?php echo $mother_birth_year; ?>";
+            var motherJob = "<?php echo $mother_job; ?>";
+            var siblings = "<?php echo $siblings; ?>";
+            var residence1 = "<?php echo $residence1; ?>";
+            var residence2 = "<?php echo $residence2; ?>";
+            var residence3 = "<?php echo $residence3; ?>";
+
+            if (partnerGender !== "" || partnerGender !== null) {
+                $('input[name="partner_mf"][value="' + partnerGender + '"]').prop('checked', true);
+            }
+            if (height !== "" || height !== null) {
+                $("#height").val(height);
+            }
+            if (personalStyle !== "" || personalStyle !== null) {
+                $("#personal_style").val(personalStyle);
+            }
+            if (marital !== "" || marital !== null) {
+                $("#marital").val(marital);
+            }
+            if (smoking !== "" || smoking !== null) {
+                $("#smoking").val(smoking);
+            }
+            if (drinking !== "" || drinking !== null) {
+                $("#drinking").val(drinking);
+            }
+            if (religion !== "" || religion !== null) {
+                $("#religion").val(religion);
+            }
+            if (mbti !== "" || mbti !== null) {
+                $("#mbti").val(mbti);
+            }
+            if (education !== "" || education !== null) {
+                $("#education").val(education);
+            }
+            if (job !== "" || job !== null) {
+                $("#job").val(job);
+            }
+            if (assetRange !== "" || assetRange !== null) {
+                $("#asset_range").val(assetRange);
+            }
+            if (incomeRange !== "" || incomeRange !== null) {
+                $("#income_range").val(incomeRange);
+            }
+            if (fatherBirthYear !== "" || fatherBirthYear !== null) {
+                $("#father_birth_year").val(fatherBirthYear);
+            }
+            if (fatherJob !== "" || fatherJob !== null) {
+                $("#father_job").val(fatherJob);
+            }
+            if (motherBirthYear !== "" || motherBirthYear !== null) {
+                $("#mother_birth_year").val(motherBirthYear);
+            }
+            if (fatherJob !== "" || fatherJob !== null) {
+                $("#mother_job").val(motherJob);
+            }
+            if (siblings !== "" || siblings !== null) {
+                $("#siblings").val(siblings);
+            }
+            if (residence1 !== "" || residence1 !== null) {
+                $("#residence1").val(residence1);
+            }
+            if (residence2 !== "" || residence2 !== null) {
+                $("#residence2").val(residence2);
+            }
+            if (residence3 !== "" || residence3 !== null) {
+                $("#residence3").val(residence3);
+            }
+            
+            
+            
             const rankedItemsList = $('#ranked');
             let rankedItems = [];
-            $('.animal_type').click(function () {
+            $('.animal_type').click(function() {
                 const checkedCount = $('.animal_type:checked').length;
                 if (checkedCount > 3) {
                     $(this).prop('checked', false);
@@ -458,10 +534,15 @@
                 }
 
                 const item = $(this).parent().text().trim();
+                const value = $(this).val().trim();
                 const order = parseInt($(this).attr('data-order'));
 
                 if ($(this).prop('checked')) {
-                    rankedItems.push({ item: item, order: order });
+                    rankedItems.push({
+                        item: item,
+                        order: order,
+                        value: value
+                    });
                 } else {
                     const index = rankedItems.findIndex(obj => obj.item === item);
                     if (index !== -1) {
@@ -476,10 +557,95 @@
                 // Display the ranked items
                 rankedItemsList.empty();
                 rankedItems.forEach((obj, index) => {
-                    rankedItemsList.append(`<li>${index + 1}순위: ${obj.item}</li>`);
+                    rankedItemsList.append(`<li data-value="${obj.value}">${index + 1}순위: ${obj.item}</li>`);
                 });
             });
-        }); 
+            <?php
+            $word_file_path = APPPATH . 'data/MemberCode.php';
+            require($word_file_path);
+            ?>
+            if (animalType1 !== "" || animalType1 !== null) {
+                <?php foreach ($animalType as $item) {
+                    if ($item['value'] === $animal_type1) {
+                ?>
+                        rankedItems.push({
+                            item: "<?= $item['name'] ?>",
+                            order: 0,
+                            value: <?= $item['value'] ?>
+                        });
+                    <?php
+                    } 
+                    
+                }
+                ?>
+                rankedItemsList.append(`<li data-value="<?= $animal_type1 ?>">1순위: ` + rankedItems[0].item + `</li>`);
+            }
+            if (animalType2 !== "" || animalType2 !== null) {
+                <?php foreach ($animalType as $item) {
+                    if ($item['value'] === $animal_type2) {
+                ?>
+                        rankedItems.push({
+                            item: "<?= $item['name'] ?>",
+                            order: 0,
+                            value: <?= $item['value'] ?>
+                        });
+                    <?php
+                    } 
+                    
+                }
+                ?>
+                rankedItemsList.append(`<li data-value="<?= $animal_type2 ?>">2순위: ` + rankedItems[1].item + `</li>`);
+            }
+            if (animalType3 !== "" || animalType3 !== null) {
+                <?php foreach ($animalType as $item) {
+                    if ($item['value'] === $animal_type3) {
+                ?>
+                        rankedItems.push({
+                            item: "<?= $item['name'] ?>",
+                            order: 0,
+                            value: <?= $item['value'] ?>
+                        });
+                    <?php
+                    } 
+                    
+                }
+                ?>
+                rankedItemsList.append(`<li data-value="<?= $animal_type3 ?>">3순위: ` + rankedItems[2].item + `</li>`);
+            }
+        });
+
+        function savePartnerInfo() {
+            var postData = new FormData($('form')[0]);
+            $('#ranked li').each(function(index, li) {
+                var value = $(li).data('value');
+                postData.append('animal_type' + (index + 1), value);
+            });
+
+            $.ajax({
+                url: '/ajax/savePartner', // todo : 추후 본인인증 연결
+                type: 'POST',
+                data: postData,
+                processData: false,
+                contentType: false,
+                async: false,
+                success: function(data) {
+                    console.log(data);
+                    if (data.status === 'success') {
+                        // 성공                        
+                        console.log('저장', data);
+                    } else if (data.status === 'error') {
+                        console.log('실패', data);
+                    } else {
+                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    }
+                    return false;
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
+            });
+        }
     </script>
 
     <!-- -->

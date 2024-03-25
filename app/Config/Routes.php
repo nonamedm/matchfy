@@ -95,6 +95,7 @@ $routes->post('/ajax/updtFeedData', 'MoAjax::updtFeedData');
 $routes->post('/ajax/showFeedDetail', 'MoAjax::showFeedDetail');
 $routes->post('/ajax/myFeedDelete', 'MoAjax::myFeedDelete');
 $routes->post('/ajax/myFeedUpdate', 'MoAjax::myFeedUpdate');
+$routes->post('/ajax/savePartner', 'MoAjax::savePartner');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

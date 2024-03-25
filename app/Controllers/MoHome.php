@@ -8,6 +8,7 @@ use App\Models\MemberModel;
 use App\Models\MemberFileModel;
 use App\Models\MemberFeedModel;
 use App\Models\MemberFeedFileModel;
+use App\Models\MatchPartnerModel;
 use App\Models\PointModel;
 use App\Models\PointExchangeModel;
 use CodeIgniter\Session\Session;
@@ -780,11 +781,17 @@ class MoHome extends BaseController
 
         $MemberModel = new MemberModel();
         $user = $MemberModel->where('ci', $ci)->first();
-
+        
         $data = [
             'name' => $user['name'],
             'grade' => $user['grade'],
         ];
+
+        $MatchPartnerModel = new MatchPartnerModel();
+        $partnerInfo = $MatchPartnerModel->where('member_ci',$ci)->first();
+        if($partnerInfo) {
+            $data = array_merge($data, $partnerInfo);
+        }
 
         return view('mo_partner', $data);
     }

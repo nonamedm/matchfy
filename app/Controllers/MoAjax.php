@@ -7,6 +7,7 @@ use App\Models\MemberFileModel;
 use App\Models\MemberFeedModel;
 use App\Models\MemberFeedFileModel;
 use App\Models\UniversityModel;
+use App\Models\MatchPartnerModel;
 use App\Config\Encryption;
 
 class MoAjax extends BaseController
@@ -876,6 +877,83 @@ class MoAjax extends BaseController
         }
 
 
+    }
+
+    public function savePartner()
+    {        
+        $MatchPartnerModel = new MatchPartnerModel();
+        
+        $session = session();
+        $member_ci = $session->get('ci');
+        $partner_gender = $this->request->getPost('partner_mf');
+        $animal_type1 = $this->request->getPost('animal_type1');
+        $animal_type2 = $this->request->getPost('animal_type2');
+        $animal_type3 = $this->request->getPost('animal_type3');
+        $height = $this->request->getPost('height');
+        $stylish = $this->request->getPost('personal_style');
+        $married = $this->request->getPost('marital');
+        $smoker = $this->request->getPost('smoking');
+        $drinking = $this->request->getPost('drinking');
+        $religion = $this->request->getPost('religion');
+        $mbti = $this->request->getPost('mbti');
+        $education = $this->request->getPost('education');
+        $job = $this->request->getPost('job');
+        $asset_range = $this->request->getPost('asset_range');
+        $income_range = $this->request->getPost('income_range');
+        $father_birth_year = $this->request->getPost('father_birth_year');
+        $father_job = $this->request->getPost('father_job');
+        $mother_birth_year = $this->request->getPost('mother_birth_year');
+        $mother_job = $this->request->getPost('mother_job');
+        $siblings = $this->request->getPost('siblings');
+        $residence1 = $this->request->getPost('residence1');
+        $residence2 = $this->request->getPost('residence2');
+        $residence3 = $this->request->getPost('residence3');
+    
+    
+        $data = [
+            'member_ci' => $member_ci,
+            'partner_gender' => $partner_gender,
+            'animal_type1' => $animal_type1,
+            'animal_type2' => $animal_type2,
+            'animal_type3' => $animal_type3,
+            'height' => $height,
+            'stylish' => $stylish,
+            'married' => $married,
+            'smoker' => $smoker,
+            'drinking' => $drinking,
+            'religion' => $religion,
+            'mbti' => $mbti,
+            'education' => $education,
+            'job' => $job,
+            'asset_range' => $asset_range,
+            'income_range' => $income_range,
+            'father_birth_year' => $father_birth_year,
+            'father_job' => $father_job,
+            'mother_birth_year' => $mother_birth_year,
+            'mother_job' => $mother_job,
+            'siblings' => $siblings,
+            'residence1' => $residence1,
+            'residence2' => $residence2,
+            'residence3' => $residence3,
+        ];
+    
+        // 데이터 저장
+        $selected = $MatchPartnerModel->where('member_ci', $member_ci)->first();
+        if($selected) {
+            $inserted = $MatchPartnerModel->update($member_ci, $data);
+        } else {
+            $inserted = $MatchPartnerModel->insert($data);
+        }
+    
+        // 저장완료 되었을 떄
+        if ($inserted)
+        {            
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Partner info saved successfully', 'data' => $data]);
+        } else
+        {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Partner info saved successfully', 'data' => $data]);
+        }
+    
     }
 
 }
