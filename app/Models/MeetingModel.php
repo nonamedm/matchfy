@@ -6,13 +6,13 @@ use CodeIgniter\Model;
 
 class MeetingModel extends Model
 {
-    protected $table            = 'meetings';
+    protected $table            = 'wh_meetings';
     protected $primaryKey       = 'idx';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['member_ci', 'category', 'recruitment_start_date', 'recruitment_end_date',
+    protected $allowedFields    = ['idx', 'member_ci', 'category', 'recruitment_start_date', 'recruitment_end_date',
                                     'meeting_start_date', 'meeting_end_date', 'number_of_people', 'matching_rate',
                                     'title', 'content', 'reservation_previous', 'meeting_place', 'membership_fee',
                                     'create_at', 'update_at', 'delete_yn'];

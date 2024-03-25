@@ -5,6 +5,7 @@ use CodeIgniter\Files\File;
 use App\Helpers\MoHelper;
 use App\Models\BoardModel;
 use App\Models\BoardFileModel;
+use App\Models\MeetingFileModel;
 
 class Upload extends BaseController
 {
@@ -174,6 +175,50 @@ class Upload extends BaseController
 
         } else {
             $postData['fail'] = '파일전송 실패';
+            return $postData;
+        }
+    }
+
+    public function meetingUpload($file, $meeting_idx, $member_ci)
+    {                      
+        if ($file && $file->isValid() && !$file->hasMoved())
+        {
+            // 파일명 가져오기 및 확장자 분리
+            $orgName = $file->getClientName();
+            $ext = $file->getClientExtension();
+            
+            // 난수생성 (새 파일명 할당)
+            $newName = $file->getRandomName();
+
+            //파일이동
+            $file->move(ROOTPATH.$uploadDir, $newName);
+
+            // 데이터 저장
+            $postData['org_name'] = $orgName;
+            $postData['ext'] = $ext;
+            $postData['file_name'] = $newName;
+            $uploadDir = 'static/files/uploads/';
+            $postData['file_path'] = $uploadDir;
+
+            //삽입된 데이터가 있을 경우 파일 데이터 추가
+            if ($meeting_idx) {
+                
+                $data = [
+                    'member_ci' => $member_ci,
+                    'meeting_idx' => $meeting_idx,
+                    'file_path' => $uploadDir,
+                    'file_name' => $newName,
+                    'org_name'  => $orgName,
+                    'ext' => $ext,
+                    //'upload_date' => date('Y-m-d H:i:s'),
+                ];
+                
+                $MeetingFileModel = new MeetingFileModel();
+                $meetingFileIdx = $MeetingFileModel->insert($data);
+                   
+            } else{
+                $postData['fail'] = '파일전송 실패';
+            }
             return $postData;
         }
     }
