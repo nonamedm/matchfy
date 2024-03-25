@@ -15,7 +15,7 @@ class MemberModel extends Model
     protected $protectFields = true;
     protected $allowedFields = [
         // 준회원 구간
-        'idx', 'name', 'birthday', 'gender', 'city', 'town', 'profile_url', 'video_profile_url',
+        'idx', 'name', 'birthday', 'gender', 'city', 'town', 'nickname', 'video_profile_url',
         'unique_code', 'recommender_code', 'mobile_no', 'ci', 'agree1', 'agree2', 'agree3',
         'grade', 'status', 'sns_type', 'os_type',
         // 정회원 구간

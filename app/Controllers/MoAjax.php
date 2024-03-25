@@ -7,6 +7,7 @@ use App\Models\MemberFileModel;
 use App\Models\MemberFeedModel;
 use App\Models\MemberFeedFileModel;
 use App\Models\UniversityModel;
+use App\Models\MatchPartnerModel;
 use App\Config\Encryption;
 
 class MoAjax extends BaseController
@@ -117,9 +118,20 @@ class MoAjax extends BaseController
                 'errors' => $this->validator->getErrors(),
             ]);
         } else
-        {
-            // $postData = $this->request->getPost();
-
+        {            
+            $MemberModel = new MemberModel();
+            
+            $is_duplicate = true;
+            $random_word = '';
+            // 닉네임 중복확인
+            while ($is_duplicate) {
+                // 닉네임 랜덤 생성
+                $word_file_path = APPPATH . 'data/RandomWord.php';
+                require($word_file_path);
+                $random_word = $randomadj[array_rand($randomadj)].$randomword[array_rand($randomword)].'@'.mt_rand(100000, 999999);
+                $is_duplicate = $MemberModel->where(['nickname'=>$random_word])->first();
+            }
+            
             $mobile_no = $this->request->getPost('mobile_no');
             $encrypter = \Config\Services::encrypter();
             $ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 32]));
@@ -135,7 +147,6 @@ class MoAjax extends BaseController
             $town = $this->request->getPost('town');
             // $town = $encrypter->decrypt(base64_decode($ci), ['key' => 'nonamedm', 'blockSize' => 32]);
 
-            $MemberModel = new MemberModel();
 
             $data = [
                 'mobile_no' => $mobile_no,
@@ -148,6 +159,7 @@ class MoAjax extends BaseController
                 'gender' => $gender,
                 'city' => $city,
                 'town' => $town,
+                'nickname' => $random_word,
             ];
 
             // 데이터 저장
@@ -865,6 +877,83 @@ class MoAjax extends BaseController
         }
 
 
+    }
+
+    public function savePartner()
+    {        
+        $MatchPartnerModel = new MatchPartnerModel();
+        
+        $session = session();
+        $member_ci = $session->get('ci');
+        $partner_gender = $this->request->getPost('partner_mf');
+        $animal_type1 = $this->request->getPost('animal_type1');
+        $animal_type2 = $this->request->getPost('animal_type2');
+        $animal_type3 = $this->request->getPost('animal_type3');
+        $height = $this->request->getPost('height');
+        $stylish = $this->request->getPost('personal_style');
+        $married = $this->request->getPost('marital');
+        $smoker = $this->request->getPost('smoking');
+        $drinking = $this->request->getPost('drinking');
+        $religion = $this->request->getPost('religion');
+        $mbti = $this->request->getPost('mbti');
+        $education = $this->request->getPost('education');
+        $job = $this->request->getPost('job');
+        $asset_range = $this->request->getPost('asset_range');
+        $income_range = $this->request->getPost('income_range');
+        $father_birth_year = $this->request->getPost('father_birth_year');
+        $father_job = $this->request->getPost('father_job');
+        $mother_birth_year = $this->request->getPost('mother_birth_year');
+        $mother_job = $this->request->getPost('mother_job');
+        $siblings = $this->request->getPost('siblings');
+        $residence1 = $this->request->getPost('residence1');
+        $residence2 = $this->request->getPost('residence2');
+        $residence3 = $this->request->getPost('residence3');
+    
+    
+        $data = [
+            'member_ci' => $member_ci,
+            'partner_gender' => $partner_gender,
+            'animal_type1' => $animal_type1,
+            'animal_type2' => $animal_type2,
+            'animal_type3' => $animal_type3,
+            'height' => $height,
+            'stylish' => $stylish,
+            'married' => $married,
+            'smoker' => $smoker,
+            'drinking' => $drinking,
+            'religion' => $religion,
+            'mbti' => $mbti,
+            'education' => $education,
+            'job' => $job,
+            'asset_range' => $asset_range,
+            'income_range' => $income_range,
+            'father_birth_year' => $father_birth_year,
+            'father_job' => $father_job,
+            'mother_birth_year' => $mother_birth_year,
+            'mother_job' => $mother_job,
+            'siblings' => $siblings,
+            'residence1' => $residence1,
+            'residence2' => $residence2,
+            'residence3' => $residence3,
+        ];
+    
+        // 데이터 저장
+        $selected = $MatchPartnerModel->where('member_ci', $member_ci)->first();
+        if($selected) {
+            $inserted = $MatchPartnerModel->update($member_ci, $data);
+        } else {
+            $inserted = $MatchPartnerModel->insert($data);
+        }
+    
+        // 저장완료 되었을 떄
+        if ($inserted)
+        {            
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Partner info saved successfully', 'data' => $data]);
+        } else
+        {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Partner info saved successfully', 'data' => $data]);
+        }
+    
     }
 
 }

@@ -30,27 +30,12 @@
                 </div>
             </div>
             <div style="height: 50px;"></div>
-            <footer class="footer">
+            <footer class="footer" style="text-align: center;">
+                <div class="btn_group multy">
+                    <button type="button" class="btn type02" onclick='moveToUrl("/")'>메인화면으로 이동</button>
+                    <button type="button" class="btn type01" onclick='moveToUrl("/mo/partner")'>매칭정보 입력</button>
+                </div>
 
-                <div class="btn_group">
-                    <button type="button" class="btn type01" onclick='moveToUrl("/")'>메인화면으로 이동</button>
-                </div>
-                <!-- <div class="footer_logo mb40">
-                    matchfy
-                </div>
-                <div class="footer_link mb40">
-                    <a href="#">회사정보</a>
-                    <a href="#">개인정보 처리방침</a>
-                    <a href="#">서비스 이용약관</a>
-                </div>
-                <div class="footer_info mb40">
-                    <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                    <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
-                            src="/static/images/part_line.png" /> gildong@naver.com</span>
-                </div>
-                <div class="footer_copy">
-                    COPYRIGHT 2023. ALL RIGHTS RESERVED.
-                </div> -->
 
             </footer>
         </div>
@@ -61,14 +46,6 @@
     <!-- SCRIPTS -->
 
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
             var gradeText = localStorage.getItem('gradeText');
 

@@ -56,12 +56,12 @@ $routes->get('/mo/mypage/mygroup/list', 'MoHome::mypageMygroupList');
 $routes->get('/mo/mypage/mygroup/list/edit', 'MoHome::mypageMygroupListEdit');
 $routes->get('/mo/mypage/group/searchPopup', 'MoHome::mypageGroupSearchPopup');
 $routes->get('/mo/mymsg/ai/qna', 'MoHome::mymsgAiQna');
-$routes->get('/mo/myfeed', 'MoHome::myfeed');
+$routes->get('/mo/myfeed/(:any)', 'MoHome::myfeed/$1');
 $routes->get('/mo/myfeed/detail', 'MoHome::myfeedDetail');
 $routes->get('/mo/myfeed/edit', 'MoHome::myfeedEdit');
 $routes->get('/mo/matchFeed', 'MoHome::matchFeed');
 $routes->get('/mo/myfeed/view', 'MoHome::myfeedView');
-$routes->get('/mo/myfeed/view/profile', 'MoHome::myfeedViewProfile');
+$routes->get('/mo/viewProfile/(:any)', 'MoHome::myfeedViewProfile/$1');
 $routes->get('/mo/alertPopup', 'MoHome::alertPopup');
 $routes->get('/mo/alliance/list', 'MoHome::allianceList');
 $routes->get('/mo/alliance/regionPopup', 'MoHome::allianceRegionPopup');
@@ -95,6 +95,7 @@ $routes->post('/ajax/updtFeedData', 'MoAjax::updtFeedData');
 $routes->post('/ajax/showFeedDetail', 'MoAjax::showFeedDetail');
 $routes->post('/ajax/myFeedDelete', 'MoAjax::myFeedDelete');
 $routes->post('/ajax/myFeedUpdate', 'MoAjax::myFeedUpdate');
+$routes->post('/ajax/savePartner', 'MoAjax::savePartner');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

@@ -251,6 +251,13 @@ header .menu_right.edit {
     color: #777777;
     margin: 5px 0px !important;
 }
+.content_feed_list {
+    margin: 20px 0;
+}
+.content_feed_list .profile_btn {
+    position: absolute;
+    right: 20px;
+}
 .content_mypage_list li {
     cursor: pointer;
 }
@@ -1002,6 +1009,7 @@ td {
     text-align: center;
     height: 46px;
     margin: 0 auto;
+    margin-bottom: 20px;
 }
 .content_wrap .mypage_wallet .mypage_wallet_list .mypage_wallet_filter {
     display: flex;
@@ -1321,14 +1329,14 @@ td {
     color: #ffffff;
 }
 .mo_wrap .sub_wrap .content_wrap .content_body.content_mypage .content_mypage_info {
-    padding: 15px 20px;
+    padding: 15px 0px 15px 20px;
     display: flex;
     flex-direction: column;
 }
 .mo_wrap .sub_wrap .content_wrap .content_body.content_mypage .content_mypage_info h2 {
     font-family: 'Pretendard-Bold';
     font-weight: 700;
-    font-size: 20px;
+    font-size: 15px;
     line-height: 24px;
     text-align: center;
     cursor: pointer;
@@ -1696,6 +1704,59 @@ form input[type='file'] {
     line-height: 17px;
 
     color: #ffffff;
+}
+.mo_wrap .chk_box.partner {
+    width: 150px;
+}
+.mo_wrap .chk_box.partner label {
+    display: block;
+    padding: 1px 0 1px 30px;
+    font-size: 14px;
+    line-height: 17px;
+    color: #111111;
+}
+.mo_wrap .animal_type_module {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.mo_wrap .animal_type_module .chk_box {
+    width: 110px;
+}
+.mo_wrap .chk_box.animal_type_chk label {
+    display: block;
+    padding: 1px 0 1px 30px;
+    font-size: 14px;
+    line-height: 17px;
+    color: #111111;
+}
+.mo_wrap .signin_form_div #ranked {
+    display: flex;
+    margin: 0px 0px 20px 0px;
+    list-style: none;
+}
+.mo_wrap .signin_form_div #ranked li {
+    width: 110px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 10px;
+}
+.mo_wrap .chk_box.partner label h2 {
+    margin: 0;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 10px;
+}
+.mo_wrap .chk_box.animal_type_chk label h2 {
+    margin: 0;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 10px;
 }
 
 .mo_wrap .chk_box label.totAgree_label {
@@ -2211,8 +2272,8 @@ input[type='number']::-webkit-inner-spin-button {
     cursor: pointer;
 }
 .content_wrap .content_mypage .profile_img {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
 }
 .content_wrap .content_mypage {
@@ -2226,7 +2287,7 @@ input[type='number']::-webkit-inner-spin-button {
 }
 .content_wrap .content_mypage_info h2 {
     font-family: 'Pretendard-Bold';
-    font-size: 18px;
+    font-size: 15px;
     line-height: 22px;
     text-align: center;
     color: #000000;
@@ -2255,6 +2316,11 @@ input[type='number']::-webkit-inner-spin-button {
 
 /* feed list */
 .feed_img_box img {
+    width: 335px;
+    height: 335px;
+    border-radius: 3px;
+}
+.feed_img_box video {
     width: 335px;
     height: 335px;
     border-radius: 3px;
