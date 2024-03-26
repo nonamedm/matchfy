@@ -1004,11 +1004,31 @@ class MoAjax extends BaseController
                     'numeric' => '모집 인원은 숫자만 입력 가능합니다.'
                 ]
             ],
+            'group_min_age' => [
+                'label' => 'group_min_age',
+                'rules' => 'required|numeric|max_length[2]',
+                'errors' => [
+                    'required' => '최소 나이를 입력해주세요.',
+                    'numeric' => '최소 나이는 숫자만 입력 가능합니다.',
+                    'max_length' => '최소 나이는 최대 2자리 숫자여야 합니다.',
+                ]
+            ],
+            'group_max_age' => [
+                'label' => 'group_max_age',
+                'rules' => 'required|numeric|max_length[2]',
+                'errors' => [
+                    'required' => '최대 나이를 입력해주세요.',
+                    'numeric' => '최대 나이는 숫자만 입력 가능합니다.',
+                    'max_length' => '최대 나이는 최대 2자리 숫자여야 합니다.'
+                ]
+            ],
             'matching_rate' => [
                 'label' => 'matching_rate',
-                'rules' => 'required',
+                'rules' => 'required|numeric|less_than_equal_to[100]',
                 'errors' => [
                     'required' => '매칭률을 선택해주세요.',
+                    'numeric' => '매칭률은 숫자만 입력 가능합니다.',
+                    'less_than_equal_to' => '매칭률은 100% 이하만 가능합니다.'
                 ]
             ],
             'title' => [
@@ -1058,10 +1078,12 @@ class MoAjax extends BaseController
             $meeting_start_date = $this->request->getPost('meeting_start_date');
             $meeting_end_date = $this->request->getPost('meeting_end_date');
             $number_of_people = $this->request->getPost('number_of_people');
+            $group_min_age = $this->request->getPost('group_min_age');
+            $group_max_age = $this->request->getPost('group_max_age');
             $matching_rate = $this->request->getPost('matching_rate');
             $title = $this->request->getPost('title');
             $content = $this->request->getPost('content');
-            $reservation_previous = $this->request->getPost('reservation_previous');
+            //$reservation_previous = $this->request->getPost('reservation_previous');
             $meeting_place = $this->request->getPost('meeting_place');
             $membership_fee = $this->request->getPost('membership_fee');
             
@@ -1077,10 +1099,12 @@ class MoAjax extends BaseController
                 'meeting_start_date' => $meeting_start_date,
                 'meeting_end_date' => $meeting_end_date,
                 'number_of_people' => $number_of_people,
+                'group_min_age' => $group_min_age,
+                'group_max_age' => $group_max_age,
                 'matching_rate' => $matching_rate,
                 'title' => $title,
                 'content' => $content,
-                'reservation_previous' => $reservation_previous,
+                //'reservation_previous' => $reservation_previous,
                 'meeting_place' => $meeting_place,
                 'membership_fee' => $membership_fee,
             ];
@@ -1092,53 +1116,24 @@ class MoAjax extends BaseController
 
             if ($inserted)
             {
-                // 프로필 사진 DB 업로드
-                // $MeetingFileModel = new MeetingFileModel();
-                // $org_name = $this->request->getPost('org_name');
-                // $file_name = $this->request->getPost('file_name');
-                // $file_path = $this->request->getPost('file_path');
-                // $ext = $this->request->getPost('ext');
-                // if ($org_name)
-                // {
-                //     // 프로필 첨부 있을때만 file db 저장
-                //     $data2 = [
-                //         'member_ci' => $ci,
-                //         'org_name' => $org_name,
-                //         'file_name' => $file_name,
-                //         'file_path' => $file_path,
-                //         'ext' => $ext,
-                //         // 'board_type' => 'main_photo',
-                //     ];
-                //     $data = array_merge($data, $data2);
-                //     $MeetingFileModel->insert($data2);
-                // }
-                
-            
-                if ($inserted)
-                {
-                    $inserted_id = $MeetingModel->getInsertID();
+                $inserted_id = $MeetingModel->getInsertID();
 
-                    $upload= new Upload();
-                    $fileData = $upload->meetingUpload($file, $inserted_id, $member_ci);
+                $upload= new Upload();
+                $fileData = $upload->meetingUpload($file, $inserted_id, $member_ci);
 
-                    return $this->response->setJSON([
-                        'status' => 'success', 
-                        'message' => 'Save Meeting successfully', 
-                        'data' => $data,
-                        'inserted_id' => $inserted_id
-                    ]);
-                } else
-                {
-                    return $this->response->setJSON([
-                        'status' => 'success', 
-                        'message' => 'Save Meeting fail', 
-                        'data' => $data
-                    ]);
-                }
-            }
-            else
+                return $this->response->setJSON([
+                    'status' => 'success', 
+                    'message' => 'Save Meeting successfully', 
+                    'data' => $data,
+                    'inserted_id' => $inserted_id
+                ]);
+            } else
             {
-                return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to save meeting']);
+                return $this->response->setJSON([
+                    'error' => 'error', 
+                    'message' => 'Failed to save meeting', 
+                    'data' => $data
+                ]);
             }
         }
     }
