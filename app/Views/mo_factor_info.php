@@ -30,8 +30,7 @@
                             <?= $name ?>님, 반갑습니다.<br />
                             어떤 친구를 원하시나요?
                         </p>
-                        <h2>만나고 싶은 친구의 정보를<br />
-                            입력해주세요! </h2>
+                        <h2>가중치 설정 페이지 </h2>
                     </div>
                     <img src="/static/images/partner.png" />
                 </div>
@@ -40,28 +39,7 @@
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="appear_type" class="signin_label">파트너 성별</label>
-                                <div>
-                                    <div class="chk_box radio_box partner">
-                                        <input type="radio" id="female" name="partner_mf" value="0" checked=""
-                                            onclick="selectGender(this)">
-                                        <label for="female">
-                                            <h2>여성</h2>
-                                        </label>
-                                    </div>
-                                    <div class="chk_box radio_box partner">
-                                        <input type="radio" id="male" name="partner_mf" value="1"
-                                            onclick="selectGender(this)">
-                                        <label for="male">
-                                            <h2>남성</h2>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="appear_type" class="signin_label">외모유형 (최대 3개 선택)</label>
+                                <label for="appear_type" class="signin_label">주요 가중치 선택 (최대 3개 선택) -> 내가 저장한 항목에 대해서 우선 출력</label>
                                 <div id="ranked"></div>
                                 <div class="animal_type_module">
                                     <?php
@@ -87,6 +65,8 @@
                                     ?>
                                 </div>
                             </div>
+                            배제항목 필요
+                            (체크박스선택 -> 추가 selectbox생성- > 선택)
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="region1" class="signin_label">지역</label>
@@ -651,7 +631,7 @@
                     if (data.status === 'success') {
                         // 성공                        
                         console.log('저장', data);
-                        moveToUrl('/mo/factorInfo');
+                        moveToURl('/mo/factorInfo');
                     } else if (data.status === 'error') {
                         console.log('실패', data);
                     } else {
