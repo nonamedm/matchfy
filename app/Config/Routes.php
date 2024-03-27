@@ -78,6 +78,7 @@ $routes->post('/mo/alliance/exchangepointSubmit', 'MoHome::allianceExchangePoint
 $routes->get('/mo_mypage_excharge_success', 'MoHome::exchangePoint_success');
 $routes->get('/mo_mypage_excharge_fail', 'MoHome::exchangePoint_fail');
 $routes->get('/mo/partner', 'MoHome::partner');
+$routes->get('/mo/factorBasic', 'MoHome::factorBasic');
 $routes->get('/mo/factorInfo', 'MoHome::factorInfo');
 $routes->get('/mo/partner/regular', 'MoHome::partnerRegular');
 $routes->get('/mo/partner/premium', 'MoHome::partnerPremium');

@@ -511,7 +511,7 @@
                     if (data.status === 'success') {
                         // 성공                        
                         console.log('저장', data);
-                        //moveToUrl('/mo/factorInfo');
+                        moveToUrl('/mo/factorBasic');
                     } else if (data.status === 'error') {
                         console.log('실패', data);
                     } else {

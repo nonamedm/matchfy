@@ -1495,7 +1495,11 @@ td {
     width: 335px;
     margin: 0 auto;
 }
-
+.form_row.signin_form .signin_form_div.flex {
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+}
 .form_row.signin_form .signin_form_div .multy_select {
     display: flex;
 }
@@ -1793,8 +1797,10 @@ form input[type='file'] {
     padding: 15px;
     font-size: 15px;
     line-height: 18px;
-
     color: #999999;
+}
+.form_row .flex select {
+    width: 120px;
 }
 .agree_cont .textarea {
     width: 305px;

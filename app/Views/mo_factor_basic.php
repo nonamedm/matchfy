@@ -37,11 +37,13 @@
                 </div>
                 <div class="content_partner" style="margin: 50px 5px;">
                     <div class="content_partner_header">
-                        <h2>가중치 항목 설정 </h2>
+                        <h2>기본 배점 설정 </h2>
                         <p style="margin-top: 20px;">[선택 사항]</p>
                         <p style="text-indent: -10px;">
-                            * 더 정확한 매칭을 위해, 상대를 선택할때<br/>
-                            중점을 두는 사항에 대해 가중치를 설정해보세요
+                            * 입력하는 각 항목에 대해 아래와 같이 세 그룹으로 나뉘고<br/>
+                            각각에 기본 배점이 적용 되어있습니다.<br/>
+                            더 정확한 매칭을 위해 본인이 원하는 대로 각 항목의<br/>
+                            배점을 수정할 수 있습니다.
                         </p>
                     </div>
                 </div>
