@@ -8,6 +8,7 @@ use App\Models\MemberFeedModel;
 use App\Models\MemberFeedFileModel;
 use App\Models\UniversityModel;
 use App\Models\MatchPartnerModel;
+use App\Models\MatchFactorModel;
 use App\Config\Encryption;
 
 class MoAjax extends BaseController
@@ -118,20 +119,21 @@ class MoAjax extends BaseController
                 'errors' => $this->validator->getErrors(),
             ]);
         } else
-        {            
+        {
             $MemberModel = new MemberModel();
-            
+
             $is_duplicate = true;
             $random_word = '';
             // 닉네임 중복확인
-            while ($is_duplicate) {
+            while ($is_duplicate)
+            {
                 // 닉네임 랜덤 생성
                 $word_file_path = APPPATH . 'data/RandomWord.php';
-                require($word_file_path);
-                $random_word = $randomadj[array_rand($randomadj)].$randomword[array_rand($randomword)].'@'.mt_rand(100000, 999999);
-                $is_duplicate = $MemberModel->where(['nickname'=>$random_word])->first();
+                require ($word_file_path);
+                $random_word = $randomadj[array_rand($randomadj)] . $randomword[array_rand($randomword)] . '@' . mt_rand(100000, 999999);
+                $is_duplicate = $MemberModel->where(['nickname' => $random_word])->first();
             }
-            
+
             $mobile_no = $this->request->getPost('mobile_no');
             $encrypter = \Config\Services::encrypter();
             $ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 32]));
@@ -561,7 +563,7 @@ class MoAjax extends BaseController
 
         $insertedData = [];
 
-        if (!empty($postData))
+        if (!empty ($postData))
         {
             // $postData 배열을 반복하여 데이터베이스에 삽입
             foreach ($postData as $fileInfo)
@@ -596,7 +598,7 @@ class MoAjax extends BaseController
                 }
             }
         }
-        if (!empty($postData2))
+        if (!empty ($postData2))
         {
             // $postData 배열을 반복하여 데이터베이스에 삽입
             foreach ($postData2 as $fileInfo)
@@ -637,7 +639,7 @@ class MoAjax extends BaseController
             'file_name' => $file_name,
             'insertedData' => $insertedData
         ];
-        if (!empty($insertedData))
+        if (!empty ($insertedData))
         {
             return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
         } else
@@ -653,14 +655,15 @@ class MoAjax extends BaseController
         $feed_cont = $this->request->getPost('feed_cont');
         $public_yn = $this->request->getPost('public_yn');
         $edit_type = $this->request->getPost('edit_type');
-        
+
         $session = session();
         $member_ci = $session->get('ci');
         $postData = $this->request->getPost('uploadedFeeds');
         $insertedData = [];
 
         // edit_type 따라 신규/업데이트 분기
-        if ($edit_type=='addMyFeed') {
+        if ($edit_type == 'addMyFeed')
+        {
             // 신규 등록일 때
             $data = [
                 'member_ci' => $member_ci,
@@ -673,7 +676,7 @@ class MoAjax extends BaseController
             if ($inserted)
             {
                 $feed_idx = $MemberFeedModel->insertID();
-                if (!empty($postData))
+                if (!empty ($postData))
                 {
                     // $postData 배열을 반복하여 데이터베이스에 삽입
                     foreach ($postData as $fileInfo)
@@ -705,16 +708,17 @@ class MoAjax extends BaseController
                     'file_name' => $file_name,
                     'insertedData' => $insertedData
                 ];
-                if (!empty($insertedData))
+                if (!empty ($insertedData))
                 {
                     return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
                 } else
                 {
                     return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
                 }
-    
+
             }
-        } else {
+        } else
+        {
             // 수정일 때
             $feed_idx = $this->request->getPost('feed_idx');
             $condition = [
@@ -722,17 +726,19 @@ class MoAjax extends BaseController
                 'member_ci' => $member_ci,
                 'delete_yn' => 'n'
             ];
-            
-            if(!empty($postData)) {
+
+            if (!empty ($postData))
+            {
                 // 첨부파일이 있는 경우(수정한 경우)
                 $data = [
                     'feed_cont' => $feed_cont,
                     'public_yn' => $public_yn,
                     'thumb_filename' => $postData[0]['file_name'],
                     'thumb_filepath' => $postData[0]['file_path'],
-                ];                
+                ];
                 $updated = $MemberFeedModel->update($condition, $data);
-            } else {
+            } else
+            {
                 // 첨부파일이 없는 경우(수정 안한 경우)
                 $data = [
                     'feed_cont' => $feed_cont,
@@ -742,7 +748,7 @@ class MoAjax extends BaseController
             }
             if ($updated)
             {
-                if (!empty($postData))
+                if (!empty ($postData))
                 {
                     // 기존 첨부파일은 삭제하고
                     $condition2 = [
@@ -754,7 +760,8 @@ class MoAjax extends BaseController
                     ];
                     $deleted = $MemberFeedFileModel->where($condition2)->update($condition2, $update);
 
-                    if($deleted) {
+                    if ($deleted)
+                    {
                         // $postData 배열을 반복하여 데이터베이스에 삽입
                         foreach ($postData as $fileInfo)
                         {
@@ -784,18 +791,20 @@ class MoAjax extends BaseController
                             'file_name' => $file_name,
                             'insertedData' => $insertedData,
                         ];
-                    } else {
+                    } else
+                    {
                         $return = [
                             'fileinputfalse' => 'false'
                         ];
                     }
-                } else {
+                } else
+                {
                     $return = [
                         'member_ci' => $member_ci,
                     ];
 
                 }
-                if (!empty($insertedData))
+                if (!empty ($insertedData))
                 {
                     return $this->response->setJSON(['status' => 'success', 'message' => 'Feed modify with photo success', 'data' => $return]);
                 } else
@@ -820,9 +829,9 @@ class MoAjax extends BaseController
         $result = $MemberFeedModel->where($condition)->join('wh_member_feed_files', 'wh_member_feed_files.feed_idx = wh_member_feed.idx')->first();
         if ($result)
         {
-            
+
             return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
-                
+
         } else
         {
             return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
@@ -845,9 +854,9 @@ class MoAjax extends BaseController
         ];
         $result = $MemberFeedModel->update($condition, $update);
         if ($result)
-        {            
+        {
             return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
-                
+
         } else
         {
             return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
@@ -865,12 +874,12 @@ class MoAjax extends BaseController
             'wh_member_feed.idx' => $feed_idx,
             'wh_member_feed.member_ci' => $member_ci,
         ];
-        
+
         $result = $MemberFeedModel->where($condition)->join('wh_member_feed_files', 'wh_member_feed_files.feed_idx = wh_member_feed.idx')->first();
         if ($result)
-        {            
+        {
             return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
-                
+
         } else
         {
             return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
@@ -880,13 +889,14 @@ class MoAjax extends BaseController
     }
 
     public function savePartner()
-    {        
+    {
         $MatchPartnerModel = new MatchPartnerModel();
-        
+
         $session = session();
         $member_ci = $session->get('ci');
         $partner_gender = $this->request->getPost('partner_mf');
         $animal_type1 = $this->request->getPost('animal_type1');
+        $region = $this->request->getPost('region');
         $fromyear = $this->request->getPost('fromyear');
         $toyear = $this->request->getPost('toyear');
         $height = $this->request->getPost('height');
@@ -906,11 +916,12 @@ class MoAjax extends BaseController
         $siblings = $this->request->getPost('siblings');
         $residence1 = $this->request->getPost('residence1');
         $residence2 = $this->request->getPost('residence2');
-    
-    
+
+
         $data = [
             'member_ci' => $member_ci,
             'partner_gender' => $partner_gender,
+            'region' => $region,
             'animal_type1' => $animal_type1,
             'fromyear' => $fromyear,
             'toyear' => $toyear,
@@ -932,24 +943,213 @@ class MoAjax extends BaseController
             'residence1' => $residence1,
             'residence2' => $residence2,
         ];
-    
+
         // 데이터 저장
         $selected = $MatchPartnerModel->where('member_ci', $member_ci)->first();
-        if($selected) {
+        if ($selected)
+        {
             $inserted = $MatchPartnerModel->update($member_ci, $data);
-        } else {
+        } else
+        {
             $inserted = $MatchPartnerModel->insert($data);
         }
-    
+
         // 저장완료 되었을 떄
         if ($inserted)
-        {            
+        {
             return $this->response->setJSON(['status' => 'success', 'message' => 'Partner info saved successfully', 'data' => $data]);
         } else
         {
             return $this->response->setJSON(['status' => 'error', 'message' => 'Partner info saved successfully', 'data' => $data]);
         }
-    
+
+    }
+    public function saveFactorBasic()
+    {
+        $MatchFactorModel = new MatchFactorModel();
+
+        $session = session();
+        $member_ci = $session->get('ci');
+        $group1 = $this->request->getPost('group1');
+        $group2 = $this->request->getPost('group2');
+        $group3 = $this->request->getPost('group3');
+        $group4 = $this->request->getPost('group4');
+        $group5 = $this->request->getPost('group5');
+
+        $data = [
+            'member_ci' => $member_ci,
+            'group1' => $group1,
+            'group2' => $group2,
+            'group3' => $group3,
+            'group4' => $group4,
+            'group5' => $group5,
+        ];
+
+        // 데이터 저장
+        $selected = $MatchFactorModel->where('member_ci', $member_ci)->first();
+        if ($selected)
+        {
+            $inserted = $MatchFactorModel->update($member_ci, $data);
+        } else
+        {
+            $inserted = $MatchFactorModel->insert($data);
+        }
+
+        // 저장완료 되었을 떄
+        if ($inserted)
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Partner info saved successfully', 'data' => $data]);
+        } else
+        {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Partner info saved successfully', 'data' => $data]);
+        }
+
+    }
+    public function saveFactorInfo()
+    {
+        $MatchFactorModel = new MatchFactorModel();
+
+        $session = session();
+        $member_ci = $session->get('ci');
+        $first_factor = $this->request->getPost('first_factor');
+        $second_factor = $this->request->getPost('second_factor');
+        $third_factor = $this->request->getPost('third_factor');
+        $fourth_factor = $this->request->getPost('fourth_factor');
+        $fifth_factor = $this->request->getPost('fifth_factor');
+        $except1 = $this->request->getPost('except1');
+        $except2 = $this->request->getPost('except2');
+        $except3 = $this->request->getPost('except3');
+        $except4 = $this->request->getPost('except4');
+        $except5 = $this->request->getPost('except5');
+        $except1_detail = $this->request->getPost('except1_detail');
+        $except2_detail = $this->request->getPost('except2_detail');
+
+        $data = [
+            'member_ci' => $member_ci,
+            'first_factor' => $first_factor,
+            'second_factor' => $second_factor,
+            'third_factor' => $third_factor,
+            'fourth_factor' => $fourth_factor,
+            'fifth_factor' => $fifth_factor,
+            'except1' => $except1,
+            'except2' => $except2,
+            'except3' => $except3,
+            'except4' => $except4,
+            'except5' => $except5,
+            'except1_detail' => $except1_detail,
+            'except2_detail' => $except2_detail,
+        ];
+
+        // 데이터 저장
+        $selected = $MatchFactorModel->where('member_ci', $member_ci)->first();
+        if ($selected)
+        {
+            $inserted = $MatchFactorModel->update($member_ci, $data);
+        } else
+        {
+            $inserted = $MatchFactorModel->insert($data);
+        }
+
+        // 저장완료 되었을 떄
+        if ($inserted)
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Partner info saved successfully', 'data' => $data]);
+        } else
+        {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Partner info saved successfully', 'data' => $data]);
+        }
+
+    }
+    public function chgExcept()
+    {
+        $word_file_path = APPPATH . 'data/MemberCode.php';
+        require ($word_file_path);
+        $value = $this->request->getPost('value');
+        if ($value === 'mbti')
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $mbti]);
+        } else if ($value === 'facialtype')
+        {
+            $session = session();
+            $member_ci = $session->get('ci');
+            $MatchPartnerModel = new MatchPartnerModel();
+            $selected = $MatchPartnerModel->where('member_ci', $member_ci)->first();
+            if ($selected)
+            {
+                if ($selected['partner_gender'] === "0")
+                {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $animalTypeFemale]);
+                } else
+                {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $animalTypeMale]);
+                }
+            } else
+            {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
+            }
+        } else if ($value === 'stylish')
+        {
+            $session = session();
+            $member_ci = $session->get('ci');
+            $MatchPartnerModel = new MatchPartnerModel();
+            $selected = $MatchPartnerModel->where('member_ci', $member_ci)->first();
+            if ($selected)
+            {
+                if ($selected['partner_gender'] === "0")
+                {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $femaleStyle]);
+                } else
+                {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $maleStyle]);
+                }
+            } else
+            {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
+            }
+        } else if ($value === 'drinking')
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $drinking]);
+        } else if ($value === 'year')
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success']);
+        } else if ($value === 'bodyshape')
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $bodyshape]);
+        } else if ($value === 'city')
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $region]);
+        } else if ($value === 'married')
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $marital]);
+        } else if ($value === 'smoker')
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $smoking]);
+        } else if ($value === 'religion')
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $religion]);
+        } else if ($value === 'gender')
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $gender]);
+        } else if ($value === 'height')
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $height]);
+        } else if ($value === 'education')
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $education]);
+        } else if ($value === 'job')
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $job]);
+        } else if ($value === 'asset_range')
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $asset]);
+        } else if ($value === 'income_range')
+        {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $income]);
+        }
+
+        // if ($value === '')
+        // {
+        // }
     }
 
 }

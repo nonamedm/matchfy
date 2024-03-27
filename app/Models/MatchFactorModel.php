@@ -4,42 +4,35 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class MatchPartnerModel extends Model
+class MatchFactorModel extends Model
 {
     // protected $tableName;
-    protected $table = 'wh_match_partner';
+    protected $table = 'wh_match_factor';
     protected $primaryKey = 'member_ci';
     protected $useAutoIncrement = true;
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $protectFields = true;
     protected $allowedFields = [
-        // 준회원 구간
         'idx',
         'member_ci',
-        'partner_gender',
-        'animal_type1',
-        'fromyear',
-        'toyear',
-        'height',
-        'stylish',
-        'bodyshape',
-        'married',
-        'smoker',
-        'drinking',
-        'religion',
-        'mbti',
-        'education',
-        'job',
-        'asset_range',
-        'income_range',
-        'father_job',
-        'mother_job',
-        'siblings',
-        'region',
-        'residence1',
-        'residence2',
-        'residence3',
+        'group1',
+        'group2',
+        'group3',
+        'group4',
+        'group5',
+        'first_factor',
+        'second_factor',
+        'third_factor',
+        'fourth_factor',
+        'fifth_factor',
+        'except1',
+        'except2',
+        'except1_detail',
+        'except2_detail',
+        'except3',
+        'except4',
+        'except5',
         'delete_yn',
         'last_access_dt'
     ];

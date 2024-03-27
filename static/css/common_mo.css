@@ -188,6 +188,13 @@ header .menu_right.edit {
     display: flex;
     justify-content: space-between;
 }
+.mo_wrap .sub_wrap .content_wrap .content_partner.content_factor {
+    display: block;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid #dddddd;
+    padding: 30px;
+}
 .mo_wrap .sub_wrap .content_wrap .content_partner img {
     width: 74px;
     height: 74px;
@@ -1508,6 +1515,9 @@ td {
     width: 163px;
     margin-right: 9px;
 }
+.form_row.signin_form .signin_form_div.flex .multy_select select {
+    width: 115px;
+}
 .form_row.signin_form .signin_form_div .multy_select_three select {
     width: 107px;
 }
@@ -2522,17 +2532,16 @@ input[type='number']::-webkit-inner-spin-button {
 .scroll_body::-webkit-scrollbar {
     width: 10px;
 }
-.scroll_body::-webkit-scrollbar-track { 
+.scroll_body::-webkit-scrollbar-track {
     background-color: #fff;
 }
-.scroll_body::-webkit-scrollbar-thumb { 
+.scroll_body::-webkit-scrollbar-thumb {
     /* background-color: #ff0267; */
     background-color: #fff;
 }
 .scroll_body::-webkit-scrollbar-button {
     display: none;
 }
-
 
 /* 코너에 라운드 효과 */
 .scroll_body::-webkit-scrollbar-track,
@@ -3200,7 +3209,7 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 /*loading*/
-.loading{
+.loading {
     position: fixed;
     left: 50%;
     top: 50%;
@@ -3209,6 +3218,6 @@ input[type='number']::-webkit-inner-spin-button {
     height: 5%;
     display: none;
 }
-.loading img{
+.loading img {
     width: 100%;
 }

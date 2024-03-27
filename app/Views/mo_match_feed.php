@@ -83,6 +83,7 @@
                 }
                 ?>
                 <hr class="hoz_part" />
+                <?= $sql ?>
             </div>
             <div style="height: 50px;"></div>
             <footer class="footer">
@@ -103,13 +104,7 @@
     <!-- SCRIPTS -->
 
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
+
     </script>
 
     <!-- -->

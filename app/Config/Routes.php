@@ -100,6 +100,9 @@ $routes->post('/ajax/showFeedDetail', 'MoAjax::showFeedDetail');
 $routes->post('/ajax/myFeedDelete', 'MoAjax::myFeedDelete');
 $routes->post('/ajax/myFeedUpdate', 'MoAjax::myFeedUpdate');
 $routes->post('/ajax/savePartner', 'MoAjax::savePartner');
+$routes->post('/ajax/saveFactorBasic', 'MoAjax::saveFactorBasic');
+$routes->post('/ajax/saveFactorInfo', 'MoAjax::saveFactorInfo');
+$routes->post('/ajax/chgExcept', 'MoAjax::chgExcept');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

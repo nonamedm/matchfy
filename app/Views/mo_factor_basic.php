@@ -40,9 +40,9 @@
                         <h2>기본 배점 설정 </h2>
                         <p style="margin-top: 20px;">[선택 사항]</p>
                         <p style="text-indent: -10px;">
-                            * 입력하는 각 항목에 대해 아래와 같이 세 그룹으로 나뉘고<br/>
-                            각각에 기본 배점이 적용 되어있습니다.<br/>
-                            더 정확한 매칭을 위해 본인이 원하는 대로 각 항목의<br/>
+                            * 입력하는 각 항목에 대해 아래와 같이 세 그룹으로 나뉘고<br />
+                            각각에 기본 배점이 적용 되어있습니다.<br />
+                            더 정확한 매칭을 위해 본인이 원하는 대로 각 항목의<br />
                             배점을 수정할 수 있습니다.
                         </p>
                     </div>
@@ -64,10 +64,10 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div flex">
-                                <label for="group2" class="signin_label">나이 / 체형 / 지역<br/>결혼경험 / 흡연유무 / 종교</label>
+                                <label for="group2" class="signin_label">나이 / 체형 / 지역<br />결혼경험 / 흡연유무 / 종교</label>
                                 <select id="group2" name="group2">
-                                    <option value="5" selected>5</option>
-                                    <option value="10">10</option>
+                                    <option value="5">5</option>
+                                    <option value="10" selected>10</option>
                                     <option value="30">30</option>
                                     <option value="50">50</option>
                                     <option value="70">70</option>
@@ -76,18 +76,18 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div flex">
-                                <label for="group3" class="signin_label">성별 / 키 / 학력 / 직업<br/> 자산구간 / 소득구간</label>
+                                <label for="group3" class="signin_label">성별 / 키 / 학력 / 직업<br /> 자산구간 / 소득구간</label>
                                 <select id="group3" name="group3">
-                                    <option value="5" selected>5</option>
+                                    <option value="5">5</option>
                                     <option value="10">10</option>
                                     <option value="30">30</option>
-                                    <option value="50">50</option>
+                                    <option value="50" selected>50</option>
                                     <option value="70">70</option>
                                 </select>
                             </div>
                         </div>
                         <div class="btn_group">
-                            <button type="button" class="btn type01" onclick="savePartnerInfo()">저장</button>
+                            <button type="button" class="btn type01" onclick="saveFactorBasic()">저장</button>
                         </div>
                     </div>
                 </form>
@@ -126,8 +126,58 @@
 
     <script>
         $(document).ready(function () {
+            var partnerGender = <?php echo json_encode($partner_gender); ?>;
 
+            var group1 = "<?php echo $group1; ?>";
+            var group2 = "<?php echo $group2; ?>";
+            var group3 = "<?php echo $group3; ?>";
+            var group4 = "<?php echo $group4; ?>";
+            var group5 = "<?php echo $group5; ?>";
+
+            if (group1 !== "" || group1 !== null) {
+                $("#group1").val(group1);
+            }
+            if (group2 !== "" || group2 !== null) {
+                $("#group2").val(group2);
+            }
+            if (group3 !== "" || group3 !== null) {
+                $("#group3").val(group3);
+            }
+            if (group4 !== "" || group4 !== null) {
+                $("#group4").val(group4);
+            }
+            if (group5 !== "" || group5 !== null) {
+                $("#group5").val(group5);
+            }
         });
+        const saveFactorBasic = () => {
+            var postData = new FormData($('form')[0]);
+            $.ajax({
+                url: '/ajax/saveFactorBasic', // todo : 추후 본인인증 연결
+                type: 'POST',
+                data: postData,
+                processData: false,
+                contentType: false,
+                async: false,
+                success: function (data) {
+                    console.log(data);
+                    if (data.status === 'success') {
+                        // 성공                        
+                        console.log('저장', data);
+                        moveToUrl('/mo/factorInfo');
+                    } else if (data.status === 'error') {
+                        console.log('실패', data);
+                    } else {
+                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    }
+                    return false;
+                },
+                error: function (data, status, err) {
+                    console.log(err);
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
+            });
+        }
     </script>
 
     <!-- -->
