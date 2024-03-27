@@ -10,6 +10,7 @@ use App\Models\UniversityModel;
 use App\Models\MeetingModel;
 use App\Models\MeetingFileModel;
 use App\Models\MatchPartnerModel;
+use App\Models\MeetingMembersModel;
 use App\Config\Encryption;
 
 class MoAjax extends BaseController
@@ -1109,17 +1110,28 @@ class MoAjax extends BaseController
                 'membership_fee' => $membership_fee,
             ];
 
+            //미팅 데이터 저장
             $MeetingModel = new MeetingModel();
-
-            // 데이터 저장
             $inserted = $MeetingModel->insert($data);
 
             if ($inserted)
             {
-                $inserted_id = $MeetingModel->getInsertID();
+                //참석 멤버 추가(방장)
+                $meetMemdata = [
+                    'meeting_idx' =>$meeting_idx,
+                    'member_ci' => $ci,
+                    'meeting_master' =>'K',
+                    'create_at' => date('Y-m-d H:i:s'),
+                ];
+                $meeting_members = new MeetingMembersModel();
+                $meeting_members->insert($meetMemdata);
 
+                //파일 업로드
                 $upload= new Upload();
                 $fileData = $upload->meetingUpload($file, $inserted_id, $member_ci);
+
+                //저장된 미팅 idx
+                $inserted_id = $MeetingModel->getInsertID();
 
                 return $this->response->setJSON([
                     'status' => 'success', 
@@ -1127,7 +1139,8 @@ class MoAjax extends BaseController
                     'data' => $data,
                     'inserted_id' => $inserted_id
                 ]);
-            } else
+            } 
+            else
             {
                 return $this->response->setJSON([
                     'error' => 'error', 
@@ -1136,6 +1149,59 @@ class MoAjax extends BaseController
                 ]);
             }
         }
+    }
+
+    public function meetingFiltering()
+    {
+        $category = $this->request->getPost('category');// 카테고리 필터링
+        $searchText = $this->request->getPost('searchText');// 검색 필터링
+        $filterOption = $this->request->getPost('filterOption');// 필터링
+
+        $MeetingModel = new MeetingModel();
+
+        // 카테고리 필터링
+        if (!empty($category)) {
+            $MeetingModel->where('category', $category);
+        }
+
+        // 검색어 필터링
+        if (!empty($searchText)) {
+            $MeetingModel->like('title', $searchText);
+        }
+
+        // 필터 옵션에 따른 정렬
+        switch ($filterOption) {
+            case 'create_at':
+                $MeetingModel->orderBy('create_at', 'DESC');
+                break;
+            case 'meeting_start_date':
+                $MeetingModel->orderBy('meeting_start_date', 'ASC');
+                break;
+            case 'membership_fee':
+                $MeetingModel->orderBy('membership_fee', 'ASC');
+                break;
+            default:
+                $MeetingModel->orderBy('create_at', 'DESC');
+        }
+
+        $meetings = $MeetingModel
+                        ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx')
+                        ->findAll();
+                        
+
+        $MeetingMembersModel = new MeetingMembersModel();
+
+        // 각 모임에 대한 참여 인원 수 계산
+        foreach ($meetings as &$meeting) {
+            $memCount = $MeetingMembersModel
+                            ->where('meeting_idx', $meeting['idx'])
+                            ->countAllResults();
+            $meeting['count'] = $memCount;
+        }
+        unset($meeting); // 참조 해제
+
+        // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
+        return $this->response->setJSON($meetings);
     }
 
 }

@@ -466,6 +466,8 @@ class MoHome extends BaseController
         $MeetingModel = new MeetingModel();
         //$MeetingFileModel = new MeetingFileModel();
         // $data['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
+        
+        $MeetingModel->orderBy('create_at', 'DESC');
 
         $meetings = $MeetingModel
                         ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx')

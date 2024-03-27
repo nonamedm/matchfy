@@ -764,6 +764,9 @@ td {
     display: flex;
     width: 350px;
 }
+.group_search img {
+    cursor: pointer;
+}
 .group_search_list {
     margin-top: 30px;
     display: flex;
@@ -875,7 +878,12 @@ td {
     justify-content: space-between;
     margin-top: 20px;
 }
+.group_category .highlighted {
+    border: 2px solid #FFA500; /* 오렌지색 테두리 */
+    border-radius: 50%;
+}
 .group_category div {
+    cursor: pointer;
 }
 .group_category img {
     width: 54px;
