@@ -506,6 +506,7 @@ class MoHome extends BaseController
         $meetingDateTime .= ' (' . $days[$meetingDay] . ')';
 
         $data = [
+            'idx' => $idx,
             'category' => $Meeting['category'],
             'recruitment_start_date' => $recruitStartTime,
             'recruitment_end_date' => $recruitEndTime,

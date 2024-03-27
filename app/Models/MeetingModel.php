@@ -15,7 +15,7 @@ class MeetingModel extends Model
     protected $allowedFields    = ['idx', 'member_ci', 'category', 'recruitment_start_date', 'recruitment_end_date',
                                     'meeting_start_date', 'meeting_end_date', 'number_of_people', 'matching_rate',
                                     'title', 'content', 'reservation_previous', 'meeting_place', 'membership_fee',
-                                    'create_at', 'update_at', 'delete_yn'];
+                                    'create_at', 'update_at', 'delete_yn','meeting_members_ci','meeting_members_points','meeting_members_type'];
 
     protected bool $allowEmptyInserts = false;
 
