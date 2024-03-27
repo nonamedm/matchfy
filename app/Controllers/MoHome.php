@@ -16,6 +16,7 @@ use App\Models\MeetingFileModel;
 use App\Models\MeetingMembersModel;
 use App\Helpers\MoHelper;
 use App\Models\MeetModel;
+use App\Models\MeetPointModel;
 use CodeIgniter\Session\Session;
 
 
@@ -592,10 +593,11 @@ class MoHome extends BaseController
     }
 
     /*결재 시 모임에 이미 등록되어있는지 판단 */
-    public function getMemberConfirm($ci) {
+    public function getMemberConfirm($ci,$meeting_idx) {
         $MeetingMembersModel = new MeetingMembersModel();
         $total = $MeetingMembersModel
             ->where('member_ci', $ci)
+            ->where('meeting_idx', $meeting_idx)
             ->countAllResults();
         // echo $total;
         if ($total > 0) {
@@ -615,7 +617,7 @@ class MoHome extends BaseController
         $pointModel = new PointModel();
 
         $getMemberCount = $this->getMemberCount($meeting_idx);
-        $getMemberConfirm = $this->getMemberConfirm($ci);
+        $getMemberConfirm = $this->getMemberConfirm($ci,$meeting_idx);
         
         if($getMemberCount == 1){
             if($mypoint < $point){//보유포인트가 모자랄 경우
@@ -661,23 +663,25 @@ class MoHome extends BaseController
                     $memberName = new MemberModel();
                     $meetingUser = $memberName
                                     ->distinct()
-                                    ->select('m.name as name')
+                                    ->select('m.name as name,m.ci as ci')
                                     ->from('members m')
                                     ->where('m.ci', $ci)
                                     ->get()
                                     ->getRow();
 
-                    //방장한테 포인트 가도록
-                    $masterdata = [
-                        'member_ci' => $meetingMaster->ci,
-                        'my_point' => $meetingMaster->k_point + $point,
-                        'add_point' => $point,
-                        'point_details' => $meetingUser->name."(모임회비)",
+                     //모임방에 포인트 올리기
+                     $meetPointModel = new MeetPointModel();
+                     $masterdata = [
+                        'meeting_idx'=> $meeting_idx,
+                        'member_ci' => $meetingUser->ci,
+                        'meeting_points'=> $point,
+                        'meeting_type' =>'M',
+                        'point_check_type' =>'1',
                         'create_at' => date('Y-m-d H:i:s'),
-                        'point_type' => 'A',
+                        'update_at' => date('Y-m-d H:i:s'),
                     ];
 
-                    $pointModel->insert($masterdata);
+                    $meetPointModel->insert($masterdata);
                     
                     if ($result) {
                         return $this->response->setJSON(['success' => true, 'msg' => '포인트 결재 완료 되었습니다.']);
