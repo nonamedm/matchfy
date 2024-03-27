@@ -887,10 +887,11 @@ class MoAjax extends BaseController
         $member_ci = $session->get('ci');
         $partner_gender = $this->request->getPost('partner_mf');
         $animal_type1 = $this->request->getPost('animal_type1');
-        $animal_type2 = $this->request->getPost('animal_type2');
-        $animal_type3 = $this->request->getPost('animal_type3');
+        $fromyear = $this->request->getPost('fromyear');
+        $toyear = $this->request->getPost('toyear');
         $height = $this->request->getPost('height');
         $stylish = $this->request->getPost('personal_style');
+        $bodyshape = $this->request->getPost('bodyshape');
         $married = $this->request->getPost('marital');
         $smoker = $this->request->getPost('smoking');
         $drinking = $this->request->getPost('drinking');
@@ -900,24 +901,22 @@ class MoAjax extends BaseController
         $job = $this->request->getPost('job');
         $asset_range = $this->request->getPost('asset_range');
         $income_range = $this->request->getPost('income_range');
-        $father_birth_year = $this->request->getPost('father_birth_year');
         $father_job = $this->request->getPost('father_job');
-        $mother_birth_year = $this->request->getPost('mother_birth_year');
         $mother_job = $this->request->getPost('mother_job');
         $siblings = $this->request->getPost('siblings');
         $residence1 = $this->request->getPost('residence1');
         $residence2 = $this->request->getPost('residence2');
-        $residence3 = $this->request->getPost('residence3');
     
     
         $data = [
             'member_ci' => $member_ci,
             'partner_gender' => $partner_gender,
             'animal_type1' => $animal_type1,
-            'animal_type2' => $animal_type2,
-            'animal_type3' => $animal_type3,
+            'fromyear' => $fromyear,
+            'toyear' => $toyear,
             'height' => $height,
             'stylish' => $stylish,
+            'bodyshape' => $bodyshape,
             'married' => $married,
             'smoker' => $smoker,
             'drinking' => $drinking,
@@ -927,14 +926,11 @@ class MoAjax extends BaseController
             'job' => $job,
             'asset_range' => $asset_range,
             'income_range' => $income_range,
-            'father_birth_year' => $father_birth_year,
             'father_job' => $father_job,
-            'mother_birth_year' => $mother_birth_year,
             'mother_job' => $mother_job,
             'siblings' => $siblings,
             'residence1' => $residence1,
             'residence2' => $residence2,
-            'residence3' => $residence3,
         ];
     
         // 데이터 저장

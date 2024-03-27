@@ -1,37 +1,21 @@
 <?php
 
-$animalType = array(
-    array("id" => "animal_type0", "name" => "다람쥐상", "value" => "0"),
-    array("id" => "animal_type1", "name" => "쿼카상", "value" => "1"),
-    array("id" => "animal_type2", "name" => "햄스터상", "value" => "2"),
-    array("id" => "animal_type3", "name" => "소상", "value" => "3"),
-    array("id" => "animal_type4", "name" => "호랑이상", "value" => "4"),
+$animalTypeFemale = array(
+    array("id" => "animal_type0", "name" => "강아지상", "value" => "0"),
+    array("id" => "animal_type1", "name" => "고양이상", "value" => "1"),
+    array("id" => "animal_type2", "name" => "곰상", "value" => "2"),
+    array("id" => "animal_type3", "name" => "사슴상", "value" => "3"),
+    array("id" => "animal_type4", "name" => "여우상", "value" => "4"),
     array("id" => "animal_type5", "name" => "토끼상", "value" => "5"),
-    array("id" => "animal_type6", "name" => "용상", "value" => "6"),
-    array("id" => "animal_type7", "name" => "공룡상", "value" => "7"),
-    array("id" => "animal_type8", "name" => "뱀상", "value" => "8"),
-    array("id" => "animal_type9", "name" => "거북이상", "value" => "9"),
-    array("id" => "animal_type10", "name" => "말상", "value" => "10"),
-    array("id" => "animal_type11", "name" => "양상", "value" => "11"),
-    array("id" => "animal_type12", "name" => "원숭이상", "value" => "12"),
-    array("id" => "animal_type13", "name" => "닭상", "value" => "13"),
-    array("id" => "animal_type14", "name" => "강아지상", "value" => "14"),
-    array("id" => "animal_type15", "name" => "곰상", "value" => "15"),
-    array("id" => "animal_type16", "name" => "늑대상", "value" => "16"),
-    array("id" => "animal_type17", "name" => "여우상", "value" => "17"),
-    array("id" => "animal_type18", "name" => "돼지상", "value" => "18"),
-    array("id" => "animal_type19", "name" => "고양이상", "value" => "19"),
-    array("id" => "animal_type20", "name" => "사자상", "value" => "20"),
-    array("id" => "animal_type21", "name" => "너구리상", "value" => "21"),
-    array("id" => "animal_type22", "name" => "사슴상", "value" => "22"),
-    array("id" => "animal_type23", "name" => "개구리상", "value" => "23"),
-    array("id" => "animal_type24", "name" => "두꺼비상", "value" => "24"),
-    array("id" => "animal_type25", "name" => "상어상", "value" => "25"),
-    array("id" => "animal_type26", "name" => "물고기상", "value" => "26"),
-    array("id" => "animal_type27", "name" => "오리상", "value" => "27"),
-    array("id" => "animal_type28", "name" => "펭귄상", "value" => "28"),
 );
-$json = json_encode($array);
+$animalTypeMale = array(
+    array("id" => "animal_type0", "name" => "강아지상", "value" => "0"),
+    array("id" => "animal_type1", "name" => "곰상", "value" => "1"),
+    array("id" => "animal_type2", "name" => "늑대상", "value" => "2"),
+    array("id" => "animal_type3", "name" => "사슴상", "value" => "3"),
+    array("id" => "animal_type4", "name" => "토끼상", "value" => "4"),
+    array("id" => "animal_type5", "name" => "호랑이상", "value" => "5"),
+);
 
 $maleStyle = array(
     array("id" => "style01", "name" => "스포티 & 활동적 타입", "value" => "0"),
@@ -61,4 +45,5 @@ $femaleStyle = array(
     array("id" => "style11", "name" => "내추럴 & 자연스러운 타입", "value" => "10"),
     array("id" => "style12", "name" => "비즈니스 & 전문적 타입", "value" => "11"),
 );
+$json = json_encode($array);
 // echo $json;
