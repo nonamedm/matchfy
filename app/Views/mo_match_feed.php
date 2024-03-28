@@ -106,12 +106,12 @@
     <script>
         $(document).ready(function () {
             $.ajax({
-                url: '/ajax/calcMatchRate', // todo : 추후 본인인증 연결
+                url: '/ajax/calcMatchRate', // todo : 추후 로그인완료로 이동
                 type: 'POST',
                 async: false,
                 success: function (data) {
                     console.log(data);
-                    
+
                 },
                 error: function (data, status, err) {
                     console.log(err);

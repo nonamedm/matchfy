@@ -18,8 +18,9 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        
-        <?php $title = "준회원 프로필"; include 'header.php'; ?>
+
+        <?php $title = "준회원 프로필";
+        include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
@@ -52,7 +53,7 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="gender" class="signin_label">성별</label>
-                                <select id="gender" name="gender">
+                                <select id="gender" name="gender" readonly>
                                     <option>성별을 선택하세요</option>
                                     <option value="0">여성</option>
                                     <option value="1">남성</option>
@@ -68,12 +69,15 @@
                                 ?>
                                 <select id="city" name="city">
                                     <option value>지역을 선택하세요</option>
-                                    <?php 
-                                        foreach($sido as $item) {
-                                    ?>
-                                        <option value="<?= $item['id']?>"><?= $item['name']?></option>
                                     <?php
-                                        }
+                                    foreach ($sido as $item)
+                                    {
+                                        ?>
+                                        <option value="<?= $item['id'] ?>">
+                                            <?= $item['name'] ?>
+                                        </option>
+                                        <?php
+                                    }
                                     ?>
                                 </select>
                             </div>

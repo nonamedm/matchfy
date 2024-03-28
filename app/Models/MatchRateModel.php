@@ -4,42 +4,22 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class MatchPartnerModel extends Model
+class MatchRateModel extends Model
 {
     // protected $tableName;
-    protected $table = 'wh_match_partner';
+    protected $table = 'wh_match_rate';
     protected $primaryKey = 'member_ci';
     protected $useAutoIncrement = true;
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $protectFields = true;
     protected $allowedFields = [
-        
         'idx',
         'member_ci',
-        'partner_gender',
-        'animal_type1',
-        'fromyear',
-        'toyear',
-        'height',
-        'stylish',
-        'bodyshape',
-        'married',
-        'smoker',
-        'drinking',
-        'religion',
-        'mbti',
-        'education',
-        'job',
-        'asset_range',
-        'income_range',
-        'father_job',
-        'mother_job',
-        'siblings',
-        'region',
-        'residence1',
-        'residence2',
-        'residence3',
+        'my_nickname',
+        'your_nickname',
+        'match_score',
+        'match_rate',
         'delete_yn',
         'last_access_dt'
     ];
@@ -78,4 +58,5 @@ class MatchPartnerModel extends Model
     {
         return $this->table;
     }
+
 }

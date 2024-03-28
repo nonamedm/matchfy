@@ -15,13 +15,51 @@ class MemberModel extends Model
     protected $protectFields = true;
     protected $allowedFields = [
         // 준회원 구간
-        'idx', 'name', 'birthday', 'gender', 'city', 'town', 'nickname', 'video_profile_url',
-        'unique_code', 'recommender_code', 'mobile_no', 'ci', 'agree1', 'agree2', 'agree3',
-        'grade', 'status', 'sns_type', 'os_type',
+        'idx',
+        'name',
+        'birthday',
+        'gender',
+        'city',
+        'town',
+        'nickname',
+        'video_profile_url',
+        'unique_code',
+        'recommender_code',
+        'mobile_no',
+        'ci',
+        'agree1',
+        'agree2',
+        'agree3',
+        'grade',
+        'status',
+        'sns_type',
+        'os_type',
         // 정회원 구간
-        'married', 'smoker', 'drinking', 'religion', 'mbti', 'height', 'stylish', 'education', 'school', 'major', 'job', 'asset_range','income_range',
+        'married',
+        'smoker',
+        'bodyshape',
+        'drinking',
+        'religion',
+        'mbti',
+        'height',
+        'stylish',
+        'education',
+        'school',
+        'major',
+        'job',
+        'asset_range',
+        'income_range',
         // 프리미엄 구간
-        'father_birth_year', 'father_job', 'mother_birth_year', 'mother_job', 'siblings', 'residence1', 'residence2', 'residence3', 'delete_yn', 'last_access_dt'
+        'father_birth_year',
+        'father_job',
+        'mother_birth_year',
+        'mother_job',
+        'siblings',
+        'residence1',
+        'residence2',
+        'residence3',
+        'delete_yn',
+        'last_access_dt'
     ];
 
     protected bool $allowEmptyInserts = false;

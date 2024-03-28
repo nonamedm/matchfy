@@ -79,21 +79,21 @@
                                 <select id="first_factor" name="first_factor">
                                     <option value>미선택</option>
                                     <option value="mbti">MBTI</option>
-                                    <option value="facialtype">얼굴형</option>
-                                    <option value="style">스타일</option>
+                                    <option value="animal_type1">얼굴형</option>
+                                    <option value="stylish">스타일</option>
                                     <option value="drinking">음주횟수</option>
-                                    <option value="year">나이</option>
+                                    <option value="birthday">나이</option>
                                     <option value="bodyshape">체형</option>
-                                    <option value="region">지역</option>
-                                    <option value="marital">결혼경험</option>
-                                    <option value="smoking">흡연유무</option>
+                                    <option value="city">지역</option>
+                                    <option value="married">결혼경험</option>
+                                    <option value="smoker">흡연유무</option>
                                     <option value="religion">종교</option>
                                     <option value="gender">성별</option>
                                     <option value="height">키</option>
                                     <option value="education">학력</option>
                                     <option value="job">직업</option>
-                                    <option value="asset">자산구간</option>
-                                    <option value="income">소득구간</option>
+                                    <option value="asset_range">자산구간</option>
+                                    <option value="income_range">소득구간</option>
                                 </select>
                             </div>
                         </div>
@@ -103,21 +103,21 @@
                                 <select id="second_factor" name="second_factor">
                                     <option value>미선택</option>
                                     <option value="mbti">MBTI</option>
-                                    <option value="facialtype">얼굴형</option>
-                                    <option value="style">스타일</option>
+                                    <option value="animal_type1">얼굴형</option>
+                                    <option value="stylish">스타일</option>
                                     <option value="drinking">음주횟수</option>
-                                    <option value="year">나이</option>
+                                    <option value="birthday">나이</option>
                                     <option value="bodyshape">체형</option>
-                                    <option value="region">지역</option>
-                                    <option value="marital">결혼경험</option>
-                                    <option value="smoking">흡연유무</option>
+                                    <option value="city">지역</option>
+                                    <option value="married">결혼경험</option>
+                                    <option value="smoker">흡연유무</option>
                                     <option value="religion">종교</option>
                                     <option value="gender">성별</option>
                                     <option value="height">키</option>
                                     <option value="education">학력</option>
                                     <option value="job">직업</option>
-                                    <option value="asset">자산구간</option>
-                                    <option value="income">소득구간</option>
+                                    <option value="asset_range">자산구간</option>
+                                    <option value="income_range">소득구간</option>
                                 </select>
                             </div>
                         </div>
@@ -127,21 +127,21 @@
                                 <select id="third_factor" name="third_factor">
                                     <option value>미선택</option>
                                     <option value="mbti">MBTI</option>
-                                    <option value="facialtype">얼굴형</option>
-                                    <option value="style">스타일</option>
+                                    <option value="animal_type1">얼굴형</option>
+                                    <option value="stylish">스타일</option>
                                     <option value="drinking">음주횟수</option>
-                                    <option value="year">나이</option>
+                                    <option value="birthday">나이</option>
                                     <option value="bodyshape">체형</option>
-                                    <option value="region">지역</option>
-                                    <option value="marital">결혼경험</option>
-                                    <option value="smoking">흡연유무</option>
+                                    <option value="city">지역</option>
+                                    <option value="married">결혼경험</option>
+                                    <option value="smoker">흡연유무</option>
                                     <option value="religion">종교</option>
                                     <option value="gender">성별</option>
                                     <option value="height">키</option>
                                     <option value="education">학력</option>
                                     <option value="job">직업</option>
-                                    <option value="asset">자산구간</option>
-                                    <option value="income">소득구간</option>
+                                    <option value="asset_range">자산구간</option>
+                                    <option value="income_range">소득구간</option>
                                 </select>
                             </div>
                         </div>
@@ -151,21 +151,21 @@
                                 <select id="fourth_factor" name="fourth_factor">
                                     <option value>미선택</option>
                                     <option value="mbti">MBTI</option>
-                                    <option value="facialtype">얼굴형</option>
-                                    <option value="style">스타일</option>
+                                    <option value="animal_type1">얼굴형</option>
+                                    <option value="stylish">스타일</option>
                                     <option value="drinking">음주횟수</option>
-                                    <option value="year">나이</option>
+                                    <option value="birthday">나이</option>
                                     <option value="bodyshape">체형</option>
-                                    <option value="region">지역</option>
-                                    <option value="marital">결혼경험</option>
-                                    <option value="smoking">흡연유무</option>
+                                    <option value="city">지역</option>
+                                    <option value="married">결혼경험</option>
+                                    <option value="smoker">흡연유무</option>
                                     <option value="religion">종교</option>
                                     <option value="gender">성별</option>
                                     <option value="height">키</option>
                                     <option value="education">학력</option>
                                     <option value="job">직업</option>
-                                    <option value="asset">자산구간</option>
-                                    <option value="income">소득구간</option>
+                                    <option value="asset_range">자산구간</option>
+                                    <option value="income_range">소득구간</option>
                                 </select>
                             </div>
                         </div>
@@ -183,10 +183,10 @@
                                     <select id="except1" name="except1" onchange="chgExcept(this);">
                                         <option value>미선택</option>
                                         <option value="mbti">MBTI</option>
-                                        <option value="facialtype">얼굴형</option>
+                                        <option value="animal_type1">얼굴형</option>
                                         <option value="stylish">스타일</option>
                                         <option value="drinking">음주횟수</option>
-                                        <!-- <option value="year">나이</option> -->
+                                        <!-- <option value="birthday">나이</option> -->
                                         <option value="bodyshape">체형</option>
                                         <option value="city">지역</option>
                                         <option value="married">결혼경험</option>
@@ -212,10 +212,10 @@
                                     <select id="except2" name="except2" onchange="chgExcept(this);">
                                         <option value>미선택</option>
                                         <option value="mbti">MBTI</option>
-                                        <option value="facialtype">얼굴형</option>
+                                        <option value="animal_type1">얼굴형</option>
                                         <option value="stylish">스타일</option>
                                         <option value="drinking">음주횟수</option>
-                                        <!-- <option value="year">나이</option> -->
+                                        <!-- <option value="birthday">나이</option> -->
                                         <option value="bodyshape">체형</option>
                                         <option value="city">지역</option>
                                         <option value="married">결혼경험</option>

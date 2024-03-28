@@ -18,8 +18,9 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        
-        <?php $title = "프리미엄 프로필"; include 'header.php'; ?>
+
+        <?php $title = "프리미엄 프로필";
+        include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
@@ -77,10 +78,10 @@
                                 <label for="drinking" class="signin_label">음주 횟수</label>
                                 <select id="drinking" name="drinking" class="custom_select" value="">
                                     <option value="">선택</option>
-                                    <option value="0">전혀 안함</option>
-                                    <option value="1">주 1~2병</option>
-                                    <option value="2">주 3~5병</option>
-                                    <option value="3">주 5병 이상</option>
+                                    <option value="1">전혀 안함</option>
+                                    <option value="2">주 1~2병</option>
+                                    <option value="3">주 3~5병</option>
+                                    <option value="4">주 5병 이상</option>
                                 </select>
                             </div>
                         </div>
@@ -131,6 +132,20 @@
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
+                                <label for="bodyshape" class="signin_label">체형</label>
+                                <select id="bodyshape" name="bodyshape" class="custom_select" value="">
+                                    <option value="">선택</option>
+                                    <option value="0">보통</option>
+                                    <option value="1">마른</option>
+                                    <option value="2">조금마른</option>
+                                    <option value="3">조금통통한</option>
+                                    <option value="4">통통한</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form_row signin_form">
+                            <div class="signin_form_div">
                                 <label for="personal_style" class="signin_label">스타일</label>
                                 <select id="personal_style" name="personal_style" class="custom_select" value="">
                                     <option value="">선택</option>
@@ -148,13 +163,11 @@
                                 <label for="education" class="signin_label">학력</label>
                                 <select id="education" name="education" class="custom_select" value="">
                                     <option value="">선택</option>
-                                    <option value="0">초등학교이하</option>
-                                    <option value="1">중학교</option>
-                                    <option value="2">고등학교</option>
-                                    <option value="3">대학교(2/3년제)</option>
-                                    <option value="4">대학교(4년제)</option>
-                                    <option value="5">대학원(석사)</option>
-                                    <option value="6">대학원(박사)</option>
+                                    <option value="0">고등학교졸업</option>
+                                    <option value="1">대학교재학</option>
+                                    <option value="2">대학교졸업</option>
+                                    <option value="3">대학원재학</option>
+                                    <option value="4">대학원졸업이상</option>
                                 </select>
                             </div>
                         </div>
@@ -185,30 +198,9 @@
                                 <div class="input_btn">
                                     <select id="job" name="job" class="custom_select" value="">
                                         <option value="">선택</option>
-                                        <option value="0">사업관리</option>
-                                        <option value="1">경영/회계/사무</option>
-                                        <option value="2">금융보험</option>
-                                        <option value="3">교육직</option>
-                                        <option value="4">법률직</option>
-                                        <option value="5">보건의료직</option>
-                                        <option value="6">사회복지/종교</option>
-                                        <option value="7">문화/예술</option>
-                                        <option value="8">운전/운송</option>
-                                        <option value="9">영업/판매</option>
-                                        <option value="10">경비/청소</option>
-                                        <option value="11">숙박/여행</option>
-                                        <option value="12">음식/서비스</option>
-                                        <option value="13">건설, 기계</option>
-                                        <option value="14">재료</option>
-                                        <option value="15">화학/바이오</option>
-                                        <option value="16">섬유/의복</option>
-                                        <option value="17">전기/전자</option>
-                                        <option value="18">정보통신</option>
-                                        <option value="19">식품가공</option>
-                                        <option value="20">인쇄/목재</option>
-                                        <option value="21">환경/에너지</option>
-                                        <option value="22">농업</option>
-                                        <option value="23">기타</option>
+                                        <option value="0">1군 : 중소기업 회사원/자영업/프리랜서 등 기타</option>
+                                        <option value="1">2군 : 상장사, 대기업 회사원/기업대표/공무원/공기업</option>
+                                        <option value="2">3군 : 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)</option>
                                     </select>
                                     <button type="button" class="btn btn_input_form"
                                         onclick="showPopupRgt('job','<?php echo $ci ?>')">인증</button>
