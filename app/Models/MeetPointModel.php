@@ -4,10 +4,10 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class MeetingMembersModel extends Model
+class MeetPointModel extends Model
 {
-    protected $table            = 'wh_meeting_members';
-    protected $primaryKey       = 'idx';
+    protected $table            = 'wh_meeting_points';
+    protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
@@ -16,14 +16,15 @@ class MeetingMembersModel extends Model
 
         'meeting_idx',
         'member_ci',
-        'meeting_master',
-        'update_at',
-        'create_at',
+        'meeting_points',
+        'meeting_type',
+        'point_check_type',
         'delete_yn',
+        'create_at',
+        'update_at',
         'extra1',
         'extra2',
-        'extra3',
-        'count'
+        'extra3'
     ];
 
     protected bool $allowEmptyInserts = false;

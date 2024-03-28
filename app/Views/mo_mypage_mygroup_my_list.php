@@ -12,8 +12,6 @@
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/mygroup.js"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -28,19 +26,9 @@
                         <img src="/static/images/left_arrow.png" />
                     </li>
                     <li class="header_title">
-                        모임
+                        내모임
                     </li>
                 </ul>
-<<<<<<< HEAD
-                <div class="menu_right edit">편집</div>
-                <div class="menu_right delete" style="display:none;">삭제</div>
-=======
-                <div class="menu_right edit" id="meet_edit_btn"onclick="MeetingEditChk();">편집</div>
-                <div class="menu_right edit meet_menu_right" style="display:none;">
-                    <span class="meet_menu_header" onclick="MeetCancelChk();"> 편집종료</span>
-                    <span class="meet_menu_header" id="meet_delete_btn" onclick="MyGoupDelconfrim();">삭제</span>
-                </div>
->>>>>>> origin/local_payment
             </div>
 
         </header>
@@ -48,50 +36,76 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="notice_filter">
-                    <select class="small" id="notice_filter">
-                        <option value="create_at">등록순</option>
-                        <option value="meeting_start_date">빠른 모임순</option>
-                        <option value="membership_fee">예약금 낮은 순</option>
+                    <p>09.01 ~ 09.30</p>
+                    <select>
+                        <option>최근순</option>
+                        <option>최근순</option>
+                        <option>최근순</option>
                     </select>
                 </div>
-<<<<<<< HEAD
-                <div class="mygroup_list">
-                    <?php foreach ($meetings as $meeting): ?>
-                    <a href="/mo/mypage/group/detail/<?= $meeting['idx'] ?>">
-                        <div class="apply_group_detail  <?= $meeting['isEnded'] ? 'ended' : '' ?>">
-                            <div class="chk_box" style="display:none;">
-                                <input type="checkbox" id="totAgree<?= $meeting['idx'] ?>" name="chkDefault<?= $meeting['idx'] ?>">
-                                <label class="totAgree_label" for="totAgree<?= $meeting['idx'] ?>"></label>
-=======
                 <div class="mygroup_list" id="mygroup_list_body">
                 <?php foreach ($meetings as $meeting): ?>
-                    <div class="apply_group_detail">
+                    <div class="apply_group_detail" onclick="javascript:MygroupPopup(<?=$meeting->meeting_idx?>)">
                         <div class="chk_box meet_delete_chk_box" style="display:none;">
                             <input type="checkbox" class="totAgree" id="totAgree<?= $meeting->meeting_idx ?>" name="chkDefault00">
                             <label class="totAgree_label" for="totAgree<?= $meeting->meeting_idx ?>"></label>
                         </div>
-                        <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
-                            <img src="/<?= $meeting->file_path?><?= $meeting->file_name?>" />
-                        </a>
                         <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt" onclick="javascript:meetingMemberList(<?= $meeting->meeting_idx ?>);">
-                                <span>신청 <?= $meeting->meeting_idx_count ?></span>/<?= $meeting->number_of_people ?>명
-                            </div>
-                            <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
-                                <div class="group_location">
-                                    <img src="/static/images/ico_location_16x16.png" />
-                                    <?= $meeting->meeting_place ?>
-                                </div>
-                                <p class="group_price"><?= number_format($meeting->membership_fee) ?>원</p>
-                                <?php
-                                    $date = $meeting->meeting_start_date;
-                                    $dayOfWeek = date('w', strtotime($date)); // 요일을 숫자(0~6)로 가져옴
+                            <div class="group_particpnt">
+                            <?php
+                                $currentTimestamp = time();
+                                $endDateTimestamp = strtotime($meeting->meeting_end_date);
+                                $startDateTimestamp = strtotime($meeting->meeting_start_date);
+                                $dday;
 
-                                    $days = array('일', '월', '화', '수', '목', '금', '토');
-                                    $newDate = date('Y.m.d', strtotime($date)) . ' (' . $days[$dayOfWeek] . ') 모임';
+                                if ($currentTimestamp > $endDateTimestamp) {
+                                    $dday = '종료';
+                                } elseif ($currentTimestamp < $startDateTimestamp) {
+                                    $timeDiff = $startDateTimestamp - $currentTimestamp;
+                                    $days = floor($timeDiff / (60 * 60 * 24));
+                                    if ($days == 1) {
+                                        $dday = '내일';
+                                    } else if($dday ==0){
+                                        $dday = '당일';
+                                    } else {
+                                        $dday = 'D-' . $days;
+                                    }
+                                } else {
+                                    $timeDiff = $endDateTimestamp - $currentTimestamp;
+                                    $days = floor($timeDiff / (60 * 60 * 24));
+                                    if ($days == 1) {
+                                        $dday = '내일';
+                                    } else if($dday ==0){
+                                        $dday = '당일';
+                                    } else {
+                                        $dday = 'D-' . $days;
+                                    }
+                                }
                                 ?>
-                                <p class="group_schedule"><?= $newDate ?> </p>
-                            </a>
+                                <span><?=$dday?></span>
+                            </div>
+                        
+                            <div class="group_location">
+                                <img src="/static/images/ico_location_16x16.png" />
+                                <?= $meeting->meeting_place ?>
+                            </div>
+                            <p class="group_price"><?= number_format($meeting->membership_fee) ?>원</p>
+                            <?php
+                                $date = $meeting->meeting_start_date;
+                                $dayOfWeek = date('w', strtotime($date)); // 요일을 숫자(0~6)로 가져옴
+                                
+                                $days = array('일', '월', '화', '수', '목', '금', '토');
+                                $newDate = date('m.d A h:i', strtotime($date)) . ' (' . $days[$dayOfWeek] . ') 모임';
+                                
+                                // AM 또는 PM 확인하여 오전 또는 오후로 변경
+                                if (strpos($newDate, 'AM') !== false) {
+                                    $newDate = str_replace('AM', '오전', $newDate);
+                                } else {
+                                    $newDate = str_replace('PM', '오후', $newDate);
+                                }
+                            ?>
+                            <p class="group_schedule"><?= $newDate ?> </p>
+                            <span>인원 <?= $meeting->meeting_idx_count ?></span>명
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -100,32 +114,14 @@
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt">
                                 <span>신청 2</span>/4명
->>>>>>> origin/local_payment
                             </div>
-                            <?php if ($meeting['isEnded']): ?>
-                                <div class="ended_overlay">종료</div>
-                            <?php endif; ?>
-                            <?php if ($meeting['meeting_idx']): ?>
-                                <img class="profile_img <?= $meeting['isEnded'] ? 'grayscale' : '' ?>" src="/<?= $meeting['file_path'] ?><?= $meeting['file_name'] ?>" />
-                            <?php else: ?>
-                                <img class="profile_img <?= $meeting['isEnded'] ? 'grayscale' : '' ?>" src="/static/images/group_list_1.png" />
-                            <?php endif; ?>
-                            <div class="group_list_item group_apply_item">
-                                <div class="group_particpnt">
-                                    <span>신청 <?=$meeting['count']?></span>/<?= $meeting['number_of_people'] ?>명
-                                </div>
-                                <div class="group_location">
-                                    <img src="/static/images/ico_location_16x16.png" />
-                                    <?= $meeting['meeting_place'] ?>
-                                </div>
-                                <p class="group_price"><?= number_format($meeting['membership_fee']) ?>원</p>
-                                <p class="group_schedule"><?= $meeting['meetingDateTime'] ?> </p>
+                            <div class="group_location">
+                                <img src="/static/images/ico_location_16x16.png" />
+                                서울/강남구
                             </div>
+                            <p class="group_price">20,000원</p>
+                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
                         </div>
-<<<<<<< HEAD
-                    </a>
-                    <?php endforeach; ?>
-=======
                     </div> -->
                     <!-- <div class="apply_group_detail">
                         <img src="/static/images/group_list_2.png" />
@@ -197,7 +193,6 @@
                             <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
                         </div>
                     </div> -->
->>>>>>> origin/local_payment
                 </div>
             </div>
         </div>
@@ -240,44 +235,6 @@
                 menuItem.classList.toggle("hidden");
             }
         }
-
-        // 편집 버튼 클릭 이벤트
-        document.querySelector('.menu_right.edit').addEventListener('click', function() {
-
-            document.querySelectorAll('.chk_box').forEach(chkBox => chkBox.style.display = 'block');
-
-            document.querySelector('.menu_right.edit').style.display = 'none';
-            document.querySelector('.menu_right.delete').style.display = 'block';
-
-            document.querySelectorAll('.mygroup_list a').forEach(a => {
-                a.dataset.href = a.getAttribute('href'); // 원래 href 값을 저장
-                a.removeAttribute('href'); // href 속성 제거
-            });
-        });
-
-        // 삭제 버튼 클릭 이벤트
-        document.querySelector('.menu_right.delete').addEventListener('click', function() {
-            
-            document.querySelectorAll('.chk_box').forEach(chkBox => chkBox.style.display = 'none');
-            
-            document.querySelector('.menu_right.delete').style.display = 'none';
-            document.querySelector('.menu_right.edit').style.display = 'block';
-            // 링크 활성화
-            document.querySelectorAll('.mygroup_list a').forEach(a => {
-                if(a.dataset.href) { // 저장된 href 값이 있으면 복원
-                    a.setAttribute('href', a.dataset.href);
-                }
-            });
-        });
-
-        $(document).ready(function() {
-            // 필터링 옵션
-            $('#notice_filter').change(function() {
-                var filterOption = $(this).val();
-                MymeetingFiltering(filterOption);
-            });
-        });
-
     </script>
 
     <!-- -->

@@ -17,6 +17,7 @@ class MeetingModel extends Model
                                     'matching_rate', 'title', 'content', 'reservation_previous', 'meeting_place', 'membership_fee',
                                     'create_at', 'update_at', 'delete_yn'];
 
+
     protected bool $allowEmptyInserts = false;
 
     // Dates

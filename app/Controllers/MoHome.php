@@ -16,6 +16,7 @@ use App\Models\MeetingFileModel;
 use App\Models\MeetingMembersModel;
 use App\Helpers\MoHelper;
 use App\Models\MeetModel;
+use App\Models\MeetPointModel;
 use CodeIgniter\Session\Session;
 
 
@@ -537,6 +538,7 @@ class MoHome extends BaseController
             ->first();
 
         $data = [
+            'idx' => $idx,
             'category' => $Meeting['category'],
             'recruitment_start_date' => $recruitStartTime,
             'recruitment_end_date' => $recruitEndTime,
@@ -624,10 +626,11 @@ class MoHome extends BaseController
     }
 
     /*결재 시 모임에 이미 등록되어있는지 판단 */
-    public function getMemberConfirm($ci) {
+    public function getMemberConfirm($ci,$meeting_idx) {
         $MeetingMembersModel = new MeetingMembersModel();
         $total = $MeetingMembersModel
             ->where('member_ci', $ci)
+            ->where('meeting_idx', $meeting_idx)
             ->countAllResults();
         // echo $total;
         if ($total > 0) {
@@ -647,7 +650,7 @@ class MoHome extends BaseController
         $pointModel = new PointModel();
 
         $getMemberCount = $this->getMemberCount($meeting_idx);
-        $getMemberConfirm = $this->getMemberConfirm($ci);
+        $getMemberConfirm = $this->getMemberConfirm($ci,$meeting_idx);
         
         if($getMemberCount == 1){
             if($mypoint < $point){//보유포인트가 모자랄 경우
@@ -693,23 +696,25 @@ class MoHome extends BaseController
                     $memberName = new MemberModel();
                     $meetingUser = $memberName
                                     ->distinct()
-                                    ->select('m.name as name')
+                                    ->select('m.name as name,m.ci as ci')
                                     ->from('members m')
                                     ->where('m.ci', $ci)
                                     ->get()
                                     ->getRow();
 
-                    //방장한테 포인트 가도록
-                    $masterdata = [
-                        'member_ci' => $meetingMaster->ci,
-                        'my_point' => $meetingMaster->k_point + $point,
-                        'add_point' => $point,
-                        'point_details' => $meetingUser->name."(모임회비)",
+                     //모임방에 포인트 올리기
+                     $meetPointModel = new MeetPointModel();
+                     $masterdata = [
+                        'meeting_idx'=> $meeting_idx,
+                        'member_ci' => $meetingUser->ci,
+                        'meeting_points'=> $point,
+                        'meeting_type' =>'M',
+                        'point_check_type' =>'1',
                         'create_at' => date('Y-m-d H:i:s'),
-                        'point_type' => 'A',
+                        'update_at' => date('Y-m-d H:i:s'),
                     ];
 
-                    $pointModel->insert($masterdata);
+                    $meetPointModel->insert($masterdata);
                     
                     if ($result) {
                         return $this->response->setJSON(['success' => true, 'msg' => '포인트 결재 완료 되었습니다.']);
@@ -766,53 +771,141 @@ class MoHome extends BaseController
     {
         return view('mo_mypage_group_create');
     }
-    public function mypageMygroupList(): string
+    public function mypageMygroupList()
     {
+        $db = db_connect();
+
         $session = session();
         $ci = $session->get('ci');
         
-        $MeetingModel = new MeetingModel();
-        //$MeetingFileModel = new MeetingFileModel();
-        // $data['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
+        $query = $db->table('wh_meeting_members a')
+            ->select('a.meeting_idx, 
+                      b.category, 
+                      b.meeting_start_date, 
+                      b.number_of_people, 
+                      b.title, 
+                      b.meeting_place, 
+                      b.membership_fee, 
+                      COUNT(a.meeting_idx) AS meeting_idx_count,
+                      c.file_path,
+                      c.file_name')
+            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+            ->join('wh_meetings_files c','b.idx = c.meeting_idx','left')
+            ->whereIn('a.meeting_idx', function ($builder) use ($ci) {
+                $builder->select('d.meeting_idx')
+                    ->from('wh_meeting_members d')
+                    ->where('d.meeting_master', 'K')
+                    ->where('d.member_ci', $ci);
+            })
+            ->where('b.delete_yn', 'N')
+            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
         
-        $MeetingModel->orderBy('create_at', 'DESC');
-
-        $meetings = $MeetingModel
-                        ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx')
-                        ->where('wh_meetings.member_ci', $ci)
-                        ->findAll();
-
-        $days = ['일', '월', '화', '수', '목', '금', '토'];
-        $currentDate = new \DateTime();
-
-        // 참여 인원 모델
-        $MeetingMembersModel = new MeetingMembersModel();
-
+        $result = $query->get()->getResult();
         
-        foreach ($meetings as &$meeting) {//&로 참조 필요
-            // 모임 시작 시간 포맷팅
-            $meetingDateTimestamp = strtotime($meeting['meeting_start_date']);
-            $meetingDay = date("w", $meetingDateTimestamp);//0~6
-            $dayName = $days[$meetingDay];//요일
-            $meetingDateTime = date("Y.m.d ", $meetingDateTimestamp) . ' (' . $dayName . ') ' . date(" H:i", $meetingDateTimestamp);
-            $meeting['meetingDateTime'] = $meetingDateTime;
-            
-            // 이벤트 종료 여부 판단
-            $eventDate = new \DateTime($meeting['meeting_start_date']);
-            $meeting['isEnded'] = ($currentDate > $eventDate);
-
-            // 각 모임에 대한 참여 인원 수 계산
-            $memCount = $MeetingMembersModel
-                            ->where('meeting_idx', $meeting['idx'])
-                            ->countAllResults();
-            $meeting['count'] = $memCount;
-        }
-        unset($meeting);//참조 해제
-
-        $data['meetings'] = $meetings;
+        $data['meetings'] = $result;
 
         return view('mo_mypage_mygroup_list', $data);
     }
+
+    public function mypageMygroupMyList()
+    {
+        $db = db_connect();
+
+        $session = session();
+        $ci = $session->get('ci');
+        
+        $query = $db->table('wh_meeting_members a')
+            ->select('a.meeting_idx, 
+                      b.category, 
+                      b.meeting_start_date, 
+                      b.meeting_end_date, 
+                      b.number_of_people, 
+                      b.title, 
+                      b.meeting_place, 
+                      b.membership_fee, 
+                      COUNT(a.meeting_idx) AS meeting_idx_count,
+                      c.file_path,
+                      c.file_name')
+            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+            ->join('wh_meetings_files c','b.idx = c.meeting_idx','left')
+            ->whereIn('a.meeting_idx', function ($builder) use ($ci) {
+                $builder->select('d.meeting_idx')
+                    ->from('wh_meeting_members d')
+                    ->where('d.meeting_master', 'K')
+                    ->where('d.member_ci', $ci);
+            })
+            ->where('b.delete_yn', 'N')
+            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
+        
+        $result = $query->get()->getResult();
+        
+        $data['meetings'] = $result;
+
+        return view('mo_mypage_mygroup_my_list', $data);
+    }
+
+    public function mypageMygroupEdit()
+    {
+        $result= $this->mygoupRefreshList();
+
+        if ($result){
+            return $this->response->setJSON(['success' => true,'data' =>$result]);
+        } else{
+            return $this->response->setJSON(['success' => false]);
+        }
+    }
+    public function mygoupRefreshList(){
+        $db = db_connect();
+
+        $session = session();
+        $ci = $session->get('ci');
+        
+        $query = $db->table('wh_meeting_members a')
+            ->select('a.meeting_idx, 
+                      b.category, 
+                      b.meeting_start_date, 
+                      b.number_of_people, 
+                      b.title, 
+                      b.meeting_place, 
+                      b.membership_fee, 
+                      COUNT(a.meeting_idx) AS meeting_idx_count,
+                      c.file_path,
+                      c.file_name')
+            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+            ->join('wh_meetings_files c','b.idx = c.meeting_idx','left')
+            ->whereIn('a.meeting_idx', function ($builder) use ($ci) {
+                $builder->select('d.meeting_idx')
+                    ->from('wh_meeting_members d')
+                    ->where('d.meeting_master', 'K')
+                    ->where('d.member_ci', $ci);
+            })
+            ->where('b.delete_yn', 'N')
+            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
+        
+        $result = $query->get()->getResult();
+        
+        $data['meetings'] = $result;
+        return $result;
+    }
+    public function mypageMygroupDel(){
+        
+        $idxArray = $this->request->getPost('delArr');
+        $meetModel = new MeetModel();
+        
+        $result = $meetModel->update($idxArray, [
+            'delete_yn' => 'Y', 
+            'update_at' => date('Y-m-d H:i:s')
+        ]);
+                
+        if ($result){
+            $data = $this->mygoupRefreshList();
+            return $this->response->setJSON(['success' => true, 'data' => $data]);
+        } else{
+            return $this->response->setJSON(['success' => false]);
+        }
+
+    }
+
     public function mypageMygroupListEdit(): string
     {
         return view('mo_mypage_mygroup_list_edit');
