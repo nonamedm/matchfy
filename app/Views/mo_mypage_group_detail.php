@@ -74,6 +74,7 @@
             <footer class="footer">
                 <div class="btn_group">
                     <button type="button" class="btn type01" onclick="meetingApplication('<?=$idx?>')">함께하기</button>
+                    <button type="button" class="btn type01" onclick="meetingApplication('<?=$idx?>')">함께하기</button>
                 </div>
                 
             </footer>
