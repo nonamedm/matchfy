@@ -91,11 +91,14 @@
                                     placeholder="모집 인원을 입력하세요" >
                             </div>
                         </div>
-                        <!-- <div class="form_row signin_form">
+                        <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="group_age" class="signin_label">나이</label>
-                                <div class="multy_select">
-                                    <select id="group_age1" class="custom_select" value="">
+                                <div class="multy_input">
+                                    <input id="group_min_age" type="text" name="group_min_age" value="" placeholder="나이를 입력하세요"><br />
+                                    - 
+                                    <input id="group_max_age" type="text" name="group_max_age" value="" placeholder="나이를 입력하세요"><br />
+                                    <!-- <select id="group_age1" class="custom_select" value="">
                                         <option value="">선택</option>
                                         <option value="0">20대</option>
                                         <option value="1">30대</option>
@@ -108,14 +111,15 @@
                                         <option value="1">30대</option>
                                         <option value="2">40대</option>
                                         <option value="2">50대 이상</option>
-                                    </select>
+                                    </select> -->
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="matching_rate" class="signin_label">매칭률</label>
-                                <select id="matching_rate" class="custom_select" name="matching_rate" value="">
+                                <input id="matching_rate" type="text" name="matching_rate" value="" placeholder="매칭률을 입력하세요"><br />
+                                <!-- <select id="matching_rate" class="custom_select" name="matching_rate" value="">
                                     <option value="">선택</option>
                                     <option value="01">~50%</option>
                                     <option value="02">50~60%</option>
@@ -123,21 +127,13 @@
                                     <option value="04">70~80%</option>
                                     <option value="05">80~70%</option>
                                     <option value="06">90% 이상</option>
-                                </select>
+                                </select> -->
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="group_detail" class="signin_label">모임상세</label>
                                 <input id="title" type="text" name="title" value="" placeholder="제목을 입력하세요"><br />
-                                <!-- <textarea id="content" name="content" value="" placeholder="내용을 입력하세요"></textarea></br />
-                                <select id="reservation_previous" class="custom_select" value="">
-                                    <option>예약 내역 선택</option>
-                                    <option value="0">20대</option>
-                                    <option value="1">30대</option>
-                                    <option value="2">40대</option>
-                                    <option value="2">50대 이상</option>
-                                </select> -->
                             </div>
                         </div>
                         <div class="form_row signin_form">
@@ -145,7 +141,7 @@
                                 <textarea id="content" name="content" value="" placeholder="내용을 입력하세요"></textarea></br />
                             </div>
                         </div>
-                        <div class="form_row signin_form">
+                        <!-- <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <select id="reservation_previous" name= "reservation_previous" class="custom_select" value="">
                                     <option>예약 내역 선택</option>
@@ -153,10 +149,9 @@
                                     <option value="1">30대</option>
                                     <option value="2">40대</option>
                                     <option value="2">50대 이상</option>
-                                    <!-- 이전 예약 내역 불러오는 걸로 수정필요 -->
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="meeting_place" class="signin_label">모임장소</label>

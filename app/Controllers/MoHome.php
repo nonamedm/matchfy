@@ -465,9 +465,26 @@ class MoHome extends BaseController
     public function mypageGroupList(): string
     {
         $MeetingModel = new MeetingModel();
-        $MeetingFileModel = new MeetingFileModel();
+        //$MeetingFileModel = new MeetingFileModel();
+        // $data['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
 
-        $data['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
+        $meetings = $MeetingModel
+                        ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx')
+                        ->findAll();
+
+        // 참여 인원 모델
+        $MeetingMembersModel = new MeetingMembersModel();
+
+        // 각 모임에 대한 참여 인원 수 계산
+        foreach ($meetings as &$meeting) {//&로 참조 필요
+            $memCount = $MeetingMembersModel
+                            ->where('meeting_idx', $meeting['idx'])
+                            ->countAllResults();
+            $meeting['count'] = $memCount;
+        }
+        unset($meeting);//참조 해제
+
+        $data['meetings'] = $meetings;
 
         return view('mo_mypage_group_list', $data);
     }
@@ -492,7 +509,6 @@ class MoHome extends BaseController
     public function mypageGroupDetail($idx): string
     {
         $MeetingModel = new MeetingModel();
-
         $Meeting = $MeetingModel->where('idx', $idx)->first();
 
         $recruitStartTime = date("Y.m.d", strtotime($Meeting['recruitment_start_date']));
@@ -506,6 +522,19 @@ class MoHome extends BaseController
         $days = ['일', '월', '화', '수', '목', '금', '토'];
         $meetingDateTime .= ' (' . $days[$meetingDay] . ')';
 
+        //참여 인원
+        $MeetingMembersModel = new MeetingMembersModel();
+        $memCount = $MeetingMembersModel
+            ->where('meeting_idx', $idx)
+            ->countAllResults();
+
+        //이미지 정보
+        $MeetingFileModel = new MeetingFileModel();
+        $imageInfo = $MeetingFileModel
+            ->where('meeting_idx', $idx)
+            ->where('delete_yn', 'n')
+            ->first();
+
         $data = [
             'idx' => $idx,
             'category' => $Meeting['category'],
@@ -514,11 +543,13 @@ class MoHome extends BaseController
             'meeting_start_date' => $meetingDateTime, //$Meeting['meeting_start_date'],
             //'meeting_end_date' => $Meeting['meeting_end_date'],
             'number_of_people' => $Meeting['number_of_people'], //현재 모집된 인원 수 필요
+            'meeing_count' => $memCount,
             'matching_rate' => $Meeting['matching_rate'],
             'title' => $Meeting['title'],
             'content' => $Meeting['content'],
             'meeting_place' => $Meeting['meeting_place'],
-            'membership_fee' => $Meeting['membership_fee']
+            'membership_fee' => $Meeting['membership_fee'],
+            'image' => $imageInfo
         ];
 
         // if(!empty($userFile)) {

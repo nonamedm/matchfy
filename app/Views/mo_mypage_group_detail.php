@@ -9,6 +9,8 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="/static/js/meeting_member.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="/static/js/meeting_member.js"></script>
@@ -26,19 +28,23 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="group_deatil_img">
-                    <img src="/static/images/group_deatil.png" />
+                    <?php if ($image): ?>
+                        <img src="/<?= $image['file_path'] ?><?= $image['file_name'] ?>" />
+                    <?php else: ?>
+                        <img src="/static/images/group_deatil.png" />
+                    <?php endif; ?>
                 </div>
                 <div class="group_detail_info">
                     <div class="group_detail_header">
                         <div class="group_detail_type"><?=$category?><?php $postData ?></div>
-                        <p>매칭률 <span><?=$matching_rate?></span></p>
+                        <p>매칭률 <span><?=$matching_rate?>%</span></p>
                     </div>
                     <div class="group_detail_title">
                         <h2><?=$title?></h2>
                         <p class="group_detail_period"><?=$recruitment_start_date?> ~ <?=$recruitment_end_date?> 까지 모집중</p>
                         <p class="group_detail_schedule"><?=$meeting_start_date?> 모임</p>
                         <div class="group_particpnt" onclick="meetingMemberList('<?=$idx?>')">
-                            <span>신청 2</span>/<?=$number_of_people?>명
+                            <span>신청 <?=$meeing_count?></span>/<?=$number_of_people?>명
                         </div>
                     </div>
                     <hr class="hoz_part" />

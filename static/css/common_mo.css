@@ -3225,3 +3225,12 @@ input[type='number']::-webkit-inner-spin-button {
 .meet_menu_header{
     margin-left: 10px;
 }
+/* meetings */
+.form_row.signin_form .signin_form_div .multy_input {
+    display: flex;
+}
+
+.form_row.signin_form .signin_form_div .multy_input input {
+    width: 160px !important; 
+    margin: 3px;
+}

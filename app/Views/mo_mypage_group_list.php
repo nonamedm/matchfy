@@ -63,9 +63,14 @@
                 <?php foreach ($meetings as $meeting): ?>
                     <a href="/mo/mypage/group/detail/<?= $meeting['idx'] ?>">
                         <div class="group_list_item">
-                            <img src="/static/images/group_list_1.png" />
+                            <?php if ($meeting['meeting_idx']): ?>
+                                <img class="profile_img" src="/<?= $meeting['file_path'] ?><?= $meeting['file_name'] ?>" />
+                            <?php else: ?>
+                                <img src="/static/images/group_list_1.png" />
+                            <?php endif; ?>
+                            
                             <div class="group_particpnt">
-                                <span>신청 1</span>/<?= $meeting['number_of_people'] ?>명
+                                <span>신청 <?=$meeting['count']?></span>/<?= $meeting['number_of_people'] ?>명
                             </div>
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />
