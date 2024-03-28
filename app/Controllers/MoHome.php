@@ -805,6 +805,43 @@ class MoHome extends BaseController
         return view('mo_mypage_mygroup_list', $data);
     }
 
+    public function mypageMygroupMyList()
+    {
+        $db = db_connect();
+
+        $session = session();
+        $ci = $session->get('ci');
+        
+        $query = $db->table('wh_meeting_members a')
+            ->select('a.meeting_idx, 
+                      b.category, 
+                      b.meeting_start_date, 
+                      b.meeting_end_date, 
+                      b.number_of_people, 
+                      b.title, 
+                      b.meeting_place, 
+                      b.membership_fee, 
+                      COUNT(a.meeting_idx) AS meeting_idx_count,
+                      c.file_path,
+                      c.file_name')
+            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+            ->join('wh_meetings_files c','b.idx = c.meeting_idx','left')
+            ->whereIn('a.meeting_idx', function ($builder) use ($ci) {
+                $builder->select('d.meeting_idx')
+                    ->from('wh_meeting_members d')
+                    ->where('d.meeting_master', 'K')
+                    ->where('d.member_ci', $ci);
+            })
+            ->where('b.delete_yn', 'N')
+            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
+        
+        $result = $query->get()->getResult();
+        
+        $data['meetings'] = $result;
+
+        return view('mo_mypage_mygroup_my_list', $data);
+    }
+
     public function mypageMygroupEdit()
     {
         $result= $this->mygoupRefreshList();

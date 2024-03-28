@@ -26,14 +26,9 @@
                         <img src="/static/images/left_arrow.png" />
                     </li>
                     <li class="header_title">
-                        모임
+                        내모임
                     </li>
                 </ul>
-                <div class="menu_right edit" id="meet_edit_btn"onclick="MeetingEditChk();">편집</div>
-                <div class="menu_right edit meet_menu_right" style="display:none;">
-                    <span class="meet_menu_header" onclick="MeetCancelChk();"> 편집종료</span>
-                    <span class="meet_menu_header" id="meet_delete_btn" onclick="MyGoupDelconfrim();">삭제</span>
-                </div>
             </div>
 
         </header>
@@ -50,33 +45,67 @@
                 </div>
                 <div class="mygroup_list" id="mygroup_list_body">
                 <?php foreach ($meetings as $meeting): ?>
-                    <div class="apply_group_detail">
+                    <div class="apply_group_detail" onclick="javascript:MygroupPopup(<?=$meeting->meeting_idx?>)">
                         <div class="chk_box meet_delete_chk_box" style="display:none;">
                             <input type="checkbox" class="totAgree" id="totAgree<?= $meeting->meeting_idx ?>" name="chkDefault00">
                             <label class="totAgree_label" for="totAgree<?= $meeting->meeting_idx ?>"></label>
                         </div>
-                        <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
-                            <img src="/<?= $meeting->file_path?><?= $meeting->file_name?>" />
-                        </a>
                         <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt" onclick="javascript:meetingMemberList(<?= $meeting->meeting_idx ?>);">
-                                <span>신청 <?= $meeting->meeting_idx_count ?></span>/<?= $meeting->number_of_people ?>명
-                            </div>
-                            <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
-                                <div class="group_location">
-                                    <img src="/static/images/ico_location_16x16.png" />
-                                    <?= $meeting->meeting_place ?>
-                                </div>
-                                <p class="group_price"><?= number_format($meeting->membership_fee) ?>원</p>
-                                <?php
-                                    $date = $meeting->meeting_start_date;
-                                    $dayOfWeek = date('w', strtotime($date)); // 요일을 숫자(0~6)로 가져옴
+                            <div class="group_particpnt">
+                            <?php
+                                $currentTimestamp = time();
+                                $endDateTimestamp = strtotime($meeting->meeting_end_date);
+                                $startDateTimestamp = strtotime($meeting->meeting_start_date);
+                                $dday;
 
-                                    $days = array('일', '월', '화', '수', '목', '금', '토');
-                                    $newDate = date('Y.m.d', strtotime($date)) . ' (' . $days[$dayOfWeek] . ') 모임';
+                                if ($currentTimestamp > $endDateTimestamp) {
+                                    $dday = '종료';
+                                } elseif ($currentTimestamp < $startDateTimestamp) {
+                                    $timeDiff = $startDateTimestamp - $currentTimestamp;
+                                    $days = floor($timeDiff / (60 * 60 * 24));
+                                    if ($days == 1) {
+                                        $dday = '내일';
+                                    } else if($dday ==0){
+                                        $dday = '당일';
+                                    } else {
+                                        $dday = 'D-' . $days;
+                                    }
+                                } else {
+                                    $timeDiff = $endDateTimestamp - $currentTimestamp;
+                                    $days = floor($timeDiff / (60 * 60 * 24));
+                                    if ($days == 1) {
+                                        $dday = '내일';
+                                    } else if($dday ==0){
+                                        $dday = '당일';
+                                    } else {
+                                        $dday = 'D-' . $days;
+                                    }
+                                }
                                 ?>
-                                <p class="group_schedule"><?= $newDate ?> </p>
-                            </a>
+                                <span><?=$dday?></span>
+                            </div>
+                        
+                            <div class="group_location">
+                                <img src="/static/images/ico_location_16x16.png" />
+                                <?= $meeting->meeting_place ?>
+                            </div>
+                            <p class="group_price"><?= number_format($meeting->membership_fee) ?>원</p>
+                            <?php
+                                $date = $meeting->meeting_start_date;
+                                $dayOfWeek = date('w', strtotime($date)); // 요일을 숫자(0~6)로 가져옴
+                                
+                                $days = array('일', '월', '화', '수', '목', '금', '토');
+                                $newDate = date('m.d A h:i', strtotime($date)) . ' (' . $days[$dayOfWeek] . ') 모임';
+                                
+                                // AM 또는 PM 확인하여 오전 또는 오후로 변경
+                                if (strpos($newDate, 'AM') !== false) {
+                                    $newDate = str_replace('AM', '오전', $newDate);
+                                } else {
+                                    $newDate = str_replace('PM', '오후', $newDate);
+                                }
+                            ?>
+                            <p class="group_schedule"><?= $newDate ?> </p>
+                            <span>인원 <?= $meeting->meeting_idx_count ?></span>명
                         </div>
                     </div>
                 <?php endforeach; ?>
