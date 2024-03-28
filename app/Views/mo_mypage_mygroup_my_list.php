@@ -36,7 +36,7 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="notice_filter">
-                    <p>09.01 ~ 09.30</p>
+                    <p></p>
                     <select>
                         <option>최근순</option>
                         <option>최근순</option>
@@ -46,12 +46,8 @@
                 <div class="mygroup_list" id="mygroup_list_body">
                 <?php foreach ($meetings as $meeting): ?>
                     <div class="apply_group_detail" onclick="javascript:MygroupPopup(<?=$meeting->meeting_idx?>)">
-                        <div class="chk_box meet_delete_chk_box" style="display:none;">
-                            <input type="checkbox" class="totAgree" id="totAgree<?= $meeting->meeting_idx ?>" name="chkDefault00">
-                            <label class="totAgree_label" for="totAgree<?= $meeting->meeting_idx ?>"></label>
-                        </div>
+                    
                         <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
                             <?php
                                 $currentTimestamp = time();
                                 $endDateTimestamp = strtotime($meeting->meeting_end_date);
@@ -82,14 +78,9 @@
                                     }
                                 }
                                 ?>
-                                <span><?=$dday?></span>
-                            </div>
-                        
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                <?= $meeting->meeting_place ?>
-                            </div>
-                            <p class="group_price"><?= number_format($meeting->membership_fee) ?>원</p>
+                            <p class="group_price"><?=$dday?></p><!--디데이-->
+                            <p class="group_price"><?= $meeting->meeting_place ?></p><!--모임장소-->
+                            <p class="group_price"><?= number_format($meeting->membership_fee) ?>원</p> <!--모임돈-->
                             <?php
                                 $date = $meeting->meeting_start_date;
                                 $dayOfWeek = date('w', strtotime($date)); // 요일을 숫자(0~6)로 가져옴
@@ -104,8 +95,8 @@
                                     $newDate = str_replace('PM', '오후', $newDate);
                                 }
                             ?>
-                            <p class="group_schedule"><?= $newDate ?> </p>
-                            <span>인원 <?= $meeting->meeting_idx_count ?></span>명
+                            <p class="group_schedule"><?= $newDate ?></p><!--날짜-->
+                            <p class="group_schedule">인원 <?= $meeting->meeting_idx_count ?>명</p> <!--인원수-->
                         </div>
                     </div>
                 <?php endforeach; ?>

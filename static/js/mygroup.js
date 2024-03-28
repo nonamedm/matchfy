@@ -270,6 +270,7 @@ function MeetCancelChk(){
         }
     });
 }
+
 function MyGoupDate(value){
     var date = new Date(value);
     var year = date.getFullYear();
@@ -279,4 +280,43 @@ function MyGoupDate(value){
 
     var finalDate = year + '.' + month + '.' + day + ' (' + dayOfWeek + ') 모임';
     return finalDate;
+}
+
+function MygroupPopup(idx){
+    $.ajax({
+        url: '/mo/mypage/mygroup/select',
+        data : {meetingIdx:idx},
+        type: 'post',
+        success: function(data) {
+            var html='';
+            if(data.success == true){
+                var data =data.data
+                var html ='';
+                html += '<div class="layerPopup alert middle">';
+                html += '<div class="layerPopup_wrap">';
+                html += '<div class="layerPopup_content msmall">';
+                html += '<p class="txt">예약확인</p>';
+                html += '<div class="apply_group">';
+                html += '<p>'+'</p>';
+                html += '</div>';
+                html += '<div class="layerPopup_bottom">';
+                html += '<div class="btn_group multy">';
+                html += '<button class="btn type01">확인</button>';
+                html += '<button class="btn type02" onclick="alertClose();">취소</button>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+
+                $('body').append(html);
+            }
+            $('#mygroup_list_body').html(html);
+            
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+    
 }
