@@ -100,6 +100,7 @@ $routes->post('/ajax/myFeedUpdate', 'MoAjax::myFeedUpdate');
 $routes->post('/ajax/savePartner', 'MoAjax::savePartner');
 $routes->post('/ajax/meetingSave', 'MoAjax::meetingSave');
 $routes->post('/ajax/meetingFilter', 'MoAjax::meetingFiltering');
+$routes->post('/ajax/myMeetingFilter', 'MoAjax::myMeetingFiltering');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

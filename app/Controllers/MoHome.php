@@ -768,7 +768,50 @@ class MoHome extends BaseController
     }
     public function mypageMygroupList(): string
     {
-        return view('mo_mypage_mygroup_list');
+        $session = session();
+        $ci = $session->get('ci');
+        
+        $MeetingModel = new MeetingModel();
+        //$MeetingFileModel = new MeetingFileModel();
+        // $data['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
+        
+        $MeetingModel->orderBy('create_at', 'DESC');
+
+        $meetings = $MeetingModel
+                        ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx')
+                        ->where('wh_meetings.member_ci', $ci)
+                        ->findAll();
+
+        $days = ['일', '월', '화', '수', '목', '금', '토'];
+        $currentDate = new \DateTime();
+
+        // 참여 인원 모델
+        $MeetingMembersModel = new MeetingMembersModel();
+
+        
+        foreach ($meetings as &$meeting) {//&로 참조 필요
+            // 모임 시작 시간 포맷팅
+            $meetingDateTimestamp = strtotime($meeting['meeting_start_date']);
+            $meetingDay = date("w", $meetingDateTimestamp);//0~6
+            $dayName = $days[$meetingDay];//요일
+            $meetingDateTime = date("Y.m.d ", $meetingDateTimestamp) . ' (' . $dayName . ') ' . date(" H:i", $meetingDateTimestamp);
+            $meeting['meetingDateTime'] = $meetingDateTime;
+            
+            // 이벤트 종료 여부 판단
+            $eventDate = new \DateTime($meeting['meeting_start_date']);
+            $meeting['isEnded'] = ($currentDate > $eventDate);
+
+            // 각 모임에 대한 참여 인원 수 계산
+            $memCount = $MeetingMembersModel
+                            ->where('meeting_idx', $meeting['idx'])
+                            ->countAllResults();
+            $meeting['count'] = $memCount;
+        }
+        unset($meeting);//참조 해제
+
+        $data['meetings'] = $meetings;
+
+        return view('mo_mypage_mygroup_list', $data);
     }
     public function mypageMygroupListEdit(): string
     {

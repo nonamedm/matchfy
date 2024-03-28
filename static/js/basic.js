@@ -825,3 +825,58 @@ const meetingFiltering = (category, searchText, filterOption) => {
         },
     });
 };
+
+const MymeetingFiltering = (filterOption) => {
+    var postData = new FormData();
+
+    if (filterOption !== undefined && filterOption !== "") {
+        postData.append('filterOption', filterOption);
+    }
+
+    $.ajax({
+        url: '/ajax/myMeetingFilter',
+        type: 'POST',
+        data: postData,
+        processData: false,
+        contentType: false,
+        async: false,
+        success: function (data) {
+            console.log(data);
+            var listHtml = '';
+            if (data.length > 0) {
+                data.forEach(function(meeting) {
+                    var imagePath = meeting.meeting_idx ? '/' + meeting.file_path + meeting.file_name : '/static/images/group_list_1.png';
+                    var endedOverlay = meeting.isEnded ? '<div class="ended_overlay">종료</div>' : '';
+                    var grayscaleClass = meeting.isEnded ? 'grayscale' : '';
+
+                    listHtml += `
+                        <a href="/mo/mypage/group/detail/${meeting.idx}">
+                            <div class="apply_group_detail ${grayscaleClass}">
+                                ${endedOverlay ? '<div class="ended_overlay">종료</div>' : ''}
+                                <img class="profile_img ${grayscaleClass}" src="${imagePath}" />
+                                <div class="group_list_item group_apply_item">
+                                    <div class="group_particpnt">
+                                        <span>신청 ${meeting.count}</span>/${meeting.number_of_people}명
+                                    </div>
+                                    <div class="group_location">
+                                        <img src="/static/images/ico_location_16x16.png" />
+                                        ${meeting.meeting_place}
+                                    </div>
+                                    <p class="group_price">${parseInt(meeting.membership_fee).toLocaleString('ko-KR')}원</p>
+                                    <p class="group_schedule">${meeting.meetingDateTime}</p>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                });
+            } else {
+                listHtml = '<div style="text-align: center; margin-top: 20px; color: gray;">검색 결과가 없습니다.</div>';
+            }
+            $('.mygroup_list').html(listHtml);
+        },
+        error: function (xhr, status, err) {
+            console.log(err);
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
+};

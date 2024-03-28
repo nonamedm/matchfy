@@ -1204,4 +1204,62 @@ class MoAjax extends BaseController
         return $this->response->setJSON($meetings);
     }
 
+
+    public function myMeetingFiltering()
+    {
+        $filterOption = $this->request->getPost('filterOption');// 필터링
+
+        $session = session();
+        $ci = $session->get('ci');
+
+        $MeetingModel = new MeetingModel();
+
+        // 필터 옵션에 따른 정렬
+        switch ($filterOption) {
+            case 'create_at':
+                $MeetingModel->orderBy('create_at', 'DESC');
+                break;
+            case 'meeting_start_date':
+                $MeetingModel->orderBy('meeting_start_date', 'ASC');
+                break;
+            case 'membership_fee':
+                $MeetingModel->orderBy('membership_fee', 'ASC');
+                break;
+            default:
+                $MeetingModel->orderBy('create_at', 'DESC');
+        }
+
+        $meetings = $MeetingModel
+                        ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx')
+                        ->where('wh_meetings.member_ci', $ci)
+                        ->findAll();
+                        
+        $days = ['일', '월', '화', '수', '목', '금', '토'];
+        $currentDate = new \DateTime();
+
+        $MeetingMembersModel = new MeetingMembersModel();
+
+        foreach ($meetings as &$meeting) {
+            // 모임 시작 시간 포맷팅
+            $meetingDateTimestamp = strtotime($meeting['meeting_start_date']);
+            $meetingDay = date("w", $meetingDateTimestamp);//0~6
+            $dayName = $days[$meetingDay];//요일
+            $meetingDateTime = date("Y.m.d ", $meetingDateTimestamp) . ' (' . $dayName . ') ' . date(" H:i", $meetingDateTimestamp);
+            $meeting['meetingDateTime'] = $meetingDateTime;
+            
+            // 이벤트 종료 여부 판단
+            $eventDate = new \DateTime($meeting['meeting_start_date']);
+            $meeting['isEnded'] = ($currentDate > $eventDate);
+
+            // 각 모임에 대한 참여 인원 수 계산
+            $memCount = $MeetingMembersModel
+                            ->where('meeting_idx', $meeting['idx'])
+                            ->countAllResults();
+            $meeting['count'] = $memCount;
+        }
+        unset($meeting);//참조 해제
+
+        // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
+        return $this->response->setJSON($meetings);
+    }
 }

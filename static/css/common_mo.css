@@ -646,6 +646,7 @@ td {
 .mygroup_list .apply_group_detail img {
     width: 100px;
     height: 100px;
+    border-radius: 10px;
 }
 .mygroup_list .apply_group_detail .group_location img {
     width: 16px;
@@ -655,6 +656,33 @@ td {
     display: flex;
     justify-content: space-between;
 }
+
+.grayscale {
+    filter: brightness(0.5);
+}
+
+.ended_overlay {
+    position: absolute;
+    top: 40%;
+    left: 15%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 2;
+}
+
+/* Make sure the parent position is relative for absolute positioning of the overlay */
+.apply_group_detail {
+    position: relative;
+}
+
+/* Optional: Add a hover effect to indicate clickable */
+a.ended:hover .ended_overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
 
 /* group detail*/
 .group_deatil_img img {
@@ -2101,7 +2129,7 @@ input[type='number']::-webkit-inner-spin-button {
 .notice_filter {
     height: 30px;
     background: #f5f5f5;
-    padding: 0 0 0 23px;
+    padding: 0 0 0 10px;
     display: flex;
     justify-content: space-between;
 }

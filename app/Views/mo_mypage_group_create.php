@@ -363,6 +363,13 @@
             var imagePreviewContainer = document.getElementById('meeting_photo_view');
             imagePreviewContainer.innerHTML = ''; // 기존의 미리보기를 클리어
 
+            var labelForInput = document.querySelector('label[for="group_photo"]');
+            if (files.length > 0) {
+                labelForInput.style.display = 'none';
+            } else {
+                labelForInput.style.display = 'block';
+            }
+
             Array.from(files).forEach(function(file) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
@@ -374,6 +381,12 @@
                     img.style.marginTop = '10px';
                     img.style.border = '1px solid #dddddd';
                     img.style.borderRadius = '10px';
+                    imagePreviewContainer.appendChild(img);
+
+                    // 미리보기 이미지 클릭 시 파일 선택 input 활성화
+                    img.onclick = function() {
+                        document.getElementById('group_photo').click();
+                    };
                     imagePreviewContainer.appendChild(img);
                 };
                 reader.readAsDataURL(file);
