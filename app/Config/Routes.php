@@ -103,6 +103,7 @@ $routes->post('/ajax/savePartner', 'MoAjax::savePartner');
 $routes->post('/ajax/saveFactorBasic', 'MoAjax::saveFactorBasic');
 $routes->post('/ajax/saveFactorInfo', 'MoAjax::saveFactorInfo');
 $routes->post('/ajax/chgExcept', 'MoAjax::chgExcept');
+$routes->post('/ajax/calcMatchRate', 'MoAjax::calcMatchRate');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

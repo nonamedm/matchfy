@@ -832,12 +832,12 @@ class MoHome extends BaseController
         // $feedFile = $MemberFeedFileModel->where('member_ci', $ci)->findAll();
         $condition = ['board_type' => 'main_photo', 'member_ci' => $user['ci'], 'delete_yn' => 'n'];
         $userFile = $MemberFileModel->where($condition)->first();
-        $data = [
+                $data = [
             'ci' => $user['ci'],
             'name' => $name,
             'user' => $user,
             'feed_list' => $feedList,
-        ];
+                    ];
         if (!empty ($userFile))
         {
             $data = array_merge($data, $userFile);
@@ -888,9 +888,7 @@ class MoHome extends BaseController
             $query .= " AND (mb." . $factorList['except2'] . " != '" . $factorList['except2_detail'] . "'  OR mb." . $factorList['except2'] . " IS NULL)";
         }
         $datas = $MemberFeedModel
-            ->query($query)->getResultArray();
-
-        
+            ->query($query)->getResultArray();       
 
         $data['feeds'] = $datas;
         $data['factors'] = $factorList;
@@ -1082,7 +1080,8 @@ class MoHome extends BaseController
         $partnerInfo = $MatchPartnerModel->where('member_ci', $ci)->first();
         if ($partnerInfo)
         {
-            $data = array_merge($data, $partnerInfo);
+            // $data = array_merge($data, $partnerInfo);
+            $data['partnerInfo'] = $partnerInfo;
         }
 
         return view('mo_partner', $data);

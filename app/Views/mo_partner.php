@@ -200,7 +200,7 @@
                                         <option value="2">조금마른</option>
                                         <option value="3">조금통통한</option>
                                         <option value="4">통통한</option>
-                                        <option value="5">무관</option>
+                                        <option value="5" selected>무관</option>
                                     </select>
                                 </div>
                             </div>
@@ -224,7 +224,7 @@
                                         <option value="2">대학교졸업</option>
                                         <option value="3">대학원재학</option>
                                         <option value="4">대학원졸업이상</option>
-                                        <option value="5">무관</option>
+                                        <option value="5" selected>무관</option>
                                     </select>
                                 </div>
                             </div>
@@ -254,7 +254,7 @@
                                         <option value="0">1군 : 중소기업 회사원/자영업/프리랜서 등 기타</option>
                                         <option value="1">2군 : 상장사, 대기업 회사원/기업대표/공무원/공기업</option>
                                         <option value="2">3군 : 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)</option>
-                                        <option value="3">무관</option>
+                                        <option value="3" selected>무관</option>
                                     </select>
                                 </div>
                             </div>
@@ -271,7 +271,7 @@
                                             <option value="3">3000~4000만원</option>
                                             <option value="4">4000~5000만원</option>
                                             <option value="5">5000만원 이상</option>
-                                            <option value="6">무관</option>
+                                            <option value="6" selected>무관</option>
                                         </select>
                                     </div>
                                 </div>
@@ -289,7 +289,7 @@
                                             <option value="3">3000~4000만원</option>
                                             <option value="4">4000~5000만원</option>
                                             <option value="5">5000만원 이상</option>
-                                            <option value="6">무관</option>
+                                            <option value="6" selected>무관</option>
                                         </select>
                                     </div>
                                 </div>
@@ -304,7 +304,7 @@
                                         <option value="0">1군 : 중소기업 회사원/자영업/프리랜서 등 기타</option>
                                         <option value="1">2군 : 상장사, 대기업 회사원/기업대표/공무원/공기업</option>
                                         <option value="2">3군 : 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)</option>
-                                        <option value="3">무관</option>
+                                        <option value="3" selected>무관</option>
                                     </select>
                                 </div>
                             </div>
@@ -316,7 +316,7 @@
                                         <option value="0">1군 : 중소기업 회사원/자영업/프리랜서 등 기타</option>
                                         <option value="1">2군 : 상장사, 대기업 회사원/기업대표/공무원/공기업</option>
                                         <option value="2">3군 : 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)</option>
-                                        <option value="3">무관</option>
+                                        <option value="3" selected>무관</option>
                                     </select>
                                 </div>
                             </div>
@@ -331,7 +331,7 @@
                                         <option value="3">1남2녀</option>
                                         <option value="4">2남2녀</option>
                                         <option value="5">기타</option>
-                                        <option value="6">무관</option>
+                                        <option value="6" selected>무관</option>
                                     </select>
                                 </div>
                             </div>
@@ -347,7 +347,7 @@
                                             <option value="3">오피스텔</option>
                                             <option value="4">다가구주택</option>
                                             <option value="5">기타</option>
-                                            <option value="6">무관</option>
+                                            <option value="6" selected>무관</option>
                                         </select>
                                         <select id="residence2" name="residence2" class="custom_select" value="">
                                             <option value="">선택</option>
@@ -355,7 +355,7 @@
                                             <option value="1">전세</option>
                                             <option value="2">월세</option>
                                             <option value="3">기타</option>
-                                            <option value="4">무관</option>
+                                            <option value="4" selected>무관</option>
                                         </select>
                                     </div>
                                 </div>
@@ -429,90 +429,90 @@
         $(document).ready(function () {
             selectGender(0);
 
-            var partnerGender = <?php echo json_encode($partner_gender); ?>;
+            var partnerGender = <?php echo json_encode($partnerInfo['partner_gender']); ?>;
 
-            var region = <?php echo json_encode($region); ?>;
-            var fromyear = <?php echo json_encode($fromyear); ?>;
-            var toyear = <?php echo json_encode($toyear); ?>;
-            var height = "<?php echo $height; ?>";
-            var bodyshape = "<?php echo $bodyshape; ?>";
-            var personalStyle = "<?php echo $stylish; ?>";
-            var marital = "<?php echo $married; ?>";
-            var smoking = "<?php echo $smoker; ?>";
-            var drinking = "<?php echo $drinking; ?>";
-            var religion = "<?php echo $religion; ?>";
-            var mbti = "<?php echo $mbti; ?>";
-            var education = "<?php echo $education; ?>";
-            var job = "<?php echo $job; ?>";
-            var assetRange = "<?php echo $asset_range; ?>";
-            var incomeRange = "<?php echo $income_range; ?>";
-            var fatherJob = "<?php echo $father_job; ?>";
-            var motherJob = "<?php echo $mother_job; ?>";
-            var siblings = "<?php echo $siblings; ?>";
-            var residence1 = "<?php echo $residence1; ?>";
-            var residence2 = "<?php echo $residence2; ?>";
+            var region = "<?php echo $partnerInfo['region']; ?>";
+            var fromyear = "<?php echo $partnerInfo['fromyear']; ?>";
+            var toyear = "<?php echo $partnerInfo['toyear']; ?>";
+            var height = "<?php echo $partnerInfo['height']; ?>";
+            var bodyshape = "<?php echo $partnerInfo['bodyshape']; ?>";
+            var personalStyle = "<?php echo $partnerInfo['stylish']; ?>";
+            var marital = "<?php echo $partnerInfo['married']; ?>";
+            var smoking = "<?php echo $partnerInfo['smoker']; ?>";
+            var drinking = "<?php echo $partnerInfo['drinking']; ?>";
+            var religion = "<?php echo $partnerInfo['religion']; ?>";
+            var mbti = "<?php echo $partnerInfo['mbti']; ?>";
+            var education = "<?php echo $partnerInfo['education']; ?>";
+            var job = "<?php echo $partnerInfo['job']; ?>";
+            var assetRange = "<?php echo $partnerInfo['asset_range']; ?>";
+            var incomeRange = "<?php echo $partnerInfo['income_range']; ?>";
+            var fatherJob = "<?php echo $partnerInfo['father_job']; ?>";
+            var motherJob = "<?php echo $partnerInfo['mother_job']; ?>";
+            var siblings = "<?php echo $partnerInfo['siblings']; ?>";
+            var residence1 = "<?php echo $partnerInfo['residence1']; ?>";
+            var residence2 = "<?php echo $partnerInfo['residence2']; ?>";
 
-            if (partnerGender !== "" || partnerGender !== null) {
+            if (partnerGender !== "" && partnerGender !== null) {
                 $('input[name="partner_mf"][value="' + partnerGender + '"]').prop('checked', true);
             }
-            if (region !== "" || region !== null) {
+            if (region !== "" && region !== null) {
                 $("#region").val(region);
             }
-            if (fromyear !== "" || fromyear !== null) {
+            if (fromyear !== "" && fromyear !== null) {
                 $("#fromyear").val(fromyear);
             }
-            if (toyear !== "" || toyear !== null) {
+            if (toyear !== "" && toyear !== null) {
                 $("#toyear").val(toyear);
             }
-            if (height !== "" || height !== null) {
+            if (height !== "" && height !== null) {
                 $("#height").val(height);
             }
-            if (bodyshape !== "" || bodyshape !== null) {
+            if (bodyshape !== "" && bodyshape !== null) {
                 $("#bodyshape").val(bodyshape);
             }
-            if (personalStyle !== "" || personalStyle !== null) {
+            if (personalStyle !== "" && personalStyle !== null) {
                 $("#personal_style").val(personalStyle);
             }
-            if (marital !== "" || marital !== null) {
+            if (marital !== "" && marital !== null) {
                 $("#marital").val(marital);
             }
-            if (smoking !== "" || smoking !== null) {
+            if (smoking !== "" && smoking !== null) {
                 $("#smoking").val(smoking);
             }
-            if (drinking !== "" || drinking !== null) {
+            if (drinking !== "" && drinking !== null) {
                 $("#drinking").val(drinking);
             }
-            if (religion !== "" || religion !== null) {
+            if (religion !== "" && religion !== null) {
                 $("#religion").val(religion);
             }
-            if (mbti !== "" || mbti !== null) {
+            if (mbti !== "" && mbti !== null) {
                 $("#mbti").val(mbti);
             }
-            if (education !== "" || education !== null) {
+            if (education !== "" && education !== null) {
                 $("#education").val(education);
             }
-            if (job !== "" || job !== null) {
+            if (job !== "" && job !== null) {
                 $("#job").val(job);
             }
-            if (assetRange !== "" || assetRange !== null) {
+            if (assetRange !== "" && assetRange !== null) {
                 $("#asset_range").val(assetRange);
             }
-            if (incomeRange !== "" || incomeRange !== null) {
+            if (incomeRange !== "" && incomeRange !== null) {
                 $("#income_range").val(incomeRange);
             }
-            if (fatherJob !== "" || fatherJob !== null) {
+            if (fatherJob !== "" && fatherJob !== null) {
                 $("#father_job").val(fatherJob);
             }
-            if (fatherJob !== "" || fatherJob !== null) {
+            if (fatherJob !== "" && fatherJob !== null) {
                 $("#mother_job").val(motherJob);
             }
-            if (siblings !== "" || siblings !== null) {
+            if (siblings !== "" && siblings !== null) {
                 $("#siblings").val(siblings);
             }
-            if (residence1 !== "" || residence1 !== null) {
+            if (residence1 !== "" && residence1 !== null) {
                 $("#residence1").val(residence1);
             }
-            if (residence2 !== "" || residence2 !== null) {
+            if (residence2 !== "" && residence2 !== null) {
                 $("#residence2").val(residence2);
             }
 

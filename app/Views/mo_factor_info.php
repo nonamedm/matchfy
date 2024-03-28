@@ -280,22 +280,22 @@
             var except1_detail = "<?php echo $except1_detail; ?>"
             var except2_detail = "<?php echo $except2_detail; ?>"
 
-            if (first_factor !== "" || first_factor !== null) {
+            if (first_factor !== "" && first_factor !== null) {
                 $("#first_factor").val(first_factor);
             }
-            if (second_factor !== "" || second_factor !== null) {
+            if (second_factor !== "" && second_factor !== null) {
                 $("#second_factor").val(second_factor);
             }
-            if (third_factor !== "" || third_factor !== null) {
+            if (third_factor !== "" && third_factor !== null) {
                 $("#third_factor").val(third_factor);
             }
-            if (fourth_factor !== "" || fourth_factor !== null) {
+            if (fourth_factor !== "" && fourth_factor !== null) {
                 $("#fourth_factor").val(fourth_factor);
             }
-            if (except1 !== "" || except1 !== null) {
+            if (except1 !== "" && except1 !== null) {
                 $("#except1").val(except1);
             }
-            if (except2 !== "" || except2 !== null) {
+            if (except2 !== "" && except2 !== null) {
                 $("#except2").val(except2);
             }
             // if (except1_detail !== "" || except1_detail !== null) {

@@ -820,14 +820,13 @@ class MoAjax extends BaseController
         $MemberFeedModel = new MemberFeedModel();
         $feed_idx = $this->request->getPost('feed_idx');
         $session = session();
-        $member_ci = $session->get('ci');
+        $member_ci = $session->get('ci'); // 현재 로그인한 사람의 ci값
         $condition = [
-            'wh_member_feed.member_ci' => $member_ci,
             'wh_member_feed.idx' => $feed_idx,
             'wh_member_feed.delete_yn' => 'n',
         ];
         $result = $MemberFeedModel->where($condition)->join('wh_member_feed_files', 'wh_member_feed_files.feed_idx = wh_member_feed.idx')->first();
-        if ($result)
+                if ($result)
         {
 
             return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
@@ -1150,6 +1149,43 @@ class MoAjax extends BaseController
         // if ($value === '')
         // {
         // }
+    }
+
+    public function calcMatchRate()
+    {
+        $MemberModel = new MemberModel();
+        $MatchPartnerModel = new MatchPartnerModel();
+        $MatchFactorModel = new MatchFactorModel();
+        $session = session();
+        $ci = $session->get('ci');
+
+        $myPartner = $MatchPartnerModel -> where(['member_ci' => $ci]) -> first();
+        $myFactor = $MatchFactorModel -> where(['member_ci' => $ci]) -> first();
+
+
+        $query = "SELECT name, nickname FROM members";
+        if (!empty ($myFactor['except1'])&&$myFactor['except1']!=='') //배제항목 있을 시 조건에서 배제하기
+        {
+            $query .= " WHERE (" . $myFactor['except1'] . " != '" . $myFactor['except1_detail'] . "'  OR " . $myFactor['except1'] . " IS NULL)";
+        }
+        if (!empty ($myFactor['except2'])&&$myFactor['except2']!=='') //배제항목 있을 시 조건에서 배제하기
+        {
+            $query .= " OR (" . $myFactor['except2'] . " != '" . $myFactor['except2_detail'] . "'  OR " . $myFactor['except2'] . " IS NULL)";
+        }
+        $datas = $MemberModel
+            ->query($query)->getResultArray();
+
+        // 여기서 datas 배열 돌면서 점수 매긴 후 저장하기
+        // 세션(또는 파일로 로컬)에 저장한다. 이후 로그인 시 해당 ajax 작동시킨다.
+
+        if($datas) {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $datas]);
+        } else {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
+        }
+
+
+        
     }
 
 }

@@ -104,7 +104,21 @@
     <!-- SCRIPTS -->
 
     <script>
-
+        $(document).ready(function () {
+            $.ajax({
+                url: '/ajax/calcMatchRate', // todo : 추후 본인인증 연결
+                type: 'POST',
+                async: false,
+                success: function (data) {
+                    console.log(data);
+                    
+                },
+                error: function (data, status, err) {
+                    console.log(err);
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
+            });
+        });
     </script>
 
     <!-- -->

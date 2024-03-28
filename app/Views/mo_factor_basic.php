@@ -134,19 +134,19 @@
             var group4 = "<?php echo $group4; ?>";
             var group5 = "<?php echo $group5; ?>";
 
-            if (group1 !== "" || group1 !== null) {
+            if (group1 !== "" && group1 !== null) {
                 $("#group1").val(group1);
             }
-            if (group2 !== "" || group2 !== null) {
+            if (group2 !== "" && group2 !== null) {
                 $("#group2").val(group2);
             }
-            if (group3 !== "" || group3 !== null) {
+            if (group3 !== "" && group3 !== null) {
                 $("#group3").val(group3);
             }
-            if (group4 !== "" || group4 !== null) {
+            if (group4 !== "" && group4 !== null) {
                 $("#group4").val(group4);
             }
-            if (group5 !== "" || group5 !== null) {
+            if (group5 !== "" && group5 !== null) {
                 $("#group5").val(group5);
             }
         });
