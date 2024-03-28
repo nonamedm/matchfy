@@ -10,6 +10,7 @@ use App\Models\MemberFeedModel;
 use App\Models\MemberFeedFileModel;
 use App\Models\MatchPartnerModel;
 use App\Models\MatchFactorModel;
+use App\Models\MatchRateModel;
 use App\Models\PointModel;
 use App\Models\PointExchangeModel;
 use App\Models\MeetingModel;
@@ -832,12 +833,12 @@ class MoHome extends BaseController
         // $feedFile = $MemberFeedFileModel->where('member_ci', $ci)->findAll();
         $condition = ['board_type' => 'main_photo', 'member_ci' => $user['ci'], 'delete_yn' => 'n'];
         $userFile = $MemberFileModel->where($condition)->first();
-                $data = [
+        $data = [
             'ci' => $user['ci'],
             'name' => $name,
             'user' => $user,
             'feed_list' => $feedList,
-                    ];
+        ];
         if (!empty ($userFile))
         {
             $data = array_merge($data, $userFile);
@@ -888,7 +889,22 @@ class MoHome extends BaseController
             $query .= " AND (mb." . $factorList['except2'] . " != '" . $factorList['except2_detail'] . "'  OR mb." . $factorList['except2'] . " IS NULL)";
         }
         $datas = $MemberFeedModel
-            ->query($query)->getResultArray();       
+            ->query($query)->getResultArray();
+
+        foreach ($datas as &$item)
+        {
+            $MatchRateModel = new MatchRateModel();
+            $condition = [
+                'member_ci' => $ci,
+                'your_nickname' => $item['nickname']
+            ];
+            $matchScore = $MatchRateModel->where($condition)->first();
+            if ($matchScore)
+            {
+                $item['matchScore'] = $matchScore;
+            }
+
+        }
 
         $data['feeds'] = $datas;
         $data['factors'] = $factorList;

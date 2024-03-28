@@ -45,7 +45,9 @@
                                 <div class="profile">
                                     <h2>
                                         <?= $feed['nickname'] ?><span style="font-size:15px;"> 님</span>
-                                    </h2><span class="match_percent">99%</span>
+                                    </h2><span class="match_percent">
+                                        <?= $feed['matchScore']['match_score'] ?>점(%)
+                                    </span>
                                 </div>
                                 <p>
                                     <?= $feed['birthyear'] ?> ·
