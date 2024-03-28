@@ -88,6 +88,7 @@ header .menu_right.edit {
     line-height: 17px;
     text-align: right;
     color: #ff0267;
+    cursor: pointer;
 }
 
 .mo_wrap {
@@ -1768,6 +1769,17 @@ form input[type='file'] {
     line-height: 18px;
     color: #111111;
 }
+
+.mo_wrap .chk_box label.totAgree_label_box {
+    font-family: 'Pretendard-Bold';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 18px;
+    color: #111111;
+    display: flex;
+}
+
 .mo_wrap .chk_box label.agree_cont_label {
     font-family: 'Pretendard-SemiBold';
     font-style: normal;
@@ -3205,4 +3217,11 @@ input[type='number']::-webkit-inner-spin-button {
 }
 .loading img{
     width: 100%;
+}
+.meet_menu_right{
+    display: none;
+    display: flex;
+}
+.meet_menu_header{
+    margin-left: 10px;
 }

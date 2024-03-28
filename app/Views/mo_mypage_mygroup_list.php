@@ -9,6 +9,8 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/meeting_member.js"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
 </head>
 
@@ -27,7 +29,11 @@
                         모임
                     </li>
                 </ul>
-                <div class="menu_right edit">편집</div>
+                <div class="menu_right edit" id="meet_edit_btn"onclick="MeetingEditChk();">편집</div>
+                <div class="menu_right edit meet_menu_right" style="display:none;">
+                    <span class="meet_menu_header" onclick="MeetCancelChk();"> 취소</span>
+                    <span class="meet_menu_header" id="meet_delete_btn" onclick="MyGoupDelconfrim();">삭제</span>
+                </div>
             </div>
 
         </header>
@@ -42,8 +48,32 @@
                         <option>최근순</option>
                     </select>
                 </div>
-                <div class="mygroup_list">
+                <div class="mygroup_list" id="mygroup_list_body">
+                <?php foreach ($meetings as $meeting): ?>
                     <div class="apply_group_detail">
+                        <div class="chk_box meet_delete_chk_box" style="display:none;">
+                            <input type="checkbox" class="totAgree" id="totAgree<?= $meeting->meeting_idx ?>" name="chkDefault00">
+                            <label class="totAgree_label" for="totAgree<?= $meeting->meeting_idx ?>"></label>
+                        </div>
+                        <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
+                            <img src="<?= $meeting->file_path?><?= $meeting->file_name?>" />
+                        </a>
+                        <div class="group_list_item group_apply_item">
+                            <div class="group_particpnt" onclick="javascript:meetingMemberList(<?= $meeting->meeting_idx ?>);">
+                                <span>신청 <?= $meeting->meeting_idx_count ?></span>/<?= $meeting->number_of_people ?>명
+                            </div>
+                            <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
+                                <div class="group_location">
+                                    <img src="/static/images/ico_location_16x16.png" />
+                                    <?= $meeting->meeting_place ?>
+                                </div>
+                                <p class="group_price"><?= $meeting->membership_fee ?>원</p>
+                                <p class="group_schedule"><?= $meeting->meeting_start_date ?> </p>
+                            </a>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+                    <!-- <div class="apply_group_detail">
                         <img src="/static/images/group_list_1.png" />
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt">
@@ -56,8 +86,8 @@
                             <p class="group_price">20,000원</p>
                             <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
                         </div>
-                    </div>
-                    <div class="apply_group_detail">
+                    </div> -->
+                    <!-- <div class="apply_group_detail">
                         <img src="/static/images/group_list_2.png" />
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt">
@@ -126,7 +156,7 @@
                             <p class="group_price">20,000원</p>
                             <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

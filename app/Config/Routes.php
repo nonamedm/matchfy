@@ -55,6 +55,8 @@ $routes->post('/mo/mypage/group/partcntPopup', 'MoHome::mypageGroupPartcntPopup'
 $routes->post('/mo/mypage/group/applyPopup', 'MoHome::mypageGroupApplyPopup');
 $routes->get('/mo/mypage/group/create', 'MoHome::mypageGroupCreate');
 $routes->get('/mo/mypage/mygroup/list', 'MoHome::mypageMygroupList');
+$routes->post('/mo/mypage/mygroup/select', 'MoHome::mypageMygroupEdit');
+$routes->post('/mo/mypage/mygroup/del', 'MoHome::mypageMygroupDel');
 $routes->get('/mo/mypage/mygroup/list/edit', 'MoHome::mypageMygroupListEdit');
 $routes->get('/mo/mypage/group/searchPopup', 'MoHome::mypageGroupSearchPopup');
 $routes->get('/mo/mymsg/ai/qna', 'MoHome::mymsgAiQna');
