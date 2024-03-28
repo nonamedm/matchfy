@@ -31,16 +31,11 @@
                         모임
                     </li>
                 </ul>
-<<<<<<< HEAD
-                <div class="menu_right edit">편집</div>
-                <div class="menu_right delete" style="display:none;">삭제</div>
-=======
                 <div class="menu_right edit" id="meet_edit_btn"onclick="MeetingEditChk();">편집</div>
                 <div class="menu_right edit meet_menu_right" style="display:none;">
                     <span class="meet_menu_header" onclick="MeetCancelChk();"> 편집종료</span>
                     <span class="meet_menu_header" id="meet_delete_btn" onclick="MyGoupDelconfrim();">삭제</span>
                 </div>
->>>>>>> origin/local_payment
             </div>
 
         </header>
@@ -54,21 +49,15 @@
                         <option value="membership_fee">예약금 낮은 순</option>
                     </select>
                 </div>
-<<<<<<< HEAD
-                <div class="mygroup_list">
-                    <?php foreach ($meetings as $meeting): ?>
-                    <a href="/mo/mypage/group/detail/<?= $meeting['idx'] ?>">
-                        <div class="apply_group_detail  <?= $meeting['isEnded'] ? 'ended' : '' ?>">
-                            <div class="chk_box" style="display:none;">
-                                <input type="checkbox" id="totAgree<?= $meeting['idx'] ?>" name="chkDefault<?= $meeting['idx'] ?>">
-                                <label class="totAgree_label" for="totAgree<?= $meeting['idx'] ?>"></label>
-=======
                 <div class="mygroup_list" id="mygroup_list_body">
                 <?php foreach ($meetings as $meeting): ?>
                     <div class="apply_group_detail">
                         <div class="chk_box meet_delete_chk_box" style="display:none;">
                             <input type="checkbox" class="totAgree" id="totAgree<?= $meeting->meeting_idx ?>" name="chkDefault00">
                             <label class="totAgree_label" for="totAgree<?= $meeting->meeting_idx ?>"></label>
+                            <?php if ($meeting->isEnded): ?>
+                                <div class="ended_overlay">종료</div>
+                            <?php endif; ?>
                         </div>
                         <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
                             <img src="/<?= $meeting->file_path?><?= $meeting->file_name?>" />
@@ -95,109 +84,6 @@
                         </div>
                     </div>
                 <?php endforeach; ?>
-                    <!-- <div class="apply_group_detail">
-                        <img src="/static/images/group_list_1.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
->>>>>>> origin/local_payment
-                            </div>
-                            <?php if ($meeting['isEnded']): ?>
-                                <div class="ended_overlay">종료</div>
-                            <?php endif; ?>
-                            <?php if ($meeting['meeting_idx']): ?>
-                                <img class="profile_img <?= $meeting['isEnded'] ? 'grayscale' : '' ?>" src="/<?= $meeting['file_path'] ?><?= $meeting['file_name'] ?>" />
-                            <?php else: ?>
-                                <img class="profile_img <?= $meeting['isEnded'] ? 'grayscale' : '' ?>" src="/static/images/group_list_1.png" />
-                            <?php endif; ?>
-                            <div class="group_list_item group_apply_item">
-                                <div class="group_particpnt">
-                                    <span>신청 <?=$meeting['count']?></span>/<?= $meeting['number_of_people'] ?>명
-                                </div>
-                                <div class="group_location">
-                                    <img src="/static/images/ico_location_16x16.png" />
-                                    <?= $meeting['meeting_place'] ?>
-                                </div>
-                                <p class="group_price"><?= number_format($meeting['membership_fee']) ?>원</p>
-                                <p class="group_schedule"><?= $meeting['meetingDateTime'] ?> </p>
-                            </div>
-                        </div>
-<<<<<<< HEAD
-                    </a>
-                    <?php endforeach; ?>
-=======
-                    </div> -->
-                    <!-- <div class="apply_group_detail">
-                        <img src="/static/images/group_list_2.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
-                            </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                        </div>
-                    </div>
-                    <div class="apply_group_detail">
-                        <img src="/static/images/group_list_3.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
-                            </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                        </div>
-                    </div>
-                    <div class="apply_group_detail">
-                        <img src="/static/images/group_list_4.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
-                            </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                        </div>
-                    </div>
-                    <div class="apply_group_detail">
-                        <img src="/static/images/group_list_1.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
-                            </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                        </div>
-                    </div>
-                    <div class="apply_group_detail">
-                        <img src="/static/images/group_list_2.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
-                            </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                        </div>
-                    </div> -->
->>>>>>> origin/local_payment
                 </div>
             </div>
         </div>
@@ -240,35 +126,6 @@
                 menuItem.classList.toggle("hidden");
             }
         }
-
-        // 편집 버튼 클릭 이벤트
-        document.querySelector('.menu_right.edit').addEventListener('click', function() {
-
-            document.querySelectorAll('.chk_box').forEach(chkBox => chkBox.style.display = 'block');
-
-            document.querySelector('.menu_right.edit').style.display = 'none';
-            document.querySelector('.menu_right.delete').style.display = 'block';
-
-            document.querySelectorAll('.mygroup_list a').forEach(a => {
-                a.dataset.href = a.getAttribute('href'); // 원래 href 값을 저장
-                a.removeAttribute('href'); // href 속성 제거
-            });
-        });
-
-        // 삭제 버튼 클릭 이벤트
-        document.querySelector('.menu_right.delete').addEventListener('click', function() {
-            
-            document.querySelectorAll('.chk_box').forEach(chkBox => chkBox.style.display = 'none');
-            
-            document.querySelector('.menu_right.delete').style.display = 'none';
-            document.querySelector('.menu_right.edit').style.display = 'block';
-            // 링크 활성화
-            document.querySelectorAll('.mygroup_list a').forEach(a => {
-                if(a.dataset.href) { // 저장된 href 값이 있으면 복원
-                    a.setAttribute('href', a.dataset.href);
-                }
-            });
-        });
 
         $(document).ready(function() {
             // 필터링 옵션
