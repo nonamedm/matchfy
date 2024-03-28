@@ -890,6 +890,8 @@ class MoHome extends BaseController
         $datas = $MemberFeedModel
             ->query($query)->getResultArray();
 
+        
+
         $data['feeds'] = $datas;
         $data['factors'] = $factorList;
         $data['sql'] = $query;

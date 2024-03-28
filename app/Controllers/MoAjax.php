@@ -90,17 +90,17 @@ class MoAjax extends BaseController
             ],
             'gender' => [
                 'label' => 'gender',
-                'rules' => 'required|in_list[M,F]', //'M'(남성) / 'F'(여성)
+                'rules' => 'required|in_list[0,1]', //'1'(남성) / '0'(여성)
                 'errors' => [
                     'required' => '성별을 선택해 주세요.',
-                    'in_list' => '성별을 올바르게 선택해 주세요. M / F'
+                    'in_list' => '성별을 올바르게 선택해 주세요.'
                 ]
             ],
             'city' => [
                 'label' => 'city',
                 'rules' => 'required',
                 'errors' => [
-                    'required' => '지역을 입력해 주세요.',
+                    'required' => '지역을 선택해 주세요.',
                 ]
             ],
             'town' => [
