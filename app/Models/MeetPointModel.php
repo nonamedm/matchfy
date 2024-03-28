@@ -4,19 +4,28 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class MeetingModel extends Model
+class MeetPointModel extends Model
 {
-    protected $table            = 'wh_meetings';
-    protected $primaryKey       = 'idx';
+    protected $table            = 'wh_meeting_points';
+    protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['idx', 'member_ci', 'category', 'recruitment_start_date', 'recruitment_end_date',
-                                    'meeting_start_date', 'meeting_end_date', 'number_of_people', 'group_min_age', 'group_max_age',
-                                    'matching_rate', 'title', 'content', 'reservation_previous', 'meeting_place', 'membership_fee',
-                                    'create_at', 'update_at', 'delete_yn'];
+    protected $allowedFields    = [
 
+        'meeting_idx',
+        'member_ci',
+        'meeting_points',
+        'meeting_type',
+        'point_check_type',
+        'delete_yn',
+        'create_at',
+        'update_at',
+        'extra1',
+        'extra2',
+        'extra3'
+    ];
 
     protected bool $allowEmptyInserts = false;
 

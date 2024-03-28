@@ -13,6 +13,8 @@
     <script src="/static/js/meeting_member.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="/static/js/meeting_member.js"></script>
+    <link rel="stylesheet" href="/static/css/common_mo.css">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfeedb645765a4f5e27cfb8dda43a2c8&libraries=services"></script>
 </head>
 
@@ -71,7 +73,7 @@
             <div style="height: 50px;"></div>
             <footer class="footer">
                 <div class="btn_group">
-                    <button type="button" class="btn type01">함께하기</button>
+                    <button type="button" class="btn type01" onclick="meetingApplication('<?=$idx?>')">함께하기</button>
                 </div>
                 
             </footer>
