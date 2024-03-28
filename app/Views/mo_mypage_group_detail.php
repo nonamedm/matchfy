@@ -43,7 +43,7 @@
                         <h2><?=$title?></h2>
                         <p class="group_detail_period"><?=$recruitment_start_date?> ~ <?=$recruitment_end_date?> 까지 모집중</p>
                         <p class="group_detail_schedule"><?=$meeting_start_date?> 모임</p>
-                        <div class="group_particpnt" onclick="meetingMemberList('1')">
+                        <div class="group_particpnt" onclick="meetingMemberList('<?=$idx?>')">
                             <span>신청 <?=$meeing_count?></span>/<?=$number_of_people?>명
                         </div>
                     </div>
@@ -73,7 +73,6 @@
             <div style="height: 50px;"></div>
             <footer class="footer">
                 <div class="btn_group">
-                    <button type="button" class="btn type01" onclick="meetingApplication('<?=$idx?>')">함께하기</button>
                     <button type="button" class="btn type01" onclick="meetingApplication('<?=$idx?>')">함께하기</button>
                 </div>
                 
