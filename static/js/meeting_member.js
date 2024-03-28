@@ -231,8 +231,8 @@ function MeetingEditChk(){
                     html+='<img src="/static/images/ico_location_16x16.png" />';
                     html+= data[i].meeting_place;
                     html+='</div>';
-                    html+='<p class="group_price">'+data[i].membership_fee+'원</p>';
-                    html+='<p class="group_schedule">'+data[i].meeting_start_date+'</p>';
+                    html+='<p class="group_price">'+Number(data[i].membership_fee).toLocaleString()+'원</p>';
+                    html+='<p class="group_schedule">'+MyGoupDate(data[i].meeting_start_date)+'</p>';
                     html+='</div>';
                     html+='</div>';
                     html+='</label>';
@@ -317,8 +317,8 @@ function MyGoupDelcheck(){
                     html+='<img src="/static/images/ico_location_16x16.png" />';
                     html+= data[i].meeting_place;
                     html+='</div>';
-                    html+='<p class="group_price">'+data[i].membership_fee+'원</p>';
-                    html+='<p class="group_schedule">'+data[i].meeting_start_date+'</p>';
+                    html+='<p class="group_price">'+Number(data[i].membership_fee).toLocaleString()+'원</p>';
+                    html+='<p class="group_schedule">'+MyGoupDate(data[i].meeting_start_date)+'</p>';
                     html+='</a>';
                     html+='</div>';
                     html+='</div>';
@@ -358,8 +358,8 @@ function MeetCancelChk(){
                     html+='<img src="/static/images/ico_location_16x16.png" />';
                     html+= data[i].meeting_place;
                     html+='</div>';
-                    html+='<p class="group_price">'+data[i].membership_fee+'원</p>';
-                    html+='<p class="group_schedule">'+data[i].meeting_start_date+'</p>';
+                    html+='<p class="group_price">'+Number(data[i].membership_fee).toLocaleString()+'원</p>';
+                    html+='<p class="group_schedule">'+MyGoupDate(data[i].meeting_start_date)+'</p>';
                     html+='</a>';
                     html+='</div>';
                     html+='</div>';
@@ -372,6 +372,14 @@ function MeetCancelChk(){
             console.log(error);
         }
     });
+}
+function MyGoupDate(value){
+    var date = new Date(value);
+    var year = date.getFullYear();
+    var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고, 2자리 숫자로 표시
+    var day = date.getDate().toString().padStart(2, '0'); // 일도 2자리 숫자로 표시
+    var dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'][date.getDay()]; // 요일을 배열에서 가져옴
 
-   
+    var finalDate = year + '.' + month + '.' + day + ' (' + dayOfWeek + ') 모임';
+    return finalDate;
 }

@@ -31,7 +31,7 @@
                 </ul>
                 <div class="menu_right edit" id="meet_edit_btn"onclick="MeetingEditChk();">편집</div>
                 <div class="menu_right edit meet_menu_right" style="display:none;">
-                    <span class="meet_menu_header" onclick="MeetCancelChk();"> 취소</span>
+                    <span class="meet_menu_header" onclick="MeetCancelChk();"> 편집종료</span>
                     <span class="meet_menu_header" id="meet_delete_btn" onclick="MyGoupDelconfrim();">삭제</span>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                             <label class="totAgree_label" for="totAgree<?= $meeting->meeting_idx ?>"></label>
                         </div>
                         <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
-                            <img src="<?= $meeting->file_path?><?= $meeting->file_name?>" />
+                            <img src="/<?= $meeting->file_path?><?= $meeting->file_name?>" />
                         </a>
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt" onclick="javascript:meetingMemberList(<?= $meeting->meeting_idx ?>);">
@@ -67,8 +67,15 @@
                                     <img src="/static/images/ico_location_16x16.png" />
                                     <?= $meeting->meeting_place ?>
                                 </div>
-                                <p class="group_price"><?= $meeting->membership_fee ?>원</p>
-                                <p class="group_schedule"><?= $meeting->meeting_start_date ?> </p>
+                                <p class="group_price"><?= number_format($meeting->membership_fee) ?>원</p>
+                                <?php
+                                    $date = $meeting->meeting_start_date;
+                                    $dayOfWeek = date('w', strtotime($date)); // 요일을 숫자(0~6)로 가져옴
+
+                                    $days = array('일', '월', '화', '수', '목', '금', '토');
+                                    $newDate = date('Y.m.d', strtotime($date)) . ' (' . $days[$dayOfWeek] . ') 모임';
+                                ?>
+                                <p class="group_schedule"><?= $newDate ?> </p>
                             </a>
                         </div>
                     </div>
