@@ -993,7 +993,6 @@ class MoHome extends BaseController
                 $item['matchScore'] = $matchScore;
             }
         }
-
         $data['feeds'] = $datas;
         $data['factors'] = $factorList;
         $data['sql'] = $query;

@@ -19,6 +19,7 @@ class MatchRateModel extends Model
         'my_nickname',
         'your_nickname',
         'match_score',
+        'match_score_max',
         'match_rate',
         'delete_yn',
         'last_access_dt'
@@ -58,5 +59,4 @@ class MatchRateModel extends Model
     {
         return $this->table;
     }
-
 }

@@ -1365,6 +1365,7 @@ class MoAjax extends BaseController
         foreach ($datas as &$item) {
             // 기본배점 항목 계산
             $calc = 0;
+            $calcMax = 0;
 
             $mydata = $MemberModel->where(['ci' => $ci])->first();
             if ($mydata['nickname'] !== $item['nickname']) { // 본인이 아닌 경우만 계산
@@ -1385,7 +1386,7 @@ class MoAjax extends BaseController
                     $calc += $calcValue;
                 }
                 // 얼굴형
-                // if (!$item['mbti'] !== null) // 얼굴형 아직 없음
+                // if (!$item['mbti'] !== null) // 회원가입시 얼굴형 아직 없음
                 // {
                 //     $calcValue = 0;
                 //     if ($myPartner['mbti'] === $item['mbti'])
@@ -1595,28 +1596,36 @@ class MoAjax extends BaseController
                         $calcValue = 40; // 가중치1 항목 일치 시 추가점수
                     }
                     $calc += $calcValue;
+                    $calcMax += $calcValue;
                 }
                 if ($myFactor['second_factor'] !== null) {
                     if ($item[$myFactor['second_factor']] === $myPartner[$myFactor['second_factor']]) {
                         $calcValue = 30; // 가중치2 항목 일치 시 추가점수
                     }
                     $calc += $calcValue;
+                    $calcMax += $calcValue;
                 }
                 if ($myFactor['third_factor'] !== null) {
                     if ($item[$myFactor['third_factor']] === $myPartner[$myFactor['third_factor']]) {
                         $calcValue = 20; // 가중치3 항목 일치 시 추가점수
                     }
                     $calc += $calcValue;
+                    $calcMax += $calcValue;
                 }
                 if ($myFactor['fourth_factor'] !== null) {
                     if ($item[$myFactor['fourth_factor']] === $myPartner[$myFactor['fourth_factor']]) {
                         $calcValue = 10; // 가중치4 항목 일치 시 추가점수
                     }
                     $calc += $calcValue;
+                    $calcMax += $calcValue;
                 }
 
-
+                // group1 항목 총 4개 -- 얼굴형은 현재 제외이므로 3개만 계산
+                // group2 항목 총 6개
+                // group3 항목 총 6개 -- 성별은 애초에 거르기 때문에 5개만 계산
+                $calcMax += $myFactor['group1'] * 3 + $myFactor['group2'] * 6 + $myFactor['group3'] * 5;
                 $item['calc'] = $calc;
+                $item['calc_max'] = $calcMax;
 
 
                 // 계산한 가중치 항목 DB insert -> 회원수 너무 많아지면 python 배치 저장 필요
@@ -1630,6 +1639,8 @@ class MoAjax extends BaseController
                 if ($selected) {
                     $query = "UPDATE wh_match_rate";
                     $query .= " SET match_score = '" . $calc . "'";
+                    $query .= " , match_score_max = '" . $calcMax . "'";
+                    $query .= " , match_rate = '" . number_format($calc / $calcMax * 100, 2) . "'";
                     $query .= " WHERE my_nickname = '" . $mydata['nickname'] . "'";
                     $query .= " AND your_nickname = '" . $item['nickname'] . "'";
 
@@ -1641,7 +1652,8 @@ class MoAjax extends BaseController
                         'my_nickname' => $mydata['nickname'],
                         'your_nickname' => $item['nickname'],
                         'match_score' => $item['calc'],
-                        //'match_rate' => $rate,
+                        'match_score_max' => $item['calc_max'],
+                        'match_rate' => number_format($item['calc'] / $item['calc_max'] * 100, 2),
                     ];
                     $result = $MatchRateModel->insert($insertParam);
                 }
