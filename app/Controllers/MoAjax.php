@@ -977,7 +977,6 @@ class MoAjax extends BaseController
         } else {
             return $this->response->setJSON(['status' => 'error', 'message' => 'Partner info saved successfully', 'data' => $data]);
         }
-    
     }
 
     public function meetingSave()
@@ -1083,15 +1082,12 @@ class MoAjax extends BaseController
             ],
         ];
 
-        if (!$this->validate($rules))
-        {
+        if (!$this->validate($rules)) {
             return $this->response->setJSON([
                 'status' => 'error',
                 'errors' => $this->validator->getErrors(),
             ]);
-        } 
-        else
-        {
+        } else {
 
             $file = $this->request->getFile('meeting_photo');
             $category = $this->request->getPost('category');
@@ -1108,7 +1104,7 @@ class MoAjax extends BaseController
             //$reservation_previous = $this->request->getPost('reservation_previous');
             $meeting_place = $this->request->getPost('meeting_place');
             $membership_fee = $this->request->getPost('membership_fee');
-            
+
             // CI조회
             $session = session();
             $member_ci = $session->get('ci');
@@ -1131,41 +1127,27 @@ class MoAjax extends BaseController
                 'membership_fee' => $membership_fee,
             ];
 
-            //미팅 데이터 저장
             $MeetingModel = new MeetingModel();
+
+            // 데이터 저장
             $inserted = $MeetingModel->insert($data);
 
-            if ($inserted)
-            {
-                //참석 멤버 추가(방장)
-                $meetMemdata = [
-                    'meeting_idx' =>$meeting_idx,
-                    'member_ci' => $ci,
-                    'meeting_master' =>'K',
-                    'create_at' => date('Y-m-d H:i:s'),
-                ];
-                $meeting_members = new MeetingMembersModel();
-                $meeting_members->insert($meetMemdata);
-
-                //파일 업로드
-                $upload= new Upload();
-                $fileData = $upload->meetingUpload($file, $inserted_id, $member_ci);
-
-                //저장된 미팅 idx
+            if ($inserted) {
                 $inserted_id = $MeetingModel->getInsertID();
 
+                $upload = new Upload();
+                $fileData = $upload->meetingUpload($file, $inserted_id, $member_ci);
+
                 return $this->response->setJSON([
-                    'status' => 'success', 
-                    'message' => 'Save Meeting successfully', 
+                    'status' => 'success',
+                    'message' => 'Save Meeting successfully',
                     'data' => $data,
                     'inserted_id' => $inserted_id
                 ]);
-            } 
-            else
-            {
+            } else {
                 return $this->response->setJSON([
-                    'error' => 'error', 
-                    'message' => 'Failed to save meeting', 
+                    'error' => 'error',
+                    'message' => 'Failed to save meeting',
                     'data' => $data
                 ]);
             }
@@ -1174,9 +1156,9 @@ class MoAjax extends BaseController
 
     public function meetingFiltering()
     {
-        $category = $this->request->getPost('category');// 카테고리 필터링
-        $searchText = $this->request->getPost('searchText');// 검색 필터링
-        $filterOption = $this->request->getPost('filterOption');// 필터링
+        $category = $this->request->getPost('category'); // 카테고리 필터링
+        $searchText = $this->request->getPost('searchText'); // 검색 필터링
+        $filterOption = $this->request->getPost('filterOption'); // 필터링
 
         $MeetingModel = new MeetingModel();
 
@@ -1206,17 +1188,17 @@ class MoAjax extends BaseController
         }
 
         $meetings = $MeetingModel
-                        ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx')
-                        ->findAll();
-                        
+            ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx')
+            ->findAll();
+
 
         $MeetingMembersModel = new MeetingMembersModel();
 
         // 각 모임에 대한 참여 인원 수 계산
         foreach ($meetings as &$meeting) {
             $memCount = $MeetingMembersModel
-                            ->where('meeting_idx', $meeting['idx'])
-                            ->countAllResults();
+                ->where('meeting_idx', $meeting['idx'])
+                ->countAllResults();
             $meeting['count'] = $memCount;
         }
         unset($meeting); // 참조 해제
@@ -1228,7 +1210,7 @@ class MoAjax extends BaseController
 
     public function myMeetingFiltering()
     {
-        $filterOption = $this->request->getPost('filterOption');// 필터링
+        $filterOption = $this->request->getPost('filterOption'); // 필터링
 
         $session = session();
         $ci = $session->get('ci');
@@ -1251,10 +1233,10 @@ class MoAjax extends BaseController
         }
 
         $meetings = $MeetingModel
-                        ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx')
-                        ->where('wh_meetings.member_ci', $ci)
-                        ->findAll();
-                        
+            ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx')
+            ->where('wh_meetings.member_ci', $ci)
+            ->findAll();
+
         $days = ['일', '월', '화', '수', '목', '금', '토'];
         $currentDate = new \DateTime();
 
@@ -1263,24 +1245,413 @@ class MoAjax extends BaseController
         foreach ($meetings as &$meeting) {
             // 모임 시작 시간 포맷팅
             $meetingDateTimestamp = strtotime($meeting['meeting_start_date']);
-            $meetingDay = date("w", $meetingDateTimestamp);//0~6
-            $dayName = $days[$meetingDay];//요일
+            $meetingDay = date("w", $meetingDateTimestamp); //0~6
+            $dayName = $days[$meetingDay]; //요일
             $meetingDateTime = date("Y.m.d ", $meetingDateTimestamp) . ' (' . $dayName . ') ' . date(" H:i", $meetingDateTimestamp);
             $meeting['meetingDateTime'] = $meetingDateTime;
-            
+
             // 이벤트 종료 여부 판단
             $eventDate = new \DateTime($meeting['meeting_start_date']);
             $meeting['isEnded'] = ($currentDate > $eventDate);
 
             // 각 모임에 대한 참여 인원 수 계산
             $memCount = $MeetingMembersModel
-                            ->where('meeting_idx', $meeting['idx'])
-                            ->countAllResults();
+                ->where('meeting_idx', $meeting['idx'])
+                ->countAllResults();
             $meeting['count'] = $memCount;
         }
-        unset($meeting);//참조 해제
+        unset($meeting); //참조 해제
 
         // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
         return $this->response->setJSON($meetings);
+    }
+
+    public function chgExcept()
+    {
+        $word_file_path = APPPATH . 'data/MemberCode.php';
+        require($word_file_path);
+        $value = $this->request->getPost('value');
+        if ($value === 'mbti') {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $mbti]);
+        } else if ($value === 'animal_type1') {
+            $session = session();
+            $member_ci = $session->get('ci');
+            $MatchPartnerModel = new MatchPartnerModel();
+            $selected = $MatchPartnerModel->where('member_ci', $member_ci)->first();
+            if ($selected) {
+                if ($selected['partner_gender'] === "0") {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $animalTypeFemale]);
+                } else {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $animalTypeMale]);
+                }
+            } else {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
+            }
+        } else if ($value === 'stylish') {
+            $session = session();
+            $member_ci = $session->get('ci');
+            $MatchPartnerModel = new MatchPartnerModel();
+            $selected = $MatchPartnerModel->where('member_ci', $member_ci)->first();
+            if ($selected) {
+                if ($selected['partner_gender'] === "0") {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $femaleStyle]);
+                } else {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $maleStyle]);
+                }
+            } else {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
+            }
+        } else if ($value === 'drinking') {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $drinking]);
+        } else if ($value === 'year') {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success']);
+        } else if ($value === 'bodyshape') {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $bodyshape]);
+        } else if ($value === 'city') {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $region]);
+        } else if ($value === 'married') {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $marital]);
+        } else if ($value === 'smoker') {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $smoking]);
+        } else if ($value === 'religion') {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $religion]);
+        } else if ($value === 'gender') {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $gender]);
+        } else if ($value === 'height') {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $height]);
+        } else if ($value === 'education') {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $education]);
+        } else if ($value === 'job') {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $job]);
+        } else if ($value === 'asset_range') {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $asset]);
+        } else if ($value === 'income_range') {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $income]);
+        }
+
+        // if ($value === '')
+        // {
+        // }
+    }
+
+    public function calcMatchRate()
+    {
+        $MemberModel = new MemberModel();
+        $MatchPartnerModel = new MatchPartnerModel();
+        $MatchFactorModel = new MatchFactorModel();
+        $session = session();
+        $ci = $session->get('ci');
+
+        $myPartner = $MatchPartnerModel->where(['member_ci' => $ci])->first();
+        $myFactor = $MatchFactorModel->where(['member_ci' => $ci])->first();
+
+        $query = "SELECT * FROM members";
+        if (!empty($myFactor['except1']) && $myFactor['except1'] !== '') //배제항목 있을 시 조건에서 배제하기
+        {
+            $query .= " WHERE (" . $myFactor['except1'] . " != '" . $myFactor['except1_detail'] . "'  OR " . $myFactor['except1'] . " IS NULL)";
+        }
+        if (!empty($myFactor['except2']) && $myFactor['except2'] !== '') //배제항목 있을 시 조건에서 배제하기
+        {
+            $query .= " OR (" . $myFactor['except2'] . " != '" . $myFactor['except2_detail'] . "'  OR " . $myFactor['except2'] . " IS NULL)";
+        }
+        if (!empty($myPartner['partner_gender']))  // 성별 거르기
+        {
+            $query .= " OR (gender = '" . $myPartner['partner_gender'] . ")";
+        }
+        $datas = $MemberModel
+            ->query($query)->getResultArray();
+
+        // 세션(또는 파일로 로컬)에 저장한다. 이후 로그인 시 해당 ajax 작동시킨다.
+        foreach ($datas as &$item) {
+            // 기본배점 항목 계산
+            $calc = 0;
+
+            $mydata = $MemberModel->where(['ci' => $ci])->first();
+            if ($mydata['nickname'] !== $item['nickname']) { // 본인이 아닌 경우만 계산
+                // group1 -- MBTI, 얼굴형, 스타일, 음주횟수
+                // MBTI
+                if ($item['mbti'] !== null) {
+                    $calcValue = 0;
+                    if ($myPartner['mbti'] === $item['mbti'])
+                    // 원하는 유형이 같을 때
+                    {
+                        $calcValue = $myFactor['group1'] * 1; // 점수
+                    } else if ($myPartner['mbti'] === '16') // 무관일 때
+                    {
+                        $calcValue = $myFactor['group1'] * 1; // 모두에게 점수
+                    } else {
+                        $calcValue = 0;
+                    }
+                    $calc += $calcValue;
+                }
+                // 얼굴형
+                // if (!$item['mbti'] !== null) // 얼굴형 아직 없음
+                // {
+                //     $calcValue = 0;
+                //     if ($myPartner['mbti'] === $item['mbti'])
+                //     // 원하는 유형이 같을 때
+                //     {
+                //         $calcValue = $myFactor['group2'] * 1; // 점수
+                //     } else
+                //     {
+                //         $calcValue = 0;
+                //     }
+                //     $calc += $calcValue;
+                // }
+
+                // 스타일
+                if ($item['stylish'] !== null) {
+                    $calcValue = 0;
+                    if ($myPartner['stylish'] === $item['stylish'])
+                    // 원하는 유형이 같을 때
+                    {
+                        $calcValue = $myFactor['group1'] * 1; // 점수
+                    } else {
+                        $calcValue = 0;
+                    }
+                    $calc += $calcValue;
+                }
+                // 음주횟수
+                if ($item['drinking'] !== null) {
+                    $calcValue = 0;
+                    if ($myPartner['drinking'] === '0') { // 음주횟수 - 무관
+                        $calcValue = $myFactor['group1'] * 1; // 모두에게 점수
+                    } else {
+                        if ($myPartner['drinking'] === $item['drinking']) {
+                            $calcValue = $myFactor['group1'] * 1; // 그외 일치할 경우 점수
+                        } else {
+                            $calcValue = 0;
+                        }
+                    }
+                    $calc += $calcValue;
+                }
+                // group2 -- 나이, 체형, 지역, 결혼경험, 흡연유무, 종교
+                // 나이
+                if ($item['birthday'] !== null) {
+                    $calcValue = 0;
+                    if ($myPartner['fromyear'] !== null && $myPartner['toyear']) {
+                        $birthday = $item['birthday'];
+                        $birthYear = substr($birthday, 0, 4);
+                        if ($birthYear >= $myPartner['fromyear'] && $birthYear <= $myPartner['toyear']) {
+                            // 나이조건 적합
+                            $calcValue = $myFactor['group2'] * 1;
+                        } else {
+                            // 나이 부적합
+                            $calcValue = 0;
+                        }
+                    } else {
+                        $calcValue = 0;
+                    }
+
+                    $calc += $calcValue;
+                }
+                // 체형
+                if ($item['bodyshape'] !== null) {
+                    $calcValue = 0;
+                    if ($myPartner['bodyshape'] === '5')
+                    //무관일 때
+                    {
+                        $calcValue = $myFactor['group2'] * 1; // 점수
+                    } else if ($myPartner['bodyshape'] === $item['bodyshape'])
+                    // 원하는 체형이 같을 때
+                    {
+                        $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
+                    } else if ((($myPartner['bodyshape'] - 1) === $item['bodyshape'] || ($myPartner['bodyshape'] + 1) === $item['bodyshape']))
+                    // 바로옆 체형일 때
+                    {
+                        $calcValue = $myFactor['group2'] * 0.5; // 0.5배점
+                    } else {
+                        $calcValue = 0;
+                    }
+                    $calc += $calcValue;
+                }
+                // 지역
+                if ($item['city'] !== null) {
+                    $calcValue = 0;
+                    if ($myPartner['region'] === $item['city'])
+                    // 지역이 같을 때
+                    {
+                        $calcValue = $myFactor['group2'] * 1; // 점수
+                    }
+
+                    $calc += $calcValue;
+                }
+                // 결혼유무
+                if ($item['married'] !== null) {
+                    $calcValue = 0;
+                    if ($myPartner['married'] === '0') { // 결혼유무 - 무관
+                        $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
+                    } else {
+                        if ($item['married'] === '0') {
+                            $calcValue = $myFactor['group2'] * 1; // 미혼에게만 점수
+                        }
+                    }
+                    $calc += $calcValue;
+                }
+                // 흡연유무
+                if ($item['smoker'] !== null) {
+                    $calcValue = 0;
+                    if ($myPartner['smoker'] === '0') { // 흡연유무 - 무관
+                        $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
+                    } else {
+                        if ($item['smoker'] === '0') {
+                            $calcValue = $myFactor['group2'] * 1; // 금연자만 점수
+                        }
+                    }
+                    $calc += $calcValue;
+                }
+                // 종교
+                if ($item['religion'] !== null) {
+                    $calcValue = 0;
+                    if ($myPartner['religion'] === '5') { // 종교유무 - 무관
+                        $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
+                    } else {
+                        if ($myPartner['religion'] === $item['married']) {
+                            $calcValue = $myFactor['group2'] * 1; // 원하는 종교만 점수
+                        }
+                    }
+                    $calc += $calcValue;
+                }
+                // group3 -- 성별, 키, 학력, 직업, 자산구간, 소득구간
+                // 성별은 애초에 거르기 때문에 배점 X
+                // 키
+                if ($item['height'] !== null) {
+                    $calcValue = 0;
+                    if ($myPartner['height'] !== null) {
+                        if ($item['height'] >= $myPartner['height']) {
+                            // 원하는 키보다 클 때
+                            $calcValue = $myFactor['group3'] * 1;
+                        } else {
+                            // 키 부적합
+                            $calcValue = 0;
+                        }
+                    } else {
+                        $calcValue = 0;
+                    }
+
+                    $calc += $calcValue;
+                }
+                // 학력
+                if ($item['education'] !== null) {
+                    $calcValue = 0;
+                    if ($myPartner['education'] === '5') { // 학력 - 무관
+                        $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
+                    } else {
+                        if ($myPartner['education'] <= $item['education']) {
+                            $calcValue = $myFactor['group3'] * 1; // 원하는 학력 이상이면 점수
+                        } else {
+                            $calcValue = 0;
+                        }
+                    }
+                    $calc += $calcValue;
+                }
+                // 직업(군)
+                if ($item['job'] !== null) {
+                    $calcValue = 0;
+                    if ($myPartner['job'] === '3') { // 직업 - 무관
+                        $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
+                    } else {
+                        if ($myPartner['job'] <= $item['job']) {
+                            $calcValue = $myFactor['group3'] * 1; // 원하는 직업 이상이면 점수
+                        } else {
+                            $calcValue = 0;
+                        }
+                    }
+                    $calc += $calcValue;
+                }
+                // 자산
+                if ($item['asset_range'] !== null) {
+                    $calcValue = 0;
+                    if ($myPartner['asset_range'] === '6') { // 자산 - 무관
+                        $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
+                    } else {
+                        if ($myPartner['asset_range'] <= $item['asset_range']) {
+                            $calcValue = $myFactor['group3'] * 1; // 원하는 자산 이상이면 점수
+                        } else {
+                            $calcValue = 0;
+                        }
+                    }
+                    $calc += $calcValue;
+                }
+                // 소득
+                if ($item['income_range'] !== null) {
+                    $calcValue = 0;
+                    if ($myPartner['income_range'] === '6') { // 소득 - 무관
+                        $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
+                    } else {
+                        if ($myPartner['income_range'] <= $item['income_range']) {
+                            $calcValue = $myFactor['group3'] * 1; // 원하는 소득 이상이면 점수
+                        } else {
+                            $calcValue = 0;
+                        }
+                    }
+                    $calc += $calcValue;
+                }
+
+
+                // 가중치 항목 계산
+                if ($myFactor['first_factor'] !== null) {
+                    if ($item[$myFactor['first_factor']] === $myPartner[$myFactor['first_factor']]) {
+                        $calcValue = 40; // 가중치1 항목 일치 시 추가점수
+                    }
+                    $calc += $calcValue;
+                }
+                if ($myFactor['second_factor'] !== null) {
+                    if ($item[$myFactor['second_factor']] === $myPartner[$myFactor['second_factor']]) {
+                        $calcValue = 30; // 가중치2 항목 일치 시 추가점수
+                    }
+                    $calc += $calcValue;
+                }
+                if ($myFactor['third_factor'] !== null) {
+                    if ($item[$myFactor['third_factor']] === $myPartner[$myFactor['third_factor']]) {
+                        $calcValue = 20; // 가중치3 항목 일치 시 추가점수
+                    }
+                    $calc += $calcValue;
+                }
+                if ($myFactor['fourth_factor'] !== null) {
+                    if ($item[$myFactor['fourth_factor']] === $myPartner[$myFactor['fourth_factor']]) {
+                        $calcValue = 10; // 가중치4 항목 일치 시 추가점수
+                    }
+                    $calc += $calcValue;
+                }
+
+
+                $item['calc'] = $calc;
+
+
+                // 계산한 가중치 항목 DB insert -> 회원수 너무 많아지면 python 배치 저장 필요
+                $MatchRateModel = new MatchRateModel();
+                $selectParam = [
+                    'member_ci' => $mydata['ci'],
+                    'my_nickname' => $mydata['nickname'],
+                    'your_nickname' => $item['nickname'],
+                ];
+                $selected = $MatchRateModel->where($selectParam)->first();
+                if ($selected) {
+                    $query = "UPDATE wh_match_rate";
+                    $query .= " SET match_score = '" . $calc . "'";
+                    $query .= " WHERE my_nickname = '" . $mydata['nickname'] . "'";
+                    $query .= " AND your_nickname = '" . $item['nickname'] . "'";
+
+                    $result = $MatchRateModel
+                        ->query($query);
+                } else {
+                    $insertParam = [
+                        'member_ci' => $mydata['ci'],
+                        'my_nickname' => $mydata['nickname'],
+                        'your_nickname' => $item['nickname'],
+                        'match_score' => $item['calc'],
+                        //'match_rate' => $rate,
+                    ];
+                    $result = $MatchRateModel->insert($insertParam);
+                }
+            }
+        }
+
+        if ($result) {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $datas]);
+        } else {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
+        }
     }
 }
