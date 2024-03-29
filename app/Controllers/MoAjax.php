@@ -1640,7 +1640,7 @@ class MoAjax extends BaseController
                     $query = "UPDATE wh_match_rate";
                     $query .= " SET match_score = '" . $calc . "'";
                     $query .= " , match_score_max = '" . $calcMax . "'";
-                    $query .= " , match_rate = '" . number_format($calc / $calcMax * 100, 2) . "'";
+                    $query .= " , match_rate = '" . number_format(($calc === 0 ? 1 : $calc) / ($calcMax === 0 ? 100 : $calcMax) * 100, 2) . "'";
                     $query .= " WHERE my_nickname = '" . $mydata['nickname'] . "'";
                     $query .= " AND your_nickname = '" . $item['nickname'] . "'";
 
@@ -1653,7 +1653,7 @@ class MoAjax extends BaseController
                         'your_nickname' => $item['nickname'],
                         'match_score' => $item['calc'],
                         'match_score_max' => $item['calc_max'],
-                        'match_rate' => number_format($item['calc'] / $item['calc_max'] * 100, 2),
+                        'match_rate' => number_format(($calc === 0 ? 1 : $calc) / ($calcMax === 0 ? 100 : $calcMax) * 100, 2),
                     ];
                     $result = $MatchRateModel->insert($insertParam);
                 }
