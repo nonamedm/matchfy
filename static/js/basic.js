@@ -724,3 +724,159 @@ const submitFile = () => {
         return false;
     }
 };
+
+const meetingSave = (postData) => {
+    var postData = new FormData(document.querySelector('form'));
+    $.ajax({
+        url: '/ajax/meetingSave',
+        type: 'POST',
+        data: postData,
+        processData: false,
+        contentType: false,
+        async: false,
+        success: function (data) {
+            console.log(data);
+            if (data.status === 'success') {
+                // 성공
+                moveToUrl('/mo/mypage/group/detail/' + data.inserted_id);
+            } else if (data.status === 'error') {
+                // 한번만 출력되게 함
+                $('.alert_validation').remove();
+                // 오류 메시지 표시
+                Object.keys(data.errors).forEach(function (key, index) {
+                    var field = $('[name="' + key + '"]');
+                    var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div
+
+                    // 오류 메시지 추가
+                    if (!topMostDiv.next().hasClass('alert_validation')) {
+                        // 이미 오류 메시지가 있는지 확인
+                        topMostDiv.after('<div class="alert alert_validation">' + data.errors[key] + '</div>');
+                    }
+                    // 처음 validation 포커스
+                    if (index === 0) {
+                        field.focus();
+                    }
+                });
+            } else {
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            }
+            return false;
+        },
+        error: function (data, status, err) {
+            console.log(err);
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
+};
+
+const meetingFiltering = (category, searchText, filterOption) => {
+    var postData = new FormData();
+
+    if (category !== undefined && category !== "") {
+        postData.append('category', category);
+    }
+    
+    if (searchText !== undefined && searchText !== "") {
+        postData.append('searchText', searchText);
+    }
+
+    if (filterOption !== undefined && filterOption !== "") {
+        postData.append('filterOption', filterOption);
+    }
+
+    $.ajax({
+        url: '/ajax/meetingFilter',
+        type: 'POST',
+        data: postData,
+        processData: false,
+        contentType: false,
+        async: false,
+        success: function (data) {
+            console.log(data);
+            var listHtml = '';
+            if (data.length > 0) {
+                data.forEach(function(meeting) {
+                    var imagePath = meeting.meeting_idx ? '/' + meeting.file_path + meeting.file_name : '/static/images/group_list_1.png';
+                    listHtml += `
+                        <a href="/mo/mypage/group/detail/${meeting.idx}">
+                            <div class="group_list_item">
+                                <img class="profile_img" src="${imagePath}" />
+                                <div class="group_particpnt">
+                                    <span>신청 ${meeting.count}</span>/${meeting.number_of_people}명
+                                </div>
+                                <div class="group_location">
+                                    <img src="/static/images/ico_location_16x16.png" />
+                                    ${meeting.meeting_place}
+                                </div>
+                                <p class="group_price">${parseInt(meeting.membership_fee).toLocaleString('ko-KR')}원</p>
+                                <p class="group_schedule">${meeting.meeting_start_date}</p>
+                            </div>
+                        </a>
+                    `;
+                });
+            } else {
+                listHtml = `<div style="text-align: center; margin-top: 20px; color: gray;">검색 결과가 없습니다.</div>`;
+            }
+            $('.group_search_list').html(listHtml);
+        },
+        error: function (xhr, status, err) {
+            console.log(err);
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
+};
+
+const MymeetingFiltering = (filterOption) => {
+    var postData = new FormData();
+
+    if (filterOption !== undefined && filterOption !== "") {
+        postData.append('filterOption', filterOption);
+    }
+
+    $.ajax({
+        url: '/ajax/myMeetingFilter',
+        type: 'POST',
+        data: postData,
+        processData: false,
+        contentType: false,
+        async: false,
+        success: function (data) {
+            console.log(data);
+            var listHtml = '';
+            if (data.length > 0) {
+                data.forEach(function(meeting) {
+                    var imagePath = meeting.meeting_idx ? '/' + meeting.file_path + meeting.file_name : '/static/images/group_list_1.png';
+                    var endedOverlay = meeting.isEnded ? '<div class="ended_overlay">종료</div>' : '';
+                    var grayscaleClass = meeting.isEnded ? 'grayscale' : '';
+
+                    listHtml += `
+                        <a href="/mo/mypage/group/detail/${meeting.idx}">
+                            <div class="apply_group_detail ${grayscaleClass}">
+                                ${endedOverlay ? '<div class="ended_overlay">종료</div>' : ''}
+                                <img class="profile_img ${grayscaleClass}" src="${imagePath}" />
+                                <div class="group_list_item group_apply_item">
+                                    <div class="group_particpnt">
+                                        <span>신청 ${meeting.count}</span>/${meeting.number_of_people}명
+                                    </div>
+                                    <div class="group_location">
+                                        <img src="/static/images/ico_location_16x16.png" />
+                                        ${meeting.meeting_place}
+                                    </div>
+                                    <p class="group_price">${parseInt(meeting.membership_fee).toLocaleString('ko-KR')}원</p>
+                                    <p class="group_schedule">${meeting.meetingDateTime}</p>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                });
+            } else {
+                listHtml = '<div style="text-align: center; margin-top: 20px; color: gray;">검색 결과가 없습니다.</div>';
+            }
+            $('.mygroup_list').html(listHtml);
+        },
+        error: function (xhr, status, err) {
+            console.log(err);
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
+};

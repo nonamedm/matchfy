@@ -9,7 +9,11 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/mygroup.js"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -27,7 +31,11 @@
                         모임
                     </li>
                 </ul>
-                <div class="menu_right edit">편집</div>
+                <div class="menu_right edit" id="meet_edit_btn"onclick="MeetingEditChk();">편집</div>
+                <div class="menu_right edit meet_menu_right" style="display:none;">
+                    <span class="meet_menu_header" onclick="MeetCancelChk();"> 편집종료</span>
+                    <span class="meet_menu_header" id="meet_delete_btn" onclick="MyGoupDelconfrim();">삭제</span>
+                </div>
             </div>
 
         </header>
@@ -35,98 +43,47 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="notice_filter">
-                    <p>09.01 ~ 09.30</p>
-                    <select>
-                        <option>최근순</option>
-                        <option>최근순</option>
-                        <option>최근순</option>
+                    <select class="small" id="notice_filter">
+                        <option value="create_at">등록순</option>
+                        <option value="meeting_start_date">빠른 모임순</option>
+                        <option value="membership_fee">예약금 낮은 순</option>
                     </select>
                 </div>
-                <div class="mygroup_list">
+                <div class="mygroup_list" id="mygroup_list_body">
+                <?php foreach ($meetings as $meeting): ?>
                     <div class="apply_group_detail">
-                        <img src="/static/images/group_list_1.png" />
+                        <div class="chk_box meet_delete_chk_box" style="display:none;">
+                            <input type="checkbox" class="totAgree" id="totAgree<?= $meeting->meeting_idx ?>" name="chkDefault00">
+                            <label class="totAgree_label" for="totAgree<?= $meeting->meeting_idx ?>"></label>
+                            <?php if ($meeting->isEnded): ?>
+                                <div class="ended_overlay">종료</div>
+                            <?php endif; ?>
+                        </div>
+                        <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
+                            <img src="/<?= $meeting->file_path?><?= $meeting->file_name?>" />
+                        </a>
                         <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
+                            <div class="group_particpnt" onclick="javascript:meetingMemberList(<?= $meeting->meeting_idx ?>);">
+                                <span>신청 <?= $meeting->meeting_idx_count ?></span>/<?= $meeting->number_of_people ?>명
                             </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
+                            <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
+                                <div class="group_location">
+                                    <img src="/static/images/ico_location_16x16.png" />
+                                    <?= $meeting->meeting_place ?>
+                                </div>
+                                <p class="group_price"><?= number_format($meeting->membership_fee) ?>원</p>
+                                <?php
+                                    $date = $meeting->meeting_start_date;
+                                    $dayOfWeek = date('w', strtotime($date)); // 요일을 숫자(0~6)로 가져옴
+
+                                    $days = array('일', '월', '화', '수', '목', '금', '토');
+                                    $newDate = date('Y.m.d', strtotime($date)) . ' (' . $days[$dayOfWeek] . ') 모임';
+                                ?>
+                                <p class="group_schedule"><?= $newDate ?> </p>
+                            </a>
                         </div>
                     </div>
-                    <div class="apply_group_detail">
-                        <img src="/static/images/group_list_2.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
-                            </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                        </div>
-                    </div>
-                    <div class="apply_group_detail">
-                        <img src="/static/images/group_list_3.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
-                            </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                        </div>
-                    </div>
-                    <div class="apply_group_detail">
-                        <img src="/static/images/group_list_4.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
-                            </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                        </div>
-                    </div>
-                    <div class="apply_group_detail">
-                        <img src="/static/images/group_list_1.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
-                            </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                        </div>
-                    </div>
-                    <div class="apply_group_detail">
-                        <img src="/static/images/group_list_2.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
-                            </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                        </div>
-                    </div>
+                <?php endforeach; ?>
                 </div>
             </div>
         </div>
@@ -169,6 +126,15 @@
                 menuItem.classList.toggle("hidden");
             }
         }
+
+        $(document).ready(function() {
+            // 필터링 옵션
+            $('#notice_filter').change(function() {
+                var filterOption = $(this).val();
+                MymeetingFiltering(filterOption);
+            });
+        });
+
     </script>
 
     <!-- -->

@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class MeetingFileModel extends Model
 {
-    protected $table            = 'meetingfiles';
+    protected $table            = 'wh_meetings_files';
     protected $primaryKey       = 'idx';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';

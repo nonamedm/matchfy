@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/static/css/datepicker.css">
+    <script src="/static/js/basic.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfeedb645765a4f5e27cfb8dda43a2c8&libraries=services"></script>
@@ -27,7 +28,7 @@
 
         <div class="sub_wrap">
             <div class="content_wrap">
-                <form class="main_signin_form group_create" action="/mo/mypage/group/detail" method="post" enctype="multipart/form-data">
+                <form class="main_signin_form group_create" method="post" enctype="multipart/form-data">
                     <legend></legend>
                     <div class="">
                         <div class="form_row signin_form">
@@ -37,7 +38,7 @@
                                     <label for="group_photo" class="signin_label profile_photo_input group_photo_input"></label>
                                     <input id="group_photo" name="meeting_photo" type="file" value="" placeholder=""
                                         multiple accept="image/*">
-                                        <!-- <div id="profile_photo_view" class="profile_photo_view"> -->
+                                    <div id="meeting_photo_view" class="meeting_photo_view" style="margin-top: 10px;">
                                 </div>
                             </div>
                         </div>
@@ -90,11 +91,14 @@
                                     placeholder="모집 인원을 입력하세요" >
                             </div>
                         </div>
-                        <!-- <div class="form_row signin_form">
+                        <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="group_age" class="signin_label">나이</label>
-                                <div class="multy_select">
-                                    <select id="group_age1" class="custom_select" value="">
+                                <div class="multy_input">
+                                    <input id="group_min_age" type="text" name="group_min_age" value="" placeholder="나이를 입력하세요"><br />
+                                    - 
+                                    <input id="group_max_age" type="text" name="group_max_age" value="" placeholder="나이를 입력하세요"><br />
+                                    <!-- <select id="group_age1" class="custom_select" value="">
                                         <option value="">선택</option>
                                         <option value="0">20대</option>
                                         <option value="1">30대</option>
@@ -107,14 +111,15 @@
                                         <option value="1">30대</option>
                                         <option value="2">40대</option>
                                         <option value="2">50대 이상</option>
-                                    </select>
+                                    </select> -->
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="matching_rate" class="signin_label">매칭률</label>
-                                <select id="matching_rate" class="custom_select" name="matching_rate" value="">
+                                <input id="matching_rate" type="text" name="matching_rate" value="" placeholder="매칭률을 입력하세요"><br />
+                                <!-- <select id="matching_rate" class="custom_select" name="matching_rate" value="">
                                     <option value="">선택</option>
                                     <option value="01">~50%</option>
                                     <option value="02">50~60%</option>
@@ -122,24 +127,31 @@
                                     <option value="04">70~80%</option>
                                     <option value="05">80~70%</option>
                                     <option value="06">90% 이상</option>
-                                </select>
+                                </select> -->
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="group_detail" class="signin_label">모임상세</label>
                                 <input id="title" type="text" name="title" value="" placeholder="제목을 입력하세요"><br />
+                            </div>
+                        </div>
+                        <div class="form_row signin_form">
+                            <div class="signin_form_div">
                                 <textarea id="content" name="content" value="" placeholder="내용을 입력하세요"></textarea></br />
-                                <select id="reservation_previous" class="custom_select" value="">
+                            </div>
+                        </div>
+                        <!-- <div class="form_row signin_form">
+                            <div class="signin_form_div">
+                                <select id="reservation_previous" name= "reservation_previous" class="custom_select" value="">
                                     <option>예약 내역 선택</option>
                                     <option value="0">20대</option>
                                     <option value="1">30대</option>
                                     <option value="2">40대</option>
                                     <option value="2">50대 이상</option>
-                                    <!-- 이전 예약 내역 불러오는 걸로 수정필요 -->
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="meeting_place" class="signin_label">모임장소</label>
@@ -160,7 +172,7 @@
                         </div>
                         <div class="btn_group multy">
                             <button type="button" class="btn type02">취소</button>
-                            <button type="submit" class="btn type01">저장</button>
+                            <button type="button" class="btn type01" onclick="meetingSave()">저장</button>
                         </div>
 
                     </div>
@@ -345,6 +357,42 @@
                 alert('검색 결과가 없습니다.');
             }
         }
+
+        document.getElementById('group_photo').addEventListener('change', function(event) {
+            var files = event.target.files;
+            var imagePreviewContainer = document.getElementById('meeting_photo_view');
+            imagePreviewContainer.innerHTML = ''; // 기존의 미리보기를 클리어
+
+            var labelForInput = document.querySelector('label[for="group_photo"]');
+            if (files.length > 0) {
+                labelForInput.style.display = 'none';
+            } else {
+                labelForInput.style.display = 'block';
+            }
+
+            Array.from(files).forEach(function(file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '335px'; // 이미지 너비 고정
+                    img.style.maxHeight = '220px'; // 이미지 최대 높이
+                    img.style.objectFit = 'cover'; // 이미지 비율 유지
+                    img.style.marginTop = '10px';
+                    img.style.border = '1px solid #dddddd';
+                    img.style.borderRadius = '10px';
+                    imagePreviewContainer.appendChild(img);
+
+                    // 미리보기 이미지 클릭 시 파일 선택 input 활성화
+                    img.onclick = function() {
+                        document.getElementById('group_photo').click();
+                    };
+                    imagePreviewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
 
     </script>
     <!-- -->

@@ -10,6 +10,8 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -22,37 +24,36 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="group_search">
-                    <input style="text" placeholder="모임을 검색해보세요!" />
-                    <img src="/static/images/ico_search_18x18.png" />
+                    <input type="text" placeholder="모임을 검색해보세요!" />
+                    <img src="/static/images/ico_search_18x18.png" class="group_serch_img"/>
                 </div>
                 <div class="group_category">
-                    <div class="group_category_all">
+                    <div class="group_category_all" data-category="">
                         <img src="/static/images/group_category_all.png" />
                         <p>전체</p>
                     </div>
-                    <div class="group_category_1">
-                        <img src="/static/images/group_category_1.png" />
+                    <div class="group_category_1" data-category="01">
+                        <img src="/static/images/group_category_1.png"/>
                         <p>주중 모임</p>
                     </div>
-                    <div class="group_category_2">
-                        <img src="/static/images/group_category_2.png" />
+                    <div class="group_category_2" data-category="02">
+                        <img src="/static/images/group_category_2.png"/>
                         <p>주중 여행</p>
                     </div>
-                    <div class="group_category_3">
-                        <img src="/static/images/group_category_3.png" />
+                    <div class="group_category_3" data-category="03">
+                        <img src="/static/images/group_category_3.png"/>
                         <p>주말 모임</p>
                     </div>
-                    <div class="group_category_4">
-                        <img src="/static/images/group_category_4.png" />
+                    <div class="group_category_4 "data-category="04">
+                        <img src="/static/images/group_category_4.png"/>
                         <p>주말 여행</p>
                     </div>
                 </div>
                 <div class="group_search_filter">
-                    <select class="small">
-                        <option>등록순</option>
-                        <option>조회순</option>
-                        <option>인원많은순</option>
-                        <option>...</option>
+                    <select class="small" id="groupFilterSelect">
+                        <option value="create_at">등록순</option>
+                        <option value="meeting_start_date">빠른 모임순</option>
+                        <option value="membership_fee">예약금 낮은 순</option>
                     </select>
                     <div class="group_create_btn">
                         <img src="/static/images/ico_btn_plus_8x8.png" />
@@ -61,31 +62,26 @@
                 </div>
                 <div class="group_search_list">
                 <?php foreach ($meetings as $meeting): ?>
-                    <div class="group_list_item">
-                        <img src="/static/images/group_list_1.png" />
-                        <div class="group_particpnt">
-                            <span>신청 (변경필요)</span>/<?= $meeting['number_of_people'] ?>명
+                    <a href="/mo/mypage/group/detail/<?= $meeting['idx'] ?>">
+                        <div class="group_list_item">
+                            <?php if ($meeting['meeting_idx']): ?>
+                                <img class="profile_img" src="/<?= $meeting['file_path'] ?><?= $meeting['file_name'] ?>" />
+                            <?php else: ?>
+                                <img src="/static/images/group_list_1.png" />
+                            <?php endif; ?>
+                            
+                            <div class="group_particpnt">
+                                <span>신청 <?=$meeting['count']?></span>/<?= $meeting['number_of_people'] ?>명
+                            </div>
+                            <div class="group_location">
+                                <img src="/static/images/ico_location_16x16.png" />
+                                <?= $meeting['meeting_place'] ?>
+                            </div>
+                            <p class="group_price"><?= number_format($meeting['membership_fee']) ?>원</p>
+                            <p class="group_schedule"><?= $meeting['meeting_start_date'] ?></p>
                         </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png" />
-                            <?= $meeting['meeting_place'] ?>
-                        </div>
-                        <p class="group_price"><?= $meeting['membership_fee'] ?>원</p>
-                        <p class="group_schedule"><?= $meeting['meeting_start_date'] ?></p>
-                    </div>
+                    </a>
                 <?php endforeach; ?>
-                    <div class="group_list_item">
-                        <img src="/static/images/group_list_2.png" />
-                        <div class="group_particpnt">
-                            <span>신청 5</span>/6명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png" />
-                            서울/성동구
-                        </div>
-                        <p class="group_price">25,000원</p>
-                        <p class="group_schedule">2024. 02. 24(토) 19:30 </p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -129,6 +125,55 @@
                 menuItem.classList.toggle("hidden");
             }
         }
+
+        $(document).ready(function() {
+
+            // 카테고리 클릭
+            $('.group_category div').click(function() {
+
+                $('.group_category img').removeClass('highlighted');
+                
+                $(this).find('img').addClass('highlighted');
+
+                var category = $(this).data('category');
+                var searchText = $('.group_search input[type="text"]').val();
+                var filterOption = $('#groupFilterSelect').val();
+                meetingFiltering(category, searchText, filterOption);
+            });
+
+            //검색 - 돋보기 클릭
+            $('.group_serch_img').click(function() {
+                var searchText = $('.group_search input[type="text"]').val();
+                var filterOption = $('#groupFilterSelect').val();
+                if (searchText.length < 1) { 
+                    alert('글자를 하나 이상 입력해주세요.');
+                    return; // 함수 실행 중단
+                }
+                meetingFiltering('', searchText, filterOption);
+            });
+
+            // 검색 - 엔터 키
+            $('.group_search input[type="text"]').keypress(function(event) {
+                if (event.which == 13) {
+                    var searchText = $(this).val();
+                    var filterOption = $('#groupFilterSelect').val();
+                    if (searchText.length < 1) { 
+                        alert('글자를 하나 이상 입력해주세요.');
+                        return; // 함수 실행 중단
+                    }
+                    meetingFiltering('', searchText, filterOption);
+
+                    event.preventDefault();//폼 막기
+                }
+            });
+
+            // 필터링 옵션
+            $('#groupFilterSelect').change(function() {
+                var searchText = $('.group_search input[type="text"]').val();
+                var filterOption = $(this).val();
+                meetingFiltering('', searchText, filterOption);
+            });
+        });
     </script>
 
     <!-- -->

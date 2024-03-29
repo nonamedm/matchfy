@@ -7,9 +7,12 @@ use App\Models\MemberFileModel;
 use App\Models\MemberFeedModel;
 use App\Models\MemberFeedFileModel;
 use App\Models\UniversityModel;
+use App\Models\MeetingModel;
+use App\Models\MeetingFileModel;
 use App\Models\MatchPartnerModel;
 use App\Models\MatchFactorModel;
 use App\Models\MatchRateModel;
+use App\Models\MeetingMembersModel;
 use App\Config\Encryption;
 
 class MoAjax extends BaseController
@@ -24,8 +27,7 @@ class MoAjax extends BaseController
         $trgt_id = $this->request->getPost('trgt_id');
         $trgt_idx = $this->request->getPost('trgt_idx');
 
-        if ($cmt_idx && $trgt_id && $trgt_idx)
-        {
+        if ($cmt_idx && $trgt_id && $trgt_idx) {
             return $this->response->setJSON(['status' => 'success', 'message' => 'Data processed successfully', 'result' => $postData]);
         }
     }
@@ -39,8 +41,7 @@ class MoAjax extends BaseController
 
         $user = $MemberModel->where('mobile_no', $mobile_no)->first();
 
-        if ($user)
-        {
+        if ($user) {
             $session = session();
             $session->set([
                 'ci' => $user['ci'],
@@ -48,14 +49,12 @@ class MoAjax extends BaseController
                 'isLoggedIn' => true //로그인 상태
             ]);
 
-            if ($auto_login)
-            {
+            if ($auto_login) {
                 $session->setTempdata('ci', $user['ci'], 2592000);
             }
 
             return $this->response->setJSON(['status' => 'success', 'message' => "로그인 성공"]);
-        } else
-        {
+        } else {
             return $this->response->setJSON(['status' => 'error', 'message' => '일치하는 회원 정보가 없습니다.']);
         }
     }
@@ -113,24 +112,21 @@ class MoAjax extends BaseController
             ],
         ];
 
-        if (!$this->validate($rules))
-        {
+        if (!$this->validate($rules)) {
             return $this->response->setJSON([
                 'status' => 'error',
                 'errors' => $this->validator->getErrors(),
             ]);
-        } else
-        {
+        } else {
             $MemberModel = new MemberModel();
 
             $is_duplicate = true;
             $random_word = '';
             // 닉네임 중복확인
-            while ($is_duplicate)
-            {
+            while ($is_duplicate) {
                 // 닉네임 랜덤 생성
                 $word_file_path = APPPATH . 'data/RandomWord.php';
-                require ($word_file_path);
+                require($word_file_path);
                 $random_word = $randomadj[array_rand($randomadj)] . $randomword[array_rand($randomword)] . '@' . mt_rand(100000, 999999);
                 $is_duplicate = $MemberModel->where(['nickname' => $random_word])->first();
             }
@@ -169,16 +165,14 @@ class MoAjax extends BaseController
             $inserted = $MemberModel->insert($data);
 
             // 회원가입 완료 되었을 떄
-            if ($inserted)
-            {
+            if ($inserted) {
                 // 프로필 사진 DB 업로드
                 $MemberFileModel = new MemberFileModel();
                 $org_name = $this->request->getPost('org_name');
                 $file_name = $this->request->getPost('file_name');
                 $file_path = $this->request->getPost('file_path');
                 $ext = $this->request->getPost('ext');
-                if ($org_name)
-                {
+                if ($org_name) {
                     // 프로필 첨부 있을때만 file db 저장
                     $data2 = [
                         'member_ci' => $ci,
@@ -191,16 +185,12 @@ class MoAjax extends BaseController
                     $data = array_merge($data, $data2);
                     $MemberFileModel->insert($data2);
                 }
-                if ($inserted)
-                {
+                if ($inserted) {
                     return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
-                } else
-                {
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
+                } else {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy fail', 'data' => $data]);
                 }
-
-            } else
-            {
+            } else {
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy']);
             }
         }
@@ -314,8 +304,7 @@ class MoAjax extends BaseController
         ];
 
         // 프리미엄 회원
-        if ($this->request->getPost('grade') === 'grade03')
-        {
+        if ($this->request->getPost('grade') === 'grade03') {
             $rules['father_birth_year'] = [
                 'label' => 'father_birth_year',
                 'rules' => 'required',
@@ -394,14 +383,12 @@ class MoAjax extends BaseController
         $asset_range = $this->request->getPost('asset_range');
         $income_range = $this->request->getPost('income_range');
 
-        if (!$this->validate($rules))
-        {
+        if (!$this->validate($rules)) {
             return $this->response->setJSON([
                 'status' => 'error',
                 'errors' => $this->validator->getErrors(),
             ]);
-        } else
-        {
+        } else {
 
             $MemberModel = new MemberModel();
 
@@ -423,8 +410,7 @@ class MoAjax extends BaseController
                 'income_range' => $income_range
             ];
 
-            if ($grade === 'grade03')
-            {
+            if ($grade === 'grade03') {
                 // 프리미엄 회원에만 해당하는 추가 정보
                 $premiumData = [
                     'father_birth_year' => $this->request->getPost('father_birth_year'),
@@ -445,23 +431,18 @@ class MoAjax extends BaseController
             $existingData = $MemberModel->where('ci', $ci)->first();
 
             // 데이터 존재 시
-            if ($existingData)
-            {
+            if ($existingData) {
                 $inserted = $MemberModel->update($ci, $data);
 
-                if ($inserted)
-                {
+                if ($inserted) {
                     return $this->response->setJSON(['status' => 'success', 'message' => '데이터가 업데이트되었습니다', 'data' => $data]);
-                } else
-                {
+                } else {
                     return $this->response->setJSON(['status' => 'error', 'message' => '데이터를 업데이트하는 중 오류가 발생했습니다']);
                 }
-            } else
-            {
+            } else {
                 return $this->response->setJSON(['status' => 'error', 'message' => '업데이트할 데이터가 존재하지 않습니다']);
             }
         }
-
     }
 
     /* 사용자 파일 저장 */
@@ -482,8 +463,7 @@ class MoAjax extends BaseController
         ];
         $condition = ['board_type' => $board_type, 'member_ci' => $member_ci];
         $updated = $MemberFileModel->where($condition)->update($member_ci, $data);
-        if ($updated)
-        {
+        if ($updated) {
             $data = [
                 'member_ci' => $member_ci,
                 'file_path' => $file_path,
@@ -494,18 +474,13 @@ class MoAjax extends BaseController
             ];
 
             $inserted = $MemberFileModel->insert($data);
-            if ($inserted)
-            {
+            if ($inserted) {
                 return $this->response->setJSON(['status' => 'success', 'message' => "파일이 성공적으로 저장되었습니다.", 'data' => $data]);
-            } else
-            {
+            } else {
                 $error = $MemberFileModel->getError();
                 return $this->response->setJSON(['status' => 'fail', 'message' => "파일 저장에 실패했습니다. $error"]);
             }
         }
-
-
-
     }
 
 
@@ -521,25 +496,20 @@ class MoAjax extends BaseController
         // CI조회
         $existingData = $MemberModel->where('ci', $ci)->first();
         // 데이터 존재 시
-        if ($existingData)
-        {
+        if ($existingData) {
             $inserted = $MemberModel->update($ci, $data);
 
-            if ($inserted)
-            {
+            if ($inserted) {
                 // return $this->response->setJSON(['status' => 'success', 'message' => '데이터가 업데이트되었습니다', 'data' => $data]);
                 return '0';
-            } else
-            {
+            } else {
                 // return $this->response->setJSON(['status' => 'error', 'message' => '데이터를 업데이트하는 중 오류가 발생했습니다']);
                 return '1';
             }
-        } else
-        {
+        } else {
             // return $this->response->setJSON(['status' => 'error', 'message' => '업데이트할 데이터가 존재하지 않습니다']);
             return '2';
         }
-
     }
 
     public function searchUniversity()
@@ -573,11 +543,9 @@ class MoAjax extends BaseController
 
         $insertedData = [];
 
-        if (!empty ($postData))
-        {
+        if (!empty($postData)) {
             // $postData 배열을 반복하여 데이터베이스에 삽입
-            foreach ($postData as $fileInfo)
-            {
+            foreach ($postData as $fileInfo) {
                 // $fileInfo에서 필요한 데이터를 추출하여 데이터베이스에 삽입
                 $org_name = $fileInfo['org_name'];
                 $file_name = $fileInfo['file_name'];
@@ -591,8 +559,7 @@ class MoAjax extends BaseController
                     'thumb_filepath' => $file_path,
                 ];
                 $inserted = $MemberFeedModel->insert($data);
-                if ($inserted)
-                {
+                if ($inserted) {
                     $feed_idx = $MemberFeedModel->insertID();
                     $data = [
                         'feed_idx' => $feed_idx,
@@ -608,11 +575,9 @@ class MoAjax extends BaseController
                 }
             }
         }
-        if (!empty ($postData2))
-        {
+        if (!empty($postData2)) {
             // $postData 배열을 반복하여 데이터베이스에 삽입
-            foreach ($postData2 as $fileInfo)
-            {
+            foreach ($postData2 as $fileInfo) {
                 // $fileInfo에서 필요한 데이터를 추출하여 데이터베이스에 삽입
                 $org_name = $fileInfo['org_name'];
                 $file_name = $fileInfo['file_name'];
@@ -626,8 +591,7 @@ class MoAjax extends BaseController
                     'thumb_filepath' => $file_path,
                 ];
                 $inserted = $MemberFeedModel->insert($data);
-                if ($inserted)
-                {
+                if ($inserted) {
                     $feed_idx = $MemberFeedModel->insertID();
                     $data = [
                         'feed_idx' => $feed_idx,
@@ -649,14 +613,11 @@ class MoAjax extends BaseController
             'file_name' => $file_name,
             'insertedData' => $insertedData
         ];
-        if (!empty ($insertedData))
-        {
+        if (!empty($insertedData)) {
             return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
-        } else
-        {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
+        } else {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy fail', 'data' => $return]);
         }
-
     }
     public function updtFeedData()
     {
@@ -672,8 +633,7 @@ class MoAjax extends BaseController
         $insertedData = [];
 
         // edit_type 따라 신규/업데이트 분기
-        if ($edit_type == 'addMyFeed')
-        {
+        if ($edit_type == 'addMyFeed') {
             // 신규 등록일 때
             $data = [
                 'member_ci' => $member_ci,
@@ -683,14 +643,11 @@ class MoAjax extends BaseController
                 'thumb_filepath' => $postData[0]['file_path'],
             ];
             $inserted = $MemberFeedModel->insert($data);
-            if ($inserted)
-            {
+            if ($inserted) {
                 $feed_idx = $MemberFeedModel->insertID();
-                if (!empty ($postData))
-                {
+                if (!empty($postData)) {
                     // $postData 배열을 반복하여 데이터베이스에 삽입
-                    foreach ($postData as $fileInfo)
-                    {
+                    foreach ($postData as $fileInfo) {
                         // $fileInfo에서 필요한 데이터를 추출하여 데이터베이스에 삽입
                         $org_name = $fileInfo['org_name'];
                         $file_name = $fileInfo['file_name'];
@@ -706,8 +663,7 @@ class MoAjax extends BaseController
                             'board_type' => 'feeds',
                         ];
                         $inserted = $MemberFeedFileModel->insert($data);
-                        if ($inserted)
-                        {
+                        if ($inserted) {
                             $insertedData[] = $data;
                         }
                     }
@@ -718,17 +674,13 @@ class MoAjax extends BaseController
                     'file_name' => $file_name,
                     'insertedData' => $insertedData
                 ];
-                if (!empty ($insertedData))
-                {
+                if (!empty($insertedData)) {
                     return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
-                } else
-                {
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $return]);
+                } else {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy fail', 'data' => $return]);
                 }
-
             }
-        } else
-        {
+        } else {
             // 수정일 때
             $feed_idx = $this->request->getPost('feed_idx');
             $condition = [
@@ -737,8 +689,7 @@ class MoAjax extends BaseController
                 'delete_yn' => 'n'
             ];
 
-            if (!empty ($postData))
-            {
+            if (!empty($postData)) {
                 // 첨부파일이 있는 경우(수정한 경우)
                 $data = [
                     'feed_cont' => $feed_cont,
@@ -747,8 +698,7 @@ class MoAjax extends BaseController
                     'thumb_filepath' => $postData[0]['file_path'],
                 ];
                 $updated = $MemberFeedModel->update($condition, $data);
-            } else
-            {
+            } else {
                 // 첨부파일이 없는 경우(수정 안한 경우)
                 $data = [
                     'feed_cont' => $feed_cont,
@@ -756,10 +706,8 @@ class MoAjax extends BaseController
                 ];
                 $updated = $MemberFeedModel->update($condition, $data);
             }
-            if ($updated)
-            {
-                if (!empty ($postData))
-                {
+            if ($updated) {
+                if (!empty($postData)) {
                     // 기존 첨부파일은 삭제하고
                     $condition2 = [
                         'feed_idx' => $feed_idx,
@@ -770,11 +718,9 @@ class MoAjax extends BaseController
                     ];
                     $deleted = $MemberFeedFileModel->where($condition2)->update($condition2, $update);
 
-                    if ($deleted)
-                    {
+                    if ($deleted) {
                         // $postData 배열을 반복하여 데이터베이스에 삽입
-                        foreach ($postData as $fileInfo)
-                        {
+                        foreach ($postData as $fileInfo) {
                             // $fileInfo에서 필요한 데이터를 추출하여 데이터베이스에 삽입
                             $org_name = $fileInfo['org_name'];
                             $file_name = $fileInfo['file_name'];
@@ -790,8 +736,7 @@ class MoAjax extends BaseController
                                 'board_type' => 'feeds',
                             ];
                             $inserted = $MemberFeedFileModel->insert($data);
-                            if ($inserted)
-                            {
+                            if ($inserted) {
                                 $insertedData[] = $data;
                             }
                         }
@@ -801,29 +746,23 @@ class MoAjax extends BaseController
                             'file_name' => $file_name,
                             'insertedData' => $insertedData,
                         ];
-                    } else
-                    {
+                    } else {
                         $return = [
                             'fileinputfalse' => 'false'
                         ];
                     }
-                } else
-                {
+                } else {
                     $return = [
                         'member_ci' => $member_ci,
                     ];
-
                 }
-                if (!empty ($insertedData))
-                {
+                if (!empty($insertedData)) {
                     return $this->response->setJSON(['status' => 'success', 'message' => 'Feed modify with photo success', 'data' => $return]);
-                } else
-                {
+                } else {
                     return $this->response->setJSON(['status' => 'success', 'message' => 'Feed modify success', 'data' => $data]);
                 }
             }
         }
-
     }
     public function showFeedDetail()
     {
@@ -836,17 +775,12 @@ class MoAjax extends BaseController
             'wh_member_feed.delete_yn' => 'n',
         ];
         $result = $MemberFeedModel->where($condition)->join('wh_member_feed_files', 'wh_member_feed_files.feed_idx = wh_member_feed.idx')->first();
-        if ($result)
-        {
+        if ($result) {
 
             return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
-
-        } else
-        {
+        } else {
             return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
         }
-
-
     }
     public function myFeedDelete()
     {
@@ -862,16 +796,11 @@ class MoAjax extends BaseController
             'delete_yn' => 'y'
         ];
         $result = $MemberFeedModel->update($condition, $update);
-        if ($result)
-        {
+        if ($result) {
             return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
-
-        } else
-        {
+        } else {
             return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
         }
-
-
     }
     public function myFeedUpdate()
     {
@@ -885,16 +814,11 @@ class MoAjax extends BaseController
         ];
 
         $result = $MemberFeedModel->where($condition)->join('wh_member_feed_files', 'wh_member_feed_files.feed_idx = wh_member_feed.idx')->first();
-        if ($result)
-        {
+        if ($result) {
             return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
-
-        } else
-        {
+        } else {
             return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
         }
-
-
     }
 
     public function savePartner()
@@ -955,23 +879,18 @@ class MoAjax extends BaseController
 
         // 데이터 저장
         $selected = $MatchPartnerModel->where('member_ci', $member_ci)->first();
-        if ($selected)
-        {
+        if ($selected) {
             $inserted = $MatchPartnerModel->update($member_ci, $data);
-        } else
-        {
+        } else {
             $inserted = $MatchPartnerModel->insert($data);
         }
 
         // 저장완료 되었을 떄
-        if ($inserted)
-        {
+        if ($inserted) {
             return $this->response->setJSON(['status' => 'success', 'message' => 'Partner info saved successfully', 'data' => $data]);
-        } else
-        {
+        } else {
             return $this->response->setJSON(['status' => 'error', 'message' => 'Partner info saved successfully', 'data' => $data]);
         }
-
     }
     public function saveFactorBasic()
     {
@@ -996,23 +915,18 @@ class MoAjax extends BaseController
 
         // 데이터 저장
         $selected = $MatchFactorModel->where('member_ci', $member_ci)->first();
-        if ($selected)
-        {
+        if ($selected) {
             $inserted = $MatchFactorModel->update($member_ci, $data);
-        } else
-        {
+        } else {
             $inserted = $MatchFactorModel->insert($data);
         }
 
         // 저장완료 되었을 떄
-        if ($inserted)
-        {
+        if ($inserted) {
             return $this->response->setJSON(['status' => 'success', 'message' => 'Partner info saved successfully', 'data' => $data]);
-        } else
-        {
+        } else {
             return $this->response->setJSON(['status' => 'error', 'message' => 'Partner info saved successfully', 'data' => $data]);
         }
-
     }
     public function saveFactorInfo()
     {
@@ -1051,510 +965,322 @@ class MoAjax extends BaseController
 
         // 데이터 저장
         $selected = $MatchFactorModel->where('member_ci', $member_ci)->first();
-        if ($selected)
-        {
+        if ($selected) {
             $inserted = $MatchFactorModel->update($member_ci, $data);
-        } else
-        {
+        } else {
             $inserted = $MatchFactorModel->insert($data);
         }
 
         // 저장완료 되었을 떄
-        if ($inserted)
-        {
+        if ($inserted) {
             return $this->response->setJSON(['status' => 'success', 'message' => 'Partner info saved successfully', 'data' => $data]);
-        } else
-        {
+        } else {
             return $this->response->setJSON(['status' => 'error', 'message' => 'Partner info saved successfully', 'data' => $data]);
         }
-
+    
     }
-    public function chgExcept()
+
+    public function meetingSave()
     {
-        $word_file_path = APPPATH . 'data/MemberCode.php';
-        require ($word_file_path);
-        $value = $this->request->getPost('value');
-        if ($value === 'mbti')
+        $rules = [
+            'category' => [
+                'label' => 'category',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '카테고리를 선택해주세요.',
+                ]
+            ],
+            'recruitment_start_date' => [
+                'label' => 'recruitment_start_date',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '모집기간을 입력해주세요.',
+                ]
+            ],
+            'recruitment_end_date' => [
+                'label' => 'recruitment_end_date',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '모집기간을 입력해주세요.',
+                ]
+            ],
+            'meeting_start_date' => [
+                'label' => 'meeting_start_date',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '모임일자를 입력해주세요.',
+                ]
+            ],
+            'meeting_end_date' => [
+                'label' => 'meeting_end_date',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '모임일자를 입력해주세요.',
+                ]
+            ],
+            'number_of_people' => [
+                'label' => 'number_of_people',
+                'rules' => 'required|numeric',
+                'errors' => [
+                    'required' => '모집 인원을 입력해주세요.',
+                    'numeric' => '모집 인원은 숫자만 입력 가능합니다.'
+                ]
+            ],
+            'group_min_age' => [
+                'label' => 'group_min_age',
+                'rules' => 'required|numeric|max_length[2]',
+                'errors' => [
+                    'required' => '최소 나이를 입력해주세요.',
+                    'numeric' => '최소 나이는 숫자만 입력 가능합니다.',
+                    'max_length' => '최소 나이는 최대 2자리 숫자여야 합니다.',
+                ]
+            ],
+            'group_max_age' => [
+                'label' => 'group_max_age',
+                'rules' => 'required|numeric|max_length[2]',
+                'errors' => [
+                    'required' => '최대 나이를 입력해주세요.',
+                    'numeric' => '최대 나이는 숫자만 입력 가능합니다.',
+                    'max_length' => '최대 나이는 최대 2자리 숫자여야 합니다.'
+                ]
+            ],
+            'matching_rate' => [
+                'label' => 'matching_rate',
+                'rules' => 'required|numeric|less_than_equal_to[100]',
+                'errors' => [
+                    'required' => '매칭률을 선택해주세요.',
+                    'numeric' => '매칭률은 숫자만 입력 가능합니다.',
+                    'less_than_equal_to' => '매칭률은 100% 이하만 가능합니다.'
+                ]
+            ],
+            'title' => [
+                'label' => 'title',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '제목을 입력해주세요.',
+                ]
+            ],
+            'content' => [
+                'label' => 'content',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '내용을 입력해주세요.',
+                ]
+            ],
+            'meeting_place' => [
+                'label' => 'meeting_place',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '모임장소를 입력해주세요.',
+                ]
+            ],
+            'membership_fee' => [
+                'label' => 'membership_fee',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '회비를 입력해주세요.',
+                ]
+            ],
+        ];
+
+        if (!$this->validate($rules))
         {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $mbti]);
-        } else if ($value === 'animal_type1')
+            return $this->response->setJSON([
+                'status' => 'error',
+                'errors' => $this->validator->getErrors(),
+            ]);
+        } 
+        else
         {
+
+            $file = $this->request->getFile('meeting_photo');
+            $category = $this->request->getPost('category');
+            $recruitment_start_date = $this->request->getPost('recruitment_start_date');
+            $recruitment_end_date = $this->request->getPost('recruitment_end_date');
+            $meeting_start_date = $this->request->getPost('meeting_start_date');
+            $meeting_end_date = $this->request->getPost('meeting_end_date');
+            $number_of_people = $this->request->getPost('number_of_people');
+            $group_min_age = $this->request->getPost('group_min_age');
+            $group_max_age = $this->request->getPost('group_max_age');
+            $matching_rate = $this->request->getPost('matching_rate');
+            $title = $this->request->getPost('title');
+            $content = $this->request->getPost('content');
+            //$reservation_previous = $this->request->getPost('reservation_previous');
+            $meeting_place = $this->request->getPost('meeting_place');
+            $membership_fee = $this->request->getPost('membership_fee');
+            
+            // CI조회
             $session = session();
             $member_ci = $session->get('ci');
-            $MatchPartnerModel = new MatchPartnerModel();
-            $selected = $MatchPartnerModel->where('member_ci', $member_ci)->first();
-            if ($selected)
+
+            $data = [
+                'member_ci' => $member_ci,
+                'category' => $category,
+                'recruitment_start_date' => $recruitment_start_date,
+                'recruitment_end_date' => $recruitment_end_date,
+                'meeting_start_date' => $meeting_start_date,
+                'meeting_end_date' => $meeting_end_date,
+                'number_of_people' => $number_of_people,
+                'group_min_age' => $group_min_age,
+                'group_max_age' => $group_max_age,
+                'matching_rate' => $matching_rate,
+                'title' => $title,
+                'content' => $content,
+                //'reservation_previous' => $reservation_previous,
+                'meeting_place' => $meeting_place,
+                'membership_fee' => $membership_fee,
+            ];
+
+            //미팅 데이터 저장
+            $MeetingModel = new MeetingModel();
+            $inserted = $MeetingModel->insert($data);
+
+            if ($inserted)
             {
-                if ($selected['partner_gender'] === "0")
-                {
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $animalTypeFemale]);
-                } else
-                {
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $animalTypeMale]);
-                }
-            } else
+                //참석 멤버 추가(방장)
+                $meetMemdata = [
+                    'meeting_idx' =>$meeting_idx,
+                    'member_ci' => $ci,
+                    'meeting_master' =>'K',
+                    'create_at' => date('Y-m-d H:i:s'),
+                ];
+                $meeting_members = new MeetingMembersModel();
+                $meeting_members->insert($meetMemdata);
+
+                //파일 업로드
+                $upload= new Upload();
+                $fileData = $upload->meetingUpload($file, $inserted_id, $member_ci);
+
+                //저장된 미팅 idx
+                $inserted_id = $MeetingModel->getInsertID();
+
+                return $this->response->setJSON([
+                    'status' => 'success', 
+                    'message' => 'Save Meeting successfully', 
+                    'data' => $data,
+                    'inserted_id' => $inserted_id
+                ]);
+            } 
+            else
             {
-                return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
+                return $this->response->setJSON([
+                    'error' => 'error', 
+                    'message' => 'Failed to save meeting', 
+                    'data' => $data
+                ]);
             }
-        } else if ($value === 'stylish')
-        {
-            $session = session();
-            $member_ci = $session->get('ci');
-            $MatchPartnerModel = new MatchPartnerModel();
-            $selected = $MatchPartnerModel->where('member_ci', $member_ci)->first();
-            if ($selected)
-            {
-                if ($selected['partner_gender'] === "0")
-                {
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $femaleStyle]);
-                } else
-                {
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $maleStyle]);
-                }
-            } else
-            {
-                return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
-            }
-        } else if ($value === 'drinking')
-        {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $drinking]);
-        } else if ($value === 'year')
-        {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success']);
-        } else if ($value === 'bodyshape')
-        {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $bodyshape]);
-        } else if ($value === 'city')
-        {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $region]);
-        } else if ($value === 'married')
-        {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $marital]);
-        } else if ($value === 'smoker')
-        {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $smoking]);
-        } else if ($value === 'religion')
-        {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $religion]);
-        } else if ($value === 'gender')
-        {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $gender]);
-        } else if ($value === 'height')
-        {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $height]);
-        } else if ($value === 'education')
-        {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $education]);
-        } else if ($value === 'job')
-        {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $job]);
-        } else if ($value === 'asset_range')
-        {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $asset]);
-        } else if ($value === 'income_range')
-        {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $income]);
+        }
+    }
+
+    public function meetingFiltering()
+    {
+        $category = $this->request->getPost('category');// 카테고리 필터링
+        $searchText = $this->request->getPost('searchText');// 검색 필터링
+        $filterOption = $this->request->getPost('filterOption');// 필터링
+
+        $MeetingModel = new MeetingModel();
+
+        // 카테고리 필터링
+        if (!empty($category)) {
+            $MeetingModel->where('category', $category);
         }
 
-        // if ($value === '')
-        // {
-        // }
+        // 검색어 필터링
+        if (!empty($searchText)) {
+            $MeetingModel->like('title', $searchText);
+        }
+
+        // 필터 옵션에 따른 정렬
+        switch ($filterOption) {
+            case 'create_at':
+                $MeetingModel->orderBy('create_at', 'DESC');
+                break;
+            case 'meeting_start_date':
+                $MeetingModel->orderBy('meeting_start_date', 'ASC');
+                break;
+            case 'membership_fee':
+                $MeetingModel->orderBy('membership_fee', 'ASC');
+                break;
+            default:
+                $MeetingModel->orderBy('create_at', 'DESC');
+        }
+
+        $meetings = $MeetingModel
+                        ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx')
+                        ->findAll();
+                        
+
+        $MeetingMembersModel = new MeetingMembersModel();
+
+        // 각 모임에 대한 참여 인원 수 계산
+        foreach ($meetings as &$meeting) {
+            $memCount = $MeetingMembersModel
+                            ->where('meeting_idx', $meeting['idx'])
+                            ->countAllResults();
+            $meeting['count'] = $memCount;
+        }
+        unset($meeting); // 참조 해제
+
+        // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
+        return $this->response->setJSON($meetings);
     }
 
-    public function calcMatchRate()
+
+    public function myMeetingFiltering()
     {
-        $MemberModel = new MemberModel();
-        $MatchPartnerModel = new MatchPartnerModel();
-        $MatchFactorModel = new MatchFactorModel();
+        $filterOption = $this->request->getPost('filterOption');// 필터링
+
         $session = session();
         $ci = $session->get('ci');
 
-        $myPartner = $MatchPartnerModel->where(['member_ci' => $ci])->first();
-        $myFactor = $MatchFactorModel->where(['member_ci' => $ci])->first();
+        $MeetingModel = new MeetingModel();
 
-        $query = "SELECT * FROM members";
-        if (!empty ($myFactor['except1']) && $myFactor['except1'] !== '') //배제항목 있을 시 조건에서 배제하기
-        {
-            $query .= " WHERE (" . $myFactor['except1'] . " != '" . $myFactor['except1_detail'] . "'  OR " . $myFactor['except1'] . " IS NULL)";
-        }
-        if (!empty ($myFactor['except2']) && $myFactor['except2'] !== '') //배제항목 있을 시 조건에서 배제하기
-        {
-            $query .= " OR (" . $myFactor['except2'] . " != '" . $myFactor['except2_detail'] . "'  OR " . $myFactor['except2'] . " IS NULL)";
-        }
-        if (!empty ($myPartner['partner_gender']))  // 성별 거르기
-        {
-            $query .= " OR (gender = '" . $myPartner['partner_gender'] . ")";
-        }
-        $datas = $MemberModel
-            ->query($query)->getResultArray();
-
-        // 세션(또는 파일로 로컬)에 저장한다. 이후 로그인 시 해당 ajax 작동시킨다.
-        foreach ($datas as &$item)
-        {
-            // 기본배점 항목 계산
-            $calc = 0;
-
-            $mydata = $MemberModel->where(['ci' => $ci])->first();
-            if ($mydata['nickname'] !== $item['nickname'])
-            { // 본인이 아닌 경우만 계산
-                // group1 -- MBTI, 얼굴형, 스타일, 음주횟수
-                // MBTI
-                if ($item['mbti'] !== null)
-                {
-                    $calcValue = 0;
-                    if ($myPartner['mbti'] === $item['mbti'])
-                    // 원하는 유형이 같을 때
-                    {
-                        $calcValue = $myFactor['group1'] * 1; // 점수
-                    } else if ($myPartner['mbti'] === '16') // 무관일 때
-                    {
-                        $calcValue = $myFactor['group1'] * 1; // 모두에게 점수
-                    } else
-                    {
-                        $calcValue = 0;
-                    }
-                    $calc += $calcValue;
-                }
-                // 얼굴형
-                // if (!$item['mbti'] !== null) // 얼굴형 아직 없음
-                // {
-                //     $calcValue = 0;
-                //     if ($myPartner['mbti'] === $item['mbti'])
-                //     // 원하는 유형이 같을 때
-                //     {
-                //         $calcValue = $myFactor['group2'] * 1; // 점수
-                //     } else
-                //     {
-                //         $calcValue = 0;
-                //     }
-                //     $calc += $calcValue;
-                // }
-
-                // 스타일
-                if ($item['stylish'] !== null)
-                {
-                    $calcValue = 0;
-                    if ($myPartner['stylish'] === $item['stylish'])
-                    // 원하는 유형이 같을 때
-                    {
-                        $calcValue = $myFactor['group1'] * 1; // 점수
-                    } else
-                    {
-                        $calcValue = 0;
-                    }
-                    $calc += $calcValue;
-                }
-                // 음주횟수
-                if ($item['drinking'] !== null)
-                {
-                    $calcValue = 0;
-                    if ($myPartner['drinking'] === '0')
-                    { // 음주횟수 - 무관
-                        $calcValue = $myFactor['group1'] * 1; // 모두에게 점수
-                    } else
-                    {
-                        if ($myPartner['drinking'] === $item['drinking'])
-                        {
-                            $calcValue = $myFactor['group1'] * 1; // 그외 일치할 경우 점수
-                        } else
-                        {
-                            $calcValue = 0;
-                        }
-                    }
-                    $calc += $calcValue;
-                }
-                // group2 -- 나이, 체형, 지역, 결혼경험, 흡연유무, 종교
-                // 나이
-                if ($item['birthday'] !== null)
-                {
-                    $calcValue = 0;
-                    if ($myPartner['fromyear'] !== null && $myPartner['toyear'])
-                    {
-                        $birthday = $item['birthday'];
-                        $birthYear = substr($birthday, 0, 4);
-                        if ($birthYear >= $myPartner['fromyear'] && $birthYear <= $myPartner['toyear'])
-                        {
-                            // 나이조건 적합
-                            $calcValue = $myFactor['group2'] * 1;
-                        } else
-                        {
-                            // 나이 부적합
-                            $calcValue = 0;
-                        }
-
-                    } else
-                    {
-                        $calcValue = 0;
-                    }
-
-                    $calc += $calcValue;
-                }
-                // 체형
-                if ($item['bodyshape'] !== null)
-                {
-                    $calcValue = 0;
-                    if ($myPartner['bodyshape'] === '5')
-                    //무관일 때
-                    {
-                        $calcValue = $myFactor['group2'] * 1; // 점수
-                    } else if ($myPartner['bodyshape'] === $item['bodyshape'])
-                    // 원하는 체형이 같을 때
-                    {
-                        $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
-                    } else if ((($myPartner['bodyshape'] - 1) === $item['bodyshape'] || ($myPartner['bodyshape'] + 1) === $item['bodyshape']))
-                    // 바로옆 체형일 때
-                    {
-                        $calcValue = $myFactor['group2'] * 0.5; // 0.5배점
-                    } else
-                    {
-                        $calcValue = 0;
-                    }
-                    $calc += $calcValue;
-                }
-                // 지역
-                if ($item['city'] !== null)
-                {
-                    $calcValue = 0;
-                    if ($myPartner['region'] === $item['city'])
-                    // 지역이 같을 때
-                    {
-                        $calcValue = $myFactor['group2'] * 1; // 점수
-                    }
-
-                    $calc += $calcValue;
-                }
-                // 결혼유무
-                if ($item['married'] !== null)
-                {
-                    $calcValue = 0;
-                    if ($myPartner['married'] === '0')
-                    { // 결혼유무 - 무관
-                        $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
-                    } else
-                    {
-                        if ($item['married'] === '0')
-                        {
-                            $calcValue = $myFactor['group2'] * 1; // 미혼에게만 점수
-                        }
-                    }
-                    $calc += $calcValue;
-                }
-                // 흡연유무
-                if ($item['smoker'] !== null)
-                {
-                    $calcValue = 0;
-                    if ($myPartner['smoker'] === '0')
-                    { // 흡연유무 - 무관
-                        $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
-                    } else
-                    {
-                        if ($item['smoker'] === '0')
-                        {
-                            $calcValue = $myFactor['group2'] * 1; // 금연자만 점수
-                        }
-                    }
-                    $calc += $calcValue;
-                }
-                // 종교
-                if ($item['religion'] !== null)
-                {
-                    $calcValue = 0;
-                    if ($myPartner['religion'] === '5')
-                    { // 종교유무 - 무관
-                        $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
-                    } else
-                    {
-                        if ($myPartner['religion'] === $item['married'])
-                        {
-                            $calcValue = $myFactor['group2'] * 1; // 원하는 종교만 점수
-                        }
-                    }
-                    $calc += $calcValue;
-                }
-                // group3 -- 성별, 키, 학력, 직업, 자산구간, 소득구간
-                // 성별은 애초에 거르기 때문에 배점 X
-                // 키
-                if ($item['height'] !== null)
-                {
-                    $calcValue = 0;
-                    if ($myPartner['height'] !== null)
-                    {
-                        if ($item['height'] >= $myPartner['height'])
-                        {
-                            // 원하는 키보다 클 때
-                            $calcValue = $myFactor['group3'] * 1;
-                        } else
-                        {
-                            // 키 부적합
-                            $calcValue = 0;
-                        }
-
-                    } else
-                    {
-                        $calcValue = 0;
-                    }
-
-                    $calc += $calcValue;
-                }
-                // 학력
-                if ($item['education'] !== null)
-                {
-                    $calcValue = 0;
-                    if ($myPartner['education'] === '5')
-                    { // 학력 - 무관
-                        $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
-                    } else
-                    {
-                        if ($myPartner['education'] <= $item['education'])
-                        {
-                            $calcValue = $myFactor['group3'] * 1; // 원하는 학력 이상이면 점수
-                        } else
-                        {
-                            $calcValue = 0;
-                        }
-                    }
-                    $calc += $calcValue;
-                }
-                // 직업(군)
-                if ($item['job'] !== null)
-                {
-                    $calcValue = 0;
-                    if ($myPartner['job'] === '3')
-                    { // 직업 - 무관
-                        $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
-                    } else
-                    {
-                        if ($myPartner['job'] <= $item['job'])
-                        {
-                            $calcValue = $myFactor['group3'] * 1; // 원하는 직업 이상이면 점수
-                        } else
-                        {
-                            $calcValue = 0;
-                        }
-                    }
-                    $calc += $calcValue;
-                }
-                // 자산
-                if ($item['asset_range'] !== null)
-                {
-                    $calcValue = 0;
-                    if ($myPartner['asset_range'] === '6')
-                    { // 자산 - 무관
-                        $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
-                    } else
-                    {
-                        if ($myPartner['asset_range'] <= $item['asset_range'])
-                        {
-                            $calcValue = $myFactor['group3'] * 1; // 원하는 자산 이상이면 점수
-                        } else
-                        {
-                            $calcValue = 0;
-                        }
-                    }
-                    $calc += $calcValue;
-                }
-                // 소득
-                if ($item['income_range'] !== null)
-                {
-                    $calcValue = 0;
-                    if ($myPartner['income_range'] === '6')
-                    { // 소득 - 무관
-                        $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
-                    } else
-                    {
-                        if ($myPartner['income_range'] <= $item['income_range'])
-                        {
-                            $calcValue = $myFactor['group3'] * 1; // 원하는 소득 이상이면 점수
-                        } else
-                        {
-                            $calcValue = 0;
-                        }
-                    }
-                    $calc += $calcValue;
-                }
-
-
-                // 가중치 항목 계산
-                if ($myFactor['first_factor'] !== null)
-                {
-                    if ($item[$myFactor['first_factor']] === $myPartner[$myFactor['first_factor']])
-                    {
-                        $calcValue = 40;// 가중치1 항목 일치 시 추가점수
-                    }
-                    $calc += $calcValue;
-                }
-                if ($myFactor['second_factor'] !== null)
-                {
-                    if ($item[$myFactor['second_factor']] === $myPartner[$myFactor['second_factor']])
-                    {
-                        $calcValue = 30;// 가중치2 항목 일치 시 추가점수
-                    }
-                    $calc += $calcValue;
-                }
-                if ($myFactor['third_factor'] !== null)
-                {
-                    if ($item[$myFactor['third_factor']] === $myPartner[$myFactor['third_factor']])
-                    {
-                        $calcValue = 20;// 가중치3 항목 일치 시 추가점수
-                    }
-                    $calc += $calcValue;
-                }
-                if ($myFactor['fourth_factor'] !== null)
-                {
-                    if ($item[$myFactor['fourth_factor']] === $myPartner[$myFactor['fourth_factor']])
-                    {
-                        $calcValue = 10;// 가중치4 항목 일치 시 추가점수
-                    }
-                    $calc += $calcValue;
-                }
-
-
-                $item['calc'] = $calc;
-
-
-                // 계산한 가중치 항목 DB insert -> 회원수 너무 많아지면 python 배치 저장 필요
-                $MatchRateModel = new MatchRateModel();
-                $selectParam = [
-                    'member_ci' => $mydata['ci'],
-                    'my_nickname' => $mydata['nickname'],
-                    'your_nickname' => $item['nickname'],
-                ];
-                $selected = $MatchRateModel->where($selectParam)->first();
-                if ($selected)
-                {
-                    $query = "UPDATE wh_match_rate";
-                    $query .= " SET match_score = '" . $calc . "'";
-                    $query .= " WHERE my_nickname = '" . $mydata['nickname'] . "'";
-                    $query .= " AND your_nickname = '" . $item['nickname'] . "'";
-
-                    $result = $MatchRateModel
-                        ->query($query);
-                } else
-                {
-                    $insertParam = [
-                        'member_ci' => $mydata['ci'],
-                        'my_nickname' => $mydata['nickname'],
-                        'your_nickname' => $item['nickname'],
-                        'match_score' => $item['calc'],
-                        //'match_rate' => $rate,
-                    ];
-                    $result = $MatchRateModel->insert($insertParam);
-                }
-            }
-
-
+        // 필터 옵션에 따른 정렬
+        switch ($filterOption) {
+            case 'create_at':
+                $MeetingModel->orderBy('create_at', 'DESC');
+                break;
+            case 'meeting_start_date':
+                $MeetingModel->orderBy('meeting_start_date', 'ASC');
+                break;
+            case 'membership_fee':
+                $MeetingModel->orderBy('membership_fee', 'ASC');
+                break;
+            default:
+                $MeetingModel->orderBy('create_at', 'DESC');
         }
 
-        if ($result)
-        {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $datas]);
-        } else
-        {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
+        $meetings = $MeetingModel
+                        ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx')
+                        ->where('wh_meetings.member_ci', $ci)
+                        ->findAll();
+                        
+        $days = ['일', '월', '화', '수', '목', '금', '토'];
+        $currentDate = new \DateTime();
+
+        $MeetingMembersModel = new MeetingMembersModel();
+
+        foreach ($meetings as &$meeting) {
+            // 모임 시작 시간 포맷팅
+            $meetingDateTimestamp = strtotime($meeting['meeting_start_date']);
+            $meetingDay = date("w", $meetingDateTimestamp);//0~6
+            $dayName = $days[$meetingDay];//요일
+            $meetingDateTime = date("Y.m.d ", $meetingDateTimestamp) . ' (' . $dayName . ') ' . date(" H:i", $meetingDateTimestamp);
+            $meeting['meetingDateTime'] = $meetingDateTime;
+            
+            // 이벤트 종료 여부 판단
+            $eventDate = new \DateTime($meeting['meeting_start_date']);
+            $meeting['isEnded'] = ($currentDate > $eventDate);
+
+            // 각 모임에 대한 참여 인원 수 계산
+            $memCount = $MeetingMembersModel
+                            ->where('meeting_idx', $meeting['idx'])
+                            ->countAllResults();
+            $meeting['count'] = $memCount;
         }
+        unset($meeting);//참조 해제
 
-
-
+        // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
+        return $this->response->setJSON($meetings);
     }
-
 }

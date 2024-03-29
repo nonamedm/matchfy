@@ -50,11 +50,14 @@ $routes->post('/mo/mypage/walletTypeList', 'MoHome::walletTypeList');
 $routes->post('/mo/usePoint', 'MoHome::usePoint');
 $routes->get('/mo/mypage/group/list', 'MoHome::mypageGroupList');
 $routes->get('/mo/mypage/group/searchList', 'MoHome::mypageGroupSearchList');
-$routes->get('/mo/mypage/group/detail', 'MoHome::mypageGroupDetail');
+$routes->get('/mo/mypage/group/detail/(:num)', 'MoHome::mypageGroupDetail/$1');
 $routes->post('/mo/mypage/group/partcntPopup', 'MoHome::mypageGroupPartcntPopup');
 $routes->post('/mo/mypage/group/applyPopup', 'MoHome::mypageGroupApplyPopup');
 $routes->get('/mo/mypage/group/create', 'MoHome::mypageGroupCreate');
 $routes->get('/mo/mypage/mygroup/list', 'MoHome::mypageMygroupList');
+$routes->get('/mo/mypage/mygroup/myList', 'MoHome::mypageMygroupMyList');
+$routes->post('/mo/mypage/mygroup/select', 'MoHome::mypageMygroupEdit');
+$routes->post('/mo/mypage/mygroup/del', 'MoHome::mypageMygroupDel');
 $routes->get('/mo/mypage/mygroup/list/edit', 'MoHome::mypageMygroupListEdit');
 $routes->get('/mo/mypage/group/searchPopup', 'MoHome::mypageGroupSearchPopup');
 $routes->get('/mo/mymsg/ai/qna', 'MoHome::mymsgAiQna');
@@ -104,6 +107,9 @@ $routes->post('/ajax/saveFactorBasic', 'MoAjax::saveFactorBasic');
 $routes->post('/ajax/saveFactorInfo', 'MoAjax::saveFactorInfo');
 $routes->post('/ajax/chgExcept', 'MoAjax::chgExcept');
 $routes->post('/ajax/calcMatchRate', 'MoAjax::calcMatchRate');
+$routes->post('/ajax/meetingSave', 'MoAjax::meetingSave');
+$routes->post('/ajax/meetingFilter', 'MoAjax::meetingFiltering');
+$routes->post('/ajax/myMeetingFilter', 'MoAjax::myMeetingFiltering');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');
