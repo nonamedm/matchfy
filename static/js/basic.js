@@ -64,22 +64,30 @@ const certIdentify = () => {
     // document.body.appendChild(form);
     // form.submit();
     let tempValidation = false;
-    if ($('#input_name').val() === '') {
+    if ($('#input_name').val().trim() === '') {
         alert('이름을 입력해 주세요');
         tempValidation = false;
         $('#input_name').focus();
-    }
-    if ($('#input_mobile_no').val() === '') {
+    } else if ($('#input_mobile_no').val().trim() === '') {
         alert('전화번호를 입력해 주세요');
         tempValidation = false;
         $('#input_mobile_no').focus();
-    }
-    if ($('#input_birthday').val() === '') {
+    } else if ($('#input_birthday').val().trim() === '') {
         alert('생년월일을 입력해 주세요');
         tempValidation = false;
         $('#input_birthday').focus();
+    } else if ($('#input_gender').val().trim() === '') {
+        alert('성별을 선택해 주세요');
+        tempValidation = false;
+        $('#input_gender').focus();
     }
-    if ($('#input_name').val() !== '' && $('#input_mobile_no').val() !== '' && $('#input_birthday').val() !== '') {
+
+    if (
+        $('#input_name').val() !== '' &&
+        $('#input_mobile_no').val() !== '' &&
+        $('#input_birthday').val() !== '' &&
+        $('#input_gender').val() !== ''
+    ) {
         tempValidation = true;
     }
     if (tempValidation) {
@@ -149,8 +157,8 @@ const userLogout = () => {
             async: false,
             success: function (data) {
                 console.log(data);
-                location.reload();
                 alert('로그아웃 되었습니다.');
+                moveToUrl('/');
             },
             error: function (data, status, err) {
                 console.log(err);
@@ -553,13 +561,13 @@ const editPhotoListListner = () => {
                         img.src = e.target.result;
                         img.setAttribute('width', '100%');
                         img.setAttribute('height', '100%');
-                        img.addEventListener('click',function() {
+                        img.addEventListener('click', function () {
                             if (img.paused) {
                                 img.play();
                             } else {
                                 img.pause();
                             }
-                        })
+                        });
                         img.classList.add('profile_photo_posted');
                         imageElement.appendChild(img);
 
@@ -772,15 +780,15 @@ const meetingSave = (postData) => {
 const meetingFiltering = (category, searchText, filterOption) => {
     var postData = new FormData();
 
-    if (category !== undefined && category !== "") {
+    if (category !== undefined && category !== '') {
         postData.append('category', category);
     }
-    
-    if (searchText !== undefined && searchText !== "") {
+
+    if (searchText !== undefined && searchText !== '') {
         postData.append('searchText', searchText);
     }
 
-    if (filterOption !== undefined && filterOption !== "") {
+    if (filterOption !== undefined && filterOption !== '') {
         postData.append('filterOption', filterOption);
     }
 
@@ -795,8 +803,10 @@ const meetingFiltering = (category, searchText, filterOption) => {
             console.log(data);
             var listHtml = '';
             if (data.length > 0) {
-                data.forEach(function(meeting) {
-                    var imagePath = meeting.meeting_idx ? '/' + meeting.file_path + meeting.file_name : '/static/images/group_list_1.png';
+                data.forEach(function (meeting) {
+                    var imagePath = meeting.meeting_idx
+                        ? '/' + meeting.file_path + meeting.file_name
+                        : '/static/images/group_list_1.png';
                     listHtml += `
                         <a href="/mo/mypage/group/detail/${meeting.idx}">
                             <div class="group_list_item">
@@ -829,7 +839,7 @@ const meetingFiltering = (category, searchText, filterOption) => {
 const MymeetingFiltering = (filterOption) => {
     var postData = new FormData();
 
-    if (filterOption !== undefined && filterOption !== "") {
+    if (filterOption !== undefined && filterOption !== '') {
         postData.append('filterOption', filterOption);
     }
 
@@ -844,8 +854,10 @@ const MymeetingFiltering = (filterOption) => {
             console.log(data);
             var listHtml = '';
             if (data.length > 0) {
-                data.forEach(function(meeting) {
-                    var imagePath = meeting.meeting_idx ? '/' + meeting.file_path + meeting.file_name : '/static/images/group_list_1.png';
+                data.forEach(function (meeting) {
+                    var imagePath = meeting.meeting_idx
+                        ? '/' + meeting.file_path + meeting.file_name
+                        : '/static/images/group_list_1.png';
                     var endedOverlay = meeting.isEnded ? '<div class="ended_overlay">종료</div>' : '';
                     var grayscaleClass = meeting.isEnded ? 'grayscale' : '';
 
@@ -862,7 +874,9 @@ const MymeetingFiltering = (filterOption) => {
                                         <img src="/static/images/ico_location_16x16.png" />
                                         ${meeting.meeting_place}
                                     </div>
-                                    <p class="group_price">${parseInt(meeting.membership_fee).toLocaleString('ko-KR')}원</p>
+                                    <p class="group_price">${parseInt(meeting.membership_fee).toLocaleString(
+                                        'ko-KR',
+                                    )}원</p>
                                     <p class="group_schedule">${meeting.meetingDateTime}</p>
                                 </div>
                             </div>
@@ -870,7 +884,8 @@ const MymeetingFiltering = (filterOption) => {
                     `;
                 });
             } else {
-                listHtml = '<div style="text-align: center; margin-top: 20px; color: gray;">검색 결과가 없습니다.</div>';
+                listHtml =
+                    '<div style="text-align: center; margin-top: 20px; color: gray;">검색 결과가 없습니다.</div>';
             }
             $('.mygroup_list').html(listHtml);
         },

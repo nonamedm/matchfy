@@ -147,6 +147,11 @@ $income = array(
     array("id" => "6", "name" => "무관", "value" => "6"),
 );
 
+$genderCode = array(
+    array("id" => "0", "name" => "여성", "value" => "0"),
+    array("id" => "1", "name" => "남성", "value" => "1"),
+);
+
 
 $json = json_encode($array);
 // echo $json;

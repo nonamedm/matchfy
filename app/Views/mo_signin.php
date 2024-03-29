@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -22,6 +21,10 @@
         <?php $title = "준회원 프로필";
         include 'header.php'; ?>
 
+        <?php
+        $word_file_path = APPPATH . 'data/MemberCode.php';
+        require($word_file_path);
+        ?>
         <div class="sub_wrap">
             <div class="content_wrap">
                 <form class="main_signin_form" method="post" action="/mo/signinPhoto" enctype="multipart/form-data">
@@ -39,44 +42,45 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="name" class="signin_label">이름</label>
-                                <input id="name" name="name" type="text" value="<?php echo $name ?>"
-                                    placeholder="이름을 입력하세요" readonly>
+                                <input id="name" name="name" type="text" value="<?php echo $name ?>" placeholder="이름을 입력하세요" readonly>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="birthday" class="signin_label">생년월일</label>
-                                <input id="birthday" name="birthday" type="text" value="<?php echo $birthday ?>"
-                                    placeholder="생년월일을 입력하세요" readonly>
+                                <input id="birthday" name="birthday" type="text" value="<?php echo $birthday ?>" placeholder="생년월일을 입력하세요" readonly>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="gender" class="signin_label">성별</label>
-                                <select id="gender" name="gender" readonly>
-                                    <option>성별을 선택하세요</option>
-                                    <option value="0">여성</option>
-                                    <option value="1">남성</option>
+                                <select id="gender" name="gender">
+                                    <?php
+                                    foreach ($genderCode as $item) {
+                                        if ($item['id'] === $gender) {
+                                    ?>
+                                            <option value="<?= $item['value'] ?>">
+                                                <?= $item['name'] ?>
+                                            </option>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="city" class="signin_label">지역</label>
-                                <?php
-                                $word_file_path = APPPATH . 'data/MemberCode.php';
-                                require ($word_file_path);
-                                ?>
                                 <select id="city" name="city">
                                     <option value>지역을 선택하세요</option>
                                     <?php
-                                    foreach ($sido as $item)
-                                    {
-                                        ?>
+                                    foreach ($sido as $item) {
+                                    ?>
                                         <option value="<?= $item['id'] ?>">
                                             <?= $item['name'] ?>
                                         </option>
-                                        <?php
+                                    <?php
                                     }
                                     ?>
                                 </select>
@@ -151,11 +155,9 @@
     <!-- SCRIPTS -->
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             editPhotoListner();
-            // editPhotoListListner();
-            // editMovListListner();
-        });        
+        });
     </script>
 
     <!-- -->
