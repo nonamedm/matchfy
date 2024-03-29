@@ -295,7 +295,6 @@ const showFeedDetail = (contents, feedIdx) => {
                     myfeedDetailMov.setAttribute('src', '/' + data.data.thumb_filepath + '/' + data.data.thumb_filename);
                     $('#myfeed_cont').text(data.data.feed_cont);
                     $('#feed_idx').val(data.data.feed_idx);
-
                 }
             } else {
                 alert('오류가 발생하였습니다. \n다시 시도해 주세요.');

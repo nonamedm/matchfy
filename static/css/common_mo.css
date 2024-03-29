@@ -88,6 +88,7 @@ header .menu_right.edit {
     line-height: 17px;
     text-align: right;
     color: #ff0267;
+    cursor: pointer;
 }
 
 .mo_wrap {
@@ -187,6 +188,13 @@ header .menu_right.edit {
 .mo_wrap .sub_wrap .content_wrap .content_partner {
     display: flex;
     justify-content: space-between;
+}
+.mo_wrap .sub_wrap .content_wrap .content_partner.content_factor {
+    display: block;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid #dddddd;
+    padding: 30px;
 }
 .mo_wrap .sub_wrap .content_wrap .content_partner img {
     width: 74px;
@@ -646,6 +654,7 @@ td {
 .mygroup_list .apply_group_detail img {
     width: 100px;
     height: 100px;
+    border-radius: 10px;
 }
 .mygroup_list .apply_group_detail .group_location img {
     width: 16px;
@@ -655,6 +664,33 @@ td {
     display: flex;
     justify-content: space-between;
 }
+
+.grayscale {
+    filter: brightness(0.5);
+}
+
+.ended_overlay {
+    position: absolute;
+    top: 40%;
+    left: 15%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 2;
+}
+
+/* Make sure the parent position is relative for absolute positioning of the overlay */
+.apply_group_detail {
+    position: relative;
+}
+
+/* Optional: Add a hover effect to indicate clickable */
+a.ended:hover .ended_overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
 
 /* group detail*/
 .group_deatil_img img {
@@ -763,6 +799,9 @@ td {
 .group_search {
     display: flex;
     width: 350px;
+}
+.group_search img {
+    cursor: pointer;
 }
 .group_search_list {
     margin-top: 30px;
@@ -875,7 +914,12 @@ td {
     justify-content: space-between;
     margin-top: 20px;
 }
+.group_category .highlighted {
+    border: 2px solid #FFA500; /* 오렌지색 테두리 */
+    border-radius: 50%;
+}
 .group_category div {
+    cursor: pointer;
 }
 .group_category img {
     width: 54px;
@@ -1495,7 +1539,11 @@ td {
     width: 335px;
     margin: 0 auto;
 }
-
+.form_row.signin_form .signin_form_div.flex {
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+}
 .form_row.signin_form .signin_form_div .multy_select {
     display: flex;
 }
@@ -1503,6 +1551,9 @@ td {
 .form_row.signin_form .signin_form_div .multy_select select {
     width: 163px;
     margin-right: 9px;
+}
+.form_row.signin_form .signin_form_div.flex .multy_select select {
+    width: 115px;
 }
 .form_row.signin_form .signin_form_div .multy_select_three select {
     width: 107px;
@@ -1768,6 +1819,17 @@ form input[type='file'] {
     line-height: 18px;
     color: #111111;
 }
+
+.mo_wrap .chk_box label.totAgree_label_box {
+    font-family: 'Pretendard-Bold';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 18px;
+    color: #111111;
+    display: flex;
+}
+
 .mo_wrap .chk_box label.agree_cont_label {
     font-family: 'Pretendard-SemiBold';
     font-style: normal;
@@ -1793,8 +1855,10 @@ form input[type='file'] {
     padding: 15px;
     font-size: 15px;
     line-height: 18px;
-
     color: #999999;
+}
+.form_row .flex select {
+    width: 120px;
 }
 .agree_cont .textarea {
     width: 305px;
@@ -2093,7 +2157,7 @@ input[type='number']::-webkit-inner-spin-button {
 .notice_filter {
     height: 30px;
     background: #f5f5f5;
-    padding: 0 0 0 23px;
+    padding: 0 0 0 10px;
     display: flex;
     justify-content: space-between;
 }
@@ -2516,17 +2580,16 @@ input[type='number']::-webkit-inner-spin-button {
 .scroll_body::-webkit-scrollbar {
     width: 10px;
 }
-.scroll_body::-webkit-scrollbar-track { 
+.scroll_body::-webkit-scrollbar-track {
     background-color: #fff;
 }
-.scroll_body::-webkit-scrollbar-thumb { 
+.scroll_body::-webkit-scrollbar-thumb {
     /* background-color: #ff0267; */
     background-color: #fff;
 }
 .scroll_body::-webkit-scrollbar-button {
     display: none;
 }
-
 
 /* 코너에 라운드 효과 */
 .scroll_body::-webkit-scrollbar-track,
@@ -3194,7 +3257,7 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 /*loading*/
-.loading{
+.loading {
     position: fixed;
     left: 50%;
     top: 50%;
@@ -3203,6 +3266,22 @@ input[type='number']::-webkit-inner-spin-button {
     height: 5%;
     display: none;
 }
-.loading img{
+.loading img {
     width: 100%;
+}
+.meet_menu_right{
+    display: none;
+    display: flex;
+}
+.meet_menu_header{
+    margin-left: 10px;
+}
+/* meetings */
+.form_row.signin_form .signin_form_div .multy_input {
+    display: flex;
+}
+
+.form_row.signin_form .signin_form_div .multy_input input {
+    width: 160px !important; 
+    margin: 3px;
 }

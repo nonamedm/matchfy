@@ -19,12 +19,26 @@
                 <textarea placeholder="기타 의견을 입력해주세요."></textarea>
             </div> -->
             <input id="feed_idx" type="hidden" value="" />
+            <?php 
+                $session = $session = session();
+                $ci = $session->get('ci');
+                if ($user['ci'] === $ci) {
+            ?>
             <div class="layerPopup_bottom">
                 <div class="btn_group multy">
                     <button class="btn type02" onclick="myFeedDelete()">삭제</button>
                     <button class="btn type01" onclick="myFeedModify()">수정</button>
                 </div>
             </div>
+            <?php } else {
+            ?>
+            <div class="layerPopup_bottom">
+                <div class="btn_group">
+                    <button class="btn type01" onclick="closePopup()">닫기</button>
+                </div>
+            </div>
+            <?php
+            }?>
         </div>
     </div>
 </div>

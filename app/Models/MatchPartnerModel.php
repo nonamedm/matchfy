@@ -14,15 +14,16 @@ class MatchPartnerModel extends Model
     protected $useSoftDeletes = false;
     protected $protectFields = true;
     protected $allowedFields = [
-        // 준회원 구간
+        
         'idx',
         'member_ci',
         'partner_gender',
         'animal_type1',
-        'animal_type2',
-        'animal_type3',
+        'fromyear',
+        'toyear',
         'height',
         'stylish',
+        'bodyshape',
         'married',
         'smoker',
         'drinking',
@@ -32,15 +33,15 @@ class MatchPartnerModel extends Model
         'job',
         'asset_range',
         'income_range',
-        'father_birth_year',
         'father_job',
-        'mother_birth_year',
         'mother_job',
         'siblings',
+        'region',
         'residence1',
         'residence2',
         'residence3',
-        'delete_yn', 'last_access_dt'
+        'delete_yn',
+        'last_access_dt'
     ];
 
     protected bool $allowEmptyInserts = false;

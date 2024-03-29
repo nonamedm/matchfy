@@ -45,7 +45,9 @@
                                 <div class="profile">
                                     <h2>
                                         <?= $feed['nickname'] ?><span style="font-size:15px;"> 님</span>
-                                    </h2><span class="match_percent">99%</span>
+                                    </h2><span class="match_percent">
+                                        <?= $feed['matchScore']['match_score'] ?>점(%)
+                                    </span>
                                 </div>
                                 <p>
                                     <?= $feed['birthyear'] ?> ·
@@ -83,6 +85,7 @@
                 }
                 ?>
                 <hr class="hoz_part" />
+                <?= $sql ?>
             </div>
             <div style="height: 50px;"></div>
             <footer class="footer">
@@ -103,13 +106,21 @@
     <!-- SCRIPTS -->
 
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
+        $(document).ready(function () {
+            $.ajax({
+                url: '/ajax/calcMatchRate', // todo : 추후 로그인완료로 이동
+                type: 'POST',
+                async: false,
+                success: function (data) {
+                    console.log(data);
+
+                },
+                error: function (data, status, err) {
+                    console.log(err);
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
+            });
+        });
     </script>
 
     <!-- -->

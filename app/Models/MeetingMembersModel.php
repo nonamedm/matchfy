@@ -22,7 +22,8 @@ class MeetingMembersModel extends Model
         'delete_yn',
         'extra1',
         'extra2',
-        'extra3'
+        'extra3',
+        'count'
     ];
 
     protected bool $allowEmptyInserts = false;

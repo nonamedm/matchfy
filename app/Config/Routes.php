@@ -51,11 +51,14 @@ $routes->post('/mo/usePoint', 'MoHome::usePoint');
 $routes->get('/mo/mypage/group/list', 'MoHome::mypageGroupList');
 $routes->get('/mo/mypage/group/searchList', 'MoHome::mypageGroupSearchList');
 $routes->get('/mo/mypage/group/detail/(:num)', 'MoHome::mypageGroupDetail/$1');
-$routes->get('/mo/mypage/group/partcntPopup', 'MoHome::mypageGroupPartcntPopup');
-$routes->get('/mo/mypage/group/applyPopup', 'MoHome::mypageGroupApplyPopup');
+$routes->post('/mo/mypage/group/partcntPopup', 'MoHome::mypageGroupPartcntPopup');
+$routes->post('/mo/mypage/group/applyPopup', 'MoHome::mypageGroupApplyPopup');
 $routes->get('/mo/mypage/group/create', 'MoHome::mypageGroupCreate');
 $routes->get('/mo/mypage/mygroup/list', 'MoHome::mypageMygroupList');
-$routes->get('/mo/mypage/mygroup/list/edit', 'MoHome::mypageMygroupListEdit');
+$routes->get('/mo/mypage/mygroup/myList', 'MoHome::mypageMygroupMyList');
+$routes->post('/mo/mypage/mygroup/select', 'MoHome::mypageMygroupEdit');
+$routes->post('/mo/mypage/mygroup/del', 'MoHome::mypageMygroupDel');
+// $routes->get('/mo/mypage/mygroup/list/edit', 'MoHome::mypageMygroupListEdit');
 $routes->get('/mo/mypage/group/searchPopup', 'MoHome::mypageGroupSearchPopup');
 $routes->get('/mo/mymsg/ai/qna', 'MoHome::mymsgAiQna');
 $routes->get('/mo/myfeed/(:any)', 'MoHome::myfeed/$1');
@@ -78,6 +81,8 @@ $routes->post('/mo/alliance/exchangepointSubmit', 'MoHome::allianceExchangePoint
 $routes->get('/mo_mypage_excharge_success', 'MoHome::exchangePoint_success');
 $routes->get('/mo_mypage_excharge_fail', 'MoHome::exchangePoint_fail');
 $routes->get('/mo/partner', 'MoHome::partner');
+$routes->get('/mo/factorBasic', 'MoHome::factorBasic');
+$routes->get('/mo/factorInfo', 'MoHome::factorInfo');
 $routes->get('/mo/partner/regular', 'MoHome::partnerRegular');
 $routes->get('/mo/partner/premium', 'MoHome::partnerPremium');
 
@@ -98,7 +103,13 @@ $routes->post('/ajax/showFeedDetail', 'MoAjax::showFeedDetail');
 $routes->post('/ajax/myFeedDelete', 'MoAjax::myFeedDelete');
 $routes->post('/ajax/myFeedUpdate', 'MoAjax::myFeedUpdate');
 $routes->post('/ajax/savePartner', 'MoAjax::savePartner');
+$routes->post('/ajax/saveFactorBasic', 'MoAjax::saveFactorBasic');
+$routes->post('/ajax/saveFactorInfo', 'MoAjax::saveFactorInfo');
+$routes->post('/ajax/chgExcept', 'MoAjax::chgExcept');
+$routes->post('/ajax/calcMatchRate', 'MoAjax::calcMatchRate');
 $routes->post('/ajax/meetingSave', 'MoAjax::meetingSave');
+$routes->post('/ajax/meetingFilter', 'MoAjax::meetingFiltering');
+$routes->post('/ajax/myMeetingFilter', 'MoAjax::myMeetingFiltering');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

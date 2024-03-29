@@ -190,15 +190,15 @@ class Upload extends BaseController
             // 난수생성 (새 파일명 할당)
             $newName = $file->getRandomName();
 
-            //파일이동
-            $file->move(ROOTPATH.$uploadDir, $newName);
-
             // 데이터 저장
             $postData['org_name'] = $orgName;
             $postData['ext'] = $ext;
             $postData['file_name'] = $newName;
             $uploadDir = 'static/files/uploads/';
             $postData['file_path'] = $uploadDir;
+
+            //파일이동
+            $file->move(ROOTPATH.$uploadDir, $newName);
 
             //삽입된 데이터가 있을 경우 파일 데이터 추가
             if ($meeting_idx) {
