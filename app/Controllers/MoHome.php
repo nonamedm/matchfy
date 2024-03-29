@@ -818,7 +818,6 @@ class MoHome extends BaseController
             ->whereIn('a.meeting_idx', function ($builder) use ($ci) {
                 $builder->select('d.meeting_idx')
                     ->from('wh_meeting_members d')
-                    ->where('d.meeting_master', 'K')
                     ->where('d.member_ci', $ci);
             })
             ->where('b.delete_yn', 'N')
@@ -841,6 +840,7 @@ class MoHome extends BaseController
             return $this->response->setJSON(['success' => false]);
         }
     }
+
     public function mygoupRefreshList()
     {
         $db = db_connect();

@@ -58,7 +58,7 @@ $routes->get('/mo/mypage/mygroup/list', 'MoHome::mypageMygroupList');
 $routes->get('/mo/mypage/mygroup/myList', 'MoHome::mypageMygroupMyList');
 $routes->post('/mo/mypage/mygroup/select', 'MoHome::mypageMygroupEdit');
 $routes->post('/mo/mypage/mygroup/del', 'MoHome::mypageMygroupDel');
-$routes->get('/mo/mypage/mygroup/list/edit', 'MoHome::mypageMygroupListEdit');
+// $routes->get('/mo/mypage/mygroup/list/edit', 'MoHome::mypageMygroupListEdit');
 $routes->get('/mo/mypage/group/searchPopup', 'MoHome::mypageGroupSearchPopup');
 $routes->get('/mo/mymsg/ai/qna', 'MoHome::mymsgAiQna');
 $routes->get('/mo/myfeed/(:any)', 'MoHome::myfeed/$1');
