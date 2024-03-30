@@ -18,7 +18,7 @@ use App\Helpers\MoHelper;
 use App\Models\MeetModel;
 use App\Models\MeetPointModel;
 use CodeIgniter\Session\Session;
-
+use Kint\Zval\Value;
 
 class MoHome extends BaseController
 {
@@ -559,6 +559,7 @@ class MoHome extends BaseController
         // }
         return view('mo_mypage_group_detail', $data);
     }
+
     public function mypageGroupPartcntPopup()
     {
         $session = session();
@@ -609,7 +610,8 @@ class MoHome extends BaseController
         $peapleCountQuery = $meetModel
             ->select('m.number_of_people as number_of_people')
             ->from('wh_meetings m')
-            ->where('m.idx', $meeting_idx);
+            ->where('m.idx', $meeting_idx)
+            ->where('m.delete_yn', 'N');
         
         $peapleCountResult = $peapleCountQuery->get()->getRow();
         $number_of_people = $peapleCountResult->number_of_people;
@@ -769,6 +771,8 @@ class MoHome extends BaseController
     {
         return view('mo_mypage_group_create');
     }
+
+
     public function mypageMygroupList()
     {
         $db = db_connect();
@@ -805,10 +809,10 @@ class MoHome extends BaseController
         return view('mo_mypage_mygroup_list', $data);
     }
 
+    /* 참석한 모임 예약 리스트*/
     public function mypageMygroupMyList()
     {
         $db = db_connect();
-
         $session = session();
         $ci = $session->get('ci');
         
@@ -820,10 +824,48 @@ class MoHome extends BaseController
                       b.number_of_people, 
                       b.title, 
                       b.meeting_place, 
-                      b.membership_fee, 
+                      b.membership_fee,
+                      b.delete_yn,
                       COUNT(a.meeting_idx) AS meeting_idx_count,
                       c.file_path,
-                      c.file_name')
+                      c.file_name,
+                      a.delete_yn')
+            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+            ->join('wh_meetings_files c','b.idx = c.meeting_idx','left')
+            ->whereIn('a.meeting_idx', function ($builder) use ($ci) {
+                $builder->select('d.meeting_idx')
+                    ->from('wh_meeting_members d')
+                    ->where('d.member_ci', $ci);
+            })
+            ->where('b.delete_yn', 'N')
+            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
+        
+        $result = $query->get()->getResult();
+        
+        $data['meetings'] = $result;
+        return view('mo_mypage_mygroup_my_list', $data);
+    }
+
+    /* 참석한 모임 예약 새로고침 */
+    public function mygroupReservationRefresh(){
+        $db = db_connect();
+        $session = session();
+        $ci = $session->get('ci');
+        
+        $query = $db->table('wh_meeting_members a')
+            ->select('a.meeting_idx, 
+                      b.category, 
+                      b.meeting_start_date, 
+                      b.meeting_end_date, 
+                      b.number_of_people, 
+                      b.title, 
+                      b.meeting_place, 
+                      b.membership_fee,
+                      b.delete_yn,
+                      COUNT(a.meeting_idx) AS meeting_idx_count,
+                      c.file_path,
+                      c.file_name,
+                      a.delete_yn')
             ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
             ->join('wh_meetings_files c','b.idx = c.meeting_idx','left')
             ->whereIn('a.meeting_idx', function ($builder) use ($ci) {
@@ -838,9 +880,80 @@ class MoHome extends BaseController
         
         $data['meetings'] = $result;
 
-        return view('mo_mypage_mygroup_my_list', $data);
+        if ($result){
+            return $this->response->setJSON(['success' => true,'data' =>$result]);
+        } else{
+            return $this->response->setJSON(['success' => false]);
+        }
+    }
+    
+    /*예약취소팝업 */
+    public function mypageCancelReservation(){
+        $db = db_connect();
+        $session = session();
+        $ci = $session->get('ci');
+        $meeting_idx = $this->request->getPost('meetingIdx');
+
+        $query = $db->table('wh_meeting_members a')
+            ->select('a.meeting_idx, 
+                      b.category, 
+                      b.meeting_start_date, 
+                      b.meeting_end_date, 
+                      b.number_of_people, 
+                      b.title, 
+                      b.meeting_place, 
+                      b.membership_fee, 
+                      COUNT(a.meeting_idx) AS meeting_idx_count,
+                      c.file_path,
+                      c.file_name,
+                      a.delete_yn')
+            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+            ->join('wh_meetings_files c','b.idx = c.meeting_idx','left')
+            ->whereIn('a.meeting_idx', function ($builder) use ($ci) {
+                $builder->select('d.meeting_idx')
+                    ->from('wh_meeting_members d')
+                    ->where('d.member_ci', $ci);
+            })
+            ->where('b.delete_yn', 'N')
+            ->where('b.idx', $meeting_idx)
+            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
+        
+        $result = $query->get()->getResult();
+        
+        $data['meetings'] = $result;
+        
+        if ($result){
+            return $this->response->setJSON(['success' => true,'data' =>$result]);
+        } else{
+            return $this->response->setJSON(['success' => false]);
+        }
     }
 
+    /*예약취소 체크 */
+    public function mypageCancelReservationChk(){
+        $session = session();
+        $ci = $session->get('ci');
+        $meeting_idx = intval($this->request->getPost('meetingIdx'));
+        
+        $MeetingMembersModel = new MeetingMembersModel();
+
+        $data = [
+            'delete_yn' => 'Y',
+            'update_at' => date('Y-m-d H:i:s')
+        ];
+        
+        $result = $MeetingMembersModel->set($data)
+                                        ->where('member_ci', $ci)
+                                        ->where('meeting_idx', $meeting_idx)
+                                        ->update();
+        if ($result) {
+            return $this->response->setJSON(['success' => true]);
+        } else {
+            return $this->response->setJSON(['success' => false]);
+        }
+    }
+
+    /*내 모임 편집 */
     public function mypageMygroupEdit()
     {
         $result= $this->mygoupRefreshList();
@@ -852,6 +965,7 @@ class MoHome extends BaseController
         }
     }
     
+    /*새로고침 내모임 리스트 */
     public function mygoupRefreshList(){
         $db = db_connect();
 
@@ -885,6 +999,8 @@ class MoHome extends BaseController
         $data['meetings'] = $result;
         return $result;
     }
+
+    /* 모임삭제 */
     public function mypageMygroupDel(){
         
         $idxArray = $this->request->getPost('delArr');
@@ -904,10 +1020,10 @@ class MoHome extends BaseController
 
     }
 
-    public function mypageMygroupListEdit(): string
-    {
-        return view('mo_mypage_mygroup_list_edit');
-    }
+    // public function mypageMygroupListEdit(): string
+    // {
+    //     return view('mo_mypage_mygroup_list_edit');
+    // }
     public function mypageGroupSearchPopup(): string
     {
         return view('mo_mypage_group_search_popup');

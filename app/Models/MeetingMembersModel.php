@@ -13,7 +13,6 @@ class MeetingMembersModel extends Model
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
-
         'meeting_idx',
         'member_ci',
         'meeting_master',
