@@ -508,37 +508,122 @@
         });
 
         function savePartnerInfo() {
-            var postData = new FormData($('form')[0]);
-            $('#ranked li').each(function(index, li) {
-                var value = $(li).data('value');
-                postData.append('animal_type' + (index + 1), value);
-            });
+            let tempValidation = false;
+            if ($('#fromyear').val().trim() === '') {
+                alert('연령정보를 선택해 주세요');
+                tempValidation = false;
+                $('#fromyear').focus();
+            } else if ($('#toyear').val().trim() === '') {
+                alert('연령정보를 선택해 주세요');
+                tempValidation = false;
+                $('#toyear').focus();
+            } else if ($('#region').val().trim() === '') {
+                alert('지역을 선택해 주세요');
+                tempValidation = false;
+                $('#region').focus();
+            } else if ($('#marital').val().trim() === '') {
+                alert('결혼경험유무를 선택해 주세요');
+                tempValidation = false;
+                $('#marital').focus();
+            } else if ($('#smoking').val().trim() === '') {
+                alert('흡연유무를 선택해 주세요');
+                tempValidation = false;
+                $('#smoking').focus();
+            } else if ($('#drinking').val().trim() === '') {
+                alert('음주횟수를 선택해 주세요');
+                tempValidation = false;
+                $('#drinking').focus();
+            } else if ($('#religion').val().trim() === '') {
+                alert('종교를 선택해 주세요');
+                tempValidation = false;
+                $('#religion').focus();
+            } else if ($('#mbti').val().trim() === '') {
+                alert('MBTI를 선택해 주세요');
+                tempValidation = false;
+                $('#mbti').focus();
+            } else if ($('#height').val().trim() === '') {
+                alert('최소 키를 입력해 주세요');
+                tempValidation = false;
+                $('#height').focus();
+            } else if ($('#bodyshape').val().trim() === '') {
+                alert('체형을 선택해 주세요');
+                tempValidation = false;
+                $('#bodyshape').focus();
+            } else if ($('#personal_style').val().trim() === '') {
+                alert('스타일을 선택해 주세요');
+                tempValidation = false;
+                $('#personal_style').focus();
+            } else if ($('#education').val().trim() === '') {
+                alert('최종학력을 선택해 주세요');
+                tempValidation = false;
+                $('#education').focus();
+            } else if ($('#job').val().trim() === '') {
+                alert('직업군을 선택해 주세요');
+                tempValidation = false;
+                $('#job').focus();
+            } else if ($('#asset_range').val().trim() === '') {
+                alert('자산구간을 선택해 주세요');
+                tempValidation = false;
+                $('#asset_range').focus();
+            } else if ($('#income_range').val().trim() === '') {
+                alert('소득구간을 선택해 주세요');
+                tempValidation = false;
+                $('#income_range').focus();
+            }
 
-            $.ajax({
-                url: '/ajax/savePartner', // todo : 추후 본인인증 연결
-                type: 'POST',
-                data: postData,
-                processData: false,
-                contentType: false,
-                async: false,
-                success: function(data) {
-                    console.log(data);
-                    if (data.status === 'success') {
-                        // 성공                        
-                        console.log('저장', data);
-                        moveToUrl('/mo/factorBasic');
-                    } else if (data.status === 'error') {
-                        console.log('실패', data);
-                    } else {
-                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
-                    }
-                    return false;
-                },
-                error: function(data, status, err) {
-                    console.log(err);
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-                },
-            });
+            if (
+                $('#fromyear').val() !== '' &&
+                $('#toyear').val() !== '' &&
+                $('#region').val() !== '' &&
+                $('#marital').val() !== '' &&
+                $('#smoking').val() !== '' &&
+                $('#drinking').val() !== '' &&
+                $('#religion').val() !== '' &&
+                $('#mbti').val() !== '' &&
+                $('#height').val() !== '' &&
+                $('#bodyshape').val() !== '' &&
+                $('#personal_style').val() !== '' &&
+                $('#education').val() !== '' &&
+                $('#job').val() !== '' &&
+                $('#asset_range').val() !== '' &&
+                $('#income_range').val() !== ''
+            ) {
+                tempValidation = true;
+            }
+            if (tempValidation) {
+                var postData = new FormData($('form')[0]);
+                $('#ranked li').each(function(index, li) {
+                    var value = $(li).data('value');
+                    postData.append('animal_type' + (index + 1), value);
+                });
+
+                $.ajax({
+                    url: '/ajax/savePartner', // todo : 추후 본인인증 연결
+                    type: 'POST',
+                    data: postData,
+                    processData: false,
+                    contentType: false,
+                    async: false,
+                    success: function(data) {
+                        console.log(data);
+                        if (data.status === 'success') {
+                            // 성공                        
+                            console.log('저장', data);
+                            moveToUrl('/mo/factorBasic');
+                        } else if (data.status === 'error') {
+                            console.log('실패', data);
+                        } else {
+                            alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        }
+                        return false;
+                    },
+                    error: function(data, status, err) {
+                        console.log(err);
+                        alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    },
+                });
+            }
+
         }
     </script>
 

@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -246,23 +245,6 @@
         <div style="height: 50px;"></div>
         <footer class="footer">
 
-            <!-- <div class="footer_logo mb40">
-                matchfy
-            </div>
-            <div class="footer_link mb40">
-                <a href="#">회사정보</a>
-                <a href="#">개인정보 처리방침</a>
-                <a href="#">서비스 이용약관</a>
-            </div>
-            <div class="footer_info mb40">
-                <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
-                        src="/static/images/part_line.png" /> gildong@naver.com</span>
-            </div>
-            <div class="footer_copy">
-                COPYRIGHT 2023. ALL RIGHTS RESERVED.
-            </div> -->
-
         </footer>
     </div>
 
@@ -270,7 +252,7 @@
     <!-- SCRIPTS -->
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             var first_factor = "<?php echo $first_factor; ?>"
             var second_factor = "<?php echo $second_factor; ?>"
             var third_factor = "<?php echo $third_factor; ?>"
@@ -310,9 +292,11 @@
                 $.ajax({
                     url: '/ajax/chgExcept', // todo : 추후 본인인증 연결
                     type: 'POST',
-                    data: { "value": e.value },
+                    data: {
+                        "value": e.value
+                    },
                     async: false,
-                    success: function (data) {
+                    success: function(data) {
                         console.log(data);
                         if (data.status === 'success') {
                             // 성공                        
@@ -328,7 +312,7 @@
                         }
                         return false;
                     },
-                    error: function (data, status, err) {
+                    error: function(data, status, err) {
                         console.log(err);
                         alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                     },
@@ -339,33 +323,72 @@
             }
         }
         const saveFactorInfo = () => {
-            var postData = new FormData($('form')[0]);
-            $.ajax({
-                url: '/ajax/saveFactorInfo', // todo : 추후 본인인증 연결
-                type: 'POST',
-                data: postData,
-                processData: false,
-                contentType: false,
-                async: false,
-                success: function (data) {
-                    console.log(data);
-                    if (data.status === 'success') {              // 성공                        
-                        console.log('저장', data);
-                        if (confirm('파트너 정보저장 성공! \n마이메뉴로 이동합니다.')) {
-                            moveToUrl('/mo/menu');
+            let tempValidation = false;
+            if ($('#first_factor').val().trim() === '') {
+                alert('1순위 항목을 선택해주세요');
+                tempValidation = false;
+                $('#first_factor').focus();
+            } else if ($('#second_factor').val().trim() === '') {
+                alert('2순위 항목을 선택해주세요');
+                tempValidation = false;
+                $('#second_factor').focus();
+            } else if ($('#except1').val().trim() === '') {
+                alert('배제1 항목을 선택해 주세요');
+                tempValidation = false;
+                $('#except1').focus();
+            } else if ($('#except1_detail').val().trim() === '') {
+                alert('배제1 상세항목을 선택해 주세요');
+                tempValidation = false;
+                $('#except1_detail').focus();
+            } else if ($('#except2').val().trim() === '') {
+                alert('배제2 항목을 선택해 주세요');
+                tempValidation = false;
+                $('#except2').focus();
+            } else if ($('#except2_detail').val().trim() === '') {
+                alert('배제2 상세항목을 선택해 주세요');
+                tempValidation = false;
+                $('#except2_detail').focus();
+            }
+
+            if (
+                $('#first_factor').val() !== '' &&
+                $('#second_factor').val() !== '' &&
+                $('#except1').val() !== '' &&
+                $('#except2').val() !== '' &&
+                $('#except1_detail').val() !== '' &&
+                $('#except2_detail').val() !== ''
+            ) {
+                tempValidation = true;
+            }
+            if (tempValidation) {
+                var postData = new FormData($('form')[0]);
+                $.ajax({
+                    url: '/ajax/saveFactorInfo', // todo : 추후 본인인증 연결
+                    type: 'POST',
+                    data: postData,
+                    processData: false,
+                    contentType: false,
+                    async: false,
+                    success: function(data) {
+                        console.log(data);
+                        if (data.status === 'success') { // 성공                        
+                            console.log('저장', data);
+                            if (confirm('파트너 정보저장 성공! \n마이메뉴로 이동합니다.')) {
+                                moveToUrl('/mo/menu');
+                            }
+                        } else if (data.status === 'error') {
+                            console.log('실패', data);
+                        } else {
+                            alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                         }
-                    } else if (data.status === 'error') {
-                        console.log('실패', data);
-                    } else {
-                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
-                    }
-                    return false;
-                },
-                error: function (data, status, err) {
-                    console.log(err);
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-                },
-            });
+                        return false;
+                    },
+                    error: function(data, status, err) {
+                        console.log(err);
+                        alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    },
+                });
+            }
         }
     </script>
 

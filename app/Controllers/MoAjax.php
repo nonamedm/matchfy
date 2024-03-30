@@ -968,12 +968,29 @@ class MoAjax extends BaseController
         $except1_detail = $this->request->getPost('except1_detail');
         $except2_detail = $this->request->getPost('except2_detail');
 
+        if (!$third_factor && !$fourth_factor) {
+            $first_factor_point = 60;
+            $second_factor_point = 40;
+        } else if (!$fourth_factor) {
+            $first_factor_point = 50;
+            $second_factor_point = 30;
+            $third_factor_point = 20;
+        } else {
+            $first_factor_point = 40;
+            $second_factor_point = 30;
+            $third_factor_point = 20;
+            $fourth_factor_point = 10;
+        }
         $data = [
             'member_ci' => $member_ci,
             'first_factor' => $first_factor,
+            'first_factor_point' => $first_factor_point,
             'second_factor' => $second_factor,
+            'second_factor_point' => $second_factor_point,
             'third_factor' => $third_factor,
+            'third_factor_point' => $third_factor_point,
             'fourth_factor' => $fourth_factor,
+            'fourth_factor_point' => $fourth_factor_point,
             'fifth_factor' => $fifth_factor,
             'except1' => $except1,
             'except2' => $except2,
@@ -1614,28 +1631,28 @@ class MoAjax extends BaseController
                 // 가중치 항목 계산
                 if ($myFactor['first_factor'] !== null) {
                     if ($item[$myFactor['first_factor']] === $myPartner[$myFactor['first_factor']]) {
-                        $calcValue = 40; // 가중치1 항목 일치 시 추가점수
+                        $calcValue = $myFactor['first_factor_point']; // 가중치1 항목 일치 시 추가점수
                     }
                     $calc += $calcValue;
                     $calcMax += $calcValue;
                 }
                 if ($myFactor['second_factor'] !== null) {
                     if ($item[$myFactor['second_factor']] === $myPartner[$myFactor['second_factor']]) {
-                        $calcValue = 30; // 가중치2 항목 일치 시 추가점수
+                        $calcValue = $myFactor['second_factor_point']; // 가중치2 항목 일치 시 추가점수
                     }
                     $calc += $calcValue;
                     $calcMax += $calcValue;
                 }
                 if ($myFactor['third_factor'] !== null) {
                     if ($item[$myFactor['third_factor']] === $myPartner[$myFactor['third_factor']]) {
-                        $calcValue = 20; // 가중치3 항목 일치 시 추가점수
+                        $calcValue = $myFactor['third_factor_point']; // 가중치3 항목 일치 시 추가점수
                     }
                     $calc += $calcValue;
                     $calcMax += $calcValue;
                 }
                 if ($myFactor['fourth_factor'] !== null) {
                     if ($item[$myFactor['fourth_factor']] === $myPartner[$myFactor['fourth_factor']]) {
-                        $calcValue = 10; // 가중치4 항목 일치 시 추가점수
+                        $calcValue = $myFactor['fourth_factor_point']; // 가중치4 항목 일치 시 추가점수
                     }
                     $calc += $calcValue;
                     $calcMax += $calcValue;
