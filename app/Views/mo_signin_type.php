@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -19,7 +18,8 @@
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
 
-        <?php $title = "회원 안내"; include 'header.php'; ?>
+        <?php $title = "회원 안내";
+        include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
@@ -92,9 +92,8 @@
                 </form>
 
                 <div class="btn_group multy">
-                    <button type="button" class="btn type02">취소</button>
-                    <button type="button" class="btn type01"
-                        onclick='signInType(<?php echo json_encode($postData); ?>)'>다음</button>
+                    <button type="button" class="btn type02" onclick="moveToUrl('/')">취소</button>
+                    <button type="button" class="btn type01" onclick='signInType(<?php echo json_encode($postData); ?>)'>다음</button>
                 </div>
             </div>
         </div>

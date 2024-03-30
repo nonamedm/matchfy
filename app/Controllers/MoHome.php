@@ -44,7 +44,15 @@ class MoHome extends BaseController
         $BoardModel2->setTableName('wh_board_privacy');
         $postData['privacy'] = $BoardModel2->orderBy('created_at', 'DESC')->first();
 
-        return view('mo_agree', $postData);
+        $MemberModel = new MemberModel();
+        $mobile_no = $postData['mobile_no'];
+        $selected = $MemberModel->where('mobile_no', $mobile_no)->first();
+        if ($selected) {
+            echo '<script>alert("이미 가입된 휴대폰 번호입니다");</script>';
+            return view('mo_pass', $postData);
+        } else {
+            return view('mo_agree', $postData);
+        }
     }
     public function signin(): string
     {
@@ -68,8 +76,18 @@ class MoHome extends BaseController
         // 모든 POST 데이터를 하나의 배열에 담기
         $data['postData'] = $postData;
 
-        // view에 데이터 전달
-        return view('mo_signin_type', $data);
+        // 현재 페이지에서는 이미 가입완료이므로 로그인 시키기
+        $moAjax = new \App\Controllers\MoAjax();
+
+        $ci = $this->request->getPost('ci');
+        $mobile_no = $this->request->getPost('mobile_no');
+
+        $result = $moAjax->loginParam($mobile_no);
+        if ($result === '0') {
+            return view('mo_signin_type', $data);
+        } else {
+            return view('mo_signin_photo', $data);
+        }
     }
     public function signinSuccess(): string
     {
@@ -80,8 +98,11 @@ class MoHome extends BaseController
         $postData = $this->request->getPost();
         $moAjax = new \App\Controllers\MoAjax();
 
-        $ci = $this->request->getPost('ci');
-        $grade = $this->request->getPost('grade');
+        $session = session();
+        $ci = $session->get('ci');
+        $postData['ci'] = $ci;
+
+        $grade = 'grade02';
 
         // 등급부터 업그레이드 후 페이지 뷰
         $result = $moAjax->gradeUpdate($ci, $grade);
@@ -98,8 +119,11 @@ class MoHome extends BaseController
         $postData = $this->request->getPost();
         $moAjax = new \App\Controllers\MoAjax();
 
-        $ci = $this->request->getPost('ci');
-        $grade = $this->request->getPost('grade');
+        $session = session();
+        $ci = $session->get('ci');
+        $postData['ci'] = $ci;
+
+        $grade = 'grade03';
 
         // 등급부터 업그레이드 후 페이지 뷰
         $result = $moAjax->gradeUpdate($ci, $grade);

@@ -58,6 +58,25 @@ class MoAjax extends BaseController
             return $this->response->setJSON(['status' => 'error', 'message' => '일치하는 회원 정보가 없습니다.']);
         }
     }
+    public function loginParam($param)
+    {
+        $mobile_no = $param;
+        $MemberModel = new MemberModel();
+
+        $user = $MemberModel->where('mobile_no', $mobile_no)->first();
+
+        if ($user) {
+            $session = session();
+            $session->set([
+                'ci' => $user['ci'],
+                'name' => $user['name'],
+                'isLoggedIn' => true //로그인 상태
+            ]);
+            return '0';
+        } else {
+            return '1';
+        }
+    }
 
     public function logout()
     {
@@ -540,6 +559,7 @@ class MoAjax extends BaseController
         $postData = $this->request->getPost('uploadedFiles');
         $postData2 = $this->request->getPost('uploadedMovs');
         $ci = $this->request->getPost('ci');
+        $mobile_no = $this->request->getPost('mobile_no');
 
         $insertedData = [];
 
@@ -609,6 +629,7 @@ class MoAjax extends BaseController
         }
         $return = [
             'ci' => $ci,
+            'mobile_no' => $mobile_no,
             'file_path' => $file_path,
             'file_name' => $file_name,
             'insertedData' => $insertedData

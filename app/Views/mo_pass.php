@@ -50,13 +50,13 @@
             <div class="content_title">
                 <p>* 추후 본인인증 서비스를 연결할 때 까지는 개인정보 직접입력이 필요합니다.</p>
             </div>
-            <input id="input_name" class="temp_input_text" type="text" name="name" placeholder="이름 입력" />
-            <input id="input_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="전화번호 입력" />
-            <input id="input_birthday" class="temp_input_text" type="text" name="birthday" placeholder="생년월일 입력" />
+            <input id="input_name" class="temp_input_text" type="text" name="name" placeholder="이름 입력" value="<?= $name ?>" />
+            <input id="input_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="전화번호 입력" value="<?= $mobile_no ?>" />
+            <input id="input_birthday" class="temp_input_text" type="text" name="birthday" placeholder="생년월일 입력" value="<?= $birthday ?>" />
             <select id="input_gender" class="temp_input_text" name="gender">
                 <option>성별을 선택하세요</option>
-                <option value="0">여성</option>
-                <option value="1">남성</option>
+                <option value="0" <?php if ($gender === '0') : ?>selected<?php endif ?>>여성</option>
+                <option value="1" <?php if ($gender === '1') : ?>selected<?php endif ?>>남성</option>
             </select>
             </form>
         </div>

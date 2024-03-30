@@ -190,112 +190,229 @@ const submitFormAgree = () => {
 
 const signUp = () => {
     var postData = new FormData(document.querySelector('form'));
-    $.ajax({
-        url: '/ajax/signUp', // todo : 추후 본인인증 연결
-        type: 'POST',
-        data: postData,
-        processData: false,
-        contentType: false,
-        async: false,
-        success: function (data) {
-            console.log(data);
-            if (data.status === 'success') {
-                // 성공
-                var formData = document.querySelector('form');
-                if (!data.data.org_name) {
-                    data.data.org_name = 'profile_noimg.png';
-                    data.data.file_name = 'profile_noimg.png';
-                    data.data.file_path = 'static/images/';
-                    data.data.ext = 'png';
-                }
-                for (var key in data.data) {
-                    if (data.data.hasOwnProperty(key)) {
-                        if (key === 'ci') {
-                            var input = document.createElement('input');
-                            input.type = 'hidden'; // hidden 필드로 생성
-                            input.name = key;
-                            input.value = data.data[key];
-                            formData.appendChild(input);
+
+    let tempValidation = false;
+    if ($('#name').val().trim() === '') {
+        alert('이름을 입력해 주세요');
+        tempValidation = false;
+        $('#name').focus();
+    } else if ($('#birthday').val().trim() === '') {
+        alert('생년월일을 입력해 주세요');
+        tempValidation = false;
+        $('#birthday').focus();
+    } else if ($('#city').val().trim() === '') {
+        alert('지역을 선택해 주세요');
+        tempValidation = false;
+        $('#city').focus();
+    } else if ($('#gender').val().trim() === '') {
+        alert('성별을 선택해 주세요');
+        tempValidation = false;
+        $('#gender').focus();
+    }
+
+    if (
+        $('#name').val() !== '' &&
+        $('#birthday').val() !== '' &&
+        $('#city').val() !== '' &&
+        $('#gender').val() !== ''
+    ) {
+        tempValidation = true;
+    }
+    if (tempValidation) {
+        $.ajax({
+            url: '/ajax/signUp', // todo : 추후 본인인증 연결
+            type: 'POST',
+            data: postData,
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function (data) {
+                console.log(data);
+                if (data.status === 'success') {
+                    // 성공
+                    var formData = document.querySelector('form');
+                    if (!data.data.org_name) {
+                        data.data.org_name = 'profile_noimg.png';
+                        data.data.file_name = 'profile_noimg.png';
+                        data.data.file_path = 'static/images/';
+                        data.data.ext = 'png';
+                    }
+                    for (var key in data.data) {
+                        if (data.data.hasOwnProperty(key)) {
+                            if (key === 'ci') {
+                                var input = document.createElement('input');
+                                input.type = 'hidden'; // hidden 필드로 생성
+                                input.name = key;
+                                input.value = data.data[key];
+                                formData.appendChild(input);
+                            }
+                            if (key === 'mobile_no') {
+                                var input = document.createElement('input');
+                                input.type = 'hidden'; // hidden 필드로 생성
+                                input.name = key;
+                                input.value = data.data[key];
+                                formData.appendChild(input);
+                            }
                         }
                     }
-                }
-                submitForm();
-            } else if (data.status === 'error') {
-                // 한번만 출력되게 함
-                $('.alert_validation').remove();
-                // 오류 메시지 표시
-                Object.keys(data.errors).forEach(function (key, index) {
-                    var field = $('[name="' + key + '"]');
-                    var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div 선택
+                    submitForm();
+                } else if (data.status === 'error') {
+                    // 한번만 출력되게 함
+                    $('.alert_validation').remove();
+                    // 오류 메시지 표시
+                    Object.keys(data.errors).forEach(function (key, index) {
+                        var field = $('[name="' + key + '"]');
+                        var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div 선택
 
-                    // 오류 메시지 추가
-                    if (!topMostDiv.next().hasClass('alert_validation')) {
-                        // 이미 오류 메시지가 있는지 확인
-                        topMostDiv.after('<div class="alert alert_validation">' + data.errors[key] + '</div>');
-                    }
-                    // 처음 validation 포커스
-                    if (index === 0) {
-                        field.focus();
-                    }
-                });
-            } else {
-                alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
-            }
-            return false;
-        },
-        error: function (data, status, err) {
-            console.log(err);
-            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-        },
-    });
+                        // 오류 메시지 추가
+                        if (!topMostDiv.next().hasClass('alert_validation')) {
+                            // 이미 오류 메시지가 있는지 확인
+                            topMostDiv.after('<div class="alert alert_validation">' + data.errors[key] + '</div>');
+                        }
+                        // 처음 validation 포커스
+                        if (index === 0) {
+                            field.focus();
+                        }
+                    });
+                } else {
+                    alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                }
+                return false;
+            },
+            error: function (data, status, err) {
+                console.log(err);
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            },
+        });
+    } else {
+    }
 };
 
 const signUpdate = (postData) => {
-    var postData = new FormData(document.querySelector('form'));
-    $.ajax({
-        url: '/ajax/signUpdate',
-        type: 'POST',
-        data: postData,
-        processData: false,
-        contentType: false,
-        async: false,
-        success: function (data) {
-            console.log(data);
-            if (data.status === 'success') {
-                // 성공
-                var gradeText = data.data.grade === 'grade02' ? '정회원' : '프리미엄회원';
-                localStorage.setItem('gradeText', gradeText);
+    let tempValidation = false;
+    if ($('#marital').val().trim() === '') {
+        alert('결혼유무를 선택해 주세요');
+        tempValidation = false;
+        $('#marital').focus();
+    } else if ($('#smoking').val().trim() === '') {
+        alert('흡연유무를 선택해 주세요');
+        tempValidation = false;
+        $('#smoking').focus();
+    } else if ($('#drinking').val().trim() === '') {
+        alert('음주횟수를 선택해 주세요');
+        tempValidation = false;
+        $('#drinking').focus();
+    } else if ($('#religion').val().trim() === '') {
+        alert('종교를 선택해 주세요');
+        tempValidation = false;
+        $('#religion').focus();
+    } else if ($('#mbti').val().trim() === '') {
+        alert('MBTI를 선택해 주세요');
+        tempValidation = false;
+        $('#mbti').focus();
+    } else if ($('#height').val().trim() === '') {
+        alert('키를 입력해 주세요');
+        tempValidation = false;
+        $('#height').focus();
+    } else if ($('#bodyshape').val().trim() === '') {
+        alert('체형을 선택해 주세요');
+        tempValidation = false;
+        $('#bodyshape').focus();
+    } else if ($('#personal_style').val().trim() === '') {
+        alert('스타일을 선택해 주세요');
+        tempValidation = false;
+        $('#personal_style').focus();
+    } else if ($('#education').val().trim() === '') {
+        alert('최종학력을 선택해 주세요');
+        tempValidation = false;
+        $('#education').focus();
+    } else if ($('#major').val().trim() === '') {
+        alert('전공을 입력해 주세요');
+        tempValidation = false;
+        $('#major').focus();
+    } else if ($('#school').val().trim() === '') {
+        alert('학교명을 입력해 주세요');
+        tempValidation = false;
+        $('#school').focus();
+    } else if ($('#job').val().trim() === '') {
+        alert('직업을 선택해 주세요');
+        tempValidation = false;
+        $('#job').focus();
+    } else if ($('#asset_range').val().trim() === '') {
+        alert('자산구간을 선택해 주세요');
+        tempValidation = false;
+        $('#asset_range').focus();
+    } else if ($('#income_range').val().trim() === '') {
+        alert('소득구간을 선택해 주세요');
+        tempValidation = false;
+        $('#income_range').focus();
+    }
 
-                moveToUrl('/mo/signinSuccess');
-                // submitForm();
-            } else if (data.status === 'error') {
-                // 한번만 출력되게 함
-                $('.alert_validation').remove();
-                // 오류 메시지 표시
-                Object.keys(data.errors).forEach(function (key, index) {
-                    var field = $('[name="' + key + '"]');
-                    var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div
+    if (
+        $('#marital').val() !== '' &&
+        $('#smoking').val() !== '' &&
+        $('#drinking').val() !== '' &&
+        $('#religion').val() !== '' &&
+        $('#mbti').val() !== '' &&
+        $('#height').val() !== '' &&
+        $('#bodyshape').val() !== '' &&
+        $('#personal_style').val() !== '' &&
+        $('#education').val() !== '' &&
+        $('#major').val() !== '' &&
+        $('#school').val() !== '' &&
+        $('#job').val() !== '' &&
+        $('#asset_range').val() !== '' &&
+        $('#income_range').val() !== ''
+    ) {
+        tempValidation = true;
+    }
+    if (tempValidation) {
+        var postData = new FormData(document.querySelector('form'));
+        $.ajax({
+            url: '/ajax/signUpdate',
+            type: 'POST',
+            data: postData,
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function (data) {
+                console.log(data);
+                if (data.status === 'success') {
+                    // 성공
+                    var gradeText = data.data.grade === 'grade02' ? '정회원' : '프리미엄회원';
+                    localStorage.setItem('gradeText', gradeText);
 
-                    // 오류 메시지 추가
-                    if (!topMostDiv.next().hasClass('alert_validation')) {
-                        // 이미 오류 메시지가 있는지 확인
-                        topMostDiv.after('<div class="alert alert_validation">' + data.errors[key] + '</div>');
-                    }
-                    // 처음 validation 포커스
-                    if (index === 0) {
-                        field.focus();
-                    }
-                });
-            } else {
+                    moveToUrl('/mo/signinSuccess');
+                    // submitForm();
+                } else if (data.status === 'error') {
+                    // 한번만 출력되게 함
+                    $('.alert_validation').remove();
+                    // 오류 메시지 표시
+                    Object.keys(data.errors).forEach(function (key, index) {
+                        var field = $('[name="' + key + '"]');
+                        var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div
+
+                        // 오류 메시지 추가
+                        if (!topMostDiv.next().hasClass('alert_validation')) {
+                            // 이미 오류 메시지가 있는지 확인
+                            topMostDiv.after('<div class="alert alert_validation">' + data.errors[key] + '</div>');
+                        }
+                        // 처음 validation 포커스
+                        if (index === 0) {
+                            field.focus();
+                        }
+                    });
+                } else {
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                }
+                return false;
+            },
+            error: function (data, status, err) {
+                console.log(err);
                 alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-            }
-            return false;
-        },
-        error: function (data, status, err) {
-            console.log(err);
-            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-        },
-    });
+            },
+        });
+    }
 };
 const signInType = (postData) => {
     var postData = postData;
@@ -638,6 +755,7 @@ const editPhotoListListner = () => {
                 console.log('Upload success', data);
                 moveToUrl('/mo/signinType', {
                     ci: data.data.ci,
+                    mobile_no: data.data.mobile_no,
                     file_path: $('#file_path').val(),
                     file_name: $('#file_name').val(),
                 });
