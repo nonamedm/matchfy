@@ -113,13 +113,18 @@ function MeetingEditChk(){
             if(data.success == true){
                 var data =data.data
                 for(var i=0;i<data.length;i++){
+                    var endedOverlay = data[i].isEnded ? '<div class="ended_overlay">종료</div>' : '';
+                    var grayscaleClass = data[i].isEnded ? 'grayscale' : '';
                     html+='<label class="totAgree_label" for="totAgree'+data[i].meeting_idx+'">';
-                    html+='<div class="apply_group_detail">';
+                    html+=`<div class="apply_group_detail ${grayscaleClass}">`;
                     html+='<div class="chk_box meet_delete_chk_box">';
                     html+='<input type="checkbox" class="totAgree" id="totAgree'+data[i].meeting_idx+'" name="'+data[i].meeting_idx+'">';
                     html+='<label class="totAgree_label" for="totAgree'+data[i].meeting_idx+'"></label>';
                     html+='</div>';
-                    html+='<img src="/'+data[i].file_path+data[i].file_name+'" />';
+                    html+='<div class="relative-container">';
+                    html+=`${endedOverlay ? '<div class="ended_overlay">종료</div>' : ''}`
+                    html+=`<img class="profile_img" src="/${data[i].file_path}${data[i].file_name}" />`;
+                    html+='</div>';
                     html+='<div class="group_list_item group_apply_item">';
                     html+='<div class="group_particpnt">';
                     html+='<span>신청'+data[i].meeting_idx_count+'</span>/'+data[i].number_of_people+'명';
@@ -242,24 +247,29 @@ function MeetCancelChk(){
             if(data.success == true){
                 var data =data.data
                 for(var i=0;i<data.length;i++){
-                    html+='<div class="apply_group_detail">';
+                    var endedOverlay = data[i].isEnded ? '<div class="ended_overlay">종료</div>' : '';
+                    var grayscaleClass = data[i].isEnded ? 'grayscale' : '';
+                    html+='<label class="totAgree_label" for="totAgree'+data[i].meeting_idx+'">';
+                    html+=`<div class="apply_group_detail ${grayscaleClass}">`;
+                    html+='<div class="relative-container">';
+                    html+=`${endedOverlay ? '<div class="ended_overlay">종료</div>' : ''}`
                     html+='<a href="/mo/mypage/group/detail/'+data[i].meeting_idx+'">';
-                    html+='<img src="/'+data[i].file_path+data[i].file_name+'" />';
+                    html+=`<img class="profile_img" src="/${data[i].file_path}${data[i].file_name}" />`;
                     html+='</a>';
+                    html+='</div>';
                     html+='<div class="group_list_item group_apply_item">';
                     html+='<div class="group_particpnt">';
                     html+='<span>신청'+data[i].meeting_idx_count+'</span>/'+data[i].number_of_people+'명';
                     html+='</div>';
-                    html+='<a href="/mo/mypage/group/detail/'+data[i].meeting_idx+'">';
                     html+='<div class="group_location">';
                     html+='<img src="/static/images/ico_location_16x16.png" />';
                     html+= data[i].meeting_place;
                     html+='</div>';
                     html+='<p class="group_price">'+Number(data[i].membership_fee).toLocaleString()+'원</p>';
                     html+='<p class="group_schedule">'+MyGoupDate(data[i].meeting_start_date)+'</p>';
-                    html+='</a>';
                     html+='</div>';
                     html+='</div>';
+                    html+='</label>';
                 }
             }
             $('#mygroup_list_body').html(html);

@@ -982,8 +982,10 @@ const MymeetingFiltering = (filterOption) => {
                     listHtml += `
                         <a href="/mo/mypage/group/detail/${meeting.idx}">
                             <div class="apply_group_detail ${grayscaleClass}">
+                                <div class="relative-container">
                                 ${endedOverlay ? '<div class="ended_overlay">종료</div>' : ''}
-                                <img class="profile_img ${grayscaleClass}" src="${imagePath}" />
+                                <img class="profile_img" src="${imagePath}" />
+                                </div>
                                 <div class="group_list_item group_apply_item">
                                     <div class="group_particpnt">
                                         <span>신청 ${meeting.count}</span>/${meeting.number_of_people}명

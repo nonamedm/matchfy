@@ -1226,7 +1226,8 @@ class MoAjax extends BaseController
         }
 
         $meetings = $MeetingModel
-            ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx')
+            ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
+            ->where('wh_meetings.delete_yn', 'N')
             ->findAll();
 
 
@@ -1271,8 +1272,9 @@ class MoAjax extends BaseController
         }
 
         $meetings = $MeetingModel
-            ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx')
+            ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
             ->where('wh_meetings.member_ci', $ci)
+            ->where('wh_meetings.delete_yn', 'N')
             ->findAll();
 
         $days = ['일', '월', '화', '수', '목', '금', '토'];

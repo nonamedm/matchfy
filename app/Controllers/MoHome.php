@@ -473,9 +473,10 @@ class MoHome extends BaseController
         // $data['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
 
         $MeetingModel->orderBy('create_at', 'DESC');
-
+        
         $meetings = $MeetingModel
-            ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx')
+            ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
+            ->where('wh_meetings.delete_yn', 'N')
             ->findAll();
 
         // 참여 인원 모델
@@ -812,7 +813,7 @@ class MoHome extends BaseController
             $eventDate = new \DateTime($result->meeting_start_date);
             $result->isEnded = ($currentDate > $eventDate);
         }
-        unset($meeting); //참조 해제
+        unset($result); //참조 해제
 
         $data['meetings'] = $results;
 
@@ -824,6 +825,7 @@ class MoHome extends BaseController
 
         $session = session();
         $ci = $session->get('ci');
+        $currentDate = new \DateTime();
 
         $query = $db->table('wh_meeting_members a')
             ->select('a.meeting_idx, 
@@ -847,9 +849,16 @@ class MoHome extends BaseController
             ->where('b.delete_yn', 'N')
             ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
 
-        $result = $query->get()->getResult();
+        $results = $query->get()->getResult();
 
-        $data['meetings'] = $result;
+        foreach ($results as &$result) {
+            // 이벤트 종료 여부 판단
+            $eventDate = new \DateTime($result->meeting_start_date);
+            $result->isEnded = ($currentDate > $eventDate);
+        }
+        unset($result); //참조 해제
+
+        $data['meetings'] = $results;
 
         return view('mo_mypage_mygroup_my_list', $data);
     }
@@ -871,6 +880,7 @@ class MoHome extends BaseController
 
         $session = session();
         $ci = $session->get('ci');
+        $currentDate = new \DateTime();
 
         $query = $db->table('wh_meeting_members a')
             ->select('a.meeting_idx, 
@@ -894,10 +904,17 @@ class MoHome extends BaseController
             ->where('b.delete_yn', 'N')
             ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
 
-        $result = $query->get()->getResult();
+        $results = $query->get()->getResult();
 
-        $data['meetings'] = $result;
-        return $result;
+        foreach ($results as &$result) {
+            // 이벤트 종료 여부 판단
+            $eventDate = new \DateTime($result->meeting_start_date);
+            $result->isEnded = ($currentDate > $eventDate);
+        }
+        unset($result); //참조 해제
+
+        $data['meetings'] = $results;
+        return $results;
     }
     public function mypageMygroupDel()
     {

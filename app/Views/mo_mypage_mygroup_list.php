@@ -20,26 +20,8 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        <header>
-
-            <div class="menu">
-                <ul>
-                    <li class="left_arrow">
-                        <img src="/static/images/left_arrow.png" />
-                    </li>
-                    <li class="header_title">
-                        모임
-                    </li>
-                </ul>
-                <div class="menu_right edit" id="meet_edit_btn"onclick="MeetingEditChk();">편집</div>
-                <div class="menu_right edit meet_menu_right" style="display:none;">
-                    <span class="meet_menu_header" onclick="MeetCancelChk();"> 편집종료</span>
-                    <span class="meet_menu_header" id="meet_delete_btn" onclick="MyGoupDelconfrim();">삭제</span>
-                </div>
-            </div>
-
-        </header>
-
+        <?php $title = "내 모임"; include 'header.php'; ?>
+        
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="notice_filter">
@@ -51,17 +33,19 @@
                 </div>
                 <div class="mygroup_list" id="mygroup_list_body">
                 <?php foreach ($meetings as $meeting): ?>
-                    <div class="apply_group_detail">
+                    <div class="apply_group_detail <?= $meeting->isEnded ? 'grayscale' : '' ?>">
                         <div class="chk_box meet_delete_chk_box" style="display:none;">
                             <input type="checkbox" class="totAgree" id="totAgree<?= $meeting->meeting_idx ?>" name="chkDefault00">
                             <label class="totAgree_label" for="totAgree<?= $meeting->meeting_idx ?>"></label>
+                        </div>
+                        <div class="relative-container">
                             <?php if ($meeting->isEnded): ?>
                                 <div class="ended_overlay">종료</div>
                             <?php endif; ?>
+                            <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
+                                <img src="/<?= $meeting->file_path?><?= $meeting->file_name?>" />
+                            </a>
                         </div>
-                        <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
-                            <img src="/<?= $meeting->file_path?><?= $meeting->file_name?>" />
-                        </a>
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt" onclick="javascript:meetingMemberList(<?= $meeting->meeting_idx ?>);">
                                 <span>신청 <?= $meeting->meeting_idx_count ?></span>/<?= $meeting->number_of_people ?>명
