@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -23,7 +22,7 @@
         include 'header.php'; ?>
         <?php
         $word_file_path = APPPATH . 'data/MemberCode.php';
-        require ($word_file_path);
+        require($word_file_path);
         ?>
         <div class="sub_wrap">
             <div class="content_wrap">
@@ -46,15 +45,13 @@
                                 <label for="appear_type" class="signin_label">성별</label>
                                 <div>
                                     <div class="chk_box radio_box partner">
-                                        <input type="radio" id="female" name="partner_mf" value="0" checked=""
-                                            onclick="selectGender(this)">
+                                        <input type="radio" id="female" name="partner_mf" value="0" checked="" onclick="selectGender(this)">
                                         <label for="female">
                                             <h2>여성</h2>
                                         </label>
                                     </div>
                                     <div class="chk_box radio_box partner">
-                                        <input type="radio" id="male" name="partner_mf" value="1"
-                                            onclick="selectGender(this)">
+                                        <input type="radio" id="male" name="partner_mf" value="1" onclick="selectGender(this)">
                                         <label for="male">
                                             <h2>남성</h2>
                                         </label>
@@ -71,8 +68,7 @@
                                         <?php
                                         $nowYear = date('Y');
                                         $pastYear = 1945;
-                                        for ($year = $nowYear; $year >= $pastYear; $year--)
-                                        {
+                                        for ($year = $nowYear; $year >= $pastYear; $year--) {
                                             echo '<option value="' . $year . '">' . $year . '</option>';
                                         }
                                         ?>
@@ -83,8 +79,7 @@
                                         <?php
                                         $nowYear = date('Y');
                                         $pastYear = 1945;
-                                        for ($year = $nowYear; $year >= $pastYear; $year--)
-                                        {
+                                        for ($year = $nowYear; $year >= $pastYear; $year--) {
                                             echo '<option value="' . $year . '">' . $year . '</option>';
                                         }
                                         ?>
@@ -98,9 +93,8 @@
                                 <select id="region" name="region" class="custom_select" value="">
                                     <option value="0">무관</option>
                                     <?php
-                                    foreach ($sido as $item)
-                                    {
-                                        ?>
+                                    foreach ($sidoCode as $item) {
+                                    ?>
                                         <option value="<?= $item['id'] ?>">
                                             <?= $item['name'] ?>
                                         </option>
@@ -110,7 +104,7 @@
                             </div>
                         </div>
 
-                        <?php if (isset ($grade) && ($grade === 'grade02' || $grade === 'grade03')): ?>
+                        <?php if (isset($grade) && ($grade === 'grade02' || $grade === 'grade03')) : ?>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="marital" class="signin_label">결혼경험</label>
@@ -184,8 +178,7 @@
                                 <div class="signin_form_div">
                                     <label for="height" class="signin_label">키</label>
                                     <div style="display:flex;">
-                                        <input type="number" id="height" name="height" placeholder="최소 키 입력"
-                                            style="width:260px;">
+                                        <input type="number" id="height" name="height" placeholder="최소 키 입력" style="width:260px;">
                                         <p style="width:70px; margin-left: 20px;">cm 이상</p>
                                     </div>
                                 </div>
@@ -295,7 +288,7 @@
                                 </div>
                             </div>
                         <?php endif; ?>
-                        <?php if (isset ($grade) && ($grade === 'grade03')): ?>
+                        <?php if (isset($grade) && ($grade === 'grade03')) : ?>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="parents" class="signin_label">부(직업)</label>
@@ -406,27 +399,23 @@
             $('#personal_style').html('<option value="">선택</option>');
             if (e.value === '0') {
                 <?php
-                if (!empty ($femaleStyle))
-                {
-                    foreach ($femaleStyle as $item)
-                    { ?>
+                if (!empty($femaleStyle)) {
+                    foreach ($femaleStyle as $item) { ?>
                         $("#personal_style").append("<option value='<?= $item['value'] ?>'><?= $item['name'] ?></option>")
-                    <?php }
+                <?php }
                 } ?>
 
             } else {
                 <?php
-                if (!empty ($maleStyle))
-                {
-                    foreach ($maleStyle as $item)
-                    { ?>
+                if (!empty($maleStyle)) {
+                    foreach ($maleStyle as $item) { ?>
                         $("#personal_style").append("<option value='<?= $item['value'] ?>'><?= $item['name'] ?></option>")
-                    <?php }
+                <?php }
                 } ?>
             }
 
         }
-        $(document).ready(function () {
+        $(document).ready(function() {
             selectGender(0);
 
             var partnerGender = <?php echo json_encode($partnerInfo['partner_gender']); ?>;
@@ -520,7 +509,7 @@
 
         function savePartnerInfo() {
             var postData = new FormData($('form')[0]);
-            $('#ranked li').each(function (index, li) {
+            $('#ranked li').each(function(index, li) {
                 var value = $(li).data('value');
                 postData.append('animal_type' + (index + 1), value);
             });
@@ -532,7 +521,7 @@
                 processData: false,
                 contentType: false,
                 async: false,
-                success: function (data) {
+                success: function(data) {
                     console.log(data);
                     if (data.status === 'success') {
                         // 성공                        
@@ -545,7 +534,7 @@
                     }
                     return false;
                 },
-                error: function (data, status, err) {
+                error: function(data, status, err) {
                     console.log(err);
                     alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },

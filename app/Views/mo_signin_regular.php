@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -30,11 +29,9 @@
                     <div class="content_body">
                         <a id="profileArea" onclick="editPhoto()">
                             <?php
-                            if ($file_path)
-                            {
+                            if ($file_path) {
                                 echo '<img src="/' . $file_path . $file_name . '" style="border-radius: 50%; width: 74px; height: 74px;" />';
-                            } else
-                            {
+                            } else {
                                 echo '<img src="/static/images/profile_noimg.png" style="border-radius: 50%; width: 74px; height: 74px;" />';
                             }
                             ?>
@@ -74,10 +71,10 @@
                                 <label for="drinking" class="signin_label">음주 횟수</label>
                                 <select id="drinking" name="drinking" class="custom_select" value="">
                                     <option value="">선택</option>
-                                    <option value="0">전혀 안함</option>
-                                    <option value="1">주 1~2병</option>
-                                    <option value="2">주 3~5병</option>
-                                    <option value="3">주 5병 이상</option>
+                                    <option value="1">전혀 안함</option>
+                                    <option value="2">주 1~2병</option>
+                                    <option value="3">주 3~5병</option>
+                                    <option value="4">주 5병 이상</option>
                                 </select>
                             </div>
                         </div>
@@ -181,8 +178,7 @@
                                 <p class="profile_photo_desc">최종학교 졸업증명서를 업로드해주세요!</p>
                                 <div class="input_btn">
                                     <input id="school" name="school" type="text" value="" placeholder="학교를 입력해 주세요">
-                                    <button type="button" class="btn btn_input_form"
-                                        onclick="showPopupRgt('school','<?php echo $ci ?>')">인증</button>
+                                    <button type="button" class="btn btn_input_form" onclick="showPopupRgt('school','<?php echo $ci ?>')">인증</button>
                                 </div>
                             </div>
                         </div>
@@ -198,8 +194,7 @@
                                         <option value="1">2군 : 상장사, 대기업 회사원/기업대표/공무원/공기업</option>
                                         <option value="2">3군 : 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)</option>
                                     </select>
-                                    <button type="button" class="btn btn_input_form"
-                                        onclick="showPopupRgt('job','<?php echo $ci ?>')">인증</button>
+                                    <button type="button" class="btn btn_input_form" onclick="showPopupRgt('job','<?php echo $ci ?>')">인증</button>
                                 </div>
                             </div>
                         </div>
@@ -250,24 +245,6 @@
 
         <div style="height: 50px;"></div>
         <footer class="footer">
-
-            <!-- <div class="footer_logo mb40">
-                matchfy
-            </div>
-            <div class="footer_link mb40">
-                <a href="#">회사정보</a>
-                <a href="#">개인정보 처리방침</a>
-                <a href="#">서비스 이용약관</a>
-            </div>
-            <div class="footer_info mb40">
-                <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
-                        src="/static/images/part_line.png" /> gildong@naver.com</span>
-            </div>
-            <div class="footer_copy">
-                COPYRIGHT 2023. ALL RIGHTS RESERVED.
-            </div> -->
-
         </footer>
     </div>
 
@@ -275,15 +252,15 @@
     <!-- SCRIPTS -->
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             editPhotoListner();
             // editPhotoListListner();
             // editMovListListner();
         });
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             $("#school").autocomplete({
-                source: function (request, response) {
+                source: function(request, response) {
                     $.ajax({
                         url: "/ajax/searchUniversity",
                         type: "POST",
@@ -291,13 +268,13 @@
                         data: {
                             term: request.term
                         },
-                        success: function (data) {
+                        success: function(data) {
                             response(data);
                         }
                     });
                 },
                 minLength: 2, // 최소 문자 수
-                select: function (event, ui) {
+                select: function(event, ui) {
                     // 아이템 선택 시 동작
                     //console.log(ui.item.value); // 선택된 학교명
                 }

@@ -1293,7 +1293,7 @@ class MoAjax extends BaseController
         require($word_file_path);
         $value = $this->request->getPost('value');
         if ($value === 'mbti') {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $mbti]);
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $mbtiCode]);
         } else if ($value === 'animal_type1') {
             $session = session();
             $member_ci = $session->get('ci');
@@ -1323,27 +1323,27 @@ class MoAjax extends BaseController
                 return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
             }
         } else if ($value === 'drinking') {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $drinking]);
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $drinkingCode]);
         } else if ($value === 'year') {
             return $this->response->setJSON(['status' => 'success', 'message' => 'success']);
         } else if ($value === 'bodyshape') {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $bodyshape]);
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $bodyshapeCode]);
         } else if ($value === 'city') {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $region]);
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $sidoCode]);
         } else if ($value === 'married') {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $marital]);
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $maritalCode]);
         } else if ($value === 'smoker') {
             return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $smoking]);
         } else if ($value === 'religion') {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $religion]);
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $religionCode]);
         } else if ($value === 'gender') {
             return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $gender]);
         } else if ($value === 'height') {
             return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $height]);
         } else if ($value === 'education') {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $education]);
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $educationCode]);
         } else if ($value === 'job') {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $job]);
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $jobCode]);
         } else if ($value === 'asset_range') {
             return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $asset]);
         } else if ($value === 'income_range') {
@@ -1528,7 +1528,7 @@ class MoAjax extends BaseController
                     if ($myPartner['religion'] === '5') { // 종교유무 - 무관
                         $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
                     } else {
-                        if ($myPartner['religion'] === $item['married']) {
+                        if ($myPartner['religion'] === $item['religion']) {
                             $calcValue = $myFactor['group2'] * 1; // 원하는 종교만 점수
                         }
                     }

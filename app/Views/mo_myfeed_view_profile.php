@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -21,12 +20,14 @@
 
         <?php $title = "프로필";
         include 'header.php'; ?>
+        <?php $word_file_path = APPPATH . 'data/MemberCode.php';
+        require($word_file_path); ?>
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="content_body content_profile">
-                    <?php if ($image): ?>
+                    <?php if ($image) : ?>
                         <img class="profile_img" src="/<?= $image['file_path'] ?>/<?= $image['file_name'] ?>" />
-                    <?php else: ?>
+                    <?php else : ?>
                         <img class="profile_img" src="/static/images/profile_noimg.png" />
                     <?php endif; ?>
                 </div>
@@ -38,9 +39,13 @@
                                 <?= $nickname ?>
                             </h2>
                             <p>
-                                <?= substr($birthday, 0, 4) ?> ·
-                                <?= $city ?> ·
-                                <?= $mbti ?>
+                                <?= substr($birthday, 0, 4) ?>
+                                <?php foreach ($sidoCode as $item) {
+                                    if ($item['id'] === $city) echo ' · ' . $item['name'];
+                                } ?>
+                                <?php foreach ($mbtiCode as $item) {
+                                    if ($item['id'] === $mbti) echo ' · ' . $item['name'];
+                                } ?>
                             </p>
                         </li>
                         <hr class="hoz_part" />
@@ -60,51 +65,63 @@
                             <div class="profile_content">
                                 <h2>성별</h2>
                                 <p>
-                                    <?= $gender ?>
+                                    <?php foreach ($genderCode as $item) {
+                                        if ($item['id'] === $gender) echo $item['name'];
+                                    } ?>
                                 </p>
                             </div>
                             <div class="profile_content">
                                 <h2>지역</h2>
                                 <p>
-                                    <?= $city ?>
+                                    <?php foreach ($sidoCode as $item) {
+                                        if ($item['id'] === $city) echo $item['name'];
+                                    } ?>
                                 </p>
                             </div>
-                            <div class="profile_content">
+                            <!-- <div class="profile_content">
                                 <h2>관심사</h2>
                                 <p> </p>
-                            </div>
+                            </div> -->
                         </li>
-                        <?php if (isset ($grade) && ($grade === 'grade02' || $grade === 'grade03')): ?>
+                        <?php if (isset($grade) && ($grade === 'grade02' || $grade === 'grade03')) : ?>
                             <hr class="hoz_part" />
                             <li class="profile_body">
                                 <div class="profile_content">
                                     <h2>결혼유무</h2>
                                     <p>
-                                        <?= $married ?>
+                                        <?= $married === 0 ? '미혼' : '기혼' ?>
                                     </p>
                                 </div>
                                 <div class="profile_content">
                                     <h2>흡연 유무</h2>
                                     <p>
-                                        <?= $smoker ?>
+                                        <?php foreach ($smokingCode as $item) {
+                                            if ($item['id'] === $smoker) echo $item['name'];
+                                        } ?>
                                     </p>
                                 </div>
                                 <div class="profile_content">
                                     <h2>음주 횟수</h2>
                                     <p>
-                                        <?= $drinking ?>
+                                        <?php foreach ($drinkingCode as $item) {
+                                            if ($item['id'] === $drinking) echo $item['name'];
+                                        } ?>
                                     </p>
                                 </div>
                                 <div class="profile_content">
                                     <h2>종교</h2>
                                     <p>
-                                        <?= $religion ?>
+                                        <?php foreach ($religionCode as $item) {
+                                            if ($item['id'] === $religion) echo $item['name'];
+                                        } ?>
                                     </p>
                                 </div>
                                 <div class="profile_content">
                                     <h2>MBTI</h2>
                                     <p>
-                                        <?= $mbti ?>
+                                        <?php foreach ($mbtiCode as $item) {
+                                            if ($item['id'] === $mbti) echo $item['name'];
+                                        } ?>
                                     </p>
                                 </div>
                                 <div class="profile_content">
@@ -114,20 +131,31 @@
                                     </p>
                                 </div>
                                 <div class="profile_content">
-                                    <h2>외모특징</h2>
+                                    <h2>스타일</h2>
                                     <p>
-                                        <?= $stylish ?>
+                                        <?php
+                                        if ($gender === '0') {
+                                            foreach ($femaleStyle as $item) {
+                                                if ($item['value'] === $stylish) echo $item['name'];
+                                            }
+                                        } else {
+                                            foreach ($maleStyle as $item) {
+                                                if ($item['value'] === $stylish) echo $item['name'];
+                                            }
+                                        } ?>
                                     </p>
                                 </div>
                             </li>
                         <?php endif; ?>
-                        <?php if (isset ($grade) && ($grade === 'grade02' || $grade === 'grade03')): ?>
+                        <?php if (isset($grade) && ($grade === 'grade02' || $grade === 'grade03')) : ?>
                             <hr class="hoz_part" />
                             <li class="profile_body">
                                 <div class="profile_content">
                                     <h2>학력</h2>
                                     <p>
-                                        <?= $education ?> 졸업
+                                        <?php foreach ($educationCode as $item) {
+                                            if ($item['id'] === $education) echo $item['name'];
+                                        } ?>
                                     </p>
                                 </div>
                                 <div class="profile_content">
@@ -145,16 +173,20 @@
                                 <div class="profile_content">
                                     <h2>자산구간</h2>
                                     <p>
-                                        <?= $asset_range ?> 만원
+                                        <?php foreach ($asset as $item) {
+                                            if ($item['id'] === $asset_range) echo $item['name'];
+                                        } ?>
                                     </p>
                                 </div>
                                 <div class="profile_content">
                                     <h2>소득구간</h2>
                                     <p>
-                                        <?= $income_range ?> 만원
+                                        <?php foreach ($income as $item) {
+                                            if ($item['id'] === $income_range) echo $item['name'];
+                                        } ?>
                                     </p>
                                 </div>
-                                <div class="profile_content">
+                                <!-- <div class="profile_content">
                                     <h2>몸무게</h2>
                                     <p></p>
                                 </div>
@@ -165,10 +197,10 @@
                                 <div class="profile_content">
                                     <h2>특이사항</h2>
                                     <p></p>
-                                </div>
+                                </div> -->
                             </li>
                         <?php endif; ?>
-                        <?php if (isset ($grade) && $grade === 'grade03'): ?>
+                        <?php if (isset($grade) && $grade === 'grade03') : ?>
                             <hr class="hoz_part" />
                             <li class="profile_body">
                                 <div class="profile_content">

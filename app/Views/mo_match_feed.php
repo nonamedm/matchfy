@@ -28,6 +28,8 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <?php
+                $word_file_path = APPPATH . 'data/MemberCode.php';
+                require($word_file_path);
                 foreach ($feeds as $feed) {
                 ?>
                     <div class="content_feed_list">
@@ -55,9 +57,13 @@
                                     ?>
                                 </div>
                                 <p>
-                                    <?= $feed['birthyear'] ?> ·
-                                    <?= $feed['city'] ?> ·
-                                    <?= $feed['mbti'] ?>
+                                    <?= $feed['birthyear'] ?>
+                                    <?php foreach ($sidoCode as $item) {
+                                        if ($item['id'] === $feed['city']) echo ' · ' . $item['name'];
+                                    } ?>
+                                    <?php foreach ($mbtiCode as $item) {
+                                        if ($item['id'] === $feed['mbti']) echo ' · ' . $item['name'];
+                                    } ?>
                                 </p>
                             </div>
                             <div class="profile_btn">
