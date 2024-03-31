@@ -114,11 +114,10 @@ function formatDateTime($value)
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="notice_filter">
-                    <p>09.01 ~ 09.30</p>
-                    <select>
-                        <option>최근순</option>
-                        <option>최근순</option>
-                        <option>최근순</option>
+                    <!-- <p>09.01 ~ 09.30</p> -->
+                    <select id="mygroup_order">
+                        <option value="all">전체</option>
+                        <option value="latest">최근순</option>
                     </select>
                 </div>
                 <div class="mygroup_list" id="mygroup_list_body">

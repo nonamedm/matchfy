@@ -1295,6 +1295,7 @@ a.ended:hover .ended_overlay {
     height: 92px;
     margin: 10px 0;
     padding: 15px 0 15px 20px;
+    cursor: pointer;
 }
 .alliance_sch_list.popup .alliance_sch_item {
     width: 275px;

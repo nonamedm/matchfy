@@ -867,24 +867,30 @@ class MoHome extends BaseController
         $meeting_idx = $this->request->getPost('meetingIdx');
 
         $query = $db->table('wh_meeting_members a')
-            ->select('a.meeting_idx, 
-                        b.category, 
-                        b.meeting_start_date, 
-                        b.meeting_end_date, 
-                        b.number_of_people, 
-                        b.title, 
-                        b.meeting_place, 
-                        b.membership_fee,
-                        COUNT(d.meeting_idx) AS meeting_idx_count,
-                        MAX(CASE WHEN d.member_ci = "'.$ci.'" THEN d.meeting_master END) AS meeting_master,
-                        a.delete_yn')
-            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
-            ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
-            ->where('a.member_ci', $ci)
-            ->where('b.delete_yn', 'N')
-            ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn')
-            ->orderBy('b.meeting_start_date', 'DESC')
-            ->orderBy('a.delete_yn', 'DESC');
+                    ->select('a.meeting_idx, 
+                            b.category, 
+                            b.meeting_start_date, 
+                            b.meeting_end_date, 
+                            b.number_of_people, 
+                            b.title, 
+                            b.meeting_place, 
+                            b.membership_fee,
+                            (
+                                SELECT SUM(CASE WHEN wmm.delete_yn = \'N\' THEN 1 ELSE 0 END) 
+                                FROM wh_meeting_members wmm 
+                                WHERE wmm.meeting_idx = a.meeting_idx
+                            ) AS meeting_idx_count,
+                            MAX(CASE WHEN d.member_ci = "'.$ci.'" THEN d.meeting_master END) AS meeting_master,
+                            a.delete_yn')
+                    ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+                    ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
+                    ->where('a.member_ci', $ci)
+                    ->where('b.delete_yn', 'N')
+                    ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn')
+                    ->orderBy('CASE WHEN b.meeting_start_date > NOW() THEN 0 ELSE 1 END', 'ASC')
+                    ->orderBy('CASE WHEN a.delete_yn = \'Y\' THEN 0 ELSE 1 END', 'DESC')
+                    ->orderBy('b.meeting_start_date', 'DESC')
+                    ->orderBy('a.delete_yn', 'DESC');
 
         $result = $query->get()->getResult();
 
@@ -898,26 +904,37 @@ class MoHome extends BaseController
         $db = db_connect();
         $session = session();
         $ci = $session->get('ci');
-        
+        $selectedValue = $this->request->getPost('selectedValue');
+
         $query = $db->table('wh_meeting_members a')
-            ->select('a.meeting_idx, 
-                        b.category, 
-                        b.meeting_start_date, 
-                        b.meeting_end_date, 
-                        b.number_of_people, 
-                        b.title, 
-                        b.meeting_place, 
-                        b.membership_fee,
-                        COUNT(d.meeting_idx) AS meeting_idx_count,
-                        MAX(CASE WHEN d.member_ci = "'.$ci.'" THEN d.meeting_master END) AS meeting_master,
-                        a.delete_yn')
-            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
-            ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
-            ->where('a.member_ci', $ci)
-            ->where('b.delete_yn', 'N')
-            ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn')
-            ->orderBy('b.meeting_start_date', 'DESC')
-            ->orderBy('a.delete_yn', 'DESC');
+                        ->select('a.meeting_idx, 
+                                b.category, 
+                                b.meeting_start_date, 
+                                b.meeting_end_date, 
+                                b.number_of_people, 
+                                b.title, 
+                                b.meeting_place, 
+                                b.membership_fee,
+                                (
+                                    SELECT SUM(CASE WHEN wmm.delete_yn = \'N\' THEN 1 ELSE 0 END) 
+                                    FROM wh_meeting_members wmm 
+                                    WHERE wmm.meeting_idx = a.meeting_idx
+                                ) AS meeting_idx_count,
+                                MAX(CASE WHEN d.member_ci = "'.$ci.'" THEN d.meeting_master END) AS meeting_master,
+                                a.delete_yn')
+                        ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+                        ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
+                        ->where('a.member_ci', $ci)
+                        ->where('b.delete_yn', 'N')
+                        ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn');
+                        if($selectedValue=='all'){
+                            $query->orderBy('CASE WHEN b.meeting_start_date > NOW() THEN 0 ELSE 1 END', 'ASC');
+                            $query->orderBy('CASE WHEN a.delete_yn = \'Y\' THEN 0 ELSE 1 END', 'DESC');
+                            $query->orderBy('b.meeting_start_date', 'DESC');
+                            $query->orderBy('a.delete_yn', 'DESC');
+                        }else{
+                            $query->orderBy('b.meeting_start_date', 'DESC');
+                        }
 
         $result = $query->get()->getResult();
 
@@ -963,6 +980,33 @@ class MoHome extends BaseController
             ->where('b.idx', $meeting_idx)
             ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
         
+            $query = $db->table('wh_meeting_members a')
+                        ->select('a.meeting_idx, 
+                                b.category, 
+                                b.meeting_start_date, 
+                                b.meeting_end_date, 
+                                b.number_of_people, 
+                                b.title, 
+                                b.meeting_place, 
+                                b.membership_fee,
+                                (
+                                    SELECT SUM(CASE WHEN wmm.delete_yn = \'N\' THEN 1 ELSE 0 END) 
+                                    FROM wh_meeting_members wmm 
+                                    WHERE wmm.meeting_idx = a.meeting_idx
+                                ) AS meeting_idx_count,
+                                MAX(CASE WHEN d.member_ci = "'.$ci.'" THEN d.meeting_master END) AS meeting_master,
+                                a.delete_yn')
+                        ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+                        ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
+                        ->where('a.member_ci', $ci)
+                        ->where('b.delete_yn', 'N')
+                        ->where('b.idx', $meeting_idx)
+                        ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn')
+                        ->orderBy('CASE WHEN b.meeting_start_date > NOW() THEN 0 ELSE 1 END', 'ASC')
+                        ->orderBy('CASE WHEN a.delete_yn = \'Y\' THEN 0 ELSE 1 END', 'DESC')
+                        ->orderBy('b.meeting_start_date', 'DESC')
+                        ->orderBy('a.delete_yn', 'DESC');
+
         $result = $query->get()->getResult();
         
         $data['meetings'] = $result;

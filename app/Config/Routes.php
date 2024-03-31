@@ -57,7 +57,7 @@ $routes->get('/mo/mypage/group/create', 'MoHome::mypageGroupCreate');
 $routes->get('/mo/mypage/mygroup/list', 'MoHome::mypageMygroupList');
 $routes->get('/mo/mypage/mygroup/myList', 'MoHome::mypageMygroupMyList');
 $routes->get('/mo/alliance/schedule', 'MoHome::allianceSchedule');
-$routes->get('/mo/mypage/mygroup/mygroupReservationRefresh', 'MoHome::mygroupReservationRefresh');
+$routes->post('/mo/mypage/mygroup/mygroupReservationRefresh', 'MoHome::mygroupReservationRefresh');
 $routes->post('/mo/mypage/mygroup/select', 'MoHome::mypageMygroupEdit');
 $routes->post('/mo/mypage/mygroup/cancelReservation', 'MoHome::mypageCancelReservation');
 $routes->post('/mo/mypage/mygroup/cancelReservationChk', 'MoHome::mypageCancelReservationChk');
