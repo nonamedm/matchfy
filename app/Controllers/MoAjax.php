@@ -1164,10 +1164,14 @@ class MoAjax extends BaseController
                 'meeting_place' => $meeting_place,
                 'membership_fee' => $membership_fee,
             ];
-            
+
+            // 데이터 저장
+            $MeetingModel = new MeetingModel();
+            $insertedMeetingIdx = $MeetingModel->insert($data);
+
             //참석 멤버 추가
             $meetMemdata = [
-                'meeting_idx' =>$meeting_idx,
+                'meeting_idx' =>$insertedMeetingIdx,
                 'member_ci' => $ci,
                 'meeting_master' =>'K',
                 'create_at' => date('Y-m-d H:i:s'),
@@ -1175,12 +1179,7 @@ class MoAjax extends BaseController
             $meeting_members = new MeetingMembersModel();
             $meeting_members->insert($meetMemdata);
 
-            $MeetingModel = new MeetingModel();
-
-            // 데이터 저장
-            $inserted = $MeetingModel->insert($data);
-
-            if ($inserted) {
+            if ($insertedMeetingIdx && $meeting_members) {
                 $inserted_id = $MeetingModel->getInsertID();
 
                 $upload = new Upload();

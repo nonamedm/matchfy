@@ -822,7 +822,6 @@ class MoHome extends BaseController
         unset($result); //참조 해제
 
         $data['meetings'] = $results;
-
         return view('mo_mypage_mygroup_list', $data);
     }
 
