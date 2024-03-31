@@ -1177,9 +1177,9 @@ class MoAjax extends BaseController
                 'create_at' => date('Y-m-d H:i:s'),
             ];
             $meeting_members = new MeetingMembersModel();
-            $meeting_members->insert($meetMemdata);
+            $meetingMembersIdx = $meeting_members->insert($meetMemdata);
 
-            if ($insertedMeetingIdx && $meeting_members) {
+            if ($insertedMeetingIdx && $meetingMembersIdx) {
                 $inserted_id = $MeetingModel->getInsertID();
 
                 $upload = new Upload();
