@@ -19,17 +19,17 @@ function getDday($endDate, $startDate, $deleteYn)
     $currentTimestamp = time();
     $endDateTimestamp = strtotime($endDate);
     $startDateTimestamp = strtotime($startDate);
-    $dday ='';
-
-    if ($deleteYn == 'N' || $deleteYn === 'n') {
+    $dday = '';
+    
+    if ($deleteYn == 'N' || $deleteYn == 'n') {
         if ($currentTimestamp > $endDateTimestamp) {
             $dday = '종료';
         } elseif ($currentTimestamp < $startDateTimestamp) {
-            $timeDiff = $startDateTimestamp - $currentTimestamp;
+            $timeDiff = $startDateTimestamp - $currentTimestamp + (24 * 60 * 60); // 하루를 느리게 계산
             $days = floor($timeDiff / (60 * 60 * 24));
             if ($days == 1) {
                 $dday = '내일';
-            } elseif ($days === 0) {
+            } elseif ($days == 0) {
                 $dday = '당일';
             } else {
                 $dday = 'D-' . $days;
@@ -39,7 +39,7 @@ function getDday($endDate, $startDate, $deleteYn)
             $days = floor($timeDiff / (60 * 60 * 24));
             if ($days == 1) {
                 $dday = '내일';
-            } elseif ($days === 0) {
+            } elseif ($days == 0) {
                 $dday = '당일';
             } else {
                 $dday = 'D-' . $days;
@@ -48,8 +48,9 @@ function getDday($endDate, $startDate, $deleteYn)
     } else {
         $dday = '예약취소';
     }
-
+    
     return $dday;
+    
 }
 function formatDateTime($value)
 {

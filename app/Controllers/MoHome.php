@@ -394,6 +394,7 @@ class MoHome extends BaseController
         return view('mo_mypage_wallet_charge', ['my_point' => $my_point_value]);
     }
 
+    /*나의 보유 포인트*/
     public function mypageGetPoint()
     {
         $session = session();
@@ -409,6 +410,7 @@ class MoHome extends BaseController
         return $my_point_value;
     }
 
+    /* 나의 포인트 추가 */
     public function mypageAddPoint($pointValue, $quantityNum)
     {
         $session = session();
@@ -825,7 +827,6 @@ class MoHome extends BaseController
                       b.title, 
                       b.meeting_place, 
                       b.membership_fee,
-                      b.delete_yn,
                       COUNT(a.meeting_idx) AS meeting_idx_count,
                       c.file_path,
                       c.file_name,
@@ -835,9 +836,11 @@ class MoHome extends BaseController
             ->whereIn('a.meeting_idx', function ($builder) use ($ci) {
                 $builder->select('d.meeting_idx')
                     ->from('wh_meeting_members d')
+                    ->where('d.meeting_master', 'M')
                     ->where('d.member_ci', $ci);
             })
             ->where('b.delete_yn', 'N')
+            ->where('a.member_ci', $ci)
             ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
         
         $result = $query->get()->getResult();
@@ -861,7 +864,6 @@ class MoHome extends BaseController
                       b.title, 
                       b.meeting_place, 
                       b.membership_fee,
-                      b.delete_yn,
                       COUNT(a.meeting_idx) AS meeting_idx_count,
                       c.file_path,
                       c.file_name,
@@ -871,9 +873,11 @@ class MoHome extends BaseController
             ->whereIn('a.meeting_idx', function ($builder) use ($ci) {
                 $builder->select('d.meeting_idx')
                     ->from('wh_meeting_members d')
+                    ->where('d.meeting_master', 'M')
                     ->where('d.member_ci', $ci);
             })
             ->where('b.delete_yn', 'N')
+            ->where('a.member_ci', $ci)
             ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
         
         $result = $query->get()->getResult();
@@ -915,6 +919,7 @@ class MoHome extends BaseController
                     ->where('d.member_ci', $ci);
             })
             ->where('b.delete_yn', 'N')
+            ->where('a.member_ci', $ci) 
             ->where('b.idx', $meeting_idx)
             ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
         
@@ -935,6 +940,7 @@ class MoHome extends BaseController
         $ci = $session->get('ci');
         $meeting_idx = intval($this->request->getPost('meetingIdx'));
         
+        /*참석 모임 빼기 */
         $MeetingMembersModel = new MeetingMembersModel();
 
         $data = [
@@ -946,6 +952,60 @@ class MoHome extends BaseController
                                         ->where('member_ci', $ci)
                                         ->where('meeting_idx', $meeting_idx)
                                         ->update();
+        
+        /*참석 모임 POINT 빼기 */
+        $meetPointModel = new MeetPointModel();
+
+        $data2 = [
+            'delete_yn' => 'Y',
+            'point_check_type'=>0,
+            'update_at' => date('Y-m-d H:i:s')
+        ];
+        $meetPointModel->set($data2)
+                        ->where('member_ci', $ci)
+                        ->where('meeting_idx', $meeting_idx)
+                        ->update();
+
+                
+        
+        /* 참석모임 POINT 환불 */
+        $meetPointModel = new MeetPointModel();
+        $meetiPoint = $meetPointModel
+                        ->distinct()
+                        ->select('m.meeting_points as meeting_points')
+                        ->from('wh_meeting_points m')
+                        ->where('m.member_ci', $ci)
+                        ->where('m.meeting_idx', $meeting_idx)
+                        ->where('m.delete_yn', 'Y')
+                        ->where('m.point_check_type', 0)
+                        ->get()
+                        ->getRow();
+        
+            $meetPointModel = new MeetModel();
+            $meetMasterPlace = $meetPointModel
+                        ->distinct()
+                        ->select('m.meeting_place as meeting_place')
+                        ->from('wh_meetings m')
+                        ->where('m.idx', $meeting_idx)
+                        ->get()
+                        ->getRow();
+        
+        /*모임방에 포인트 올리기*/
+        $meetPointModel = new PointModel();
+        $my_point_value = $this->mypageGetPoint();
+
+        $masterdata = [
+           'member_ci' => $ci,
+           'my_point'=> $my_point_value + $meetiPoint->meeting_points,
+           'add_point'=> $meetiPoint->meeting_points,
+           'point_details'=>$meetMasterPlace->meeting_place . '모임 취소 환불 포인트',
+           'point_type' =>'A',
+           'create_at' => date('Y-m-d H:i:s'),
+           'update_at' => date('Y-m-d H:i:s'),
+       ];
+
+       $meetPointModel->insert($masterdata);
+
         if ($result) {
             return $this->response->setJSON(['success' => true]);
         } else {

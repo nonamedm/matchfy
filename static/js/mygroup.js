@@ -305,17 +305,17 @@ function MyGoupDate2(value){
 }
 
 function GroupDday(endDate, startDate, deleteYn) {
-    var currentTimestamp = new Date().getTime() / 1000;
-    var endDateTimestamp = new Date(endDate).getTime() / 1000;
-    var startDateTimestamp = new Date(startDate).getTime() / 1000;
+    var currentTimestamp = new Date().getTime();
+    var endDateTimestamp = new Date(endDate).getTime();
+    var startDateTimestamp = new Date(startDate).getTime();
     var dday;
 
-    if (deleteYn == 'N' || deleteYn === 'n') {
+    if (deleteYn === 'N' || deleteYn === 'n') {
         if (currentTimestamp > endDateTimestamp) {
             dday = '종료';
         } else if (currentTimestamp < startDateTimestamp) {
-            var timeDiff = startDateTimestamp - currentTimestamp + (24 * 60 * 60); // 하루를 느리게 계산
-            var days = Math.floor(timeDiff / (60 * 60 * 24));
+            var timeDiff = startDateTimestamp - currentTimestamp + (24 * 60 * 60 * 1000); // 하루를 느리게 계산
+            var days = Math.floor(timeDiff / (24 * 60 * 60 * 1000));
             if (days === 1) {
                 dday = '내일';
             } else if (days === 0) {
@@ -325,7 +325,7 @@ function GroupDday(endDate, startDate, deleteYn) {
             }
         } else {
             var timeDiff = endDateTimestamp - currentTimestamp;
-            var days = Math.floor(timeDiff / (60 * 60 * 24));
+            var days = Math.floor(timeDiff / (24 * 60 * 60 * 1000));
             if (days === 1) {
                 dday = '내일';
             } else if (days === 0) {
@@ -362,17 +362,23 @@ function MygroupPopup(idx,idValue){
                         html += '<a href="#" class="btn_close" onclick="alertClose();" style="float: right;">닫기</a>';
                         html += '</div>';
                         html += '<div class="apply_group">';
-                        html += '<p>'+data[i].meeting_idx+'</p>';
+                        // html += '<p>'+data[i].meeting_idx+'</p>';
                         html += '<p>'+GroupDday(data[i].meeting_end_date,data[i].meeting_start_date,data[i].delete_yn)+'</p>';
                         html += '<p>'+data[i].meeting_place+'</p>';
                         html += '<p>'+MyGoupDate2(data[i].meeting_start_date)+'</p>';
                         html += '<p> 인원 : '+data[i].meeting_idx_count+'</p>';
                         html += '</div>';
                         html += '<div class="layerPopup_bottom">';
-                        html += '<div class="btn_group multy">';
-                        html += '<button class="btn type01" onclick="CancelReservation('+data[i].meeting_idx+');">예약취소</button>';
-                        html += '<button class="btn type02">대화방입장</button>';
-                        html += '</div>';
+                        if(cancel_rsv == 'D-2' ||  cancel_rsv == '내일' || cancel_rsv == '당일'){
+                            html += '<div class="btn_group">';
+                            html += '<button class="btn type01">대화방입장</button>';
+                            html += '</div>';
+                        }else{
+                            html += '<div class="btn_group multy">';
+                            html += '<button class="btn type01" onclick="CancelReservation('+data[i].meeting_idx+');">예약취소</button>';
+                            html += '<button class="btn type02">대화방입장</button>';
+                            html += '</div>';
+                        }
                         html += '</div>';
                         html += '</div>';
                         html += '</div>';
@@ -434,9 +440,9 @@ function mygoupRefresh(){
             var data = data.data;
             var html='';
             for(var i=0;i<data.length;i++){
-                html += '<div class="apply_group_detail" onclick="javascript:MygroupPopup()">';
+                html += '<div class="apply_group_detail" onclick="javascript:MygroupPopup(' + data[i].meeting_idx + ',\'cancel_rsv_' + data[i].meeting_idx + '\')">';
                 html += '<div class="group_list_item group_apply_item">';
-                html += '<p class="group_price">'+GroupDday(data[i].meeting_start_date,data[i].meeting_end_date,data[i].delete_yn)+'</p>';
+                html += '<p class="group_price" id="cancel_rsv_' + data[i].meeting_idx + '">' + GroupDday(data[i].meeting_end_date, data[i].meeting_start_date, data[i].delete_yn) + '</p>';
                 html += '<p class="group_price">'+data[i].meeting_place+'</p>';
                 html += '<p class="group_schedule">'+MyGoupDate2(data[i].meeting_start_date)+'</p>';
                 html += '<p class="group_schedule"> 인원 '+data[i].meeting_idx_count+'명</p>';
