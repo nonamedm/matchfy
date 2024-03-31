@@ -29,28 +29,41 @@ function getDday($endDate, $startDate, $deleteYn)
             $days = floor($timeDiff / (60 * 60 * 24));
             if ($days == 1) {
                 $dday = '내일';
-            } elseif ($days == 0) {
-                $dday = '당일';
             } else {
-                $dday = 'D-' . $days;
+                $dday = $days . '일전';
             }
         } else {
             $timeDiff = $endDateTimestamp - $currentTimestamp;
             $days = floor($timeDiff / (60 * 60 * 24));
             if ($days == 1) {
                 $dday = '내일';
-            } elseif ($days == 0) {
-                $dday = '당일';
             } else {
-                $dday = 'D-' . $days;
+                $dday = $days . '일전';
             }
         }
     } else {
-        $dday = '예약취소';
+        $dday = '취소';
     }
     
     return $dday;
     
+}
+function getClass($endDate, $deleteYn){
+    $currentTimestamp = time();
+    $endDateTimestamp = strtotime($endDate);
+    $dday = '';
+    
+    if ($deleteYn == 'N' || $deleteYn == 'n') {
+        if ($currentTimestamp > $endDateTimestamp) {
+            $dday = 'finish';
+        } else {
+            $dday = '';
+        }
+    } else {
+        $dday = 'cancel';
+    }
+    
+    return $dday;
 }
 function formatDateTime($value)
 {
@@ -64,12 +77,12 @@ function formatDateTime($value)
     $dayOfWeekIndex = $date->format('w');
     $dayOfWeek = $daysOfWeek[$dayOfWeekIndex];
 
-    $ampm = $hour >= 12 ? '오후' : '오전';
+    // $ampm = $hour >= 12 ? '오후' : '오전';
 
     $hour = $hour % 12;
     $hour = $hour ? $hour : 12;
 
-    $formattedDateTime = $month . '.' . $day . ' (' . $dayOfWeek . ') ' . $ampm . ' ' . $hour . ':'  . $minute;
+    $formattedDateTime = $month . '.' . $day . ' (' . $dayOfWeek . ') ' . ' ' . $hour . ':'  . $minute;
 
     return $formattedDateTime;
 }
@@ -89,6 +102,7 @@ function formatDateTime($value)
                         내모임
                     </li>
                 </ul>
+                <div class="menu_right edit">삭제</div>
             </div>
 
         </header>
@@ -96,7 +110,7 @@ function formatDateTime($value)
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="notice_filter">
-                    <p></p>
+                    <p>09.01 ~ 09.30</p>
                     <select>
                         <option>최근순</option>
                         <option>최근순</option>
@@ -105,111 +119,86 @@ function formatDateTime($value)
                 </div>
                 <div class="mygroup_list" id="mygroup_list_body">
                 <?php foreach ($meetings as $meeting): ?>
-                    <div class="apply_group_detail" onclick="javascript:MygroupPopup(<?=$meeting->meeting_idx?>,'cancel_rsv_<?=$meeting->meeting_idx?>')">
-                        <div class="group_list_item group_apply_item">
-                            <p class="group_price" id="cancel_rsv_<?=$meeting->meeting_idx?>"><?=getDday($meeting->meeting_end_date,$meeting->meeting_start_date,$meeting->delete_yn)?></p><!--디데이-->
-                            <p class="group_price"><?= $meeting->meeting_place ?></p><!--모임장소-->
-                            <p class="group_schedule"><?= formatDateTime($meeting->meeting_start_date) ?></p><!--날짜-->
-                            <p class="group_schedule">인원 <?= $meeting->meeting_idx_count ?>명</p> <!--인원수-->
+                    <div class="alliance_sch_list" onclick="javascript:MygroupPopup(<?=$meeting->meeting_idx?>,'cancel_rsv_<?=$meeting->meeting_idx?>')">
+                        <div class="alliance_sch_item">
+                            <div class="alliance_sch_sts">
+                                <div class="<?=getClass($meeting->meeting_end_date,$meeting->delete_yn)?>"id="cancel_rsv_<?=$meeting->meeting_idx?>"><?=getDday($meeting->meeting_end_date,$meeting->meeting_start_date,$meeting->delete_yn)?></div>
+                                <img src="/static/images/right_arrow.png" />
+                            </div>
+                            <h2><?= $meeting->meeting_place ?></h2>
+                            <p class=""><?= formatDateTime($meeting->meeting_start_date) ?></p>
+                            <span class="">인원 <?= $meeting->meeting_idx_count ?>명</span>
                         </div>
                     </div>
                 <?php endforeach; ?>
-                    <!-- <div class="apply_group_detail">
-                        <img src="/static/images/group_list_1.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
-                            </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                        </div>
-                    </div> -->
-                    <!-- <div class="apply_group_detail">
-                        <img src="/static/images/group_list_2.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
-                            </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                        </div>
-                    </div>
-                    <div class="apply_group_detail">
-                        <img src="/static/images/group_list_3.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
-                            </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                        </div>
-                    </div>
-                    <div class="apply_group_detail">
-                        <img src="/static/images/group_list_4.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
-                            </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                        </div>
-                    </div>
-                    <div class="apply_group_detail">
-                        <img src="/static/images/group_list_1.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
-                            </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                        </div>
-                    </div>
-                    <div class="apply_group_detail">
-                        <img src="/static/images/group_list_2.png" />
-                        <div class="group_list_item group_apply_item">
-                            <div class="group_particpnt">
-                                <span>신청 2</span>/4명
-                            </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
-                            </div>
-                            <p class="group_price">20,000원</p>
-                            <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
-                        </div>
-                    </div> -->
                 </div>
+                <!-- <div class="alliance_sch_list">
+                    <div class="alliance_sch_item">
+                        <div class="alliance_sch_sts">
+                            <div class="">3일전</div>
+                            <img src="/static/images/right_arrow.png" />
+                        </div>
+                        <h2>레드버튼 (이수점)</h2>
+                        <p class="">12.8 (금) 11:00</p>
+                        <span class="">인원 2명</span>
+                    </div>
+                </div>
+                <div class="alliance_sch_list">
+                    <div class="alliance_sch_item">
+                        <div class="alliance_sch_sts">
+                            <div class="">1일전</div>
+                            <img src="/static/images/right_arrow.png" />
+                        </div>
+                        <h2>레드버튼 (이수점)</h2>
+                        <p class="">12.8 (금) 11:00</p>
+                        <span class="">인원 2명</span>
+                    </div>
+                </div>
+                <div class="alliance_sch_list">
+                    <div class="alliance_sch_item">
+                        <div class="alliance_sch_sts">
+                            <div class="finish">종료</div>
+                            <img src="/static/images/right_arrow.png" />
+                        </div>
+                        <h2>레드버튼 (이수점)</h2>
+                        <p class="">12.8 (금) 11:00</p>
+                        <span class="">인원 2명</span>
+                    </div>
+                </div>
+                <div class="alliance_sch_list">
+                    <div class="alliance_sch_item">
+                        <div class="alliance_sch_sts">
+                            <div class="finish">종료</div>
+                            <img src="/static/images/right_arrow.png" />
+                        </div>
+                        <h2>레드버튼 (이수점)</h2>
+                        <p class="">12.8 (금) 11:00</p>
+                        <span class="">인원 2명</span>
+                    </div>
+                </div>
+                <div class="alliance_sch_list">
+                    <div class="alliance_sch_item">
+                        <div class="alliance_sch_sts">
+                            <div class="finish">종료</div>
+                            <img src="/static/images/right_arrow.png" />
+                        </div>
+                        <h2>레드버튼 (이수점)</h2>
+                        <p class="">12.8 (금) 11:00</p>
+                        <span class="">인원 2명</span>
+                    </div>
+                </div> -->
             </div>
         </div>
+    </div>
 
 
 
 
 
-        <div style="height: 50px;"></div>
-<footer class="footer">
-            
-            <!-- <div class="footer_logo mb40">
+    <div style="height: 50px;"></div>
+    <footer class="footer">
+
+        <!-- <div class="footer_logo mb40">
                 matchfy
             </div>
             <div class="footer_link mb40">
@@ -226,7 +215,7 @@ function formatDateTime($value)
                 COPYRIGHT 2023. ALL RIGHTS RESERVED.
             </div> -->
 
-        </footer>
+    </footer>
     </div>
 
 

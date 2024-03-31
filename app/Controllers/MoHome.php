@@ -841,12 +841,15 @@ class MoHome extends BaseController
             })
             ->where('b.delete_yn', 'N')
             ->where('a.member_ci', $ci)
-            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
-        
+            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee')
+            ->orderBy("ABS(DATEDIFF(NOW(), b.meeting_start_date)) ASC")
+            ->orderBy('a.delete_yn', 'desc');
+
         $result = $query->get()->getResult();
         
         $data['meetings'] = $result;
         return view('mo_mypage_mygroup_my_list', $data);
+        // return view('mo_alliance_schedule', $data);
     }
 
     /* 참석한 모임 예약 새로고침 */
@@ -878,8 +881,9 @@ class MoHome extends BaseController
             })
             ->where('b.delete_yn', 'N')
             ->where('a.member_ci', $ci)
-            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
-        
+            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee')
+            ->orderBy("ABS(DATEDIFF(NOW(), b.meeting_start_date)) ASC")
+            ->orderBy('a.delete_yn', 'desc');
         $result = $query->get()->getResult();
         
         $data['meetings'] = $result;
@@ -922,7 +926,7 @@ class MoHome extends BaseController
             ->where('a.member_ci', $ci) 
             ->where('b.idx', $meeting_idx)
             ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
-        
+            
         $result = $query->get()->getResult();
         
         $data['meetings'] = $result;
