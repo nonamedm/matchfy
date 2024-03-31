@@ -29,6 +29,8 @@ function getDday($endDate, $startDate, $deleteYn)
             $days = floor($timeDiff / (60 * 60 * 24));
             if ($days == 1) {
                 $dday = '내일';
+            } else if($days == 0){
+                $dday = '당일';
             } else {
                 $dday = $days . '일전';
             }
@@ -37,6 +39,8 @@ function getDday($endDate, $startDate, $deleteYn)
             $days = floor($timeDiff / (60 * 60 * 24));
             if ($days == 1) {
                 $dday = '내일';
+            } else if($days == 0){
+                $dday = '당일';
             } else {
                 $dday = $days . '일전';
             }
@@ -119,7 +123,7 @@ function formatDateTime($value)
                 </div>
                 <div class="mygroup_list" id="mygroup_list_body">
                 <?php foreach ($meetings as $meeting): ?>
-                    <div class="alliance_sch_list" onclick="javascript:MygroupPopup(<?=$meeting->meeting_idx?>,'cancel_rsv_<?=$meeting->meeting_idx?>')">
+                    <div class="alliance_sch_list" onclick="javascript:MygroupPopup(<?=$meeting->meeting_idx?>,'cancel_rsv_<?=$meeting->meeting_idx?>','<?=$meeting->meeting_master?>')">
                         <div class="alliance_sch_item">
                             <div class="alliance_sch_sts">
                                 <div class="<?=getClass($meeting->meeting_end_date,$meeting->delete_yn)?>"id="cancel_rsv_<?=$meeting->meeting_idx?>"><?=getDday($meeting->meeting_end_date,$meeting->meeting_start_date,$meeting->delete_yn)?></div>

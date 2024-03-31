@@ -328,6 +328,8 @@ function GroupDday(endDate, startDate, deleteYn) {
             var days = Math.floor(timeDiff / (24 * 60 * 60 * 1000));
             if (days === 1) {
                 dday = '내일';
+            } else if(days == 0){
+                dday = '당일';
             } else {
                 dday = days+'일전';
             }
@@ -336,6 +338,8 @@ function GroupDday(endDate, startDate, deleteYn) {
             var days = Math.floor(timeDiff / (24 * 60 * 60 * 1000));
             if (days === 1) {
                 dday = '내일';
+            } else if(days == 0){
+                dday = '당일';
             } else {
                 dday = days +'일전';
             }
@@ -364,7 +368,7 @@ function GroupClass(endDate, deleteYn) {
 }
 
 
-function MygroupPopup(idx,idValue){
+function MygroupPopup(idx,idValue,master){
     var cancel_rsv = $('#'+idValue).text();
     $.ajax({
         url: '/mo/mypage/mygroup/cancelReservation',
@@ -398,7 +402,7 @@ function MygroupPopup(idx,idValue){
                     html+='</div>';
                     html+='<div style="height: 50px;"></div>';
                     html+='<div class="layerPopup_bottom">';
-                    if(cancel_rsv == '1일전' ||  cancel_rsv == '내일' || cancel_rsv == '2일전' || cancel_rsv == '3일전'){
+                    if(cancel_rsv == '1일전' ||  cancel_rsv == '내일' || cancel_rsv == '당일' ||cancel_rsv == '2일전' || cancel_rsv == '3일전'){
                         html+= '<div class="btn_group">';
                         html+= '<button class="btn type01">대화방입장</button>';
                         html+= '</div>';
@@ -408,7 +412,11 @@ function MygroupPopup(idx,idValue){
                         html += '</div>';
                     }else{
                         html+='<div class="btn_group multy">';
-                        html+='<button class="btn type03" onclick="CancelReservation('+data[i].meeting_idx+');">예약 취소</button>';
+                        if(master == 'K'){
+                            html+='<button class="btn type03" onclick="locationMygroup();">내 모임 취소 이동</button>';
+                        }else{
+                            html+='<button class="btn type03" onclick="CancelReservation('+data[i].meeting_idx+');">예약 취소</button>';
+                        }
                         html+='<button class="btn type01">대화방 입장</button>';
                         html+='</div>';
                     }
@@ -426,6 +434,10 @@ function MygroupPopup(idx,idValue){
         }
     });
     
+}
+
+function locationMygroup(){
+    window.location.href = '/mo/mypage/mygroup/list';
 }
 
 function CancelReservation(idx){
@@ -469,7 +481,7 @@ function mygoupRefresh(){
             var data = data.data;
             var html='';
             for(var i=0;i<data.length;i++){
-                html += '<div class="alliance_sch_list" onclick="javascript:MygroupPopup(' + data[i].meeting_idx + ',\'cancel_rsv_' + data[i].meeting_idx + '\')">';
+                html += '<div class="alliance_sch_list" onclick="javascript:MygroupPopup(' + data[i].meeting_idx + ',\'cancel_rsv_' + data[i].meeting_idx + '\',\'' + data[i].meeting_master + '\')">';
                 html += '<div class="alliance_sch_item">';
                 html += '<div class="alliance_sch_sts">';
                 html += '<div class="'+GroupClass(data[i].meeting_end_date, data[i].delete_yn)+'" id="cancel_rsv_' + data[i].meeting_idx + '">' + GroupDday(data[i].meeting_end_date, data[i].meeting_start_date, data[i].delete_yn) + '</div>';

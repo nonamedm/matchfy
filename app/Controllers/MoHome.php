@@ -849,40 +849,33 @@ class MoHome extends BaseController
 
         $session = session();
         $ci = $session->get('ci');
-        $currentDate = new \DateTime();
+        $meeting_idx = $this->request->getPost('meetingIdx');
 
         $query = $db->table('wh_meeting_members a')
             ->select('a.meeting_idx, 
-                      b.category, 
-                      b.meeting_start_date, 
-                      b.meeting_end_date, 
-                      b.number_of_people, 
-                      b.title, 
-                      b.meeting_place, 
-                      b.membership_fee,
-                      COUNT(a.meeting_idx) AS meeting_idx_count,
-                      c.file_path,
-                      c.file_name,
-                      a.delete_yn')
+                        b.category, 
+                        b.meeting_start_date, 
+                        b.meeting_end_date, 
+                        b.number_of_people, 
+                        b.title, 
+                        b.meeting_place, 
+                        b.membership_fee,
+                        COUNT(d.meeting_idx) AS meeting_idx_count,
+                        MAX(CASE WHEN d.member_ci = "'.$ci.'" THEN d.meeting_master END) AS meeting_master,
+                        a.delete_yn')
             ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
-            ->join('wh_meetings_files c','b.idx = c.meeting_idx','left')
-            ->whereIn('a.meeting_idx', function ($builder) use ($ci) {
-                $builder->select('d.meeting_idx')
-                    ->from('wh_meeting_members d')
-                    ->where('d.meeting_master', 'M')
-                    ->where('d.member_ci', $ci);
-            })
-            ->where('b.delete_yn', 'N')
+            ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
             ->where('a.member_ci', $ci)
-            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee')
-            ->orderBy("ABS(DATEDIFF(NOW(), b.meeting_start_date)) ASC")
-            ->orderBy('a.delete_yn', 'desc');
+            ->where('b.delete_yn', 'N')
+            ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn')
+            ->orderBy('b.meeting_start_date', 'DESC')
+            ->orderBy('a.delete_yn', 'DESC');
 
         $result = $query->get()->getResult();
-        
+
         $data['meetings'] = $result;
+        $data['query'] = $db->getLastQuery(); 
         return view('mo_mypage_mygroup_my_list', $data);
-        // return view('mo_alliance_schedule', $data);
     }
 
     /* 참석한 모임 예약 새로고침 */
@@ -893,33 +886,28 @@ class MoHome extends BaseController
         
         $query = $db->table('wh_meeting_members a')
             ->select('a.meeting_idx, 
-                      b.category, 
-                      b.meeting_start_date, 
-                      b.meeting_end_date, 
-                      b.number_of_people, 
-                      b.title, 
-                      b.meeting_place, 
-                      b.membership_fee,
-                      COUNT(a.meeting_idx) AS meeting_idx_count,
-                      c.file_path,
-                      c.file_name,
-                      a.delete_yn')
+                        b.category, 
+                        b.meeting_start_date, 
+                        b.meeting_end_date, 
+                        b.number_of_people, 
+                        b.title, 
+                        b.meeting_place, 
+                        b.membership_fee,
+                        COUNT(d.meeting_idx) AS meeting_idx_count,
+                        MAX(CASE WHEN d.member_ci = "'.$ci.'" THEN d.meeting_master END) AS meeting_master,
+                        a.delete_yn')
             ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
-            ->join('wh_meetings_files c','b.idx = c.meeting_idx','left')
-            ->whereIn('a.meeting_idx', function ($builder) use ($ci) {
-                $builder->select('d.meeting_idx')
-                    ->from('wh_meeting_members d')
-                    ->where('d.meeting_master', 'M')
-                    ->where('d.member_ci', $ci);
-            })
-            ->where('b.delete_yn', 'N')
+            ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
             ->where('a.member_ci', $ci)
-            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee')
-            ->orderBy("ABS(DATEDIFF(NOW(), b.meeting_start_date)) ASC")
-            ->orderBy('a.delete_yn', 'desc');
+            ->where('b.delete_yn', 'N')
+            ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn')
+            ->orderBy('b.meeting_start_date', 'DESC')
+            ->orderBy('a.delete_yn', 'DESC');
+
         $result = $query->get()->getResult();
-        
+
         $data['meetings'] = $result;
+        
 
         if ($result){
             return $this->response->setJSON(['success' => true,'data' =>$result]);
@@ -959,7 +947,7 @@ class MoHome extends BaseController
             ->where('a.member_ci', $ci) 
             ->where('b.idx', $meeting_idx)
             ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
-            
+        
         $result = $query->get()->getResult();
         
         $data['meetings'] = $result;
@@ -1002,8 +990,6 @@ class MoHome extends BaseController
                         ->where('member_ci', $ci)
                         ->where('meeting_idx', $meeting_idx)
                         ->update();
-
-                
         
         /* 참석모임 POINT 환불 */
         $meetPointModel = new MeetPointModel();
