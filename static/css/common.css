@@ -650,8 +650,8 @@ header .menu_item {
     } */
     /* .menu_left {
         display: none !important;
-    }
-} */
+    }*/
+}
 @media (max-width: 968px) {
     .login_btn {
         display: none;
