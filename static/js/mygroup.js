@@ -44,7 +44,7 @@ function meetingMemberList(idx){
                         html += '<div class="chat_member">';
                         html += '<div class="chat_member_profile">';
                         if(data[i].file_path){
-                            html += '<img class="profile_img" src="'+data[i].file_path+data[i].file_name+'" />';
+                            html += '<img class="profile_img" src="/'+data[i].file_path+data[i].file_name+'" />';
                         }else{
                             html += '<img class="profile_img" src="/static/images/mypage_no_pfofile.png" />';
                         }
@@ -304,12 +304,12 @@ function MyGoupDate2(value){
     var minute = date.getMinutes();
     var dayOfWeek = daysOfWeek[date.getDay()];
 
-    var ampm = hour >= 12 ? '오후' : '오전';
+    // var ampm = hour >= 12 ? '오후' : '오전';
 
     hour = hour % 12;
     hour = hour ? hour : 12;
 
-    var formattedDateTime = month + '.' + day + ' (' + dayOfWeek + ') ' + ampm + ' ' + hour + ':' + (minute < 10 ? '0' : '') + minute;
+    var formattedDateTime = month + '.' + day + ' (' + dayOfWeek + ') ' + ' ' + hour + ':' + (minute < 10 ? '0' : '') + minute;
 
     return formattedDateTime;     
 }
@@ -328,24 +328,37 @@ function GroupDday(endDate, startDate, deleteYn) {
             var days = Math.floor(timeDiff / (24 * 60 * 60 * 1000));
             if (days === 1) {
                 dday = '내일';
-            } else if (days === 0) {
-                dday = '당일';
             } else {
-                dday = 'D-' + days;
+                dday = days+'일전';
             }
         } else {
             var timeDiff = endDateTimestamp - currentTimestamp;
             var days = Math.floor(timeDiff / (24 * 60 * 60 * 1000));
             if (days === 1) {
                 dday = '내일';
-            } else if (days === 0) {
-                dday = '당일';
             } else {
-                dday = 'D-' + days;
+                dday = days +'일전';
             }
         }
     } else {
-        dday = '예약취소';
+        dday = '취소';
+    }
+    return dday;
+}
+
+function GroupClass(endDate, deleteYn) {
+    var currentTimestamp = new Date().getTime();
+    var endDateTimestamp = new Date(endDate).getTime();
+    var dday;
+
+    if (deleteYn === 'N' || deleteYn === 'n') {
+        if (currentTimestamp > endDateTimestamp) {
+            dday = 'finish';
+        } else {
+            dday = '';
+        }
+    } else {
+        dday = 'cancel';
     }
     return dday;
 }
@@ -353,59 +366,65 @@ function GroupDday(endDate, startDate, deleteYn) {
 
 function MygroupPopup(idx,idValue){
     var cancel_rsv = $('#'+idValue).text();
-    if(cancel_rsv !='예약취소' && cancel_rsv !='종료'){
-        $.ajax({
-            url: '/mo/mypage/mygroup/cancelReservation',
-            data : {meetingIdx:idx},
-            type: 'post',
-            success: function(data) {
-                var html='';
-                if(data.success == true){
-                    var data =data.data
-                    var html ='';
-                    for(var i=0;i<data.length;i++){
-                        html += '<div class="layerPopup alert middle">';
-                        html += '<div class="layerPopup_wrap">';
-                        html += '<div class="layerPopup_content medium">';
-                        html += '<div style="position: relative;display: flex;">';
-                        html += '<p class="txt" style="width: 90%;padding-left: 5%;">에약확인</p>';
-                        html += '<a href="#" class="btn_close" onclick="alertClose();" style="float: right;">닫기</a>';
+    $.ajax({
+        url: '/mo/mypage/mygroup/cancelReservation',
+        data : {meetingIdx:idx},
+        type: 'post',
+        success: function(data) {
+            var html='';
+            if(data.success == true){
+                var data =data.data
+                var html ='';
+                for(var i=0;i<data.length;i++){
+                    html+= '<div class="layerPopup alert">';
+                    html+= '<div class="layerPopup_wrap">';
+                    html+= '<div class="layerPopup_content small">';
+                    html+= '<div style="position: relative;display: flex;">';
+                    html+= '<p class="txt" style="width: 90%;padding-left: 5%;">에약확인</p>';
+                    html+= '<a href="#" class="btn_close" onclick="alertClose();" style="float: right;">닫기</a>';
+                    html+= '</div>';
+                    html+='<div class="alliance_sch_list popup">';
+                    html+='<a href="/mo/mypage/group/detail/'+data[i].meeting_idx+'">'
+                    html+='<div class="alliance_sch_item">';
+                    html+='<div class="alliance_sch_sts">';
+                    html+='<div class="'+GroupClass(data[i].meeting_end_date, data[i].delete_yn)+'">'+GroupDday(data[i].meeting_end_date,data[i].meeting_start_date,data[i].delete_yn)+'</div>';
+                    html+='<img src="/static/images/right_arrow.png" />';
+                    html+='</div>';
+                    html+='<h2>'+data[i].meeting_place+'</h2>';
+                    html+='<p class="">'+MyGoupDate2(data[i].meeting_start_date)+'</p>';
+                    html+='<span class="">인원 '+data[i].meeting_idx_count+'명</span>';
+                    html+='</div>';
+                    html+='</a>'
+                    html+='</div>';
+                    html+='<div style="height: 50px;"></div>';
+                    html+='<div class="layerPopup_bottom">';
+                    if(cancel_rsv == '1일전' ||  cancel_rsv == '내일' || cancel_rsv == '2일전' || cancel_rsv == '3일전'){
+                        html+= '<div class="btn_group">';
+                        html+= '<button class="btn type01">대화방입장</button>';
+                        html+= '</div>';
+                    }else if(cancel_rsv == '종료' ||  cancel_rsv == '취소'){
+                        html += '<div class="btn_group">';
+                        html += '<button class="btn type01" onclick="mygoupRefresh();">확인</button>';
                         html += '</div>';
-                        html += '<div class="apply_group">';
-                        // html += '<p>'+data[i].meeting_idx+'</p>';
-                        html += '<p>'+GroupDday(data[i].meeting_end_date,data[i].meeting_start_date,data[i].delete_yn)+'</p>';
-                        html += '<p>'+data[i].meeting_place+'</p>';
-                        html += '<p>'+MyGoupDate2(data[i].meeting_start_date)+'</p>';
-                        html += '<p> 인원 : '+data[i].meeting_idx_count+'</p>';
-                        html += '</div>';
-                        html += '<div class="layerPopup_bottom">';
-                        if(cancel_rsv == 'D-2' ||  cancel_rsv == '내일' || cancel_rsv == '당일'){
-                            html += '<div class="btn_group">';
-                            html += '<button class="btn type01">대화방입장</button>';
-                            html += '</div>';
-                        }else{
-                            html += '<div class="btn_group multy">';
-                            html += '<button class="btn type01" onclick="CancelReservation('+data[i].meeting_idx+');">예약취소</button>';
-                            html += '<button class="btn type02">대화방입장</button>';
-                            html += '</div>';
-                        }
-                        html += '</div>';
-                        html += '</div>';
-                        html += '</div>';
-                        html += '</div>';
+                    }else{
+                        html+='<div class="btn_group multy">';
+                        html+='<button class="btn type03" onclick="CancelReservation('+data[i].meeting_idx+');">예약 취소</button>';
+                        html+='<button class="btn type01">대화방 입장</button>';
+                        html+='</div>';
                     }
+                    html+='</div>';
+                    html+='</div>';
+                    html+='</div>';
+                    html+='</div>';
+                    
                 }
-                $('body').append(html);
-                
-                
-            },
-            error: function(xhr, status, error) {
-                console.log(error);
             }
-        });
-    }else{
-        return false;
-    }
+            $('body').append(html);
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
     
 }
 
@@ -416,10 +435,10 @@ function CancelReservation(idx){
         type: 'post',
         success: function(data) {
             var html ='';
-            html += '<div class="layerPopup alert middle">';
+            html += '<div class="layerPopup alert">';
             html += '<div class="layerPopup_wrap">';
             html += '<div class="layerPopup_content msmall">';
-            html += '<p class="txt">예약취소</p>';
+            html += '<p class="txt">예약 취소</p>';
             html += '<div class="apply_group">';
             html += '<p>'+'예약이 취소 되었습니다.'+'</p>';
             html += '</div>';
@@ -450,12 +469,15 @@ function mygoupRefresh(){
             var data = data.data;
             var html='';
             for(var i=0;i<data.length;i++){
-                html += '<div class="apply_group_detail" onclick="javascript:MygroupPopup(' + data[i].meeting_idx + ',\'cancel_rsv_' + data[i].meeting_idx + '\')">';
-                html += '<div class="group_list_item group_apply_item">';
-                html += '<p class="group_price" id="cancel_rsv_' + data[i].meeting_idx + '">' + GroupDday(data[i].meeting_end_date, data[i].meeting_start_date, data[i].delete_yn) + '</p>';
-                html += '<p class="group_price">'+data[i].meeting_place+'</p>';
-                html += '<p class="group_schedule">'+MyGoupDate2(data[i].meeting_start_date)+'</p>';
-                html += '<p class="group_schedule"> 인원 '+data[i].meeting_idx_count+'명</p>';
+                html += '<div class="alliance_sch_list" onclick="javascript:MygroupPopup(' + data[i].meeting_idx + ',\'cancel_rsv_' + data[i].meeting_idx + '\')">';
+                html += '<div class="alliance_sch_item">';
+                html += '<div class="alliance_sch_sts">';
+                html += '<div class="'+GroupClass(data[i].meeting_end_date, data[i].delete_yn)+'" id="cancel_rsv_' + data[i].meeting_idx + '">' + GroupDday(data[i].meeting_end_date, data[i].meeting_start_date, data[i].delete_yn) + '</div>';
+                html += '<img src="/static/images/right_arrow.png" />';
+                html += '</div>';
+                html += '<h2>'+data[i].meeting_place+'</h2>';
+                html += '<p class="">'+MyGoupDate2(data[i].meeting_start_date)+'</p>';
+                html += '<span> 인원 '+data[i].meeting_idx_count+'명</span>';
                 html += '</div>';
                 html += '</div>';   
             }
