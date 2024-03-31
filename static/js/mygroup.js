@@ -1,10 +1,16 @@
 var mygroupDelArr=[];
+var mygroup_order='all';
 $(document).ready(function() {
     MyGoupCheckbox();
 
     $(document).on('change', '.totAgree', function() {
         MyGoupCheckbox();
     });    
+    
+    $('#mygroup_order').change(function() {
+        var selectedValue = $(this).val();
+        mygoupRefresh(selectedValue);
+    });
 
 });
 
@@ -472,11 +478,12 @@ function CancelReservation(idx){
     });
 }
 
-function mygoupRefresh(){
+function mygoupRefresh(selectedValue){
     alertClose();
     $.ajax({
         url: '/mo/mypage/mygroup/mygroupReservationRefresh',
-        type: 'get',
+        data : {selectedValue:selectedValue},
+        type: 'post',
         success: function(data) {
             var data = data.data;
             var html='';
