@@ -857,25 +857,52 @@ class MoHome extends BaseController
             })
             ->where('b.delete_yn', 'N')
             ->where('a.member_ci', $ci)
-            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
+            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee')
+            ->orderBy("ABS(DATEDIFF(NOW(), b.meeting_start_date)) ASC")
+            ->orderBy('a.delete_yn', 'desc');
 
-        $results = $query->get()->getResult();
-
-        foreach ($results as &$result) {
-            // 이벤트 종료 여부 판단
-            $eventDate = new \DateTime($result->meeting_start_date);
-            $result->isEnded = ($currentDate > $eventDate);
-        }
-        unset($result); //참조 해제
-
-        $data['meetings'] = $results;
-
+        $result = $query->get()->getResult();
+        
+        $data['meetings'] = $result;
         return view('mo_mypage_mygroup_my_list', $data);
+        // return view('mo_alliance_schedule', $data);
     }
 
-    public function mypageMygroupEdit()
-    {
-        $result= $this->mygoupRefreshList();
+    /* 참석한 모임 예약 새로고침 */
+    public function mygroupReservationRefresh(){
+        $db = db_connect();
+        $session = session();
+        $ci = $session->get('ci');
+        
+        $query = $db->table('wh_meeting_members a')
+            ->select('a.meeting_idx, 
+                      b.category, 
+                      b.meeting_start_date, 
+                      b.meeting_end_date, 
+                      b.number_of_people, 
+                      b.title, 
+                      b.meeting_place, 
+                      b.membership_fee,
+                      COUNT(a.meeting_idx) AS meeting_idx_count,
+                      c.file_path,
+                      c.file_name,
+                      a.delete_yn')
+            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+            ->join('wh_meetings_files c','b.idx = c.meeting_idx','left')
+            ->whereIn('a.meeting_idx', function ($builder) use ($ci) {
+                $builder->select('d.meeting_idx')
+                    ->from('wh_meeting_members d')
+                    ->where('d.meeting_master', 'M')
+                    ->where('d.member_ci', $ci);
+            })
+            ->where('b.delete_yn', 'N')
+            ->where('a.member_ci', $ci)
+            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee')
+            ->orderBy("ABS(DATEDIFF(NOW(), b.meeting_start_date)) ASC")
+            ->orderBy('a.delete_yn', 'desc');
+        $result = $query->get()->getResult();
+        
+        $data['meetings'] = $result;
 
         if ($result){
             return $this->response->setJSON(['success' => true,'data' =>$result]);
@@ -915,7 +942,7 @@ class MoHome extends BaseController
             ->where('a.member_ci', $ci) 
             ->where('b.idx', $meeting_idx)
             ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
-        
+            
         $result = $query->get()->getResult();
         
         $data['meetings'] = $result;
