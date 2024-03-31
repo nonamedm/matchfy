@@ -13,7 +13,67 @@
     <script src="/static/js/mygroup.js"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
 </head>
+<?php
+function getDday($endDate, $startDate, $deleteYn)
+{
+    $currentTimestamp = time();
+    $endDateTimestamp = strtotime($endDate);
+    $startDateTimestamp = strtotime($startDate);
+    $dday = '';
+    
+    if ($deleteYn == 'N' || $deleteYn == 'n') {
+        if ($currentTimestamp > $endDateTimestamp) {
+            $dday = '종료';
+        } elseif ($currentTimestamp < $startDateTimestamp) {
+            $timeDiff = $startDateTimestamp - $currentTimestamp + (24 * 60 * 60); // 하루를 느리게 계산
+            $days = floor($timeDiff / (60 * 60 * 24));
+            if ($days == 1) {
+                $dday = '내일';
+            } elseif ($days == 0) {
+                $dday = '당일';
+            } else {
+                $dday = 'D-' . $days;
+            }
+        } else {
+            $timeDiff = $endDateTimestamp - $currentTimestamp;
+            $days = floor($timeDiff / (60 * 60 * 24));
+            if ($days == 1) {
+                $dday = '내일';
+            } elseif ($days == 0) {
+                $dday = '당일';
+            } else {
+                $dday = 'D-' . $days;
+            }
+        }
+    } else {
+        $dday = '예약취소';
+    }
+    
+    return $dday;
+    
+}
+function formatDateTime($value)
+{
+    $date = new DateTime($value);
+    $daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
+    $month = $date->format('n');
+    $day = $date->format('j');
+    $hour = $date->format('G');
+    $minute = $date->format('i');
+    $dayOfWeekIndex = $date->format('w');
+    $dayOfWeek = $daysOfWeek[$dayOfWeekIndex];
+
+    $ampm = $hour >= 12 ? '오후' : '오전';
+
+    $hour = $hour % 12;
+    $hour = $hour ? $hour : 12;
+
+    $formattedDateTime = $month . '.' . $day . ' (' . $dayOfWeek . ') ' . $ampm . ' ' . $hour . ':'  . $minute;
+
+    return $formattedDateTime;
+}
+?>
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
@@ -45,57 +105,11 @@
                 </div>
                 <div class="mygroup_list" id="mygroup_list_body">
                 <?php foreach ($meetings as $meeting): ?>
-                    <div class="apply_group_detail" onclick="javascript:MygroupPopup(<?=$meeting->meeting_idx?>)">
-                    
+                    <div class="apply_group_detail" onclick="javascript:MygroupPopup(<?=$meeting->meeting_idx?>,'cancel_rsv_<?=$meeting->meeting_idx?>')">
                         <div class="group_list_item group_apply_item">
-                            <?php
-                                $currentTimestamp = time();
-                                $endDateTimestamp = strtotime($meeting->meeting_end_date);
-                                $startDateTimestamp = strtotime($meeting->meeting_start_date);
-                                $dday;
-
-                                if ($currentTimestamp > $endDateTimestamp) {
-                                    $dday = '종료';
-                                } elseif ($currentTimestamp < $startDateTimestamp) {
-                                    $timeDiff = $startDateTimestamp - $currentTimestamp;
-                                    $days = floor($timeDiff / (60 * 60 * 24));
-                                    if ($days == 1) {
-                                        $dday = '내일';
-                                    } else if($dday ==0){
-                                        $dday = '당일';
-                                    } else {
-                                        $dday = 'D-' . $days;
-                                    }
-                                } else {
-                                    $timeDiff = $endDateTimestamp - $currentTimestamp;
-                                    $days = floor($timeDiff / (60 * 60 * 24));
-                                    if ($days == 1) {
-                                        $dday = '내일';
-                                    } else if($dday ==0){
-                                        $dday = '당일';
-                                    } else {
-                                        $dday = 'D-' . $days;
-                                    }
-                                }
-                                ?>
-                            <p class="group_price"><?=$dday?></p><!--디데이-->
+                            <p class="group_price" id="cancel_rsv_<?=$meeting->meeting_idx?>"><?=getDday($meeting->meeting_end_date,$meeting->meeting_start_date,$meeting->delete_yn)?></p><!--디데이-->
                             <p class="group_price"><?= $meeting->meeting_place ?></p><!--모임장소-->
-                            <p class="group_price"><?= number_format($meeting->membership_fee) ?>원</p> <!--모임돈-->
-                            <?php
-                                $date = $meeting->meeting_start_date;
-                                $dayOfWeek = date('w', strtotime($date)); // 요일을 숫자(0~6)로 가져옴
-                                
-                                $days = array('일', '월', '화', '수', '목', '금', '토');
-                                $newDate = date('m.d A h:i', strtotime($date)) . ' (' . $days[$dayOfWeek] . ') 모임';
-                                
-                                // AM 또는 PM 확인하여 오전 또는 오후로 변경
-                                if (strpos($newDate, 'AM') !== false) {
-                                    $newDate = str_replace('AM', '오전', $newDate);
-                                } else {
-                                    $newDate = str_replace('PM', '오후', $newDate);
-                                }
-                            ?>
-                            <p class="group_schedule"><?= $newDate ?></p><!--날짜-->
+                            <p class="group_schedule"><?= formatDateTime($meeting->meeting_start_date) ?></p><!--날짜-->
                             <p class="group_schedule">인원 <?= $meeting->meeting_idx_count ?>명</p> <!--인원수-->
                         </div>
                     </div>
