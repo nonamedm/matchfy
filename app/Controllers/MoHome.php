@@ -617,21 +617,36 @@ class MoHome extends BaseController
             ->where('meeting_idx', $meeting_idx)
             ->countAllResults();
 
+        if($memCount > 0){
+            $memCount = $memCount;
+        } else {
+            $memCount = 0;
+        }
+
         $meetModel = new MeetModel();
         $peapleCountQuery = $meetModel
             ->select('m.number_of_people as number_of_people')
             ->from('wh_meetings m')
             ->where('m.idx', $meeting_idx)
-            ->where('m.delete_yn', 'N');
-        
-        $peapleCountResult = $peapleCountQuery->get()->getRow();
-        $number_of_people = $peapleCountResult->number_of_people;
+            ->where('m.delete_yn','n')
+            ->get()
+            ->getRow();
+
+        if($peapleCountQuery){
+            if($peapleCountQuery > 0){
+                $number_of_people = $peapleCountQuery->number_of_people;
+            } else {
+                $number_of_people = 0;
+            }
+        }else{
+            return 'nodata';
+        }
 
         // 값 비교
         if ($number_of_people - $memCount > 0) {
-            return 1; // 조건 충족
+            return 'true'; // 조건 충족
         } else {
-            return -1; // 조건 미충족
+            return 'false'; // 조건 미충족
         }
     }
 
@@ -645,9 +660,9 @@ class MoHome extends BaseController
             ->countAllResults();
         // echo $total;
         if ($total > 0) {
-            return -1; // 이미 등록되어 있음
+            return 'false'; // 이미 등록되어 있음
         } else {
-            return 1; // 등록되어 있지 않음
+            return 'true'; // 등록되어 있지 않음
         }
     }
 
@@ -664,11 +679,11 @@ class MoHome extends BaseController
         $getMemberCount = $this->getMemberCount($meeting_idx);
         $getMemberConfirm = $this->getMemberConfirm($ci, $meeting_idx);
 
-        if ($getMemberCount == 1) {
+        if ($getMemberCount == 'true') {
             if ($mypoint < $point) { //보유포인트가 모자랄 경우
                 return $this->response->setJSON(['success' => true, 'msg' => '충전후 사용해주세요.']);
             } else {
-                if ($getMemberConfirm == 1) { //통과!
+                if ($getMemberConfirm == 'true') { //통과!
                     //마스터 유저                  
                     $masterMember = new MemberModel();
                     $meetingMaster = $masterMember
@@ -737,7 +752,9 @@ class MoHome extends BaseController
                     return $this->response->setJSON(['success' => true, 'msg' => '이미 참석된 멤버 입니다.']);
                 }
             }
-        } else { //참석멤버수가 다 찼을 경우
+        } else if($getMemberCount == 'nodata'){
+            return $this->response->setJSON(['success' => true, 'msg' => '존재하지 않는 모임입니다. 다시 시도해 주세요.']);
+        }else { //참석멤버수가 다 찼을 경우
             return $this->response->setJSON(['success' => true, 'msg' => '참석멤버수가 다 찼습니다.']);
         }
     }

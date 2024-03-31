@@ -16,7 +16,7 @@
     <script src="/static/js/basic.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfeedb645765a4f5e27cfb8dda43a2c8&libraries=services"></script>
+    <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfeedb645765a4f5e27cfb8dda43a2c8&libraries=services"></script> -->
 </head>
 
 <body class="mo_wrap">
@@ -310,29 +310,29 @@
 
 
         /* 카카오 맵 */ 
-        var mapContainer = document.getElementById('map'), 
-            mapOption = {
-                center: new kakao.maps.LatLng(33.450701, 126.570667), 
-                level: 3 
-            }; 
+        // var mapContainer = document.getElementById('map'), 
+        //     mapOption = {
+        //         center: new kakao.maps.LatLng(33.450701, 126.570667), 
+        //         level: 3 
+        //     }; 
 
         // 지도 생성
-        var map = new kakao.maps.Map(mapContainer, mapOption); 
+        // var map = new kakao.maps.Map(mapContainer, mapOption); 
         
         // 장소 검색 객체 생성
-        var ps = new kakao.maps.services.Places();  
+        // var ps = new kakao.maps.services.Places();  
     
-        function searchPlaces() {
-            var keyword = document.getElementById('meeting_place').value;
+        // function searchPlaces() {
+        //     var keyword = document.getElementById('meeting_place').value;
 
-            if (!keyword.replace(/^\s+|\s+$/g, '')) {
-                alert('키워드를 입력해주세요!');
-                return false;
-            }
+        //     if (!keyword.replace(/^\s+|\s+$/g, '')) {
+        //         alert('키워드를 입력해주세요!');
+        //         return false;
+        //     }
 
-            // 키워드로 장소 검색
-            ps.keywordSearch(keyword, placesSearchCB); 
-        }
+        //     // 키워드로 장소 검색
+        //     ps.keywordSearch(keyword, placesSearchCB); 
+        // }
 
         //앤터 추가
         document.getElementById('meeting_place').addEventListener('keydown', function(e) {

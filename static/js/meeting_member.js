@@ -122,7 +122,7 @@ function meetingApplication(idx){
                     html += '<div class="apply_group">';
                     html += '<div style="padding:20px;">';
                     html += '<div class="apply_group_detail">';
-                    html += '<img src="'+metdata[0].file_path+metdata[0].file_name+'" />';
+                    html += '<img src="/'+metdata[0].file_path+metdata[0].file_name+'" />';
                     html += '<div class="group_list_item group_apply_item">';
                     html += '<div class="group_particpnt">';
                     html += '<span>신청 '+metdata[0].meet_members+'</span>/'+metdata[0].number_of_people+'명';
