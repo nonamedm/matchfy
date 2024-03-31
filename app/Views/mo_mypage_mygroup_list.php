@@ -33,12 +33,12 @@
                 </div>
                 <div class="mygroup_list" id="mygroup_list_body">
                 <?php foreach ($meetings as $meeting): ?>
-                    <div class="apply_group_detail <?= $meeting->isEnded ? 'grayscale' : '' ?>">
+                    <div class="apply_group_detail">
                         <div class="chk_box meet_delete_chk_box" style="display:none;">
                             <input type="checkbox" class="totAgree" id="totAgree<?= $meeting->meeting_idx ?>" name="chkDefault00">
                             <label class="totAgree_label" for="totAgree<?= $meeting->meeting_idx ?>"></label>
                         </div>
-                        <div class="relative-container">
+                        <div class="relative-container <?= $meeting->isEnded ? 'grayscale' : '' ?>">
                             <?php if ($meeting->isEnded): ?>
                                 <div class="ended_overlay">종료</div>
                             <?php endif; ?>

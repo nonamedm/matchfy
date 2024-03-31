@@ -250,8 +250,8 @@ function MeetCancelChk(){
                     var endedOverlay = data[i].isEnded ? '<div class="ended_overlay">종료</div>' : '';
                     var grayscaleClass = data[i].isEnded ? 'grayscale' : '';
                     html+='<label class="totAgree_label" for="totAgree'+data[i].meeting_idx+'">';
-                    html+=`<div class="apply_group_detail ${grayscaleClass}">`;
-                    html+='<div class="relative-container">';
+                    html+='<div class="apply_group_detail">';
+                    html+=`<div class="relative-container ${grayscaleClass}">`;
                     html+=`${endedOverlay ? '<div class="ended_overlay">종료</div>' : ''}`
                     html+='<a href="/mo/mypage/group/detail/'+data[i].meeting_idx+'">';
                     html+=`<img class="profile_img" src="/${data[i].file_path}${data[i].file_name}" />`;

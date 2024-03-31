@@ -852,6 +852,78 @@ const submitFile = () => {
 };
 
 const meetingSave = (postData) => {
+
+    if ($('#group_photo').val().trim() === '') {
+        alert('대표사진을 선택해 주세요.');
+        $('#group_photo').focus();
+        return;
+    }
+    if ($('#category').val().trim() === '') {
+        alert('카테고리를 선택해 주세요.');
+        $('#category').focus();
+        return;
+    }
+    if ($('#datepicker').val().trim() === '') {
+        alert('모집기간 시작일을 입력해 주세요.');
+        $('#datepicker').focus();
+        return;
+    }
+    if ($('#datepicker1').val().trim() === '') {
+        alert('모집기간 종료일을 입력해 주세요.');
+        $('#datepicker1').focus();
+        return;
+    }
+    if ($('#datepicker2').val().trim() === '') {
+        alert('모임일자 시작일을 입력해 주세요.');
+        $('#datepicker2').focus();
+        return;
+    }
+    if ($('#datepicker3').val().trim() === '') {
+        alert('모임일자 종료일을 입력해 주세요.');
+        $('#datepicker3').focus();
+        return;
+    }
+    if ($('#number_of_people').val().trim() === '') {
+        alert('모집 인원을 입력해 주세요.');
+        $('#number_of_people').focus();
+        return;
+    }
+    if ($('#group_min_age').val().trim() === '') {
+        alert('최소 나이를 입력해 주세요.');
+        $('#group_min_age').focus();
+        return;
+    }
+    if ($('#group_max_age').val().trim() === '') {
+        alert('최대 나이를 입력해 주세요.');
+        $('#group_max_age').focus();
+        return;
+    }
+    if ($('#matching_rate').val().trim() === '') {
+        alert('매칭률을 입력해 주세요.');
+        $('#matching_rate').focus();
+        return;
+    }
+    if ($('#title').val().trim() === '') {
+        alert('제목을 입력해 주세요.');
+        $('#title').focus();
+        return;
+    }
+    if ($('#content').val().trim() === '') {
+        alert('내용을 입력해 주세요.');
+        $('#content').focus();
+        return;
+    }
+    if ($('#meeting_place').val().trim() === '') {
+        alert('모임장소를 입력해 주세요.');
+        $('#meeting_place').focus();
+        return;
+    }
+    if ($('#membership_fee').val().trim() === '') {
+        alert('회비를 입력해 주세요.');
+        $('#membership_fee').focus();
+        return;
+    }
+
     var postData = new FormData(document.querySelector('form'));
     $.ajax({
         url: '/ajax/meetingSave',
@@ -893,6 +965,8 @@ const meetingSave = (postData) => {
             alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
         },
     });
+
+    return false;
 };
 
 const meetingFiltering = (category, searchText, filterOption) => {
@@ -937,7 +1011,7 @@ const meetingFiltering = (category, searchText, filterOption) => {
                                     ${meeting.meeting_place}
                                 </div>
                                 <p class="group_price">${parseInt(meeting.membership_fee).toLocaleString('ko-KR')}원</p>
-                                <p class="group_schedule">${meeting.meeting_start_date}</p>
+                                <p class="group_schedule">${meeting.meetingDateTime}</p>
                             </div>
                         </a>
                     `;
@@ -981,8 +1055,8 @@ const MymeetingFiltering = (filterOption) => {
 
                     listHtml += `
                         <a href="/mo/mypage/group/detail/${meeting.idx}">
-                            <div class="apply_group_detail ${grayscaleClass}">
-                                <div class="relative-container">
+                            <div class="apply_group_detail">
+                                <div class="relative-container ${grayscaleClass}">
                                 ${endedOverlay ? '<div class="ended_overlay">종료</div>' : ''}
                                 <img class="profile_img" src="${imagePath}" />
                                 </div>

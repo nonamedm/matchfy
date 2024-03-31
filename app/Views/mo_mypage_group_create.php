@@ -335,28 +335,28 @@
         // }
 
         //앤터 추가
-        document.getElementById('meeting_place').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') { 
-                searchPlaces();
-            }
-        });
+        // document.getElementById('meeting_place').addEventListener('keydown', function(e) {
+        //     if (e.key === 'Enter') { 
+        //         searchPlaces();
+        //     }
+        // });
 
-        function placesSearchCB(data, status, pagination) {
-            if (status === kakao.maps.services.Status.OK) {
+        // function placesSearchCB(data, status, pagination) {
+        //     if (status === kakao.maps.services.Status.OK) {
 
-                var coords = new kakao.maps.LatLng(data[0].y, data[0].x);//위치 이동
-                console.log(coords);
-                map.setCenter(coords);
+        //         var coords = new kakao.maps.LatLng(data[0].y, data[0].x);//위치 이동
+        //         console.log(coords);
+        //         map.setCenter(coords);
                 
-                //마커
-                var marker = new kakao.maps.Marker({
-                    map: map,
-                    position: coords
-                });
-            } else {
-                alert('검색 결과가 없습니다.');
-            }
-        }
+        //         //마커
+        //         var marker = new kakao.maps.Marker({
+        //             map: map,
+        //             position: coords
+        //         });
+        //     } else {
+        //         alert('검색 결과가 없습니다.');
+        //     }
+        // }
 
         document.getElementById('group_photo').addEventListener('change', function(event) {
             var files = event.target.files;
@@ -392,7 +392,6 @@
                 reader.readAsDataURL(file);
             });
         });
-
 
     </script>
     <!-- -->

@@ -820,6 +820,11 @@ a.ended:hover .ended_overlay {
     flex-wrap: wrap;
     justify-content: space-between;
 }
+.group_search_list a, a:visited, a:focus, a:hover, a:active {
+    color: inherit;
+    text-decoration: none;
+    outline: none;
+}
 .group_list_item {
     width: 162px;
     margin-bottom: 30px;
@@ -2105,9 +2110,10 @@ form input[type='file'] {
     bottom: 20px;
     left: 20px;
 } */
-.footer .btn_group.invite {
-    /* bottom: 152px;
-    left: 20px; */
+.footer .btn.disabled {
+    background-color: gray;
+    color: white;
+    pointer-events: none;
 }
 .footer .btn_group.ai_date_check {
 }

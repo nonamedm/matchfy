@@ -78,7 +78,7 @@
                                 <?= $meeting['meeting_place'] ?>
                             </div>
                             <p class="group_price"><?= number_format($meeting['membership_fee']) ?>원</p>
-                            <p class="group_schedule"><?= $meeting['meeting_start_date'] ?></p>
+                            <p class="group_schedule"><?= $meeting['meetingDateTime'] ?></p>
                         </div>
                     </a>
                 <?php endforeach; ?>
@@ -127,53 +127,45 @@
         }
 
         $(document).ready(function() {
-
             // 카테고리 클릭
             $('.group_category div').click(function() {
-
                 $('.group_category img').removeClass('highlighted');
-                
                 $(this).find('img').addClass('highlighted');
-
-                var category = $(this).data('category');
-                var searchText = $('.group_search input[type="text"]').val();
-                var filterOption = $('#groupFilterSelect').val();
-                meetingFiltering(category, searchText, filterOption);
+                updateMeetingFiltering();
             });
 
-            //검색 - 돋보기 클릭
+            // 검색 - 돋보기 클릭
             $('.group_serch_img').click(function() {
-                var searchText = $('.group_search input[type="text"]').val();
-                var filterOption = $('#groupFilterSelect').val();
-                if (searchText.length < 1) { 
-                    alert('글자를 하나 이상 입력해주세요.');
-                    return; // 함수 실행 중단
-                }
-                meetingFiltering('', searchText, filterOption);
+                updateMeetingFiltering();
             });
 
             // 검색 - 엔터 키
             $('.group_search input[type="text"]').keypress(function(event) {
                 if (event.which == 13) {
-                    var searchText = $(this).val();
-                    var filterOption = $('#groupFilterSelect').val();
-                    if (searchText.length < 1) { 
-                        alert('글자를 하나 이상 입력해주세요.');
-                        return; // 함수 실행 중단
-                    }
-                    meetingFiltering('', searchText, filterOption);
-
-                    event.preventDefault();//폼 막기
+                    event.preventDefault();
+                    updateMeetingFiltering();
                 }
             });
 
-            // 필터링 옵션
-            $('#groupFilterSelect').change(function() {
-                var searchText = $('.group_search input[type="text"]').val();
-                var filterOption = $(this).val();
-                meetingFiltering('', searchText, filterOption);
+            // 검색창 내용 변경 시
+            $('.group_search input[type="text"]').on('input', function() {
+                updateMeetingFiltering();
             });
+
+            // 필터링 옵션 변경 시
+            $('#groupFilterSelect').change(function() {
+                updateMeetingFiltering();
+            });
+
+            // 공통
+            function updateMeetingFiltering() {
+                var selectedCategory = $('.group_category div img.highlighted').closest('div').data('category') || '';
+                var searchText = $('.group_search input[type="text"]').val();
+                var filterOption = $('#groupFilterSelect').val();
+                meetingFiltering(selectedCategory, searchText, filterOption);
+            }
         });
+
     </script>
 
     <!-- -->

@@ -475,19 +475,32 @@ class MoHome extends BaseController
         // $data['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
 
         $MeetingModel->orderBy('create_at', 'DESC');
+
+        $currentTime = date('Y-m-d H:i:s');
         
         $meetings = $MeetingModel
             ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
+            ->where('wh_meetings.meeting_start_date >=', $currentTime)
             ->where('wh_meetings.delete_yn', 'N')
             ->findAll();
+
+        $days = ['일', '월', '화', '수', '목', '금', '토'];
 
         // 참여 인원 모델
         $MeetingMembersModel = new MeetingMembersModel();
 
         // 각 모임에 대한 참여 인원 수 계산
         foreach ($meetings as &$meeting) { //&로 참조 필요
+            // 모임 시작 시간 포맷팅
+            $meetingDateTimestamp = strtotime($meeting['meeting_start_date']);
+            $meetingDay = date("w", $meetingDateTimestamp); //0~6
+            $dayName = $days[$meetingDay]; //요일
+            $meetingDateTime = date("Y.m.d ", $meetingDateTimestamp) . ' (' . $dayName . ') ' . date(" H:i", $meetingDateTimestamp);
+            $meeting['meetingDateTime'] = $meetingDateTime;
+
             $memCount = $MeetingMembersModel
                 ->where('meeting_idx', $meeting['idx'])
+                ->where('delete_yn', 'N')
                 ->countAllResults();
             $meeting['count'] = $memCount;
         }
@@ -535,14 +548,18 @@ class MoHome extends BaseController
         $MeetingMembersModel = new MeetingMembersModel();
         $memCount = $MeetingMembersModel
             ->where('meeting_idx', $idx)
+            ->where('delete_yn', 'N')
             ->countAllResults();
 
         //이미지 정보
         $MeetingFileModel = new MeetingFileModel();
         $imageInfo = $MeetingFileModel
             ->where('meeting_idx', $idx)
-            ->where('delete_yn', 'n')
+            ->where('delete_yn', 'N')
             ->first();
+
+        //모집 마감 확인
+        $isRecruitmentFull = $Meeting['number_of_people'] == $memCount;
 
         $data = [
             'idx' => $idx,
@@ -551,21 +568,18 @@ class MoHome extends BaseController
             'recruitment_end_date' => $recruitEndTime,
             'meeting_start_date' => $meetingDateTime, //$Meeting['meeting_start_date'],
             //'meeting_end_date' => $Meeting['meeting_end_date'],
-            'number_of_people' => $Meeting['number_of_people'], //현재 모집된 인원 수 필요
-            'meeing_count' => $memCount,
+            'number_of_people' => $Meeting['number_of_people'], 
+            'meeing_count' => $memCount, //현재 모집된 인원 수
             'matching_rate' => $Meeting['matching_rate'],
             'title' => $Meeting['title'],
             'content' => $Meeting['content'],
             'meeting_place' => $Meeting['meeting_place'],
             'membership_fee' => $Meeting['membership_fee'],
-            'image' => $imageInfo
+            'image' => $imageInfo,
+            'is_recruitment_full' => $isRecruitmentFull
+
         ];
 
-        // if(!empty($userFile)) {
-        //     $data = array_merge($data, $userFile);
-        // } else {
-        //     $data = array_merge($data, ['file_path' => 'static/images/', 'file_name' => 'profile_noimg.png']);
-        // }
         return view('mo_mypage_group_detail', $data);
     }
 
@@ -615,6 +629,7 @@ class MoHome extends BaseController
         $MeetingMembersModel = new MeetingMembersModel();
         $memCount = $MeetingMembersModel
             ->where('meeting_idx', $meeting_idx)
+            ->where('delete_yn', 'N')
             ->countAllResults();
 
         if($memCount > 0){
@@ -628,7 +643,7 @@ class MoHome extends BaseController
             ->select('m.number_of_people as number_of_people')
             ->from('wh_meetings m')
             ->where('m.idx', $meeting_idx)
-            ->where('m.delete_yn','n')
+            ->where('m.delete_yn','N')
             ->get()
             ->getRow();
 
