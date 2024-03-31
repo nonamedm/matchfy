@@ -1164,6 +1164,16 @@ class MoAjax extends BaseController
                 'meeting_place' => $meeting_place,
                 'membership_fee' => $membership_fee,
             ];
+            
+            //참석 멤버 추가
+            $meetMemdata = [
+                'meeting_idx' =>$meeting_idx,
+                'member_ci' => $ci,
+                'meeting_master' =>'K',
+                'create_at' => date('Y-m-d H:i:s'),
+            ];
+            $meeting_members = new MeetingMembersModel();
+            $meeting_members->insert($meetMemdata);
 
             $MeetingModel = new MeetingModel();
 
