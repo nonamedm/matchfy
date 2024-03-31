@@ -44,7 +44,7 @@ function meetingMemberList(idx){
                         html += '<div class="chat_member">';
                         html += '<div class="chat_member_profile">';
                         if(data[i].file_path){
-                            html += '<img class="profile_img" src="'+data[i].file_path+data[i].file_name+'" />';
+                            html += '<img class="profile_img" src="/'+data[i].file_path+data[i].file_name+'" />';
                         }else{
                             html += '<img class="profile_img" src="/static/images/mypage_no_pfofile.png" />';
                         }
