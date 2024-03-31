@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="/static/css/common_mo.css">
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/basic.js"></script>
-    <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/mygroup.js"></script>
 </head>
 

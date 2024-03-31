@@ -898,7 +898,16 @@ class MoHome extends BaseController
         $data['query'] = $db->getLastQuery(); 
         return view('mo_mypage_mygroup_my_list', $data);
     }
+    public function mypageMygroupEdit()
+    {
+        $result= $this->mygoupRefreshList();
 
+        if ($result){
+            return $this->response->setJSON(['success' => true,'data' =>$result]);
+        } else{
+            return $this->response->setJSON(['success' => false]);
+        }
+    }
     /* 참석한 모임 예약 새로고침 */
     public function mygroupReservationRefresh(){
         $db = db_connect();

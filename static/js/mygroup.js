@@ -1,16 +1,10 @@
 var mygroupDelArr=[];
-var mygroup_order='all';
 $(document).ready(function() {
     MyGoupCheckbox();
 
     $(document).on('change', '.totAgree', function() {
         MyGoupCheckbox();
     });    
-    
-    $('#mygroup_order').change(function() {
-        var selectedValue = $(this).val();
-        mygoupRefresh(selectedValue);
-    });
 
 });
 
@@ -122,12 +116,12 @@ function MeetingEditChk(){
                     var endedOverlay = data[i].isEnded ? '<div class="ended_overlay">종료</div>' : '';
                     var grayscaleClass = data[i].isEnded ? 'grayscale' : '';
                     html+='<label class="totAgree_label" for="totAgree'+data[i].meeting_idx+'">';
-                    html+=`<div class="apply_group_detail ${grayscaleClass}">`;
+                    html+='<div class="apply_group_detail">';
                     html+='<div class="chk_box meet_delete_chk_box">';
                     html+='<input type="checkbox" class="totAgree" id="totAgree'+data[i].meeting_idx+'" name="'+data[i].meeting_idx+'">';
                     html+='<label class="totAgree_label" for="totAgree'+data[i].meeting_idx+'"></label>';
                     html+='</div>';
-                    html+='<div class="relative-container">';
+                    html+=`<div class="relative-container ${grayscaleClass}">`;
                     html+=`${endedOverlay ? '<div class="ended_overlay">종료</div>' : ''}`
                     html+=`<img class="profile_img" src="/${data[i].file_path}${data[i].file_name}" />`;
                     html+='</div>';
@@ -478,12 +472,11 @@ function CancelReservation(idx){
     });
 }
 
-function mygoupRefresh(selectedValue){
+function mygoupRefresh(){
     alertClose();
     $.ajax({
         url: '/mo/mypage/mygroup/mygroupReservationRefresh',
-        data : {selectedValue:selectedValue},
-        type: 'post',
+        type: 'get',
         success: function(data) {
             var data = data.data;
             var html='';
