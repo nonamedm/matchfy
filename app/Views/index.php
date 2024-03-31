@@ -97,14 +97,14 @@
                     if ($ci)
                     {
                         ?>
-                        <button class="login_btn" onclick="userLogout()">
+                        <!-- <button class="login_btn" onclick="userLogout()">
                             <p>
                                 로그아웃
                             </p>
                         </button>
                         <button class="login_btn" onclick="moveToUrl('/mo/mypage')">
                             <p>mypage</p>
-                        </button>
+                        </button> -->
                         <button class="login_btn mypage_icon" onclick="moveToUrl('/mo/mypage')">
                             <svg width="28" height="26" viewBox="0 0 28 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -128,17 +128,17 @@
         </div>
 
     </header>
-    <div class="content">
-        <div class="main_bg_center_box">
-            <h2>AI가 분석하고 소개하는 <span>매치파이</span></h2>
-            <p>똑똑한 AI가 나와 딱 맞는 상대를 소개해드립니다.</p>
-            <button onclick="moveToUrl('/mo')">지금 매칭하기</button>
-        </div>
-    </div>
     <?php
     if (!$ci)
     {
         ?>
+        <div class="content">
+            <div class="main_bg_center_box">
+                <h2>AI가 분석하고 소개하는 <span>매치파이</span></h2>
+                <p>똑똑한 AI가 나와 딱 맞는 상대를 소개해드립니다.</p>
+                <button onclick="moveToUrl('/mo')">지금 매칭하기</button>
+            </div>
+        </div>
 
         <div class="content_no_img">
             <div class="main_cont_center_box main_cont_left_box">
