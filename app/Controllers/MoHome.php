@@ -475,32 +475,19 @@ class MoHome extends BaseController
         // $data['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
 
         $MeetingModel->orderBy('create_at', 'DESC');
-
-        $currentTime = date('Y-m-d H:i:s');
         
         $meetings = $MeetingModel
             ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
-            ->where('wh_meetings.meeting_start_date >=', $currentTime)
             ->where('wh_meetings.delete_yn', 'N')
             ->findAll();
-
-        $days = ['일', '월', '화', '수', '목', '금', '토'];
 
         // 참여 인원 모델
         $MeetingMembersModel = new MeetingMembersModel();
 
         // 각 모임에 대한 참여 인원 수 계산
         foreach ($meetings as &$meeting) { //&로 참조 필요
-            // 모임 시작 시간 포맷팅
-            $meetingDateTimestamp = strtotime($meeting['meeting_start_date']);
-            $meetingDay = date("w", $meetingDateTimestamp); //0~6
-            $dayName = $days[$meetingDay]; //요일
-            $meetingDateTime = date("Y.m.d ", $meetingDateTimestamp) . ' (' . $dayName . ') ' . date(" H:i", $meetingDateTimestamp);
-            $meeting['meetingDateTime'] = $meetingDateTime;
-
             $memCount = $MeetingMembersModel
                 ->where('meeting_idx', $meeting['idx'])
-                ->where('delete_yn', 'N')
                 ->countAllResults();
             $meeting['count'] = $memCount;
         }
@@ -548,18 +535,14 @@ class MoHome extends BaseController
         $MeetingMembersModel = new MeetingMembersModel();
         $memCount = $MeetingMembersModel
             ->where('meeting_idx', $idx)
-            ->where('delete_yn', 'N')
             ->countAllResults();
 
         //이미지 정보
         $MeetingFileModel = new MeetingFileModel();
         $imageInfo = $MeetingFileModel
             ->where('meeting_idx', $idx)
-            ->where('delete_yn', 'N')
+            ->where('delete_yn', 'n')
             ->first();
-
-        //모집 마감 확인
-        $isRecruitmentFull = $Meeting['number_of_people'] == $memCount;
 
         $data = [
             'idx' => $idx,
@@ -568,18 +551,21 @@ class MoHome extends BaseController
             'recruitment_end_date' => $recruitEndTime,
             'meeting_start_date' => $meetingDateTime, //$Meeting['meeting_start_date'],
             //'meeting_end_date' => $Meeting['meeting_end_date'],
-            'number_of_people' => $Meeting['number_of_people'], 
-            'meeing_count' => $memCount, //현재 모집된 인원 수
+            'number_of_people' => $Meeting['number_of_people'], //현재 모집된 인원 수 필요
+            'meeing_count' => $memCount,
             'matching_rate' => $Meeting['matching_rate'],
             'title' => $Meeting['title'],
             'content' => $Meeting['content'],
             'meeting_place' => $Meeting['meeting_place'],
             'membership_fee' => $Meeting['membership_fee'],
-            'image' => $imageInfo,
-            'is_recruitment_full' => $isRecruitmentFull
-
+            'image' => $imageInfo
         ];
 
+        // if(!empty($userFile)) {
+        //     $data = array_merge($data, $userFile);
+        // } else {
+        //     $data = array_merge($data, ['file_path' => 'static/images/', 'file_name' => 'profile_noimg.png']);
+        // }
         return view('mo_mypage_group_detail', $data);
     }
 
@@ -629,7 +615,6 @@ class MoHome extends BaseController
         $MeetingMembersModel = new MeetingMembersModel();
         $memCount = $MeetingMembersModel
             ->where('meeting_idx', $meeting_idx)
-            ->where('delete_yn', 'N')
             ->countAllResults();
 
         if($memCount > 0){
@@ -643,7 +628,7 @@ class MoHome extends BaseController
             ->select('m.number_of_people as number_of_people')
             ->from('wh_meetings m')
             ->where('m.idx', $meeting_idx)
-            ->where('m.delete_yn','N')
+            ->where('m.delete_yn','n')
             ->get()
             ->getRow();
 
@@ -672,6 +657,7 @@ class MoHome extends BaseController
         $total = $MeetingMembersModel
             ->where('member_ci', $ci)
             ->where('meeting_idx', $meeting_idx)
+            ->where('delete_yn', 'N')
             ->countAllResults();
         // echo $total;
         if ($total > 0) {
@@ -886,7 +872,7 @@ class MoHome extends BaseController
                     ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
                     ->where('a.member_ci', $ci)
                     ->where('b.delete_yn', 'N')
-                    ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn')
+                    ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn,a.create_at')
                     ->orderBy('CASE WHEN b.meeting_start_date > NOW() THEN 0 ELSE 1 END', 'ASC')
                     ->orderBy('CASE WHEN a.delete_yn = \'Y\' THEN 0 ELSE 1 END', 'DESC')
                     ->orderBy('b.meeting_start_date', 'DESC')
@@ -898,17 +884,8 @@ class MoHome extends BaseController
         $data['query'] = $db->getLastQuery(); 
         return view('mo_mypage_mygroup_my_list', $data);
     }
-    public function mypageMygroupEdit()
-    {
-        $result= $this->mygoupRefreshList();
 
-        if ($result){
-            return $this->response->setJSON(['success' => true,'data' =>$result]);
-        } else{
-            return $this->response->setJSON(['success' => false]);
-        }
-    }
-    /* 참석한 모임 예약 새로고침 */
+    /* 예약취소 참석한 모임 예약 새로고침 */
     public function mygroupReservationRefresh(){
         $db = db_connect();
         $session = session();
@@ -935,7 +912,7 @@ class MoHome extends BaseController
                         ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
                         ->where('a.member_ci', $ci)
                         ->where('b.delete_yn', 'N')
-                        ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn');
+                        ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn,a.create_at');
                         if($selectedValue=='all'){
                             $query->orderBy('CASE WHEN b.meeting_start_date > NOW() THEN 0 ELSE 1 END', 'ASC');
                             $query->orderBy('CASE WHEN a.delete_yn = \'Y\' THEN 0 ELSE 1 END', 'DESC');
@@ -949,7 +926,6 @@ class MoHome extends BaseController
 
         $data['meetings'] = $result;
         
-
         if ($result){
             return $this->response->setJSON(['success' => true,'data' =>$result]);
         } else{
@@ -965,56 +941,31 @@ class MoHome extends BaseController
         $meeting_idx = $this->request->getPost('meetingIdx');
 
         $query = $db->table('wh_meeting_members a')
-            ->select('a.meeting_idx, 
-                      b.category, 
-                      b.meeting_start_date, 
-                      b.meeting_end_date, 
-                      b.number_of_people, 
-                      b.title, 
-                      b.meeting_place, 
-                      b.membership_fee, 
-                      COUNT(a.meeting_idx) AS meeting_idx_count,
-                      c.file_path,
-                      c.file_name,
-                      a.delete_yn')
-            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
-            ->join('wh_meetings_files c','b.idx = c.meeting_idx','left')
-            ->whereIn('a.meeting_idx', function ($builder) use ($ci) {
-                $builder->select('d.meeting_idx')
-                    ->from('wh_meeting_members d')
-                    ->where('d.member_ci', $ci);
-            })
-            ->where('b.delete_yn', 'N')
-            ->where('a.member_ci', $ci) 
-            ->where('b.idx', $meeting_idx)
-            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
-        
-            $query = $db->table('wh_meeting_members a')
-                        ->select('a.meeting_idx, 
-                                b.category, 
-                                b.meeting_start_date, 
-                                b.meeting_end_date, 
-                                b.number_of_people, 
-                                b.title, 
-                                b.meeting_place, 
-                                b.membership_fee,
-                                (
-                                    SELECT SUM(CASE WHEN wmm.delete_yn = \'N\' THEN 1 ELSE 0 END) 
-                                    FROM wh_meeting_members wmm 
-                                    WHERE wmm.meeting_idx = a.meeting_idx
-                                ) AS meeting_idx_count,
-                                MAX(CASE WHEN d.member_ci = "'.$ci.'" THEN d.meeting_master END) AS meeting_master,
-                                a.delete_yn')
-                        ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
-                        ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
-                        ->where('a.member_ci', $ci)
-                        ->where('b.delete_yn', 'N')
-                        ->where('b.idx', $meeting_idx)
-                        ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn')
-                        ->orderBy('CASE WHEN b.meeting_start_date > NOW() THEN 0 ELSE 1 END', 'ASC')
-                        ->orderBy('CASE WHEN a.delete_yn = \'Y\' THEN 0 ELSE 1 END', 'DESC')
-                        ->orderBy('b.meeting_start_date', 'DESC')
-                        ->orderBy('a.delete_yn', 'DESC');
+                    ->select('a.meeting_idx, 
+                            b.category, 
+                            b.meeting_start_date, 
+                            b.meeting_end_date, 
+                            b.number_of_people, 
+                            b.title, 
+                            b.meeting_place, 
+                            b.membership_fee,
+                            (
+                                SELECT SUM(CASE WHEN wmm.delete_yn = \'N\' THEN 1 ELSE 0 END) 
+                                FROM wh_meeting_members wmm 
+                                WHERE wmm.meeting_idx = a.meeting_idx
+                            ) AS meeting_idx_count,
+                            MAX(CASE WHEN d.member_ci = "'.$ci.'" THEN d.meeting_master END) AS meeting_master,
+                            a.delete_yn')
+                    ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+                    ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
+                    ->where('a.member_ci', $ci)
+                    ->where('b.delete_yn', 'N')
+                    ->where('b.idx', $meeting_idx)
+                    ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn')
+                    ->orderBy('CASE WHEN b.meeting_start_date > NOW() THEN 0 ELSE 1 END', 'ASC')
+                    ->orderBy('CASE WHEN a.delete_yn = \'Y\' THEN 0 ELSE 1 END', 'DESC')
+                    ->orderBy('b.meeting_start_date', 'DESC')
+                    ->orderBy('a.delete_yn', 'DESC');
 
         $result = $query->get()->getResult();
         
