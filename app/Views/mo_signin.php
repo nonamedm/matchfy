@@ -75,7 +75,7 @@
                                 <select id="city" name="city">
                                     <option value>지역을 선택하세요</option>
                                     <?php
-                                    foreach ($sido as $item) {
+                                    foreach ($sidoCode as $item) {
                                     ?>
                                         <option value="<?= $item['id'] ?>">
                                             <?= $item['name'] ?>
