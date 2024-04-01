@@ -47,10 +47,12 @@ class MoHome extends BaseController
         $MemberModel = new MemberModel();
         $mobile_no = $postData['mobile_no'];
         $selected = $MemberModel->where('mobile_no', $mobile_no)->first();
-        if ($selected) {
+        if ($selected)
+        {
             echo '<script>alert("이미 가입된 휴대폰 번호입니다");</script>';
             return view('mo_pass', $postData);
-        } else {
+        } else
+        {
             return view('mo_agree', $postData);
         }
     }
@@ -83,9 +85,11 @@ class MoHome extends BaseController
         $mobile_no = $this->request->getPost('mobile_no');
 
         $result = $moAjax->loginParam($mobile_no);
-        if ($result === '0') {
+        if ($result === '0')
+        {
             return view('mo_signin_type', $data);
-        } else {
+        } else
+        {
             return view('mo_signin_photo', $data);
         }
     }
@@ -106,9 +110,11 @@ class MoHome extends BaseController
 
         // 등급부터 업그레이드 후 페이지 뷰
         $result = $moAjax->gradeUpdate($ci, $grade);
-        if ($result === '0') {
+        if ($result === '0')
+        {
             $postData['result'] = $result;
-        } else {
+        } else
+        {
             // 오류일 때 이전 페이지로 리디렉션.
         }
 
@@ -127,9 +133,11 @@ class MoHome extends BaseController
 
         // 등급부터 업그레이드 후 페이지 뷰
         $result = $moAjax->gradeUpdate($ci, $grade);
-        if ($result === '0') {
+        if ($result === '0')
+        {
             $postData['result'] = $result;
-        } else {
+        } else
+        {
             // 오류일 때 이전 페이지로 리디렉션.
         }
 
@@ -166,11 +174,14 @@ class MoHome extends BaseController
             ->from('wh_board_notice bo')
             ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
             ->groupBy('bo.id');
-        if ($value == 'recent') {
+        if ($value == 'recent')
+        {
             $query->orderBy('bo.id', 'DESC');
-        } else if ($value == 'popular') {
+        } else if ($value == 'popular')
+        {
             $query->orderBy('bo.hit', 'DESC');
-        } else {
+        } else
+        {
             $query->orderBy('bo.id', 'DESC');
         }
 
@@ -191,9 +202,11 @@ class MoHome extends BaseController
         $data['min_date'] = $min_date;
         $data['max_date'] = $max_date;
 
-        if ($this->request->isAJAX()) {
+        if ($this->request->isAJAX())
+        {
             return $this->response->setJSON($data);
-        } else {
+        } else
+        {
             return view('mo_notice', $data);
         }
     }
@@ -326,45 +339,61 @@ class MoHome extends BaseController
 
         $points = $pointModel->where('member_ci', $ci);
 
-        if ($type == 'add') {
+        if ($type == 'add')
+        {
             $points->where('point_type', 'A');
-        } else {
+        } else
+        {
             $points->where('point_type', 'U');
         }
 
-        if ($date == '1week') {
+        if ($date == '1week')
+        {
             $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 week')));
-        } else if ($date == '1month') {
+        } else if ($date == '1month')
+        {
             $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 month')));
-        } else if ($date == '3month') {
+        } else if ($date == '3month')
+        {
             $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-3 month')));
         }
 
-        if ($value == 'latest') {
+        if ($value == 'latest')
+        {
             $points->orderBy('create_at', 'DESC');
-        } else if ($value == 'oldest') {
+        } else if ($value == 'oldest')
+        {
             $points->orderBy('create_at', 'ASC');
-        } else if ($value == 'highest_amount') {
-            if ($type == 'add') {
+        } else if ($value == 'highest_amount')
+        {
+            if ($type == 'add')
+            {
                 $points->orderBy('add_point', 'DESC');
-            } else {
+            } else
+            {
                 $points->orderBy('use_point', 'DESC');
             }
-        } else if ($value == 'lowest_amount') {
-            if ($type == 'add') {
+        } else if ($value == 'lowest_amount')
+        {
+            if ($type == 'add')
+            {
                 $points->orderBy('add_point', 'ASC');
-            } else {
+            } else
+            {
                 $points->orderBy('use_point', 'ASC');
             }
-        } else {
+        } else
+        {
             $points->orderBy('create_at', 'DESC');
         }
 
         $points = $points->findAll($perPage * $page, 0);
 
-        if ($points) {
+        if ($points)
+        {
             return $this->response->setJSON(['success' => true, 'points' => $points]);
-        } else {
+        } else
+        {
             return $this->response->setJSON(['success' => false]);
         }
     }
@@ -417,7 +446,7 @@ class MoHome extends BaseController
             ->orderBy('create_at', 'DESC')
             ->first();
 
-        $my_point_value = isset($my_point['my_point']) ? $my_point['my_point'] : 0;
+        $my_point_value = isset ($my_point['my_point']) ? $my_point['my_point'] : 0;
         return $my_point_value;
     }
 
@@ -428,7 +457,8 @@ class MoHome extends BaseController
         $ci = $session->get('ci');
         $authResultCode = $this->request->getPost('authResultCode');
 
-        if ($authResultCode == '0000') { //인증성공
+        if ($authResultCode == '0000')
+        { //인증성공
             $amount = $this->request->getPost('amount');
             $clientId = $this->request->getPost('clientId');
             $orderId = $this->request->getPost('orderId');
@@ -439,11 +469,13 @@ class MoHome extends BaseController
                 ->orderBy('create_at', 'DESC')
                 ->first();
 
-            $my_point_value = isset($my_point['my_point']) ? $my_point['my_point'] : 0;
+            $my_point_value = isset ($my_point['my_point']) ? $my_point['my_point'] : 0;
 
-            if ($pointValue == '5000') {
+            if ($pointValue == '5000')
+            {
                 $amount = 5000 * $quantityNum;
-            } else {
+            } else
+            {
                 $amount;
             }
             $data = [
@@ -458,12 +490,15 @@ class MoHome extends BaseController
 
             $result = $pointModel->insert($data);
 
-            if ($result) {
+            if ($result)
+            {
                 return view('mo_mypage_charge_success', ['msg' => '포인트 충전이 되었습니다.']);
-            } else {
+            } else
+            {
                 return view('mo_mypage_charge_fail', ['msg' => '포인트 충전을 다시 해주세요.']);
             }
-        } else { // 카드에 돈이 없어서 돈이 입금 되지않았을 경우
+        } else
+        { // 카드에 돈이 없어서 돈이 입금 되지않았을 경우
             return view('mo_mypage_charge_fail', ['msg' => '다시 시도 해주세요.']);
         }
     }
@@ -475,19 +510,33 @@ class MoHome extends BaseController
         // $data['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
 
         $MeetingModel->orderBy('create_at', 'DESC');
-        
+
+        $currentTime = date('Y-m-d H:i:s');
+
         $meetings = $MeetingModel
             ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
+            ->where('wh_meetings.meeting_start_date >=', $currentTime)
             ->where('wh_meetings.delete_yn', 'N')
             ->findAll();
+
+        $days = ['일', '월', '화', '수', '목', '금', '토'];
 
         // 참여 인원 모델
         $MeetingMembersModel = new MeetingMembersModel();
 
         // 각 모임에 대한 참여 인원 수 계산
-        foreach ($meetings as &$meeting) { //&로 참조 필요
+        foreach ($meetings as &$meeting)
+        { //&로 참조 필요
+            // 모임 시작 시간 포맷팅
+            $meetingDateTimestamp = strtotime($meeting['meeting_start_date']);
+            $meetingDay = date("w", $meetingDateTimestamp); //0~6
+            $dayName = $days[$meetingDay]; //요일
+            $meetingDateTime = date("Y.m.d ", $meetingDateTimestamp) . ' (' . $dayName . ') ' . date(" H:i", $meetingDateTimestamp);
+            $meeting['meetingDateTime'] = $meetingDateTime;
+
             $memCount = $MeetingMembersModel
                 ->where('meeting_idx', $meeting['idx'])
+                ->where('delete_yn', 'N')
                 ->countAllResults();
             $meeting['count'] = $memCount;
         }
@@ -535,14 +584,18 @@ class MoHome extends BaseController
         $MeetingMembersModel = new MeetingMembersModel();
         $memCount = $MeetingMembersModel
             ->where('meeting_idx', $idx)
+            ->where('delete_yn', 'N')
             ->countAllResults();
 
         //이미지 정보
         $MeetingFileModel = new MeetingFileModel();
         $imageInfo = $MeetingFileModel
             ->where('meeting_idx', $idx)
-            ->where('delete_yn', 'n')
+            ->where('delete_yn', 'N')
             ->first();
+
+        //모집 마감 확인
+        $isRecruitmentFull = $Meeting['number_of_people'] == $memCount;
 
         $data = [
             'idx' => $idx,
@@ -551,21 +604,18 @@ class MoHome extends BaseController
             'recruitment_end_date' => $recruitEndTime,
             'meeting_start_date' => $meetingDateTime, //$Meeting['meeting_start_date'],
             //'meeting_end_date' => $Meeting['meeting_end_date'],
-            'number_of_people' => $Meeting['number_of_people'], //현재 모집된 인원 수 필요
-            'meeing_count' => $memCount,
+            'number_of_people' => $Meeting['number_of_people'],
+            'meeing_count' => $memCount, //현재 모집된 인원 수
             'matching_rate' => $Meeting['matching_rate'],
             'title' => $Meeting['title'],
             'content' => $Meeting['content'],
             'meeting_place' => $Meeting['meeting_place'],
             'membership_fee' => $Meeting['membership_fee'],
-            'image' => $imageInfo
+            'image' => $imageInfo,
+            'is_recruitment_full' => $isRecruitmentFull
+
         ];
 
-        // if(!empty($userFile)) {
-        //     $data = array_merge($data, $userFile);
-        // } else {
-        //     $data = array_merge($data, ['file_path' => 'static/images/', 'file_name' => 'profile_noimg.png']);
-        // }
         return view('mo_mypage_group_detail', $data);
     }
 
@@ -602,9 +652,11 @@ class MoHome extends BaseController
 
         $result = $query->getResult();
 
-        if ($result) {
+        if ($result)
+        {
             return $this->response->setJSON(['success' => true, 'data' => $result]);
-        } else {
+        } else
+        {
             return $this->response->setJSON(['success' => false,]);
         }
     }
@@ -615,11 +667,14 @@ class MoHome extends BaseController
         $MeetingMembersModel = new MeetingMembersModel();
         $memCount = $MeetingMembersModel
             ->where('meeting_idx', $meeting_idx)
+            ->where('delete_yn', 'N')
             ->countAllResults();
 
-        if($memCount > 0){
+        if ($memCount > 0)
+        {
             $memCount = $memCount;
-        } else {
+        } else
+        {
             $memCount = 0;
         }
 
@@ -628,24 +683,30 @@ class MoHome extends BaseController
             ->select('m.number_of_people as number_of_people')
             ->from('wh_meetings m')
             ->where('m.idx', $meeting_idx)
-            ->where('m.delete_yn','n')
+            ->where('m.delete_yn', 'N')
             ->get()
             ->getRow();
 
-        if($peapleCountQuery){
-            if($peapleCountQuery > 0){
+        if ($peapleCountQuery)
+        {
+            if ($peapleCountQuery > 0)
+            {
                 $number_of_people = $peapleCountQuery->number_of_people;
-            } else {
+            } else
+            {
                 $number_of_people = 0;
             }
-        }else{
+        } else
+        {
             return 'nodata';
         }
 
         // 값 비교
-        if ($number_of_people - $memCount > 0) {
+        if ($number_of_people - $memCount > 0)
+        {
             return 'true'; // 조건 충족
-        } else {
+        } else
+        {
             return 'false'; // 조건 미충족
         }
     }
@@ -660,9 +721,11 @@ class MoHome extends BaseController
             ->where('delete_yn', 'N')
             ->countAllResults();
         // echo $total;
-        if ($total > 0) {
+        if ($total > 0)
+        {
             return 'false'; // 이미 등록되어 있음
-        } else {
+        } else
+        {
             return 'true'; // 등록되어 있지 않음
         }
     }
@@ -680,11 +743,15 @@ class MoHome extends BaseController
         $getMemberCount = $this->getMemberCount($meeting_idx);
         $getMemberConfirm = $this->getMemberConfirm($ci, $meeting_idx);
 
-        if ($getMemberCount == 'true') {
-            if ($mypoint < $point) { //보유포인트가 모자랄 경우
+        if ($getMemberCount == 'true')
+        {
+            if ($mypoint < $point)
+            { //보유포인트가 모자랄 경우
                 return $this->response->setJSON(['success' => true, 'msg' => '충전후 사용해주세요.']);
-            } else {
-                if ($getMemberConfirm == 'true') { //통과!
+            } else
+            {
+                if ($getMemberConfirm == 'true')
+                { //통과!
                     //마스터 유저                  
                     $masterMember = new MemberModel();
                     $meetingMaster = $masterMember
@@ -744,18 +811,23 @@ class MoHome extends BaseController
 
                     $meetPointModel->insert($masterdata);
 
-                    if ($result) {
+                    if ($result)
+                    {
                         return $this->response->setJSON(['success' => true, 'msg' => '포인트 결재 완료 되었습니다.']);
-                    } else {
+                    } else
+                    {
                         return $this->response->setJSON(['success' => false, 'msg' => '포인트 결재가 실패 하였습니다.']);
                     }
-                } else { //이미 참석된 멤버 일 경우
+                } else
+                { //이미 참석된 멤버 일 경우
                     return $this->response->setJSON(['success' => true, 'msg' => '이미 참석된 멤버 입니다.']);
                 }
             }
-        } else if($getMemberCount == 'nodata'){
+        } else if ($getMemberCount == 'nodata')
+        {
             return $this->response->setJSON(['success' => true, 'msg' => '존재하지 않는 모임입니다. 다시 시도해 주세요.']);
-        }else { //참석멤버수가 다 찼을 경우
+        } else
+        { //참석멤버수가 다 찼을 경우
             return $this->response->setJSON(['success' => true, 'msg' => '참석멤버수가 다 찼습니다.']);
         }
     }
@@ -787,9 +859,11 @@ class MoHome extends BaseController
 
         $my_point_value = $this->mypageGetPoint();
 
-        if ($result) {
+        if ($result)
+        {
             return $this->response->setJSON(['success' => true, 'data' => $result, 'my_point' => $my_point_value]);
-        } else {
+        } else
+        {
             return $this->response->setJSON(['success' => false,]);
         }
         // return view('mo_mypage_group_apply_popup');
@@ -832,7 +906,8 @@ class MoHome extends BaseController
 
         $results = $query->get()->getResult();
 
-        foreach ($results as &$result) {
+        foreach ($results as &$result)
+        {
             // 이벤트 종료 여부 판단
             $eventDate = new \DateTime($result->meeting_start_date);
             $result->isEnded = ($currentDate > $eventDate);
@@ -853,7 +928,7 @@ class MoHome extends BaseController
         $meeting_idx = $this->request->getPost('meetingIdx');
 
         $query = $db->table('wh_meeting_members a')
-                    ->select('a.meeting_idx, 
+            ->select('a.meeting_idx, 
                             b.category, 
                             b.meeting_start_date, 
                             b.meeting_end_date, 
@@ -866,34 +941,48 @@ class MoHome extends BaseController
                                 FROM wh_meeting_members wmm 
                                 WHERE wmm.meeting_idx = a.meeting_idx
                             ) AS meeting_idx_count,
-                            MAX(CASE WHEN d.member_ci = "'.$ci.'" THEN d.meeting_master END) AS meeting_master,
+                            MAX(CASE WHEN d.member_ci = "' . $ci . '" THEN d.meeting_master END) AS meeting_master,
                             a.delete_yn')
-                    ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
-                    ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
-                    ->where('a.member_ci', $ci)
-                    ->where('b.delete_yn', 'N')
-                    ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn,a.create_at')
-                    ->orderBy('CASE WHEN b.meeting_start_date > NOW() THEN 0 ELSE 1 END', 'ASC')
-                    ->orderBy('CASE WHEN a.delete_yn = \'Y\' THEN 0 ELSE 1 END', 'DESC')
-                    ->orderBy('b.meeting_start_date', 'DESC')
-                    ->orderBy('a.delete_yn', 'DESC');
+            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+            ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
+            ->where('a.member_ci', $ci)
+            ->where('b.delete_yn', 'N')
+            ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn,a.create_at')
+            ->orderBy('CASE WHEN b.meeting_start_date > NOW() THEN 0 ELSE 1 END', 'ASC')
+            ->orderBy('CASE WHEN a.delete_yn = \'Y\' THEN 0 ELSE 1 END', 'DESC')
+            ->orderBy('b.meeting_start_date', 'DESC')
+            ->orderBy('a.delete_yn', 'DESC');
 
         $result = $query->get()->getResult();
 
         $data['meetings'] = $result;
-        $data['query'] = $db->getLastQuery(); 
+        $data['query'] = $db->getLastQuery();
         return view('mo_mypage_mygroup_my_list', $data);
     }
 
+    public function mypageMygroupEdit()
+    {
+        $result = $this->mygoupRefreshList();
+
+        if ($result)
+        {
+            return $this->response->setJSON(['success' => true, 'data' => $result]);
+        } else
+        {
+            return $this->response->setJSON(['success' => false]);
+        }
+    }
+
     /* 예약취소 참석한 모임 예약 새로고침 */
-    public function mygroupReservationRefresh(){
+    public function mygroupReservationRefresh()
+    {
         $db = db_connect();
         $session = session();
         $ci = $session->get('ci');
         $selectedValue = $this->request->getPost('selectedValue');
 
         $query = $db->table('wh_meeting_members a')
-                        ->select('a.meeting_idx, 
+            ->select('a.meeting_idx, 
                                 b.category, 
                                 b.meeting_start_date, 
                                 b.meeting_end_date, 
@@ -906,42 +995,47 @@ class MoHome extends BaseController
                                     FROM wh_meeting_members wmm 
                                     WHERE wmm.meeting_idx = a.meeting_idx
                                 ) AS meeting_idx_count,
-                                MAX(CASE WHEN d.member_ci = "'.$ci.'" THEN d.meeting_master END) AS meeting_master,
+                                MAX(CASE WHEN d.member_ci = "' . $ci . '" THEN d.meeting_master END) AS meeting_master,
                                 a.delete_yn')
-                        ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
-                        ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
-                        ->where('a.member_ci', $ci)
-                        ->where('b.delete_yn', 'N')
-                        ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn,a.create_at');
-                        if($selectedValue=='all'){
-                            $query->orderBy('CASE WHEN b.meeting_start_date > NOW() THEN 0 ELSE 1 END', 'ASC');
-                            $query->orderBy('CASE WHEN a.delete_yn = \'Y\' THEN 0 ELSE 1 END', 'DESC');
-                            $query->orderBy('b.meeting_start_date', 'DESC');
-                            $query->orderBy('a.delete_yn', 'DESC');
-                        }else{
-                            $query->orderBy('b.meeting_start_date', 'DESC');
-                        }
+            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+            ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
+            ->where('a.member_ci', $ci)
+            ->where('b.delete_yn', 'N')
+            ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn,a.create_at');
+        if ($selectedValue == 'all')
+        {
+            $query->orderBy('CASE WHEN b.meeting_start_date > NOW() THEN 0 ELSE 1 END', 'ASC');
+            $query->orderBy('CASE WHEN a.delete_yn = \'Y\' THEN 0 ELSE 1 END', 'DESC');
+            $query->orderBy('b.meeting_start_date', 'DESC');
+            $query->orderBy('a.delete_yn', 'DESC');
+        } else
+        {
+            $query->orderBy('b.meeting_start_date', 'DESC');
+        }
 
         $result = $query->get()->getResult();
 
         $data['meetings'] = $result;
-        
-        if ($result){
-            return $this->response->setJSON(['success' => true,'data' =>$result]);
-        } else{
+
+        if ($result)
+        {
+            return $this->response->setJSON(['success' => true, 'data' => $result]);
+        } else
+        {
             return $this->response->setJSON(['success' => false]);
         }
     }
-    
+
     /*예약취소팝업 */
-    public function mypageCancelReservation(){
+    public function mypageCancelReservation()
+    {
         $db = db_connect();
         $session = session();
         $ci = $session->get('ci');
         $meeting_idx = $this->request->getPost('meetingIdx');
 
         $query = $db->table('wh_meeting_members a')
-                    ->select('a.meeting_idx, 
+            ->select('a.meeting_idx, 
                             b.category, 
                             b.meeting_start_date, 
                             b.meeting_end_date, 
@@ -954,36 +1048,39 @@ class MoHome extends BaseController
                                 FROM wh_meeting_members wmm 
                                 WHERE wmm.meeting_idx = a.meeting_idx
                             ) AS meeting_idx_count,
-                            MAX(CASE WHEN d.member_ci = "'.$ci.'" THEN d.meeting_master END) AS meeting_master,
+                            MAX(CASE WHEN d.member_ci = "' . $ci . '" THEN d.meeting_master END) AS meeting_master,
                             a.delete_yn')
-                    ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
-                    ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
-                    ->where('a.member_ci', $ci)
-                    ->where('b.delete_yn', 'N')
-                    ->where('b.idx', $meeting_idx)
-                    ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn')
-                    ->orderBy('CASE WHEN b.meeting_start_date > NOW() THEN 0 ELSE 1 END', 'ASC')
-                    ->orderBy('CASE WHEN a.delete_yn = \'Y\' THEN 0 ELSE 1 END', 'DESC')
-                    ->orderBy('b.meeting_start_date', 'DESC')
-                    ->orderBy('a.delete_yn', 'DESC');
+            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+            ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
+            ->where('a.member_ci', $ci)
+            ->where('b.delete_yn', 'N')
+            ->where('b.idx', $meeting_idx)
+            ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn')
+            ->orderBy('CASE WHEN b.meeting_start_date > NOW() THEN 0 ELSE 1 END', 'ASC')
+            ->orderBy('CASE WHEN a.delete_yn = \'Y\' THEN 0 ELSE 1 END', 'DESC')
+            ->orderBy('b.meeting_start_date', 'DESC')
+            ->orderBy('a.delete_yn', 'DESC');
 
         $result = $query->get()->getResult();
-        
+
         $data['meetings'] = $result;
-        
-        if ($result){
-            return $this->response->setJSON(['success' => true,'data' =>$result]);
-        } else{
+
+        if ($result)
+        {
+            return $this->response->setJSON(['success' => true, 'data' => $result]);
+        } else
+        {
             return $this->response->setJSON(['success' => false]);
         }
     }
 
     /*예약취소 체크 */
-    public function mypageCancelReservationChk(){
+    public function mypageCancelReservationChk()
+    {
         $session = session();
         $ci = $session->get('ci');
         $meeting_idx = intval($this->request->getPost('meetingIdx'));
-        
+
         /*참석 모임 빼기 */
         $MeetingMembersModel = new MeetingMembersModel();
 
@@ -991,72 +1088,75 @@ class MoHome extends BaseController
             'delete_yn' => 'Y',
             'update_at' => date('Y-m-d H:i:s')
         ];
-        
+
         $result = $MeetingMembersModel->set($data)
-                                        ->where('member_ci', $ci)
-                                        ->where('meeting_idx', $meeting_idx)
-                                        ->update();
-        
+            ->where('member_ci', $ci)
+            ->where('meeting_idx', $meeting_idx)
+            ->update();
+
         /*참석 모임 POINT 빼기 */
         $meetPointModel = new MeetPointModel();
 
         $data2 = [
             'delete_yn' => 'Y',
-            'point_check_type'=>0,
+            'point_check_type' => 0,
             'update_at' => date('Y-m-d H:i:s')
         ];
         $meetPointModel->set($data2)
-                        ->where('member_ci', $ci)
-                        ->where('meeting_idx', $meeting_idx)
-                        ->update();
-        
+            ->where('member_ci', $ci)
+            ->where('meeting_idx', $meeting_idx)
+            ->update();
+
         /* 참석모임 POINT 환불 */
         $meetPointModel = new MeetPointModel();
         $meetiPoint = $meetPointModel
-                        ->distinct()
-                        ->select('m.meeting_points as meeting_points')
-                        ->from('wh_meeting_points m')
-                        ->where('m.member_ci', $ci)
-                        ->where('m.meeting_idx', $meeting_idx)
-                        ->where('m.delete_yn', 'Y')
-                        ->where('m.point_check_type', 0)
-                        ->get()
-                        ->getRow();
-        
-            $meetPointModel = new MeetModel();
-            $meetMasterPlace = $meetPointModel
-                        ->distinct()
-                        ->select('m.meeting_place as meeting_place')
-                        ->from('wh_meetings m')
-                        ->where('m.idx', $meeting_idx)
-                        ->get()
-                        ->getRow();
-        
+            ->distinct()
+            ->select('m.meeting_points as meeting_points')
+            ->from('wh_meeting_points m')
+            ->where('m.member_ci', $ci)
+            ->where('m.meeting_idx', $meeting_idx)
+            ->where('m.delete_yn', 'Y')
+            ->where('m.point_check_type', 0)
+            ->get()
+            ->getRow();
+
+        $meetPointModel = new MeetModel();
+        $meetMasterPlace = $meetPointModel
+            ->distinct()
+            ->select('m.meeting_place as meeting_place')
+            ->from('wh_meetings m')
+            ->where('m.idx', $meeting_idx)
+            ->get()
+            ->getRow();
+
         /*모임방에 포인트 올리기*/
         $meetPointModel = new PointModel();
         $my_point_value = $this->mypageGetPoint();
 
         $masterdata = [
-           'member_ci' => $ci,
-           'my_point'=> $my_point_value + $meetiPoint->meeting_points,
-           'add_point'=> $meetiPoint->meeting_points,
-           'point_details'=>$meetMasterPlace->meeting_place . '모임 취소 환불 포인트',
-           'point_type' =>'A',
-           'create_at' => date('Y-m-d H:i:s'),
-           'update_at' => date('Y-m-d H:i:s'),
-       ];
+            'member_ci' => $ci,
+            'my_point' => $my_point_value + $meetiPoint->meeting_points,
+            'add_point' => $meetiPoint->meeting_points,
+            'point_details' => $meetMasterPlace->meeting_place . '모임 취소 환불 포인트',
+            'point_type' => 'A',
+            'create_at' => date('Y-m-d H:i:s'),
+            'update_at' => date('Y-m-d H:i:s'),
+        ];
 
-       $meetPointModel->insert($masterdata);
+        $meetPointModel->insert($masterdata);
 
-        if ($result) {
+        if ($result)
+        {
             return $this->response->setJSON(['success' => true]);
-        } else {
+        } else
+        {
             return $this->response->setJSON(['success' => false]);
         }
     }
 
-    
-    public function mygoupRefreshList(){
+
+    public function mygoupRefreshList()
+    {
         $db = db_connect();
 
         $session = session();
@@ -1087,7 +1187,8 @@ class MoHome extends BaseController
 
         $results = $query->get()->getResult();
 
-        foreach ($results as &$result) {
+        foreach ($results as &$result)
+        {
             // 이벤트 종료 여부 판단
             $eventDate = new \DateTime($result->meeting_start_date);
             $result->isEnded = ($currentDate > $eventDate);
@@ -1099,8 +1200,9 @@ class MoHome extends BaseController
     }
 
     /* 모임삭제 */
-    public function mypageMygroupDel(){
-        
+    public function mypageMygroupDel()
+    {
+
         $idxArray = $this->request->getPost('delArr');
         $meetModel = new MeetModel();
 
@@ -1109,10 +1211,12 @@ class MoHome extends BaseController
             'update_at' => date('Y-m-d H:i:s')
         ]);
 
-        if ($result) {
+        if ($result)
+        {
             $data = $this->mygoupRefreshList();
             return $this->response->setJSON(['success' => true, 'data' => $data]);
-        } else {
+        } else
+        {
             return $this->response->setJSON(['success' => false]);
         }
     }
@@ -1155,9 +1259,11 @@ class MoHome extends BaseController
             'user' => $user,
             'feed_list' => $feedList,
         ];
-        if (!empty($userFile)) {
+        if (!empty ($userFile))
+        {
             $data = array_merge($data, $userFile);
-        } else {
+        } else
+        {
             $data = array_merge($data, ['file_path' => 'static/images/', 'file_name' => 'profile_noimg.png']);
         }
         return view('mo_myfeed', $data);
@@ -1194,25 +1300,27 @@ class MoHome extends BaseController
                 LEFT JOIN members mb on wmf.member_ci = mb.ci
                 LEFT JOIN member_files mf on mb.ci = mf.member_ci
                 LEFT JOIN wh_member_feed_files wmff on wmf.idx = wmff.feed_idx";
-        if (!empty($factorList['except1'])) //배제항목 있을 시 조건에서 배제하기
+        if (!empty ($factorList['except1'])) //배제항목 있을 시 조건에서 배제하기
         {
             $query .= " WHERE (mb." . $factorList['except1'] . " != '" . $factorList['except1_detail'] . "'  OR mb." . $factorList['except1'] . " IS NULL)";
         }
-        if (!empty($factorList['except1']) && !empty($factorList['except2'])) //배제항목 있을 시 조건에서 배제하기
+        if (!empty ($factorList['except1']) && !empty ($factorList['except2'])) //배제항목 있을 시 조건에서 배제하기
         {
             $query .= " AND (mb." . $factorList['except2'] . " != '" . $factorList['except2_detail'] . "'  OR mb." . $factorList['except2'] . " IS NULL)";
         }
         $datas = $MemberFeedModel
             ->query($query)->getResultArray();
 
-        foreach ($datas as &$item) {
+        foreach ($datas as &$item)
+        {
             $MatchRateModel = new MatchRateModel();
             $condition = [
                 'member_ci' => $ci,
                 'your_nickname' => $item['nickname']
             ];
             $matchScore = $MatchRateModel->where($condition)->first();
-            if ($matchScore) {
+            if ($matchScore)
+            {
                 $item['matchScore'] = $matchScore;
             }
         }
@@ -1252,7 +1360,8 @@ class MoHome extends BaseController
             'image' => $imageInfo
         ];
 
-        if ($user['grade'] == 'grade02' || $user['grade'] == 'grade03') {
+        if ($user['grade'] == 'grade02' || $user['grade'] == 'grade03')
+        {
             $data = array_merge($data, [
                 'married' => $user['married'],
                 'smoker' => $user['smoker'],
@@ -1268,9 +1377,11 @@ class MoHome extends BaseController
                 'asset_range' => $user['asset_range'],
                 'income_range' => $user['income_range']
             ]);
-        };
+        }
+        ;
 
-        if ($user['grade'] == 'grade03') {
+        if ($user['grade'] == 'grade03')
+        {
             $data = array_merge($data, [
                 'father_birth_year' => $user['father_birth_year'],
                 'father_job' => $user['father_job'],
@@ -1281,7 +1392,8 @@ class MoHome extends BaseController
                 'residence2' => $user['residence2'],
                 'residence3' => $user['residence3']
             ]);
-        };
+        }
+        ;
         return view('mo_myfeed_view_profile', $data);
     }
     public function alertPopup(): string
@@ -1354,7 +1466,7 @@ class MoHome extends BaseController
             ->orderBy('create_at', 'DESC')
             ->first();
 
-        $my_point_value = isset($my_point['my_point']) ? $my_point['my_point'] : 0;
+        $my_point_value = isset ($my_point['my_point']) ? $my_point['my_point'] : 0;
 
         $data = [
             'member_ci' => $ci,
@@ -1367,9 +1479,11 @@ class MoHome extends BaseController
 
         $result2 = $point->insert($data);
 
-        if ($result) {
+        if ($result)
+        {
             return $this->response->setJSON(['success' => true]);
-        } else {
+        } else
+        {
             return $this->response->setJSON(['success' => false]);
         }
     }
@@ -1398,7 +1512,8 @@ class MoHome extends BaseController
 
         $MatchPartnerModel = new MatchPartnerModel();
         $partnerInfo = $MatchPartnerModel->where('member_ci', $ci)->first();
-        if ($partnerInfo) {
+        if ($partnerInfo)
+        {
             // $data = array_merge($data, $partnerInfo);
             $data['partnerInfo'] = $partnerInfo;
         }
@@ -1420,7 +1535,8 @@ class MoHome extends BaseController
 
         $MatchFactorModel = new MatchFactorModel();
         $factorInfo = $MatchFactorModel->where('member_ci', $ci)->first();
-        if ($factorInfo) {
+        if ($factorInfo)
+        {
             $data = array_merge($data, $factorInfo);
         }
 
@@ -1441,7 +1557,8 @@ class MoHome extends BaseController
 
         $MatchFactorModel = new MatchFactorModel();
         $factorInfo = $MatchFactorModel->where('member_ci', $ci)->first();
-        if ($factorInfo) {
+        if ($factorInfo)
+        {
             $data = array_merge($data, $factorInfo);
         }
 
