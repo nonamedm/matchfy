@@ -521,75 +521,84 @@
                 alert('지역을 선택해 주세요');
                 tempValidation = false;
                 $('#region').focus();
-            } else if ($('#marital').val().trim() === '') {
-                alert('결혼경험유무를 선택해 주세요');
-                tempValidation = false;
-                $('#marital').focus();
-            } else if ($('#smoking').val().trim() === '') {
-                alert('흡연유무를 선택해 주세요');
-                tempValidation = false;
-                $('#smoking').focus();
-            } else if ($('#drinking').val().trim() === '') {
-                alert('음주횟수를 선택해 주세요');
-                tempValidation = false;
-                $('#drinking').focus();
-            } else if ($('#religion').val().trim() === '') {
-                alert('종교를 선택해 주세요');
-                tempValidation = false;
-                $('#religion').focus();
-            } else if ($('#mbti').val().trim() === '') {
-                alert('MBTI를 선택해 주세요');
-                tempValidation = false;
-                $('#mbti').focus();
-            } else if ($('#height').val().trim() === '') {
-                alert('최소 키를 입력해 주세요');
-                tempValidation = false;
-                $('#height').focus();
-            } else if ($('#bodyshape').val().trim() === '') {
-                alert('체형을 선택해 주세요');
-                tempValidation = false;
-                $('#bodyshape').focus();
-            } else if ($('#personal_style').val().trim() === '') {
-                alert('스타일을 선택해 주세요');
-                tempValidation = false;
-                $('#personal_style').focus();
-            } else if ($('#education').val().trim() === '') {
-                alert('최종학력을 선택해 주세요');
-                tempValidation = false;
-                $('#education').focus();
-            } else if ($('#job').val().trim() === '') {
-                alert('직업군을 선택해 주세요');
-                tempValidation = false;
-                $('#job').focus();
-            } else if ($('#asset_range').val().trim() === '') {
-                alert('자산구간을 선택해 주세요');
-                tempValidation = false;
-                $('#asset_range').focus();
-            } else if ($('#income_range').val().trim() === '') {
-                alert('소득구간을 선택해 주세요');
-                tempValidation = false;
-                $('#income_range').focus();
             }
+            <?php if (isset($grade) && ($grade === 'grade02' || $grade === 'grade03')) : ?>
+                if ($('#marital').val().trim() === '') {
+                    alert('결혼경험유무를 선택해 주세요');
+                    tempValidation = false;
+                    $('#marital').focus();
+                } else if ($('#smoking').val().trim() === '') {
+                    alert('흡연유무를 선택해 주세요');
+                    tempValidation = false;
+                    $('#smoking').focus();
+                } else if ($('#drinking').val().trim() === '') {
+                    alert('음주횟수를 선택해 주세요');
+                    tempValidation = false;
+                    $('#drinking').focus();
+                } else if ($('#religion').val().trim() === '') {
+                    alert('종교를 선택해 주세요');
+                    tempValidation = false;
+                    $('#religion').focus();
+                } else if ($('#mbti').val().trim() === '') {
+                    alert('MBTI를 선택해 주세요');
+                    tempValidation = false;
+                    $('#mbti').focus();
+                } else if ($('#height').val().trim() === '') {
+                    alert('최소 키를 입력해 주세요');
+                    tempValidation = false;
+                    $('#height').focus();
+                } else if ($('#bodyshape').val().trim() === '') {
+                    alert('체형을 선택해 주세요');
+                    tempValidation = false;
+                    $('#bodyshape').focus();
+                } else if ($('#personal_style').val().trim() === '') {
+                    alert('스타일을 선택해 주세요');
+                    tempValidation = false;
+                    $('#personal_style').focus();
+                } else if ($('#education').val().trim() === '') {
+                    alert('최종학력을 선택해 주세요');
+                    tempValidation = false;
+                    $('#education').focus();
+                } else if ($('#job').val().trim() === '') {
+                    alert('직업군을 선택해 주세요');
+                    tempValidation = false;
+                    $('#job').focus();
+                } else if ($('#asset_range').val().trim() === '') {
+                    alert('자산구간을 선택해 주세요');
+                    tempValidation = false;
+                    $('#asset_range').focus();
+                } else if ($('#income_range').val().trim() === '') {
+                    alert('소득구간을 선택해 주세요');
+                    tempValidation = false;
+                    $('#income_range').focus();
+                }
+            <?php endif; ?>
 
             if (
                 $('#fromyear').val() !== '' &&
                 $('#toyear').val() !== '' &&
-                $('#region').val() !== '' &&
-                $('#marital').val() !== '' &&
-                $('#smoking').val() !== '' &&
-                $('#drinking').val() !== '' &&
-                $('#religion').val() !== '' &&
-                $('#mbti').val() !== '' &&
-                $('#height').val() !== '' &&
-                $('#bodyshape').val() !== '' &&
-                $('#personal_style').val() !== '' &&
-                $('#education').val() !== '' &&
-                $('#job').val() !== '' &&
-                $('#asset_range').val() !== '' &&
-                $('#income_range').val() !== ''
+                $('#region').val() !== ''
             ) {
                 tempValidation = true;
             }
+            <?php if (isset($grade) && ($grade === 'grade02' || $grade === 'grade03')) : ?>
+                if (
+                    $('#marital').val() !== '' &&
+                    $('#smoking').val() !== '' &&
+                    $('#drinking').val() !== '' &&
+                    $('#religion').val() !== '' &&
+                    $('#mbti').val() !== '' &&
+                    $('#height').val() !== '' &&
+                    $('#bodyshape').val() !== '' &&
+                    $('#personal_style').val() !== '' &&
+                    $('#education').val() !== '' &&
+                    $('#job').val() !== '' &&
+                    $('#asset_range').val() !== '' &&
+                    $('#income_range').val() !== ''
+                ) {
+                    tempValidation = true;
+                }
+            <?php endif; ?>
             if (tempValidation) {
                 var postData = new FormData($('form')[0]);
                 $('#ranked li').each(function(index, li) {
