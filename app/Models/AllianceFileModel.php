@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class AllianceModelFile extends Model
+class AllianceFileModel extends Model
 {
     protected $table = 'wh_alliance_files';
     protected $primaryKey = 'member_ci';
