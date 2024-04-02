@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -19,13 +18,14 @@
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
 
-        <?php $title = "매칭모임"; include 'header.php'; ?>
+        <?php $title = "매칭모임";
+        include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="group_search">
                     <input type="text" placeholder="모임을 검색해보세요!" />
-                    <img src="/static/images/ico_search_18x18.png" class="group_serch_img"/>
+                    <img src="/static/images/ico_search_18x18.png" class="group_serch_img" />
                 </div>
                 <div class="group_category">
                     <div class="group_category_all" data-category="">
@@ -33,19 +33,19 @@
                         <p>전체</p>
                     </div>
                     <div class="group_category_1" data-category="01">
-                        <img src="/static/images/group_category_1.png"/>
+                        <img src="/static/images/group_category_1.png" />
                         <p>주중 모임</p>
                     </div>
                     <div class="group_category_2" data-category="02">
-                        <img src="/static/images/group_category_2.png"/>
+                        <img src="/static/images/group_category_2.png" />
                         <p>주중 여행</p>
                     </div>
                     <div class="group_category_3" data-category="03">
-                        <img src="/static/images/group_category_3.png"/>
+                        <img src="/static/images/group_category_3.png" />
                         <p>주말 모임</p>
                     </div>
-                    <div class="group_category_4 "data-category="04">
-                        <img src="/static/images/group_category_4.png"/>
+                    <div class="group_category_4 " data-category="04">
+                        <img src="/static/images/group_category_4.png" />
                         <p>주말 여행</p>
                     </div>
                 </div>
@@ -61,27 +61,30 @@
                     </div>
                 </div>
                 <div class="group_search_list">
-                <?php foreach ($meetings as $meeting): ?>
-                    <a href="/mo/mypage/group/detail/<?= $meeting['idx'] ?>">
-                        <div class="group_list_item">
-                            <?php if ($meeting['meeting_idx']): ?>
-                                <img class="profile_img" src="/<?= $meeting['file_path'] ?><?= $meeting['file_name'] ?>" />
-                            <?php else: ?>
-                                <img src="/static/images/group_list_1.png" />
-                            <?php endif; ?>
-                            
-                            <div class="group_particpnt">
-                                <span>신청 <?=$meeting['count']?></span>/<?= $meeting['number_of_people'] ?>명
+                    <?php foreach ($meetings as $meeting) : ?>
+                        <a href="/mo/mypage/group/detail/<?= $meeting['idx'] ?>">
+                            <div class="group_list_item">
+                                <?php if ($meeting['meeting_idx']) : ?>
+                                    <img class="profile_img" src="/<?= $meeting['file_path'] ?><?= $meeting['file_name'] ?>" />
+                                <?php else : ?>
+                                    <img src="/static/images/group_list_1.png" />
+                                <?php endif; ?>
+
+                                <div class="group_particpnt">
+                                    <span>신청 <?= $meeting['count'] ?></span>/<?= $meeting['number_of_people'] ?>명
+                                </div>
+                                <div class="group_location">
+                                    <?= $meeting['title'] ?>
+                                </div>
+                                <div class="group_location">
+                                    <img src="/static/images/ico_location_16x16.png" />
+                                    <?= $meeting['meeting_place'] ?>
+                                </div>
+                                <p class="group_price"><?= number_format($meeting['membership_fee']) ?>원</p>
+                                <p class="group_schedule"><?= $meeting['meetingDateTime'] ?></p>
                             </div>
-                            <div class="group_location">
-                                <img src="/static/images/ico_location_16x16.png" />
-                                <?= $meeting['meeting_place'] ?>
-                            </div>
-                            <p class="group_price"><?= number_format($meeting['membership_fee']) ?>원</p>
-                            <p class="group_schedule"><?= $meeting['meetingDateTime'] ?></p>
-                        </div>
-                    </a>
-                <?php endforeach; ?>
+                        </a>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
@@ -92,8 +95,8 @@
 
 
     <div style="height: 50px;"></div>
-<footer class="footer">
-        
+    <footer class="footer">
+
         <!-- <div class="footer_logo mb40">
                 matchfy
             </div>
@@ -165,7 +168,6 @@
                 meetingFiltering(selectedCategory, searchText, filterOption);
             }
         });
-
     </script>
 
     <!-- -->

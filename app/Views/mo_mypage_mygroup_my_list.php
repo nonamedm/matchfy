@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -20,7 +19,7 @@ function getDday($endDate, $startDate, $deleteYn)
     $endDateTimestamp = strtotime($endDate);
     $startDateTimestamp = strtotime($startDate);
     $dday = '';
-    
+
     if ($deleteYn == 'N' || $deleteYn == 'n') {
         if ($currentTimestamp > $endDateTimestamp) {
             $dday = '종료';
@@ -29,7 +28,7 @@ function getDday($endDate, $startDate, $deleteYn)
             $days = floor($timeDiff / (60 * 60 * 24));
             if ($days == 1) {
                 $dday = '내일';
-            } else if($days == 0){
+            } else if ($days == 0) {
                 $dday = '당일';
             } else {
                 $dday = $days . '일전';
@@ -39,7 +38,7 @@ function getDday($endDate, $startDate, $deleteYn)
             $days = floor($timeDiff / (60 * 60 * 24));
             if ($days == 1) {
                 $dday = '내일';
-            } else if($days == 0){
+            } else if ($days == 0) {
                 $dday = '당일';
             } else {
                 $dday = $days . '일전';
@@ -48,15 +47,15 @@ function getDday($endDate, $startDate, $deleteYn)
     } else {
         $dday = '취소';
     }
-    
+
     return $dday;
-    
 }
-function getClass($endDate, $deleteYn){
+function getClass($endDate, $deleteYn)
+{
     $currentTimestamp = time();
     $endDateTimestamp = strtotime($endDate);
     $dday = '';
-    
+
     if ($deleteYn == 'N' || $deleteYn == 'n') {
         if ($currentTimestamp > $endDateTimestamp) {
             $dday = 'finish';
@@ -66,7 +65,7 @@ function getClass($endDate, $deleteYn){
     } else {
         $dday = 'cancel';
     }
-    
+
     return $dday;
 }
 function formatDateTime($value)
@@ -91,25 +90,13 @@ function formatDateTime($value)
     return $formattedDateTime;
 }
 ?>
+
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        <header>
-
-            <div class="menu">
-                <ul>
-                    <li class="left_arrow">
-                        <img src="/static/images/left_arrow.png" />
-                    </li>
-                    <li class="header_title">
-                        내모임
-                    </li>
-                </ul>
-                <div class="menu_right edit">삭제</div>
-            </div>
-
-        </header>
+        <?php $title = "내 모임";
+        include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
@@ -121,19 +108,19 @@ function formatDateTime($value)
                     </select>
                 </div>
                 <div class="mygroup_list" id="mygroup_list_body">
-                <?php foreach ($meetings as $meeting): ?>
-                    <div class="alliance_sch_list" onclick="javascript:MygroupPopup(<?=$meeting->meeting_idx?>,'cancel_rsv_<?=$meeting->meeting_idx?>','<?=$meeting->meeting_master?>')">
-                        <div class="alliance_sch_item">
-                            <div class="alliance_sch_sts">
-                                <div class="<?=getClass($meeting->meeting_end_date,$meeting->delete_yn)?>"id="cancel_rsv_<?=$meeting->meeting_idx?>"><?=getDday($meeting->meeting_end_date,$meeting->meeting_start_date,$meeting->delete_yn)?></div>
-                                <img src="/static/images/right_arrow.png" />
+                    <?php foreach ($meetings as $meeting) : ?>
+                        <div class="alliance_sch_list" onclick="javascript:MygroupPopup(<?= $meeting->meeting_idx ?>,'cancel_rsv_<?= $meeting->meeting_idx ?>','<?= $meeting->meeting_master ?>')">
+                            <div class="alliance_sch_item">
+                                <div class="alliance_sch_sts">
+                                    <div class="<?= getClass($meeting->meeting_end_date, $meeting->delete_yn) ?>" id="cancel_rsv_<?= $meeting->meeting_idx ?>"><?= getDday($meeting->meeting_end_date, $meeting->meeting_start_date, $meeting->delete_yn) ?></div>
+                                    <img src="/static/images/right_arrow.png" />
+                                </div>
+                                <h2><?= $meeting->meeting_place ?></h2>
+                                <p class=""><?= formatDateTime($meeting->meeting_start_date) ?></p>
+                                <span class="">인원 <?= $meeting->meeting_idx_count ?>명</span>
                             </div>
-                            <h2><?= $meeting->meeting_place ?></h2>
-                            <p class=""><?= formatDateTime($meeting->meeting_start_date) ?></p>
-                            <span class="">인원 <?= $meeting->meeting_idx_count ?>명</span>
                         </div>
-                    </div>
-                <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </div>
                 <!-- <div class="alliance_sch_list">
                     <div class="alliance_sch_item">

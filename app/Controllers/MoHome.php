@@ -571,7 +571,7 @@ class MoHome extends BaseController
             'number_of_people' => $Meeting['number_of_people'],
             'meeing_count' => $memCount, //현재 모집된 인원 수
             'matching_rate' => $Meeting['matching_rate'],
-            'title' => $Meeting['title'],
+            'meeting_title' => $Meeting['title'],
             'content' => $Meeting['content'],
             'meeting_place' => $Meeting['meeting_place'],
             'membership_fee' => $Meeting['membership_fee'],
@@ -665,7 +665,7 @@ class MoHome extends BaseController
         }
     }
 
-    /*결재 시 모임에 이미 등록되어있는지 판단 */
+    /*결제 시 모임에 이미 등록되어있는지 판단 */
     public function getMemberConfirm($ci, $meeting_idx)
     {
         $MeetingMembersModel = new MeetingMembersModel();
@@ -682,7 +682,7 @@ class MoHome extends BaseController
         }
     }
 
-    /* 모임 결재 */
+    /* 모임 결제 */
     public function usePoint()
     {
         $session = session();
@@ -733,7 +733,20 @@ class MoHome extends BaseController
                         'create_at' => date('Y-m-d H:i:s'),
                     ];
                     $meeting_members = new MeetingMembersModel();
-                    $meeting_members->insert($meetMemdata);
+                    $meeting_members->where($meetMemdata)->first();
+                    if ($meeting_members) {
+                        // 기존 참석했던 방이면 업데이트
+                        $query = "UPDATE wh_meeting_members";
+                        $query .= " SET create_at = '" . date('Y-m-d H:i:s') . "'";
+                        $query .= " , delete_yn = 'N'";
+                        $query .= " WHERE meeting_idx = '" . $meeting_idx . "'";
+                        $query .= " AND member_ci = '" . $ci . "'";
+
+                        $result = $meeting_members
+                            ->query($query);
+                    } else {
+                        $meeting_members->insert($meetMemdata);
+                    }
 
                     //나의 유저
                     $memberName = new MemberModel();
@@ -760,9 +773,9 @@ class MoHome extends BaseController
                     $meetPointModel->insert($masterdata);
 
                     if ($result) {
-                        return $this->response->setJSON(['success' => true, 'msg' => '포인트 결재 완료 되었습니다.']);
+                        return $this->response->setJSON(['success' => true, 'msg' => '포인트 결제 완료 되었습니다.']);
                     } else {
-                        return $this->response->setJSON(['success' => false, 'msg' => '포인트 결재가 실패 하였습니다.']);
+                        return $this->response->setJSON(['success' => false, 'msg' => '포인트 결제가 실패 하였습니다.']);
                     }
                 } else { //이미 참석된 멤버 일 경우
                     return $this->response->setJSON(['success' => true, 'msg' => '이미 참석된 멤버 입니다.']);
