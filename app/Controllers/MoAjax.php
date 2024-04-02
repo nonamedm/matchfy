@@ -144,7 +144,7 @@ class MoAjax extends BaseController
             // 닉네임 중복확인
             while ($is_duplicate) {
                 // 닉네임 랜덤 생성
-                $word_file_path = APPPATH . 'data/RandomWord.php';
+                $word_file_path = APPPATH . 'Data/RandomWord.php';
                 require($word_file_path);
                 $random_word = $randomadj[array_rand($randomadj)] . $randomword[array_rand($randomword)] . '@' . mt_rand(100000, 999999);
                 $is_duplicate = $MemberModel->where(['nickname' => $random_word])->first();
@@ -1171,9 +1171,9 @@ class MoAjax extends BaseController
 
             //참석 멤버 추가
             $meetMemdata = [
-                'meeting_idx' =>$insertedMeetingIdx,
+                'meeting_idx' => $insertedMeetingIdx,
                 'member_ci' => $member_ci,
-                'meeting_master' =>'K',
+                'meeting_master' => 'K',
                 'create_at' => date('Y-m-d H:i:s'),
             ];
             $meeting_members = new MeetingMembersModel();
@@ -1235,7 +1235,7 @@ class MoAjax extends BaseController
         }
 
         $currentTime = date('Y-m-d H:i:s');
-        
+
         $meetings = $MeetingModel
             ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
             ->where('wh_meetings.meeting_start_date >=', $currentTime)
@@ -1245,7 +1245,7 @@ class MoAjax extends BaseController
         $days = ['일', '월', '화', '수', '목', '금', '토'];
 
         $MeetingMembersModel = new MeetingMembersModel();
-        
+
         // 각 모임에 대한 참여 인원 수 계산
         foreach ($meetings as &$meeting) {
 
@@ -1331,7 +1331,7 @@ class MoAjax extends BaseController
 
     public function chgExcept()
     {
-        $word_file_path = APPPATH . 'data/MemberCode.php';
+        $word_file_path = APPPATH . 'Data/MemberCode.php';
         require($word_file_path);
         $value = $this->request->getPost('value');
         if ($value === 'mbti') {

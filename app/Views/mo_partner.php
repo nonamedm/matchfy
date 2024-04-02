@@ -21,7 +21,7 @@
         <?php $title = "내 상대";
         include 'header.php'; ?>
         <?php
-        $word_file_path = APPPATH . 'data/MemberCode.php';
+        $word_file_path = APPPATH . 'Data/MemberCode.php';
         require($word_file_path);
         ?>
         <div class="sub_wrap">
