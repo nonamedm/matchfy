@@ -1140,7 +1140,7 @@ class MoAjax extends BaseController
             $title = $this->request->getPost('title');
             $content = $this->request->getPost('content');
             //$reservation_previous = $this->request->getPost('reservation_previous');
-            $meeting_place = $this->request->getPost('meeting_place');
+            $meeting_place = $this->request->getPost('meeting_place') . " " . $this->request->getPost('meeting_place_detail');
             $membership_fee = $this->request->getPost('membership_fee');
 
             // CI조회

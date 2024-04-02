@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -24,7 +23,8 @@
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
 
-        <?php $title = "모임 등록"; include 'header.php'; ?>
+        <?php $title = "모임 등록";
+        include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
@@ -36,69 +36,67 @@
                                 <h4 class="profile_photo_label">대표사진</h4>
                                 <div class="profile_photo_div">
                                     <label for="group_photo" class="signin_label profile_photo_input group_photo_input"></label>
-                                    <input id="group_photo" name="meeting_photo" type="file" value="" placeholder=""
-                                        multiple accept="image/*">
+                                    <input id="group_photo" name="meeting_photo" type="file" value="" placeholder="" multiple accept="image/*">
                                     <div id="meeting_photo_view" class="meeting_photo_view" style="margin-top: 10px;">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="category" class="signin_label">카테고리</label>
-                                <select id="category" name="category" class="custom_select" value="">
-                                    <option value="">선택</option>
-                                    <option value="01">주중모임</option>
-                                    <option value="02">주중여행</option>
-                                    <option value="03">주말모임</option>
-                                    <option value="04">주말여행</option>
-                                </select>
+                            <div class="form_row signin_form">
+                                <div class="signin_form_div">
+                                    <label for="category" class="signin_label">카테고리</label>
+                                    <select id="category" name="category" class="custom_select" value="">
+                                        <option value="">선택</option>
+                                        <option value="01">주중모임</option>
+                                        <option value="02">주중여행</option>
+                                        <option value="03">주말모임</option>
+                                        <option value="04">주말여행</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="name" class="signin_label">모집기간</label>
-                                <div class="schedule_calendar multy_select">
-                                    <div class="schedule_calendar">
-                                        <div class="schedule_calendar_div">
-                                            <input type="text" id="datepicker" name="recruitment_start_date"/>
-                                        </div>
-                                        <div class="schedule_calendar_div" style="margin-left: 8px;">
-                                            <input type="text" id="datepicker1" name="recruitment_end_date"/>
+                            <div class="form_row signin_form">
+                                <div class="signin_form_div">
+                                    <label for="name" class="signin_label">모집기간</label>
+                                    <div class="schedule_calendar multy_select">
+                                        <div class="schedule_calendar">
+                                            <div class="schedule_calendar_div">
+                                                <input type="text" id="datepicker" name="recruitment_start_date" />
+                                            </div>
+                                            <div class="schedule_calendar_div" style="margin-left: 8px;">
+                                                <input type="text" id="datepicker1" name="recruitment_end_date" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="name" class="signin_label">모집일자</label>
-                                <div class="schedule_calendar multy_select">
-                                    <div class="schedule_calendar">
-                                        <div class="schedule_calendar_div">
-                                            <input type="text" id="datepicker2" name="meeting_start_date"/>
-                                        </div>
-                                        <div class="schedule_calendar_div" style="margin-left: 8px;">
-                                            <input type="text" id="datepicker3" name="meeting_end_date"/>
+                            <div class="form_row signin_form">
+                                <div class="signin_form_div">
+                                    <label for="name" class="signin_label">모집일자</label>
+                                    <div class="schedule_calendar multy_select">
+                                        <div class="schedule_calendar">
+                                            <div class="schedule_calendar_div">
+                                                <input type="text" id="datepicker2" name="meeting_start_date" />
+                                            </div>
+                                            <div class="schedule_calendar_div" style="margin-left: 8px;">
+                                                <input type="text" id="datepicker3" name="meeting_end_date" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="number_of_people" class="signin_label">인원</label>
-                                <input id="number_of_people" name="number_of_people" type="text" value="<?php echo $name ?>"
-                                    placeholder="모집 인원을 입력하세요" >
+                            <div class="form_row signin_form">
+                                <div class="signin_form_div">
+                                    <label for="number_of_people" class="signin_label">인원</label>
+                                    <input id="number_of_people" name="number_of_people" type="text" value="<?php echo $name ?>" placeholder="모집 인원을 입력하세요">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="group_age" class="signin_label">나이</label>
-                                <div class="multy_input">
-                                    <input id="group_min_age" type="text" name="group_min_age" value="" placeholder="나이를 입력하세요"><br />
-                                    - 
-                                    <input id="group_max_age" type="text" name="group_max_age" value="" placeholder="나이를 입력하세요"><br />
-                                    <!-- <select id="group_age1" class="custom_select" value="">
+                            <div class="form_row signin_form">
+                                <div class="signin_form_div">
+                                    <label for="group_age" class="signin_label">나이</label>
+                                    <div class="multy_input">
+                                        <input id="group_min_age" type="text" name="group_min_age" value="" placeholder="나이를 입력하세요"><br />
+                                        -
+                                        <input id="group_max_age" type="text" name="group_max_age" value="" placeholder="나이를 입력하세요"><br />
+                                        <!-- <select id="group_age1" class="custom_select" value="">
                                         <option value="">선택</option>
                                         <option value="0">20대</option>
                                         <option value="1">30대</option>
@@ -112,14 +110,14 @@
                                         <option value="2">40대</option>
                                         <option value="2">50대 이상</option>
                                     </select> -->
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="matching_rate" class="signin_label">매칭률</label>
-                                <input id="matching_rate" type="text" name="matching_rate" value="" placeholder="매칭률을 입력하세요"><br />
-                                <!-- <select id="matching_rate" class="custom_select" name="matching_rate" value="">
+                            <div class="form_row signin_form">
+                                <div class="signin_form_div">
+                                    <label for="matching_rate" class="signin_label">매칭률</label>
+                                    <input id="matching_rate" type="text" name="matching_rate" value="" placeholder="매칭률을 입력하세요"><br />
+                                    <!-- <select id="matching_rate" class="custom_select" name="matching_rate" value="">
                                     <option value="">선택</option>
                                     <option value="01">~50%</option>
                                     <option value="02">50~60%</option>
@@ -128,20 +126,20 @@
                                     <option value="05">80~70%</option>
                                     <option value="06">90% 이상</option>
                                 </select> -->
+                                </div>
                             </div>
-                        </div>
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="group_detail" class="signin_label">모임상세</label>
-                                <input id="title" type="text" name="title" value="" placeholder="제목을 입력하세요"><br />
+                            <div class="form_row signin_form">
+                                <div class="signin_form_div">
+                                    <label for="group_detail" class="signin_label">모임상세</label>
+                                    <input id="title" type="text" name="title" value="" placeholder="제목을 입력하세요"><br />
+                                </div>
                             </div>
-                        </div>
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <textarea id="content" name="content" value="" placeholder="내용을 입력하세요"></textarea></br />
+                            <div class="form_row signin_form">
+                                <div class="signin_form_div">
+                                    <textarea id="content" name="content" value="" placeholder="내용을 입력하세요"></textarea></br />
+                                </div>
                             </div>
-                        </div>
-                        <!-- <div class="form_row signin_form">
+                            <!-- <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <select id="reservation_previous" name= "reservation_previous" class="custom_select" value="">
                                     <option>예약 내역 선택</option>
@@ -152,30 +150,33 @@
                                 </select>
                             </div>
                         </div> -->
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="meeting_place" class="signin_label">모임장소</label>
-                                <div class="input_ico_search">
-                                    <input id="meeting_place" type="text" name="meeting_place" value="" placeholder="주소검색">
-                                    <img src="/static/images/ico_search_18x18.png" onclick="searchPlaces()"/>
-                                </div>
-                                <div id="map" style="width:335px;height:175px;margin-top: 20px;"></div>
-                            </div>
-                        </div>
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="membership_fee" class="signin_label">회비</label>
-                                <div class="input_ico_search">
-                                    <input id="membership_fee" type="text" name="membership_fee" value="" placeholder="">
+                            <div class="form_row signin_form">
+                                <div class="signin_form_div">
+                                    <label for="meeting_place" class="signin_label">모임장소</label>
+                                    <div class="input_ico_search search_meet_place">
+                                        <input id="meeting_place" type="text" name="meeting_place" placeholder="주소검색">
+                                        <img src="/static/images/ico_search_18x18.png" onclick="searchPlaces()" />
+                                    </div>
+                                    <div class="input_ico_search search_meet_detail">
+                                        <input id="meeting_place_detail" type="text" name="meeting_place_detail" placeholder="상세주소 (동, 호수, 기타 상세주소)">
+                                    </div>
+                                    <div id="map" style="width:335px;height:175px;margin-top: 20px;"></div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="btn_group multy">
-                            <button type="button" class="btn type02">취소</button>
-                            <button type="button" class="btn type01" onclick="meetingSave()">저장</button>
-                        </div>
+                            <div class="form_row signin_form">
+                                <div class="signin_form_div">
+                                    <label for="membership_fee" class="signin_label">회비</label>
+                                    <div class="input_ico_search">
+                                        <input id="membership_fee" type="text" name="membership_fee" value="" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn_group multy">
+                                <button type="button" class="btn type02">취소</button>
+                                <button type="button" class="btn type01" onclick="meetingSave()">저장</button>
+                            </div>
 
-                    </div>
+                        </div>
                 </form>
             </div>
         </div>
@@ -185,8 +186,8 @@
 
 
         <div style="height: 50px;"></div>
-<footer class="footer">
-            
+        <footer class="footer">
+
             <!-- <div class="footer_logo mb40">
                 matchfy
             </div>
@@ -209,130 +210,209 @@
 
 
     <!-- SCRIPTS -->
-
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
-    </script>
-    <script>
-        $(function () {
+        $(function() {
             //input을 datepicker로 선언
             $("#datepicker").datepicker({
                 dateFormat: 'yy-mm-dd' //달력 날짜 형태
-                // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                , showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
-                // ,changeYear: true //option값 년 선택 가능
-                // ,changeMonth: true //option값  월 선택 가능                
-                , showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-                , buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
-                , buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-                , buttonText: "선택" //버튼 호버 텍스트        
-                , monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
-                , monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
-                , dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
-                , dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
-                , minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                , maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-                , zIndex: 9999
+                    // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+                    ,
+                showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
+                    // ,changeYear: true //option값 년 선택 가능
+                    // ,changeMonth: true //option값  월 선택 가능                
+                    ,
+                showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+                    ,
+                buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
+                    ,
+                buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+                    ,
+                buttonText: "선택" //버튼 호버 텍스트        
+                    ,
+                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
+                    ,
+                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
+                    ,
+                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
+                    ,
+                dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
+                    ,
+                minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                    ,
+                maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
+                    ,
+                zIndex: 9999
             });
 
             //초기값을 오늘 날짜로 설정
             $('#datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
             $("#datepicker1").datepicker({
                 dateFormat: 'yy-mm-dd' //달력 날짜 형태
-                // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                , showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
-                // ,changeYear: true //option값 년 선택 가능
-                // ,changeMonth: true //option값  월 선택 가능                
-                , showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-                , buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
-                , buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-                , buttonText: "선택" //버튼 호버 텍스트        
-                , monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
-                , monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
-                , dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
-                , dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
-                , minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                , maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-                , zIndex: 9999
+                    // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+                    ,
+                showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
+                    // ,changeYear: true //option값 년 선택 가능
+                    // ,changeMonth: true //option값  월 선택 가능                
+                    ,
+                showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+                    ,
+                buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
+                    ,
+                buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+                    ,
+                buttonText: "선택" //버튼 호버 텍스트        
+                    ,
+                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
+                    ,
+                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
+                    ,
+                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
+                    ,
+                dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
+                    ,
+                minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                    ,
+                maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
+                    ,
+                zIndex: 9999
             });
 
             //초기값을 오늘 날짜로 설정
             $('#datepicker1').datepicker('setDate', '+1D'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
             $("#datepicker2").datepicker({
                 dateFormat: 'yy-mm-dd' //달력 날짜 형태
-                // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                , showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
-                // ,changeYear: true //option값 년 선택 가능
-                // ,changeMonth: true //option값  월 선택 가능                
-                , showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-                , buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
-                , buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-                , buttonText: "선택" //버튼 호버 텍스트        
-                , monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
-                , monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
-                , dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
-                , dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
-                , minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                , maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-                , zIndex: 9999
+                    // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+                    ,
+                showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
+                    // ,changeYear: true //option값 년 선택 가능
+                    // ,changeMonth: true //option값  월 선택 가능                
+                    ,
+                showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+                    ,
+                buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
+                    ,
+                buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+                    ,
+                buttonText: "선택" //버튼 호버 텍스트        
+                    ,
+                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
+                    ,
+                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
+                    ,
+                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
+                    ,
+                dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
+                    ,
+                minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                    ,
+                maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
+                    ,
+                zIndex: 9999
             });
 
             //초기값을 오늘 날짜로 설정
             $('#datepicker2').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
             $("#datepicker3").datepicker({
                 dateFormat: 'yy-mm-dd' //달력 날짜 형태
-                // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                , showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
-                // ,changeYear: true //option값 년 선택 가능
-                // ,changeMonth: true //option값  월 선택 가능                
-                , showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-                , buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
-                , buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-                , buttonText: "선택" //버튼 호버 텍스트        
-                , monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
-                , monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
-                , dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
-                , dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
-                , minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                , maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-                , zIndex: 9999
+                    // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+                    ,
+                showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
+                    // ,changeYear: true //option값 년 선택 가능
+                    // ,changeMonth: true //option값  월 선택 가능                
+                    ,
+                showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+                    ,
+                buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
+                    ,
+                buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+                    ,
+                buttonText: "선택" //버튼 호버 텍스트        
+                    ,
+                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
+                    ,
+                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
+                    ,
+                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
+                    ,
+                dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
+                    ,
+                minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                    ,
+                maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
+                    ,
+                zIndex: 9999
             });
 
             //초기값을 오늘 날짜로 설정
             $('#datepicker3').datepicker('setDate', '+1D'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+
+            $('#meeting_place').autocomplete({
+                source: function(request, response) {
+                    console.log(request);
+                    const postData = {
+                        'confmKey': 'devU01TX0FVVEgyMDI0MDQwMjIzMDExNzExNDY1NTU=',
+                        'currentPage': '1',
+                        'countPerPage': '20',
+                        'keyword': request.term,
+                        'resultType': 'json'
+                    }
+                    $.ajax({
+                        url: 'https://business.juso.go.kr/addrlink/addrLinkApi.do',
+                        type: 'POST',
+                        data: postData,
+                        async: false,
+                        success: function(data) {
+                            console.log(data)
+                            response(
+                                $.map(data.results.juso, function(item) {
+                                    return {
+                                        label: item.detBdNmList,
+                                        value: item.jibunAddr ? item.jibunAddr : item.rn + " " + item.bdNm,
+                                        idx: item.zipNo,
+                                    }
+                                })
+                            )
+                        }
+                    });
+                },
+                minLength: 2, // 최소 문자 수
+                select: function(event, ui) {
+                    // 아이템 선택 시 동작
+                    console.log(ui.item.value); // 선택된 주소명
+                }
+            });
         });
 
 
-        /* 카카오 맵 */ 
-        // var mapContainer = document.getElementById('map'), 
-        //     mapOption = {
-        //         center: new kakao.maps.LatLng(33.450701, 126.570667), 
-        //         level: 3 
-        //     }; 
+        function searchPlaces() {
+            var keyword = document.getElementById('meeting_place').value;
 
-        // 지도 생성
-        // var map = new kakao.maps.Map(mapContainer, mapOption); 
-        
-        // 장소 검색 객체 생성
-        // var ps = new kakao.maps.services.Places();  
-    
-        // function searchPlaces() {
-        //     var keyword = document.getElementById('meeting_place').value;
+            if (!keyword.replace(/^\s+|\s+$/g, '')) {
+                alert('키워드를 입력해주세요!');
+                return false;
+            }
+            const postData = {
+                'confmKey': 'devU01TX0FVVEgyMDI0MDQwMjIzMDExNzExNDY1NTU=',
+                'currentPage': '1',
+                'countPerPage': '20',
+                'keyword': keyword,
+                'resultType': 'json'
+            }
+            // 키워드로 장소 검색
+            $.ajax({
+                url: 'https://business.juso.go.kr/addrlink/addrLinkApi.do',
+                type: 'POST',
+                data: postData,
+                async: false,
+                success: function(data) {
 
-        //     if (!keyword.replace(/^\s+|\s+$/g, '')) {
-        //         alert('키워드를 입력해주세요!');
-        //         return false;
-        //     }
-
-        //     // 키워드로 장소 검색
-        //     ps.keywordSearch(keyword, placesSearchCB); 
-        // }
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
+            });
+        }
 
         //앤터 추가
         // document.getElementById('meeting_place').addEventListener('keydown', function(e) {
@@ -347,7 +427,7 @@
         //         var coords = new kakao.maps.LatLng(data[0].y, data[0].x);//위치 이동
         //         console.log(coords);
         //         map.setCenter(coords);
-                
+
         //         //마커
         //         var marker = new kakao.maps.Marker({
         //             map: map,
@@ -392,7 +472,6 @@
                 reader.readAsDataURL(file);
             });
         });
-
     </script>
     <!-- -->
 
