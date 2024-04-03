@@ -1089,3 +1089,64 @@ const MymeetingFiltering = (filterOption) => {
         },
     });
 };
+
+const allianceFiltering = (category, searchText, filterOption) => {
+    var postData = new FormData();
+
+    if (category !== undefined && category !== '') {
+        postData.append('category', category);
+    }
+
+    if (searchText !== undefined && searchText !== '') {
+        postData.append('searchText', searchText);
+    }
+
+    if (filterOption !== undefined && filterOption !== '') {
+        postData.append('filterOption', filterOption);
+    }
+
+    console.log(category )
+    console.log(searchText )
+    console.log(filterOption )
+
+    $.ajax({
+        url: '/ajax/allianceFilter',
+        type: 'POST',
+        data: postData,
+        processData: false,
+        contentType: false,
+        async: false,
+        success: function (data) {
+            console.log(data);
+            var listHtml = '';
+            if (data.length > 0) {
+                data.forEach(function (alliance) {
+                    var imagePath = alliance.alliance_idx
+                        ? '/' + alliance.file_path + alliance.file_name
+                        : '/static/images/group_list_1.png';
+                    listHtml += `
+                        <a href="/mo/mypage/group/detail/${alliance.idx}">
+                            <div class="group_list_item">
+                                <img src="${imagePath}"/>
+
+                                <div class="group_location">
+                                    <img src="/static/images/ico_location_16x16.png" />
+                                    ${alliance.company_name}
+                                </div>
+                                <p class="group_price">${alliance.address}</p>
+                                <p class="group_schedule">${alliance.alliance_type}</p>
+                            </div>
+                        </a>
+                    `;
+                });
+            } else {
+                listHtml = `<div style="text-align: center; margin-top: 20px; color: gray;">검색 결과가 없습니다.</div>`;
+            }
+            $('.group_search_list').html(listHtml);
+        },
+        error: function (xhr, status, err) {
+            console.log(err);
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
+};

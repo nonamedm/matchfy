@@ -19,6 +19,7 @@ use App\Models\MeetingMembersModel;
 use App\Helpers\MoHelper;
 use App\Models\MeetModel;
 use App\Models\MeetPointModel;
+use App\Models\AllianceModel;
 use CodeIgniter\Session\Session;
 use Kint\Zval\Value;
 
@@ -1321,7 +1322,20 @@ class MoHome extends BaseController
     }
     public function allianceList(): string
     {
-        return view('mo_alliance_list');
+        $AllianceModel = new AllianceModel();
+
+        // $MeetingModel->orderBy('create_at', 'DESC');
+
+        // $currentTime = date('Y-m-d H:i:s');
+
+        $alliances = $AllianceModel
+            ->join('wh_alliance_files', 'wh_alliance_files.alliance_idx = wh_alliance.idx', 'left')
+            ->where('wh_alliance.delete_yn', 'N')
+            ->findAll();
+
+        $data['alliances'] = $alliances;
+
+        return view('mo_alliance_list', $data);
     }
     public function allianceRegionPopup(): string
     {

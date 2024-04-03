@@ -322,6 +322,8 @@ header .menu_right.edit {
     text-align: center;
     color: #999999;
     padding: 10px 0;
+
+    cursor: pointer;
 }
 .region_list_box.on {
     border: 1px solid #ff0267;
@@ -368,10 +370,16 @@ header .menu_right.edit {
     border: 1px solid #dddddd;
     color: #dddddd;
 }
+.alliance_tab_content {
+    display: none;
+}
+.alliance_tab_content.active {
+    display: block;
+}
+
 .amount_pay .amount_pay_left.alliance h2 {
     margin: 15px 0 0 0;
 }
-
 .basic_table {
     width: 335px;
     font-weight: 500;

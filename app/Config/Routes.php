@@ -74,7 +74,7 @@ $routes->get('/mo/viewProfile/(:any)', 'MoHome::myfeedViewProfile/$1');
 $routes->get('/mo/alertPopup', 'MoHome::alertPopup');
 $routes->get('/mo/alliance/list', 'MoHome::allianceList');
 $routes->get('/mo/alliance/regionPopup', 'MoHome::allianceRegionPopup');
-$routes->get('/mo/alliance/detail', 'MoHome::allianceDetail');
+$routes->get('/mo/alliance/detail/(:num)', 'MoHome::allianceDetail/$1');
 $routes->get('/mo/alliance/detail2', 'MoHome::allianceDetail2');
 $routes->get('/mo/alliance/payment', 'MoHome::alliancePayment');
 $routes->get('/mo/alliance/reservePopup', 'MoHome::allianceReservePopup');
@@ -113,6 +113,7 @@ $routes->post('/ajax/calcMatchRate', 'MoAjax::calcMatchRate');
 $routes->post('/ajax/meetingSave', 'MoAjax::meetingSave');
 $routes->post('/ajax/meetingFilter', 'MoAjax::meetingFiltering');
 $routes->post('/ajax/myMeetingFilter', 'MoAjax::myMeetingFiltering');
+$routes->post('/ajax/allianceFilter', 'MoAjax::allianceFiltering');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

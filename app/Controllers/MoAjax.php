@@ -13,6 +13,7 @@ use App\Models\MatchPartnerModel;
 use App\Models\MatchFactorModel;
 use App\Models\MatchRateModel;
 use App\Models\MeetingMembersModel;
+use App\Models\AllianceModel;
 use App\Config\Encryption;
 
 class MoAjax extends BaseController
@@ -1327,6 +1328,39 @@ class MoAjax extends BaseController
 
         // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
         return $this->response->setJSON($meetings);
+    }
+
+    public function allianceFiltering()
+    {
+        $category = $this->request->getPost('category'); // 카테고리 필터링
+        $searchText = $this->request->getPost('searchText'); // 검색 필터링
+        $filterOption = $this->request->getPost('filterOption'); // 필터링
+
+        $AllianceModel = new AllianceModel();
+
+        // 카테고리 필터링
+        if (!empty($category)) {
+            $AllianceModel->where('alliance_type', $category);
+        }
+
+        // 검색어 필터링
+        if (!empty($searchText)) {
+            $AllianceModel->like('company_name', $searchText);
+        }
+
+        // 지역에 따른 정렬
+        if (!empty($filterOption)) {
+            $AllianceModel->like('address', $filterOption);
+        }
+
+        $alliances = $AllianceModel
+            ->join('wh_alliance_files', 'wh_alliance_files.alliance_idx = wh_alliance.idx', 'left')
+            ->where('wh_alliance.delete_yn', 'N')
+            ->findAll();
+
+
+        // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
+        return $this->response->setJSON($alliances);
     }
 
     public function chgExcept()
