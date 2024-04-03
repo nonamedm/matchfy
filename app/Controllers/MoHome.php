@@ -20,11 +20,8 @@ use App\Helpers\MoHelper;
 use App\Models\MeetModel;
 use App\Models\MeetPointModel;
 use App\Models\AllianceModel;
-<<<<<<< HEAD
-=======
 use App\Models\AllianceFileModel;
 use App\Models\AllianceMemberModel;
->>>>>>> 1d0e0617a0636159c3bb1216417170f9fa8c1dee
 use CodeIgniter\Session\Session;
 use Kint\Zval\Value;
 
