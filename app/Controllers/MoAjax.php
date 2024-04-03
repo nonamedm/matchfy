@@ -14,6 +14,7 @@ use App\Models\MatchFactorModel;
 use App\Models\MatchRateModel;
 use App\Models\MeetingMembersModel;
 use App\Config\Encryption;
+use App\Models\AllianceMemberModel;
 
 class MoAjax extends BaseController
 {
@@ -1728,5 +1729,100 @@ class MoAjax extends BaseController
         } else {
             return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
         }
+    }
+    public function alianceUp()
+    {
+       
+        // $MemberModel = new MemberModel();
+        $AllianceMemberModel = new AllianceMemberModel();
+
+        // $is_duplicate = true;
+        // $random_word = '';
+        // // 닉네임 중복확인
+        // while ($is_duplicate) {
+        //     // 닉네임 랜덤 생성
+        //     $word_file_path = APPPATH . 'Data/RandomWord.php';
+        //     require($word_file_path);
+        //     $random_word = $randomadj[array_rand($randomadj)] . $randomword[array_rand($randomword)] . '@' . mt_rand(100000, 999999);
+        //     $is_duplicate = $AllianceMemberModel->where(['nickname' => $random_word])->first();
+        // }
+
+        $mobile_no = $this->request->getPost('mobile_no');
+        
+        $encrypter = \Config\Services::encrypter();
+        $aliiance_ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 24]));
+        
+        // $ci = $this->request->getPost('ci');
+        $agree1 = $this->request->getPost('agree1');
+        $agree2 = $this->request->getPost('agree2');
+        $agree3 = $this->request->getPost('agree3');
+        $name = $this->request->getPost('name');
+        $company = $this->request->getPost('company');
+        $gender = $this->request->getPost('gender');
+
+        // $town = $encrypter->decrypt(base64_decode($ci), ['key' => 'nonamedm', 'blockSize' => 32]);
+
+
+        $data = [
+            'mobile_no' => $mobile_no,
+            'alliance_ci' => $aliiance_ci,
+            'ceo_name' => $name,
+            'company_name' => $company,
+            'gender' => $gender,
+            'agree1' => $agree1,
+            'agree2' => $agree2,
+            'agree3' => $agree3,
+        ];
+
+        // 데이터 저장
+        $inserted = $AllianceMemberModel->insert($data);
+
+        // 제휴신청
+        $data = [
+            'mobile_no' => $mobile_no,
+            'alliance_ci' => $aliiance_ci,
+            'ceo_name' => $name,
+            'company_name' => $company,
+            'gender' => $gender,
+            'agree1' => $agree1,
+            'agree2' => $agree2,
+            'agree3' => $agree3,
+        ];
+        
+        if ($inserted) {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $aliiance_ci]);
+        } else {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy fail', 'data' => $aliiance_ci]);
+        }
+        // // 회원가입 완료 되었을 떄
+        // if ($inserted) {
+        //     // 프로필 사진 DB 업로드
+        //     $MemberFileModel = new MemberFileModel();
+        //     $org_name = $this->request->getPost('org_name');
+        //     $file_name = $this->request->getPost('file_name');
+        //     $file_path = $this->request->getPost('file_path');
+        //     $ext = $this->request->getPost('ext');
+        //     if ($org_name) {
+        //         // 프로필 첨부 있을때만 file db 저장
+        //         $data2 = [
+        //             'member_ci' => $ci,
+        //             'org_name' => $org_name,
+        //             'file_name' => $file_name,
+        //             'file_path' => $file_path,
+        //             'ext' => $ext,
+        //             'board_type' => 'main_photo',
+        //         ];
+        //         $data = array_merge($data, $data2);
+        //         $MemberFileModel->insert($data2);
+        //     }
+        //     if ($inserted) {
+        //         return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
+        //     } else {
+        //         return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy fail', 'data' => $data]);
+        //     }
+        // } else {
+        //     return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy']);
+        // }
+        
     }
 }

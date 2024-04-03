@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/static/css/datepicker.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -26,7 +27,7 @@
 
         <div class="sub_wrap">
             <div class="content_wrap">
-                <form class="main_signin_form group_create">
+                <form class="main_signin_form group_create" method="post" action="" enctype="multipart/form-data">
                     <legend></legend>
                     <div class="">
                         <div class="form_row signin_form">
@@ -34,10 +35,10 @@
                                 <label for="alliance_category" class="signin_label">제휴유형</label>
                                 <select id="alliance_category" class="custom_select" value="">
                                     <option>제휴 유형을 선택하세요</option>
-                                    <option value="0">음식점</option>
-                                    <option value="1">카페</option>
-                                    <option value="2">숙박</option>
-                                    <option value="3">기타</option>
+                                    <option value="01">음식점</option>
+                                    <option value="02">카페</option>
+                                    <option value="03">숙박</option>
+                                    <option value="04">기타</option>
                                 </select>
                             </div>
                         </div>
@@ -61,7 +62,7 @@
                             <div class="signin_form_div">
                                 <label for="alliance_name" class="signin_label">업체명</label>
                                 <div>
-                                    <input id="alliance_name" type="text" value="" placeholder="업체명 입력">
+                                    <input id="alliance_name" type="text" name="company" value="<?= $company ?>" placeholder="<?= $company ?>">
                                 </div>
                             </div>
                         </div>
@@ -69,7 +70,7 @@
                             <div class="signin_form_div">
                                 <label for="alliance_ceoname" class="signin_label">대표명</label>
                                 <div>
-                                    <input id="alliance_ceoname" type="text" value="" placeholder="대표명 입력">
+                                    <input id="alliance_ceoname" type="text" name="name" value="<?= $name ?>" placeholder="<?= $name ?>">
                                 </div>
                             </div>
                         </div>
@@ -89,7 +90,7 @@
                             <div class="signin_form_div">
                                 <label for="alliance_ceonumber" class="signin_label">대표 연락처</label>
                                 <div>
-                                    <input id="alliance_ceonumber" type="number" value="" placeholder="대표연락처 입력">
+                                    <input id="alliance_ceonumber" type="number" name="mobile_no" value="<?= $mobile_no ?>" placeholder="<?= $mobile_no ?>">
                                 </div>
                             </div>
                         </div>
@@ -173,9 +174,13 @@
                         </div>
                         <div class="btn_group multy">
                             <button type="button" class="btn type02">취소</button>
-                            <button type="button" class="btn type01">등록</button>
+                            <button type="button" class="btn type01" onclick="alianceUp()">등록</button>
                         </div>
                     </div>
+                    <input type="hidden" name="gender" value="<?= $gender ?>" />
+                    <input type="hidden" name="agree1" value="<?= $agree1 ?>" />
+                    <input type="hidden" name="agree2" value="<?= $agree2 ?>" />
+                    <input type="hidden" name="agree3" value="<?= $agree3 ?>" />
                 </form>
             </div>
         </div>

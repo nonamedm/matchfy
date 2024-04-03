@@ -36,7 +36,7 @@
                         <p><a onclick="moveToUrl('/mo/matchFeed')">매칭피드</a></p>
                         <p><a onclick="moveToUrl('/mo/alliance/list')">제휴점</a></p>
                         <p><a onclick="moveToUrl('/mo/matchFeed')">회원 등급 업그레이드</a></p>
-                        <p><a onclick="moveToUrl('/mo/alliance/apply')">제휴 신청</a></p>
+                        <p><a onclick="moveToUrl('/mo/alliance/pass')">제휴 신청</a></p>
                     </div>
                 </div>
                 <hr class="hoz_part" />
