@@ -32,7 +32,7 @@
 
         <?php $title = "내피드";
         include 'header.php'; ?>
-        <?php $word_file_path = APPPATH . 'data/MemberCode.php';
+        <?php $word_file_path = APPPATH . 'Data/MemberCode.php';
         require($word_file_path); ?>
         <div class="sub_wrap">
             <div class="content_wrap">

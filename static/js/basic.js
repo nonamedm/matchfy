@@ -1089,6 +1089,229 @@ const MymeetingFiltering = (filterOption) => {
         },
     });
 };
+/*제휴 번호인증 */
+const alianceCertIdentify = () => {
+    // 추후 본인인증 연결
+    // $.ajax({
+    //     url: '/ajax/cert', // 추후 본인인증 연결
+    //     type: 'post',
+    //     data: { cmt_idx: '_cmt_idx', trgt_id: '_trgt_id', trgt_idx: '_trgt_idx' }, //
+    //     dataType: 'json',
+    //     async: false,
+    //     success: function (data) {
+    //         console.log(data)
+    //         if (data) {
+    // 성공
+
+    // 폼 생성
+    // var form = document.createElement('form');
+    // form.setAttribute('action', '/mo/agree');
+    // form.setAttribute('method', 'post');
+
+    // // hidden input 요소 생성
+    // var mobileNoInput = document.createElement('input');
+    // mobileNoInput.setAttribute('type', 'hidden');
+    // mobileNoInput.setAttribute('name', 'mobile_no');
+    // mobileNoInput.setAttribute('value', '01026220923'); // todo : 추후 인증 결과값으로 변경
+    // form.appendChild(mobileNoInput);
+
+    // var nameInput = document.createElement('input');
+    // nameInput.setAttribute('type', 'hidden');
+    // nameInput.setAttribute('name', 'name');
+    // nameInput.setAttribute('value', '서승표'); // todo : 추후 인증 결과값으로 변경
+    // form.appendChild(nameInput);
+
+    // var birthdayInput = document.createElement('input');
+    // birthdayInput.setAttribute('type', 'hidden');
+    // birthdayInput.setAttribute('name', 'birthday');
+    // birthdayInput.setAttribute('value', '19890923'); // todo : 추후 인증 결과값으로 변경
+    // form.appendChild(birthdayInput);
+
+    // // 폼을 body에 추가 후 제출
+    // document.body.appendChild(form);
+    // form.submit();
+    let tempValidation = false;
+    if ($('#input_ali_name').val().trim() === '') {
+        alert('이름을 입력해 주세요');
+        tempValidation = false;
+        $('#input_ali_name').focus();
+    } else if ($('#input_ali_mobile_no').val().trim() === '') {
+        alert('전화번호를 입력해 주세요');
+        tempValidation = false;
+        $('#input_ali_mobile_no').focus();
+    } else if ($('#input_ali_company_name').val().trim() === '') {
+        alert('업체명을 입력해 주세요.');
+        tempValidation = false;
+        $('#input_ali_company_name').focus();
+    } else if ($('#input_gender').val().trim() === '') {
+        alert('성별을 선택해 주세요');
+        tempValidation = false;
+        $('#input_gender').focus();
+    }
+
+    if (
+        $('#input_ali_name').val() !== '' &&
+        $('#input_ali_mobile_no').val() !== '' &&
+        $('#input_ali_company_name').val() !== '' &&
+        $('#input_gender').val() !== ''
+    ) {
+        tempValidation = true;
+    }
+    if (tempValidation) {
+        submitForm();
+    } else {
+    }
+
+    //     } else {
+    //         // 삭제 성공
+    //         //console.log('222');
+    //         alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+    //     }
+    //     return false
+    // },
+    // error: function (data, status, err) {
+    //     alert('there was an error while fetching events!')
+    //     console.log(err)
+    // },
+    // })
+};
+/*제휴 신청 */
+const alianceUp = () => {
+    var postData = new FormData(document.querySelector('form'));
+
+    // let tempValidation = false;
+    // if($('#alliance_category').val().trim() ===''){
+    //     alert('제휴 유형을 선택해 주세요.');
+    //     tempValidation = false;
+    //     $('#alliance_category').focus();
+    // } else if ($('#alliance_number').val().trim() === '') {
+    //     alert('업체연락처를 입력해 주세요');
+    //     tempValidation = false;
+    //     $('#alliance_number').focus();
+    // } else if ($('#alliance_email').val().trim() === '') {
+    //     alert('이메일을 입력해 주세요');
+    //     tempValidation = false;
+    //     $('#alliance_email').focus();
+    // } else if ($('#alliance_name').val().trim() === '') {
+    //     alert('업체명을 입력해 주세요');
+    //     tempValidation = false;
+    //     $('#alliance_name').focus();
+    // } else if ($('#alliance_ceoname').val().trim() === '') {
+    //     alert('대표명을 입력해 주세요');
+    //     tempValidation = false;
+    //     $('#alliance_ceoname').focus();
+    // } else if ($('#alliance_address1').val().trim() === '') {
+    //     alert('주소를 입력해 주세요');
+    //     tempValidation = false;
+    //     $('#alliance_address1').focus();
+    // } else if ($('#alliance_address2').val().trim() === '') {
+    //     alert('상세주소를 입력해 주세요');
+    //     tempValidation = false;
+    //     $('#alliance_address2').focus();
+    // } else if ($('#alliance_ceonumber').val().trim() === '') {
+    //     alert('대표 연락처를 입력해 주세요');
+    //     tempValidation = false;
+    //     $('#alliance_alliance_ceonumberaddress2').focus();
+    // } else if ($('#alliance_biztime1').val().trim() === '') {
+    //     alert('영업 시작 시간을 선택해 주세요');
+    //     tempValidation = false;
+    //     $('#alliance_biztime1').focus();
+    // } else if ($('#alliance_biztime2').val().trim() === '') {
+    //     alert('영업 종료 시간을 선택해 주세요');
+    //     tempValidation = false;
+    //     $('#alliance_biztime2').focus();
+    // } else if ($('#alliance_cont').val().trim() === '') {
+    //     alert('상세내용을 선택해 주세요');
+    //     tempValidation = false;
+    //     $('#alliance_cont').focus();
+    // }
+
+    // if (
+    //     $('#alliance_number').val() !== '' &&
+    //     $('#alliance_email').val() !== '' &&
+    //     $('#alliance_name').val() !== '' &&
+    //     $('#gealliance_ceonamender').val() !== '' &&
+    //     $('#alliance_address1').val() !== '' &&
+    //     $('#alliance_address2').val() !== '' &&
+    //     $('#alliance_ceonumber').val() !== '' &&
+    //     $('#alliance_biztime1').val() !== '' &&
+    //     $('#alliance_biztime2').val() !== '' &&
+    //     $('#alliance_cont').val() !== ''
+    // ) {
+    //     tempValidation = true;
+    // }
+
+    tempValidation = true; //테스트
+
+    if (tempValidation) {
+        $.ajax({
+            url: '/ajax/alianceUp', // todo : 추후 본인인증 연결
+            type: 'POST',
+            data: postData,
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function (data) {
+                console.log(data);
+                if (data.status === 'success') {
+                    // 성공
+                    var formData = document.querySelector('form');
+                    if (!data.data.org_name) {
+                        data.data.org_name = 'profile_noimg.png';
+                        data.data.file_name = 'profile_noimg.png';
+                        data.data.file_path = 'static/images/';
+                        data.data.ext = 'png';
+                    }
+                    for (var key in data.data) {
+                        if (data.data.hasOwnProperty(key)) {
+                            if (key === 'ci') {
+                                var input = document.createElement('input');
+                                input.type = 'hidden'; // hidden 필드로 생성
+                                input.name = key;
+                                input.value = data.data[key];
+                                formData.appendChild(input);
+                            }
+                            if (key === 'mobile_no') {
+                                var input = document.createElement('input');
+                                input.type = 'hidden'; // hidden 필드로 생성
+                                input.name = key;
+                                input.value = data.data[key];
+                                formData.appendChild(input);
+                            }
+                        }
+                    }
+                    submitForm();
+                } else if (data.status === 'error') {
+                    // 한번만 출력되게 함
+                    $('.alert_validation').remove();
+                    // 오류 메시지 표시
+                    Object.keys(data.errors).forEach(function (key, index) {
+                        var field = $('[name="' + key + '"]');
+                        var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div 선택
+
+                        // 오류 메시지 추가
+                        if (!topMostDiv.next().hasClass('alert_validation')) {
+                            // 이미 오류 메시지가 있는지 확인
+                            topMostDiv.after('<div class="alert alert_validation">' + data.errors[key] + '</div>');
+                        }
+                        // 처음 validation 포커스
+                        if (index === 0) {
+                            field.focus();
+                        }
+                    });
+                } else {
+                    alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                }
+                return false;
+            },
+            error: function (data, status, err) {
+                console.log(err);
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            },
+        });
+    } else {
+    }
+};
 
 const allianceFiltering = (category, searchText, filterOption) => {
     var postData = new FormData();

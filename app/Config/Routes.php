@@ -76,9 +76,12 @@ $routes->get('/mo/alliance/list', 'MoHome::allianceList');
 $routes->get('/mo/alliance/regionPopup', 'MoHome::allianceRegionPopup');
 $routes->get('/mo/alliance/detail/(:num)', 'MoHome::allianceDetail/$1');
 $routes->get('/mo/alliance/detail2', 'MoHome::allianceDetail2');
+
+$routes->post('/mo/alliance/agree', 'MoHome::allianceAgree');
+$routes->get('/mo/alliance/pass', 'MoHome::alliancePass');
 $routes->get('/mo/alliance/payment', 'MoHome::alliancePayment');
 $routes->get('/mo/alliance/reservePopup', 'MoHome::allianceReservePopup');
-$routes->get('/mo/alliance/apply', 'MoHome::allianceApply');
+$routes->post('/mo/alliance/apply', 'MoHome::allianceApply');
 $routes->get('/mo/alliance/exchange', 'MoHome::allianceExchange');
 $routes->post('/mo/alliance/exchangepointSubmit', 'MoHome::allianceExchangePoint');
 $routes->get('/mo_mypage_excharge_success', 'MoHome::exchangePoint_success');
@@ -95,6 +98,7 @@ $routes->post('/upload', 'Upload::upload');
 
 // ajax
 $routes->post('/ajax/signUp', 'MoAjax::signUp');
+$routes->post('/ajax/alianceUp', 'MoAjax::alianceUp');
 $routes->post('/ajax/signUpdate', 'MoAjax::signUpdate');
 $routes->post('/ajax/login', 'MoAjax::login');
 $routes->post('/ajax/logout', 'MoAjax::logout');

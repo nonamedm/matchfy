@@ -20,6 +20,11 @@ use App\Helpers\MoHelper;
 use App\Models\MeetModel;
 use App\Models\MeetPointModel;
 use App\Models\AllianceModel;
+<<<<<<< HEAD
+=======
+use App\Models\AllianceFileModel;
+use App\Models\AllianceMemberModel;
+>>>>>>> 1d0e0617a0636159c3bb1216417170f9fa8c1dee
 use CodeIgniter\Session\Session;
 use Kint\Zval\Value;
 
@@ -624,6 +629,7 @@ class MoHome extends BaseController
         }
     }
 
+    /* 모임 결재 시 확인 사항1 - 멤버 수 확인 */
     public function getMemberCount($meeting_idx)
     {
 
@@ -666,7 +672,7 @@ class MoHome extends BaseController
         }
     }
 
-    /*결재 시 모임에 이미 등록되어있는지 판단 */
+    /*모임 결재 시 확인 사항2 - 결재 시 모임에 이미 등록되어있는지 판단 */
     public function getMemberConfirm($ci, $meeting_idx)
     {
         $MeetingMembersModel = new MeetingMembersModel();
@@ -1361,16 +1367,54 @@ class MoHome extends BaseController
     {
         return view('mo_alliance_reserve_popup');
     }
+    /*제휴신청시 본인인증 확인*/
+    public function alliancePass(): string
+    {
+        $data['params'] = '';
+        return view('mo_alliance_pass', $data);
+    }
+    /*제휴 본인인증 체크 확인 */
+    public function allianceAgree()
+    {
+        $session = session();
+        $ci = $session->get('ci');
+
+        $postData = $this->request->getPost();
+
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_terms');
+        $postData['terms'] = $BoardModel->orderBy('created_at', 'DESC')->first();
+
+        $BoardModel2 = new BoardModel();
+        $BoardModel2->setTableName('wh_board_privacy');
+        $postData['privacy'] = $BoardModel2->orderBy('created_at', 'DESC')->first();
+
+        $AllianceMember = new AllianceMemberModel(); //테이블
+
+        $mobile_no = $postData['mobile_no'];
+        
+        $selected = $AllianceMember->where('mobile_no', $mobile_no)->first();
+        
+        if ($selected) {
+            return view('mo_aliance_pass', $postData);
+        } else {
+            return view('mo_aliance_agree',$postData);
+        }
+    }
+    /*제휴 신청하기 */
     public function allianceApply(): string
     {
-        return view('mo_alliance_apply');
+        $postData = $this->request->getPost();
+        return view('mo_alliance_apply',$postData);
     }
+    /*환전 페이지 */
     public function allianceExchange(): string
     {
         $my_point_value = $this->mypageGetPoint();
         return view('mo_alliance_exchange', ['my_point' => $my_point_value]);
     }
 
+    /*환전 프로세스 */
     public function allianceExchangePoint()
     {
         $session = session();
@@ -1418,12 +1462,13 @@ class MoHome extends BaseController
             return $this->response->setJSON(['success' => false]);
         }
     }
-
+    /*환전 성공페이지 */
     public function exchangePoint_success(): string
     {
         return view('mo_mypage_excharge_success');
     }
 
+    /*환전 실패페이지 */
     public function exchangePoint_fail(): string
     {
         return view('mo_mypage_excharge_fail');
