@@ -1344,14 +1344,35 @@ class MoHome extends BaseController
     {
         return view('mo_alliance_region_popup');
     }
-    public function allianceDetail(): string
+    public function allianceDetail($idx): string
     {
-        return view('mo_alliance_detail');
+        $AllianceModel = new AllianceModel();
+
+        //이미지 정보
+        $alliance = $AllianceModel
+            ->join('wh_alliance_files', 'wh_alliance_files.alliance_idx = wh_alliance.idx', 'left')
+            ->where('wh_alliance.delete_yn', 'N')
+            ->where('wh_alliance.idx', $idx)
+            ->first();
+
+        if (isset($alliance['detailed_content'])) {
+            $lines = explode("<br>", $alliance['detailed_content']);
+            $lines = array_map(function($line) {
+                return "<div class='content-line-point'>· " . $line . "</div>";
+            }, $lines);
+            $alliance['detailed_content'] = implode("<br>", $lines);
+        }
+
+        // echo '<pre>';
+        // print_r($alliance['detailed_content']);
+        // echo '</pre>';
+
+        return view('mo_alliance_detail', $alliance);
     }
-    public function allianceDetail2(): string
-    {
-        return view('mo_alliance_detail2');
-    }
+    // public function allianceDetail2(): string
+    // {
+    //     return view('mo_alliance_detail2');
+    // }
     public function alliancePayment(): string
     {
         return view('mo_alliance_payment');

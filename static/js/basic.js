@@ -1373,3 +1373,23 @@ const allianceFiltering = (category, searchText, filterOption) => {
         },
     });
 };
+
+const allianceInfo = (allianceIdx) => {
+    $.ajax({
+        url: '/ajax/alliance/info',
+        type: 'POST',
+        data: {
+            idx: allianceIdx
+        },
+        processData: false,
+        contentType: false,
+        async: false,
+        success: function (data) {
+
+        },
+        error: function (xhr, status, err) {
+            console.log(err);
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
+};

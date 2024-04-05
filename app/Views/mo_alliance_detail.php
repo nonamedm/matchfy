@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/static/css/common_mo.css">
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/basic.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
 </head>
 
 <body class="mo_wrap">
@@ -28,24 +29,23 @@
                 </div>
                 <div class="group_detail_info">
                     <div class="group_detail_header">
-                        <div class="group_detail_type">기타</div>
+                        <div class="group_detail_type"><?= $alliance_type ?></div>
                         <p>　</p>
                     </div>
                     <div class="group_detail_title">
-                        <h2>레드버튼 보드게임(이수점)</h2>
-                        <p class="group_detail_schedule">서울 동작</p>
+                        <h2><?= $company_name ?></h2>
+                        <p class="group_detail_schedule"><?= $address ?> <?= $detailed_address ?></p>
                     </div>
                     <div class="tab_wrap">
                         <ul>
                             <li class="tab on" data-target="#tab-reservation">예약하기</li>
-                            <li class="tab" data-target="#tab-detail">상세정보</li>
+                            <li class="tab" data-target="#tab-detail" onclick="allianceInfo('<?= $idx ?>')">상세정보</li>
                         </ul>
                     </div>
                     <div id="tab-reservation" class="alliance_tab_content active">
                         <div class="alliance_detail_cont">
                             <h2>일정을 선택하세요</h2>
-                            <img src="/static/images/calendar.png" />
-
+                            <div id="calendar"></div>
                         </div>
                         <div class="alliance_detail_cont">
                             <h2>회차를 선택하세요</h2>
@@ -95,12 +95,7 @@
                     <div id="tab-detail" class="alliance_tab_content">
                         <div class="alliance_detail_cont">
                             <h2>소개</h2>
-                            <p>· 최소 2인 이상 예약 및 체험이 가능합니다.</p>
-                            <p>· 입장 시간 10분 전까지 도착해주세요.</p>
-                            <p>· 예약처리 기준 15분 내 미 방문 시 자동 사용 완료 처리 됩니다.</p>
-                            <p>· 주차 불가 </p>
-                            <p>· 외부 음료 반입 금지</p>
-
+                            <?= $detailed_content ?>
                         </div>
                         <div class="alliance_detail_cont">
                             <h2>취소/환불 규정</h2>                        
@@ -119,7 +114,7 @@
                             <h2>오시는 길</h2>
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />
-                                서울시 동작구 상도동 205-23 2층
+                                <?= $address ?> <?= $detailed_address ?>
                             </div>                        
                             <div class="group_detail_map">
                                 <img src="/static/images/group_naver_map.png" />
@@ -129,19 +124,19 @@
                             <h2>판매자 정보</h2>
                             <div class="alliance_profile_content">
                                 <h2>상호</h2>
-                                <p>레드버튼 이수</p>
+                                <p><?= $company_name ?></p>
                             </div>                            
                             <div class="alliance_profile_content">
                                 <h2>대표자명</h2>
-                                <p>홍길동</p>
+                                <p><?= $representative_name ?></p>
                             </div>                            
                             <div class="alliance_profile_content">
                                 <h2>사업자번호</h2>
-                                <p>112-34-55667</p>
+                                <p>추가필요</p>
                             </div>                            
                             <div class="alliance_profile_content">
                                 <h2>연락처</h2>
-                                <p>02-1234-1234</p>
+                                <p><?= $company_contact ?></p>
                             </div>                            
                         </div>
                     </div>
@@ -179,6 +174,36 @@
                 $($(this).data('target')).show();// 클릭된 탭에 해당하는 콘텐츠만 보여줌
             });
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev',
+                    center: 'title',
+                    right: 'next'
+                },
+                locale: "ko",
+                //showNonCurrentDates:false,
+                fixedWeekCount:false,
+                contentHeight:"auto",
+                handleWindowResize:true,
+                dateClick: function() {
+                    //alert('a day has been clicked!');
+                },
+                dayCellContent: function (info) {
+                    var number = document.createElement("a");
+                    number.classList.add("fc-daygrid-day-number");
+                    number.innerHTML = info.dayNumberText.replace("일", '');
+                    return {
+                        html: number.outerHTML
+                    };
+                },
+            });
+            calendar.render();
+        });
+
     </script>
 
     <!-- -->
