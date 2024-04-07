@@ -13,9 +13,10 @@ use App\Models\MatchPartnerModel;
 use App\Models\MatchFactorModel;
 use App\Models\MatchRateModel;
 use App\Models\MeetingMembersModel;
-use App\Models\AllianceModel;
-use App\Config\Encryption;
 use App\Models\AllianceMemberModel;
+use App\Models\AllianceModel;
+use App\Models\AllianceFileModel;
+use App\Config\Encryption;
 
 class MoAjax extends BaseController
 {
@@ -1767,41 +1768,45 @@ class MoAjax extends BaseController
     public function alianceUp()
     {
        
-        // $MemberModel = new MemberModel();
-        $AllianceMemberModel = new AllianceMemberModel();
+        $session = session();
+        $ci = $session->get('ci');
 
-        // $is_duplicate = true;
-        // $random_word = '';
-        // // 닉네임 중복확인
-        // while ($is_duplicate) {
-        //     // 닉네임 랜덤 생성
-        //     $word_file_path = APPPATH . 'Data/RandomWord.php';
-        //     require($word_file_path);
-        //     $random_word = $randomadj[array_rand($randomadj)] . $randomword[array_rand($randomword)] . '@' . mt_rand(100000, 999999);
-        //     $is_duplicate = $AllianceMemberModel->where(['nickname' => $random_word])->first();
-        // }
+        $AllianceMemberModel = new AllianceMemberModel();
+        $AllianceModel = new AllianceModel();
+        $AllianceFileModel = new AllianceFileModel();
 
         $mobile_no = $this->request->getPost('mobile_no');
         
         $encrypter = \Config\Services::encrypter();
-        $aliiance_ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 24]));
+        $alliance_ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 24]));
         
-        // $ci = $this->request->getPost('ci');
         $agree1 = $this->request->getPost('agree1');
         $agree2 = $this->request->getPost('agree2');
         $agree3 = $this->request->getPost('agree3');
-        $name = $this->request->getPost('name');
-        $company = $this->request->getPost('company');
         $gender = $this->request->getPost('gender');
 
-        // $town = $encrypter->decrypt(base64_decode($ci), ['key' => 'nonamedm', 'blockSize' => 32]);
+        $alliance_type = $this->request->getPost('alliance_category');
+        $company_contact = $this->request->getPost('alliance_number');
+        $email = $this->request->getPost('alliance_email');
+        $company_name = $this->request->getPost('alliance_name');
+        $representative_name = $this->request->getPost('alliance_ceoname');
+        $address = $this->request->getPost('alliance_address1');
+        $detailed_address = $this->request->getPost('alliance_address2');
+        $business_day = $this->request->getPost('alliance_bizday');
+        $representative_contact = $this->request->getPost('alliance_ceonumber');
+        $business_hour_start = $this->request->getPost('alliance_biztime1');
+        $business_hour_end = $this->request->getPost('alliance_biztime2');
+        $detailed_content = $this->request->getPost('alliance_cont');
 
-
+        $alliance_photo = $this->request->getFile('alliance_photo');
+        $alliance_photo_detail = $this->request->getFiles('alliance_photo_detail');
+        
         $data = [
             'mobile_no' => $mobile_no,
-            'alliance_ci' => $aliiance_ci,
-            'ceo_name' => $name,
-            'company_name' => $company,
+            'member_ci'=>$ci,
+            'alliance_ci' => $alliance_ci,
+            'ceo_name' => $representative_name,
+            'company_name' => $representative_name,
             'gender' => $gender,
             'agree1' => $agree1,
             'agree2' => $agree2,
@@ -1812,51 +1817,87 @@ class MoAjax extends BaseController
         $inserted = $AllianceMemberModel->insert($data);
 
         // 제휴신청
-        $data = [
-            'mobile_no' => $mobile_no,
-            'alliance_ci' => $aliiance_ci,
-            'ceo_name' => $name,
-            'company_name' => $company,
-            'gender' => $gender,
-            'agree1' => $agree1,
-            'agree2' => $agree2,
-            'agree3' => $agree3,
+        $session = session();
+        $ci = $session->get('ci');
+        
+        $allianceData = [
+            'member_ci'=>$ci,
+            'alliance_ci'=>$alliance_ci,
+            'alliance_type'=>$alliance_type,
+            'company_contact'=>$company_contact,
+            'email'=>$email,
+            'company_name'=>$company_name,
+            'representative_name'=>$representative_name,
+            'address'=>$address,
+            'detailed_address'=>$detailed_address,
+            'representative_contact'=>$representative_contact,
+            'business_day'=>$business_day,
+            'business_hour_start'=>$business_hour_start.":00:00",
+            'business_hour_end'=>$business_hour_end.":00:00",
+            'detailed_content'=>$detailed_content,
+            'alliance_application'=>'1',
+            'delete_yn'=>'n',
+            'create_at'=>date('Y-m-d H:i:s'),
+            'update_at'=>date('Y-m-d H:i:s'),
         ];
         
-        if ($inserted) {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $aliiance_ci]);
-        } else {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy fail', 'data' => $aliiance_ci]);
+        $allianceId = $AllianceModel->insert($allianceData);
+
+        if ($alliance_photo && $alliance_photo->isValid() && !$alliance_photo->hasMoved()){
+            $upload = new Upload();
+            $fileData = $upload->allianceUpload($alliance_photo);
+
+            $fileMainData=[
+                'member_ci'=>$ci, 
+                'alliance_idx'=>$allianceId,
+                'file_path'=>$fileData['file_path'], 
+                'file_name'=>$fileData['file_name'], 
+                'org_name'=>$fileData['org_name'], 
+                'ext'=>$fileData['ext'],  
+                'delete_yn'=>'n', 
+                'board_type'=>'m', 
+                'extra1', 
+                'extra2', 
+                'extra3'
+            ];
+            $AllianceFileModel->insert($fileMainData);
+        }else{
+            $msg =  "메인 사진파일이 전송 되지 않았습니다.";
         }
-        // // 회원가입 완료 되었을 떄
-        // if ($inserted) {
-        //     // 프로필 사진 DB 업로드
-        //     $MemberFileModel = new MemberFileModel();
-        //     $org_name = $this->request->getPost('org_name');
-        //     $file_name = $this->request->getPost('file_name');
-        //     $file_path = $this->request->getPost('file_path');
-        //     $ext = $this->request->getPost('ext');
-        //     if ($org_name) {
-        //         // 프로필 첨부 있을때만 file db 저장
-        //         $data2 = [
-        //             'member_ci' => $ci,
-        //             'org_name' => $org_name,
-        //             'file_name' => $file_name,
-        //             'file_path' => $file_path,
-        //             'ext' => $ext,
-        //             'board_type' => 'main_photo',
-        //         ];
-        //         $data = array_merge($data, $data2);
-        //         $MemberFileModel->insert($data2);
-        //     }
-        //     if ($inserted) {
-        //         return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
-        //     } else {
-        //         return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy fail', 'data' => $data]);
-        //     }
-        // } else {
-        //     return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy']);
-        // }
+
+        if (!empty($alliance_photo_detail)) {
+                foreach ($alliance_photo_detail as $fileArray) {                    
+                    foreach ($fileArray as $file) {
+                        // 각 파일을 처리하는 코드
+                        $upload = new Upload();
+                        $fileData = $upload->allianceUpload($file);
+
+                        $fileDetailsData=[
+                            'member_ci'=>$ci, 
+                            'alliance_idx'=>$allianceId,
+                            'file_path'=>$fileData['file_path'], 
+                            'file_name'=>$fileData['file_name'], 
+                            'org_name'=>$fileData['org_name'], 
+                            'ext'=>$fileData['ext'],  
+                            'delete_yn'=>'n', 
+                            'board_type'=>'d', 
+                            'extra1', 
+                            'extra2', 
+                            'extra3'
+                        ];
+   
+                        $fileDetailsInsert = $AllianceFileModel->insert($fileDetailsData);
+                    }
+                }
+            
+        } else {
+            $msg =  "상세 사진파일이 전송 되지 않았습니다.";
+        }
+
+        if($allianceId){
+            $msg =  "제휴 신청 후 관리자 승인으로 제휴점에 입점 됩니다.";
+            return view('mo_alliance_success',['msg' => $msg]);
+        }
         
     }
 }

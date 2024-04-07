@@ -7,6 +7,7 @@ use App\Models\BoardModel;
 use App\Models\BoardFileModel;
 use App\Models\PointModel;
 use App\Models\PointExchangeModel;
+use App\Models\AllianceModel;
 
 class AdminHome extends BaseController
 {
@@ -565,5 +566,40 @@ class AdminHome extends BaseController
             return $this->response->setJSON(['error' => true, 'msg' => '환전 실패 되었습니다.']);
         }
 
+    }
+
+    public function allianceList()
+    {
+        $AllianceModel = new AllianceModel();
+        $query = $AllianceModel
+                ->select(
+                    'idx',
+                    'alliance_ci',
+                    'member_ci',
+                    'alliance_type',
+                    'company_contact',
+                    'email',
+                    'company_name',
+                    'representative_name',
+                    'address',
+                    'detailed_address',
+                    'representative_contact',
+                    'business_day',
+                    'business_hour_start',
+                    'business_hour_end',
+                    'detailed_content',
+                    'alliance_application',
+                    'delete_yn'
+                )
+                ->whereIn('alliance_application', ['1', '2'])
+                ->orderBy('alliance_application', 'asc')
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            $results = $query->getResultArray();
+
+            $data['datas'] = $results;
+        
+        return view('admin/ad_alliance_list', $data);
     }
 }

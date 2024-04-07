@@ -19,4 +19,7 @@
     <li class="menu_item">
         <a href="/ad/exchange/exchangeList">환전내역 신청리스트</a>
     </li>
+    <li class="menu_item">
+        <a href="/ad/alliance/allianceList">제휴점 신청리스트</a>
+    </li>
 </ul>

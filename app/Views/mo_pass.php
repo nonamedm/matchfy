@@ -35,7 +35,7 @@
 
         <div class="sub_wrap">
             <div class="content_wrap">
-                <form class="temp_input" action="/mo/agree" method="post">
+                <form class="temp_input" action="/mo/agree" method="post" >
                     <div class="content_title">
                         <h2>휴대폰 본인인증</h2>
                         <p>원활한 서비스 이용을 위해 휴대전화 본인인증이 필요합니다. </p>

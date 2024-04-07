@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="/static/css/datepicker.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey9a1a5ebdc4ded5f8146d83a08dade5d7&libraries=services"></script>
     <script src="/static/js/basic.js"></script>
 </head>
 
@@ -27,14 +29,14 @@
 
         <div class="sub_wrap">
             <div class="content_wrap">
-                <form class="main_signin_form group_create" method="post" action="" enctype="multipart/form-data">
+                <form class="main_signin_form group_create" method="post" action="/ajax/alianceUp" enctype="multipart/form-data">
                     <legend></legend>
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="alliance_category" class="signin_label">제휴유형</label>
-                                <select id="alliance_category" class="custom_select" value="">
-                                    <option>제휴 유형을 선택하세요</option>
+                                <select id="alliance_category" name="alliance_category" class="custom_select" value="">
+                                    <option value ="00">제휴 유형을 선택하세요</option>
                                     <option value="01">음식점</option>
                                     <option value="02">카페</option>
                                     <option value="03">숙박</option>
@@ -46,7 +48,7 @@
                             <div class="signin_form_div">
                                 <label for="alliance_number" class="signin_label">업체 연락처</label>
                                 <div>
-                                    <input id="alliance_number" type="number" value="" placeholder="-제외 연락처 입력">
+                                    <input id="alliance_number" type="number" name="alliance_number" value="" placeholder="-제외 연락처 입력">
                                 </div>
                             </div>
                         </div>
@@ -54,7 +56,7 @@
                             <div class="signin_form_div">
                                 <label for="alliance_email" class="signin_label">이메일</label>
                                 <div>
-                                    <input id="alliance_email" type="text" value="" placeholder="이메일 입력">
+                                    <input id="alliance_email" type="text" name="alliance_email" value="" placeholder="이메일 입력">
                                 </div>
                             </div>
                         </div>
@@ -62,7 +64,7 @@
                             <div class="signin_form_div">
                                 <label for="alliance_name" class="signin_label">업체명</label>
                                 <div>
-                                    <input id="alliance_name" type="text" name="company" value="<?= $company ?>" placeholder="<?= $company ?>">
+                                    <input id="alliance_name" type="text" name="alliance_name" value="<?= $company ?>" placeholder="<?= $company ?>">
                                 </div>
                             </div>
                         </div>
@@ -70,19 +72,19 @@
                             <div class="signin_form_div">
                                 <label for="alliance_ceoname" class="signin_label">대표명</label>
                                 <div>
-                                    <input id="alliance_ceoname" type="text" name="name" value="<?= $name ?>" placeholder="<?= $name ?>">
+                                    <input id="alliance_ceoname" type="text" name="alliance_ceoname" value="<?= $name ?>" placeholder="<?= $name ?>">
                                 </div>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="alliance_address" class="signin_label">주소</label>
-                                <div style="margin-bottom: 10px;">
-                                    <input id="alliance_address1" class="alliance_address1" type="text" value=""
-                                        placeholder="주소를 입력해주세요">
-                                    <button class="btn search">검색</button>
+                                <div style="margin-bottom: 10px;display:flex;">
+                                    <input id="alliance_address1" class="alliance_address1" name="alliance_address1" type="text" value=""
+                                        placeholder="주소를 입력해주세요" onclick="searchAddress();">
+                                    <button class="btn search" onclick="searchAddress(event);">검색</button>
                                 </div>
-                                <input id="alliance_address2" class="alliance_address2" type="text" value=""
+                                <input id="alliance_address2" class="alliance_address2" name="alliance_address2" type="text" value=""
                                     placeholder="상세주소를 입력해주세요">
                             </div>
                         </div>
@@ -90,21 +92,21 @@
                             <div class="signin_form_div">
                                 <label for="alliance_ceonumber" class="signin_label">대표 연락처</label>
                                 <div>
-                                    <input id="alliance_ceonumber" type="number" name="mobile_no" value="<?= $mobile_no ?>" placeholder="<?= $mobile_no ?>">
+                                    <input id="alliance_ceonumber" type="number" name="alliance_ceonumber" value="<?= $mobile_no ?>" placeholder="<?= $mobile_no ?>">
                                 </div>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="alliance_bizday" class="signin_label">영업일</label>
-                                <div class="biz_day">
-                                    <div class="biz_day_box">월</div>
-                                    <div class="biz_day_box on">화</div>
-                                    <div class="biz_day_box">수</div>
-                                    <div class="biz_day_box">목</div>
-                                    <div class="biz_day_box on">금</div>
-                                    <div class="biz_day_box">토</div>
-                                    <div class="biz_day_box">일</div>
+                                <div id="biz_day" class="biz_day" tabindex="0">
+                                    <div class="biz_day_box" value="mon">월</div>
+                                    <div class="biz_day_box" value="tue">화</div>
+                                    <div class="biz_day_box" value="wed">수</div>
+                                    <div class="biz_day_box" value="thu">목</div>
+                                    <div class="biz_day_box" value="fri">금</div>
+                                    <div class="biz_day_box" value="sat">토</div>
+                                    <div class="biz_day_box" value="sun">일</div>
                                 </div>
                             </div>
                         </div>
@@ -112,14 +114,14 @@
                             <div class="signin_form_div">
                                 <label for="alliance_biztime" class="signin_label">영업시간</label>
                                 <div class="multy_select">
-                                    <select id="alliance_biztime1" class="custom_select" value="">
+                                    <select id="alliance_biztime1" class="custom_select" name="alliance_biztime1" value="">
                                         <option value="">선택</option>
                                         <option value="0">00시</option>
                                         <option value="1">01시</option>
                                         <option value="2">02시</option>
                                         <option value="3">03시</option>
                                     </select>
-                                    <select id="alliance_biztime2" class="custom_select" value="">
+                                    <select id="alliance_biztime2" class="custom_select" name="alliance_biztime2" value="">
                                         <option value="">선택</option>
                                         <option value="0">00시</option>
                                         <option value="1">01시</option>
@@ -135,7 +137,8 @@
                                 <div class="profile_photo_div">
                                     <label for="alliance_photo"
                                         class="signin_label profile_photo_input group_photo_input"></label>
-                                    <input id="alliance_photo" type="file" value="" placeholder="">
+                                    <input id="alliance_photo" name="alliance_photo" type="file" value="" placeholder="" accept="image/*">
+                                    <div id="alliance_photo_view" class="meeting_photo_view" style="margin-top: 10px;">
                                 </div>
                             </div>
                         </div>
@@ -144,11 +147,8 @@
                                 <h4 class="profile_photo_label">상세사진</h4>
                                 <div class="profile_photo_div">
                                     <label for="alliance_photo_detail" class="signin_label profile_photo_input"></label>
-                                    <input id="alliance_photo_detail" type="file" value="" placeholder="">
-                                    <div>
-                                        <img class="profile_photo_posted" src="/static/images/input_img_1.png" />
-                                        <img class="profile_photo_posted" src="/static/images/input_img_2.png" />
-                                        <!-- <img class="profile_photo_posted" src="/static/images/input_img_3.png" /> -->
+                                    <input id="alliance_photo_detail" name="alliance_photo_detail" type="file" value="" placeholder="" multiple accept="image/*">
+                                    <div id="alliance_detail_post_box">
                                     </div>
                                 </div>
                             </div>
@@ -156,7 +156,7 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="alliance_cont" class="signin_label">상세내용</label>
-                                <textarea id="alliance_cont" value="" placeholder="내용을 입력하세요"></textarea></br />
+                                <textarea id="alliance_cont" value="" name="detailed_content" placeholder="내용을 입력하세요"></textarea></br />
                             </div>
                         </div>
                         <div class="form_row signin_form">
@@ -177,6 +177,7 @@
                             <button type="button" class="btn type01" onclick="alianceUp()">등록</button>
                         </div>
                     </div>
+                    <input type="hidden" id="alliance_bizday" name="alliance_bizday">
                     <input type="hidden" name="gender" value="<?= $gender ?>" />
                     <input type="hidden" name="agree1" value="<?= $agree1 ?>" />
                     <input type="hidden" name="agree2" value="<?= $agree2 ?>" />
@@ -225,96 +226,136 @@
         }
     </script>
     <script>
-        $(function () {
-            //input을 datepicker로 선언
-            $("#datepicker").datepicker({
-                dateFormat: 'yy-mm-dd' //달력 날짜 형태
-                // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                , showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
-                // ,changeYear: true //option값 년 선택 가능
-                // ,changeMonth: true //option값  월 선택 가능                
-                , showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-                , buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
-                , buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-                , buttonText: "선택" //버튼 호버 텍스트        
-                , monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
-                , monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
-                , dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
-                , dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
-                , minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                , maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-                , zIndex: 9999
-            });
-
-            //초기값을 오늘 날짜로 설정
-            $('#datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
-            $("#datepicker1").datepicker({
-                dateFormat: 'yy-mm-dd' //달력 날짜 형태
-                // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                , showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
-                // ,changeYear: true //option값 년 선택 가능
-                // ,changeMonth: true //option값  월 선택 가능                
-                , showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-                , buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
-                , buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-                , buttonText: "선택" //버튼 호버 텍스트        
-                , monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
-                , monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
-                , dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
-                , dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
-                , minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                , maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-                , zIndex: 9999
-            });
-
-            //초기값을 오늘 날짜로 설정
-            $('#datepicker1').datepicker('setDate', '+1D'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
-            $("#datepicker2").datepicker({
-                dateFormat: 'yy-mm-dd' //달력 날짜 형태
-                // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                , showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
-                // ,changeYear: true //option값 년 선택 가능
-                // ,changeMonth: true //option값  월 선택 가능                
-                , showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-                , buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
-                , buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-                , buttonText: "선택" //버튼 호버 텍스트        
-                , monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
-                , monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
-                , dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
-                , dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
-                , minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                , maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-                , zIndex: 9999
-            });
-
-            //초기값을 오늘 날짜로 설정
-            $('#datepicker2').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
-            $("#datepicker3").datepicker({
-                dateFormat: 'yy-mm-dd' //달력 날짜 형태
-                // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                , showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
-                // ,changeYear: true //option값 년 선택 가능
-                // ,changeMonth: true //option값  월 선택 가능                
-                , showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-                , buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
-                , buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-                , buttonText: "선택" //버튼 호버 텍스트        
-                , monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
-                , monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
-                , dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
-                , dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
-                , minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                , maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-                , zIndex: 9999
-            });
-
-            //초기값을 오늘 날짜로 설정
-            $('#datepicker3').datepicker('setDate', '+1D'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+        
+        var filesInput = $('#alliance_photo_detail')[0];
+        var filesArray = Array.from(filesInput.files);
+        
+        $(document).ready(function() {
+            fileDetailBtn();
+            alliClosetBtn();
         });
-    </script>
-    <!-- -->
+        const searchAddress = () => { 
+            if(event){
+                event.preventDefault();
+            }
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    var addr = data.address;
+                    $('#alliance_address1').val(addr);
+                }
+                
+            }).open();
+        }
 
+        /*제휴신청 - 대표사진 미리보기 */
+        $('#alliance_photo').on('change', function(event) {
+                var files = event.target.files;
+                var imagePreviewContainer = $('#alliance_photo_view');
+                imagePreviewContainer.empty(); // 기존의 미리보기를 클리어
+
+                var labelForInput = $('label[for="alliance_photo"]');
+                if (files.length > 0) {
+                    labelForInput.css('display', 'none');
+                } else {
+                    labelForInput.css('display', 'block');
+                }
+
+                $.each(files, function(index, file) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        var img = $('<img>');
+                        img.attr('src', e.target.result);
+                        img.css('width', '335px'); // 이미지 너비 고정
+                        img.css('max-height', '220px'); // 이미지 최대 높이
+                        img.css('object-fit', 'cover'); // 이미지 비율 유지
+                        img.css('margin-top', '10px');
+                        img.css('border', '1px solid #dddddd');
+                        img.css('border-radius', '10px');
+                        imagePreviewContainer.append(img);
+
+                        // 미리보기 이미지 클릭 시 파일 선택 input 활성화
+                        img.on('click', function() {
+                            $('#alliance_photo').click();
+                        });
+                        imagePreviewContainer.append(img);
+                    };
+                reader.readAsDataURL(file);
+            });
+        });
+
+        /*제휴신청-요일 */
+        $('.biz_day_box').on('click', function() {
+            $(this).toggleClass('on');
+            updateForm();
+        });
+
+        function updateForm() {
+            var selectedDays = [];
+            $('.biz_day_box.on').each(function() {
+                selectedDays.push($(this).attr('value'));
+            });
+
+            // 선택된 요일을 name과 함께 form 으로 보내기
+            $('#alliance_bizday').val(selectedDays.join(', '));
+        }
+
+        /* 제휴신청 - 디테일 파일 선택시 */
+        function fileDetailBtn() {
+            $('#alliance_photo_detail').on('change', function() {
+                var files = $(this)[0].files;
+                var maxFiles = 20; // 최대 업로드 가능한 파일 개수
+                var currentFiles = $('#alliance_detail_post_box .alliance_image_container').length;
+                var remainingSlots = maxFiles - currentFiles;
+
+                if (files.length > remainingSlots) {
+                    alert('최대 20장까지만 업로드할 수 있습니다.');
+                    var excessFiles = Array.from(files).slice(0, remainingSlots);
+                    $('#alliance_photo_detail').prop('files', excessFiles);
+                    files = excessFiles;
+                }
+
+                for (var i = 0; i < files.length; i++) {
+                    var reader = new FileReader();
+                    reader.onload = (function(file) {
+                        return function(e) {
+                            var imageContainer = $('<div>', { class: 'alliance_image_container' });
+                            var image = $('<img>', { class: 'profile_photo_posted', src: e.target.result, style: 'display: block;' });
+                            var closeButton = $('<span>', { class: 'alliance_close_button' });
+
+                            imageContainer.append(image).append(closeButton);
+                            $('#alliance_detail_post_box').append(imageContainer);
+
+                            filesArray.push(file);
+                            setFilesToInput(filesArray);
+                        };
+                    })(files[i]);
+                    reader.readAsDataURL(files[i]);
+                }
+            });
+        }
+        
+        function alliClosetBtn() {
+            $(document).on('click', '.alliance_close_button', function() {
+                var container = $(this).closest('.alliance_image_container');
+                var fileIndex = container.index();
+
+                container.remove();
+
+                filesArray.splice(fileIndex, 1);
+                setFilesToInput(filesArray);
+            });
+        }
+
+        /*제휴신청 - 상세파일목록정리 */
+        function setFilesToInput(filesArray) {
+            var dataTransfer = new DataTransfer();
+            for (var i = 0; i < filesArray.length; i++) {
+                dataTransfer.items.add(filesArray[i]);
+            }
+            filesInput.files = dataTransfer.files;
+        }
+
+    </script>
 
 </body>
 

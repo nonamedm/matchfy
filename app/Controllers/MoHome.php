@@ -1393,6 +1393,7 @@ class MoHome extends BaseController
         $selected = $AllianceMember->where('mobile_no', $mobile_no)->first();
         
         if ($selected) {
+            echo '<script>alert("이미 가입된 휴대폰 번호입니다");</script>';
             return view('mo_aliance_pass', $postData);
         } else {
             return view('mo_aliance_agree',$postData);
@@ -1404,6 +1405,7 @@ class MoHome extends BaseController
         $postData = $this->request->getPost();
         return view('mo_alliance_apply',$postData);
     }
+    
     /*환전 페이지 */
     public function allianceExchange(): string
     {

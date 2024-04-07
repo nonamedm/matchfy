@@ -223,6 +223,33 @@ class Upload extends BaseController
         }
     }
 
+    public function allianceUpload($file)
+    {
+        
+        if ($file && $file->isValid() && !$file->hasMoved()){
+            $orgName = $file->getClientName();
+            $ext = $file->getClientExtension();
+            
+            // 난수생성
+            $newName = $file->getRandomName();
+            
+            // 데이터 저장
+            $postData['org_name'] = $orgName;
+            $postData['ext'] = $ext;
+            $postData['file_name'] = $newName;
+            $uploadDir = 'static/files/uploads/';
+            $postData['file_path'] = $uploadDir;
+
+            $file->move(ROOTPATH.$uploadDir, $newName);
+
+            return $postData;
+        }else{
+            $postData['fail'] = '파일전송 실패';
+            return $postData;
+        }
+    
+    }
+
 }
 
 

@@ -1359,7 +1359,20 @@ a.ended:hover .ended_overlay {
 .alliance_address1 {
     width: 250px !important;
 }
-
+.alliance_image_container{
+    position: relative; 
+    display: inline-block;
+}
+.alliance_close_button{
+    position: absolute; 
+    top: 0; 
+    right: 0; 
+    background-image: url('/static/images/alliance_cancel.png'); 
+    background-size: cover; 
+    width: 20px; 
+    height: 20px;
+    margin:4px;
+}
 .myinfo_level {
     padding: 3px 8px;
     width: 46px;

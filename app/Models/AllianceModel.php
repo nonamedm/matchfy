@@ -14,6 +14,7 @@ class AllianceModel extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [
                                     'member_ci',
+                                    'alliance_ci',
                                     'alliance_type',
                                     'company_contact',
                                     'email',

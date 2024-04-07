@@ -162,3 +162,4 @@ $routes->post('/ad/FileDelete', 'AdminHome::fileDelete');
 
 $routes->get('/ad/exchange/exchangeList', 'AdminHome::exchangeList');
 $routes->post('/ad/exchangeCheck', 'AdminHome::exchangeCheck');
+$routes->get('/ad/alliance/allianceList', 'AdminHome::allianceList');
