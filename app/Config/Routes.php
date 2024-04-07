@@ -118,7 +118,7 @@ $routes->post('/ajax/meetingSave', 'MoAjax::meetingSave');
 $routes->post('/ajax/meetingFilter', 'MoAjax::meetingFiltering');
 $routes->post('/ajax/myMeetingFilter', 'MoAjax::myMeetingFiltering');
 $routes->post('/ajax/allianceFilter', 'MoAjax::allianceFiltering');
-$routes->post('/ajax/alliance/info', 'MoAjax::allianceFiltering');
+$routes->get('/ajax/alliance/reservation', 'MoAjax::allianceReservation');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

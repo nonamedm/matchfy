@@ -39,7 +39,7 @@
                     <div class="tab_wrap">
                         <ul>
                             <li class="tab on" data-target="#tab-reservation">예약하기</li>
-                            <li class="tab" data-target="#tab-detail" onclick="allianceInfo('<?= $idx ?>')">상세정보</li>
+                            <li class="tab" data-target="#tab-detail">상세정보</li>
                         </ul>
                     </div>
                     <div id="tab-reservation" class="alliance_tab_content active">
@@ -50,17 +50,23 @@
                         <div class="alliance_detail_cont">
                             <h2>회차를 선택하세요</h2>
                             <div class="alliance_reserv_list">
-                                <div class="alliance_reserv_time">10:00</div>
-                                <div class="alliance_reserv_time">11:00</div>
-                                <div class="alliance_reserv_time">12:00</div>
-                                <div class="alliance_reserv_time">13:00</div>
-                                <div class="alliance_reserv_time close">14:00</div>
-                                <div class="alliance_reserv_time">15:00</div>
-                                <div class="alliance_reserv_time on">16:00</div>
-                                <div class="alliance_reserv_time">17:00</div>
-                                <div class="alliance_reserv_time">18:00</div>
-                                <div class="alliance_reserv_time">19:00</div>
-                                <div class="alliance_reserv_time">20:00</div>
+                                <?php foreach ($time_slots as $time_slot): ?>
+                                    <?php
+                                    $time_slot_time = explode(' ', $time_slot)[1];
+                                    $isReserved = false;
+                                    foreach ($reservations as $reservation) {
+                                        // 예약 날짜와 시간을 결합하여 비교합니다.
+                                        $reservedDateTime = substr($reservation['reservation_time'], 0, 5);
+                                        if ($time_slot == $reservedDateTime) {
+                                            $isReserved = true;
+                                            break;
+                                        }
+                                    }
+                                    ?>
+                                    <div class="<?= $isReserved ? 'alliance_reserv_time close' : 'alliance_reserv_time' ?>">
+                                        <?= htmlspecialchars($time_slot) ?>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                         <div class="alliance_detail_cont">
@@ -68,11 +74,11 @@
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <div style="display: flex; align-items: center;">
-                                        <input id="quantity" type="number" value="" style="width:225px;"
+                                        <input id="quantity" type="number" value="0" style="width:225px;"
                                             placeholder="인원수" />
                                         <p style="margin-left:8px; font-size: 15px;">명</p>
-                                        <a style="margin-left:15px;"><img src="/static/images/ico_plus_30x30.png" /></a>
-                                        <a style="margin-left:12px;"><img src="/static/images/ico_minus_30x30.png" /></a>
+                                        <a style="margin-left:15px;" id="plus"><img src="/static/images/ico_plus_30x30.png" /></a>
+                                        <a style="margin-left:12px;" id="minus"><img src="/static/images/ico_minus_30x30.png" /></a>
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +151,7 @@
                 <footer class="footer">
 
                     <div class="btn_group">
-                        <button type="button" class="btn type01">예약하기</button>
+                        <button type="button" class="btn type01" onclick="allianceSave()">예약하기</button>
                     </div>
                 </footer>
             </div>
@@ -166,17 +172,42 @@
         }
 
         $(document).ready(function() {
+            // 탭 구현
             $('.tab').click(function() {
                 $('.tab').removeClass('on');
                 $(this).addClass('on');
                 
                 $('.alliance_tab_content').hide();
-                $($(this).data('target')).show();// 클릭된 탭에 해당하는 콘텐츠만 보여줌
+                $($(this).data('target')).show();
+            });
+
+            // 시간 선택 테두리
+            $('.alliance_reserv_list').on('click', '.alliance_reserv_time', function() {
+                $('.alliance_reserv_time').removeClass('on');
+                $(this).addClass('on');
+            });
+
+            // 인원 수 증가
+            $('#plus').click(function() {
+                let currentValue = parseInt($('#quantity').val(), 10);
+                $('#quantity').val(currentValue + 1);
+            });
+
+            // 인원 수 감소
+            $('#minus').click(function() {
+                let currentValue = parseInt($('#quantity').val(), 10);
+                if (currentValue > 1) {
+                    $('#quantity').val(currentValue - 1);
+                }
             });
         });
 
+        //달력
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
+            var lastSelectedDay;
+            var allianceIdx = <?= $idx ?>;
+
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 headerToolbar: {
@@ -185,12 +216,35 @@
                     right: 'next'
                 },
                 locale: "ko",
-                //showNonCurrentDates:false,
-                fixedWeekCount:false,
                 contentHeight:"auto",
-                handleWindowResize:true,
-                dateClick: function() {
-                    //alert('a day has been clicked!');
+                dateClick: function(info) {
+                    // 이전 테두리를 제거
+                    if (lastSelectedDay) {
+                        lastSelectedDay.classList.remove('selected-day');
+                        lastSelectedDay.style.border = '';
+                    }
+                    // 선택한 날자 데이터 표시
+                    info.dayEl.classList.add('selected-day');
+                    lastSelectedDay = info.dayEl;
+
+                    // 선택된 날짜 저장
+                    selectedDate = info.dateStr;
+                    console.log(selectedDate);
+
+                    // 예약 정보 업데이트
+                    $.ajax({
+                        url: '/ajax/alliance/reservation',
+                        type: 'GET',
+                        data: { date: selectedDate,
+                                idx: allianceIdx },
+                        success: function(response) {
+                            //console.log(response);
+                            updateReservationList(response);// 예약 시간 표현
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error fetching reservation data:", error);
+                        }
+                    });
                 },
                 dayCellContent: function (info) {
                     var number = document.createElement("a");
@@ -203,6 +257,23 @@
             });
             calendar.render();
         });
+
+        // 예약 시간 표현
+        function updateReservationList(reservations) {
+            var listHtml = '';
+            var time_slots = <?php echo json_encode($time_slots); ?>;
+
+            time_slots.forEach(function(time_slot) {
+                var isReserved = reservations.some(function(reservation) {
+                    return time_slot === reservation.reservation_time.substr(0, 5);
+                });
+
+                var classStr = isReserved ? 'alliance_reserv_time close' : 'alliance_reserv_time';
+                listHtml += `<div class="${classStr}">${time_slot}</div>`;
+            });
+
+            document.querySelector('.alliance_reserv_list').innerHTML = listHtml;
+        }
 
     </script>
 
