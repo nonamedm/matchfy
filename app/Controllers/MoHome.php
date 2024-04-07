@@ -22,6 +22,7 @@ use App\Models\MeetPointModel;
 use App\Models\AllianceModel;
 use App\Models\AllianceFileModel;
 use App\Models\AllianceMemberModel;
+use App\Models\AllianceReservationModel;
 use CodeIgniter\Session\Session;
 use Kint\Zval\Value;
 
@@ -1327,14 +1328,19 @@ class MoHome extends BaseController
     {
         $AllianceModel = new AllianceModel();
 
-        // $MeetingModel->orderBy('create_at', 'DESC');
-
-        // $currentTime = date('Y-m-d H:i:s');
+        $query = "SELECT a.*, b.*
+            FROM wh_alliance a
+            LEFT JOIN (
+                SELECT MIN(idx) AS idx, alliance_idx
+                FROM wh_alliance_files
+                GROUP BY alliance_idx
+            ) AS bf ON bf.alliance_idx = a.idx
+            LEFT JOIN wh_alliance_files b ON b.idx = bf.idx
+            WHERE a.delete_yn = 'N'
+            ORDER BY a.idx ASC";    
 
         $alliances = $AllianceModel
-            ->join('wh_alliance_files', 'wh_alliance_files.alliance_idx = wh_alliance.idx', 'left')
-            ->where('wh_alliance.delete_yn', 'N')
-            ->findAll();
+            ->query($query)->getResultArray();
 
         $data['alliances'] = $alliances;
 
@@ -1344,13 +1350,60 @@ class MoHome extends BaseController
     {
         return view('mo_alliance_region_popup');
     }
-    public function allianceDetail(): string
+    public function allianceDetail($idx): string
     {
-        return view('mo_alliance_detail');
+        $AllianceModel = new AllianceModel();
+
+        //이미지 정보
+        $alliance = $AllianceModel
+            ->join('wh_alliance_files', 'wh_alliance_files.alliance_idx = wh_alliance.idx', 'left')
+            ->where('wh_alliance.delete_yn', 'N')
+            ->where('wh_alliance.idx', $idx)
+            ->first();
+
+        if (isset($alliance['detailed_content'])) {
+            $lines = explode("<br>", $alliance['detailed_content']);
+            $lines = array_map(function($line) {
+                return "<div class='content-line-point'>· " . $line . "</div>";
+            }, $lines);
+            $alliance['detailed_content'] = implode("<br>", $lines);
+        }
+
+        $alliance['time_slots'] = $this->generateTimeSlots($alliance['business_hour_start'], $alliance['business_hour_end']);
+
+        //예약 정보 가져오기
+        $AllianceReservationModel = new AllianceReservationModel();
+
+        date_default_timezone_set('Asia/Seoul');
+        $currentDateTime = date('Y-m-d');
+        $reservations = $AllianceReservationModel
+            ->select('reservation_date, reservation_time')
+            ->where('wh_alliance_idx', $idx)
+            ->where('DATE(reservation_datetime)', $currentDateTime)
+            ->orderBy('reservation_datetime', 'ASC')
+            ->findAll();
+
+        $alliance['reservations'] = $reservations;
+
+        // echo '<pre>';
+        // print_r($currentDateTime);
+        // print_r($alliance);
+        // echo '</pre>';
+
+        return view('mo_alliance_detail', $alliance);
     }
-    public function allianceDetail2(): string
-    {
-        return view('mo_alliance_detail2');
+    //운영 시간 1시간 단위로 받음(마지막 타임 제외)
+    protected function generateTimeSlots($start, $end) {
+        $startTime = new \DateTime($start);
+        $endTime = new \DateTime($end);
+        $interval = new \DateInterval('PT1H');//1시간 단위
+        $timeSlots = [];
+    
+        for($time = $startTime; $time < $endTime; $time->add($interval)) {
+            $timeSlots[] = $time->format("H:i");
+        }
+    
+        return $timeSlots;
     }
     public function alliancePayment(): string
     {

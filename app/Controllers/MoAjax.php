@@ -17,6 +17,8 @@ use App\Models\AllianceMemberModel;
 use App\Models\AllianceModel;
 use App\Models\AllianceFileModel;
 use App\Config\Encryption;
+use App\Models\AllianceReservationModel;
+
 
 class MoAjax extends BaseController
 {
@@ -1340,31 +1342,82 @@ class MoAjax extends BaseController
 
         $AllianceModel = new AllianceModel();
 
-        // 카테고리 필터링
+        // 동적 WHERE 절 구성 시작
+        $whereConditions = "a.delete_yn = 'N'";
+        $bindParams = [];
+
+        // 카테고리 필터링 조건
         if (!empty($category)) {
-            $AllianceModel->where('alliance_type', $category);
+            $whereConditions .= " AND alliance_type = :category:";
+            $bindParams['category'] = $category;
         }
 
-        // 검색어 필터링
+        // 검색어 필터링 조건
         if (!empty($searchText)) {
-            $AllianceModel->like('company_name', $searchText);
+            $whereConditions .= " AND company_name LIKE :searchText:";
+            $bindParams['searchText'] = '%' . $searchText . '%';
         }
 
-        // 지역에 따른 정렬
+        // 지역에 따른 정렬 조건
         if (!empty($filterOption)) {
-            $AllianceModel->like('address', $filterOption);
+            $whereConditions .= " AND address LIKE :filterOption:";
+            $bindParams['filterOption'] = '%' . $filterOption . '%';
         }
 
-        $alliances = $AllianceModel
-            ->join('wh_alliance_files', 'wh_alliance_files.alliance_idx = wh_alliance.idx', 'left')
-            ->where('wh_alliance.delete_yn', 'N')
-            ->findAll();
+        $query = "SELECT a.*, b.*
+            FROM wh_alliance a
+            LEFT JOIN (
+                SELECT MIN(idx) AS idx, alliance_idx
+                FROM wh_alliance_files
+                GROUP BY alliance_idx
+            ) AS bf ON bf.alliance_idx = a.idx
+            LEFT JOIN wh_alliance_files b ON b.idx = bf.idx
+            WHERE " . $whereConditions . "
+            ORDER BY a.idx ASC";
 
+        $alliances = $AllianceModel->query($query, $bindParams)->getResultArray();
 
         // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
         return $this->response->setJSON($alliances);
     }
 
+    // public function allianceInfo()
+    // {
+    //     $idx = $this->request->getPost('idx');
+
+    //     $AllianceModel = new AllianceModel();
+
+    //     $alliances = $AllianceModel
+    //         ->join('wh_alliance_files', 'wh_alliance_files.alliance_idx = wh_alliance.idx', 'left')
+    //         ->where('wh_alliance.delete_yn', 'N')
+    //         ->like('idx', $idx)
+    //         ->findAll();
+
+
+    //     // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
+    //     return $this->response->setJSON($alliances);
+    // }
+    public function allianceReservation()
+    {
+        $date = $this->request->getGet('date');
+        $idx = $this->request->getGet('idx');
+
+        $AllianceReservationModel = new AllianceReservationModel();
+
+        // date_default_timezone_set('Asia/Seoul');
+        // $currentDateTime = date('Y-m-d');
+        $reservations = $AllianceReservationModel
+            ->select('reservation_date, reservation_time')
+            ->where('wh_alliance_idx', $idx)
+            ->where('reservation_date', $date)
+            //->where('DATE(reservation_datetime)', $currentDateTime)
+            ->where('delete_yn', 'N')
+            ->orderBy('reservation_datetime', 'ASC')
+            ->findAll();
+
+        // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
+        return $this->response->setJSON($reservations);
+    }
     public function chgExcept()
     {
         $word_file_path = APPPATH . 'Data/MemberCode.php';

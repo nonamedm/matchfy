@@ -224,6 +224,7 @@ header .menu_right.edit {
     justify-content: space-around;
     padding: 0;
     margin: 0;
+    cursor: pointer;
 }
 
 .tab_wrap ul li.on {
@@ -360,6 +361,7 @@ header .menu_right.edit {
     text-align: center;
     color: #999999;
     padding: 10px 0;
+    cursor: pointer;
 }
 .alliance_reserv_time.on {
     border: 1px solid #ff0267;
@@ -377,6 +379,42 @@ header .menu_right.edit {
     display: block;
 }
 
+.fc .fc-day-header {
+    background-color: #ccc; /* 회색 배경 */
+}
+
+.fc-day-mon a {
+    color: #7E7894;
+}
+.fc-day-tue a {
+    color: #7E7894;
+}
+.fc-day-wed a {
+    color: #7E7894;
+}
+.fc-day-thu a {
+    color: #7E7894;
+}
+.fc-day-fri a {
+    color: #7E7894;
+}
+/* 일요일 날짜 빨간색 */
+.fc-day-sun a {
+    color: #FF7274;
+    text-decoration: none;
+}
+/* 토요일 날짜 파란색 */
+.fc-day-sat a {
+    color: #81A0FF;
+    text-decoration: none;
+}
+.fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+    min-height: 0em;
+    position: relative; 
+}
+.selected-day {
+    box-shadow: inset 0 0 0 2px red;
+}
 .amount_pay .amount_pay_left.alliance h2 {
     margin: 15px 0 0 0;
 }

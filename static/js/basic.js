@@ -1313,10 +1313,6 @@ const allianceFiltering = (category, searchText, filterOption) => {
         postData.append('filterOption', filterOption);
     }
 
-    console.log(category )
-    console.log(searchText )
-    console.log(filterOption )
-
     $.ajax({
         url: '/ajax/allianceFilter',
         type: 'POST',
@@ -1325,7 +1321,7 @@ const allianceFiltering = (category, searchText, filterOption) => {
         contentType: false,
         async: false,
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             var listHtml = '';
             if (data.length > 0) {
                 data.forEach(function (alliance) {
@@ -1357,4 +1353,35 @@ const allianceFiltering = (category, searchText, filterOption) => {
             alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
         },
     });
+};
+
+const allianceSave = () => {
+
+    if ($('.alliance_reserv_time.on').length === 0) {
+        alert('회차를 선택해 주세요.');
+        return;
+    }
+    if ($('#quantity').val().trim() === '0') {
+        alert('인원을 선택해 주세요..');
+        $('#quantity').focus();
+        return;
+    }
+
+    // $.ajax({
+    //     url: '',
+    //     type: 'POST',
+    //     data: {
+    //         idx: allianceIdx
+    //     },
+    //     processData: false,
+    //     contentType: false,
+    //     async: false,
+    //     success: function (data) {
+
+    //     },
+    //     error: function (xhr, status, err) {
+    //         console.log(err);
+    //         alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+    //     },
+    // });
 };
