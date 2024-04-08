@@ -113,6 +113,7 @@ $routes->post('/ajax/calcMatchRate', 'MoAjax::calcMatchRate');
 $routes->post('/ajax/meetingSave', 'MoAjax::meetingSave');
 $routes->post('/ajax/meetingFilter', 'MoAjax::meetingFiltering');
 $routes->post('/ajax/myMeetingFilter', 'MoAjax::myMeetingFiltering');
+$routes->post('/ajax/AImatch', 'MoAjax::AImatch');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

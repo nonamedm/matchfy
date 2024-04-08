@@ -202,7 +202,7 @@ input[type='checkbox'] + label:hover {
 .content_no_img.login_main .ai_mat_card {
     display: flex;
     flex-direction: column;
-    margin-right: 20px;
+    margin-right: 45px;
 }
 .content_no_img.login_main .ai_mat_card img {
     width: 290px;
@@ -233,6 +233,9 @@ input[type='checkbox'] + label:hover {
     font-size: 14px;
     line-height: 17px;
     color: #999999;
+}
+.content_no_img.login_main .ai_mat_card .mbti.nodata {
+    border: none;
 }
 .content_no_img.login_main .ai_mat_card .mat_percent {
     font-family: 'Pretendard-Bold';
