@@ -1389,7 +1389,7 @@ class MoHome extends BaseController
         // print_r($currentDateTime);
         // print_r($alliance);
         // echo '</pre>';
-
+        $alliance['idx']=$idx;
         return view('mo_alliance_detail', $alliance);
     }
     //운영 시간 1시간 단위로 받음(마지막 타임 제외)
