@@ -1849,7 +1849,7 @@ class MoAjax extends BaseController
         $representative_contact = $this->request->getPost('alliance_ceonumber');
         $business_hour_start = $this->request->getPost('alliance_biztime1');
         $business_hour_end = $this->request->getPost('alliance_biztime2');
-        $detailed_content = $this->request->getPost('alliance_cont');
+        $detailed_content = $this->request->getPost('detailed_content');
 
         $alliance_photo = $this->request->getFile('alliance_photo');
         $alliance_photo_detail = $this->request->getFiles('alliance_photo_detail');
@@ -1919,7 +1919,8 @@ class MoAjax extends BaseController
         }
 
         if (!empty($alliance_photo_detail)) {
-                foreach ($alliance_photo_detail as $fileArray) {                    
+            
+                foreach ($alliance_photo_detail as $fileArray) {                  
                     foreach ($fileArray as $file) {
                         // 각 파일을 처리하는 코드
                         $upload = new Upload();
@@ -1933,10 +1934,7 @@ class MoAjax extends BaseController
                             'org_name'=>$fileData['org_name'], 
                             'ext'=>$fileData['ext'],  
                             'delete_yn'=>'n', 
-                            'board_type'=>'d', 
-                            'extra1', 
-                            'extra2', 
-                            'extra3'
+                            'board_type'=>'d'
                         ];
    
                         $fileDetailsInsert = $AllianceFileModel->insert($fileDetailsData);
@@ -1949,7 +1947,8 @@ class MoAjax extends BaseController
 
         if($allianceId){
             $msg =  "제휴 신청 후 관리자 승인으로 제휴점에 입점 됩니다.";
-            return view('mo_alliance_success',['msg' => $msg]);
+            // return view('mo_alliance_success',['msg' => $msg]);
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success']);
         }
         
     }

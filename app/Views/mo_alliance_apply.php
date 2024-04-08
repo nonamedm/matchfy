@@ -28,6 +28,8 @@
         <?php $title = "제휴 신청"; include 'header.php'; ?>
 
         <div class="sub_wrap">
+            <div class="loading"><img src="/static/images/loading.gif"/></div>
+            <div class="loading_bg"></div>
             <div class="content_wrap">
                 <form class="main_signin_form group_create" method="post" action="/ajax/alianceUp" enctype="multipart/form-data">
                     <legend></legend>
@@ -120,6 +122,27 @@
                                         <option value="1">01시</option>
                                         <option value="2">02시</option>
                                         <option value="3">03시</option>
+                                        <option value="4">04시</option>
+                                        <option value="5">05시</option>
+                                        <option value="6">06시</option>
+                                        <option value="7">07시</option>
+                                        <option value="8">08시</option>
+                                        <option value="9">09시</option>
+                                        <option value="10">10시</option>
+                                        <option value="11">11시</option>
+                                        <option value="12">12시</option>
+                                        <option value="13">13시</option>
+                                        <option value="14">14시</option>
+                                        <option value="15">15시</option>
+                                        <option value="16">16시</option>
+                                        <option value="17">17시</option>
+                                        <option value="18">18시</option>
+                                        <option value="19">19시</option>
+                                        <option value="20">20시</option>
+                                        <option value="21">21시</option>
+                                        <option value="22">22시</option>
+                                        <option value="23">23시</option>
+                                        <option value="24">24시</option>
                                     </select>
                                     <select id="alliance_biztime2" class="custom_select" name="alliance_biztime2" value="">
                                         <option value="">선택</option>
@@ -127,6 +150,27 @@
                                         <option value="1">01시</option>
                                         <option value="2">02시</option>
                                         <option value="3">03시</option>
+                                        <option value="4">04시</option>
+                                        <option value="5">05시</option>
+                                        <option value="6">06시</option>
+                                        <option value="7">07시</option>
+                                        <option value="8">08시</option>
+                                        <option value="9">09시</option>
+                                        <option value="10">10시</option>
+                                        <option value="11">11시</option>
+                                        <option value="12">12시</option>
+                                        <option value="13">13시</option>
+                                        <option value="14">14시</option>
+                                        <option value="15">15시</option>
+                                        <option value="16">16시</option>
+                                        <option value="17">17시</option>
+                                        <option value="18">18시</option>
+                                        <option value="19">19시</option>
+                                        <option value="20">20시</option>
+                                        <option value="21">21시</option>
+                                        <option value="22">22시</option>
+                                        <option value="23">23시</option>
+                                        <option value="24">24시</option>
                                     </select>
                                 </div>
                             </div>
@@ -155,16 +199,19 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="alliance_cont" class="signin_label">상세내용</label>
+                                <label for="detailed_content" class="signin_label">상세내용</label>
                                 <textarea id="alliance_cont" value="" name="detailed_content" placeholder="내용을 입력하세요"></textarea></br />
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="alliance_terms" class="signin_label">개인정보 수집 및 이용목적</label>
-                                <div class="alliance_terms_agree">
+                                <div class="alliance_terms_agree allance_btn">
                                     <p>개인정보 수집 동의</p>
                                     <img src="/static/images/select_arrow.png" />
+                                </div>
+                                <div class="allance_content" style="display:none;">
+                                    <p class=""><?= nl2br($privacy['content']); ?></p>
                                 </div>
                             </div>
                         </div>
@@ -174,9 +221,10 @@
                         </div>
                         <div class="btn_group multy">
                             <button type="button" class="btn type02">취소</button>
-                            <button type="button" class="btn type01" onclick="alianceUp()">등록</button>
+                            <button type="button" class="btn type01" onclick="allianceUp()">등록</button>
                         </div>
                     </div>
+
                     <input type="hidden" id="alliance_bizday" name="alliance_bizday">
                     <input type="hidden" name="gender" value="<?= $gender ?>" />
                     <input type="hidden" name="agree1" value="<?= $agree1 ?>" />
@@ -233,6 +281,7 @@
         $(document).ready(function() {
             fileDetailBtn();
             alliClosetBtn();
+            toggleMenu();
         });
         const searchAddress = () => { 
             if(event){
@@ -242,8 +291,19 @@
                 oncomplete: function (data) {
                     var addr = data.address;
                     $('#alliance_address1').val(addr);
+                },
+                // 테마 옵션 설정
+                theme: {
+                    bgColor: "#FFFFFF", //바탕 배경색
+                    searchBgColor: "#FFFFFF", //검색창 배경색
+                    contentBgColor: "#FFFFFF", //본문 배경색(검색결과,결과없음,첫화면,검색서제스트)
+                    pageBgColor: "#FFFFFF", //페이지 배경색
+                    textColor: "#333333", //기본 글자색
+                    queryTextColor: "#222222", //검색창 글자색
+                    postcodeTextColor: "#FF0267", //우편번호 글자색
+                    emphTextColor: "#FF0267", //강조 글자색
+                    outlineColor: "#F0F0F0", //테두리
                 }
-                
             }).open();
         }
 
@@ -355,6 +415,18 @@
             filesInput.files = dataTransfer.files;
         }
 
+        function toggleMenu() {
+            $('.allance_btn').click(function () {
+                var $answer = $(this).next('.allance_content');
+                if ($answer.is(':visible')) {
+                    $answer.slideUp();
+                    $(this).find('img').attr('src', '/static/images/select_arrow.png');
+                } else {
+                    $answer.slideDown();
+                    $(this).find('img').attr('src', '/static/images/select_arrow_up.png');
+                }
+            });
+        }
     </script>
 
 </body>

@@ -1447,7 +1447,7 @@ class MoHome extends BaseController
         
         if ($selected) {
             echo '<script>alert("이미 가입된 휴대폰 번호입니다");</script>';
-            return view('mo_aliance_pass', $postData);
+            return view('mo_alliance_pass', $postData);
         } else {
             return view('mo_aliance_agree',$postData);
         }
@@ -1456,7 +1456,23 @@ class MoHome extends BaseController
     public function allianceApply(): string
     {
         $postData = $this->request->getPost();
+
+        $BoardModel2 = new BoardModel();
+        $BoardModel2->setTableName('wh_board_privacy');
+        $postData['privacy'] = $BoardModel2->orderBy('created_at', 'DESC')->first();
+
         return view('mo_alliance_apply',$postData);
+    }
+    
+    public function allianceSuccess($num){
+        
+        if($num == 1){
+            $data['msg'] ="제휴 신청 후 관리자 승인으로 제휴점에 입점 됩니다.";
+        }else{
+            $data['msg'] ="제휴 신청이 제대로 되지 않았습니다.";
+        }
+        
+        return view('mo_alliance_success',$data);
     }
     
     /*환전 페이지 */

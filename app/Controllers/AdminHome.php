@@ -567,39 +567,60 @@ class AdminHome extends BaseController
         }
 
     }
-
+    
     public function allianceList()
     {
         $AllianceModel = new AllianceModel();
         $query = $AllianceModel
-                ->select(
-                    'idx',
-                    'alliance_ci',
-                    'member_ci',
-                    'alliance_type',
-                    'company_contact',
-                    'email',
-                    'company_name',
-                    'representative_name',
-                    'address',
-                    'detailed_address',
-                    'representative_contact',
-                    'business_day',
-                    'business_hour_start',
-                    'business_hour_end',
-                    'detailed_content',
-                    'alliance_application',
-                    'delete_yn'
-                )
-                ->whereIn('alliance_application', ['1', '2'])
-                ->orderBy('alliance_application', 'asc')
-                ->orderBy('created_at', 'desc')
-                ->get();
+        ->distinct()
+        ->select(
+            'idx,
+            alliance_ci,
+            member_ci
+            alliance_type,
+            company_contact,
+            email,
+            company_name,
+            representative_name,
+            address,
+            detailed_address,
+            representative_contact,
+            business_day,
+            business_hour_start,
+            business_hour_end,
+            detailed_content,
+            alliance_application,
+            delete_yn'
+            )
+            ->whereIn('alliance_application', ['1', '2'])
+            ->orderBy('alliance_application', 'asc')
+            ->orderBy('create_at', 'desc');
 
-            $results = $query->getResultArray();
-
-            $data['datas'] = $results;
+        $data['datas'] = $query->get()->getResultArray();
+        // $data['query'] = $query->getLastQuery(); 
         
         return view('admin/ad_alliance_list', $data);
+        
+    }
+    
+    public function allianceCheck(){
+        $level = $this->request->getPost('level');
+        $idx = $this->request->getPost('idx');
+    
+        $AllianceModel = new AllianceModel();
+    
+        $updated = $AllianceModel->update($idx, [
+            'alliance_application' => $level,
+            'updated_at'=>date('Y-m-d H:i:s')
+        ]);
+    
+        if ($updated) {
+            if($level =='2'){
+                return $this->response->setJSON(['success' => true, 'msg' => '제휴 승인 되었습니다.']);
+            }
+        } else {
+            return $this->response->setJSON(['error' => true, 'msg' => '제휴승인 실패 되었습니다.']);
+        }
+    
     }
 }

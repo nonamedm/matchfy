@@ -22,7 +22,7 @@
             ?>
         </div>
         <div class="ad_con">
-            <h2>환전신청 목록</h2> 
+            <h2>제휴신청 목록</h2> 
             <table>
                 <thead>
                     <tr class="tr">
@@ -36,7 +36,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- <?php foreach ($datas as $data): ?>
+                    <?php foreach ($datas as $data): ?>
                         <tr class="tr">
                             <td class="td"><span id="exc_idx"><?= $data['idx'] ?></span><input id="exc_mci" type="hidden" value="<?=$data['member_ci']?>"/></td>
                             <td class="td"><?= $data['representative_name'] ?></td>
@@ -49,14 +49,14 @@
                                 $exchange_level = $data['alliance_application'];
 
                                 if ($exchange_level == 1) {
-                                    echo "<button class='btn00 btn type02'  data-idx='".$data['idx']."' data-exchange-level='2'>승인</button>";
+                                    echo "<button class='alliancebtn btn00 btn type01'  data-idx='".$data['idx']."' data-alliance-level='2'>승인</button>";
                                 } elseif ($exchange_level == 2) {
-                                    echo "<span class='exc_text'>신청완료</span>";
+                                    echo "<button class='alliancebtn btn00 btn type02'>완료</button>";
                                 }
                                 ?>  
                             </td>
                         </tr>
-                    <?php endforeach; ?> -->
+                    <?php endforeach; ?>
                 </tbody>
             </table>  
         </div>

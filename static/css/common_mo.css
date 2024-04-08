@@ -3342,9 +3342,21 @@ input[type='number']::-webkit-inner-spin-button {
     width: 80px;
     height: 5%;
     display: none;
+    z-index: 99;
 }
 .loading img {
     width: 100%;
+}
+.loading_bg{
+    background: #000;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    left: 0;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.3;
+    display: none;
 }
 .meet_menu_right{
     display: none;
