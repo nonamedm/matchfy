@@ -136,7 +136,21 @@ const userLogin = () => {
         success: function (data) {
             console.log(data);
             if (data) {
-                moveToUrl('/');
+                $(document).ready(function () {
+                    $.ajax({
+                        url: '/ajax/calcMatchRate', // todo : 추후 로그인완료로 이동
+                        type: 'POST',
+                        async: false,
+                        success: function (data) {
+                            moveToUrl('/');
+                            console.log(data);
+                        },
+                        error: function (data, status, err) {
+                            console.log(err);
+                            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        },
+                    });
+                });
                 //location.href = '/index/login'
             } else {
                 alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
@@ -852,7 +866,6 @@ const submitFile = () => {
 };
 
 const meetingSave = (postData) => {
-
     if ($('#group_photo').val().trim() === '') {
         alert('대표사진을 선택해 주세요.');
         $('#group_photo').focus();

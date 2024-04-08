@@ -1262,7 +1262,7 @@ class MoHome extends BaseController
         }
         $data['feeds'] = $datas;
         $data['factors'] = $factorList;
-        $data['sql'] = $query;
+        
         return view('mo_match_feed', $data);
     }
     public function myfeedView(): string
