@@ -14,11 +14,13 @@ class AllianceReservationModel extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [
                                     'wh_alliance_idx', 
+                                    'member_ci',
                                     'alliance_name', 
                                     'customer_name', 
                                     'customer_contact',
                                     'number_of_people', 
                                     'reservation_amount', 
+                                    'reservation_datetime',
                                     'reservation_date', 
                                     'reservation_time', 
                                     'delete_yn', 

@@ -83,6 +83,7 @@ $routes->get('/mo/alliance/payment', 'MoHome::alliancePayment');
 $routes->get('/mo/alliance/reservePopup', 'MoHome::allianceReservePopup');
 $routes->post('/mo/alliance/apply', 'MoHome::allianceApply');
 $routes->get('/mo/alliance/success/(:num)', 'MoHome::allianceSuccess/$1');
+$routes->post('/mo/alliance/alliancePaymentChk', 'MoHome::alliancePaymentChk');
 $routes->get('/mo/alliance/exchange', 'MoHome::allianceExchange');
 $routes->post('/mo/alliance/exchangepointSubmit', 'MoHome::allianceExchangePoint');
 $routes->get('/mo_mypage_excharge_success', 'MoHome::exchangePoint_success');

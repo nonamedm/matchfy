@@ -1464,6 +1464,88 @@ class MoHome extends BaseController
         return view('mo_alliance_apply',$postData);
     }
     
+    /*제휴 결재 */
+    public function alliancePaymentChk(){
+        
+        $session = session();
+        $ci = $session->get('ci');
+
+        $allianceIdx = intval($this->request->getPost('allianceIdx'));
+        $alliancePayment = intval($this->request->getPost('alliancePayment'));
+        $numberPeople = intval($this->request->getPost('numberPeople'));
+        $reservationDate = $this->request->getPost('reservationDate');
+        $reservationTime = $this->request->getPost('reservationTime');
+
+        $mypoint = $this->mypageGetPoint();
+
+        if ($mypoint < $alliancePayment) { //보유포인트가 모자랄 경우
+            return $this->response->setJSON(['success' => true, 'msg' => '충전후 사용해주세요.']);
+        } else {
+            
+            //예약한 제휴지점 결재
+            $PointModel = new PointModel();
+
+            $AllianceModel = new AllianceModel();
+            $allianceStore = $AllianceModel->select('member_ci,alliance_ci,company_name')->where('idx', $allianceIdx)->first();
+
+            if ($allianceStore) {
+                $mydata = [
+                    'member_ci' => $ci,
+                    'my_point' => $mypoint - $alliancePayment,
+                    'use_point' => $alliancePayment,
+                    'point_details' => $allianceStore['company_name'] . "(제휴점 결재)",
+                    'create_at' => date('Y-m-d H:i:s'),
+                    'point_type' => 'U',
+                ];
+
+                $PointModel->insert($mydata);
+            } else {
+                return $this->response->setJSON(['success' => false, 'msg' => '제휴점이 존재하지 않습니다.']);
+            }
+
+            //예약추가
+            $MemberModel = new MemberModel();
+            $memberInfo = $MemberModel ->select('name,mobile_no')->where('ci', $ci)->first();
+
+            $allianceRevers = new AllianceReservationModel();
+            
+            $reversData = [
+                'wh_alliance_idx'=>$allianceIdx, 
+                'alliance_name'=>$allianceStore['company_name'], 
+                'customer_name'=>$memberInfo['name'], 
+                'member_ci'=>$ci,
+                'customer_contact'=>$memberInfo['mobile_no'],
+                'number_of_people'=>$numberPeople,
+                'reservation_amount'=>$alliancePayment, 
+                'reservation_datetime'=>$reservationDate.' '.$reservationTime,
+                'reservation_date'=>$reservationDate,
+                'reservation_time'=>$reservationTime, 
+                'reg_date'=>date('Y-m-d H:i:s'),
+            ];
+            $result = $allianceRevers->insert($reversData);
+
+            //제휴점으로 포인트 추가
+            $allianceAllPoint = $PointModel->select('my_point')->where('member_ci', $allianceStore['member_ci'])->orderBy('create_at', 'DESC')->first();
+
+            $allianceAddPointData = [
+                'member_ci' => $allianceStore['member_ci'],
+                'my_point' => $allianceAllPoint + $alliancePayment,
+                'use_point' => $alliancePayment,
+                'point_details' => $reservationDate.' '.$reservationTime . " ( 예약자 : ".$memberInfo['name'] . ")",
+                'create_at' => date('Y-m-d H:i:s'),
+                'point_type' => 'A',
+            ];
+
+            $PointModel->insert($allianceAddPointData);
+
+            if ($result) {
+                return $this->response->setJSON(['success' => true, 'msg' => $allianceStore->company_name .'예약 되었습니다.']);
+            } else {
+                return $this->response->setJSON(['success' => false, 'msg' => '예약이 실패 하였습니다. 다시 확인 해주세요.']);
+            }
+        }
+    }
+
     public function allianceSuccess($num){
         
         if($num == 1){

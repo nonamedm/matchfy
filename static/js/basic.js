@@ -1325,7 +1325,7 @@ const allianceUp = () => {
                     $('.loading').show();
                     $('.loading_bg').show();
                     if (data.status === 'success') {
-                        
+                        // moveToUrl
                         window.location.href ="/mo/alliance/success/1";
                     } else if (data.status === 'error') {
                         window.location.href ="/mo/alliance/fail/0";
@@ -1434,4 +1434,57 @@ const allianceSave = () => {
     //         alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
     //     },
     // });
+};
+const alliancePaymentChk = () => {
+    $('.loading').show();
+    $('.loading_bg').show();
+    
+    var allianceIdxValue = 139;
+    var alliancePaymentValue = 40000;
+    var numberPeopleValue = 5;
+    var reservationDateValue ='2024-04-07';
+    var reservationTimeValue='17:00';
+
+    var postData = {
+        allianceIdx:allianceIdxValue,
+        alliancePayment:alliancePaymentValue,
+        numberPeople:numberPeopleValue,
+        reservationDate:reservationDateValue,
+        reservationTime:reservationTimeValue,
+    };
+    setTimeout(function(){
+        $.ajax({
+            url: '/mo/alliance/alliancePaymentChk', // todo : 추후 본인인증 연결
+            type: 'POST',
+            data: {
+                allianceIdx:139,
+                alliancePayment:4000,
+                numberPeople:5,
+                reservationDate:'2024-04-07',
+                reservationTime:'17:00',
+            },
+            success: function (data) {
+                console.log(data);
+                $('.loading').show();
+                $('.loading_bg').show();
+                if (data.status === 'success') {
+                    window.location.href ="/mo/alliance/success/1";
+                } else if (data.status === 'error') {
+                    window.location.href ="/mo/alliance/fail/0";
+                } else {
+                    alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                }
+                $('.loading').hide();
+                $('.loading_bg').hide();
+                return false;
+            },
+            error: function (data, status, err) {
+                console.log(err);
+                $('.loading').hide();
+                $('.loading_bg').hide();
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            },
+        });
+    }, 2000);
+
 };
