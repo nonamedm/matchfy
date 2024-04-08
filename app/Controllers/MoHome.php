@@ -1328,7 +1328,7 @@ class MoHome extends BaseController
     {
         $AllianceModel = new AllianceModel();
 
-        $query = "SELECT a.*, b.*
+        $query = "SELECT a.idx, a.company_name, a.address, a.alliance_type, b.file_path, b.file_name
             FROM wh_alliance a
             LEFT JOIN (
                 SELECT MIN(idx) AS idx, alliance_idx
@@ -1343,6 +1343,10 @@ class MoHome extends BaseController
             ->query($query)->getResultArray();
 
         $data['alliances'] = $alliances;
+
+        // echo '<pre>';
+        // print_r($alliances);
+        // echo '</pre>';
 
         return view('mo_alliance_list', $data);
     }
@@ -1385,11 +1389,11 @@ class MoHome extends BaseController
 
         $alliance['reservations'] = $reservations;
 
-        // echo '<pre>';
-        // print_r($currentDateTime);
-        // print_r($alliance);
-        // echo '</pre>';
-        $alliance['idx']=$idx;
+        echo '<pre>';
+        print_r($currentDateTime);
+        print_r($alliance);
+        echo '</pre>';
+
         return view('mo_alliance_detail', $alliance);
     }
     //운영 시간 1시간 단위로 받음(마지막 타임 제외)
@@ -1405,9 +1409,53 @@ class MoHome extends BaseController
     
         return $timeSlots;
     }
-    public function alliancePayment(): string
+    public function alliancePayment($idx): string
     {
-        return view('mo_alliance_payment');
+
+        
+        $session = session();
+        $ci = $session->get('ci');
+
+        $points = $this->mypageGetPoint();
+
+        $AllianceModel = new AllianceModel();
+        $alliance = $AllianceModel
+            ->select('alliance_pay')
+            ->where('delete_yn', 'N')
+            ->where('idx', $idx)
+            ->first();
+
+        $MemberModel = new MemberModel();
+        $user = $MemberModel
+            ->select('name, mobile_no')
+            ->where('ci', $ci)
+            ->first();
+
+        if (!empty($user['mobile_no'])) {
+            $mobileNo = $user['mobile_no'];
+            $formattedMobileNo = substr($mobileNo, 0, 3) . '-' . substr($mobileNo, 3, 4) . '-' . substr($mobileNo, 7);
+            $user['mobile_no'] = $formattedMobileNo;
+        }
+
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_privacy');
+        $privacy = $BoardModel
+                ->select('title, content')
+                ->orderBy('created_at', 'DESC')
+                ->first();
+
+        $data = [
+            'alliance' => $alliance,
+            'points' => $points,
+            'user' => $user,
+            'privacys' => $privacy
+        ];
+
+        echo '<pre>';
+        print_r($data);
+        echo '</pre>';
+
+        return view('mo_alliance_payment', $data);
     }
     public function allianceSchedule(): string
     {

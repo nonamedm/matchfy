@@ -1364,7 +1364,7 @@ class MoAjax extends BaseController
             $bindParams['filterOption'] = '%' . $filterOption . '%';
         }
 
-        $query = "SELECT a.*, b.*
+        $query = "SELECT a.idx, a.company_name, a.address, a.alliance_type, b.alliance_idx, b.file_path, b.file_name
             FROM wh_alliance a
             LEFT JOIN (
                 SELECT MIN(idx) AS idx, alliance_idx
@@ -1373,7 +1373,7 @@ class MoAjax extends BaseController
             ) AS bf ON bf.alliance_idx = a.idx
             LEFT JOIN wh_alliance_files b ON b.idx = bf.idx
             WHERE " . $whereConditions . "
-            ORDER BY a.idx ASC";
+            ORDER BY a.idx ASC";   
 
         $alliances = $AllianceModel->query($query, $bindParams)->getResultArray();
 

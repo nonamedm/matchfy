@@ -1379,7 +1379,7 @@ const allianceFiltering = (category, searchText, filterOption) => {
                         ? '/' + alliance.file_path + alliance.file_name
                         : '/static/images/group_list_1.png';
                     listHtml += `
-                        <a href="/mo/mypage/group/detail/${alliance.idx}">
+                        <a href="/mo/alliance/detail/${alliance.idx}">
                             <div class="group_list_item">
                                 <img src="${imagePath}"/>
 
