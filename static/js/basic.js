@@ -1254,6 +1254,12 @@ const allianceUp = () => {
         $('#alliance_biztime2').focus();
         $('.loading').hide();
         $('.loading_bg').hide();
+    } else if ($('#alliance_pay').val().trim() === '') {
+        alert('인당 예약 금액을 정해주세요');
+        tempValidation = false;
+        $('#alliance_pay').focus();
+        $('.loading').hide();
+        $('.loading_bg').hide();
     } else if($('#alliance_photo').val().trim() === ''){
         alert('메인 사진을 등록 해주세요.');
         tempValidation = false;
@@ -1292,6 +1298,7 @@ const allianceUp = () => {
         $('#alliance_bizday').val() !== '' &&
         $('#alliance_biztime1').val() !== '' &&
         $('#alliance_biztime2').val() !== '' &&
+        $('#alliance_pay').val() !== '' &&
         $('#alliance_photo').val() !== '' &&
         filesArray.length !== 0 &&
         $('#alliance_cont').val() !== ''&&
@@ -1325,10 +1332,14 @@ const allianceUp = () => {
                     } else {
                         alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                     }
+                    $('.loading').hide();
+                    $('.loading_bg').hide();
                     return false;
                 },
                 error: function (data, status, err) {
                     console.log(err);
+                    $('.loading').hide();
+                    $('.loading_bg').hide();
                     alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });

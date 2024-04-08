@@ -1846,6 +1846,7 @@ class MoAjax extends BaseController
         $address = $this->request->getPost('alliance_address1');
         $detailed_address = $this->request->getPost('alliance_address2');
         $business_day = $this->request->getPost('alliance_bizday');
+        $alliance_pay = $this->request->getPost('alliance_pay');
         $representative_contact = $this->request->getPost('alliance_ceonumber');
         $business_hour_start = $this->request->getPost('alliance_biztime1');
         $business_hour_end = $this->request->getPost('alliance_biztime2');
@@ -1888,6 +1889,7 @@ class MoAjax extends BaseController
             'business_hour_start'=>$business_hour_start.":00:00",
             'business_hour_end'=>$business_hour_end.":00:00",
             'detailed_content'=>$detailed_content,
+            'alliance_pay'=>$alliance_pay,
             'alliance_application'=>'1',
             'delete_yn'=>'n',
             'create_at'=>date('Y-m-d H:i:s'),

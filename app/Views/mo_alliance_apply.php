@@ -177,6 +177,14 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
+                                <label for="alliance_pay" class="signin_label">인당 예약금 설정</label>
+                                <div>
+                                    <input id="alliance_pay" type="number" name="alliance_pay" value="" placeholder="ex)10,000">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form_row signin_form">
+                            <div class="signin_form_div">
                                 <h4 class="profile_photo_label">메인사진</h4>
                                 <div class="profile_photo_div">
                                     <label for="alliance_photo"

@@ -459,6 +459,7 @@ td {
     font-size: 15px;
     line-height: 18px;
     color: #999999;
+    cursor: pointer;
 }
 .biz_day_box.on {
     border: 1px solid #ff0267;

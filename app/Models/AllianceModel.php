@@ -28,6 +28,7 @@ class AllianceModel extends Model
                                     'business_hour_end',
                                     'detailed_content',
                                     'alliance_application',
+                                    'alliance_pay',
                                     'delete_yn',
                                     'create_at',
                                     'update_at',
