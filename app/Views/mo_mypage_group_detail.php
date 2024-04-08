@@ -34,7 +34,7 @@
                 </div>
                 <div class="group_detail_info">
                     <div class="group_detail_header">
-                        <div class="group_detail_type"><?=$category?><?php $postData ?></div>
+                        <div class="group_detail_type">data<?php $postData ?></div>
                         <p>매칭률 <span><?=$matching_rate?>%</span></p>
                     </div>
                     <div class="group_detail_title">

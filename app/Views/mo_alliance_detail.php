@@ -89,7 +89,7 @@
                                     <h2>총 결제금액</h2>
                                 </div>
                                 <div class="amount_pay_right">
-                                    <h2>40,000 원</h2>
+                                    <h2><?= number_format($alliance_pay, 0) ?> 원</h2>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +151,7 @@
                 <footer class="footer">
 
                     <div class="btn_group">
-                        <button type="button" class="btn type01" onclick="allianceSave()">예약하기</button>
+                        <button type="button" class="btn type01" id="alliance_reserve">예약하기</button>
                     </div>
                 </footer>
             </div>
@@ -199,6 +199,29 @@
                 if (currentValue > 1) {
                     $('#quantity').val(currentValue - 1);
                 }
+            });
+
+            //validation check
+            $('#alliance_reserve').click(function() {
+                // 회차 선택 확인
+                if ($('.alliance_reserv_time.on').length === 0) {
+                    alert('회차를 선택해 주세요.');
+                    return false;
+                }
+                // 인원 선택 확인
+                var quantity = parseInt($('#quantity').val(), 10);
+                if (isNaN(quantity) || quantity < 1) {
+                    alert('인원을 선택해 주세요.');
+                    return false;
+                }
+
+                // 구매 조건 동의 확인
+                if (!$('#totAgree').is(':checked')) {
+                    alert('구매 조건 확인 및 결제 진행에 동의해 주세요.');
+                    return false;
+                }
+
+                moveToUrl('/mo/alliance/payment/<?= $idx ?>');
             });
         });
 
