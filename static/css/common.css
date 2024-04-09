@@ -140,7 +140,7 @@ input[type='checkbox'] + label:hover {
     text-underline-offset: 10px;
 }
 .content_no_img.login_main .login_main_list {
-    display: flex;
+    display: block;
     overflow-x: auto;
 }
 

@@ -245,7 +245,6 @@
                 AImatch(button.value);
             }
             const AImatch = (v) => {
-                $(".AImatch_list").html("");
                 $.ajax({
                     url: '/ajax/AImatch',
                     type: 'POST',
@@ -255,28 +254,34 @@
                     async: false,
                     success: function(data) {
                         console.log(data);
-                        data.result.forEach(function(item) {
-                            var html = '<div class="ai_mat_card">';
-                            html += `<a onclick="moveToUrl('/mo/viewProfile/` + item.nickname + `')">`;
-                            if (item.file_path !== "" && item.file_path !== null) {
-                                html += '<img src="/' + item.file_path + item.file_name + '" />';
-                            } else {
-                                html += '<img src="/static/images/profile_noimg.png" />';
-                            }
-                            html += '<h2>' + item.birthyear + ', ' + item.city + '</h2>';
-                            html += '<div class="profile_row">';
-                            if (item.mbti !== "" && item.mbti !== null) {
-                                html += '<p class="mbti">' + item.mbti + '</p>';
-                            } else {
-                                html += '<p class="mbti nodata"></p>';
-                            }
-                            html += '<p class="mat_percent">' + item.match_rate + '%</p>';
-                            html += '</div>';
-                            html += '</a>';
-                            html += '</div>';
+                        if (data.message === 'success') {
+                            $(".AImatch_list").html("");
+                            data.result.forEach(function(item) {
+                                var html = '<div class="ai_mat_card">';
+                                html += `<a onclick="moveToUrl('/mo/viewProfile/` + item.nickname + `')">`;
+                                if (item.file_path !== "" && item.file_path !== null) {
+                                    html += '<img src="/' + item.file_path + item.file_name + '" />';
+                                } else {
+                                    html += '<img src="/static/images/profile_noimg.png" />';
+                                }
+                                html += '<h2>' + item.birthyear + ', ' + item.city + '</h2>';
+                                html += '<div class="profile_row">';
+                                if (item.mbti !== "" && item.mbti !== null) {
+                                    html += '<p class="mbti">' + item.mbti + '</p>';
+                                } else {
+                                    html += '<p class="mbti nodata"></p>';
+                                }
+                                html += '<p class="mat_percent">' + item.match_rate + '%</p>';
+                                html += '</div>';
+                                html += '</a>';
+                                html += '</div>';
 
-                            $(".AImatch_list").append(html);
-                        });
+                                $(".AImatch_list").append(html);
+                            });
+                        } else {
+                            $(".AImatch_list").css("text-align", "center");
+                            $(".AImatch_list").removeClass("login_main_list");
+                        }
                     },
                     error: function(data, status, err) {
                         console.log(err);
@@ -294,6 +299,7 @@
                         console.log(data);
                         data.result.forEach(function(item) {
                             $(".category" + item.category).html("");
+                            $(".category" + item.category).css("display", "flex");
                         });
                         data.result.forEach(function(item) {
                             var html = '<div class="ai_group_card">';
@@ -453,8 +459,14 @@
                 </div>
             </div>
             <div class="login_main_list AImatch_list">
-
-
+                <div class="ai_mat_card" style="padding-top: 50px;">
+                    <h2>파트너 정보를 설정해 주세요</h2>
+                    <a onclick="moveToUrl('/mo/partner')">
+                        <p class="">설정하러 가기</p>
+                    </a>
+                    <div class="profile_row">
+                    </div>
+                </div>
             </div>
         </div>
         <div class="content_no_img login_main">
@@ -475,9 +487,14 @@
                     </div>
                 </div>
                 <div class="login_main_list category01">
-                    <div class="ai_group_card">
-                        <div class="schedule_row">
-                            <p>등록된 모임이 없습니다. 모임을 생성해 보세요.</p>
+                    <div class="ai_group_card" style="text-align: center;">
+                        <div class="group_location" style="margin: 0 auto; padding-top: 50px;">
+                            등록된 모임이 없습니다.<br /> 모임을 생성해 보세요
+                        </div>
+                        <div class="schedule_row" style="display: block;">
+                            <a onclick="moveToUrl('/mo/mypage/group/list')">
+                                <p>생성하러 가기</p>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -496,9 +513,14 @@
                     </div>
                 </div>
                 <div class="login_main_list category02">
-                    <div class="ai_group_card">
-                        <div class="schedule_row">
-                            <p>등록된 모임이 없습니다. 모임을 생성해 보세요.</p>
+                    <div class="ai_group_card" style="text-align: center;">
+                        <div class="group_location" style="margin: 0 auto; padding-top: 50px;">
+                            등록된 모임이 없습니다.<br /> 모임을 생성해 보세요
+                        </div>
+                        <div class="schedule_row" style="display: block;">
+                            <a onclick="moveToUrl('/mo/mypage/group/list')">
+                                <p>생성하러 가기</p>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -522,9 +544,14 @@
                     </div>
                 </div>
                 <div class="login_main_list category03">
-                    <div class="ai_group_card">
-                        <div class="schedule_row">
-                            <p>등록된 모임이 없습니다. 모임을 생성해 보세요.</p>
+                    <div class="ai_group_card" style="text-align: center;">
+                        <div class="group_location" style="margin: 0 auto; padding-top: 50px;">
+                            등록된 모임이 없습니다.<br /> 모임을 생성해 보세요
+                        </div>
+                        <div class="schedule_row" style="display: block;">
+                            <a onclick="moveToUrl('/mo/mypage/group/list')">
+                                <p>생성하러 가기</p>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -543,9 +570,14 @@
                     </div>
                 </div>
                 <div class="login_main_list category04">
-                    <div class="ai_group_card">
-                        <div class="schedule_row">
-                            <p>등록된 모임이 없습니다. 모임을 생성해 보세요.</p>
+                    <div class="ai_group_card" style="text-align: center;">
+                        <div class="group_location" style="margin: 0 auto; padding-top: 50px;">
+                            등록된 모임이 없습니다.<br /> 모임을 생성해 보세요
+                        </div>
+                        <div class="schedule_row" style="display: block;">
+                            <a onclick="moveToUrl('/mo/mypage/group/list')">
+                                <p>생성하러 가기</p>
+                            </a>
                         </div>
                     </div>
                 </div>

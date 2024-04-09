@@ -33,6 +33,7 @@ class MoAjax extends BaseController
         if ($filter !== "9") {
             $query .= " AND mb.gender = '" . $filter . "'";
         }
+        $query .= " AND mr.match_score > '0'";
         $query .= " ORDER BY mr.match_rate desc";
 
         $MemberModel = new MemberModel();
