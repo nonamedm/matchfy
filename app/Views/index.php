@@ -256,6 +256,7 @@
                         console.log(data);
                         if (data.message === 'success') {
                             $(".AImatch_list").html("");
+                            $(".AImatch_list").css("display", "flex");
                             data.result.forEach(function(item) {
                                 var html = '<div class="ai_mat_card">';
                                 html += `<a onclick="moveToUrl('/mo/viewProfile/` + item.nickname + `')">`;

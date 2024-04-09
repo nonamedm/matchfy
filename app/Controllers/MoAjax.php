@@ -34,7 +34,7 @@ class MoAjax extends BaseController
             $query .= " AND mb.gender = '" . $filter . "'";
         }
         $query .= " AND mr.match_score > '0'";
-        $query .= " ORDER BY mr.match_rate desc";
+        $query .= " ORDER BY CONVERT(mr.match_rate, SIGNED) DESC";
 
         $MemberModel = new MemberModel();
         $result = $MemberModel
@@ -1504,7 +1504,7 @@ class MoAjax extends BaseController
         }
         if (!empty($myPartner['partner_gender']))  // 성별 거르기
         {
-            $query .= " OR (gender = '" . $myPartner['partner_gender'] . ")";
+            $query .= " OR (gender = '" . $myPartner['partner_gender'] . "')";
         }
         $datas = $MemberModel
             ->query($query)->getResultArray();
