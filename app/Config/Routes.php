@@ -114,6 +114,7 @@ $routes->post('/ajax/meetingSave', 'MoAjax::meetingSave');
 $routes->post('/ajax/meetingFilter', 'MoAjax::meetingFiltering');
 $routes->post('/ajax/myMeetingFilter', 'MoAjax::myMeetingFiltering');
 $routes->post('/ajax/AImatch', 'MoAjax::AImatch');
+$routes->post('/ajax/mainMeetingList', 'MoAjax::mainMeetingList');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

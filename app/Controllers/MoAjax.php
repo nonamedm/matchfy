@@ -56,6 +56,51 @@ class MoAjax extends BaseController
         }
     }
 
+    public function mainMeetingList()
+    {
+        $MeetingModel = new MeetingModel();
+        //$MeetingFileModel = new MeetingFileModel();
+        // $data['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
+
+        $MeetingModel->orderBy('create_at', 'DESC');
+
+        $currentTime = date('Y-m-d H:i:s');
+
+        $meetings = $MeetingModel
+            ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
+            ->where('wh_meetings.meeting_start_date >=', $currentTime)
+            ->where('wh_meetings.delete_yn', 'N')
+            ->findAll();
+
+        $days = ['일', '월', '화', '수', '목', '금', '토'];
+
+        // 참여 인원 모델
+        $MeetingMembersModel = new MeetingMembersModel();
+
+        // 각 모임에 대한 참여 인원 수 계산
+        foreach ($meetings as &$meeting) { //&로 참조 필요
+            // 모임 시작 시간 포맷팅
+            $meetingDateTimestamp = strtotime($meeting['meeting_start_date']);
+            $meetingDay = date("w", $meetingDateTimestamp); //0~6
+            $dayName = $days[$meetingDay]; //요일
+            $meetingDateTime = date("Y.m.d ", $meetingDateTimestamp) . ' (' . $dayName . ') ' . date(" H:i", $meetingDateTimestamp);
+            $meeting['meetingDateTime'] = $meetingDateTime;
+
+            $memCount = $MeetingMembersModel
+                ->where('meeting_idx', $meeting['idx'])
+                ->where('delete_yn', 'N')
+                ->countAllResults();
+            $meeting['count'] = $memCount;
+        }
+        unset($meeting); //참조 해제
+
+        if ($meetings) {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => $meetings]);
+        } else {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
+        }
+    }
+
     public function delCmt()
     {
 

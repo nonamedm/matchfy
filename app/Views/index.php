@@ -247,7 +247,7 @@
             const AImatch = (v) => {
                 $(".AImatch_list").html("");
                 $.ajax({
-                    url: '/ajax/AImatch', // todo : 추후 본인인증 연결
+                    url: '/ajax/AImatch',
                     type: 'POST',
                     data: {
                         "value": v
@@ -284,8 +284,160 @@
                     },
                 });
             }
+
+            const meetingList = () => {
+                $.ajax({
+                    url: '/ajax/mainMeetingList',
+                    type: 'POST',
+                    async: false,
+                    success: function(data) {
+                        console.log(data);
+                        data.result.forEach(function(item) {
+                            $(".category" + item.category).html("");
+                        });
+                        data.result.forEach(function(item) {
+                            var html = '<div class="ai_group_card">';
+                            if (item.file_path !== "" && item.file_path !== null) {
+                                html += '<img src="/' + item.file_path + item.file_name + '" />';
+                            } else {
+                                html += '<img src="/static/images/group_main_01.png" />';
+                            }
+                            html += '<div class="group_particpnt">';
+                            html += '<span>신청 ' + item.count + '</span>/' + item.number_of_people + '명 </div>';
+                            html += '<div class = "group_location" >';
+                            html += ' ' + item.title + ' </div>';
+                            html += '<div class = "group_location" >';
+                            html += '<img src = "/static/images/ico_location_16x16.png" >';
+                            html += ' ' + item.meeting_place + ' </div>';
+                            html += '<div class = "schedule_row" >';
+                            html += '<p> ' + item.membership_fee.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' 원 <span> ' + item.meetingDateTime + ' </span></p>';
+                            html += '</div></div>';
+                            $(".category" + item.category).append(html);
+                        });
+                    },
+                    error: function(data, status, err) {
+                        console.log(err);
+                        alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    },
+                });
+            }
+
+            const clickLeft = (val) => {
+                var container = $('.' + val);
+                var containerWidth = container.outerWidth();
+                var scrollLeft = container.scrollLeft();
+                var maxScroll = container[0].scrollWidth - containerWidth;
+                if (scrollLeft !== 0) {
+                    container.animate({
+                        scrollLeft: '-=250px'
+                    }, 500);
+                }
+            }
+
+
+            const clickRight = (val) => {
+                var container = $('.' + val);
+                var containerWidth = container.outerWidth();
+                var scrollLeft = container.scrollLeft();
+                var maxScroll = container[0].scrollWidth - containerWidth;
+                if (scrollLeft < maxScroll) {
+                    container.animate({
+                        scrollLeft: '+=250px'
+                    }, 500);
+                }
+            }
+
+            const scrollAction = () => {
+                $('.category01').scroll(function() {
+                    var scrollLeft = $(this).scrollLeft();
+                    var container = $('.category01');
+                    var containerWidth = container.outerWidth();
+                    var maxScroll = container[0].scrollWidth - containerWidth;
+                    if ((scrollLeft - 5) <= '0') {
+                        $(".category01_left").addClass('disabled');
+                    } else {
+                        $(".category01_left").removeClass('disabled');
+                    }
+                    if ((scrollLeft + 5) >= maxScroll) {
+                        $(".category01_right").addClass('disabled');
+                    } else {
+                        $(".category01_right").removeClass('disabled');
+                    }
+
+                    if (scrollLeft === '0' && (scrollLeft + 5) >= maxScroll) {
+                        $(".category01_left").addClass('disabled');
+                        $(".category01_right").addClass('disabled');
+                    }
+                });
+                $('.category02').scroll(function() {
+                    var scrollLeft = $(this).scrollLeft();
+                    var container = $('.category02');
+                    var containerWidth = container.outerWidth();
+                    var maxScroll = container[0].scrollWidth - containerWidth;
+                    if ((scrollLeft - 5) <= '0') {
+                        $(".category02_left").addClass('disabled');
+                    } else {
+                        $(".category02_left").removeClass('disabled');
+                    }
+                    if ((scrollLeft + 5) >= maxScroll) {
+                        $(".category02_right").addClass('disabled');
+                    } else {
+                        $(".category02_right").removeClass('disabled');
+                    }
+
+                    if (scrollLeft === '0' && (scrollLeft + 5) >= maxScroll) {
+                        $(".category02_left").addClass('disabled');
+                        $(".category02_right").addClass('disabled');
+                    }
+                });
+                $('.category03').scroll(function() {
+                    var scrollLeft = $(this).scrollLeft();
+                    var container = $('.category03');
+                    var containerWidth = container.outerWidth();
+                    var maxScroll = container[0].scrollWidth - containerWidth;
+                    if ((scrollLeft - 5) <= '0') {
+                        $(".category03_left").addClass('disabled');
+                    } else {
+                        $(".category03_left").removeClass('disabled');
+                    }
+                    if ((scrollLeft + 5) >= maxScroll) {
+                        $(".category03_right").addClass('disabled');
+                    } else {
+                        $(".category03_right").removeClass('disabled');
+                    }
+
+                    if (scrollLeft === '0' && (scrollLeft + 5) >= maxScroll) {
+                        $(".category03_left").addClass('disabled');
+                        $(".category03_right").addClass('disabled');
+                    }
+                });
+                $('.category04').scroll(function() {
+                    var scrollLeft = $(this).scrollLeft();
+                    var container = $('.category04');
+                    var containerWidth = container.outerWidth();
+                    var maxScroll = container[0].scrollWidth - containerWidth;
+                    if ((scrollLeft - 5) <= '0') {
+                        $(".category04_left").addClass('disabled');
+                    } else {
+                        $(".category04_left").removeClass('disabled');
+                    }
+                    if ((scrollLeft + 5) >= maxScroll) {
+                        $(".category04_right").addClass('disabled');
+                    } else {
+                        $(".category04_right").removeClass('disabled');
+                    }
+
+                    if (scrollLeft === '0' && (scrollLeft + 5) >= maxScroll) {
+                        $(".category04_left").addClass('disabled');
+                        $(".category04_right").addClass('disabled');
+                    }
+                });
+            }
             $(function() {
                 AImatch('9');
+                meetingList();
+                scrollAction();
+
             })
         </script>
         <div class="content_banner_top">
@@ -316,66 +468,18 @@
                         식사/술/차
                     </h2>
                     <div class="main_title_btn">
-                        <button class="total">전체보기</button>
-                        <button class="disabled">
+                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')">전체보기</button>
+                        <button class="category01_left disabled" onclick="clickLeft('category01')">
                             < </button>
-                                <button>></button>
+                                <button class="category01_right" onclick="clickRight('category01')">></button>
                     </div>
                 </div>
-                <div class="login_main_list">
+                <div class="login_main_list category01">
                     <div class="ai_group_card">
-                        <img src="/static/images/group_main_01.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png">
-                            서울/강남구
-                        </div>
                         <div class="schedule_row">
-                            <p>20,000원 <span>2023. 01. 24(수) 19:30</span></p>
+                            <p>등록된 모임이 없습니다. 모임을 생성해 보세요.</p>
                         </div>
                     </div>
-                    <div class="ai_group_card">
-                        <img src="/static/images/group_main_02.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png">
-                            서울/강남구
-                        </div>
-                        <div class="schedule_row">
-                            <p>20,000원 <span>2023. 01. 24(수) 19:30</span></p>
-                        </div>
-                    </div>
-                    <div class="ai_group_card">
-                        <img src="/static/images/group_main_03.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png">
-                            서울/강남구
-                        </div>
-                        <div class="schedule_row">
-                            <p>20,000원 <span>2023. 01. 24(수) 19:30</span></p>
-                        </div>
-                    </div>
-                    <div class="ai_group_card">
-                        <img src="/static/images/group_main_04.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png">
-                            서울/강남구
-                        </div>
-                        <div class="schedule_row">
-                            <p>20,000원 <span>2023. 01. 24(수) 19:30</span></p>
-                        </div>
-                    </div>
-
                 </div>
             </div>
             <div class="group_row">
@@ -385,66 +489,18 @@
                         여행
                     </h2>
                     <div class="main_title_btn">
-                        <button class="total">전체보기</button>
-                        <button class="disabled">
+                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')">전체보기</button>
+                        <button class="category02_left disabled" onclick="clickLeft('category02')">
                             < </button>
-                                <button>></button>
+                                <button class="category02_right" onclick="clickRight('category02')">></button>
                     </div>
                 </div>
-                <div class="login_main_list">
+                <div class="login_main_list category02">
                     <div class="ai_group_card">
-                        <img src="/static/images/group_main_05.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png">
-                            서울/강남구
-                        </div>
                         <div class="schedule_row">
-                            <p>20,000원 <span>2023. 01. 24(수) 19:30</span></p>
+                            <p>등록된 모임이 없습니다. 모임을 생성해 보세요.</p>
                         </div>
                     </div>
-                    <div class="ai_group_card">
-                        <img src="/static/images/group_main_06.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png">
-                            서울/강남구
-                        </div>
-                        <div class="schedule_row">
-                            <p>20,000원 <span>2023. 01. 24(수) 19:30</span></p>
-                        </div>
-                    </div>
-                    <div class="ai_group_card">
-                        <img src="/static/images/group_main_07.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png">
-                            서울/강남구
-                        </div>
-                        <div class="schedule_row">
-                            <p>20,000원 <span>2023. 01. 24(수) 19:30</span></p>
-                        </div>
-                    </div>
-                    <div class="ai_group_card">
-                        <img src="/static/images/group_main_08.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png">
-                            서울/강남구
-                        </div>
-                        <div class="schedule_row">
-                            <p>20,000원 <span>2023. 01. 24(수) 19:30</span></p>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -459,66 +515,18 @@
                         식사/술/차
                     </h2>
                     <div class="main_title_btn">
-                        <button class="total">전체보기</button>
-                        <button class="disabled">
+                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')">전체보기</button>
+                        <button class="category03_left disabled" onclick="clickLeft('category03')">
                             < </button>
-                                <button>></button>
+                                <button class="category03_right" onclick="clickRight('category03')">></button>
                     </div>
                 </div>
-                <div class="login_main_list">
+                <div class="login_main_list category03">
                     <div class="ai_group_card">
-                        <img src="/static/images/group_main_01.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png">
-                            서울/강남구
-                        </div>
                         <div class="schedule_row">
-                            <p>20,000원 <span>2023. 01. 24(수) 19:30</span></p>
+                            <p>등록된 모임이 없습니다. 모임을 생성해 보세요.</p>
                         </div>
                     </div>
-                    <div class="ai_group_card">
-                        <img src="/static/images/group_main_02.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png">
-                            서울/강남구
-                        </div>
-                        <div class="schedule_row">
-                            <p>20,000원 <span>2023. 01. 24(수) 19:30</span></p>
-                        </div>
-                    </div>
-                    <div class="ai_group_card">
-                        <img src="/static/images/group_main_03.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png">
-                            서울/강남구
-                        </div>
-                        <div class="schedule_row">
-                            <p>20,000원 <span>2023. 01. 24(수) 19:30</span></p>
-                        </div>
-                    </div>
-                    <div class="ai_group_card">
-                        <img src="/static/images/group_main_04.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png">
-                            서울/강남구
-                        </div>
-                        <div class="schedule_row">
-                            <p>20,000원 <span>2023. 01. 24(수) 19:30</span></p>
-                        </div>
-                    </div>
-
                 </div>
             </div>
             <div class="group_row">
@@ -528,66 +536,18 @@
                         여행
                     </h2>
                     <div class="main_title_btn">
-                        <button class="total">전체보기</button>
-                        <button class="disabled">
+                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')">전체보기</button>
+                        <button class="category04_left disabled" onclick="clickLeft('category04')">
                             < </button>
-                                <button>></button>
+                                <button class="category04_right" onclick="clickRight('category04')">></button>
                     </div>
                 </div>
-                <div class="login_main_list">
+                <div class="login_main_list category04">
                     <div class="ai_group_card">
-                        <img src="/static/images/group_main_05.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png">
-                            서울/강남구
-                        </div>
                         <div class="schedule_row">
-                            <p>20,000원 <span>2023. 01. 24(수) 19:30</span></p>
+                            <p>등록된 모임이 없습니다. 모임을 생성해 보세요.</p>
                         </div>
                     </div>
-                    <div class="ai_group_card">
-                        <img src="/static/images/group_main_06.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png">
-                            서울/강남구
-                        </div>
-                        <div class="schedule_row">
-                            <p>20,000원 <span>2023. 01. 24(수) 19:30</span></p>
-                        </div>
-                    </div>
-                    <div class="ai_group_card">
-                        <img src="/static/images/group_main_07.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png">
-                            서울/강남구
-                        </div>
-                        <div class="schedule_row">
-                            <p>20,000원 <span>2023. 01. 24(수) 19:30</span></p>
-                        </div>
-                    </div>
-                    <div class="ai_group_card">
-                        <img src="/static/images/group_main_08.png" />
-                        <div class="group_particpnt">
-                            <span>신청 2</span>/4명
-                        </div>
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png">
-                            서울/강남구
-                        </div>
-                        <div class="schedule_row">
-                            <p>20,000원 <span>2023. 01. 24(수) 19:30</span></p>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
