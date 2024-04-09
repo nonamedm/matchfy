@@ -1337,6 +1337,7 @@ class MoHome extends BaseController
             ) AS bf ON bf.alliance_idx = a.idx
             LEFT JOIN wh_alliance_files b ON b.idx = bf.idx
             WHERE a.delete_yn = 'N'
+            AND a.alliance_application = '2'
             ORDER BY a.idx ASC";    
 
         $alliances = $AllianceModel
@@ -1358,11 +1359,18 @@ class MoHome extends BaseController
     {
         $AllianceModel = new AllianceModel();
 
-        //이미지 정보
+        // $alliance = $AllianceModel
+        //     ->select('wh_alliance.*, wh_alliance_files.file_path, wh_alliance_files.file_name')
+        //     ->join('wh_alliance_files', 'wh_alliance_files.alliance_idx = wh_alliance.idx', 'left')
+        //     ->where('wh_alliance.delete_yn', 'N')
+        //     ->where('wh_alliance.idx', $idx)
+        //     ->orderBy('wh_alliance.idx', 'DESC')
+        //     ->first();
+
         $alliance = $AllianceModel
-            ->join('wh_alliance_files', 'wh_alliance_files.alliance_idx = wh_alliance.idx', 'left')
-            ->where('wh_alliance.delete_yn', 'N')
-            ->where('wh_alliance.idx', $idx)
+            ->where('delete_yn', 'N')
+            ->where('idx', $idx)
+            ->orderBy('idx', 'DESC')
             ->first();
 
         if (isset($alliance['detailed_content'])) {
@@ -1389,10 +1397,17 @@ class MoHome extends BaseController
 
         $alliance['reservations'] = $reservations;
 
-        echo '<pre>';
-        print_r($currentDateTime);
-        print_r($alliance);
-        echo '</pre>';
+        $AllianceFileModel = new AllianceFileModel;
+        $files = $AllianceFileModel
+            ->where('alliance_idx', $idx)
+            ->where('delete_yn', 'n')
+            ->findAll();
+
+        $alliance['files'] = $files;
+
+        // echo '<pre>';
+        // print_r($alliance);
+        // echo '</pre>';
 
         return view('mo_alliance_detail', $alliance);
     }
@@ -1411,19 +1426,11 @@ class MoHome extends BaseController
     }
     public function alliancePayment($idx): string
     {
-
-        
         $session = session();
         $ci = $session->get('ci');
 
+        $totalAmount = $this->request->getVar('totalAmount');
         $points = $this->mypageGetPoint();
-
-        $AllianceModel = new AllianceModel();
-        $alliance = $AllianceModel
-            ->select('alliance_pay')
-            ->where('delete_yn', 'N')
-            ->where('idx', $idx)
-            ->first();
 
         $MemberModel = new MemberModel();
         $user = $MemberModel
@@ -1445,15 +1452,15 @@ class MoHome extends BaseController
                 ->first();
 
         $data = [
-            'alliance' => $alliance,
+            'totalAmount' => $totalAmount,
             'points' => $points,
             'user' => $user,
             'privacys' => $privacy
         ];
 
-        echo '<pre>';
-        print_r($data);
-        echo '</pre>';
+        // echo '<pre>';
+        // print_r($data);
+        // echo '</pre>';
 
         return view('mo_alliance_payment', $data);
     }

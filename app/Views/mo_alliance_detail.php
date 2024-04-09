@@ -25,7 +25,15 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="group_deatil_img">
-                    <img src="/static/images/alliance_detail.png" />
+                    <div id="imageSlider" class="slider">
+                        <?php foreach ($files as $file): ?>
+                        <div class="slide">
+                            <img src="/<?= htmlspecialchars($file['file_path']) . htmlspecialchars($file['file_name']) ?>" alt="Slide Image" />
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <a href="#" id="prev">&#10094;</a>
+                    <a href="#" id="next">&#10095;</a>
                 </div>
                 <div class="group_detail_info">
                     <div class="group_detail_header">
@@ -89,7 +97,7 @@
                                     <h2>총 결제금액</h2>
                                 </div>
                                 <div class="amount_pay_right">
-                                    <h2><?= number_format($alliance_pay, 0) ?> 원</h2>
+                                    <h2 id="totalAmount"><?= number_format($alliance_pay, 0) ?> 원</h2>
                                 </div>
                             </div>
                         </div>
@@ -172,6 +180,29 @@
         }
 
         $(document).ready(function() {
+            // 이미지 슬라이드
+            let slideIndex = 0;
+            showSlides(slideIndex);
+
+            $('#next').click(function(e) {
+                e.preventDefault();
+                showSlides(++slideIndex);
+            });
+
+            $('#prev').click(function(e) {
+                e.preventDefault();
+                showSlides(--slideIndex);
+            });
+
+            function showSlides(n) {
+                let slides = $('.slide');
+                if (n >= slides.length) slideIndex = 0;
+                if (n < 0) slideIndex = slides.length - 1;
+
+                slides.hide(); 
+                $(slides[slideIndex]).show();
+            }
+
             // 탭 구현
             $('.tab').click(function() {
                 $('.tab').removeClass('on');
@@ -187,17 +218,28 @@
                 $(this).addClass('on');
             });
 
+            var basePay = <?= $alliance_pay ?>;
+            var totalAmount = basePay;
+
             // 인원 수 증가
             $('#plus').click(function() {
                 let currentValue = parseInt($('#quantity').val(), 10);
                 $('#quantity').val(currentValue + 1);
+                updateTotalAmount();
             });
+
+            function updateTotalAmount() {
+                let currentValue = parseInt($('#quantity').val(), 10);
+                totalAmount = basePay * currentValue;
+                $('#totalAmount').text(totalAmount.toLocaleString() + ' 원');
+            }
 
             // 인원 수 감소
             $('#minus').click(function() {
                 let currentValue = parseInt($('#quantity').val(), 10);
                 if (currentValue > 1) {
                     $('#quantity').val(currentValue - 1);
+                    updateTotalAmount();
                 }
             });
 
@@ -221,7 +263,7 @@
                     return false;
                 }
 
-                moveToUrl('/mo/alliance/payment/<?= $idx ?>');
+                moveToUrl('/mo/alliance/payment/<?= $idx ?>?totalAmount=' + totalAmount);
             });
         });
 
@@ -246,6 +288,7 @@
                         lastSelectedDay.classList.remove('selected-day');
                         lastSelectedDay.style.border = '';
                     }
+                    
                     // 선택한 날자 데이터 표시
                     info.dayEl.classList.add('selected-day');
                     lastSelectedDay = info.dayEl;

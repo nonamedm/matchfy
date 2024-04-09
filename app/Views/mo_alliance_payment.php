@@ -32,7 +32,7 @@
                             <h2>총 결제금액</h2>
                         </div>
                         <div class="amount_pay_right">
-                            <h2><?=number_format($alliance['alliance_pay'], 0)?> 원</h2>
+                            <h2><?=number_format($totalAmount, 0)?> 원</h2>
                         </div>
                     </div>
                     <hr class="hoz_part" />
@@ -155,7 +155,7 @@
 
                 //결제 포인트 체크
                 var points = <?= $points ?>;
-                var alliancePay = <?= $alliance['alliance_pay'] ?>;
+                var alliancePay = <?= $totalAmount ?>;
 
                 if (alliancePay > points) {
                     alert('보유포인트가 부족합니다.');

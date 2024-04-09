@@ -378,7 +378,41 @@ header .menu_right.edit {
 .alliance_tab_content.active {
     display: block;
 }
-
+/* 이미지 슬라이드 */
+.group_deatil_img {
+    position: relative; /* 화살표의 포지셔닝 기준 */
+}
+#imageSlider {
+    width: 100%;
+    overflow: hidden;
+}
+.slide {
+    display: none;
+}
+.slide img {
+    width: 100%;
+    display: block;
+}
+#prev, #next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* 화살표가 정확히 중앙에 오도록 조정 */
+    z-index: 10;
+    width: 30px;
+    height: 30px;
+    font-size: 21px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+}
+#prev {
+    left: 5px;
+}
+#next {
+    right: 5px;
+}
 .fc .fc-day-header {
     background-color: #ccc; /* 회색 배경 */
 }
