@@ -1,10 +1,18 @@
 $(document).ready(function(){
-    $('.btn00').click(function() {
+    $('.exchangebtn').click(function() {
         var value = $(this).text();
         var exchange_level = $(this).data('exchange-level');
         var idx =$(this).data('idx');
 
         exchangeSubmit(exchange_level,idx);
+    });
+    
+    $('.alliancebtn').click(function() {
+        var value = $(this).text();
+        var level = $(this).data('alliance-level');
+        var idx =$(this).data('idx');
+
+        allianceSubmit(level,idx);
     });
 
     CKEDITOR.replace('content');
@@ -139,6 +147,25 @@ function exchangeSubmit(exchange_level,idx){
         url: '/ad/exchangeCheck',
         data:{
             exchange_level:exchange_level,
+            idx:idx,
+        },
+        type: 'post',
+        success: function(data) {
+            alert(data.msg);
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+function allianceSubmit(level,idx){
+    
+    $.ajax({
+        url: '/ad/allianceCheck',
+        data:{
+            level:level,
             idx:idx,
         },
         type: 'post',

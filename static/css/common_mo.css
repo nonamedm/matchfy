@@ -224,6 +224,7 @@ header .menu_right.edit {
     justify-content: space-around;
     padding: 0;
     margin: 0;
+    cursor: pointer;
 }
 
 .tab_wrap ul li.on {
@@ -322,6 +323,8 @@ header .menu_right.edit {
     text-align: center;
     color: #999999;
     padding: 10px 0;
+
+    cursor: pointer;
 }
 .region_list_box.on {
     border: 1px solid #ff0267;
@@ -358,6 +361,7 @@ header .menu_right.edit {
     text-align: center;
     color: #999999;
     padding: 10px 0;
+    cursor: pointer;
 }
 .alliance_reserv_time.on {
     border: 1px solid #ff0267;
@@ -368,10 +372,86 @@ header .menu_right.edit {
     border: 1px solid #dddddd;
     color: #dddddd;
 }
+.alliance_tab_content {
+    display: none;
+}
+.alliance_tab_content.active {
+    display: block;
+}
+/* 이미지 슬라이드 */
+.group_deatil_img {
+    position: relative; /* 화살표의 포지셔닝 기준 */
+}
+#imageSlider {
+    width: 100%;
+    overflow: hidden;
+}
+.slide {
+    display: none;
+}
+.slide img {
+    width: 100%;
+    display: block;
+}
+#prev, #next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* 화살표가 정확히 중앙에 오도록 조정 */
+    z-index: 10;
+    width: 30px;
+    height: 30px;
+    font-size: 21px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+}
+#prev {
+    left: 5px;
+}
+#next {
+    right: 5px;
+}
+.fc .fc-day-header {
+    background-color: #ccc; /* 회색 배경 */
+}
+
+.fc-day-mon a {
+    color: #7E7894;
+}
+.fc-day-tue a {
+    color: #7E7894;
+}
+.fc-day-wed a {
+    color: #7E7894;
+}
+.fc-day-thu a {
+    color: #7E7894;
+}
+.fc-day-fri a {
+    color: #7E7894;
+}
+/* 일요일 날짜 빨간색 */
+.fc-day-sun a {
+    color: #FF7274;
+    text-decoration: none;
+}
+/* 토요일 날짜 파란색 */
+.fc-day-sat a {
+    color: #81A0FF;
+    text-decoration: none;
+}
+.fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+    min-height: 0em;
+    position: relative; 
+}
+.selected-day {
+    box-shadow: inset 0 0 0 2px red;
+}
 .amount_pay .amount_pay_left.alliance h2 {
     margin: 15px 0 0 0;
 }
-
 .basic_table {
     width: 335px;
     font-weight: 500;
@@ -413,6 +493,7 @@ td {
     font-size: 15px;
     line-height: 18px;
     color: #999999;
+    cursor: pointer;
 }
 .biz_day_box.on {
     border: 1px solid #ff0267;
@@ -1358,7 +1439,20 @@ a:active {
 .alliance_address1 {
     width: 250px !important;
 }
-
+.alliance_image_container{
+    position: relative; 
+    display: inline-block;
+}
+.alliance_close_button{
+    position: absolute; 
+    top: 0; 
+    right: 0; 
+    background-image: url('/static/images/alliance_cancel.png'); 
+    background-size: cover; 
+    width: 20px; 
+    height: 20px;
+    margin:4px;
+}
 .myinfo_level {
     padding: 3px 8px;
     width: 46px;
@@ -3297,11 +3391,23 @@ input[type='number']::-webkit-inner-spin-button {
     width: 80px;
     height: 5%;
     display: none;
+    z-index: 99;
 }
 .loading img {
     width: 100%;
 }
-.meet_menu_right {
+.loading_bg{
+    background: #000;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    left: 0;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.3;
+    display: none;
+}
+.meet_menu_right{
     display: none;
     display: flex;
 }

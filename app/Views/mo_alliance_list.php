@@ -10,6 +10,8 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -25,85 +27,92 @@
                     <img src="/static/images/alliance_banner.png" />
                 </div>
                 <div class="group_search">
-                    <input style="text" placeholder="제휴점을 검색해보세요!" />
+                    <input type="text" placeholder="제휴점을 검색해보세요!" />
                     <img src="/static/images/ico_search_18x18.png" />
                 </div>
                 <div class="group_category">
-                    <div class="group_category_all">
+                    <div class="group_category_all" data-category="">
                         <img src="/static/images/group_category_all.png" />
                         <p>전체</p>
                     </div>
-                    <div class="group_category_1">
+                    <div class="group_category_1" data-category="01">
                         <img src="/static/images/alliance_category_1.png" />
                         <p>음식점</p>
                     </div>
-                    <div class="group_category_2">
+                    <div class="group_category_2" data-category="02">
                         <img src="/static/images/alliance_category_2.png" />
                         <p>카페</p>
                     </div>
-                    <div class="group_category_3">
+                    <div class="group_category_3" data-category="03">
                         <img src="/static/images/alliance_category_3.png" />
                         <p>숙박</p>
                     </div>
-                    <div class="group_category_4">
+                    <div class="group_category_4" data-category="">
                         <img src="/static/images/alliance_category_4.png" />
-                        <p>기타</p>
+                        <p>지역별</p>
                     </div>
                 </div>
-                <div class="group_search_filter">
+                <!-- <div class="group_search_filter">
                     <select class="small">
                         <option>지역 전체</option>
 
                     </select>
-                </div>
+                </div> -->
                 <div class="group_search_list">
-                    <div class="group_list_item">
-                        <img src="/static/images/alliance_shop_1.png" />
+                <?php foreach ($alliances as $alliance): ?>
+                    <a href="/mo/alliance/detail/<?= $alliance['idx'] ?>">
+                        <div class="group_list_item">
+                            <img src="/<?= $alliance['file_path'] ?><?= $alliance['file_name'] ?>" />
 
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png" />
-                            코다차야
+                            <div class="group_location">
+                                <img src="/static/images/ico_location_16x16.png" />
+                                <?= $alliance['company_name'] ?>
+                            </div>
+                            <p class="group_price"><?= $alliance['address'] ?></p>
+                            <p class="group_schedule"><?= $alliance['alliance_type'] ?></p>
                         </div>
-                        <p class="group_price">서울 강남</p>
-                        <p class="group_schedule">음식점</p>
-                    </div>
-                    <div class="group_list_item">
-                        <img src="/static/images/alliance_shop_2.png" />
-
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png" />
-                            용마커피
-                        </div>
-                        <p class="group_price">서울 관악</p>
-                        <p class="group_schedule">카페</p>
-                    </div>
-                    <div class="group_list_item">
-                        <img src="/static/images/alliance_shop_3.png" />
-
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png" />
-                            가평꿈그린
-                        </div>
-                        <p class="group_price">경기 가평</p>
-                        <p class="group_schedule">숙박</p>
-                    </div>
-                    <div class="group_list_item">
-                        <img src="/static/images/alliance_shop_4.png" />
-
-                        <div class="group_location">
-                            <img src="/static/images/ico_location_16x16.png" />
-                            레드버튼
-                        </div>
-                        <p class="group_price">서울 동작</p>
-                        <p class="group_schedule">기타</p>
-                    </div>
+                    </a>
+                <?php endforeach; ?>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="layerPopup alert middle alliance" style="display: none;"><!-- class: imgPop 추가 -->
+        <div class="layerPopup_wrap">
+            <div class="layerPopup_content">
+                <p class="txt">지역 선택</p>
+                <!-- <em class="desc">인증을 위한 혼인관계증명서를<br/>등록해주세요</em> -->
 
-
+                <div class="region_list">
+                    <div class="region_list_box on">전체</div>
+                    <div class="region_list_box">서울</div>
+                    <div class="region_list_box">경기</div>
+                    <div class="region_list_box">인천</div>
+                    <div class="region_list_box">대전</div>
+                    <div class="region_list_box">세종</div>
+                    <div class="region_list_box">충남</div>
+                    <div class="region_list_box">충북</div>
+                    <div class="region_list_box">광주</div>
+                    <div class="region_list_box">전남</div>
+                    <div class="region_list_box">전북</div>
+                    <div class="region_list_box">대구</div>
+                    <div class="region_list_box">경북</div>
+                    <div class="region_list_box">부산</div>
+                    <div class="region_list_box">울산</div>
+                    <div class="region_list_box">경남</div>
+                    <div class="region_list_box">강원</div>
+                    <div class="region_list_box">제주</div>
+                </div>
+                <div class="layerPopup_bottom">
+                    <div class="btn_group multy">
+                        <button class="btn type03" id="reset">초기화</button>
+                        <button class="btn type01" id="confirm">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div style="height: 50px;"></div>
@@ -140,6 +149,69 @@
                 menuItem.classList.toggle("hidden");
             }
         }
+
+        $(document).ready(function() {
+            // 검색 - 돋보기 클릭
+            $('.group_serch_img').click(function() {
+                updateAllianceFiltering();
+            });
+
+            // 검색 - 엔터 키
+            $('.group_search input[type="text"]').keypress(function(event) {
+                if (event.which == 13) {
+                    event.preventDefault();
+                    updateAllianceFiltering();
+                }
+            });
+
+            // 검색창 내용 변경 시
+            $('.group_search input[type="text"]').on('input', function() {
+                updateAllianceFiltering();
+            });
+
+            // 카테고리 클릭
+            $('.group_category div').click(function() {
+                if (!$(this).hasClass('group_category_4')) {
+                    $('.group_category img').removeClass('highlighted');
+                    $(this).find('img').addClass('highlighted');
+                }
+                if (!$(this).hasClass('group_category_4')) {
+                    updateAllianceFiltering();
+                }
+            });
+
+            //팝업 - 지역
+            $('.group_category_4').click(function() {
+                $(".layerPopup").css("display", "flex");
+            });
+
+            $('.region_list_box').click(function() {
+                $('.region_list_box').removeClass('on');
+                $(this).addClass('on');
+            });
+
+            //팝업 - 초기화 버튼
+            $('.layerPopup .btn.type03').click(function() {
+                $('.region_list_box').removeClass('on');
+                $('.region_list_box:first').addClass('on');
+            });
+            
+            //팝업 - 확인 버튼
+            $('.layerPopup .btn.type01').click(function() {
+                $(".layerPopup").hide();
+                updateAllianceFiltering();
+            });
+
+            // 공통
+            function updateAllianceFiltering() {
+                var selectedCategory = $('.group_category div img.highlighted').closest('div').data('category') || '';
+                var searchText = $('.group_search input[type="text"]').val();
+                var selectedRegionText = $('.region_list_box.on').text();
+                var filterOption = selectedRegionText === "전체" ? '' : selectedRegionText;
+                allianceFiltering(selectedCategory, searchText, filterOption);
+            }
+
+        });
     </script>
 
     <!-- -->

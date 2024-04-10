@@ -19,6 +19,10 @@ use App\Models\MeetingMembersModel;
 use App\Helpers\MoHelper;
 use App\Models\MeetModel;
 use App\Models\MeetPointModel;
+use App\Models\AllianceModel;
+use App\Models\AllianceFileModel;
+use App\Models\AllianceMemberModel;
+use App\Models\AllianceReservationModel;
 use CodeIgniter\Session\Session;
 use Kint\Zval\Value;
 
@@ -623,6 +627,7 @@ class MoHome extends BaseController
         }
     }
 
+    /* 모임 결재 시 확인 사항1 - 멤버 수 확인 */
     public function getMemberCount($meeting_idx)
     {
 
@@ -666,6 +671,7 @@ class MoHome extends BaseController
     }
 
     /*결제 시 모임에 이미 등록되어있는지 판단 */
+    /*모임 결재 시 확인 사항2 - 결재 시 모임에 이미 등록되어있는지 판단 */
     public function getMemberConfirm($ci, $meeting_idx)
     {
         $MeetingMembersModel = new MeetingMembersModel();
@@ -1334,23 +1340,143 @@ class MoHome extends BaseController
     }
     public function allianceList(): string
     {
-        return view('mo_alliance_list');
+        $AllianceModel = new AllianceModel();
+
+        $query = "SELECT a.idx, a.company_name, a.address, a.alliance_type, b.file_path, b.file_name
+            FROM wh_alliance a
+            LEFT JOIN (
+                SELECT MIN(idx) AS idx, alliance_idx
+                FROM wh_alliance_files
+                GROUP BY alliance_idx
+            ) AS bf ON bf.alliance_idx = a.idx
+            LEFT JOIN wh_alliance_files b ON b.idx = bf.idx
+            WHERE a.delete_yn = 'N'
+            AND a.alliance_application = '2'
+            ORDER BY a.idx ASC";    
+
+        $alliances = $AllianceModel
+            ->query($query)->getResultArray();
+
+        $data['alliances'] = $alliances;
+
+        // echo '<pre>';
+        // print_r($alliances);
+        // echo '</pre>';
+
+        return view('mo_alliance_list', $data);
     }
     public function allianceRegionPopup(): string
     {
         return view('mo_alliance_region_popup');
     }
-    public function allianceDetail(): string
+    public function allianceDetail($idx): string
     {
-        return view('mo_alliance_detail');
+        $AllianceModel = new AllianceModel();
+
+        // $alliance = $AllianceModel
+        //     ->select('wh_alliance.*, wh_alliance_files.file_path, wh_alliance_files.file_name')
+        //     ->join('wh_alliance_files', 'wh_alliance_files.alliance_idx = wh_alliance.idx', 'left')
+        //     ->where('wh_alliance.delete_yn', 'N')
+        //     ->where('wh_alliance.idx', $idx)
+        //     ->orderBy('wh_alliance.idx', 'DESC')
+        //     ->first();
+
+        $alliance = $AllianceModel
+            ->where('delete_yn', 'N')
+            ->where('idx', $idx)
+            ->orderBy('idx', 'DESC')
+            ->first();
+
+        if (isset($alliance['detailed_content'])) {
+            $lines = explode("<br>", $alliance['detailed_content']);
+            $lines = array_map(function($line) {
+                return "<div class='content-line-point'>· " . $line . "</div>";
+            }, $lines);
+            $alliance['detailed_content'] = implode("<br>", $lines);
+        }
+
+        $alliance['time_slots'] = $this->generateTimeSlots($alliance['business_hour_start'], $alliance['business_hour_end']);
+
+        //예약 정보 가져오기
+        $AllianceReservationModel = new AllianceReservationModel();
+
+        date_default_timezone_set('Asia/Seoul');
+        $currentDateTime = date('Y-m-d');
+        $reservations = $AllianceReservationModel
+            ->select('reservation_date, reservation_time')
+            ->where('wh_alliance_idx', $idx)
+            ->where('DATE(reservation_datetime)', $currentDateTime)
+            ->orderBy('reservation_datetime', 'ASC')
+            ->findAll();
+
+        $alliance['reservations'] = $reservations;
+
+        $AllianceFileModel = new AllianceFileModel;
+        $files = $AllianceFileModel
+            ->where('alliance_idx', $idx)
+            ->where('delete_yn', 'n')
+            ->findAll();
+
+        $alliance['files'] = $files;
+
+        // echo '<pre>';
+        // print_r($alliance);
+        // echo '</pre>';
+
+        return view('mo_alliance_detail', $alliance);
     }
-    public function allianceDetail2(): string
-    {
-        return view('mo_alliance_detail2');
+    //운영 시간 1시간 단위로 받음(마지막 타임 제외)
+    protected function generateTimeSlots($start, $end) {
+        $startTime = new \DateTime($start);
+        $endTime = new \DateTime($end);
+        $interval = new \DateInterval('PT1H');//1시간 단위
+        $timeSlots = [];
+    
+        for($time = $startTime; $time < $endTime; $time->add($interval)) {
+            $timeSlots[] = $time->format("H:i");
+        }
+    
+        return $timeSlots;
     }
-    public function alliancePayment(): string
+    public function alliancePayment($idx): string
     {
-        return view('mo_alliance_payment');
+        $session = session();
+        $ci = $session->get('ci');
+
+        $totalAmount = $this->request->getVar('totalAmount');
+        $points = $this->mypageGetPoint();
+
+        $MemberModel = new MemberModel();
+        $user = $MemberModel
+            ->select('name, mobile_no')
+            ->where('ci', $ci)
+            ->first();
+
+        if (!empty($user['mobile_no'])) {
+            $mobileNo = $user['mobile_no'];
+            $formattedMobileNo = substr($mobileNo, 0, 3) . '-' . substr($mobileNo, 3, 4) . '-' . substr($mobileNo, 7);
+            $user['mobile_no'] = $formattedMobileNo;
+        }
+
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_privacy');
+        $privacy = $BoardModel
+                ->select('title, content')
+                ->orderBy('created_at', 'DESC')
+                ->first();
+
+        $data = [
+            'totalAmount' => $totalAmount,
+            'points' => $points,
+            'user' => $user,
+            'privacys' => $privacy
+        ];
+
+        // echo '<pre>';
+        // print_r($data);
+        // echo '</pre>';
+
+        return view('mo_alliance_payment', $data);
     }
     public function allianceSchedule(): string
     {
@@ -1360,16 +1486,154 @@ class MoHome extends BaseController
     {
         return view('mo_alliance_reserve_popup');
     }
+    /*제휴신청시 본인인증 확인*/
+    public function alliancePass(): string
+    {
+        $data['params'] = '';
+        return view('mo_alliance_pass', $data);
+    }
+    /*제휴 본인인증 체크 확인 */
+    public function allianceAgree()
+    {
+        $session = session();
+        $ci = $session->get('ci');
+
+        $postData = $this->request->getPost();
+
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_terms');
+        $postData['terms'] = $BoardModel->orderBy('created_at', 'DESC')->first();
+
+        $BoardModel2 = new BoardModel();
+        $BoardModel2->setTableName('wh_board_privacy');
+        $postData['privacy'] = $BoardModel2->orderBy('created_at', 'DESC')->first();
+
+        $AllianceMember = new AllianceMemberModel(); //테이블
+
+        $mobile_no = $postData['mobile_no'];
+        
+        $selected = $AllianceMember->where('mobile_no', $mobile_no)->first();
+        
+        if ($selected) {
+            echo '<script>alert("이미 가입된 휴대폰 번호입니다");</script>';
+            return view('mo_alliance_pass', $postData);
+        } else {
+            return view('mo_aliance_agree',$postData);
+        }
+    }
+    /*제휴 신청하기 */
     public function allianceApply(): string
     {
-        return view('mo_alliance_apply');
+        $postData = $this->request->getPost();
+
+        $BoardModel2 = new BoardModel();
+        $BoardModel2->setTableName('wh_board_privacy');
+        $postData['privacy'] = $BoardModel2->orderBy('created_at', 'DESC')->first();
+
+        return view('mo_alliance_apply',$postData);
     }
+    
+    /*제휴 결재 */
+    public function alliancePaymentChk(){
+        
+        $session = session();
+        $ci = $session->get('ci');
+
+        $allianceIdx = intval($this->request->getPost('allianceIdx'));
+        $alliancePayment = intval($this->request->getPost('alliancePayment'));
+        $numberPeople = intval($this->request->getPost('numberPeople'));
+        $reservationDate = $this->request->getPost('reservationDate');
+        $reservationTime = $this->request->getPost('reservationTime');
+
+        $mypoint = $this->mypageGetPoint();
+
+        if ($mypoint < $alliancePayment) { //보유포인트가 모자랄 경우
+            return $this->response->setJSON(['success' => true, 'msg' => '충전후 사용해주세요.']);
+        } else {
+            
+            //예약한 제휴지점 결재
+            $PointModel = new PointModel();
+
+            $AllianceModel = new AllianceModel();
+            $allianceStore = $AllianceModel->select('member_ci,alliance_ci,company_name')->where('idx', $allianceIdx)->first();
+
+            if ($allianceStore) {
+                $mydata = [
+                    'member_ci' => $ci,
+                    'my_point' => $mypoint - $alliancePayment,
+                    'use_point' => $alliancePayment,
+                    'point_details' => $allianceStore['company_name'] . "(제휴점 결재)",
+                    'create_at' => date('Y-m-d H:i:s'),
+                    'point_type' => 'U',
+                ];
+
+                $PointModel->insert($mydata);
+            } else {
+                return $this->response->setJSON(['success' => false, 'msg' => '제휴점이 존재하지 않습니다.']);
+            }
+
+            //예약추가
+            $MemberModel = new MemberModel();
+            $memberInfo = $MemberModel ->select('name,mobile_no')->where('ci', $ci)->first();
+
+            $allianceRevers = new AllianceReservationModel();
+            
+            $reversData = [
+                'wh_alliance_idx'=>$allianceIdx, 
+                'alliance_name'=>$allianceStore['company_name'], 
+                'customer_name'=>$memberInfo['name'], 
+                'member_ci'=>$ci,
+                'customer_contact'=>$memberInfo['mobile_no'],
+                'number_of_people'=>$numberPeople,
+                'reservation_amount'=>$alliancePayment, 
+                'reservation_datetime'=>$reservationDate.' '.$reservationTime,
+                'reservation_date'=>$reservationDate,
+                'reservation_time'=>$reservationTime, 
+                'reg_date'=>date('Y-m-d H:i:s'),
+            ];
+            $result = $allianceRevers->insert($reversData);
+
+            //제휴점으로 포인트 추가
+            $allianceAllPoint = $PointModel->select('my_point')->where('member_ci', $allianceStore['member_ci'])->orderBy('create_at', 'DESC')->first();
+
+            $allianceAddPointData = [
+                'member_ci' => $allianceStore['member_ci'],
+                'my_point' => $allianceAllPoint + $alliancePayment,
+                'use_point' => $alliancePayment,
+                'point_details' => $reservationDate.' '.$reservationTime . " ( 예약자 : ".$memberInfo['name'] . ")",
+                'create_at' => date('Y-m-d H:i:s'),
+                'point_type' => 'A',
+            ];
+
+            $PointModel->insert($allianceAddPointData);
+
+            if ($result) {
+                return $this->response->setJSON(['success' => true, 'msg' => $allianceStore->company_name .'예약 되었습니다.']);
+            } else {
+                return $this->response->setJSON(['success' => false, 'msg' => '예약이 실패 하였습니다. 다시 확인 해주세요.']);
+            }
+        }
+    }
+
+    public function allianceSuccess($num){
+        
+        if($num == 1){
+            $data['msg'] ="제휴 신청 후 관리자 승인으로 제휴점에 입점 됩니다.";
+        }else{
+            $data['msg'] ="제휴 신청이 제대로 되지 않았습니다.";
+        }
+        
+        return view('mo_alliance_success',$data);
+    }
+    
+    /*환전 페이지 */
     public function allianceExchange(): string
     {
         $my_point_value = $this->mypageGetPoint();
         return view('mo_alliance_exchange', ['my_point' => $my_point_value]);
     }
 
+    /*환전 프로세스 */
     public function allianceExchangePoint()
     {
         $session = session();
@@ -1417,12 +1681,13 @@ class MoHome extends BaseController
             return $this->response->setJSON(['success' => false]);
         }
     }
-
+    /*환전 성공페이지 */
     public function exchangePoint_success(): string
     {
         return view('mo_mypage_excharge_success');
     }
 
+    /*환전 실패페이지 */
     public function exchangePoint_fail(): string
     {
         return view('mo_mypage_excharge_fail');

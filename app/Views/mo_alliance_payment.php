@@ -10,6 +10,7 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="/static/js/jquery.min.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -24,14 +25,14 @@
                 <div class="alliance_payment">
                     <div class="alliance_payment_point">
                         <p>보유포인트</p>
-                        <h2>1,000,000</h2>
+                        <h2><?=number_format($points, 0)?> 원</h2>
                     </div>
                     <div class="amount_pay">
                         <div class="amount_pay_left alliance">
                             <h2>총 결제금액</h2>
                         </div>
                         <div class="amount_pay_right">
-                            <h2>40,000 원</h2>
+                            <h2><?=number_format($totalAmount, 0)?> 원</h2>
                         </div>
                     </div>
                     <hr class="hoz_part" />
@@ -39,24 +40,30 @@
                         <h2>예매자 정보</h2>
                         <div class="alliance_profile_content">
                             <h2>예매자</h2>
-                            <p>홍길동</p>
+                            <p><?=$user['name']?></p>
                         </div>                            
                         <div class="alliance_profile_content">
                             <h2>연락처</h2>
-                            <p>02-1234-1234</p>
+                            <p><?=$user['mobile_no']?></p>
                         </div>                           
                     </div>
                     <hr class="hoz_part" />
                     <div class="alliance_detail_cont">
                         <h2>개인정보 수집 제공</h2>
-                        <div class="alliance_terms_agree">
-                            <p>개인정보 수집 동의</p>
+                        <div class="alliance_terms_agree allance_btn">
+                            <p><?= nl2br($privacys['title']); ?></p>
                             <img src="/static/images/select_arrow.png"/>
-                        </div>                            
-                        <div class="alliance_terms_agree">
-                            <p>개인정보 수집 동의</p>
+                        </div>           
+                        <div class="allance_content" style="display:none;">
+                            <p class=""><?= nl2br($privacys['content']); ?></p>
+                        </div>                 
+                        <div class="alliance_terms_agree allance_btn">
+                            <p><?= nl2br($privacys['title']); ?></p>
                             <img src="/static/images/select_arrow.png"/>
-                        </div>                           
+                        </div>
+                        <div class="allance_content" style="display:none;">
+                            <p class=""><?= nl2br($privacys['content']); ?></p>
+                        </div>                              
                     </div>
                     <hr class="hoz_part" />
                     <div class="alliance_detail_cont">
@@ -87,8 +94,9 @@
                     <p>· 회원탈퇴 시 회원정보가 삭제됨으로 구매하신 포인트는
                         자동 소멸됩니다.</p>
                 </div>
-                <div class="btn_group">
-                    <button type="button" class="btn type01">충전하기</button>
+                <div class="btn_group multy">
+                    <button type="button" class="btn type02" id="cancelButton">취소</button>
+                    <button type="button" class="btn type01" id="alliance_reserve">동의하고 결제</button>
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy
@@ -126,6 +134,48 @@
                 var menuItem = menuItems[i];
                 menuItem.classList.toggle("hidden");
             }
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            toggleMenu();
+
+            // 취소
+            $('#cancelButton').click(function() {
+                window.history.back();
+            });
+
+            $('#alliance_reserve').click(function() {
+
+                // 동의 확인
+                if (!$('#agree01').is(':checked')) {
+                    alert('구매 조건 확인 및 결제 진행에 동의해 주세요.');
+                    return false;
+                }
+
+                //결제 포인트 체크
+                var points = <?= $points ?>;
+                var alliancePay = <?= $totalAmount ?>;
+
+                if (alliancePay > points) {
+                    alert('보유포인트가 부족합니다.');
+                    return false;
+                }
+
+            });
+        });
+
+        function toggleMenu() {
+            $('.allance_btn').click(function () {
+                var $answer = $(this).next('.allance_content');
+                if ($answer.is(':visible')) {
+                    $answer.slideUp();
+                    $(this).find('img').attr('src', '/static/images/select_arrow.png');
+                } else {
+                    $answer.slideDown();
+                    $(this).find('img').attr('src', '/static/images/select_arrow_up.png');
+                }
+            });
         }
     </script>
 

@@ -1100,3 +1100,402 @@ const MymeetingFiltering = (filterOption) => {
         },
     });
 };
+/*제휴 번호인증 */
+const alianceCertIdentify = () => {
+    // 추후 본인인증 연결
+    // $.ajax({
+    //     url: '/ajax/cert', // 추후 본인인증 연결
+    //     type: 'post',
+    //     data: { cmt_idx: '_cmt_idx', trgt_id: '_trgt_id', trgt_idx: '_trgt_idx' }, //
+    //     dataType: 'json',
+    //     async: false,
+    //     success: function (data) {
+    //         console.log(data)
+    //         if (data) {
+    // 성공
+
+    // 폼 생성
+    // var form = document.createElement('form');
+    // form.setAttribute('action', '/mo/agree');
+    // form.setAttribute('method', 'post');
+
+    // // hidden input 요소 생성
+    // var mobileNoInput = document.createElement('input');
+    // mobileNoInput.setAttribute('type', 'hidden');
+    // mobileNoInput.setAttribute('name', 'mobile_no');
+    // mobileNoInput.setAttribute('value', '01026220923'); // todo : 추후 인증 결과값으로 변경
+    // form.appendChild(mobileNoInput);
+
+    // var nameInput = document.createElement('input');
+    // nameInput.setAttribute('type', 'hidden');
+    // nameInput.setAttribute('name', 'name');
+    // nameInput.setAttribute('value', '서승표'); // todo : 추후 인증 결과값으로 변경
+    // form.appendChild(nameInput);
+
+    // var birthdayInput = document.createElement('input');
+    // birthdayInput.setAttribute('type', 'hidden');
+    // birthdayInput.setAttribute('name', 'birthday');
+    // birthdayInput.setAttribute('value', '19890923'); // todo : 추후 인증 결과값으로 변경
+    // form.appendChild(birthdayInput);
+
+    // // 폼을 body에 추가 후 제출
+    // document.body.appendChild(form);
+    // form.submit();
+    let tempValidation = false;
+    if ($('#input_ali_name').val().trim() === '') {
+        alert('이름을 입력해 주세요');
+        tempValidation = false;
+        $('#input_ali_name').focus();
+    } else if ($('#input_ali_mobile_no').val().trim() === '') {
+        alert('전화번호를 입력해 주세요');
+        tempValidation = false;
+        $('#input_ali_mobile_no').focus();
+    } else if ($('#input_ali_company_name').val().trim() === '') {
+        alert('업체명을 입력해 주세요.');
+        tempValidation = false;
+        $('#input_ali_company_name').focus();
+    } else if ($('#input_gender').val().trim() === '') {
+        alert('성별을 선택해 주세요');
+        tempValidation = false;
+        $('#input_gender').focus();
+    }
+
+    if (
+        $('#input_ali_name').val() !== '' &&
+        $('#input_ali_mobile_no').val() !== '' &&
+        $('#input_ali_company_name').val() !== '' &&
+        $('#input_gender').val() !== ''
+    ) {
+        tempValidation = true;
+    }
+    if (tempValidation) {
+        submitForm();
+    } else {
+    }
+
+    //     } else {
+    //         // 삭제 성공
+    //         //console.log('222');
+    //         alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+    //     }
+    //     return false
+    // },
+    // error: function (data, status, err) {
+    //     alert('there was an error while fetching events!')
+    //     console.log(err)
+    // },
+    // })
+};
+/*제휴 신청 */
+const allianceUp = () => {
+    $('.loading').show();
+    $('.loading_bg').show();
+    var postData = new FormData(document.querySelector('form'));
+    var files = $('#alliance_photo_detail')[0].files;
+    for (var i = 0; i < files.length; i++) {
+        postData.append('alliance_photo_detail[]', files[i]);
+    }
+
+    var filesInput = $('#alliance_photo_detail')[0];
+    var filesArray = Array.from(filesInput.files);
+
+    let tempValidation = false;
+    if($('#alliance_category').val().trim() ==='00'){
+        alert('제휴 유형을 선택해 주세요.');
+        tempValidation = false;
+        $('#alliance_category').focus();
+        $('.loading').hide();
+        $('.loading_bg').hide();
+    } else if ($('#alliance_number').val().trim() === '') {
+        alert('업체연락처를 입력해 주세요');
+        tempValidation = false;
+        $('#alliance_number').focus();
+        $('.loading').hide();
+        $('.loading_bg').hide();
+    } else if ($('#alliance_email').val().trim() === '') {
+        alert('이메일을 입력해 주세요');
+        tempValidation = false;
+        $('#alliance_email').focus();
+        $('.loading').hide();
+        $('.loading_bg').hide();
+    } else if ($('#alliance_name').val().trim() === '') {
+        alert('업체명을 입력해 주세요');
+        tempValidation = false;
+        $('#alliance_name').focus();
+        $('.loading').hide();
+        $('.loading_bg').hide();
+    } else if ($('#alliance_ceoname').val().trim() === '') {
+        alert('대표명을 입력해 주세요');
+        tempValidation = false;
+        $('#alliance_ceoname').focus();
+        $('.loading').hide();
+        $('.loading_bg').hide();
+    } else if ($('#alliance_address1').val().trim() === '') {
+        alert('주소를 입력해 주세요');
+        tempValidation = false;
+        $('#alliance_address1').focus();
+        $('.loading').hide();
+        $('.loading_bg').hide();
+    } else if ($('#alliance_address2').val().trim() === '') {
+        alert('상세주소를 입력해 주세요');
+        tempValidation = false;
+        $('#alliance_address2').focus();
+        $('.loading').hide();
+    } else if ($('#alliance_bizday').val().trim() === '') {
+        alert('영업요일을 선택 해주세요.');
+        tempValidation = false;
+        $('#biz_day').focus();
+        $('.loading').hide();
+        $('.loading_bg').hide();
+    } else if ($('#alliance_ceonumber').val().trim() === '') {
+        alert('대표 연락처를 입력해 주세요');
+        tempValidation = false;
+        $('#alliance_alliance_ceonumberaddress2').focus();
+        $('.loading').hide();
+        $('.loading_bg').hide();
+    } else if ($('#alliance_biztime1').val().trim() === '') {
+        alert('영업 시작 시간을 선택해 주세요');
+        tempValidation = false;
+        $('#alliance_biztime1').focus();
+        $('.loading').hide();
+        $('.loading_bg').hide();
+    } else if ($('#alliance_biztime2').val().trim() === '') {
+        alert('영업 종료 시간을 선택해 주세요');
+        tempValidation = false;
+        $('#alliance_biztime2').focus();
+        $('.loading').hide();
+        $('.loading_bg').hide();
+    } else if ($('#alliance_pay').val().trim() === '') {
+        alert('인당 예약 금액을 정해주세요');
+        tempValidation = false;
+        $('#alliance_pay').focus();
+        $('.loading').hide();
+        $('.loading_bg').hide();
+    } else if($('#alliance_photo').val().trim() === ''){
+        alert('메인 사진을 등록 해주세요.');
+        tempValidation = false;
+        $('#alliance_photo').focus();
+        $('.loading').hide();
+        $('.loading_bg').hide();
+    } else if(filesArray.length === 0){
+        alert('상세 사진을 등록 해주세요.');
+        tempValidation = false;
+        $('#alliance_photo_detail').focus();
+        $('.loading').hide();
+        $('.loading_bg').hide();
+    } else if ($('#alliance_cont').val().trim() === '') {
+        alert('상세내용을 선택해 주세요');
+        tempValidation = false;
+        $('#alliance_cont').focus();
+        $('.loading').hide();
+        $('.loading_bg').hide();
+    }else if($('#agree01').is(':checked') ==false){
+        alert('동의 체크 해주세요.');
+        tempValidation = false;
+        $('#agree01').focus();
+        $('.loading').hide();
+        $('.loading_bg').hide();
+    }
+
+    if (
+        $('#alliance_category').val() !=='' &&
+        $('#alliance_number').val() !== '' &&
+        $('#alliance_email').val() !== '' &&
+        $('#alliance_name').val() !== '' &&
+        $('#gealliance_ceonamender').val() !== '' &&
+        $('#alliance_address1').val() !== '' &&
+        $('#alliance_address2').val() !== '' &&
+        $('#alliance_ceonumber').val() !== '' &&
+        $('#alliance_bizday').val() !== '' &&
+        $('#alliance_biztime1').val() !== '' &&
+        $('#alliance_biztime2').val() !== '' &&
+        $('#alliance_pay').val() !== '' &&
+        $('#alliance_photo').val() !== '' &&
+        filesArray.length !== 0 &&
+        $('#alliance_cont').val() !== ''&&
+        $('#agree01').is(':checked')
+        
+    ) {
+        tempValidation = true;
+    }
+    
+    
+    if(tempValidation){
+        
+        setTimeout(function(){
+            $.ajax({
+                url: '/ajax/alianceUp', // todo : 추후 본인인증 연결
+                type: 'POST',
+                data: postData,
+                processData: false,
+                contentType: false,
+                async: false,
+                success: function (data) {
+    
+                    console.log(data);
+                    $('.loading').show();
+                    $('.loading_bg').show();
+                    if (data.status === 'success') {
+                        // moveToUrl
+                        window.location.href ="/mo/alliance/success/1";
+                    } else if (data.status === 'error') {
+                        window.location.href ="/mo/alliance/fail/0";
+                    } else {
+                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    }
+                    $('.loading').hide();
+                    $('.loading_bg').hide();
+                    return false;
+                },
+                error: function (data, status, err) {
+                    console.log(err);
+                    $('.loading').hide();
+                    $('.loading_bg').hide();
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
+            });
+        }, 2000);
+    }
+
+};
+
+const allianceFiltering = (category, searchText, filterOption) => {
+    var postData = new FormData();
+
+    if (category !== undefined && category !== '') {
+        postData.append('category', category);
+    }
+
+    if (searchText !== undefined && searchText !== '') {
+        postData.append('searchText', searchText);
+    }
+
+    if (filterOption !== undefined && filterOption !== '') {
+        postData.append('filterOption', filterOption);
+    }
+
+    $.ajax({
+        url: '/ajax/allianceFilter',
+        type: 'POST',
+        data: postData,
+        processData: false,
+        contentType: false,
+        async: false,
+        success: function (data) {
+            //console.log(data);
+            var listHtml = '';
+            if (data.length > 0) {
+                data.forEach(function (alliance) {
+                    var imagePath = alliance.alliance_idx
+                        ? '/' + alliance.file_path + alliance.file_name
+                        : '/static/images/group_list_1.png';
+                    listHtml += `
+                        <a href="/mo/alliance/detail/${alliance.idx}">
+                            <div class="group_list_item">
+                                <img src="${imagePath}"/>
+
+                                <div class="group_location">
+                                    <img src="/static/images/ico_location_16x16.png" />
+                                    ${alliance.company_name}
+                                </div>
+                                <p class="group_price">${alliance.address}</p>
+                                <p class="group_schedule">${alliance.alliance_type}</p>
+                            </div>
+                        </a>
+                    `;
+                });
+            } else {
+                listHtml = `<div style="text-align: center; margin-top: 20px; color: gray;">검색 결과가 없습니다.</div>`;
+            }
+            $('.group_search_list').html(listHtml);
+        },
+        error: function (xhr, status, err) {
+            console.log(err);
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
+};
+
+const allianceSave = () => {
+
+    if ($('.alliance_reserv_time.on').length === 0) {
+        alert('회차를 선택해 주세요.');
+        return;
+    }
+    if ($('#quantity').val().trim() === '0') {
+        alert('인원을 선택해 주세요..');
+        $('#quantity').focus();
+        return;
+    }
+
+    // $.ajax({
+    //     url: '',
+    //     type: 'POST',
+    //     data: {
+    //         idx: allianceIdx
+    //     },
+    //     processData: false,
+    //     contentType: false,
+    //     async: false,
+    //     success: function (data) {
+
+    //     },
+    //     error: function (xhr, status, err) {
+    //         console.log(err);
+    //         alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+    //     },
+    // });
+};
+const alliancePaymentChk = () => {
+    $('.loading').show();
+    $('.loading_bg').show();
+    
+    var allianceIdxValue = 139;
+    var alliancePaymentValue = 40000;
+    var numberPeopleValue = 5;
+    var reservationDateValue ='2024-04-07';
+    var reservationTimeValue='17:00';
+
+    var postData = {
+        allianceIdx:allianceIdxValue,
+        alliancePayment:alliancePaymentValue,
+        numberPeople:numberPeopleValue,
+        reservationDate:reservationDateValue,
+        reservationTime:reservationTimeValue,
+    };
+    setTimeout(function(){
+        $.ajax({
+            url: '/mo/alliance/alliancePaymentChk', // todo : 추후 본인인증 연결
+            type: 'POST',
+            data: {
+                allianceIdx:139,
+                alliancePayment:4000,
+                numberPeople:5,
+                reservationDate:'2024-04-07',
+                reservationTime:'17:00',
+            },
+            success: function (data) {
+                console.log(data);
+                $('.loading').show();
+                $('.loading_bg').show();
+                if (data.status === 'success') {
+                    window.location.href ="/mo/alliance/success/1";
+                } else if (data.status === 'error') {
+                    window.location.href ="/mo/alliance/fail/0";
+                } else {
+                    alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                }
+                $('.loading').hide();
+                $('.loading_bg').hide();
+                return false;
+            },
+            error: function (data, status, err) {
+                console.log(err);
+                $('.loading').hide();
+                $('.loading_bg').hide();
+                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            },
+        });
+    }, 2000);
+
+};

@@ -49,9 +49,9 @@
                                 $exchange_level = $data['exchange_level'];
 
                                 if ($exchange_level == 0) {
-                                    echo "<button class='btn00 btn type01' data-idx='".$data['idx']."' data-exchange-level='1'>승인</button>";
+                                    echo "<button class='exchangebtn btn00 btn type01' data-idx='".$data['idx']."' data-exchange-level='1'>승인</button>";
                                 } elseif ($exchange_level == 1) {
-                                    echo "<button class='btn00 btn type02'  data-idx='".$data['idx']."' data-exchange-level='2'>완료</button>";
+                                    echo "<button class='exchangebtn btn00 btn type02'  data-idx='".$data['idx']."' data-exchange-level='2'>완료</button>";
                                 } elseif ($exchange_level == 2) {
                                     echo "<span class='exc_text'>환전완료</span>";
                                 }

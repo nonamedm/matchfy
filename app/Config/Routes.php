@@ -74,11 +74,16 @@ $routes->get('/mo/viewProfile/(:any)', 'MoHome::myfeedViewProfile/$1');
 $routes->get('/mo/alertPopup', 'MoHome::alertPopup');
 $routes->get('/mo/alliance/list', 'MoHome::allianceList');
 $routes->get('/mo/alliance/regionPopup', 'MoHome::allianceRegionPopup');
-$routes->get('/mo/alliance/detail', 'MoHome::allianceDetail');
+$routes->get('/mo/alliance/detail/(:num)', 'MoHome::allianceDetail/$1');
 $routes->get('/mo/alliance/detail2', 'MoHome::allianceDetail2');
-$routes->get('/mo/alliance/payment', 'MoHome::alliancePayment');
+
+$routes->post('/mo/alliance/agree', 'MoHome::allianceAgree');
+$routes->get('/mo/alliance/pass', 'MoHome::alliancePass');
+$routes->get('/mo/alliance/payment/(:num)', 'MoHome::alliancePayment/$1');
 $routes->get('/mo/alliance/reservePopup', 'MoHome::allianceReservePopup');
-$routes->get('/mo/alliance/apply', 'MoHome::allianceApply');
+$routes->post('/mo/alliance/apply', 'MoHome::allianceApply');
+$routes->get('/mo/alliance/success/(:num)', 'MoHome::allianceSuccess/$1');
+$routes->post('/mo/alliance/alliancePaymentChk', 'MoHome::alliancePaymentChk');
 $routes->get('/mo/alliance/exchange', 'MoHome::allianceExchange');
 $routes->post('/mo/alliance/exchangepointSubmit', 'MoHome::allianceExchangePoint');
 $routes->get('/mo_mypage_excharge_success', 'MoHome::exchangePoint_success');
@@ -95,6 +100,7 @@ $routes->post('/upload', 'Upload::upload');
 
 // ajax
 $routes->post('/ajax/signUp', 'MoAjax::signUp');
+$routes->post('/ajax/alianceUp', 'MoAjax::alianceUp');
 $routes->post('/ajax/signUpdate', 'MoAjax::signUpdate');
 $routes->post('/ajax/login', 'MoAjax::login');
 $routes->post('/ajax/logout', 'MoAjax::logout');
@@ -115,6 +121,8 @@ $routes->post('/ajax/meetingFilter', 'MoAjax::meetingFiltering');
 $routes->post('/ajax/myMeetingFilter', 'MoAjax::myMeetingFiltering');
 $routes->post('/ajax/AImatch', 'MoAjax::AImatch');
 $routes->post('/ajax/mainMeetingList', 'MoAjax::mainMeetingList');
+$routes->post('/ajax/allianceFilter', 'MoAjax::allianceFiltering');
+$routes->get('/ajax/alliance/reservation', 'MoAjax::allianceReservation');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');
@@ -159,3 +167,5 @@ $routes->post('/ad/FileDelete', 'AdminHome::fileDelete');
 
 $routes->get('/ad/exchange/exchangeList', 'AdminHome::exchangeList');
 $routes->post('/ad/exchangeCheck', 'AdminHome::exchangeCheck');
+$routes->get('/ad/alliance/allianceList', 'AdminHome::allianceList');
+$routes->post('/ad/allianceCheck', 'AdminHome::allianceCheck');
