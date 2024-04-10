@@ -1,16 +1,15 @@
-var mygroupDelArr=[];
-$(document).ready(function() {
+var mygroupDelArr = [];
+$(document).ready(function () {
     MyGoupCheckbox();
 
-    $(document).on('change', '.totAgree', function() {
+    $(document).on('change', '.totAgree', function () {
         MyGoupCheckbox();
-    });    
-
+    });
 });
 
-function MyGoupCheckbox(){
-    mygroupDelArr=[];
-    $('.totAgree').each(function() {
+function MyGoupCheckbox() {
+    mygroupDelArr = [];
+    $('.totAgree').each(function () {
         if ($(this).is(':checked')) {
             var id = $(this).attr('id');
             var numericPart = id.replace('totAgree', '');
@@ -20,64 +19,63 @@ function MyGoupCheckbox(){
 }
 
 /*참석멤버 리스트*/
-function meetingMemberList(idx){
+function meetingMemberList(idx) {
     $.ajax({
         url: '/mo/mypage/group/partcntPopup',
-        data:{
-            meetingIdx:idx,
+        data: {
+            meetingIdx: idx,
         },
         type: 'post',
-        success: function(data) {
-            var html='';
-            if(data.success == true){
+        success: function (data) {
+            var html = '';
+            if (data.success == true) {
                 var data = data.data;
-                    html += '<div class="meetingMemPopup layerPopup alert middle">';
-                    html += '<div class="layerPopup_wrap">';
-                    html += '<div class="layerPopup_content medium">';
-                    html += '<div style="position: relative;display: flex;">';
-                    html += '<p class="txt" style="width: 90%;padding-left: 5%;">참석멤버</p>';
-                    html += '<a href="#" class="btn_close"  onclick="alertClose();" style="float: right;">닫기</a>';
-                    html += '</div>';
-                    html += '<div class="scroll_body">';
-                    for(var i=0; i<data.length;i++){
-                        
-                        html += '<div class="chat_member">';
-                        html += '<div class="chat_member_profile">';
-                        if(data[i].file_path){
-                            html += '<img class="profile_img" src="/'+data[i].file_path+data[i].file_name+'" />';
-                        }else{
-                            html += '<img class="profile_img" src="/static/images/mypage_no_pfofile.png" />';
-                        }
-                        html += '<p>'+data[i].name+'</p>';
-                        if(data[i].meeting_master =='K'){
-                            html += '<img class="group_master" src="/static/images/group_master.png" />';
-                        }
-                        html += '</div>';
-                        html += '<div class="group_member_detail">';
-                        html += data[0].birthday.slice(2,4) + ' · ' + data[i].city + ' · ' + data[i].mbti;
-                        html += '</div>';
-                        html += '</div>';
+                html += '<div class="meetingMemPopup layerPopup alert middle">';
+                html += '<div class="layerPopup_wrap">';
+                html += '<div class="layerPopup_content medium">';
+                html += '<div style="position: relative;display: flex;">';
+                html += '<p class="txt" style="width: 90%;padding-left: 5%;">참석멤버</p>';
+                html += '<a href="#" class="btn_close"  onclick="alertClose();" style="float: right;">닫기</a>';
+                html += '</div>';
+                html += '<div class="scroll_body">';
+                for (var i = 0; i < data.length; i++) {
+                    html += '<div class="chat_member">';
+                    html += '<div class="chat_member_profile">';
+                    if (data[i].file_path) {
+                        html += '<img class="profile_img" src="/' + data[i].file_path + data[i].file_name + '" />';
+                    } else {
+                        html += '<img class="profile_img" src="/static/images/mypage_no_pfofile.png" />';
                     }
+                    html += '<p>' + data[i].name + '</p>';
+                    if (data[i].meeting_master == 'K') {
+                        html += '<img class="group_master" src="/static/images/group_master.png" />';
+                    }
+                    html += '</div>';
+                    html += '<div class="group_member_detail">';
+                    html += data[0].birthday.slice(2, 4) + ' · ' + data[i].city + ' · ' + data[i].mbti;
+                    html += '</div>';
+                    html += '</div>';
+                }
 
-                    html += '</div>';
-                    html += '<div class="layerPopup_bottom">';
-                    html += '<div class="btn_group">';
-                    html += '<button class="btn type01" onclick="meetingPopupClose();">확인</button>';
-                    html += '</div>';
-                    html += '</div>';
-                    html += '</div>';
-                    html += '</div>';
-                    html += '</div>';
+                html += '</div>';
+                html += '<div class="layerPopup_bottom">';
+                html += '<div class="btn_group">';
+                html += '<button class="btn type01" onclick="meetingPopupClose();">확인</button>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
             }
             $('body').append(html);
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.log(error);
-        }
+        },
     });
 }
 /*참석멤버 닫기*/
-function meetingPopupClose(){
+function meetingPopupClose() {
     $('.meetingMemPopup').hide();
 }
 /* 날짜 포맷 변경 함수*/
@@ -92,74 +90,88 @@ function formatDate(dateString) {
     var hours = date.getHours();
     var minutes = date.getMinutes();
 
-    var formattedDate = year + '. ' + ('0' + month).slice(-2) + '. ' + ('0' + day).slice(-2) + '(' + dayOfWeek + ') ' + ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+    var formattedDate =
+        year +
+        '. ' +
+        ('0' + month).slice(-2) +
+        '. ' +
+        ('0' + day).slice(-2) +
+        '(' +
+        dayOfWeek +
+        ') ' +
+        ('0' + hours).slice(-2) +
+        ':' +
+        ('0' + minutes).slice(-2);
 
     return formattedDate;
 }
 
-function alertClose(){
+function alertClose() {
     $('.alert').hide();
 }
 
-function MeetingEditChk(){
+function MeetingEditChk() {
     $('.meet_delete_chk_box').show();
     $('.meet_menu_right').show();
-    $('#meet_edit_btn').hide();    
+    $('#meet_edit_btn').hide();
     $.ajax({
         url: '/mo/mypage/mygroup/select',
         type: 'post',
-        success: function(data) {
-            var html='';
-            if(data.success == true){
-                var data =data.data
-                for(var i=0;i<data.length;i++){
+        success: function (data) {
+            var html = '';
+            if (data.success == true) {
+                var data = data.data;
+                for (var i = 0; i < data.length; i++) {
                     var endedOverlay = data[i].isEnded ? '<div class="ended_overlay">종료</div>' : '';
                     var grayscaleClass = data[i].isEnded ? 'grayscale' : '';
-                    html+='<label class="totAgree_label" for="totAgree'+data[i].meeting_idx+'">';
-                    html+='<div class="apply_group_detail">';
-                    html+='<div class="chk_box meet_delete_chk_box">';
-                    html+='<input type="checkbox" class="totAgree" id="totAgree'+data[i].meeting_idx+'" name="'+data[i].meeting_idx+'">';
-                    html+='<label class="totAgree_label" for="totAgree'+data[i].meeting_idx+'"></label>';
-                    html+='</div>';
-                    html+=`<div class="relative-container ${grayscaleClass}">`;
-                    html+=`${endedOverlay ? '<div class="ended_overlay">종료</div>' : ''}`
-                    html+=`<img class="profile_img" src="/${data[i].file_path}${data[i].file_name}" />`;
-                    html+='</div>';
-                    html+='<div class="group_list_item group_apply_item">';
-                    html+='<div class="group_particpnt">';
-                    html+='<span>신청'+data[i].meeting_idx_count+'</span>/'+data[i].number_of_people+'명';
-                    html+='</div>';
-                    html+='<div class="group_location">';
-                    html+='<img src="/static/images/ico_location_16x16.png" />';
-                    html+= data[i].meeting_place;
-                    html+='</div>';
-                    html+='<p class="group_price">'+Number(data[i].membership_fee).toLocaleString()+'원</p>';
-                    html+='<p class="group_schedule">'+MyGoupDate(data[i].meeting_start_date)+'</p>';
-                    html+='</div>';
-                    html+='</div>';
-                    html+='</label>';
+                    html += '<label class="totAgree_label" for="totAgree' + data[i].meeting_idx + '">';
+                    html += '<div class="apply_group_detail">';
+                    html += '<div class="chk_box meet_delete_chk_box">';
+                    html +=
+                        '<input type="checkbox" class="totAgree" id="totAgree' +
+                        data[i].meeting_idx +
+                        '" name="' +
+                        data[i].meeting_idx +
+                        '">';
+                    html += '<label class="totAgree_label" for="totAgree' + data[i].meeting_idx + '"></label>';
+                    html += '</div>';
+                    html += `<div class="relative-container ${grayscaleClass}">`;
+                    html += `${endedOverlay ? '<div class="ended_overlay">종료</div>' : ''}`;
+                    html += `<img class="profile_img" src="/${data[i].file_path}${data[i].file_name}" />`;
+                    html += '</div>';
+                    html += '<div class="group_list_item group_apply_item">';
+                    html += '<div class="group_particpnt">';
+                    html += '<span>신청' + data[i].meeting_idx_count + '</span>/' + data[i].number_of_people + '명';
+                    html += '</div>';
+                    html += '<div class="group_location">';
+                    html += '<img src="/static/images/ico_location_16x16.png" />';
+                    html += data[i].meeting_place;
+                    html += '</div>';
+                    html += '<p class="group_price">' + Number(data[i].membership_fee).toLocaleString() + '원</p>';
+                    html += '<p class="group_schedule">' + MyGoupDate(data[i].meeting_start_date) + '</p>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</label>';
                 }
             }
             $('#mygroup_list_body').html(html);
-            
-            
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.log(error);
-        }
+        },
     });
 }
-function MyGoupDelconfrim(){
-    var msg='';
-    var html='';
-    if(mygroupDelArr.length != 0){
-        msg='선택한 모임을 삭제 하시겠습니까?';
+function MyGoupDelconfrim() {
+    var msg = '';
+    var html = '';
+    if (mygroupDelArr.length != 0) {
+        msg = '선택한 모임을 삭제 하시겠습니까?';
         html += '<div class="layerPopup alert middle">';
         html += '<div class="layerPopup_wrap">';
         html += '<div class="layerPopup_content msmall">';
         html += '<p class="txt">내 모임 삭제</p>';
         html += '<div class="apply_group">';
-        html += '<p>'+msg+'</p>';
+        html += '<p>' + msg + '</p>';
         html += '</div>';
         html += '<div class="layerPopup_bottom">';
         html += '<div class="btn_group multy">';
@@ -170,14 +182,14 @@ function MyGoupDelconfrim(){
         html += '</div>';
         html += '</div>';
         html += '</div>';
-    }else{
-        msg='삭제할 모임을 선택 해주세요.';
+    } else {
+        msg = '삭제할 모임을 선택 해주세요.';
         html += '<div class="layerPopup alert middle">';
         html += '<div class="layerPopup_wrap">';
         html += '<div class="layerPopup_content msmall">';
         html += '<p class="txt">내 모임 삭제</p>';
         html += '<div class="apply_group">';
-        html += '<p>'+msg+'</p>';
+        html += '<p>' + msg + '</p>';
         html += '</div>';
         html += '<div class="layerPopup_bottom">';
         html += '<div class="btn_group">';
@@ -192,49 +204,54 @@ function MyGoupDelconfrim(){
     $('body').append(html);
 }
 
-function MyGoupDelcheck(){
+function MyGoupDelcheck() {
     $.ajax({
         url: '/mo/mypage/mygroup/del',
-        data:{delArr:mygroupDelArr},
+        data: { delArr: mygroupDelArr },
         type: 'post',
-        success: function(data) {
-            var html='';
-            if(data.success == true){
-                var data =data.data
-                for(var i=0;i<data.length;i++){
-                    html+='<div class="apply_group_detail">';
-                    html+='<div class="chk_box meet_delete_chk_box">';
-                    html+='<input type="checkbox" class="totAgree" id="totAgree'+data[i].meeting_idx+'" name="'+data[i].meeting_idx+'">';
-                    html+='<label class="totAgree_label" for="totAgree'+data[i].meeting_idx+'"></label>';
-                    html+='</div>';
-                    html+='<a href="/mo/mypage/group/detail/'+data[i].meeting_idx+'">';
-                    html+='<img src="/'+data[i].file_path+data[i].file_name+'" />';
-                    html+='</a>';
-                    html+='<div class="group_list_item group_apply_item">';
-                    html+='<div class="group_particpnt">';
-                    html+='<span>신청'+data[i].meeting_idx_count+'</span>/'+data[i].number_of_people+'명';
-                    html+='</div>';
-                    html+='<a href="/mo/mypage/group/detail/'+data[i].meeting_idx+'">';
-                    html+='<div class="group_location">';
-                    html+='<img src="/static/images/ico_location_16x16.png" />';
-                    html+= data[i].meeting_place;
-                    html+='</div>';
-                    html+='<p class="group_price">'+Number(data[i].membership_fee).toLocaleString()+'원</p>';
-                    html+='<p class="group_schedule">'+MyGoupDate(data[i].meeting_start_date)+'</p>';
-                    html+='</a>';
-                    html+='</div>';
-                    html+='</div>';
+        success: function (data) {
+            var html = '';
+            if (data.success == true) {
+                var data = data.data;
+                for (var i = 0; i < data.length; i++) {
+                    html += '<div class="apply_group_detail">';
+                    html += '<div class="chk_box meet_delete_chk_box">';
+                    html +=
+                        '<input type="checkbox" class="totAgree" id="totAgree' +
+                        data[i].meeting_idx +
+                        '" name="' +
+                        data[i].meeting_idx +
+                        '">';
+                    html += '<label class="totAgree_label" for="totAgree' + data[i].meeting_idx + '"></label>';
+                    html += '</div>';
+                    html += '<a href="/mo/mypage/group/detail/' + data[i].meeting_idx + '">';
+                    html += '<img src="/' + data[i].file_path + data[i].file_name + '" />';
+                    html += '</a>';
+                    html += '<div class="group_list_item group_apply_item">';
+                    html += '<div class="group_particpnt">';
+                    html += '<span>신청' + data[i].meeting_idx_count + '</span>/' + data[i].number_of_people + '명';
+                    html += '</div>';
+                    html += '<a href="/mo/mypage/group/detail/' + data[i].meeting_idx + '">';
+                    html += '<div class="group_location">';
+                    html += '<img src="/static/images/ico_location_16x16.png" />';
+                    html += data[i].meeting_place;
+                    html += '</div>';
+                    html += '<p class="group_price">' + Number(data[i].membership_fee).toLocaleString() + '원</p>';
+                    html += '<p class="group_schedule">' + MyGoupDate(data[i].meeting_start_date) + '</p>';
+                    html += '</a>';
+                    html += '</div>';
+                    html += '</div>';
                 }
             }
             $('#mygroup_list_body').html(html);
             alertClose();
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.log(error);
-        }
+        },
     });
 }
-function MeetCancelChk(){
+function MeetCancelChk() {
     $('.meet_delete_chk_box').hide();
     $('.meet_menu_right').hide();
     $('#meet_edit_btn').show();
@@ -242,46 +259,45 @@ function MeetCancelChk(){
     $.ajax({
         url: '/mo/mypage/mygroup/select',
         type: 'post',
-        success: function(data) {
-            var html='';
-            if(data.success == true){
-                var data =data.data
-                for(var i=0;i<data.length;i++){
+        success: function (data) {
+            var html = '';
+            if (data.success == true) {
+                var data = data.data;
+                for (var i = 0; i < data.length; i++) {
                     var endedOverlay = data[i].isEnded ? '<div class="ended_overlay">종료</div>' : '';
                     var grayscaleClass = data[i].isEnded ? 'grayscale' : '';
-                    html+='<label class="totAgree_label" for="totAgree'+data[i].meeting_idx+'">';
-                    html+='<div class="apply_group_detail">';
-                    html+=`<div class="relative-container ${grayscaleClass}">`;
-                    html+=`${endedOverlay ? '<div class="ended_overlay">종료</div>' : ''}`
-                    html+='<a href="/mo/mypage/group/detail/'+data[i].meeting_idx+'">';
-                    html+=`<img class="profile_img" src="/${data[i].file_path}${data[i].file_name}" />`;
-                    html+='</a>';
-                    html+='</div>';
-                    html+='<div class="group_list_item group_apply_item">';
-                    html+='<div class="group_particpnt">';
-                    html+='<span>신청'+data[i].meeting_idx_count+'</span>/'+data[i].number_of_people+'명';
-                    html+='</div>';
-                    html+='<div class="group_location">';
-                    html+='<img src="/static/images/ico_location_16x16.png" />';
-                    html+= data[i].meeting_place;
-                    html+='</div>';
-                    html+='<p class="group_price">'+Number(data[i].membership_fee).toLocaleString()+'원</p>';
-                    html+='<p class="group_schedule">'+MyGoupDate(data[i].meeting_start_date)+'</p>';
-                    html+='</div>';
-                    html+='</div>';
-                    html+='</label>';
+                    html += '<label class="totAgree_label" for="totAgree' + data[i].meeting_idx + '">';
+                    html += '<div class="apply_group_detail">';
+                    html += `<div class="relative-container ${grayscaleClass}">`;
+                    html += `${endedOverlay ? '<div class="ended_overlay">종료</div>' : ''}`;
+                    html += '<a href="/mo/mypage/group/detail/' + data[i].meeting_idx + '">';
+                    html += `<img class="profile_img" src="/${data[i].file_path}${data[i].file_name}" />`;
+                    html += '</a>';
+                    html += '</div>';
+                    html += '<div class="group_list_item group_apply_item">';
+                    html += '<div class="group_particpnt">';
+                    html += '<span>신청' + data[i].meeting_idx_count + '</span>/' + data[i].number_of_people + '명';
+                    html += '</div>';
+                    html += '<div class="group_location">';
+                    html += '<img src="/static/images/ico_location_16x16.png" />';
+                    html += data[i].meeting_place;
+                    html += '</div>';
+                    html += '<p class="group_price">' + Number(data[i].membership_fee).toLocaleString() + '원</p>';
+                    html += '<p class="group_schedule">' + MyGoupDate(data[i].meeting_start_date) + '</p>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</label>';
                 }
             }
             $('#mygroup_list_body').html(html);
-            
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.log(error);
-        }
+        },
     });
 }
 
-function MyGoupDate(value){
+function MyGoupDate(value) {
     var date = new Date(value);
     var year = date.getFullYear();
     var month = (date.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고, 2자리 숫자로 표시
@@ -292,13 +308,12 @@ function MyGoupDate(value){
     return finalDate;
 }
 
-function MyGoupDate2(value){
-
+function MyGoupDate2(value) {
     var date = new Date(value);
-    
+
     var daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 
-    var month = date.getMonth() + 1; 
+    var month = date.getMonth() + 1;
     var day = date.getDate();
     var hour = date.getHours();
     var minute = date.getMinutes();
@@ -309,9 +324,10 @@ function MyGoupDate2(value){
     hour = hour % 12;
     hour = hour ? hour : 12;
 
-    var formattedDateTime = month + '.' + day + ' (' + dayOfWeek + ') ' + ' ' + hour + ':' + (minute < 10 ? '0' : '') + minute;
+    var formattedDateTime =
+        month + '.' + day + ' (' + dayOfWeek + ') ' + ' ' + hour + ':' + (minute < 10 ? '0' : '') + minute;
 
-    return formattedDateTime;     
+    return formattedDateTime;
 }
 
 function GroupDday(endDate, startDate, deleteYn) {
@@ -324,24 +340,24 @@ function GroupDday(endDate, startDate, deleteYn) {
         if (currentTimestamp > endDateTimestamp) {
             dday = '종료';
         } else if (currentTimestamp < startDateTimestamp) {
-            var timeDiff = startDateTimestamp - currentTimestamp + (24 * 60 * 60 * 1000); // 하루를 느리게 계산
+            var timeDiff = startDateTimestamp - currentTimestamp + 24 * 60 * 60 * 1000; // 하루를 느리게 계산
             var days = Math.floor(timeDiff / (24 * 60 * 60 * 1000));
             if (days === 1) {
                 dday = '내일';
-            } else if(days == 0){
+            } else if (days == 0) {
                 dday = '당일';
             } else {
-                dday = days+'일전';
+                dday = days + '일전';
             }
         } else {
             var timeDiff = endDateTimestamp - currentTimestamp;
             var days = Math.floor(timeDiff / (24 * 60 * 60 * 1000));
             if (days === 1) {
                 dday = '내일';
-            } else if(days == 0){
+            } else if (days == 0) {
                 dday = '당일';
             } else {
-                dday = days +'일전';
+                dday = days + '일전';
             }
         }
     } else {
@@ -367,92 +383,103 @@ function GroupClass(endDate, deleteYn) {
     return dday;
 }
 
-
-function MygroupPopup(idx,idValue,master){
-    var cancel_rsv = $('#'+idValue).text();
+function MygroupPopup(idx, idValue, master) {
+    var cancel_rsv = $('#' + idValue).text();
     $.ajax({
         url: '/mo/mypage/mygroup/cancelReservation',
-        data : {meetingIdx:idx},
+        data: { meetingIdx: idx },
         type: 'post',
-        success: function(data) {
-            var html='';
-            if(data.success == true){
-                var data =data.data
-                var html ='';
-                for(var i=0;i<data.length;i++){
-                    html+= '<div class="layerPopup alert">';
-                    html+= '<div class="layerPopup_wrap">';
-                    html+= '<div class="layerPopup_content small">';
-                    html+= '<div style="position: relative;display: flex;">';
-                    html+= '<p class="txt" style="width: 90%;padding-left: 5%;">에약확인</p>';
-                    html+= '<a href="#" class="btn_close" onclick="alertClose();" style="float: right;">닫기</a>';
-                    html+= '</div>';
-                    html+='<div class="alliance_sch_list popup">';
-                    html+='<a href="/mo/mypage/group/detail/'+data[i].meeting_idx+'">'
-                    html+='<div class="alliance_sch_item">';
-                    html+='<div class="alliance_sch_sts">';
-                    html+='<div class="'+GroupClass(data[i].meeting_end_date, data[i].delete_yn)+'">'+GroupDday(data[i].meeting_end_date,data[i].meeting_start_date,data[i].delete_yn)+'</div>';
-                    html+='<img src="/static/images/right_arrow.png" />';
-                    html+='</div>';
-                    html+='<h2>'+data[i].meeting_place+'</h2>';
-                    html+='<p class="">'+MyGoupDate2(data[i].meeting_start_date)+'</p>';
-                    html+='<span class="">인원 '+data[i].meeting_idx_count+'명</span>';
-                    html+='</div>';
-                    html+='</a>'
-                    html+='</div>';
-                    html+='<div style="height: 50px;"></div>';
-                    html+='<div class="layerPopup_bottom">';
-                    if(cancel_rsv == '1일전' ||  cancel_rsv == '내일' || cancel_rsv == '당일' ||cancel_rsv == '2일전' || cancel_rsv == '3일전'){
-                        html+= '<div class="btn_group">';
-                        html+= '<button class="btn type01">대화방입장</button>';
-                        html+= '</div>';
-                    }else if(cancel_rsv == '종료' ||  cancel_rsv == '취소'){
+        success: function (data) {
+            var html = '';
+            if (data.success == true) {
+                var data = data.data;
+                var html = '';
+                for (var i = 0; i < data.length; i++) {
+                    html += '<div class="layerPopup alert">';
+                    html += '<div class="layerPopup_wrap">';
+                    html += '<div class="layerPopup_content small">';
+                    html += '<div style="position: relative;display: flex;">';
+                    html += '<p class="txt" style="width: 90%;padding-left: 5%;">에약확인</p>';
+                    html += '<a href="#" class="btn_close" onclick="alertClose();" style="float: right;">닫기</a>';
+                    html += '</div>';
+                    html += '<div class="alliance_sch_list popup">';
+                    html += '<a href="/mo/mypage/group/detail/' + data[i].meeting_idx + '">';
+                    html += '<div class="alliance_sch_item">';
+                    html += '<div class="alliance_sch_sts">';
+                    html +=
+                        '<div class="' +
+                        GroupClass(data[i].meeting_end_date, data[i].delete_yn) +
+                        '">' +
+                        GroupDday(data[i].meeting_end_date, data[i].meeting_start_date, data[i].delete_yn) +
+                        '</div>';
+                    html += '<img src="/static/images/right_arrow.png" />';
+                    html += '</div>';
+                    html += '<h2>' + data[i].meeting_place + '</h2>';
+                    html += '<p class="">' + MyGoupDate2(data[i].meeting_start_date) + '</p>';
+                    html += '<span class="">인원 ' + data[i].meeting_idx_count + '명</span>';
+                    html += '</div>';
+                    html += '</a>';
+                    html += '</div>';
+                    html += '<div style="height: 50px;"></div>';
+                    html += '<div class="layerPopup_bottom">';
+                    if (
+                        cancel_rsv == '1일전' ||
+                        cancel_rsv == '내일' ||
+                        cancel_rsv == '당일' ||
+                        cancel_rsv == '2일전' ||
+                        cancel_rsv == '3일전'
+                    ) {
+                        html += '<div class="btn_group">';
+                        html += '<button class="btn type01">대화방입장</button>';
+                        html += '</div>';
+                    } else if (cancel_rsv == '종료' || cancel_rsv == '취소') {
                         html += '<div class="btn_group">';
                         html += '<button class="btn type01" onclick="mygoupRefresh();">확인</button>';
                         html += '</div>';
-                    }else{
-                        html+='<div class="btn_group multy">';
-                        if(master == 'K'){
-                            html+='<button class="btn type03" onclick="locationMygroup();">내 모임 취소 이동</button>';
-                        }else{
-                            html+='<button class="btn type03" onclick="CancelReservation('+data[i].meeting_idx+');">예약 취소</button>';
+                    } else {
+                        html += '<div class="btn_group multy">';
+                        if (master == 'K') {
+                            html += '<button class="btn type03" onclick="locationMygroup();">내 모임 관리</button>';
+                        } else {
+                            html +=
+                                '<button class="btn type03" onclick="CancelReservation(' +
+                                data[i].meeting_idx +
+                                ');">예약 취소</button>';
                         }
-                        html+='<button class="btn type01">대화방 입장</button>';
-                        html+='</div>';
+                        html += '<button class="btn type01">대화방 입장</button>';
+                        html += '</div>';
                     }
-                    html+='</div>';
-                    html+='</div>';
-                    html+='</div>';
-                    html+='</div>';
-                    
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
                 }
             }
             $('body').append(html);
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.log(error);
-        }
+        },
     });
-    
 }
 
-function locationMygroup(){
+function locationMygroup() {
     window.location.href = '/mo/mypage/mygroup/list';
 }
 
-function CancelReservation(idx){
+function CancelReservation(idx) {
     $.ajax({
         url: '/mo/mypage/mygroup/cancelReservationChk',
-        data : {meetingIdx:idx},
+        data: { meetingIdx: idx },
         type: 'post',
-        success: function(data) {
-            var html ='';
+        success: function (data) {
+            var html = '';
             html += '<div class="layerPopup alert">';
             html += '<div class="layerPopup_wrap">';
             html += '<div class="layerPopup_content msmall">';
             html += '<p class="txt">예약 취소</p>';
             html += '<div class="apply_group">';
-            html += '<p>'+'예약이 취소 되었습니다.'+'</p>';
+            html += '<p>' + '예약이 취소 되었습니다.' + '</p>';
             html += '</div>';
             html += '<div class="layerPopup_bottom">';
             html += '<div class="btn_group">';
@@ -462,45 +489,55 @@ function CancelReservation(idx){
             html += '</div>';
             html += '</div>';
             html += '</div>';
-        
+
             $('body').append(html);
-            
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.log(error);
-        }
+        },
     });
 }
 
-function mygoupRefresh(){
+function mygoupRefresh() {
     alertClose();
     $.ajax({
         url: '/mo/mypage/mygroup/mygroupReservationRefresh',
         type: 'get',
-        success: function(data) {
+        success: function (data) {
             var data = data.data;
-            var html='';
-            for(var i=0;i<data.length;i++){
-                html += '<div class="alliance_sch_list" onclick="javascript:MygroupPopup(' + data[i].meeting_idx + ',\'cancel_rsv_' + data[i].meeting_idx + '\',\'' + data[i].meeting_master + '\')">';
+            var html = '';
+            for (var i = 0; i < data.length; i++) {
+                html +=
+                    '<div class="alliance_sch_list" onclick="javascript:MygroupPopup(' +
+                    data[i].meeting_idx +
+                    ",'cancel_rsv_" +
+                    data[i].meeting_idx +
+                    "','" +
+                    data[i].meeting_master +
+                    '\')">';
                 html += '<div class="alliance_sch_item">';
                 html += '<div class="alliance_sch_sts">';
-                html += '<div class="'+GroupClass(data[i].meeting_end_date, data[i].delete_yn)+'" id="cancel_rsv_' + data[i].meeting_idx + '">' + GroupDday(data[i].meeting_end_date, data[i].meeting_start_date, data[i].delete_yn) + '</div>';
+                html +=
+                    '<div class="' +
+                    GroupClass(data[i].meeting_end_date, data[i].delete_yn) +
+                    '" id="cancel_rsv_' +
+                    data[i].meeting_idx +
+                    '">' +
+                    GroupDday(data[i].meeting_end_date, data[i].meeting_start_date, data[i].delete_yn) +
+                    '</div>';
                 html += '<img src="/static/images/right_arrow.png" />';
                 html += '</div>';
-                html += '<h2>'+data[i].meeting_place+'</h2>';
-                html += '<p class="">'+MyGoupDate2(data[i].meeting_start_date)+'</p>';
-                html += '<span> 인원 '+data[i].meeting_idx_count+'명</span>';
+                html += '<h2>' + data[i].meeting_place + '</h2>';
+                html += '<p class="">' + MyGoupDate2(data[i].meeting_start_date) + '</p>';
+                html += '<span> 인원 ' + data[i].meeting_idx_count + '명</span>';
                 html += '</div>';
-                html += '</div>';   
+                html += '</div>';
             }
-        
+
             $('#mygroup_list_body').html(html);
-            
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.log(error);
-        }
+        },
     });
-
-
 }

@@ -22,6 +22,91 @@ use App\Models\AllianceReservationModel;
 
 class MoAjax extends BaseController
 {
+    public function AImatch()
+    {
+        $word_file_path = APPPATH . 'Data/MemberCode.php';
+        require($word_file_path);
+
+        $session = session();
+        $member_ci = $session->get('ci');
+        $filter = $this->request->getPost('value');
+
+        $query = "SELECT mr.match_rate, mf.file_path, mf.file_name, mb.city, mb.mbti, mb.nickname, SUBSTRING(mb.birthday, 1, 4) as birthyear FROM wh_match_rate mr
+        LEFT JOIN members mb on mr.your_nickname = mb.nickname
+        LEFT JOIN member_files mf on mb.ci = mf.member_ci";
+        $query .= " WHERE mr.member_ci = '" . $member_ci . "'";
+        if ($filter !== "9") {
+            $query .= " AND mb.gender = '" . $filter . "'";
+        }
+        $query .= " AND mr.match_score > '0'";
+        $query .= " ORDER BY CONVERT(mr.match_rate, SIGNED) DESC";
+
+        $MemberModel = new MemberModel();
+        $result = $MemberModel
+            ->query($query)->getResultArray();
+
+        if ($result) {
+            foreach ($result as &$row) {
+                // 각 행의 birthyear 값에 문자열 1을 추가합니다.
+                foreach ($sidoCode as $item) {
+                    if ($item['id'] === $row['city']) $row['city'] = $item['name'];
+                }
+                foreach ($mbtiCode as $item) {
+                    if ($item['id'] === $row['mbti']) $row['mbti'] = $item['name'];
+                }
+                $row['match_rate'] = number_format($row['match_rate'], 0);
+            }
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => $result]);
+        } else {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
+        }
+    }
+
+    public function mainMeetingList()
+    {
+        $MeetingModel = new MeetingModel();
+        //$MeetingFileModel = new MeetingFileModel();
+        // $data['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
+
+        $MeetingModel->orderBy('create_at', 'DESC');
+
+        $currentTime = date('Y-m-d H:i:s');
+
+        $meetings = $MeetingModel
+            ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
+            ->where('wh_meetings.meeting_start_date >=', $currentTime)
+            ->where('wh_meetings.delete_yn', 'N')
+            ->findAll();
+
+        $days = ['일', '월', '화', '수', '목', '금', '토'];
+
+        // 참여 인원 모델
+        $MeetingMembersModel = new MeetingMembersModel();
+
+        // 각 모임에 대한 참여 인원 수 계산
+        foreach ($meetings as &$meeting) { //&로 참조 필요
+            // 모임 시작 시간 포맷팅
+            $meetingDateTimestamp = strtotime($meeting['meeting_start_date']);
+            $meetingDay = date("w", $meetingDateTimestamp); //0~6
+            $dayName = $days[$meetingDay]; //요일
+            $meetingDateTime = date("Y.m.d ", $meetingDateTimestamp) . ' (' . $dayName . ') ' . date(" H:i", $meetingDateTimestamp);
+            $meeting['meetingDateTime'] = $meetingDateTime;
+
+            $memCount = $MeetingMembersModel
+                ->where('meeting_idx', $meeting['idx'])
+                ->where('delete_yn', 'N')
+                ->countAllResults();
+            $meeting['count'] = $memCount;
+        }
+        unset($meeting); //참조 해제
+
+        if ($meetings) {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => $meetings]);
+        } else {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
+        }
+    }
+
     public function delCmt()
     {
 
@@ -1145,7 +1230,7 @@ class MoAjax extends BaseController
             $title = $this->request->getPost('title');
             $content = $this->request->getPost('content');
             //$reservation_previous = $this->request->getPost('reservation_previous');
-            $meeting_place = $this->request->getPost('meeting_place');
+            $meeting_place = $this->request->getPost('meeting_place') . " " . $this->request->getPost('meeting_place_detail');
             $membership_fee = $this->request->getPost('membership_fee');
 
             // CI조회
@@ -1508,7 +1593,7 @@ class MoAjax extends BaseController
         }
         if (!empty($myPartner['partner_gender']))  // 성별 거르기
         {
-            $query .= " OR (gender = '" . $myPartner['partner_gender'] . ")";
+            $query .= " OR (gender = '" . $myPartner['partner_gender'] . "')";
         }
         $datas = $MemberModel
             ->query($query)->getResultArray();

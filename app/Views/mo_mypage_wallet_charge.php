@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -14,8 +13,8 @@
     <script src="https://pay.nicepay.co.kr/v1/js/"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
     <script>
-        
-        </script>
+
+    </script>
 </head>
 
 <body class="mo_wrap">
@@ -23,10 +22,11 @@
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
 
-        <?php $title = "내지갑"; include 'header.php'; ?>
+        <?php $title = "내지갑";
+        include 'header.php'; ?>
 
         <div class="sub_wrap">
-            <div class="loading"><img src="/static/images/loading.gif"/></div>
+            <div class="loading"><img src="/static/images/loading.gif" /></div>
             <div class="content_wrap">
                 <div class="mypage_wallet charge">
                     <div class="mypage_wallet_point">
@@ -39,7 +39,7 @@
                         <div class="">
                             <div class="mypage_wallet_select">
                                 <p>구매포인트</p>
-                                <div class="charge_select1 selected" >
+                                <div class="charge_select1 selected">
                                     <p data-points="5000" data-price="5500">5,000P (5,500원)</p>
                                 </div>
                                 <div class="charge_select2" style="margin-top: 10px;">
@@ -75,7 +75,7 @@
                                         <h2>총 결제금액</h2>
                                     </div>
                                     <div class="amount_pay_right">
-                                        <p id="selected_pay_type">결재선택</p>
+                                        <p id="selected_pay_type">결제선택</p>
                                         <h2 id="total_price">5,500</h2>
                                     </div>
                                 </div>
@@ -85,11 +85,11 @@
                 </div>
             </div>
             <div style="height: 50px;"></div>
-<footer class="footer">
+            <footer class="footer">
 
                 <div class="pay_agree_desc">
                     <div class="chk_box">
-                        <input type="checkbox" id="agree01" name="chkDefault00" >
+                        <input type="checkbox" id="agree01" name="chkDefault00">
                         <label class="agree_cont_label" for="agree01">위 구매조건 확인 및 결제진행에 동의</label>
                     </div>
                     <p>· 회원탈퇴 시 회원정보가 삭제됨으로 구매하신 포인트는
@@ -97,7 +97,7 @@
                 </div>
                 <div class="btn_group">
                     <button type="button" class="btn type01" onclick="serverAuth()">충전하기</button>
-                    
+
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy

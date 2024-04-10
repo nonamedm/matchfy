@@ -87,13 +87,23 @@
                             </p>
                         </li>
                         <hr class="hoz_part" />
-                        <li onclick="moveToUrl('/mo/mypage/mygroup/list')">
+                        <li onclick="moveToUrl('/mo/mypage/mygroup/myList')">
                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15.3001 16.2001V13.5001C15.3001 11.5119 13.6883 9.90015 11.7001 9.90015H6.30007C4.31185 9.90015 2.70007 11.5119 2.70007 13.5001V16.2001" stroke="#111111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                 <circle cx="9.00006" cy="4.50015" r="2.85" stroke="#111111" stroke-width="1.5" />
                             </svg>
                             <p>
                                 내 모임
+                            </p>
+                        </li>
+                        <hr class="hoz_part" />
+                        <li onclick="moveToUrl('/mo/mypage/mygroup/list')">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.3001 16.2001V13.5001C15.3001 11.5119 13.6883 9.90015 11.7001 9.90015H6.30007C4.31185 9.90015 2.70007 11.5119 2.70007 13.5001V16.2001" stroke="#111111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <circle cx="9.00006" cy="4.50015" r="2.85" stroke="#111111" stroke-width="1.5" />
+                            </svg>
+                            <p>
+                                내 모임 관리
                             </p>
                         </li>
                         <hr class="hoz_part" />

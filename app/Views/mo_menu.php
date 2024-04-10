@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -30,9 +29,9 @@
                     </div>
                     <div class="menu_cont">
                         <p>
-                            <a onclick="moveToUrl('/mo/menu')">매칭모임</a>
+                            <a onclick="moveToUrl('/mo/mypage/group/list')">매칭모임</a>
                         </p>
-                        <p><a onclick="moveToUrl('/mo/partner')">매칭정보 입력</a></p>
+                        <!-- <p><a onclick="moveToUrl('/mo/partner')">매칭정보 입력</a></p> -->
                         <p><a onclick="moveToUrl('/mo/matchFeed')">매칭피드</a></p>
                         <p><a onclick="moveToUrl('/mo/alliance/list')">제휴점</a></p>
                         <p><a onclick="moveToUrl('/mo/matchFeed')">회원 등급 업그레이드</a></p>

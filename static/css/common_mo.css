@@ -767,7 +767,11 @@ td {
     z-index: 2;
 }
 
-.mygroup_list a, a:visited, a:focus, a:hover, a:active {
+.mygroup_list a,
+a:visited,
+a:focus,
+a:hover,
+a:active {
     color: inherit;
     text-decoration: none;
     outline: none;
@@ -782,7 +786,6 @@ td {
 a.ended:hover .ended_overlay {
     background-color: rgba(0, 0, 0, 0.8);
 }
-
 
 /* group detail*/
 .group_deatil_img img {
@@ -812,7 +815,7 @@ a.ended:hover .ended_overlay {
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    color: #ff0267;;
+    color: #ff0267;
 }
 .group_detail_period {
     font-size: 12px;
@@ -836,7 +839,7 @@ a.ended:hover .ended_overlay {
 }
 .group_detail_location {
     width: 335px;
-    height: 90px;
+    min-height: 90px;
     border: 1px solid #dddddd;
     border-radius: 5px;
     margin: 30px 0 0 0;
@@ -901,7 +904,11 @@ a.ended:hover .ended_overlay {
     flex-wrap: wrap;
     justify-content: space-between;
 }
-.group_search_list a, a:visited, a:focus, a:hover, a:active {
+.group_search_list a,
+a:visited,
+a:focus,
+a:hover,
+a:active {
     color: inherit;
     text-decoration: none;
     outline: none;
@@ -1012,7 +1019,7 @@ a.ended:hover .ended_overlay {
     margin-top: 20px;
 }
 .group_category .highlighted {
-    border: 2px solid #FFA500; /* 오렌지색 테두리 */
+    border: 2px solid #ffa500; /* 오렌지색 테두리 */
     border-radius: 50%;
 }
 .group_category div {
@@ -1681,6 +1688,12 @@ a.ended:hover .ended_overlay {
 
     color: #999999;
 }
+.input_ico_search.search_meet_place input {
+    padding: 15px 40px 15px 15px;
+}
+.input_ico_search.search_meet_detail input {
+    margin-top: 20px;
+}
 .form_row input::placeholder {
     font-family: 'Pretendard-Regular';
     color: #999999;
@@ -1717,6 +1730,7 @@ a.ended:hover .ended_overlay {
     height: 18px;
     top: 15px;
     right: 30px;
+    cursor: pointer;
 }
 .form_row.signin_form .signin_form_div.input_btn input {
     width: 250px;
@@ -3397,7 +3411,7 @@ input[type='number']::-webkit-inner-spin-button {
     display: none;
     display: flex;
 }
-.meet_menu_header{
+.meet_menu_header {
     margin-left: 10px;
 }
 /* meetings */
@@ -3406,6 +3420,6 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 .form_row.signin_form .signin_form_div .multy_input input {
-    width: 160px !important; 
+    width: 160px !important;
     margin: 3px;
 }

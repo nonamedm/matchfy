@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -20,34 +19,41 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        
-        <?php $title = "매칭모임"; include 'header.php'; ?>
 
+        <?php $title = "매칭모임";
+        include 'header.php'; ?>
+        <?php $word_file_path = APPPATH . 'Data/MeetingCode.php';
+        require($word_file_path); ?>
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="group_deatil_img">
-                    <?php if ($image): ?>
+                    <?php if ($image) : ?>
                         <img src="/<?= $image['file_path'] ?><?= $image['file_name'] ?>" />
-                    <?php else: ?>
+                    <?php else : ?>
                         <img src="/static/images/group_deatil.png" />
                     <?php endif; ?>
                 </div>
                 <div class="group_detail_info">
                     <div class="group_detail_header">
-                        <div class="group_detail_type">data<?php $postData ?></div>
-                        <p>매칭률 <span><?=$matching_rate?>%</span></p>
+                        <div class="group_detail_type"><?php foreach ($categoryCode as $item) {
+                                                            if ($item['value'] === $category) {
+                                                                echo $item['name'];
+                                                            }
+                                                        }
+                                                        ?><?php $postData ?></div>
+                        <p>매칭률 <span><?= $matching_rate ?>%</span></p>
                     </div>
                     <div class="group_detail_title">
-                        <h2><?=$title?></h2>
-                        <p class="group_detail_period"><?=$recruitment_start_date?> ~ <?=$recruitment_end_date?> 까지 모집중</p>
-                        <p class="group_detail_schedule"><?=$meeting_start_date?> 모임</p>
-                        <div class="group_particpnt" onclick="meetingMemberList('<?=$idx?>')">
-                            <span>신청 <?=$meeing_count?></span>/<?=$number_of_people?>명
+                        <h2><?= $meeting_title ?></h2>
+                        <p class="group_detail_period"><?= $recruitment_start_date ?> ~ <?= $recruitment_end_date ?> 까지 모집중</p>
+                        <p class="group_detail_schedule"><?= $meeting_start_date ?> 모임</p>
+                        <div class="group_particpnt" onclick="meetingMemberList('<?= $idx ?>')">
+                            <span>신청 <?= $meeing_count ?></span>/<?= $number_of_people ?>명
                         </div>
                     </div>
                     <hr class="hoz_part" />
                     <div class="group_detail_cont">
-                    <?=$content?>
+                        <?= $content ?>
                         <div class="group_detail_location">
                             <div>
                                 <img src="/static/images/group_location_detail.png" />
@@ -55,10 +61,10 @@
                             <div style="padding: 10px 0 0 20px;">
                                 <div class="group_location">
                                     <img src="/static/images/ico_location_16x16.png" />
-                                    <?=$meeting_place?>
+                                    <?= $meeting_place ?>
                                 </div>
-                                <p class="group_location_schedule"><?=$meeting_start_date?></p>
-                                <p class="group_location_fee"><span><?=number_format($membership_fee)?>원</span></p>
+                                <p class="group_location_schedule"><?= $meeting_start_date ?></p>
+                                <p class="group_location_fee"><span><?= number_format($membership_fee) ?>원</span></p>
                             </div>
                         </div>
                     </div>
@@ -71,9 +77,9 @@
             <div style="height: 50px;"></div>
             <footer class="footer">
                 <div class="btn_group">
-                    <?php if ($is_recruitment_full): ?>
+                    <?php if ($is_recruitment_full) : ?>
                         <button type="button" class="btn type01 disabled">모집 마감</button>
-                    <?php else: ?>
+                    <?php else : ?>
                         <button type="button" class="btn type01" onclick="meetingApplication('<?= $idx ?>')">함께하기</button>
                     <?php endif; ?>
                 </div>
@@ -106,7 +112,7 @@
         // var geocoder = new kakao.maps.services.Geocoder();
 
         // // 주소로 좌표를 검색합니다
-        // geocoder.addressSearch('<?=$meeting_place?>', function(result, status) {
+        // geocoder.addressSearch('<?= $meeting_place ?>', function(result, status) {
 
         //     // 정상적으로 검색이 완료됐으면 
         //     if (status === kakao.maps.services.Status.OK) {
@@ -121,7 +127,7 @@
 
         //         // 인포윈도우로 장소에 대한 설명을 표시합니다
         //         var infowindow = new kakao.maps.InfoWindow({
-        //             content: `<div style="width:150px;text-align:center;padding:6px 0;"><?=$meeting_place?></div>`
+        //             content: `<div style="width:150px;text-align:center;padding:6px 0;"><?= $meeting_place ?></div>`
         //         });
         //         infowindow.open(map, marker);
 
@@ -129,7 +135,6 @@
         //         map.setCenter(coords);
         //     } 
         // });    
-
     </script>
 
     <!-- -->
