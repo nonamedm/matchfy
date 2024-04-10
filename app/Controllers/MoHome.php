@@ -1438,12 +1438,12 @@ class MoHome extends BaseController
     
         return $timeSlots;
     }
-    public function alliancePayment($idx): string
+    public function alliancePayment($idx,$people,$date,$time): string
     {
         $session = session();
         $ci = $session->get('ci');
 
-        $totalAmount = $this->request->getVar('totalAmount');
+        // $totalAmount = $this->request->getVar('totalAmount');
         $points = $this->mypageGetPoint();
 
         $MemberModel = new MemberModel();
@@ -1465,11 +1465,21 @@ class MoHome extends BaseController
                 ->orderBy('created_at', 'DESC')
                 ->first();
 
+        $AllianceModel = new AllianceModel();
+        $alliancePay = $AllianceModel
+                    ->select('alliance_pay')
+                    ->where('idx', $idx)
+                    ->first();
+
         $data = [
-            'totalAmount' => $totalAmount,
+            'alliancePay' =>intval($alliancePay['alliance_pay']),
             'points' => $points,
             'user' => $user,
-            'privacys' => $privacy
+            'privacys' => $privacy,
+            'idx'=>$idx,
+            'people'=>$people,
+            'date'=>$date,
+            'time'=>$time
         ];
 
         // echo '<pre>';
@@ -1540,7 +1550,12 @@ class MoHome extends BaseController
         $ci = $session->get('ci');
 
         $allianceIdx = intval($this->request->getPost('allianceIdx'));
-        $alliancePayment = intval($this->request->getPost('alliancePayment'));
+        $AllianceModel = new AllianceModel();
+        $alliancePay = $AllianceModel
+                    ->select('alliance_pay')
+                    ->where('idx', $allianceIdx)
+                    ->first();
+        $alliancePayment = intval($alliancePay['alliance_pay']);
         $numberPeople = intval($this->request->getPost('numberPeople'));
         $reservationDate = $this->request->getPost('reservationDate');
         $reservationTime = $this->request->getPost('reservationTime');
@@ -1550,10 +1565,9 @@ class MoHome extends BaseController
         if ($mypoint < $alliancePayment) { //보유포인트가 모자랄 경우
             return $this->response->setJSON(['success' => true, 'msg' => '충전후 사용해주세요.']);
         } else {
-            
             //예약한 제휴지점 결재
             $PointModel = new PointModel();
-
+            
             $AllianceModel = new AllianceModel();
             $allianceStore = $AllianceModel->select('member_ci,alliance_ci,company_name')->where('idx', $allianceIdx)->first();
 
@@ -1571,18 +1585,18 @@ class MoHome extends BaseController
             } else {
                 return $this->response->setJSON(['success' => false, 'msg' => '제휴점이 존재하지 않습니다.']);
             }
-
+            
             //예약추가
             $MemberModel = new MemberModel();
             $memberInfo = $MemberModel ->select('name,mobile_no')->where('ci', $ci)->first();
-
+            
             $allianceRevers = new AllianceReservationModel();
             
             $reversData = [
                 'wh_alliance_idx'=>$allianceIdx, 
+                'member_ci'=>$ci,
                 'alliance_name'=>$allianceStore['company_name'], 
                 'customer_name'=>$memberInfo['name'], 
-                'member_ci'=>$ci,
                 'customer_contact'=>$memberInfo['mobile_no'],
                 'number_of_people'=>$numberPeople,
                 'reservation_amount'=>$alliancePayment, 
@@ -1591,14 +1605,15 @@ class MoHome extends BaseController
                 'reservation_time'=>$reservationTime, 
                 'reg_date'=>date('Y-m-d H:i:s'),
             ];
+            
             $result = $allianceRevers->insert($reversData);
 
             //제휴점으로 포인트 추가
             $allianceAllPoint = $PointModel->select('my_point')->where('member_ci', $allianceStore['member_ci'])->orderBy('create_at', 'DESC')->first();
-
+            
             $allianceAddPointData = [
                 'member_ci' => $allianceStore['member_ci'],
-                'my_point' => $allianceAllPoint + $alliancePayment,
+                'my_point' => intval($allianceAllPoint) + $alliancePayment,
                 'use_point' => $alliancePayment,
                 'point_details' => $reservationDate.' '.$reservationTime . " ( 예약자 : ".$memberInfo['name'] . ")",
                 'create_at' => date('Y-m-d H:i:s'),
