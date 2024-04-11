@@ -1608,13 +1608,17 @@ class MoHome extends BaseController
             
             $result = $allianceRevers->insert($reversData);
 
-            //제휴점으로 포인트 추가
-            $allianceAllPoint = $PointModel->select('my_point')->where('member_ci', $allianceStore['member_ci'])->orderBy('create_at', 'DESC')->first();
             
+            //제휴점으로 포인트 추가
+            $pointModel2 = new PointModel();
+            $allianceAllPoint = $pointModel2->select('my_point')->where('member_ci', $allianceStore['member_ci'])->orderBy('create_at', 'DESC')->first();
+
+            // return var_dump(intval($allianceAllPoint['my_point']));
+
             $allianceAddPointData = [
                 'member_ci' => $allianceStore['member_ci'],
-                'my_point' => intval($allianceAllPoint) + $alliancePayment,
-                'use_point' => $alliancePayment,
+                'my_point' => intval($allianceAllPoint['my_point']) + $alliancePayment,
+                'add_point' => $alliancePayment,
                 'point_details' => $reservationDate.' '.$reservationTime . " ( 예약자 : ".$memberInfo['name'] . ")",
                 'create_at' => date('Y-m-d H:i:s'),
                 'point_type' => 'A',
@@ -1623,19 +1627,22 @@ class MoHome extends BaseController
             $PointModel->insert($allianceAddPointData);
 
             if ($result) {
-                return $this->response->setJSON(['success' => true, 'msg' => $allianceStore->company_name .'예약 되었습니다.']);
+                return $this->response->setJSON(['status' => 'success', 'msg' => '예약 되었습니다.']);
             } else {
-                return $this->response->setJSON(['success' => false, 'msg' => '예약이 실패 하였습니다. 다시 확인 해주세요.']);
+                return $this->response->setJSON(['status' => 'error', 'msg' => '예약이 실패 하였습니다. 다시 확인 해주세요.']);
             }
         }
     }
 
-    public function allianceSuccess($num){
-        
+    public function allianceAlert($num){
+        $data['num'] = $num;
         if($num == 1){
             $data['msg'] ="제휴 신청 후 관리자 승인으로 제휴점에 입점 됩니다.";
+        }else if($num == 2){
+            $data['msg'] ="예약완료 되었습니다.";
         }else{
-            $data['msg'] ="제휴 신청이 제대로 되지 않았습니다.";
+            $data['msg'] ="제대로 확인 되지 않았습니다. 확인 부탁 드립니다.";
+            return view('mo_alliance_fail',$data);
         }
         
         return view('mo_alliance_success',$data);
