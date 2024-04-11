@@ -3423,3 +3423,8 @@ input[type='number']::-webkit-inner-spin-button {
     width: 160px !important;
     margin: 3px;
 }
+
+.ui-menu.ui-widget.ui-widget-content.ui-autocomplete.ui-front {
+    max-height: 300px;
+    overflow-y: scroll;
+}

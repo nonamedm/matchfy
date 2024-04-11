@@ -210,8 +210,10 @@
 
 
     <!-- SCRIPTS -->
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=smqlge9tsx&submodules=geocoder"></script>
     <script>
         $(function() {
+            initMap();
             //input을 datepicker로 선언
             $("#datepicker").datepicker({
                 dateFormat: 'yy-mm-dd' //달력 날짜 형태
@@ -352,7 +354,7 @@
                     const postData = {
                         'confmKey': 'devU01TX0FVVEgyMDI0MDQwMjIzMDExNzExNDY1NTU=',
                         'currentPage': '1',
-                        'countPerPage': '20',
+                        'countPerPage': '100',
                         'keyword': request.term,
                         'resultType': 'json'
                     }
@@ -366,8 +368,8 @@
                             response(
                                 $.map(data.results.juso, function(item) {
                                     return {
-                                        label: item.detBdNmList,
-                                        value: item.jibunAddr ? item.jibunAddr : item.rn + " " + item.bdNm,
+                                        label: item.jibunAddr,
+                                        value: item.jibunAddr,
                                         idx: item.zipNo,
                                     }
                                 })
@@ -378,11 +380,38 @@
                 minLength: 2, // 최소 문자 수
                 select: function(event, ui) {
                     // 아이템 선택 시 동작
-                    console.log(ui.item.value); // 선택된 주소명
+                    console.log(ui.item.value); // 선택된 주소명                    
+
+                    // todo: 로딩화면 호출
+                    naver.maps.Service.geocode({
+                        address: ui.item.value
+                    }, function(status, response) {
+                        if (status === naver.maps.Service.Status.ERROR) {
+                            console.log('올바른 주소를 입력해 주세요');
+                        }
+                        // 성공 시의 response 처리
+                        // todo: 로딩화면 종료
+                        map = new naver.maps.Map('map', {
+                            center: new naver.maps.LatLng(response.result.items[0].point.y, response.result.items[0].point.x),
+                            zoom: 18
+                        });
+                        var marker = new naver.maps.Marker({
+                            position: new naver.maps.LatLng(response.result.items[0].point.y, response.result.items[0].point.x),
+                            map: map
+                        });
+                    });
                 }
             });
         });
 
+        var map = null;
+
+        function initMap() {
+            map = new naver.maps.Map('map', {
+                center: new naver.maps.LatLng(37.3595704, 127.105399),
+                zoom: 10
+            });
+        }
 
         function searchPlaces() {
             var keyword = document.getElementById('meeting_place').value;
