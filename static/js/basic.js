@@ -1450,29 +1450,20 @@ const alliancePaymentChk = () => {
     $('.loading').show();
     $('.loading_bg').show();
     
-    var allianceIdxValue = 139;
-    var alliancePaymentValue = 40000;
-    var numberPeopleValue = 5;
-    var reservationDateValue ='2024-04-07';
-    var reservationTimeValue='17:00';
+    // var allianceIdxValue = 139;
+    // var numberPeopleValue = 5;
+    // var reservationDateValue ='2024-04-07';
+    // var reservationTimeValue='17:00';
 
-    var postData = {
-        allianceIdx:allianceIdxValue,
-        alliancePayment:alliancePaymentValue,
-        numberPeople:numberPeopleValue,
-        reservationDate:reservationDateValue,
-        reservationTime:reservationTimeValue,
-    };
     setTimeout(function(){
         $.ajax({
             url: '/mo/alliance/alliancePaymentChk', // todo : 추후 본인인증 연결
             type: 'POST',
             data: {
-                allianceIdx:139,
-                alliancePayment:4000,
-                numberPeople:5,
-                reservationDate:'2024-04-07',
-                reservationTime:'17:00',
+                allianceIdx:alliance_idx,
+                numberPeople:reserv_people,
+                reservationDate:reserv_date,
+                reservationTime:reserv_time,
             },
             success: function (data) {
                 console.log(data);

@@ -11,6 +11,13 @@
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
     <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
+    <script>
+        var alliance_idx = <?=$idx?>;
+        var reserv_people = <?=$people?>;
+        var reserv_date ='<?=strval($date)?>';
+        var reserv_time='<?=strval($time)?>';
+    </script>
 </head>
 
 <body class="mo_wrap">
@@ -32,7 +39,7 @@
                             <h2>총 결제금액</h2>
                         </div>
                         <div class="amount_pay_right">
-                            <h2><?=number_format($totalAmount, 0)?> 원</h2>
+                            <h2><?=number_format($alliancePay, 0)?> 원</h2>
                         </div>
                     </div>
                     <hr class="hoz_part" />
@@ -96,7 +103,7 @@
                 </div>
                 <div class="btn_group multy">
                     <button type="button" class="btn type02" id="cancelButton">취소</button>
-                    <button type="button" class="btn type01" id="alliance_reserve">동의하고 결제</button>
+                    <button type="button" class="btn type01" id="alliance_reserve" onclick="alliancePaymentChk()">동의하고 결제</button>
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy
@@ -155,7 +162,7 @@
 
                 //결제 포인트 체크
                 var points = <?= $points ?>;
-                var alliancePay = <?= $totalAmount ?>;
+                var alliancePay = <?=$alliancePay?>;
 
                 if (alliancePay > points) {
                     alert('보유포인트가 부족합니다.');

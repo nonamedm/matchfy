@@ -245,6 +245,7 @@
 
             //validation check
             $('#alliance_reserve').click(function() {
+                var reserveTime = $('.alliance_reserv_time.on').text();
                 // 회차 선택 확인
                 if ($('.alliance_reserv_time.on').length === 0) {
                     alert('회차를 선택해 주세요.');
@@ -263,7 +264,8 @@
                     return false;
                 }
 
-                moveToUrl('/mo/alliance/payment/<?= $idx ?>?totalAmount=' + totalAmount);
+                // moveToUrl('/mo/alliance/payment/<?= $idx ?>?totalAmount=' + totalAmount);
+                moveToUrl('/mo/alliance/payment/<?= $idx ?>/'+quantity+'/'+selectedDate+'/'+reserveTime);
             });
         });
 
