@@ -28,6 +28,8 @@
         <?php $title = "제휴"; include 'header.php'; ?>
 
         <div class="sub_wrap">
+            <div class="loading"><img src="/static/images/loading.gif"/></div>
+            <div class="loading_bg"></div>
             <div class="content_wrap">
                 <div class="alliance_payment">
                     <div class="alliance_payment_point">

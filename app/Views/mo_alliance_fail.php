@@ -24,9 +24,9 @@
         <div class="sub_wrap">
             <div class="content_wrap center_wrap">
                 <div class="content_body" style="margin-top:235px">
-                    <img src="/static/images/alliance_succese.png" />
+                    <img src="/static/images/alliance_fail.png" />
                     <div class="success_text">
-                    <p><?= ($num == 1) ? "제휴 신청 완료" : (($num == 2) ? "제휴 예약완료" : "완료") ?></p>
+                        <p>제휴 신청 에러</p>
                         <em><?=$msg?></em>
                     </div>
                 </div>

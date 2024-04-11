@@ -1337,7 +1337,7 @@ const allianceUp = () => {
                     $('.loading_bg').show();
                     if (data.status === 'success') {
                         // moveToUrl
-                        window.location.href ="/mo/alliance/success/1";
+                        window.location.href ="/mo/alliance/alert/1";
                     } else if (data.status === 'error') {
                         window.location.href ="/mo/alliance/fail/0";
                     } else {
@@ -1449,11 +1449,6 @@ const allianceSave = () => {
 const alliancePaymentChk = () => {
     $('.loading').show();
     $('.loading_bg').show();
-    
-    // var allianceIdxValue = 139;
-    // var numberPeopleValue = 5;
-    // var reservationDateValue ='2024-04-07';
-    // var reservationTimeValue='17:00';
 
     setTimeout(function(){
         $.ajax({
@@ -1470,9 +1465,9 @@ const alliancePaymentChk = () => {
                 $('.loading').show();
                 $('.loading_bg').show();
                 if (data.status === 'success') {
-                    window.location.href ="/mo/alliance/success/1";
+                    window.location.href ="/mo/alliance/alert/2";
                 } else if (data.status === 'error') {
-                    window.location.href ="/mo/alliance/fail/0";
+                    window.location.href ="/mo/alliance/alert/0";
                 } else {
                     alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                 }

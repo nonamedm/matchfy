@@ -177,7 +177,7 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="alliance_pay" class="signin_label">인당 예약금 설정</label>
+                                <label for="alliance_pay" class="signin_label">예약금 설정</label>
                                 <div>
                                     <input id="alliance_pay" type="number" name="alliance_pay" value="" placeholder="ex)10,000">
                                 </div>
