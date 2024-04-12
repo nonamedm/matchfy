@@ -885,15 +885,15 @@ const meetingSave = (postData) => {
         return;
     }
     if ($('#datepicker2').val().trim() === '') {
-        alert('모임일자 시작일을 입력해 주세요.');
+        alert('모임일자를 입력해 주세요.');
         $('#datepicker2').focus();
         return;
     }
-    if ($('#datepicker3').val().trim() === '') {
-        alert('모임일자 종료일을 입력해 주세요.');
-        $('#datepicker3').focus();
-        return;
-    }
+    // if ($('#datepicker3').val().trim() === '') {
+    //     alert('모임일자 종료일을 입력해 주세요.');
+    //     $('#datepicker3').focus();
+    //     return;
+    // }
     if ($('#number_of_people').val().trim() === '') {
         alert('모집 인원을 입력해 주세요.');
         $('#number_of_people').focus();
@@ -1200,7 +1200,7 @@ const allianceUp = () => {
     var filesArray = Array.from(filesInput.files);
 
     let tempValidation = false;
-    if($('#alliance_category').val().trim() ==='00'){
+    if ($('#alliance_category').val().trim() === '00') {
         alert('제휴 유형을 선택해 주세요.');
         tempValidation = false;
         $('#alliance_category').focus();
@@ -1271,13 +1271,13 @@ const allianceUp = () => {
         $('#alliance_pay').focus();
         $('.loading').hide();
         $('.loading_bg').hide();
-    } else if($('#alliance_photo').val().trim() === ''){
+    } else if ($('#alliance_photo').val().trim() === '') {
         alert('메인 사진을 등록 해주세요.');
         tempValidation = false;
         $('#alliance_photo').focus();
         $('.loading').hide();
         $('.loading_bg').hide();
-    } else if(filesArray.length === 0){
+    } else if (filesArray.length === 0) {
         alert('상세 사진을 등록 해주세요.');
         tempValidation = false;
         $('#alliance_photo_detail').focus();
@@ -1289,7 +1289,7 @@ const allianceUp = () => {
         $('#alliance_cont').focus();
         $('.loading').hide();
         $('.loading_bg').hide();
-    }else if($('#agree01').is(':checked') ==false){
+    } else if ($('#agree01').is(':checked') == false) {
         alert('동의 체크 해주세요.');
         tempValidation = false;
         $('#agree01').focus();
@@ -1298,7 +1298,7 @@ const allianceUp = () => {
     }
 
     if (
-        $('#alliance_category').val() !=='' &&
+        $('#alliance_category').val() !== '' &&
         $('#alliance_number').val() !== '' &&
         $('#alliance_email').val() !== '' &&
         $('#alliance_name').val() !== '' &&
@@ -1312,17 +1312,14 @@ const allianceUp = () => {
         $('#alliance_pay').val() !== '' &&
         $('#alliance_photo').val() !== '' &&
         filesArray.length !== 0 &&
-        $('#alliance_cont').val() !== ''&&
+        $('#alliance_cont').val() !== '' &&
         $('#agree01').is(':checked')
-        
     ) {
         tempValidation = true;
     }
-    
-    
-    if(tempValidation){
-        
-        setTimeout(function(){
+
+    if (tempValidation) {
+        setTimeout(function () {
             $.ajax({
                 url: '/ajax/alianceUp', // todo : 추후 본인인증 연결
                 type: 'POST',
@@ -1331,15 +1328,14 @@ const allianceUp = () => {
                 contentType: false,
                 async: false,
                 success: function (data) {
-    
                     console.log(data);
                     $('.loading').show();
                     $('.loading_bg').show();
                     if (data.status === 'success') {
                         // moveToUrl
-                        window.location.href ="/mo/alliance/alert/1";
+                        window.location.href = '/mo/alliance/alert/1';
                     } else if (data.status === 'error') {
-                        window.location.href ="/mo/alliance/fail/0";
+                        window.location.href = '/mo/alliance/fail/0';
                     } else {
                         alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                     }
@@ -1356,7 +1352,6 @@ const allianceUp = () => {
             });
         }, 2000);
     }
-
 };
 
 const allianceFiltering = (category, searchText, filterOption) => {
@@ -1417,7 +1412,6 @@ const allianceFiltering = (category, searchText, filterOption) => {
 };
 
 const allianceSave = () => {
-
     if ($('.alliance_reserv_time.on').length === 0) {
         alert('회차를 선택해 주세요.');
         return;
@@ -1450,24 +1444,24 @@ const alliancePaymentChk = () => {
     $('.loading').show();
     $('.loading_bg').show();
 
-    setTimeout(function(){
+    setTimeout(function () {
         $.ajax({
             url: '/mo/alliance/alliancePaymentChk', // todo : 추후 본인인증 연결
             type: 'POST',
             data: {
-                allianceIdx:alliance_idx,
-                numberPeople:reserv_people,
-                reservationDate:reserv_date,
-                reservationTime:reserv_time,
+                allianceIdx: alliance_idx,
+                numberPeople: reserv_people,
+                reservationDate: reserv_date,
+                reservationTime: reserv_time,
             },
             success: function (data) {
                 console.log(data);
                 $('.loading').show();
                 $('.loading_bg').show();
                 if (data.status === 'success') {
-                    window.location.href ="/mo/alliance/alert/2";
+                    window.location.href = '/mo/alliance/alert/2';
                 } else if (data.status === 'error') {
-                    window.location.href ="/mo/alliance/alert/0";
+                    window.location.href = '/mo/alliance/alert/0';
                 } else {
                     alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                 }
@@ -1483,5 +1477,4 @@ const alliancePaymentChk = () => {
             },
         });
     }, 2000);
-
 };

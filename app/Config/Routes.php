@@ -123,6 +123,8 @@ $routes->post('/ajax/AImatch', 'MoAjax::AImatch');
 $routes->post('/ajax/mainMeetingList', 'MoAjax::mainMeetingList');
 $routes->post('/ajax/allianceFilter', 'MoAjax::allianceFiltering');
 $routes->get('/ajax/alliance/reservation', 'MoAjax::allianceReservation');
+$routes->post('/ajax/myAlliance', 'MoAjax::myAlliance');
+$routes->post('/ajax/myAllianceDetail', 'MoAjax::myAllianceDetail');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

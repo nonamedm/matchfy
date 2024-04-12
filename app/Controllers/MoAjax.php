@@ -1458,7 +1458,7 @@ class MoAjax extends BaseController
             ) AS bf ON bf.alliance_idx = a.idx
             LEFT JOIN wh_alliance_files b ON b.idx = bf.idx
             WHERE " . $whereConditions . "
-            ORDER BY a.idx ASC";   
+            ORDER BY a.idx ASC";
 
         $alliances = $AllianceModel->query($query, $bindParams)->getResultArray();
 
@@ -1503,6 +1503,89 @@ class MoAjax extends BaseController
         // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
         return $this->response->setJSON($reservations);
     }
+
+    public function myAlliance()
+    {
+        $session = session();
+        $member_ci = $session->get('ci');
+
+
+        $AllianceReservationModel = new AllianceReservationModel();
+
+        // 동적 WHERE 절 구성 시작
+        $whereConditions = "a.delete_yn = 'N'";
+        $bindParams = [];
+
+        // 카테고리 필터링 조건
+        if (!empty($member_ci)) {
+            $whereConditions .= " AND member_ci = :member_ci:";
+            $bindParams['member_ci'] = $member_ci;
+        }
+
+        $query = "SELECT *
+            FROM wh_alliance_reservation a
+            
+            WHERE " . $whereConditions . "
+            ORDER BY a.idx ASC";
+
+        $reservations = $AllianceReservationModel->query($query, $bindParams)->getResultArray();
+        // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
+        return $this->response->setJSON($reservations);
+    }
+    public function myAllianceDetail()
+    {
+        $session = session();
+        $member_ci = $session->get('ci');
+        $idx = $this->request->getPost('value');
+
+        $AllianceReservationModel = new AllianceReservationModel();
+
+        // 동적 WHERE 절 구성 시작
+        $whereConditions = "a.delete_yn = 'N'";
+        $bindParams = [];
+
+        // 카테고리 필터링 조건
+        if (!empty($member_ci)) {
+            $whereConditions .= " AND member_ci = :member_ci:";
+            $bindParams['member_ci'] = $member_ci;
+        }
+        if (!empty($idx)) {
+            $whereConditions .= " AND wh_alliance_idx = :wh_alliance_idx:";
+            $bindParams['wh_alliance_idx'] = $idx;
+        }
+        // idx 조작방지를 위해 한번 더 조회하는것
+        $query = "SELECT *
+            FROM wh_alliance_reservation a
+            
+            WHERE " . $whereConditions . "
+            ORDER BY a.idx ASC";
+
+        $reservations = $AllianceReservationModel->query($query, $bindParams)->getResultArray();
+
+        if ($reservations) {
+            $AllianceModel = new AllianceModel();
+
+            // 동적 WHERE 절 구성 시작
+            $whereConditions = "a.delete_yn = 'N'";
+            $bindParams = [];
+
+            // 카테고리 필터링 조건
+            $whereConditions .= " AND idx = :wh_alliance_idx:";
+            $bindParams['wh_alliance_idx'] = $reservations[0]['wh_alliance_idx'];
+
+            // idx 조작방지를 위해 한번 더 조회하는것
+            $query = "SELECT a.address, a.alliance_pay, a.detailed_address
+            FROM wh_alliance a
+            WHERE " . $whereConditions . "
+            ORDER BY a.idx ASC";
+
+            $alliance = $AllianceReservationModel->query($query, $bindParams)->getResultArray();
+            $alliance['reservation'] = $reservations[0];
+        }
+        // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
+        return $this->response->setJSON($alliance);
+    }
+
     public function chgExcept()
     {
         $word_file_path = APPPATH . 'Data/MemberCode.php';
@@ -1905,7 +1988,7 @@ class MoAjax extends BaseController
     }
     public function alianceUp()
     {
-       
+
         $session = session();
         $ci = $session->get('ci');
 
@@ -1914,10 +1997,10 @@ class MoAjax extends BaseController
         $AllianceFileModel = new AllianceFileModel();
 
         $mobile_no = $this->request->getPost('mobile_no');
-        
+
         $encrypter = \Config\Services::encrypter();
         $alliance_ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 24]));
-        
+
         $agree1 = $this->request->getPost('agree1');
         $agree2 = $this->request->getPost('agree2');
         $agree3 = $this->request->getPost('agree3');
@@ -1939,10 +2022,10 @@ class MoAjax extends BaseController
 
         $alliance_photo = $this->request->getFile('alliance_photo');
         $alliance_photo_detail = $this->request->getFiles('alliance_photo_detail');
-        
+
         $data = [
             'mobile_no' => $mobile_no,
-            'member_ci'=>$ci,
+            'member_ci' => $ci,
             'alliance_ci' => $alliance_ci,
             'ceo_name' => $representative_name,
             'company_name' => $representative_name,
@@ -1958,85 +2041,83 @@ class MoAjax extends BaseController
         // 제휴신청
         $session = session();
         $ci = $session->get('ci');
-        
+
         $allianceData = [
-            'member_ci'=>$ci,
-            'alliance_ci'=>$alliance_ci,
-            'alliance_type'=>$alliance_type,
-            'company_contact'=>$company_contact,
-            'email'=>$email,
-            'company_name'=>$company_name,
-            'representative_name'=>$representative_name,
-            'address'=>$address,
-            'detailed_address'=>$detailed_address,
-            'representative_contact'=>$representative_contact,
-            'business_day'=>$business_day,
-            'business_hour_start'=>$business_hour_start.":00:00",
-            'business_hour_end'=>$business_hour_end.":00:00",
-            'detailed_content'=>$detailed_content,
-            'alliance_pay'=>$alliance_pay,
-            'alliance_application'=>'1',
-            'delete_yn'=>'n',
-            'create_at'=>date('Y-m-d H:i:s'),
-            'update_at'=>date('Y-m-d H:i:s'),
+            'member_ci' => $ci,
+            'alliance_ci' => $alliance_ci,
+            'alliance_type' => $alliance_type,
+            'company_contact' => $company_contact,
+            'email' => $email,
+            'company_name' => $company_name,
+            'representative_name' => $representative_name,
+            'address' => $address,
+            'detailed_address' => $detailed_address,
+            'representative_contact' => $representative_contact,
+            'business_day' => $business_day,
+            'business_hour_start' => $business_hour_start . ":00:00",
+            'business_hour_end' => $business_hour_end . ":00:00",
+            'detailed_content' => $detailed_content,
+            'alliance_pay' => $alliance_pay,
+            'alliance_application' => '1',
+            'delete_yn' => 'n',
+            'create_at' => date('Y-m-d H:i:s'),
+            'update_at' => date('Y-m-d H:i:s'),
         ];
-        
+
         $allianceId = $AllianceModel->insert($allianceData);
 
-        if ($alliance_photo && $alliance_photo->isValid() && !$alliance_photo->hasMoved()){
+        if ($alliance_photo && $alliance_photo->isValid() && !$alliance_photo->hasMoved()) {
             $upload = new Upload();
             $fileData = $upload->allianceUpload($alliance_photo);
 
-            $fileMainData=[
-                'member_ci'=>$ci, 
-                'alliance_idx'=>$allianceId,
-                'file_path'=>$fileData['file_path'], 
-                'file_name'=>$fileData['file_name'], 
-                'org_name'=>$fileData['org_name'], 
-                'ext'=>$fileData['ext'],  
-                'delete_yn'=>'n', 
-                'board_type'=>'m', 
-                'extra1', 
-                'extra2', 
+            $fileMainData = [
+                'member_ci' => $ci,
+                'alliance_idx' => $allianceId,
+                'file_path' => $fileData['file_path'],
+                'file_name' => $fileData['file_name'],
+                'org_name' => $fileData['org_name'],
+                'ext' => $fileData['ext'],
+                'delete_yn' => 'n',
+                'board_type' => 'm',
+                'extra1',
+                'extra2',
                 'extra3'
             ];
             $AllianceFileModel->insert($fileMainData);
-        }else{
+        } else {
             $msg =  "메인 사진파일이 전송 되지 않았습니다.";
         }
 
         if (!empty($alliance_photo_detail)) {
-            
-                foreach ($alliance_photo_detail as $fileArray) {                  
-                    foreach ($fileArray as $file) {
-                        // 각 파일을 처리하는 코드
-                        $upload = new Upload();
-                        $fileData = $upload->allianceUpload($file);
 
-                        $fileDetailsData=[
-                            'member_ci'=>$ci, 
-                            'alliance_idx'=>$allianceId,
-                            'file_path'=>$fileData['file_path'], 
-                            'file_name'=>$fileData['file_name'], 
-                            'org_name'=>$fileData['org_name'], 
-                            'ext'=>$fileData['ext'],  
-                            'delete_yn'=>'n', 
-                            'board_type'=>'d'
-                        ];
-   
-                        $fileDetailsInsert = $AllianceFileModel->insert($fileDetailsData);
-                    }
+            foreach ($alliance_photo_detail as $fileArray) {
+                foreach ($fileArray as $file) {
+                    // 각 파일을 처리하는 코드
+                    $upload = new Upload();
+                    $fileData = $upload->allianceUpload($file);
+
+                    $fileDetailsData = [
+                        'member_ci' => $ci,
+                        'alliance_idx' => $allianceId,
+                        'file_path' => $fileData['file_path'],
+                        'file_name' => $fileData['file_name'],
+                        'org_name' => $fileData['org_name'],
+                        'ext' => $fileData['ext'],
+                        'delete_yn' => 'n',
+                        'board_type' => 'd'
+                    ];
+
+                    $fileDetailsInsert = $AllianceFileModel->insert($fileDetailsData);
                 }
-            
+            }
         } else {
             $msg =  "상세 사진파일이 전송 되지 않았습니다.";
         }
 
-        if($allianceId){
+        if ($allianceId) {
             $msg =  "제휴 신청 후 관리자 승인으로 제휴점에 입점 됩니다.";
             // return view('mo_alliance_success',['msg' => $msg]);
             return $this->response->setJSON(['status' => 'success', 'message' => 'success']);
         }
-        
     }
 }

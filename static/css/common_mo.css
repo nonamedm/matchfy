@@ -1052,7 +1052,10 @@ a:active {
     right: 30px;
 }
 .group_create .schedule_calendar .hasDatepicker {
-    width: 150px;
+    width: 151px;
+}
+.group_create .schedule_calendar .hasDatepicker.datepicker2 {
+    width: 335px;
 }
 /* wallet*/
 .amount_pay {

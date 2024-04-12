@@ -276,41 +276,8 @@
             fileDetailBtn();
             alliClosetBtn();
             toggleMenu();
-            $('#alliance_address1').autocomplete({
-                source: function(request, response) {
-                    console.log(request);
-                    const postData = {
-                        'confmKey': 'devU01TX0FVVEgyMDI0MDQwMjIzMDExNzExNDY1NTU=',
-                        'currentPage': '1',
-                        'countPerPage': '100',
-                        'keyword': request.term,
-                        'resultType': 'json'
-                    }
-                    $.ajax({
-                        url: 'https://business.juso.go.kr/addrlink/addrLinkApi.do',
-                        type: 'POST',
-                        data: postData,
-                        async: false,
-                        success: function(data) {
-                            console.log(data)
-                            response(
-                                $.map(data.results.juso, function(item) {
-                                    return {
-                                        label: item.jibunAddr,
-                                        value: item.jibunAddr,
-                                        idx: item.zipNo,
-                                    }
-                                })
-                            )
-                        }
-                    });
-                },
-                minLength: 2, // 최소 문자 수
-                select: function(event, ui) {
-                    // 아이템 선택 시 동작
-                    console.log(ui.item.value); // 선택된 주소명
-                }
-            });
+            searchAddr();
+
         });
         // const searchAddress = () => { 
         //     if(event){
@@ -461,6 +428,44 @@
                 } else {
                     $answer.slideDown();
                     $(this).find('img').attr('src', '/static/images/select_arrow_up.png');
+                }
+            });
+        }
+
+        function searchAddr() {
+            $('#alliance_address1').autocomplete({
+                source: function(request, response) {
+                    console.log(request);
+                    const postData = {
+                        'confmKey': 'devU01TX0FVVEgyMDI0MDQwMjIzMDExNzExNDY1NTU=',
+                        'currentPage': '1',
+                        'countPerPage': '100',
+                        'keyword': request.term,
+                        'resultType': 'json'
+                    }
+                    $.ajax({
+                        url: 'https://business.juso.go.kr/addrlink/addrLinkApi.do',
+                        type: 'POST',
+                        data: postData,
+                        async: false,
+                        success: function(data) {
+                            console.log(data)
+                            response(
+                                $.map(data.results.juso, function(item) {
+                                    return {
+                                        label: item.jibunAddr,
+                                        value: item.jibunAddr,
+                                        idx: item.zipNo,
+                                    }
+                                })
+                            )
+                        }
+                    });
+                },
+                minLength: 2, // 최소 문자 수
+                select: function(event, ui) {
+                    // 아이템 선택 시 동작
+                    console.log(ui.item.value); // 선택된 주소명
                 }
             });
         }

@@ -61,9 +61,12 @@
                                             <div class="schedule_calendar_div">
                                                 <input type="text" id="datepicker" name="recruitment_start_date" />
                                             </div>
+                                            <br />
+                                            -
                                             <div class="schedule_calendar_div" style="margin-left: 8px;">
                                                 <input type="text" id="datepicker1" name="recruitment_end_date" />
                                             </div>
+                                            <br />
                                         </div>
                                     </div>
                                 </div>
@@ -71,13 +74,10 @@
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="name" class="signin_label">모집일자</label>
-                                    <div class="schedule_calendar multy_select">
+                                    <div class="schedule_calendar">
                                         <div class="schedule_calendar">
                                             <div class="schedule_calendar_div">
-                                                <input type="text" id="datepicker2" name="meeting_start_date" />
-                                            </div>
-                                            <div class="schedule_calendar_div" style="margin-left: 8px;">
-                                                <input type="text" id="datepicker3" name="meeting_end_date" />
+                                                <input type="text" id="datepicker2" name="meeting_start_date" class="datepicker2" />
                                             </div>
                                         </div>
                                     </div>
@@ -93,23 +93,9 @@
                                 <div class="signin_form_div">
                                     <label for="group_age" class="signin_label">나이</label>
                                     <div class="multy_input">
-                                        <input id="group_min_age" type="text" name="group_min_age" value="" placeholder="나이를 입력하세요"><br />
+                                        <input id="group_min_age" type="text" name="group_min_age" value="" placeholder="최소나이"><br />
                                         -
-                                        <input id="group_max_age" type="text" name="group_max_age" value="" placeholder="나이를 입력하세요"><br />
-                                        <!-- <select id="group_age1" class="custom_select" value="">
-                                        <option value="">선택</option>
-                                        <option value="0">20대</option>
-                                        <option value="1">30대</option>
-                                        <option value="2">40대</option>
-                                        <option value="2">50대 이상</option>
-                                    </select>
-                                    <select id="group_age2" class="custom_select" value="">
-                                        <option value="">선택</option>
-                                        <option value="0">20대</option>
-                                        <option value="1">30대</option>
-                                        <option value="2">40대</option>
-                                        <option value="2">50대 이상</option>
-                                    </select> -->
+                                        <input id="group_max_age" type="text" name="group_max_age" value="" placeholder="최대나이"><br />
                                     </div>
                                 </div>
                             </div>
@@ -139,17 +125,14 @@
                                     <textarea id="content" name="content" value="" placeholder="내용을 입력하세요"></textarea></br />
                                 </div>
                             </div>
-                            <!-- <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <select id="reservation_previous" name= "reservation_previous" class="custom_select" value="">
-                                    <option>예약 내역 선택</option>
-                                    <option value="0">20대</option>
-                                    <option value="1">30대</option>
-                                    <option value="2">40대</option>
-                                    <option value="2">50대 이상</option>
-                                </select>
+                            <div class="form_row signin_form">
+                                <div class="signin_form_div">
+                                    <label for="group_detail" class="signin_label">예약내역</label>
+                                    <select id="reservation_previous" name="reservation_previous" class="custom_select" onchange="myAllianceDetail(this)">
+                                        <option value="">예약 내역 선택</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div> -->
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="meeting_place" class="signin_label">모임장소</label>
@@ -214,140 +197,83 @@
     <script>
         $(function() {
             initMap();
-            //input을 datepicker로 선언
-            $("#datepicker").datepicker({
-                dateFormat: 'yy-mm-dd' //달력 날짜 형태
-                    // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                    ,
-                showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
-                    // ,changeYear: true //option값 년 선택 가능
-                    // ,changeMonth: true //option값  월 선택 가능                
-                    ,
-                showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-                    ,
-                buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
-                    ,
-                buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-                    ,
-                buttonText: "선택" //버튼 호버 텍스트        
-                    ,
-                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
-                    ,
-                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
-                    ,
-                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
-                    ,
-                dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
-                    ,
-                minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                    ,
-                maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-                    ,
-                zIndex: 9999
+            setDatepicker();
+            searchAddr();
+            loadMyAlliance();
+
+        });
+
+        function loadMyAlliance() {
+            $.ajax({
+                url: '/ajax/myAlliance',
+                type: 'POST',
+                //data: postData,
+                async: false,
+                success: function(data) {
+                    data.forEach(function(key, index) {
+                        $("#reservation_previous").append('<option value="' + key.wh_alliance_idx + '" >' + key.alliance_name + '(' + key.reservation_date + ')' + '</option>');
+                    });
+
+                }
             });
+        }
 
-            //초기값을 오늘 날짜로 설정
-            $('#datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
-            $("#datepicker1").datepicker({
-                dateFormat: 'yy-mm-dd' //달력 날짜 형태
-                    // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                    ,
-                showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
-                    // ,changeYear: true //option값 년 선택 가능
-                    // ,changeMonth: true //option값  월 선택 가능                
-                    ,
-                showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-                    ,
-                buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
-                    ,
-                buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-                    ,
-                buttonText: "선택" //버튼 호버 텍스트        
-                    ,
-                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
-                    ,
-                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
-                    ,
-                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
-                    ,
-                dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
-                    ,
-                minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                    ,
-                maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-                    ,
-                zIndex: 9999
+        function myAllianceDetail(e) {
+            console.log(e.value);
+            if (e.value === "" || e.value === null) {
+                // 예약내역 미선택, 직접입력
+            } else {
+                // 예약내역 선택
+                $.ajax({
+                    url: '/ajax/myAllianceDetail',
+                    type: 'POST',
+                    data: {
+                        "value": e.value
+                    },
+                    async: false,
+                    success: function(data) {
+                        console.log(data);
+                        $("#meeting_place").val(data[0].address);
+                        $("#meeting_place_detail").val(data[0].detailed_address);
+                        $("#membership_fee").val(data[0].alliance_pay);
+                        $("#datepicker2").val(data.reservation.reservation_date);
+                        naver.maps.Service.geocode({
+                            address: data[0].address
+                        }, function(status, response) {
+                            if (status === naver.maps.Service.Status.ERROR) {
+                                console.log('올바른 주소를 입력해 주세요');
+                            }
+                            // 성공 시의 response 처리
+                            // todo: 로딩화면 종료
+                            map = new naver.maps.Map('map', {
+                                center: new naver.maps.LatLng(response.result.items[0].point.y, response.result.items[0].point.x),
+                                zoom: 18
+                            });
+                            var marker = new naver.maps.Marker({
+                                position: new naver.maps.LatLng(response.result.items[0].point.y, response.result.items[0].point.x),
+                                map: map
+                            });
+                        });
+                        // data.forEach(function(key, index) {
+                        //     $("#reservation_previous").append('<option value="' + key.wh_alliance_idx + '" >' + key.alliance_name + '(' + key.reservation_date + ')' + '</option>');
+                        // });
+
+                    }
+                });
+            }
+        }
+
+
+        var map = null;
+
+        function initMap() {
+            map = new naver.maps.Map('map', {
+                center: new naver.maps.LatLng(37.3595704, 127.105399),
+                zoom: 10
             });
+        }
 
-            //초기값을 오늘 날짜로 설정
-            $('#datepicker1').datepicker('setDate', '+1D'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
-            $("#datepicker2").datepicker({
-                dateFormat: 'yy-mm-dd' //달력 날짜 형태
-                    // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                    ,
-                showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
-                    // ,changeYear: true //option값 년 선택 가능
-                    // ,changeMonth: true //option값  월 선택 가능                
-                    ,
-                showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-                    ,
-                buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
-                    ,
-                buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-                    ,
-                buttonText: "선택" //버튼 호버 텍스트        
-                    ,
-                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
-                    ,
-                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
-                    ,
-                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
-                    ,
-                dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
-                    ,
-                minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                    ,
-                maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-                    ,
-                zIndex: 9999
-            });
-
-            //초기값을 오늘 날짜로 설정
-            $('#datepicker2').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
-            $("#datepicker3").datepicker({
-                dateFormat: 'yy-mm-dd' //달력 날짜 형태
-                    // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                    ,
-                showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
-                    // ,changeYear: true //option값 년 선택 가능
-                    // ,changeMonth: true //option값  월 선택 가능                
-                    ,
-                showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-                    ,
-                buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
-                    ,
-                buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-                    ,
-                buttonText: "선택" //버튼 호버 텍스트        
-                    ,
-                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
-                    ,
-                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
-                    ,
-                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
-                    ,
-                dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
-                    ,
-                minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                    ,
-                maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-                    ,
-                zIndex: 9999
-            });
-
-            //초기값을 오늘 날짜로 설정
-            $('#datepicker3').datepicker('setDate', '+1D'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
-
+        function searchAddr() {
             $('#meeting_place').autocomplete({
                 source: function(request, response) {
                     console.log(request);
@@ -402,15 +328,6 @@
                     });
                 }
             });
-        });
-
-        var map = null;
-
-        function initMap() {
-            map = new naver.maps.Map('map', {
-                center: new naver.maps.LatLng(37.3595704, 127.105399),
-                zoom: 10
-            });
         }
 
         function searchPlaces() {
@@ -441,6 +358,142 @@
                     alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
+        }
+
+        function setDatepicker() {
+            //input을 datepicker로 선언
+            $("#datepicker").datepicker({
+                dateFormat: 'yy-mm-dd' //달력 날짜 형태
+                    // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+                    ,
+                showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
+                    // ,changeYear: true //option값 년 선택 가능
+                    // ,changeMonth: true //option값  월 선택 가능                
+                    ,
+                showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+                    ,
+                buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
+                    ,
+                buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+                    ,
+                buttonText: "선택" //버튼 호버 텍스트        
+                    ,
+                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
+                    ,
+                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
+                    ,
+                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
+                    ,
+                dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
+                    ,
+                minDate: "-1Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                    ,
+                maxDate: "+1y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
+                    ,
+                zIndex: 9999
+            });
+
+            //초기값을 오늘 날짜로 설정
+            $('#datepicker').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
+            $("#datepicker1").datepicker({
+                dateFormat: 'yy-mm-dd' //달력 날짜 형태
+                    // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+                    ,
+                showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
+                    // ,changeYear: true //option값 년 선택 가능
+                    // ,changeMonth: true //option값  월 선택 가능                
+                    ,
+                showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+                    ,
+                buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
+                    ,
+                buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+                    ,
+                buttonText: "선택" //버튼 호버 텍스트        
+                    ,
+                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
+                    ,
+                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
+                    ,
+                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
+                    ,
+                dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
+                    ,
+                minDate: "-1Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                    ,
+                maxDate: "+1y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
+                    ,
+                zIndex: 9999
+            });
+
+            //초기값을 오늘 날짜로 설정
+            $('#datepicker1').datepicker('setDate', '+1D'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+            $("#datepicker2").datepicker({
+                dateFormat: 'yy-mm-dd' //달력 날짜 형태
+                    // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+                    ,
+                showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
+                    // ,changeYear: true //option값 년 선택 가능
+                    // ,changeMonth: true //option값  월 선택 가능                
+                    ,
+                showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+                    ,
+                buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
+                    ,
+                buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+                    ,
+                buttonText: "선택" //버튼 호버 텍스트        
+                    ,
+                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
+                    ,
+                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
+                    ,
+                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
+                    ,
+                dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
+                    ,
+                minDate: "-1Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                    ,
+                maxDate: "+1y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
+                    ,
+                zIndex: 9999
+            });
+
+            //초기값을 오늘 날짜로 설정
+            $('#datepicker2').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
+            // $("#datepicker3").datepicker({
+            //     dateFormat: 'yy-mm-dd' //달력 날짜 형태
+            //         // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+            //         ,
+            //     showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
+            //         // ,changeYear: true //option값 년 선택 가능
+            //         // ,changeMonth: true //option값  월 선택 가능                
+            //         ,
+            //     showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+            //         ,
+            //     buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
+            //         ,
+            //     buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+            //         ,
+            //     buttonText: "선택" //버튼 호버 텍스트        
+            //         ,
+            //     monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
+            //         ,
+            //     monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
+            //         ,
+            //     dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
+            //         ,
+            //     dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
+            //         ,
+            //     minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+            //         ,
+            //     maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
+            //         ,
+            //     zIndex: 9999
+            // });
+
+            // //초기값을 오늘 날짜로 설정
+            // $('#datepicker3').datepicker('setDate', '+1D'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
         }
 
         //앤터 추가
