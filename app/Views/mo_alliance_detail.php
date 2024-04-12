@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -19,17 +18,18 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        
-        <?php $title = "제휴"; include 'header.php'; ?>
+
+        <?php $title = "제휴";
+        include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="group_deatil_img">
                     <div id="imageSlider" class="slider">
-                        <?php foreach ($files as $file): ?>
-                        <div class="slide">
-                            <img src="/<?= htmlspecialchars($file['file_path']) . htmlspecialchars($file['file_name']) ?>" alt="Slide Image" />
-                        </div>
+                        <?php foreach ($files as $file) : ?>
+                            <div class="slide">
+                                <img src="/<?= htmlspecialchars($file['file_path']) . htmlspecialchars($file['file_name']) ?>" alt="Slide Image" />
+                            </div>
                         <?php endforeach; ?>
                     </div>
                     <a href="#" id="prev">&#10094;</a>
@@ -58,7 +58,7 @@
                         <div class="alliance_detail_cont">
                             <h2>회차를 선택하세요</h2>
                             <div class="alliance_reserv_list">
-                                <?php foreach ($time_slots as $time_slot): ?>
+                                <?php foreach ($time_slots as $time_slot) : ?>
                                     <?php
                                     $time_slot_time = explode(' ', $time_slot)[1];
                                     $isReserved = false;
@@ -82,8 +82,7 @@
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <div style="display: flex; align-items: center;">
-                                        <input id="quantity" type="number" value="0" style="width:225px;"
-                                            placeholder="인원수" />
+                                        <input id="quantity" type="number" value="0" style="width:225px;" placeholder="인원수" />
                                         <p style="margin-left:8px; font-size: 15px;">명</p>
                                         <a style="margin-left:15px;" id="plus"><img src="/static/images/ico_plus_30x30.png" /></a>
                                         <a style="margin-left:12px;" id="minus"><img src="/static/images/ico_minus_30x30.png" /></a>
@@ -112,7 +111,7 @@
                             <?= $detailed_content ?>
                         </div>
                         <div class="alliance_detail_cont">
-                            <h2>취소/환불 규정</h2>                        
+                            <h2>취소/환불 규정</h2>
                             <table class="basic_table">
                                 <tr>
                                     <td>이용 1일 전까지</td>
@@ -129,9 +128,9 @@
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />
                                 <?= $address ?> <?= $detailed_address ?>
-                            </div>                        
+                            </div>
                             <div class="group_detail_map">
-                                <img src="/static/images/group_naver_map.png" />
+                                <div id="map" style="width:335px;height:208px;margin-top: 20px;"></div>
                             </div>
                         </div>
                         <div class="alliance_detail_cont">
@@ -139,19 +138,19 @@
                             <div class="alliance_profile_content">
                                 <h2>상호</h2>
                                 <p><?= $company_name ?></p>
-                            </div>                            
+                            </div>
                             <div class="alliance_profile_content">
                                 <h2>대표자명</h2>
                                 <p><?= $representative_name ?></p>
-                            </div>                            
+                            </div>
                             <div class="alliance_profile_content">
                                 <h2>사업자번호</h2>
                                 <p>추가필요</p>
-                            </div>                            
+                            </div>
                             <div class="alliance_profile_content">
                                 <h2>연락처</h2>
                                 <p><?= $company_contact ?></p>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -169,17 +168,12 @@
 
 
     <!-- SCRIPTS -->
-
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=smqlge9tsx&submodules=geocoder"></script>
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
-
         $(document).ready(function() {
+            // 지도 호출
+            initMap();
+
             // 이미지 슬라이드
             let slideIndex = 0;
             showSlides(slideIndex);
@@ -199,7 +193,7 @@
                 if (n >= slides.length) slideIndex = 0;
                 if (n < 0) slideIndex = slides.length - 1;
 
-                slides.hide(); 
+                slides.hide();
                 $(slides[slideIndex]).show();
             }
 
@@ -207,7 +201,7 @@
             $('.tab').click(function() {
                 $('.tab').removeClass('on');
                 $(this).addClass('on');
-                
+
                 $('.alliance_tab_content').hide();
                 $($(this).data('target')).show();
             });
@@ -265,7 +259,7 @@
                 }
 
                 // moveToUrl('/mo/alliance/payment/<?= $idx ?>?totalAmount=' + totalAmount);
-                moveToUrl('/mo/alliance/payment/<?= $idx ?>/'+quantity+'/'+selectedDate+'/'+reserveTime);
+                moveToUrl('/mo/alliance/payment/<?= $idx ?>/' + quantity + '/' + selectedDate + '/' + reserveTime);
             });
         });
 
@@ -283,14 +277,14 @@
                     right: 'next'
                 },
                 locale: "ko",
-                contentHeight:"auto",
+                contentHeight: "auto",
                 dateClick: function(info) {
                     // 이전 테두리를 제거
                     if (lastSelectedDay) {
                         lastSelectedDay.classList.remove('selected-day');
                         lastSelectedDay.style.border = '';
                     }
-                    
+
                     // 선택한 날자 데이터 표시
                     info.dayEl.classList.add('selected-day');
                     lastSelectedDay = info.dayEl;
@@ -303,18 +297,20 @@
                     $.ajax({
                         url: '/ajax/alliance/reservation',
                         type: 'GET',
-                        data: { date: selectedDate,
-                                idx: allianceIdx },
+                        data: {
+                            date: selectedDate,
+                            idx: allianceIdx
+                        },
                         success: function(response) {
                             //console.log(response);
-                            updateReservationList(response);// 예약 시간 표현
+                            updateReservationList(response); // 예약 시간 표현
                         },
                         error: function(xhr, status, error) {
                             console.error("Error fetching reservation data:", error);
                         }
                     });
                 },
-                dayCellContent: function (info) {
+                dayCellContent: function(info) {
                     var number = document.createElement("a");
                     number.classList.add("fc-daygrid-day-number");
                     number.innerHTML = info.dayNumberText.replace("일", '');
@@ -343,6 +339,27 @@
             document.querySelector('.alliance_reserv_list').innerHTML = listHtml;
         }
 
+        function initMap() {
+            var add1 = '<?= $address ?>';
+            var add2 = '<?= $detailed_address ?>';
+            naver.maps.Service.geocode({
+                address: add1 + ' ' + add2
+            }, function(status, response) {
+                if (status === naver.maps.Service.Status.ERROR) {
+                    console.log('올바른 주소를 입력해 주세요');
+                }
+                // 성공 시의 response 처리
+                // todo: 로딩화면 종료
+                map = new naver.maps.Map('map', {
+                    center: new naver.maps.LatLng(response.result.items[0].point.y, response.result.items[0].point.x),
+                    zoom: 18
+                });
+                var marker = new naver.maps.Marker({
+                    position: new naver.maps.LatLng(response.result.items[0].point.y, response.result.items[0].point.x),
+                    map: map
+                });
+            });
+        }
     </script>
 
     <!-- -->
