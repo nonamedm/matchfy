@@ -222,6 +222,10 @@
             console.log(e.value);
             if (e.value === "" || e.value === null) {
                 // 예약내역 미선택, 직접입력
+                $("#meeting_place").val("");
+                $("#meeting_place_detail").val("");
+                $("#membership_fee").val("");
+                $('#datepicker2').datepicker('setDate', '+1D');
             } else {
                 // 예약내역 선택
                 $.ajax({
