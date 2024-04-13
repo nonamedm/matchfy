@@ -27,6 +27,7 @@ $routes->get('/mo/privacy', 'MoHome::privacy');
 $routes->get('/mo/mypage', 'MoHome::mypage');
 $routes->get('/mo/mymsg/ai', 'MoHome::mymsgAi');
 $routes->get('/mo/mymsg', 'MoHome::mymsg');
+$routes->post('/mo/mymsg', 'MoHome::mymsg');
 $routes->get('/mo/mymsg/list', 'MoHome::mymsgList');
 $routes->get('/mo/mymsg/menu', 'MoHome::mymsgMenu');
 $routes->get('/mo/mymsg/ai/profilePopup', 'MoHome::mymsgAiProfilePopup');
@@ -125,6 +126,9 @@ $routes->post('/ajax/allianceFilter', 'MoAjax::allianceFiltering');
 $routes->get('/ajax/alliance/reservation', 'MoAjax::allianceReservation');
 $routes->post('/ajax/myAlliance', 'MoAjax::myAlliance');
 $routes->post('/ajax/myAllianceDetail', 'MoAjax::myAllianceDetail');
+
+/* 채팅 */
+$routes->post('/ajax/createChat', 'MoAjax::createChat');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

@@ -18,6 +18,9 @@ use App\Models\AllianceModel;
 use App\Models\AllianceFileModel;
 use App\Config\Encryption;
 use App\Models\AllianceReservationModel;
+use App\Models\ChatRoomModel;
+use App\Models\ChatRoomMsgModel;
+use App\Models\ChatRoomMemberModel;
 
 
 class MoAjax extends BaseController
@@ -2118,6 +2121,89 @@ class MoAjax extends BaseController
             $msg =  "제휴 신청 후 관리자 승인으로 제휴점에 입점 됩니다.";
             // return view('mo_alliance_success',['msg' => $msg]);
             return $this->response->setJSON(['status' => 'success', 'message' => 'success']);
+        }
+    }
+
+    public function createChat()
+    {
+        // 1:1 채팅 생성하기
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $member_ci = $session->get('ci');
+
+        $nickname = $this->request->getPost('nickname');
+        $query = "SELECT * FROM members WHERE nickname = '" . $nickname . "'";
+        $sendto = $MemberModel
+            ->query($query)->getResultArray();
+
+        // 보내는사람, 받는사람의 member_ci 를 알파벳순으로 정렬 후
+        // 두 값을 조합해서 room_ci를 생성함
+        $sorted_values = [$member_ci, $sendto[0]['ci']];
+        sort($sorted_values);
+        $combined = implode('', $sorted_values);
+        $room_ci = hash('sha256', $combined);
+
+        $query = "SELECT * FROM wh_chat_room WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
+        $chatroom = $ChatRoomModel
+            ->query($query)->getResultArray();
+
+        if ($chatroom) {
+            // 기존에 채팅이 존재할 경우
+            $query = "SELECT * FROM wh_chat_room_member WHERE delete_yn = 'n' AND room_ci='" . $room_ci . "' AND member_ci='" . $member_ci . "'";
+            $checkYn = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            if ($checkYn) {
+                // 내가 이 채팅에 참여중인 상태이면 바로 이동한다
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["room_ci" => $room_ci]]);
+            } else {
+                // 내가 이 채팅에서 나간 상태이면 참가 상태를 참여로 바꿔준다
+                $query = "UPDATE wh_chat_room_member
+                SET delete_yn='n', entered_at=CURRENT_TIMESTAMP, updated_at=CURRENT_TIMESTAMP
+                WHERE room_ci='" . $room_ci . "' AND member_ci='" . $member_ci . "'";
+                $updateChatRoom1 = $ChatRoomMemberModel
+                    ->query($query);
+                // $query = "UPDATE wh_chat_room_member
+                // SET delete_yn='n', entered_at=CURRENT_TIMESTAMP, updated_at=CURRENT_TIMESTAMP
+                // WHERE room_ci='" . $room_ci . "' AND member_ci='" . $sendto[0]['ci'] . "'";
+                // $updateChatRoom2 = $ChatRoomMemberModel
+                // ->query($query);
+                if ($updateChatRoom1) {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["room_ci" => $room_ci]]);
+                } else {
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
+                }
+            }
+        } else {
+            // 없는 경우 신규 채팅방 생성
+            $query = "INSERT INTO wh_chat_room (room_ci, room_type) VALUES('" . $room_ci . "','0');";
+            $createChat = $ChatRoomModel
+                ->query($query);
+
+            // 채팅방 멤버 업데이트
+            if ($createChat) {
+                $query = "INSERT INTO wh_chat_room_member
+                            (room_ci, member_ci, entry_num, member_type, entered_at, updated_at)
+                            VALUES('" . $room_ci . "','" . $member_ci . "','1','0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                $enterChatRoom1 = $ChatRoomMemberModel
+                    ->query($query);
+                $query = "INSERT INTO wh_chat_room_member
+                            (room_ci, member_ci, entry_num, member_type, entered_at, updated_at)
+                            VALUES('" . $room_ci . "','" . $sendto[0]['ci'] . "','2','0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                $enterChatRoom2 = $ChatRoomMemberModel
+                    ->query($query);
+                if ($enterChatRoom1 && $enterChatRoom2) {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["room_ci" => $room_ci]]);
+                } else {
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
+                }
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 생성 실패']);
+            }
         }
     }
 }

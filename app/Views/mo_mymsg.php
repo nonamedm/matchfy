@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -16,15 +15,16 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        
-        <?php $title = "메시지"; include 'header.php'; ?>
+
+        <?php $title = "메시지";
+        include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="tab_wrap">
                     <ul>
                         <li>
-                            AI 메시지
+                            AI 메시지<?= $room_ci ?>
                         </li>
                         <li class="on">
                             메시지함
@@ -91,8 +91,8 @@
                 </div>
             </div>
             <div style="height: 50px;"></div>
-<footer class="footer">
-                
+            <footer class="footer">
+
                 <div class="message_input_box">
                     <!-- <div class="btn_group multy ai_date_check">
                         <button type="button" class="btn type01">수락</button>

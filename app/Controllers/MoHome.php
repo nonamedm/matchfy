@@ -23,6 +23,9 @@ use App\Models\AllianceModel;
 use App\Models\AllianceFileModel;
 use App\Models\AllianceMemberModel;
 use App\Models\AllianceReservationModel;
+use App\Models\ChatRoomModel;
+use App\Models\ChatRoomMsgModel;
+use App\Models\ChatRoomMemberModel;
 use CodeIgniter\Session\Session;
 use Kint\Zval\Value;
 
@@ -270,7 +273,34 @@ class MoHome extends BaseController
     }
     public function mymsg(): string
     {
-        return view('mo_mymsg');
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $room_ci = $this->request->getPost('room_ci');
+
+        // 내가 이 방의 참가자가 맞는지 다시 확인
+        $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "'";
+        $memberYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($memberYn) {
+            // 내가 방 참가자가 맞으면
+            $query = "SELECT * FROM wh_chat_room_msg WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
+            $allMsg = $ChatRoomMsgModel
+                ->query($query)->getResultArray();
+
+
+            $data['room_ci'] = $room_ci;
+            $data['allMsg'] = $allMsg;
+
+            return view('mo_mymsg', $data);
+        } else {
+            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return view('index');
+        }
     }
     public function mymsgList(): string
     {
@@ -1268,7 +1298,7 @@ class MoHome extends BaseController
         }
         $data['feeds'] = $datas;
         $data['factors'] = $factorList;
-        
+
         return view('mo_match_feed', $data);
     }
     public function myfeedView(): string
@@ -1291,6 +1321,7 @@ class MoHome extends BaseController
             ->first();
 
         $data = [
+            'ci' => $user['ci'],
             'nickname' => $user['nickname'],
             'name' => $user['name'],
             'birthday' => $user['birthday'],
@@ -1352,7 +1383,7 @@ class MoHome extends BaseController
             LEFT JOIN wh_alliance_files b ON b.idx = bf.idx
             WHERE a.delete_yn = 'N'
             AND a.alliance_application = '2'
-            ORDER BY a.idx ASC";    
+            ORDER BY a.idx ASC";
 
         $alliances = $AllianceModel
             ->query($query)->getResultArray();
@@ -1389,7 +1420,7 @@ class MoHome extends BaseController
 
         if (isset($alliance['detailed_content'])) {
             $lines = explode("<br>", $alliance['detailed_content']);
-            $lines = array_map(function($line) {
+            $lines = array_map(function ($line) {
                 return "<div class='content-line-point'>· " . $line . "</div>";
             }, $lines);
             $alliance['detailed_content'] = implode("<br>", $lines);
@@ -1426,19 +1457,20 @@ class MoHome extends BaseController
         return view('mo_alliance_detail', $alliance);
     }
     //운영 시간 1시간 단위로 받음(마지막 타임 제외)
-    protected function generateTimeSlots($start, $end) {
+    protected function generateTimeSlots($start, $end)
+    {
         $startTime = new \DateTime($start);
         $endTime = new \DateTime($end);
-        $interval = new \DateInterval('PT1H');//1시간 단위
+        $interval = new \DateInterval('PT1H'); //1시간 단위
         $timeSlots = [];
-    
-        for($time = $startTime; $time < $endTime; $time->add($interval)) {
+
+        for ($time = $startTime; $time < $endTime; $time->add($interval)) {
             $timeSlots[] = $time->format("H:i");
         }
-    
+
         return $timeSlots;
     }
-    public function alliancePayment($idx,$people,$date,$time): string
+    public function alliancePayment($idx, $people, $date, $time): string
     {
         $session = session();
         $ci = $session->get('ci');
@@ -1461,25 +1493,25 @@ class MoHome extends BaseController
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_privacy');
         $privacy = $BoardModel
-                ->select('title, content')
-                ->orderBy('created_at', 'DESC')
-                ->first();
+            ->select('title, content')
+            ->orderBy('created_at', 'DESC')
+            ->first();
 
         $AllianceModel = new AllianceModel();
         $alliancePay = $AllianceModel
-                    ->select('alliance_pay')
-                    ->where('idx', $idx)
-                    ->first();
+            ->select('alliance_pay')
+            ->where('idx', $idx)
+            ->first();
 
         $data = [
-            'alliancePay' =>intval($alliancePay['alliance_pay']),
+            'alliancePay' => intval($alliancePay['alliance_pay']),
             'points' => $points,
             'user' => $user,
             'privacys' => $privacy,
-            'idx'=>$idx,
-            'people'=>$people,
-            'date'=>$date,
-            'time'=>$time
+            'idx' => $idx,
+            'people' => $people,
+            'date' => $date,
+            'time' => $time
         ];
 
         // echo '<pre>';
@@ -1521,14 +1553,14 @@ class MoHome extends BaseController
         $AllianceMember = new AllianceMemberModel(); //테이블
 
         $mobile_no = $postData['mobile_no'];
-        
+
         $selected = $AllianceMember->where('mobile_no', $mobile_no)->first();
-        
+
         if ($selected) {
             echo '<script>alert("이미 가입된 휴대폰 번호입니다");</script>';
             return view('mo_alliance_pass', $postData);
         } else {
-            return view('mo_aliance_agree',$postData);
+            return view('mo_aliance_agree', $postData);
         }
     }
     /*제휴 신청하기 */
@@ -1540,21 +1572,22 @@ class MoHome extends BaseController
         $BoardModel2->setTableName('wh_board_privacy');
         $postData['privacy'] = $BoardModel2->orderBy('created_at', 'DESC')->first();
 
-        return view('mo_alliance_apply',$postData);
+        return view('mo_alliance_apply', $postData);
     }
-    
+
     /*제휴 결재 */
-    public function alliancePaymentChk(){
-        
+    public function alliancePaymentChk()
+    {
+
         $session = session();
         $ci = $session->get('ci');
 
         $allianceIdx = intval($this->request->getPost('allianceIdx'));
         $AllianceModel = new AllianceModel();
         $alliancePay = $AllianceModel
-                    ->select('alliance_pay')
-                    ->where('idx', $allianceIdx)
-                    ->first();
+            ->select('alliance_pay')
+            ->where('idx', $allianceIdx)
+            ->first();
         $alliancePayment = intval($alliancePay['alliance_pay']);
         $numberPeople = intval($this->request->getPost('numberPeople'));
         $reservationDate = $this->request->getPost('reservationDate');
@@ -1567,7 +1600,7 @@ class MoHome extends BaseController
         } else {
             //예약한 제휴지점 결재
             $PointModel = new PointModel();
-            
+
             $AllianceModel = new AllianceModel();
             $allianceStore = $AllianceModel->select('member_ci,alliance_ci,company_name')->where('idx', $allianceIdx)->first();
 
@@ -1585,30 +1618,30 @@ class MoHome extends BaseController
             } else {
                 return $this->response->setJSON(['success' => false, 'msg' => '제휴점이 존재하지 않습니다.']);
             }
-            
+
             //예약추가
             $MemberModel = new MemberModel();
-            $memberInfo = $MemberModel ->select('name,mobile_no')->where('ci', $ci)->first();
-            
+            $memberInfo = $MemberModel->select('name,mobile_no')->where('ci', $ci)->first();
+
             $allianceRevers = new AllianceReservationModel();
-            
+
             $reversData = [
-                'wh_alliance_idx'=>$allianceIdx, 
-                'member_ci'=>$ci,
-                'alliance_name'=>$allianceStore['company_name'], 
-                'customer_name'=>$memberInfo['name'], 
-                'customer_contact'=>$memberInfo['mobile_no'],
-                'number_of_people'=>$numberPeople,
-                'reservation_amount'=>$alliancePayment, 
-                'reservation_datetime'=>$reservationDate.' '.$reservationTime,
-                'reservation_date'=>$reservationDate,
-                'reservation_time'=>$reservationTime, 
-                'reg_date'=>date('Y-m-d H:i:s'),
+                'wh_alliance_idx' => $allianceIdx,
+                'member_ci' => $ci,
+                'alliance_name' => $allianceStore['company_name'],
+                'customer_name' => $memberInfo['name'],
+                'customer_contact' => $memberInfo['mobile_no'],
+                'number_of_people' => $numberPeople,
+                'reservation_amount' => $alliancePayment,
+                'reservation_datetime' => $reservationDate . ' ' . $reservationTime,
+                'reservation_date' => $reservationDate,
+                'reservation_time' => $reservationTime,
+                'reg_date' => date('Y-m-d H:i:s'),
             ];
-            
+
             $result = $allianceRevers->insert($reversData);
 
-            
+
             //제휴점으로 포인트 추가
             $pointModel2 = new PointModel();
             $allianceAllPoint = $pointModel2->select('my_point')->where('member_ci', $allianceStore['member_ci'])->orderBy('create_at', 'DESC')->first();
@@ -1619,7 +1652,7 @@ class MoHome extends BaseController
                 'member_ci' => $allianceStore['member_ci'],
                 'my_point' => intval($allianceAllPoint['my_point']) + $alliancePayment,
                 'add_point' => $alliancePayment,
-                'point_details' => $reservationDate.' '.$reservationTime . " ( 예약자 : ".$memberInfo['name'] . ")",
+                'point_details' => $reservationDate . ' ' . $reservationTime . " ( 예약자 : " . $memberInfo['name'] . ")",
                 'create_at' => date('Y-m-d H:i:s'),
                 'point_type' => 'A',
             ];
@@ -1634,20 +1667,21 @@ class MoHome extends BaseController
         }
     }
 
-    public function allianceAlert($num){
+    public function allianceAlert($num)
+    {
         $data['num'] = $num;
-        if($num == 1){
-            $data['msg'] ="제휴 신청 후 관리자 승인으로 제휴점에 입점 됩니다.";
-        }else if($num == 2){
-            $data['msg'] ="예약완료 되었습니다.";
-        }else{
-            $data['msg'] ="제대로 확인 되지 않았습니다. 확인 부탁 드립니다.";
-            return view('mo_alliance_fail',$data);
+        if ($num == 1) {
+            $data['msg'] = "제휴 신청 후 관리자 승인으로 제휴점에 입점 됩니다.";
+        } else if ($num == 2) {
+            $data['msg'] = "예약완료 되었습니다.";
+        } else {
+            $data['msg'] = "제대로 확인 되지 않았습니다. 확인 부탁 드립니다.";
+            return view('mo_alliance_fail', $data);
         }
-        
-        return view('mo_alliance_success',$data);
+
+        return view('mo_alliance_success', $data);
     }
-    
+
     /*환전 페이지 */
     public function allianceExchange(): string
     {

@@ -242,10 +242,18 @@
                 </div>
                 <div style="height: 50px;"></div>
                 <footer class="footer">
-
-                    <div class="btn_group">
-                        <button type="button" class="btn type01" onclick="moveToUrl('/mo/mymsg')">메시지 보내기</button>
-                    </div>
+                    <!-- 본인계정 아닐때만 메세지보내기 활성 -->
+                    <?php
+                    $session = $session = session();
+                    $now_ci = $session->get('ci');
+                    if ($now_ci !== $ci) {
+                    ?>
+                        <div class="btn_group">
+                            <button type="button" class="btn type01" onclick="sendMsg()">메시지 보내기</button>
+                        </div>
+                    <?php
+                    }
+                    ?>
                 </footer>
             </div>
         </div>
@@ -260,12 +268,33 @@
     <!-- SCRIPTS -->
 
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
+        const sendMsg = () => {
+            $.ajax({
+                url: '/ajax/createChat',
+                type: 'POST',
+                data: {
+                    "nickname": "<?= $nickname ?>"
+                },
+                async: false,
+                success: function(data) {
+                    if (data.status === 'success') {
+                        // 성공
+                        console.log(data)
+                        moveToUrl('/mo/mymsg', {
+                            room_ci: data.data.room_ci
+                        });
+                    } else if (data.status === 'error') {
+                        console.log('메세지 전송 실패', data);
+                    } else {
+                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    }
+                    return false;
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
+            });
         }
     </script>
 
