@@ -1373,8 +1373,8 @@ class MoHome extends BaseController
     {
 
         // 사용자 권한 확인
-        if (!hasPermission($idx)) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundExceptio('You do not have permission to view this page.');
+        if (!$this->hasPermission($idx)) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('You do not have permission to view this page.');
         }
 
         $AllianceModel = new AllianceModel();
@@ -1445,16 +1445,16 @@ class MoHome extends BaseController
         return $timeSlots;
     }
     //승인 나지 않는 페이지 idx 막음
-    function hasPermission($idx) {
+    protected function hasPermission($idx) {
         $AllianceModel = new AllianceModel();
 
         $allianceApplication = $AllianceModel
             ->select('alliance_application')
-            ->where('delete_yn', 'N')
+            ->where('delete_yn', 'n')
             ->where('idx', $idx)
             ->first();
 
-        if (empty($allianceApplication) || ($allianceApplication !== '2')) {
+        if (empty($allianceApplication['alliance_application']) || $allianceApplication['alliance_application'] !== '2') {
             return false;
         }
 
