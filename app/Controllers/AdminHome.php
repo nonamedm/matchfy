@@ -572,35 +572,42 @@ class AdminHome extends BaseController
     {
         $AllianceModel = new AllianceModel();
         $query = $AllianceModel
-        ->distinct()
-        ->select(
-            'idx,
-            alliance_ci,
-            member_ci
-            alliance_type,
-            company_contact,
-            email,
-            company_name,
-            representative_name,
-            address,
-            detailed_address,
-            representative_contact,
-            business_day,
-            business_hour_start,
-            business_hour_end,
-            detailed_content,
-            alliance_application,
-            delete_yn'
-            )
-            ->whereIn('alliance_application', ['1', '2'])
-            ->orderBy('alliance_application', 'asc')
-            ->orderBy('create_at', 'desc');
+            ->distinct()
+            ->select('a.idx as idx,
+                    a.alliance_ci as alliance_ci,
+                    a.member_ci as member_ci,
+                    a.alliance_ceo_num as alliance_ceo_num,
+                    a.alliance_type as alliance_type,
+                    a.company_contact as company_contact,
+                    a.email as email,
+                    a.company_name as company_name,
+                    a.representative_name as representative_name,
+                    a.address as address,
+                    a.detailed_address as detailed_address,
+                    a.representative_contact as representative_contact,
+                    a.business_day as business_day,
+                    a.business_hour_start as business_hour_start,
+                    a.business_hour_end as business_hour_end,
+                    a.detailed_content as detailed_content,
+                    a.alliance_application as alliance_application,
+                    a.delete_yn as delete_yn,
+                    b.idx as file_idx,
+                    b.board_type as board_type,
+                    b.file_path as file_path,
+                    b.file_name as file_name,
+                    b.org_name as org_name,
+                    b.ext as ext
+                    ')
+            ->from('wh_alliance a')
+            ->join('wh_alliance_files b', 'a.idx = b.alliance_idx AND b.board_type = "ceonum"', 'left')
+            ->whereIn('a.alliance_application', ['1', '2'])
+            ->orderBy('a.alliance_application', 'asc')
+            ->orderBy('a.create_at', 'desc');
 
         $data['datas'] = $query->get()->getResultArray();
-        // $data['query'] = $query->getLastQuery(); 
-        
+        $data['query'] = $query->getLastQuery();
+
         return view('admin/ad_alliance_list', $data);
-        
     }
     
     public function allianceCheck(){

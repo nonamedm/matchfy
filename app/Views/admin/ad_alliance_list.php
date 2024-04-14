@@ -21,6 +21,7 @@
                 include 'header.php';
             ?>
         </div>
+        <!-- <p>쿼리문: <?php echo $query; ?></p> -->
         <div class="ad_con">
             <h2>제휴신청 목록</h2> 
             <table>
@@ -31,7 +32,8 @@
                         <th class="th">대표핸드폰번호</th>
                         <th class="th">업체이름</th>
                         <th class="th">업체 번호</th>
-                        <th class="th">이메일</th>
+                        <th class="th">사업자번호</th>
+                        <th class="th">사업자등록증 파일확인</th>
                         <th class="th">신청 확인</th>
                     </tr>
                 </thead>
@@ -43,13 +45,23 @@
                             <td class="td"><?= $data['representative_contact'] ?></td>
                             <td class="td"><?= $data['company_name'] ?></td>
                             <td class="td"><?= $data['company_contact'] ?></td>
-                            <td class="td"><?= $data['email'] ?></td>
+                            <td class="td"><?= $data['alliance_ceo_num'] ?></td>
+                            <td class="td">
+                            <?php
+                                $ceonum = $data['board_type'] ;
+                                if($ceonum =='ceonum'){
+                                    echo '<span class="attatch_file_div"><a class="attatch_file" href="/downloadCeonumFile/'. $data['file_idx'].'">'.$data['org_name'] . '</a></span>';
+                                }else{
+                                    echo '<span class="attatch_file_div">첨부파일 없음</span>';
+                                }
+                            ?>
+                            </td>
                             <td class="td">
                             <?php
                                 $exchange_level = $data['alliance_application'];
 
                                 if ($exchange_level == 1) {
-                                    echo "<button class='alliancebtn btn00 btn type01'  data-idx='".$data['idx']."' data-alliance-level='2'>승인</button>";
+                                    echo "<button class='alliancebtn btn00 btn type01' data-idx='".$data['idx']."' data-alliance-level='2'>승인</button>";
                                 } elseif ($exchange_level == 2) {
                                     echo "<button class='alliancebtn btn00 btn type02'>완료</button>";
                                 }

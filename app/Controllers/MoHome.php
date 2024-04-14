@@ -1524,12 +1524,12 @@ class MoHome extends BaseController
         
         $selected = $AllianceMember->where('mobile_no', $mobile_no)->first();
         
-        if ($selected) {
-            echo '<script>alert("이미 가입된 휴대폰 번호입니다");</script>';
-            return view('mo_alliance_pass', $postData);
-        } else {
-            return view('mo_aliance_agree',$postData);
-        }
+        // if ($selected) {
+        //     echo '<script>alert("이미 가입된 휴대폰 번호입니다");</script>';
+        //     return view('mo_alliance_pass', $postData);
+        // } else {
+        // }
+        return view('mo_aliance_agree',$postData);
     }
     /*제휴 신청하기 */
     public function allianceApply(): string

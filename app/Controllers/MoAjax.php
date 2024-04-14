@@ -1922,7 +1922,6 @@ class MoAjax extends BaseController
         $agree2 = $this->request->getPost('agree2');
         $agree3 = $this->request->getPost('agree3');
         $gender = $this->request->getPost('gender');
-
         $alliance_type = $this->request->getPost('alliance_category');
         $company_contact = $this->request->getPost('alliance_number');
         $email = $this->request->getPost('alliance_email');
@@ -1936,14 +1935,18 @@ class MoAjax extends BaseController
         $business_hour_start = $this->request->getPost('alliance_biztime1');
         $business_hour_end = $this->request->getPost('alliance_biztime2');
         $detailed_content = $this->request->getPost('detailed_content');
-
+        
+        $alliance_ceo_num = $this->request->getPost('alliance_ceo_num');
+        $alliance_ceonum_file = $this->request->getFile('alliance_ceonum_file');
         $alliance_photo = $this->request->getFile('alliance_photo');
         $alliance_photo_detail = $this->request->getFiles('alliance_photo_detail');
+
         
         $data = [
             'mobile_no' => $mobile_no,
             'member_ci'=>$ci,
             'alliance_ci' => $alliance_ci,
+            'alliance_ceo_num'=>$alliance_ceo_num,
             'ceo_name' => $representative_name,
             'company_name' => $representative_name,
             'gender' => $gender,
@@ -1962,6 +1965,7 @@ class MoAjax extends BaseController
         $allianceData = [
             'member_ci'=>$ci,
             'alliance_ci'=>$alliance_ci,
+            'alliance_ceo_num'=>$alliance_ceo_num,
             'alliance_type'=>$alliance_type,
             'company_contact'=>$company_contact,
             'email'=>$email,
@@ -1982,6 +1986,28 @@ class MoAjax extends BaseController
         ];
         
         $allianceId = $AllianceModel->insert($allianceData);
+        if ($alliance_ceonum_file && $alliance_ceonum_file->isValid() && !$alliance_ceonum_file->hasMoved()){
+            
+            // return var_dump($alliance_ceonum_file->getClientName());
+            $upload = new Upload();
+            $fileData = $upload->allianceUpload($alliance_ceonum_file);
+            $fileMainData=[
+                'member_ci'=>$ci, 
+                'alliance_idx'=>$allianceId,
+                'file_path'=>$fileData['file_path'], 
+                'file_name'=>$fileData['file_name'], 
+                'org_name'=>$fileData['org_name'], 
+                'ext'=>$fileData['ext'],  
+                'delete_yn'=>'n', 
+                'board_type'=>'ceonum', 
+                'extra1', 
+                'extra2', 
+                'extra3'
+            ];
+            $AllianceFileModel->insert($fileMainData);
+        }else{
+            $msg =  "사업자등록증 첨부파일이 등록되지 않았습니다.";
+        }
 
         if ($alliance_photo && $alliance_photo->isValid() && !$alliance_photo->hasMoved()){
             $upload = new Upload();
@@ -2035,7 +2061,7 @@ class MoAjax extends BaseController
         if($allianceId){
             $msg =  "제휴 신청 후 관리자 승인으로 제휴점에 입점 됩니다.";
             // return view('mo_alliance_success',['msg' => $msg]);
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success']);
+            return $this->response->setJSON(['status' => 'success', 'msg' => $msg]);
         }
         
     }

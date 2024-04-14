@@ -10,7 +10,6 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
-
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/static/css/datepicker.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -34,6 +33,23 @@
                 <form class="main_signin_form group_create" method="post" action="/ajax/alianceUp" enctype="multipart/form-data">
                     <legend></legend>
                     <div class="">
+                        <div class="form_row signin_form">
+                            <div class="signin_form_div">
+                                <label for="alliance_ceo_num" class="signin_label">사업자번호</label>
+                                <input id="alliance_ceo_num" type="number" name="alliance_ceo_num" value="" placeholder="-제외 연락처 입력">
+                            </div>
+                        </div>
+                        <div class="form_row signin_form">
+                            <div class="signin_form_div">
+                                <label for="alliance_ceonum_file" class="signin_label">사업자등록증 첨부파일</label> 
+                                <div class="filebox">
+                                    <input class="alliance_ceonum_upload" value="첨부파일" placeholder="첨부파일" disabled="disabled">
+                                    <label for="alliance_ceonum_file" class="btn search">파일</label> 
+                                    <input type="file" id="alliance_ceonum_file" name="alliance_ceonum_file">
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="alliance_category" class="signin_label">제휴유형</label>
@@ -197,10 +213,10 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <h4 class="profile_photo_label">상세사진</h4>
-                                <div class="profile_photo_div">
-                                    <label for="alliance_photo_detail" class="signin_label profile_photo_input"></label>
-                                    <input id="alliance_photo_detail" name="alliance_photo_detail" type="file" value="" placeholder="" multiple accept="image/*">
-                                    <div id="alliance_detail_post_box">
+                                <div class="alliance_detail_post" id="alliance_detail_post_box" style="display: flex;flex-flow: wrap;">
+                                    <div class="profile_photo_div">
+                                        <label for="alliance_photo_detail" class="profile_photo_input"></label>
+                                        <input id="alliance_photo_detail" name="alliance_photo_detail" type="file" value="" placeholder="" multiple accept="image/*">
                                     </div>
                                 </div>
                             </div>
@@ -291,6 +307,12 @@
             alliClosetBtn();
             toggleMenu();
         });
+
+        /*제휴신청 - 사업자번호 파일 추가 */
+        $("#alliance_ceonum_file").on('change',function(){
+            var fileName = $(this).val().split('\\').pop();
+            $('.alliance_ceonum_upload').val(fileName);
+        });
         const searchAddress = () => { 
             if(event){
                 event.preventDefault();
@@ -315,6 +337,8 @@
             }).open();
         }
 
+        
+    
         /*제휴신청 - 대표사진 미리보기 */
         $('#alliance_photo').on('change', function(event) {
                 var files = event.target.files;
@@ -387,7 +411,7 @@
                     reader.onload = (function(file) {
                         return function(e) {
                             var imageContainer = $('<div>', { class: 'alliance_image_container' });
-                            var image = $('<img>', { class: 'profile_photo_posted', src: e.target.result, style: 'display: block;' });
+                            var image = $('<img>', { class: 'profile_photo_posted_detail', src: e.target.result, style: 'display: block;' });
                             var closeButton = $('<span>', { class: 'alliance_close_button' });
 
                             imageContainer.append(image).append(closeButton);
