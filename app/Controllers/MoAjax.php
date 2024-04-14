@@ -1428,7 +1428,7 @@ class MoAjax extends BaseController
         $AllianceModel = new AllianceModel();
 
         // 동적 WHERE 절 구성 시작
-        $whereConditions = "a.delete_yn = 'N'";
+        $whereConditions = "a.delete_yn = 'N' AND a.alliance_application = '2'";
         $bindParams = [];
 
         // 카테고리 필터링 조건
@@ -1460,7 +1460,8 @@ class MoAjax extends BaseController
             WHERE " . $whereConditions . "
             ORDER BY a.idx ASC";
 
-        $alliances = $AllianceModel->query($query, $bindParams)->getResultArray();
+        $alliances = $AllianceModel
+            ->query($query, $bindParams)->getResultArray();
 
         // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
         return $this->response->setJSON($alliances);

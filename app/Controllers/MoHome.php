@@ -1371,6 +1371,12 @@ class MoHome extends BaseController
     }
     public function allianceDetail($idx): string
     {
+
+        // 사용자 권한 확인
+        if (!hasPermission($idx)) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundExceptio('You do not have permission to view this page.');
+        }
+
         $AllianceModel = new AllianceModel();
 
         // $alliance = $AllianceModel
@@ -1437,6 +1443,22 @@ class MoHome extends BaseController
         }
     
         return $timeSlots;
+    }
+    //승인 나지 않는 페이지 idx 막음
+    function hasPermission($idx) {
+        $AllianceModel = new AllianceModel();
+
+        $allianceApplication = $AllianceModel
+            ->select('alliance_application')
+            ->where('delete_yn', 'N')
+            ->where('idx', $idx)
+            ->first();
+
+        if (empty($allianceApplication) || ($allianceApplication !== '2')) {
+            return false;
+        }
+
+        return true;
     }
     public function alliancePayment($idx,$people,$date,$time): string
     {
