@@ -79,6 +79,9 @@ class MoHome extends BaseController
 
         // 모든 POST 데이터를 하나의 배열에 담기
         $data['postData'] = $postData;
+        echo " mobile_no: " . $postData['mobile_no'] . "<br>";
+        echo " ci: " . $postData['ci'] . "<br>";
+        echo " invite_code: " . $postData['invite_code'] . "<br>";
 
         //초대코드 업데이트
         $ci = $this->request->getPost('ci');

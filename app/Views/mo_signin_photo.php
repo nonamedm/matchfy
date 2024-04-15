@@ -62,13 +62,13 @@
                                     정회원 / 프리미엄 회원 <span>50% 할인!</span></h2>
 
                                     <div class="invite_code_popup">
-                                        <input type="text" name="invite_code" value="" placeholder="초대코드를 입력해주세요"/>
+                                        <input type="text" id="invite_code" name="invite_code" placeholder="초대코드를 입력해주세요"/>
                                     </div>
                                 </div>
                                 <div class="layerPopup_bottom">
                                     <div class="btn_group multy">
-                                        <button class="btn type02">건너뛰기</button>
-                                        <button class="btn type01">등록</button>
+                                        <button type="button" class="btn type02">건너뛰기</button>
+                                        <button type="button" class="btn type01">등록</button>
                                     </div>
                                 </div>
                             </div>
@@ -77,6 +77,7 @@
                         <input type="hidden" name="ci" value="<?php echo $postData['ci'] ?>" />
                         <input type="hidden" id="file_path" name="file_path" value="<?php echo $postData['file_path'] ?>" />
                         <input type="hidden" id="file_name" name="file_name" value="<?php echo $postData['file_name'] ?>" />
+
                         <div id="profile_photo_uploaded" style="display:none;"></div>
                         <div id="profile_mov_uploaded" style="display:none;"></div>
                         <div class="btn_group multy">
@@ -108,8 +109,7 @@
                 $('.layerPopup').show();
             });
 
-            // 팝업 내 버튼 이벤트 처리
-            $('.layerPopup .btn').click(function() {
+            $('.layerPopup_bottom .btn').click(function() {
                 $('.main_signin_form').submit(); // 폼 제출
             });
         });
