@@ -2241,4 +2241,51 @@ class MoAjax extends BaseController
             return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
         }
     }
+    public function reloadMsg()
+    {
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $room_ci = $this->request->getPost('room_ci');
+        // 내가 이 방의 참가자가 맞는지 다시 확인
+        $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "'";
+        $memberYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($memberYn) {
+            // 내가 방 참가자가 맞으면
+            $query = "SELECT crm.chk_entry_num, crm.chk_num, crm.created_at, crm.entry_num, crm.msg_cont, crm.msg_type, crm.updated_at,
+                            (SELECT nickname FROM members WHERE ci = crm.member_ci) as nickname,
+                            (CASE
+                                WHEN member_ci = '" . $ci . "' THEN 'me'
+                                ELSE 'you' 
+                                END) AS chk,
+                                (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname) as match_rate,
+                            (SELECT file_path FROM member_files WHERE member_ci = crm.member_ci) AS file_path,
+                            (SELECT file_name FROM member_files WHERE member_ci = crm.member_ci) AS file_name
+                            FROM wh_chat_room_msg  crm WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at ASC";
+            $allMsg = $ChatRoomMsgModel
+                ->query($query)->getResultArray();
+            if ($allMsg) {
+                date_default_timezone_set('Asia/Seoul');
+                $current_time = time();
+                $today_date = date('Y-m-d', $current_time);
+                foreach ($allMsg as &$row) {
+                    $today_date === date('Y-m-d', strtotime($row['created_at'])) ?  $row['created_at'] = date('H:i', strtotime($row['created_at'])) : $row['created_at'] = date('m-d', strtotime($row['created_at']));
+                }
+            }
+            $query = "SELECT * FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND member_ci != '" . $ci . "' AND delete_yn='n'";
+
+            $data['allMsg'] = $allMsg;
+
+            // echo print_r($allMsg);
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $data]]);
+        } else {
+            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
 }

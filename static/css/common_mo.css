@@ -393,7 +393,8 @@ header .menu_right.edit {
     width: 100%;
     display: block;
 }
-#prev, #next {
+#prev,
+#next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%); /* 화살표가 정확히 중앙에 오도록 조정 */
@@ -418,33 +419,33 @@ header .menu_right.edit {
 }
 
 .fc-day-mon a {
-    color: #7E7894;
+    color: #7e7894;
 }
 .fc-day-tue a {
-    color: #7E7894;
+    color: #7e7894;
 }
 .fc-day-wed a {
-    color: #7E7894;
+    color: #7e7894;
 }
 .fc-day-thu a {
-    color: #7E7894;
+    color: #7e7894;
 }
 .fc-day-fri a {
-    color: #7E7894;
+    color: #7e7894;
 }
 /* 일요일 날짜 빨간색 */
 .fc-day-sun a {
-    color: #FF7274;
+    color: #ff7274;
     text-decoration: none;
 }
 /* 토요일 날짜 파란색 */
 .fc-day-sat a {
-    color: #81A0FF;
+    color: #81a0ff;
     text-decoration: none;
 }
 .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
     min-height: 0em;
-    position: relative; 
+    position: relative;
 }
 .selected-day {
     box-shadow: inset 0 0 0 2px red;
@@ -508,6 +509,10 @@ td {
 .chat_list_wrap .chat_room_title {
     padding-top: 7px;
     display: flex;
+}
+.chat_wrap {
+    height: 600px;
+    overflow: auto;
 }
 .chat_wrap .receive_msg .receive_profile img {
     width: 30px;
@@ -1449,19 +1454,19 @@ a:active {
 .alliance_address1 {
     width: 250px !important;
 }
-.alliance_image_container{
-    position: relative; 
+.alliance_image_container {
+    position: relative;
     display: inline-block;
 }
-.alliance_close_button{
-    position: absolute; 
-    top: 0; 
-    right: 0; 
-    background-image: url('/static/images/alliance_cancel.png'); 
-    background-size: cover; 
-    width: 20px; 
+.alliance_close_button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: url('/static/images/alliance_cancel.png');
+    background-size: cover;
+    width: 20px;
     height: 20px;
-    margin:4px;
+    margin: 4px;
 }
 .myinfo_level {
     padding: 3px 8px;
@@ -3406,7 +3411,7 @@ input[type='number']::-webkit-inner-spin-button {
 .loading img {
     width: 100%;
 }
-.loading_bg{
+.loading_bg {
     background: #000;
     position: fixed;
     top: 0;
@@ -3417,7 +3422,7 @@ input[type='number']::-webkit-inner-spin-button {
     opacity: 0.3;
     display: none;
 }
-.meet_menu_right{
+.meet_menu_right {
     display: none;
     display: flex;
 }

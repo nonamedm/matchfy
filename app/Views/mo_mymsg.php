@@ -23,8 +23,7 @@
         include 'header.php'; ?>
         <?php $session = session();
         $member_ci = $session->get('ci');
-        $current_time = time();
-        $today_date = date('Y-m-d', $current_time);
+
         ?>
         <div class="sub_wrap">
             <div class="content_wrap">
@@ -38,18 +37,15 @@
                         </li>
                     </ul>
                 </div>
-                <div class="chat_wrap">
+                <div id="chat_wrap" class="chat_wrap">
                     <?php foreach ($allMsg as $row) {
-                        if ($row['member_ci'] === $member_ci) {
+                        if ($row['chk'] === 'me') {
                     ?>
                             <div class="send_msg">
                                 <div class="send_text">
                                     <div class="receive_time">
                                         <p>
-                                            <?php
-                                            $today_date === date('Y-m-d', strtotime($row['created_at'])) ?  $echoValue = date('H:i', strtotime($row['created_at'])) : $echoValue = date('m:d', strtotime($row['created_at']));
-                                            ?>
-                                            <?= $echoValue ?>
+                                            <?= $row['created_at'] ?>
                                         </p>
                                     </div>
                                     <div class="send_msg_area">
@@ -62,9 +58,9 @@
                         ?>
                             <div class="receive_msg">
                                 <div class="receive_profile">
-                                    <?php if ($partnerInfo[0]['file_name']) {
+                                    <?php if ($row['file_name']) {
                                     ?>
-                                        <img src="/<?= $partnerInfo[0]['file_path'] ?><?= $partnerInfo[0]['file_name'] ?>" />
+                                        <img src="/<?= $row['file_path'] ?><?= $row['file_name'] ?>" />
                                     <?php
                                     } else {
                                     ?>
@@ -73,14 +69,14 @@
                                     } ?>
                                 </div>
                                 <div class="receive_text">
-                                    <p class="receive_profile_name"><?= $partnerInfo[0]['your_nickname'] ?><span class="match_percent"><?= number_format($partnerInfo[0]['match_rate'], 0) ?>%</span></p>
+                                    <p class="receive_profile_name"><?= $row['nickname'] ?><span class="match_percent"><?= number_format($row['match_rate'], 0) ?>%</span></p>
                                     <div class="receive_msg_area">
                                         <p><?= $row['msg_cont'] ?></p>
                                     </div>
                                 </div>
                                 <div class="receive_time">
                                     <p>
-                                        14:00
+                                        <?= $row['created_at'] ?>
                                     </p>
                                 </div>
                             </div>
@@ -128,7 +124,64 @@
                 $(e.target).css('height', '26px'); // height 초기화
                 $(e.target).css('height', $(e.target)[0].scrollHeight + 'px');
             });
+            scrollToBottom();
+            setInterval(function() {
+                reloadMsg();
+            }, 5000)
         });
+        const reloadMsg = () => {
+            $.ajax({
+                url: '/ajax/reloadMsg',
+                type: 'POST',
+                data: {
+                    "room_ci": $("#room_ci").val()
+                },
+                async: false,
+                success: function(data) {
+                    console.log(data);
+                    if (data.status === 'success') {
+                        // 성공
+                        $("#chat_wrap").html("");
+                        var member_ci = "<?= $member_ci ?>";
+                        var html = "";
+                        data.data.reulst_value.allMsg.forEach(item => {
+                            if (item.chk === 'me') {
+                                html += '<div class="send_msg">';
+                                html += '<div class="send_text">';
+                                html += '<div class="receive_time"><p>';
+                                html += item.created_at + '</p></div>';
+                                html += '<div class = "send_msg_area" ><p>';
+                                html += item.msg_cont + '</p></div></div></div>';
+                            } else {
+                                html += '<div class="receive_msg">';
+                                html += '<div class="receive_profile">';
+                                if (item.file_name) {
+                                    html += '<img src="/' + item.file_path + item.file_name + '" />';
+                                } else {
+                                    html += '<img src="/static/images/profile_noimg.png" />';
+                                }
+                                html += '</div>';
+                                html += '<div class="receive_text">';
+                                html += '<p class="receive_profile_name">' + item.nickname + '<span class="match_percent">' + item.match_rate + '%</span></p>';
+                                html += '<div class="receive_msg_area"><p>' + item.msg_cont + '</p></div></div>';
+                                html += '<div class="receive_time"><p>' + item.created_at + '</p></div></div>';
+                            }
+                        });
+                        $("#chat_wrap").html(html);
+                        // moveToUrl('/mo/factorInfo');
+                    } else if (data.status === 'error') {
+                        console.log('실패', data);
+                    } else {
+                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    }
+                    return false;
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
+            });
+        }
         const sendMsg = () => {
             var sendMsg = $("#msgbox").val();
             if (sendMsg !== "") {
@@ -143,8 +196,9 @@
                     success: function(data) {
                         console.log(data);
                         if (data.status === 'success') {
-                            // 성공                        
-                            console.log('저장', data);
+                            // 성공
+                            reloadMsg();
+                            scrollToBottom();
                             // moveToUrl('/mo/factorInfo');
                         } else if (data.status === 'error') {
                             console.log('실패', data);
@@ -161,6 +215,13 @@
             }
             console.log(sendMsg)
             $("#msgbox").val("");
+        }
+
+        function scrollToBottom() {
+            var element = $("#chat_wrap");
+            element.animate({
+                scrollTop: element.height()
+            }, 'slow');
         }
     </script>
 
