@@ -300,6 +300,28 @@ const signUp = () => {
     }
 };
 
+const isValidRecommendCode = (inviteCode, callback) => {
+    $.ajax({
+        url: '/ajax/isValidRecommendCode',
+        type: 'POST',
+        data:  { inviteCode: inviteCode },
+        success: function (data) {
+            console.log(data);
+            if (data.isValid) {
+                callback(true);
+            } else {
+                alert('유효하지 않은 초대 코드입니다.');
+                callback(false);
+            }
+        },
+        error: function (data, status, err) {
+            console.log(err);
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            callback(false);
+        },
+    });
+}
+
 const signUpdate = (postData) => {
     let tempValidation = false;
     if ($('#marital').val().trim() === '') {

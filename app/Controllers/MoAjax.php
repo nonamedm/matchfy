@@ -229,6 +229,8 @@ class MoAjax extends BaseController
         } else {
             $MemberModel = new MemberModel();
 
+            $unique_code = $this->generateUniqueCode($MemberModel);
+
             $is_duplicate = true;
             $random_word = '';
             // 닉네임 중복확인
@@ -268,6 +270,7 @@ class MoAjax extends BaseController
                 'city' => $city,
                 'town' => $town,
                 'nickname' => $random_word,
+                'unique_code' => $unique_code,
             ];
 
             // 데이터 저장
@@ -303,6 +306,43 @@ class MoAjax extends BaseController
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy']);
             }
         }
+    }
+    protected function generateUniqueCode($MemberModel) {
+        $length = 6;
+        $charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $code = '';
+        $is_duplicate = true;
+    
+        while ($is_duplicate) {
+            $code = '';
+            for ($i = 0; $i < $length; $i++) {
+                $code .= $charset[rand(0, strlen($charset) - 1)];
+            }
+            $is_duplicate = $MemberModel
+                ->where(['unique_code' => $code])
+                ->first() ? true : false;
+        }
+    
+        return $code;
+    }
+
+    public function isValidRecommendCode()
+    {
+        $inviteCode = $this->request->getPost('inviteCode');
+
+        $MemberModel = new MemberModel();
+
+        $result = $MemberModel
+            ->select('unique_code')
+            ->where('unique_code', $inviteCode)
+            ->where('delete_yn', 'N')
+            ->first();
+
+        $isValid = $result !== null;
+
+        return $this->response->setJSON([
+            'isValid' => $isValid
+        ]);
     }
 
     public function signUpdate()

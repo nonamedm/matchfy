@@ -79,41 +79,28 @@ class MoHome extends BaseController
 
         // 모든 POST 데이터를 하나의 배열에 담기
         $data['postData'] = $postData;
-        echo " mobile_no: " . $postData['mobile_no'] . "<br>";
-        echo " ci: " . $postData['ci'] . "<br>";
-        echo " invite_code: " . $postData['invite_code'] . "<br>";
 
         //초대코드 업데이트
         $ci = $this->request->getPost('ci');
         $mobile_no = $this->request->getPost('mobile_no');
         $invite_code = $this->request->getPost('invite_code');
-        echo " invite_code: " . (!empty($invite_code) ? 'true' : 'false') . "<br>";
 
         $MemberModel = new MemberModel();
         $isDiscounted = false;
-        echo "Initial isDiscounted: " . ($isDiscounted ? 'true' : 'false') . "<br>";
 
         if (!empty($invite_code)) {
             //코드 검증 필요
             $isValid = true;
-            echo "isValid: " . ($isValid ? 'true' : 'false') . "<br>";
 
             if ($isValid) {
                 $isDiscounted = true;
             }
-            echo "isDiscounted after isValid: " . ($isDiscounted ? 'true' : 'false') . "<br>";
 
             $MemberModel->set('recommender_code', $invite_code)
                     ->where('ci', $ci)
                     ->update();
         }
-        echo "isDiscounted before sending to view: " . ($isDiscounted ? 'true' : 'false') . "<br>";
-
         $data['isDiscounted'] = $isDiscounted;
-
-        echo '<pre>';
-        print_r($post);
-        echo '</pre>';
 
         // 현재 페이지에서는 이미 가입완료이므로 로그인 시키기
         $moAjax = new \App\Controllers\MoAjax();
@@ -125,6 +112,7 @@ class MoHome extends BaseController
             return view('mo_signin_photo', $data);
         }
     }
+    // echo "isDiscounted before sending to view: " . ($isDiscounted ? 'true' : 'false') . "<br>";
     public function signinSuccess(): string
     {
         return view('mo_signin_success');

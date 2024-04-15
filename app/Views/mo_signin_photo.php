@@ -110,7 +110,17 @@
             });
 
             $('.layerPopup_bottom .btn').click(function() {
-                $('.main_signin_form').submit(); // 폼 제출
+                if ($(this).hasClass('type01')) {
+                    var inviteCode = $('#invite_code').val();
+                    isValidRecommendCode(inviteCode, function(isValid) {
+                        if (isValid) {
+                            $('.main_signin_form').submit();
+                        }
+                    });
+                } else {
+                    $('#invite_code').val(null);
+                    $('.main_signin_form').submit(); 
+                }
             });
         });
     </script>
