@@ -9,6 +9,9 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
+    <script src="/static/js/myfeed.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -18,13 +21,17 @@
 
         <?php $title = "메시지";
         include 'header.php'; ?>
-
+        <?php $session = session();
+        $member_ci = $session->get('ci');
+        $current_time = time();
+        $today_date = date('Y-m-d', $current_time);
+        ?>
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="tab_wrap">
                     <ul>
                         <li>
-                            AI 메시지<?= $room_ci ?>
+                            AI 메시지
                         </li>
                         <li class="on">
                             메시지함
@@ -32,62 +39,54 @@
                     </ul>
                 </div>
                 <div class="chat_wrap">
-                    <div class="receive_msg">
-                        <div class="receive_profile">
-                            <img src="/static/images/message_send.png" />
-                        </div>
-                        <div class="receive_text">
-                            <p class="receive_profile_name">강해린<span class="match_percent">95%</span></p>
-                            <div class="receive_msg_area">
-                                <p>안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요</p>
+                    <?php foreach ($allMsg as $row) {
+                        if ($row['member_ci'] === $member_ci) {
+                    ?>
+                            <div class="send_msg">
+                                <div class="send_text">
+                                    <div class="receive_time">
+                                        <p>
+                                            <?php
+                                            $today_date === date('Y-m-d', strtotime($row['created_at'])) ?  $echoValue = date('H:i', strtotime($row['created_at'])) : $echoValue = date('m:d', strtotime($row['created_at']));
+                                            ?>
+                                            <?= $echoValue ?>
+                                        </p>
+                                    </div>
+                                    <div class="send_msg_area">
+                                        <p><?= $row['msg_cont'] ?></p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="receive_time">
-                            <p>
-                                14:00
-                            </p>
-                        </div>
-                    </div>
-                    <div class="send_msg">
-                        <div class="send_text">
-                            <div class="receive_time">
-                                <p>
-                                    14:00
-                                </p>
+                        <?php
+                        } else {
+                        ?>
+                            <div class="receive_msg">
+                                <div class="receive_profile">
+                                    <?php if ($partnerInfo[0]['file_name']) {
+                                    ?>
+                                        <img src="/<?= $partnerInfo[0]['file_path'] ?><?= $partnerInfo[0]['file_name'] ?>" />
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <img src="/static/images/profile_noimg.png" />
+                                    <?php
+                                    } ?>
+                                </div>
+                                <div class="receive_text">
+                                    <p class="receive_profile_name"><?= $partnerInfo[0]['your_nickname'] ?><span class="match_percent"><?= number_format($partnerInfo[0]['match_rate'], 0) ?>%</span></p>
+                                    <div class="receive_msg_area">
+                                        <p><?= $row['msg_cont'] ?></p>
+                                    </div>
+                                </div>
+                                <div class="receive_time">
+                                    <p>
+                                        14:00
+                                    </p>
+                                </div>
                             </div>
-                            <div class="send_msg_area">
-                                <p>안녕하세요</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="send_msg">
-                        <div class="send_text">
-                            <div class="receive_time">
-                                <p>
-                                    14:00
-                                </p>
-                            </div>
-                            <div class="send_msg_area">
-                                <p>7시에 강남역에서 봐요<br />맛있는거 먹어요</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="receive_msg">
-                        <div class="receive_profile">
-                            <img src="/static/images/message_send.png" />
-                        </div>
-                        <div class="receive_text">
-                            <p class="receive_profile_name">강해린<span class="match_percent">95%</span></p>
-                            <div class="receive_msg_area">
-                                <p>좋아요~이따봬요</p>
-                            </div>
-                        </div>
-                        <div class="receive_time">
-                            <p>
-                                14:00
-                            </p>
-                        </div>
-                    </div>
+                    <?php
+                        }
+                    } ?>
                 </div>
             </div>
             <div style="height: 50px;"></div>
@@ -105,11 +104,12 @@
                             <img src="/static/images/hamberger_menu.png" />
                         </div>
                         <div class="message_input_box_border">
-                            <textarea type="text" placeholder="메세지를 입력하세요"></textarea>
-                            <img style="position:absolute; right: 30px" src="/static/images/message_send_btn.png" />
+                            <textarea id="msgbox" type="text" placeholder="메세지를 입력하세요" rows={1}></textarea>
+                            <img style="position:absolute; right: 30px" src="/static/images/message_send_btn.png" onclick="sendMsg()" />
                         </div>
                     </div>
                 </div>
+                <input id="room_ci" type="hidden" value="<?= $room_ci ?>" />
             </footer>
         </div>
 
@@ -123,12 +123,44 @@
     <!-- SCRIPTS -->
 
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
+        $(document).ready(function() {
+            $("#msgbox").on("propertychange change keyup paste input", function(e) {
+                $(e.target).css('height', '26px'); // height 초기화
+                $(e.target).css('height', $(e.target)[0].scrollHeight + 'px');
+            });
+        });
+        const sendMsg = () => {
+            var sendMsg = $("#msgbox").val();
+            if (sendMsg !== "") {
+                $.ajax({
+                    url: '/ajax/sendMsg',
+                    type: 'POST',
+                    data: {
+                        "room_ci": $("#room_ci").val(),
+                        "msg_cont": sendMsg
+                    },
+                    async: false,
+                    success: function(data) {
+                        console.log(data);
+                        if (data.status === 'success') {
+                            // 성공                        
+                            console.log('저장', data);
+                            // moveToUrl('/mo/factorInfo');
+                        } else if (data.status === 'error') {
+                            console.log('실패', data);
+                        } else {
+                            alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        }
+                        return false;
+                    },
+                    error: function(data, status, err) {
+                        console.log(err);
+                        alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    },
+                });
             }
+            console.log(sendMsg)
+            $("#msgbox").val("");
         }
     </script>
 

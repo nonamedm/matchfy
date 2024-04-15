@@ -2206,4 +2206,39 @@ class MoAjax extends BaseController
             }
         }
     }
+    public function sendMsg()
+    {
+        // 1:1 채팅 생성하기
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $member_ci = $session->get('ci');
+
+        $room_ci = $this->request->getPost('room_ci');
+        // 여기서 member_ci로 내가 방 참가자 맞는지 조회 한번 해야함
+        $query = "SELECT * FROM wh_chat_room_member WHERE member_ci = '" . $member_ci . "'
+                  AND room_ci = '" . $room_ci . "'";
+        $checkYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($checkYn) {
+            // 해당 채팅방의 멤버가 맞다면 메세지 전송
+            $msg_cont = $this->request->getPost('msg_cont');
+
+            $query = "INSERT INTO wh_chat_room_msg
+            (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
+            VALUES('" . $room_ci . "','" . $member_ci . "','9','0','" . $msg_cont . "','9','9');";
+
+            $sendMsg = $ChatRoomMsgModel
+                ->query($query);
+
+
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $sendMsg]]);
+        } else {
+            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
 }

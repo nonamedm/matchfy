@@ -288,14 +288,26 @@ class MoHome extends BaseController
             ->query($query)->getResultArray();
         if ($memberYn) {
             // 내가 방 참가자가 맞으면
-            $query = "SELECT * FROM wh_chat_room_msg WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
+            $query = "SELECT * FROM wh_chat_room_msg WHERE room_ci = '" . $room_ci . "' AND delete_yn='n' ORDER BY created_at ASC";
             $allMsg = $ChatRoomMsgModel
                 ->query($query)->getResultArray();
 
+            $query = "SELECT * FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND member_ci != '" . $ci . "' AND delete_yn='n'";
+            $partner_ci = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
 
+            $query = "
+            SELECT mb.name, mb.nickname, mb.birthday, mr.match_rate, mr.your_nickname, mf.file_path, mf.file_name
+              FROM members mb, wh_match_rate mr, member_files mf
+             WHERE mr.your_nickname = mb.nickname AND mb.ci = mf.member_ci AND mb.ci = '" . $partner_ci[0]['member_ci'] . "'
+              AND mr.my_nickname = (SELECT nickname FROM members WHERE ci='" . $ci . "');";
+            $partnerInfo = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
             $data['room_ci'] = $room_ci;
+            $data['partnerInfo'] = $partnerInfo;
             $data['allMsg'] = $allMsg;
 
+            // echo print_r($allMsg);
             return view('mo_mymsg', $data);
         } else {
             echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
