@@ -513,6 +513,11 @@ td {
 .chat_wrap {
     height: 600px;
     overflow: auto;
+    transition: all 0.3s;
+}
+.chat_wrap.on {
+    height: 380px;
+    transition: all 0.3s;
 }
 .chat_wrap .receive_msg .receive_profile img {
     width: 30px;
@@ -574,9 +579,30 @@ td {
 }
 
 .message_input_box {
+    background-color: #fff;
     position: absolute;
     bottom: 0px;
     padding: 10px 20px;
+    transition: all 0.3s;
+}
+.message_input_box.on {
+    height: 108px;
+    bottom: 200px;
+    transition: all 0.3s;
+}
+.message_input_box .hamberger_menu {
+    display: block;
+    cursor: pointer;
+}
+.message_input_box .hamberger_cancel {
+    display: none;
+    cursor: pointer;
+}
+.message_input_box.on .hamberger_menu {
+    display: none;
+}
+.message_input_box.on .hamberger_cancel {
+    display: block;
 }
 .message_input_box.message_input_box_on {
     height: 300px;
@@ -585,16 +611,20 @@ td {
     display: flex;
 }
 .message_input_box .chat_menu_open {
-    display: flex;
+    display: none;
     flex-wrap: wrap;
     margin-top: 12px;
     margin: 12px 0 0 3px;
+}
+.message_input_box.on .chat_menu_open {
+    display: flex;
 }
 .message_input_box .chat_menu_open .chat_menu_func {
     width: 54px;
     height: 54px;
     margin: 20px 28px;
     text-align: center;
+    cursor: pointer;
 }
 .message_input_box .chat_menu_open .chat_menu_func p {
     margin: 6px 0px;
@@ -607,6 +637,16 @@ td {
 .message_input_box .chat_menu_open img {
     width: 54px;
     height: 54px;
+}
+.message_input_box .chat_menu_open label {
+    width: 54px;
+    height: 54px;
+    background: url('/static/images/chat_picture.png') no-repeat center;
+    display: block;
+    cursor: pointer;
+}
+.message_input_box .chat_menu_open input {
+    display: none;
 }
 
 .message_input_box .chat_input_box .message_input_box_border {
@@ -681,6 +721,10 @@ td {
     font-weight: 500;
     font-size: 15px;
     line-height: 24px;
+}
+.receive_msg .receive_text .receive_msg_area img {
+    width: 150px;
+    height: 150px;
 }
 .receive_msg .receive_text .receive_msg_area p {
     margin: 0;
@@ -1272,6 +1316,10 @@ a:active {
     font-weight: 500;
     font-size: 15px;
     line-height: 24px;
+}
+.send_msg .send_text .send_msg_area img {
+    width: 150px;
+    height: 150px;
 }
 .send_msg .send_text .send_msg_area p {
     margin: 0;

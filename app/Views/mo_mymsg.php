@@ -86,33 +86,53 @@
                 </div>
             </div>
             <div style="height: 50px;"></div>
-            <footer class="footer">
 
-                <div class="message_input_box">
-                    <!-- <div class="btn_group multy ai_date_check">
+
+            <div class="message_input_box">
+                <!-- <div class="btn_group multy ai_date_check">
                         <button type="button" class="btn type01">수락</button>
                         <button type="button" class="btn type04">거절</button>
                         <button type="button" class="btn type05">보류</button>
                     </div>  -->
-                    <hr class="hoz_part" />
-                    <div class="chat_input_box">
-                        <div style="padding:20px 8px;">
-                            <img src="/static/images/hamberger_menu.png" />
-                        </div>
-                        <div class="message_input_box_border">
-                            <textarea id="msgbox" type="text" placeholder="메세지를 입력하세요" rows={1}></textarea>
-                            <img style="position:absolute; right: 30px" src="/static/images/message_send_btn.png" onclick="sendMsg()" />
-                        </div>
+                <hr class="hoz_part" />
+                <div class="chat_input_box">
+                    <div id="mymsg_menu" style="padding:20px 8px;">
+                        <img class="hamberger_menu" src="/static/images/hamberger_menu.png" />
+                        <img class="hamberger_cancel" src="/static/images/hamberger_cancel.png" />
+                    </div>
+                    <div class="message_input_box_border">
+                        <textarea id="msgbox" type="text" placeholder="메세지를 입력하세요" rows={1}></textarea>
+                        <img style="position:absolute; right: 30px" src="/static/images/message_send_btn.png" onclick="sendMsg()" />
                     </div>
                 </div>
-                <input id="room_ci" type="hidden" value="<?= $room_ci ?>" />
+                <div class="chat_menu_open">
+                    <div id="mymsg_photo_div" class="chat_menu_func">
+                        <!-- <img src="/static/images/chat_picture.png"> -->
+                        <label for="mymsg_photo" class=""></label>
+                        <p>앨범</p>
+                        <input id="mymsg_photo" name="mymsg_photo" type="file" value="" placeholder="" multiple accept="image/*">
+                    </div>
+                    <div class="chat_menu_func"><img src="/static/images/chat_location.png">
+                        <p>약속</p>
+                    </div>
+                    <div class="chat_menu_func"><img src="/static/images/chat_banking.png">
+                        <p>예약금<br />송금</p>
+                    </div>
+                    <div class="chat_menu_func"><img src="/static/images/chat_quit.png">
+                        <p>방나가기</p>
+                    </div>
+                    <div class="chat_menu_func"><img src="/static/images/chat_report.png">
+                        <p>신고/강퇴</p>
+                    </div>
+                    <div class="chat_menu_func"><img src="/static/images/chat_call.png">
+                        <p>안심번호<br /> 통화하기</p>
+                    </div>
+                </div>
+            </div>
+            <input id="room_ci" type="hidden" value="<?= $room_ci ?>" />
+            <footer class="footer">
             </footer>
         </div>
-
-
-
-
-
     </div>
 
 
@@ -121,13 +141,26 @@
     <script>
         $(document).ready(function() {
             $("#msgbox").on("propertychange change keyup paste input", function(e) {
-                $(e.target).css('height', '26px'); // height 초기화
-                $(e.target).css('height', $(e.target)[0].scrollHeight + 'px');
+                if (!($(".message_input_box").hasClass("on")) && !($(".chat_wrap").hasClass("on"))) {
+                    $(e.target).css('height', '26px'); // height 초기화
+                    $(e.target).css('height', $(e.target)[0].scrollHeight + 'px');
+                }
             });
             scrollToBottom();
+            mymsgPhotoListener();
             setInterval(function() {
                 reloadMsg();
-            }, 5000)
+            }, 5000);
+            $("#mymsg_menu").on("click", function() {
+                if (!($(".message_input_box").hasClass("on")) && !($(".chat_wrap").hasClass("on"))) {
+                    $(".message_input_box").addClass("on");
+                    $(".chat_wrap").addClass("on");
+                } else {
+                    $(".message_input_box").removeClass("on");
+                    $(".chat_wrap").removeClass("on");
+                }
+            });
+
         });
         const reloadMsg = () => {
             $.ajax({
@@ -190,13 +223,15 @@
                     type: 'POST',
                     data: {
                         "room_ci": $("#room_ci").val(),
-                        "msg_cont": sendMsg
+                        "msg_cont": sendMsg,
+                        "msg_type": "0"
                     },
                     async: false,
                     success: function(data) {
                         console.log(data);
                         if (data.status === 'success') {
                             // 성공
+                            $('#msgbox').css('height', '26px'); // height 초기화
                             reloadMsg();
                             scrollToBottom();
                             // moveToUrl('/mo/factorInfo');
@@ -213,16 +248,87 @@
                     },
                 });
             }
-            console.log(sendMsg)
             $("#msgbox").val("");
         }
 
         function scrollToBottom() {
-            var element = $("#chat_wrap");
-            element.animate({
-                scrollTop: element.height()
-            }, 'slow');
+            $("#chat_wrap").scrollTop($("#chat_wrap")[0].scrollHeight);
         }
+
+        const mymsgPhotoListener = () => {
+            const mymsg_photo_input = document.getElementById('mymsg_photo');
+            let uploadedFiles = [];
+            mymsg_photo_input.addEventListener('change', function() {
+                if (mymsg_photo_input.files.length > 0) {
+                    for (let i = 0; i < mymsg_photo_input.files.length; i++) {
+                        const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i;
+                        if (!allowedExtensions.exec(mymsg_photo_input.files[i].name)) {
+                            alert('이미지 파일만 업로드할 수 있습니다.');
+                            // 입력한 파일을 초기화하여 업로드를 취소
+                            this.value = '';
+                        } else {
+                            // FileReader 객체 생성
+                            const reader = new FileReader();
+
+                            // 파일 읽기가 완료되었을 때 실행되는 콜백 함수 정의
+                            reader.onload = function(e) {
+                                // javascript에서 fileUpload 호출
+                                fileUpload(mymsg_photo_input.files[i])
+                                    .then((data) => {
+                                        console.log('result', data);
+                                        const fileInfo = {
+                                            org_name: data.org_name,
+                                            file_name: data.file_name,
+                                            file_path: data.file_path,
+                                            ext: data.ext,
+                                        };
+                                        uploadedFiles.push(fileInfo);
+
+                                        // DB저장하기
+                                        $.ajax({
+                                            url: '/ajax/sendMsg',
+                                            type: 'POST',
+                                            data: {
+                                                "room_ci": $("#room_ci").val(),
+                                                "msg_cont": '<img src="/' + fileInfo.file_path + fileInfo.file_name + '" style="width: 150px; height: 150px;" />',
+                                                "msg_type": "1"
+                                            },
+                                            async: false,
+                                            success: function(data) {
+                                                console.log(data);
+                                                if (data.status === 'success') {
+                                                    // 성공
+                                                    $('#msgbox').css('height', '26px'); // height 초기화
+                                                    $(".message_input_box").removeClass("on");
+                                                    $(".chat_wrap").removeClass("on");
+                                                    reloadMsg();
+                                                    scrollToBottom();
+                                                    // moveToUrl('/mo/factorInfo');
+                                                } else if (data.status === 'error') {
+                                                    console.log('실패', data);
+                                                } else {
+                                                    alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                                                }
+                                                return false;
+                                            },
+                                            error: function(data, status, err) {
+                                                console.log(err);
+                                                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                                            },
+                                        });
+
+                                    })
+                                    .catch((error) => {
+                                        console.error('error : ', error);
+                                    });
+                            };
+                            // 파일 읽기 시작
+                            reader.readAsDataURL(mymsg_photo_input.files[i]);
+                        }
+                    }
+                } else {}
+            });
+        };
     </script>
 
     <!-- -->

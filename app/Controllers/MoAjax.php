@@ -2226,7 +2226,12 @@ class MoAjax extends BaseController
         if ($checkYn) {
             // 해당 채팅방의 멤버가 맞다면 메세지 전송
             $msg_cont = $this->request->getPost('msg_cont');
+            $msg_type = $this->request->getPost('msg_type');
 
+            if ($msg_type == '0') {
+                $msg_cont = htmlspecialchars($msg_cont, ENT_QUOTES);
+                $msg_cont = str_replace("\n", "<br>", $msg_cont);
+            }
             $query = "INSERT INTO wh_chat_room_msg
             (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
             VALUES('" . $room_ci . "','" . $member_ci . "','9','0','" . $msg_cont . "','9','9');";
