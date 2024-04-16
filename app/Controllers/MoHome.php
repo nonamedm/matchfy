@@ -330,7 +330,19 @@ class MoHome extends BaseController
     }
     public function invite(): string
     {
-        return view('mo_invite');
+        $session = session();
+        $ci = $session->get('ci');
+
+        $MemberModel = new MemberModel();
+
+        $uniqueCode = $MemberModel
+            ->select('unique_code')
+            ->where('ci', $ci)
+            ->first();
+
+        print_r($uniqueCode);
+
+        return view('mo_invite', $uniqueCode);
     }
     public function invitePopup(): string
     {

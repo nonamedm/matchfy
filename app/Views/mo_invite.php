@@ -10,34 +10,25 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        <header>
-
-            <div class="menu">
-                <ul>
-
-                    <li class="header_title">
-                        친구 초대
-                    </li>
-                </ul>
-            </div>
-
-        </header>
+        <?php $title = "친구 초대"; include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="invite_wrap">
                     <div class="invite_img">
-                        <img src="/static/images/invite_img.png" style="width:335px" />
+                        <img src="/static/images/invite.jpg" style="width:335px" />
                     </div>
                     <div class="invite_code">
-                        <a>
-                            <h2>ZH5XVWUQS</h2>
+                        <a id="copyButton" data-code="<?=$unique_code?>">
+                            <h2><?=$unique_code?></h2>
                             <p><img src="/static/images/ico_copy_14x14.png" />초대링크 복사하기</p>
                         </a>
                     </div>
@@ -47,7 +38,7 @@
 <footer class="footer">
                 
                 <div class="btn_group invite">
-                    <button type="button" class="btn type01">친구에게 공유하기</button>
+                    <button type="button" class="btn type01" id="shareButton" data-code="<?=$unique_code?>">친구에게 공유하기</button>
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy
@@ -68,11 +59,6 @@
 
             </footer>
         </div>
-
-
-
-
-
     </div>
 
 
@@ -86,6 +72,36 @@
                 menuItem.classList.toggle("hidden");
             }
         }
+
+        $(document).ready(function() {
+            $('#copyButton').click(function() {
+                var code = $(this).attr('data-code');
+                var tempInput = $('<textarea>');
+
+                $('body').append(tempInput);
+                tempInput.val(code).select();
+                document.execCommand('copy');
+                tempInput.remove();
+                alert('초대코드가 클립보드에 복사되었습니다!');
+            });
+        });
+
+        document.getElementById('shareButton').addEventListener('click', function() {
+            var code = this.getAttribute('data-code');
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Matchfy 초대',
+                    text: 'Matchfy에 초대합니다! 여기 코드를 사용하세요: ' + code,
+                    url: window.location.href
+                }).then(() => {
+                    console.log('공유 완료');
+                }).catch((error) => {
+                    console.log('공유 실패 : ', error);
+                });
+            } else {
+                alert('지원되지 않는 기기입니다.');
+            }
+        });
     </script>
 
     <!-- -->
