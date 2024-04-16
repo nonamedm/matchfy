@@ -18,7 +18,7 @@
         </div>
         <div class="ad_con">
             <h2>FAQ 목록</h2> 
-            <input type="button" class="btn type01 edit" value="등록" Onclick="fn_EditClick('faq');"/>
+            <input type="button" class="btn type01 edit" value="<?=lang('Korean.registration')?>" Onclick="fn_EditClick('faq');"/>
             
             <?php foreach ($faqs as $faq): ?>
                 <div class="notice_list">
@@ -50,7 +50,7 @@
                     </a>
                     <div class="btn_up_del_box">
                         <input type="button" class="btn type01" value="수정" Onclick="fn_clickUpdate('faq','<?= $faq['id']?>')"/>
-                        <input type="button" class="btn type02" value="삭제"  Onclick="fn_clickDelete('<?= $faq['id']?>','faq')"/>
+                        <input type="button" class="btn type02" value="<?=lang('Korean.delete')?>"  Onclick="fn_clickDelete('<?= $faq['id']?>','faq')"/>
                     </div>
                 </div>
             <?php endforeach; ?>

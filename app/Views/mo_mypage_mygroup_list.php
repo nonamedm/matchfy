@@ -47,14 +47,14 @@
                             </div>
                             <div class="group_list_item group_apply_item">
                                 <div class="group_particpnt" onclick="javascript:meetingMemberList(<?= $meeting->meeting_idx ?>);">
-                                    <span>신청 <?= $meeting->meeting_idx_count ?></span>/<?= $meeting->number_of_people ?>명
+                                    <span>신청 <?= $meeting->meeting_idx_count ?></span>/<?= $meeting->number_of_people ?><?=lang('Korean.people')?>
                                 </div>
                                 <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
                                     <div class="group_location">
                                         <img src="/static/images/ico_location_16x16.png" />
                                         <?= $meeting->meeting_place ?>
                                     </div>
-                                    <p class="group_price"><?= number_format($meeting->membership_fee) ?>원</p>
+                                    <p class="group_price"><?= number_format($meeting->membership_fee) ?><?=lang('Korean.won')?></p>
                                     <?php
                                     $date = $meeting->meeting_start_date;
                                     $dayOfWeek = date('w', strtotime($date)); // 요일을 숫자(0~6)로 가져옴
@@ -82,13 +82,13 @@
                 matchfy
             </div>
             <div class="footer_link mb40">
-                <a href="#">회사정보</a>
-                <a href="#">개인정보 처리방침</a>
-                <a href="#">서비스 이용약관</a>
+                <a href="#"><?=lang('Korean.companyName')?></a>
+                <a href="#"><?=lang('Korean.pravacyName')?></a>
+                <a href="#"><?=lang('Korean.serviceName')?></a>
             </div>
             <div class="footer_info mb40">
-                <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
+                <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
+                <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
                         src="/static/images/part_line.png" /> gildong@naver.com</span>
             </div>
             <div class="footer_copy">

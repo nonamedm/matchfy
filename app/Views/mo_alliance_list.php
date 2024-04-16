@@ -27,34 +27,34 @@
                     <img src="/static/images/alliance_banner.png" />
                 </div>
                 <div class="group_search">
-                    <input type="text" placeholder="제휴점을 검색해보세요!" />
+                    <input type="text" placeholder="<?=lang('Korean.alliancePlacehoder3')?>" />
                     <img src="/static/images/ico_search_18x18.png" />
                 </div>
                 <div class="group_category">
                     <div class="group_category_all" data-category="">
                         <img src="/static/images/group_category_all.png" />
-                        <p>전체</p>
+                        <p><?=lang('Korean.all')?></p>
                     </div>
                     <div class="group_category_1" data-category="01">
                         <img src="/static/images/alliance_category_1.png" />
-                        <p>음식점</p>
+                        <p><?=lang('Korean.allianceType2')?></p>
                     </div>
                     <div class="group_category_2" data-category="02">
                         <img src="/static/images/alliance_category_2.png" />
-                        <p>카페</p>
+                        <p><?=lang('Korean.allianceType3')?></p>
                     </div>
                     <div class="group_category_3" data-category="03">
                         <img src="/static/images/alliance_category_3.png" />
-                        <p>숙박</p>
+                        <p><?=lang('Korean.allianceType4')?></p>
                     </div>
                     <div class="group_category_4" data-category="">
                         <img src="/static/images/alliance_category_4.png" />
-                        <p>지역별</p>
+                        <p><?=lang('Korean.allianceType5')?></p>
                     </div>
                 </div>
                 <!-- <div class="group_search_filter">
                     <select class="small">
-                        <option>지역 전체</option>
+                        <option><?=lang('Korean.region')?> <?=lang('Korean.all')?></option>
 
                     </select>
                 </div> -->
@@ -81,33 +81,33 @@
     <div class="layerPopup alert middle alliance" style="display: none;"><!-- class: imgPop 추가 -->
         <div class="layerPopup_wrap">
             <div class="layerPopup_content">
-                <p class="txt">지역 선택</p>
+                <p class="txt"><?=lang('Korean.region')?> <?=lang('Korean.selected')?></p>
                 <!-- <em class="desc">인증을 위한 혼인관계증명서를<br/>등록해주세요</em> -->
 
                 <div class="region_list">
-                    <div class="region_list_box on">전체</div>
-                    <div class="region_list_box">서울</div>
-                    <div class="region_list_box">경기</div>
-                    <div class="region_list_box">인천</div>
-                    <div class="region_list_box">대전</div>
-                    <div class="region_list_box">세종</div>
-                    <div class="region_list_box">충남</div>
-                    <div class="region_list_box">충북</div>
-                    <div class="region_list_box">광주</div>
-                    <div class="region_list_box">전남</div>
-                    <div class="region_list_box">전북</div>
-                    <div class="region_list_box">대구</div>
-                    <div class="region_list_box">경북</div>
-                    <div class="region_list_box">부산</div>
-                    <div class="region_list_box">울산</div>
-                    <div class="region_list_box">경남</div>
-                    <div class="region_list_box">강원</div>
-                    <div class="region_list_box">제주</div>
+                    <div class="region_list_box on"><?=lang('Korean.all')?></div>
+                    <div class="region_list_box"><?=lang('Korean.seoul')?></div>
+                    <div class="region_list_box"><?=lang('Korean.gyeonggi')?></div>
+                    <div class="region_list_box"><?=lang('Korean.incheon')?></div>
+                    <div class="region_list_box"><?=lang('Korean.daejeon')?></div>
+                    <div class="region_list_box"><?=lang('Korean.sejong')?></div>
+                    <div class="region_list_box"><?=lang('Korean.chungnam')?></div>
+                    <div class="region_list_box"><?=lang('Korean.chungbuk')?></div>
+                    <div class="region_list_box"><?=lang('Korean.gwangju')?></div>
+                    <div class="region_list_box"><?=lang('Korean.jeonnam')?></div>
+                    <div class="region_list_box"><?=lang('Korean.jeonbuk')?></div>
+                    <div class="region_list_box"><?=lang('Korean.daegu')?></div>
+                    <div class="region_list_box"><?=lang('Korean.gyeongbuk')?></div>
+                    <div class="region_list_box"><?=lang('Korean.busan')?></div>
+                    <div class="region_list_box"><?=lang('Korean.ulsan')?></div>
+                    <div class="region_list_box"><?=lang('Korean.gyeongnam')?></div>
+                    <div class="region_list_box"><?=lang('Korean.gangwon')?></div>
+                    <div class="region_list_box"><?=lang('Korean.jeju')?></div>
                 </div>
                 <div class="layerPopup_bottom">
                     <div class="btn_group multy">
-                        <button class="btn type03" id="reset">초기화</button>
-                        <button class="btn type01" id="confirm">확인</button>
+                        <button class="btn type03" id="reset"><?=lang('Korean.reset')?></button>
+                        <button class="btn type01" id="confirm"><?=lang('Korean.check')?></button>
                     </div>
                 </div>
             </div>
@@ -122,13 +122,13 @@
                 matchfy
             </div>
             <div class="footer_link mb40">
-                <a href="#">회사정보</a>
-                <a href="#">개인정보 처리방침</a>
-                <a href="#">서비스 이용약관</a>
+                <a href="#"><?=lang('Korean.companyName')?></a>
+                <a href="#"><?=lang('Korean.pravacyName')?></a>
+                <a href="#"><?=lang('Korean.serviceName')?></a>
             </div>
             <div class="footer_info mb40">
-                <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
+                <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
+                <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
                         src="/static/images/part_line.png" /> gildong@naver.com</span>
             </div>
             <div class="footer_copy">
@@ -207,7 +207,7 @@
                 var selectedCategory = $('.group_category div img.highlighted').closest('div').data('category') || '';
                 var searchText = $('.group_search input[type="text"]').val();
                 var selectedRegionText = $('.region_list_box.on').text();
-                var filterOption = selectedRegionText === "전체" ? '' : selectedRegionText;
+                var filterOption = selectedRegionText === "<?=lang('Korean.all')?>" ? '' : selectedRegionText;
                 allianceFiltering(selectedCategory, searchText, filterOption);
             }
 

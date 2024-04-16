@@ -35,16 +35,16 @@
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="alliance_ceo_num" class="signin_label">사업자번호</label>
-                                <input id="alliance_ceo_num" type="number" name="alliance_ceo_num" value="" placeholder="-제외 연락처 입력">
+                                <label for="alliance_ceo_num" class="signin_label"><?=lang('Korean.allianceCeonum')?></label>
+                                <input id="alliance_ceo_num" type="number" name="alliance_ceo_num" value="" placeholder="<?=lang('Korean.alliancePlacehoder1')?>">
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="alliance_ceonum_file" class="signin_label">사업자등록증 첨부파일</label> 
+                                <label for="alliance_ceonum_file" class="signin_label"><?=lang('Korean.allianceCeonumFile')?></label> 
                                 <div class="filebox">
-                                    <input class="alliance_ceonum_upload" value="첨부파일" placeholder="첨부파일" disabled="disabled">
-                                    <label for="alliance_ceonum_file" class="btn search">파일</label> 
+                                    <input class="alliance_ceonum_upload" value="<?=lang('Korean.alliancePlacehoder2')?>" placeholder="<?=lang('Korean.alliancePlacehoder2')?>" diabled="disabled">
+                                    <label for="alliance_ceonum_file" class="btn search"><?=lang('Korean.file')?></label> 
                                     <input type="file" id="alliance_ceonum_file" name="alliance_ceonum_file">
                                 </div>
                             </div>
@@ -52,27 +52,27 @@
                         
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="alliance_category" class="signin_label">제휴유형</label>
+                                <label for="alliance_category" class="signin_label"><?=lang('Korean.allianceType')?></label>
                                 <select id="alliance_category" name="alliance_category" class="custom_select" value="">
-                                    <option value ="00">제휴 유형을 선택하세요</option>
-                                    <option value="01">음식점</option>
-                                    <option value="02">카페</option>
-                                    <option value="03">숙박</option>
-                                    <option value="04">기타</option>
+                                    <option value ="00"><?=lang('Korean.allianceType1')?></option>
+                                    <option value="01"><?=lang('Korean.allianceType2')?></option>
+                                    <option value="02"><?=lang('Korean.allianceType3')?></option>
+                                    <option value="03"><?=lang('Korean.allianceType4')?></option>
+                                    <option value="04"><?=lang('Korean.extra')?></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="alliance_number" class="signin_label">업체 연락처</label>
+                                <label for="alliance_number" class="signin_label"><?=lang('Korean.allianceComNum')?></label>
                                 <div>
-                                    <input id="alliance_number" type="number" name="alliance_number" value="" placeholder="-제외 연락처 입력">
+                                    <input id="alliance_number" type="number" name="alliance_number" value="" placeholder="<?=lang('Korean.alliancePlacehoder1')?>">
                                 </div>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="alliance_email" class="signin_label">이메일</label>
+                                <label for="alliance_email" class="signin_label"><?=lang('Korean.allianceEmail')?></label>
                                 <div>
                                     <input id="alliance_email" type="text" name="alliance_email" value="" placeholder="이메일 입력">
                                 </div>
@@ -80,7 +80,7 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="alliance_name" class="signin_label">업체명</label>
+                                <label for="alliance_name" class="signin_label"><?=lang('Korean.allianceComName')?></label>
                                 <div>
                                     <input id="alliance_name" type="text" name="alliance_name" value="<?= $company ?>" placeholder="<?= $company ?>">
                                 </div>
@@ -88,7 +88,7 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="alliance_ceoname" class="signin_label">대표명</label>
+                                <label for="alliance_ceoname" class="signin_label"><?=lang('Korean.allianceCeoName')?></label>
                                 <div>
                                     <input id="alliance_ceoname" type="text" name="alliance_ceoname" value="<?= $name ?>" placeholder="<?= $name ?>">
                                 </div>
@@ -96,19 +96,19 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="alliance_address" class="signin_label">주소</label>
+                                <label for="alliance_address" class="signin_label"><?=lang('Korean.allianceAdress')?></label>
                                 <div style="margin-bottom: 10px;display:flex;">
                                     <input id="alliance_address1" class="alliance_address1" name="alliance_address1" type="text" value=""
-                                        placeholder="주소를 입력해주세요" onclick="searchAddress();">
-                                    <button class="btn search" onclick="searchAddress(event);">검색</button>
+                                        placeholder="<?=lang('Korean.agreePravacy3')?>" onclick="searchAddress();">
+                                    <button class="btn search" onclick="searchAddress(event);"><?=lang('Korean.search')?></button>
                                 </div>
                                 <input id="alliance_address2" class="alliance_address2" name="alliance_address2" type="text" value=""
-                                    placeholder="상세주소를 입력해주세요">
+                                    placeholder="<?=lang('Korean.agreePravacy4')?>">
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="alliance_ceonumber" class="signin_label">대표 연락처</label>
+                                <label for="alliance_ceonumber" class="signin_label"><?=lang('Korean.allianceCeoPhonenum')?></label>
                                 <div>
                                     <input id="alliance_ceonumber" type="number" name="alliance_ceonumber" value="<?= $mobile_no ?>" placeholder="<?= $mobile_no ?>">
                                 </div>
@@ -116,84 +116,84 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="alliance_bizday" class="signin_label">영업일</label>
+                                <label for="alliance_bizday" class="signin_label"><?=lang('Korean.allianceBizday')?></label>
                                 <div id="biz_day" class="biz_day" tabindex="0">
-                                    <div class="biz_day_box" value="mon">월</div>
-                                    <div class="biz_day_box" value="tue">화</div>
-                                    <div class="biz_day_box" value="wed">수</div>
-                                    <div class="biz_day_box" value="thu">목</div>
-                                    <div class="biz_day_box" value="fri">금</div>
-                                    <div class="biz_day_box" value="sat">토</div>
-                                    <div class="biz_day_box" value="sun">일</div>
+                                    <div class="biz_day_box" value="mon"><?=lang('Korean.mon')?></div>
+                                    <div class="biz_day_box" value="tue"><?=lang('Korean.tue')?></div>
+                                    <div class="biz_day_box" value="wed"><?=lang('Korean.wed')?></div>
+                                    <div class="biz_day_box" value="thu"><?=lang('Korean.thu')?></div>
+                                    <div class="biz_day_box" value="fri"><?=lang('Korean.fri')?></div>
+                                    <div class="biz_day_box" value="sat"><?=lang('Korean.sat')?></div>
+                                    <div class="biz_day_box" value="sun"><?=lang('Korean.sun')?></div>
                                 </div>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="alliance_biztime" class="signin_label">영업시간</label>
+                                <label for="alliance_biztime" class="signin_label"><?=lang('Korean.allianceBizTime')?></label>
                                 <div class="multy_select">
                                     <select id="alliance_biztime1" class="custom_select" name="alliance_biztime1" value="">
-                                        <option value="">선택</option>
-                                        <option value="0">00시</option>
-                                        <option value="1">01시</option>
-                                        <option value="2">02시</option>
-                                        <option value="3">03시</option>
-                                        <option value="4">04시</option>
-                                        <option value="5">05시</option>
-                                        <option value="6">06시</option>
-                                        <option value="7">07시</option>
-                                        <option value="8">08시</option>
-                                        <option value="9">09시</option>
-                                        <option value="10">10시</option>
-                                        <option value="11">11시</option>
-                                        <option value="12">12시</option>
-                                        <option value="13">13시</option>
-                                        <option value="14">14시</option>
-                                        <option value="15">15시</option>
-                                        <option value="16">16시</option>
-                                        <option value="17">17시</option>
-                                        <option value="18">18시</option>
-                                        <option value="19">19시</option>
-                                        <option value="20">20시</option>
-                                        <option value="21">21시</option>
-                                        <option value="22">22시</option>
-                                        <option value="23">23시</option>
-                                        <option value="24">24시</option>
+                                        <option value=""><?=lang('Korean.selected')?></option>
+                                        <option value="0">00<?=lang('Korean.hourse')?></option>
+                                        <option value="1">01<?=lang('Korean.hourse')?></option>
+                                        <option value="2">02<?=lang('Korean.hourse')?></option>
+                                        <option value="3">03<?=lang('Korean.hourse')?></option>
+                                        <option value="4">04<?=lang('Korean.hourse')?></option>
+                                        <option value="5">05<?=lang('Korean.hourse')?></option>
+                                        <option value="6">06<?=lang('Korean.hourse')?></option>
+                                        <option value="7">07<?=lang('Korean.hourse')?></option>
+                                        <option value="8">08<?=lang('Korean.hourse')?></option>
+                                        <option value="9">09<?=lang('Korean.hourse')?></option>
+                                        <option value="10">10<?=lang('Korean.hourse')?></option>
+                                        <option value="11">11<?=lang('Korean.hourse')?></option>
+                                        <option value="12">12<?=lang('Korean.hourse')?></option>
+                                        <option value="13">13<?=lang('Korean.hourse')?></option>
+                                        <option value="14">14<?=lang('Korean.hourse')?></option>
+                                        <option value="15">15<?=lang('Korean.hourse')?></option>
+                                        <option value="16">16<?=lang('Korean.hourse')?></option>
+                                        <option value="17">17<?=lang('Korean.hourse')?></option>
+                                        <option value="18">18<?=lang('Korean.hourse')?></option>
+                                        <option value="19">19<?=lang('Korean.hourse')?></option>
+                                        <option value="20">20<?=lang('Korean.hourse')?></option>
+                                        <option value="21">21<?=lang('Korean.hourse')?></option>
+                                        <option value="22">22<?=lang('Korean.hourse')?></option>
+                                        <option value="23">23<?=lang('Korean.hourse')?></option>
+                                        <option value="24">24<?=lang('Korean.hourse')?></option>
                                     </select>
                                     <select id="alliance_biztime2" class="custom_select" name="alliance_biztime2" value="">
-                                        <option value="">선택</option>
-                                        <option value="0">00시</option>
-                                        <option value="1">01시</option>
-                                        <option value="2">02시</option>
-                                        <option value="3">03시</option>
-                                        <option value="4">04시</option>
-                                        <option value="5">05시</option>
-                                        <option value="6">06시</option>
-                                        <option value="7">07시</option>
-                                        <option value="8">08시</option>
-                                        <option value="9">09시</option>
-                                        <option value="10">10시</option>
-                                        <option value="11">11시</option>
-                                        <option value="12">12시</option>
-                                        <option value="13">13시</option>
-                                        <option value="14">14시</option>
-                                        <option value="15">15시</option>
-                                        <option value="16">16시</option>
-                                        <option value="17">17시</option>
-                                        <option value="18">18시</option>
-                                        <option value="19">19시</option>
-                                        <option value="20">20시</option>
-                                        <option value="21">21시</option>
-                                        <option value="22">22시</option>
-                                        <option value="23">23시</option>
-                                        <option value="24">24시</option>
+                                        <option value=""><?=lang('Korean.selected')?></option>
+                                        <option value="0">00<?=lang('Korean.hourse')?></option>
+                                        <option value="1">01<?=lang('Korean.hourse')?></option>
+                                        <option value="2">02<?=lang('Korean.hourse')?></option>
+                                        <option value="3">03<?=lang('Korean.hourse')?></option>
+                                        <option value="4">04<?=lang('Korean.hourse')?></option>
+                                        <option value="5">05<?=lang('Korean.hourse')?></option>
+                                        <option value="6">06<?=lang('Korean.hourse')?></option>
+                                        <option value="7">07<?=lang('Korean.hourse')?></option>
+                                        <option value="8">08<?=lang('Korean.hourse')?></option>
+                                        <option value="9">09<?=lang('Korean.hourse')?></option>
+                                        <option value="10">10<?=lang('Korean.hourse')?></option>
+                                        <option value="11">11<?=lang('Korean.hourse')?></option>
+                                        <option value="12">12<?=lang('Korean.hourse')?></option>
+                                        <option value="13">13<?=lang('Korean.hourse')?></option>
+                                        <option value="14">14<?=lang('Korean.hourse')?></option>
+                                        <option value="15">15<?=lang('Korean.hourse')?></option>
+                                        <option value="16">16<?=lang('Korean.hourse')?></option>
+                                        <option value="17">17<?=lang('Korean.hourse')?></option>
+                                        <option value="18">18<?=lang('Korean.hourse')?></option>
+                                        <option value="19">19<?=lang('Korean.hourse')?></option>
+                                        <option value="20">20<?=lang('Korean.hourse')?></option>
+                                        <option value="21">21<?=lang('Korean.hourse')?></option>
+                                        <option value="22">22<?=lang('Korean.hourse')?></option>
+                                        <option value="23">23<?=lang('Korean.hourse')?></option>
+                                        <option value="24">24<?=lang('Korean.hourse')?></option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="alliance_pay" class="signin_label">예약금 설정</label>
+                                <label for="alliance_pay" class="signin_label"><?=lang('Korean.allianceReservPayTitle')?></label>
                                 <div>
                                     <input id="alliance_pay" type="number" name="alliance_pay" value="" placeholder="ex)10,000">
                                 </div>
@@ -201,7 +201,7 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <h4 class="profile_photo_label">메인사진</h4>
+                                <h4 class="profile_photo_label"><?=lang('Korean.allianceMainPhoto')?></h4>
                                 <div class="profile_photo_div">
                                     <label for="alliance_photo"
                                         class="signin_label profile_photo_input group_photo_input"></label>
@@ -212,7 +212,7 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <h4 class="profile_photo_label">상세사진</h4>
+                                <h4 class="profile_photo_label"><?=lang('Korean.allianceDetailPhoto')?></h4>
                                 <div class="alliance_detail_post" id="alliance_detail_post_box" style="display: flex;flex-flow: wrap;">
                                     <div class="profile_photo_div">
                                         <label for="alliance_photo_detail" class="profile_photo_input"></label>
@@ -223,15 +223,15 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="detailed_content" class="signin_label">상세내용</label>
-                                <textarea id="alliance_cont" value="" name="detailed_content" placeholder="내용을 입력하세요"></textarea></br />
+                                <label for="detailed_content" class="signin_label"><?=lang('Korean.allianceDetailCon')?></label>
+                                <textarea id="alliance_cont" value="" name="detailed_content" placeholder="<?=lang('Korean.Placehoder1')?>"></textarea></br />
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="alliance_terms" class="signin_label">개인정보 수집 및 이용목적</label>
+                                <label for="alliance_terms" class="signin_label"><?=lang('Korean.allianceAgreeTitle')?></label>
                                 <div class="alliance_terms_agree allance_btn">
-                                    <p>개인정보 수집 동의</p>
+                                    <p><?=lang('Korean.allianceAgree')?></p>
                                     <img src="/static/images/select_arrow.png" />
                                 </div>
                                 <div class="allance_content" style="display:none;">
@@ -241,11 +241,11 @@
                         </div>
                         <div class="chk_box">
                             <input type="checkbox" id="agree01" name="chkDefault00" checked="">
-                            <label class="agree_cont_label" for="agree01">위 구매조건 확인 및 결제진행에 동의</label>
+                            <label class="agree_cont_label" for="agree01"><?=lang('Korean.allianceAgreeTrue')?></label>
                         </div>
                         <div class="btn_group multy">
-                            <button type="button" class="btn type02">취소</button>
-                            <button type="button" class="btn type01" onclick="allianceUp()">등록</button>
+                            <button type="button" class="btn type02"><?=lang('Korean.cancel')?></button>
+                            <button type="button" class="btn type01" onclick="allianceUp()"><?=lang('Korean.registration')?></button>
                         </div>
                     </div>
 
@@ -269,13 +269,13 @@
                 matchfy
             </div>
             <div class="footer_link mb40">
-                <a href="#">회사정보</a>
-                <a href="#">개인정보 처리방침</a>
-                <a href="#">서비스 이용약관</a>
+                <a href="#"><?=lang('Korean.companyName')?></a>
+                <a href="#"><?=lang('Korean.pravacyName')?></a>
+                <a href="#"><?=lang('Korean.serviceName')?></a>
             </div>
             <div class="footer_info mb40">
-                <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
+                <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
+                <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
                         src="/static/images/part_line.png" /> gildong@naver.com</span>
             </div>
             <div class="footer_copy">

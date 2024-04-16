@@ -65,7 +65,7 @@
                     <hr class="hoz_part" />
                 </div>
                 <div class="btn_group">
-                    <button type="button" class="btn type01">저장</button>
+                    <button type="button" class="btn type01"><?=lang('Korean.save')?></button>
                 </div>
                 <!-- <div class="message_input_box">
                 </div> -->

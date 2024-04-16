@@ -29,7 +29,7 @@
                         </div>
                         <div class="schedule_deposit">
                             <input type="number" id=""/>
-                            <p>원</p>
+                            <p><?=lang('Korean.won')?></p>
                         </div>
                     </div>
                     

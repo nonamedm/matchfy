@@ -22,14 +22,14 @@
             <div class="layerPopup_heading">
                 <!-- <img src="/static/images/invite_popup_img.png" style="position: absolute; right: 20px; top: -40px;" /> -->
                 <h2 class="heading">모임신청</h2>
-                <a href="javascript:avoid(0)" class="btn_close">닫기</a>
+                <a href="javascript:avoid(0)" class="btn_close"><?=lang('Korean.close')?></a>
             </div>
             <div class="layerPopup_content medium bg_white">
                 <div class="group_search">
                     <div style="display:flex; flex-direction: column;">
                         <div style="margin-bottom: 20px">
                             <div class="group_search_detail">
-                                <h2>기간선택</h2>
+                                <h2>기간<?=lang('Korean.selected')?></h2>
                             </div>
                             <div class="group_search_btn">
                                 <button class="search_period_btn">1주</button>
@@ -50,10 +50,10 @@
                         </div>
                         <div>
                             <div class="group_search_detail">
-                                <h2>구분선택</h2>
+                                <h2>구분<?=lang('Korean.selected')?></h2>
                             </div>
                             <div class="group_search_btn">
-                                <button class="search_type_btn">전체</button>
+                                <button class="search_type_btn"><?=lang('Korean.all')?></button>
                                 <button class="search_type_btn">주중 모임</button>
                                 <button class="search_type_btn on">주중 여행</button>
                                 <button class="search_type_btn">주말 모임</button>
@@ -65,7 +65,7 @@
                                 <h2>정렬 기준</h2>
                             </div>
                             <div class="group_search_btn">
-                                <button class="search_order_btn on">최근순</button>
+                                <button class="search_order_btn on"><?=lang('Korean.recent')?></button>
                                 <button class="search_order_btn">회비 낮은순</button>
                                 <button class="search_order_btn">빠른 모임순</button>
                             </div>
@@ -75,8 +75,8 @@
             </div>
             <div class="layerPopup_bottom">
                 <div class="btn_group multy">
-                    <button class="btn type02">취소</button>
-                    <button class="btn type01">검색</button>
+                    <button class="btn type02"><?=lang('Korean.cancel')?></button>
+                    <button class="btn type01"><?=lang('Korean.search')?></button>
                 </div>
             </div>
         </div>

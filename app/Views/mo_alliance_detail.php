@@ -46,17 +46,17 @@
                     </div>
                     <div class="tab_wrap">
                         <ul>
-                            <li class="tab on" data-target="#tab-reservation">예약하기</li>
-                            <li class="tab" data-target="#tab-detail">상세정보</li>
+                            <li class="tab on" data-target="#tab-reservation"><?=lang('Korean.reservBtn')?></li>
+                            <li class="tab" data-target="#tab-detail"><?=lang('Korean.allianceDetailInfo')?></li>
                         </ul>
                     </div>
                     <div id="tab-reservation" class="alliance_tab_content active">
                         <div class="alliance_detail_cont">
-                            <h2>일정을 선택하세요</h2>
+                            <h2><?=lang('Korean.allianceDaySelected')?></h2>
                             <div id="calendar"></div>
                         </div>
                         <div class="alliance_detail_cont">
-                            <h2>회차를 선택하세요</h2>
+                            <h2><?=lang('Korean.allianceRoundSelected')?></h2>
                             <div class="alliance_reserv_list">
                                 <?php foreach ($time_slots as $time_slot): ?>
                                     <?php
@@ -78,13 +78,13 @@
                             </div>
                         </div>
                         <div class="alliance_detail_cont">
-                            <h2>인원을 선택해주세요</h2>
+                            <h2><?=lang('Korean.alliancePeopleNumSelected')?></h2>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <div style="display: flex; align-items: center;">
                                         <input id="quantity" type="number" value="0" style="width:225px;"
-                                            placeholder="인원수" />
-                                        <p style="margin-left:8px; font-size: 15px;">명</p>
+                                            placeholder="<?=lang('Korean.peopleNum')?>" />
+                                        <p style="margin-left:8px; font-size: 15px;"><?=lang('Korean.people')?></p>
                                         <a style="margin-left:15px;" id="plus"><img src="/static/images/ico_plus_30x30.png" /></a>
                                         <a style="margin-left:12px;" id="minus"><img src="/static/images/ico_minus_30x30.png" /></a>
                                     </div>
@@ -94,38 +94,38 @@
                         <div class="form_row signin_form">
                             <div class="amount_pay">
                                 <div class="amount_pay_left alliance">
-                                    <h2>총 결제금액</h2>
+                                    <h2><?=lang('Korean.allPay')?></h2>
                                 </div>
                                 <div class="amount_pay_right">
-                                    <h2 id="totalAmount"><?= number_format($alliance_pay, 0) ?> 원</h2>
+                                    <h2 id="totalAmount"><?= number_format($alliance_pay, 0) ?> <?=lang('Korean.won')?></h2>
                                 </div>
                             </div>
                         </div>
                         <div class="chk_box">
                             <input type="checkbox" id="totAgree" name="chkDefault00" checked="">
-                            <label class="totAgree_label" for="totAgree">위 구매조건 확인 및 결제진행에 동의</label>
+                            <label class="totAgree_label" for="totAgree"><?=lang('Korean.allianceAgreeTrue')?></label>
                         </div>
                     </div>
                     <div id="tab-detail" class="alliance_tab_content">
                         <div class="alliance_detail_cont">
-                            <h2>소개</h2>
+                            <h2><?=lang('Korean.intro')?></h2>
                             <?= $detailed_content ?>
                         </div>
                         <div class="alliance_detail_cont">
-                            <h2>취소/환불 규정</h2>                        
+                            <h2><?=lang('Korean.allianceCancelCon')?></h2>                        
                             <table class="basic_table">
                                 <tr>
-                                    <td>이용 1일 전까지</td>
-                                    <td>결제 금액에 대한 취소 수수료 없음</td>
+                                    <td><?=lang('Korean.allianceCancelCon2')?></td>
+                                    <td><?=lang('Korean.allianceCancelCon3')?></td>
                                 </tr>
                                 <tr>
-                                    <td>이용 당일</td>
-                                    <td>결제 금액의 100% 차감</td>
+                                    <td><?=lang('Korean.allianceCancelCon4')?></td>
+                                    <td><?=lang('Korean.allianceCancelCon5')?></td>
                                 </tr>
                             </table>
                         </div>
                         <div class="alliance_detail_cont">
-                            <h2>오시는 길</h2>
+                            <h2><?=lang('Korean.allianceLocation')?></h2>
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />
                                 <?= $address ?> <?= $detailed_address ?>
@@ -135,21 +135,21 @@
                             </div>
                         </div>
                         <div class="alliance_detail_cont">
-                            <h2>판매자 정보</h2>
+                            <h2><?=lang('Korean.allianceSellerInfo')?></h2>
                             <div class="alliance_profile_content">
-                                <h2>상호</h2>
+                                <h2><?=lang('Korean.allianceMutual')?></h2>
                                 <p><?= $company_name ?></p>
                             </div>                            
                             <div class="alliance_profile_content">
-                                <h2>대표자명</h2>
+                                <h2><?=lang('Korean.allianceRepresentativeName')?></h2>
                                 <p><?= $representative_name ?></p>
                             </div>                            
                             <div class="alliance_profile_content">
-                                <h2>사업자번호</h2>
+                                <h2><?=lang('Korean.allianceCeonum')?></h2>
                                 <p>추가필요</p>
                             </div>                            
                             <div class="alliance_profile_content">
-                                <h2>연락처</h2>
+                                <h2><?=lang('Korean.allianceCompanyContact')?></h2>
                                 <p><?= $company_contact ?></p>
                             </div>                            
                         </div>
@@ -159,7 +159,7 @@
                 <footer class="footer">
 
                     <div class="btn_group">
-                        <button type="button" class="btn type01" id="alliance_reserve">예약하기</button>
+                        <button type="button" class="btn type01" id="alliance_reserve"><?=lang('Korean.reservBtn')?></button>
                     </div>
                 </footer>
             </div>

@@ -29,7 +29,7 @@
                         <div class="profile">
                             <h2>장원영<span style="font-size:15px;"> 님</span></h2>
                         </div>
-                        <p>96 · 서울 강남 · ESTJ</p>
+                        <p>96 · <?=lang('Korean.seoul')?> 강남 · ESTJ</p>
                     </div>
                     <div>
                         <button class="popup_view_profile">프로필</button>

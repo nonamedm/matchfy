@@ -40,7 +40,7 @@
                             </div>
                             <div class="grade_box_cont">
                                 <p>기본정보</p>
-                                <span>이름 / 생년월일 / 성별</span>
+                                <span><?=lang('Korean.name')?> / <?=lang('Korean.birthTrueFalse')?> / <?=lang('Korean.gender')?></span>
                             </div>
                         </div>
                         <div class="grade_box">
@@ -61,9 +61,9 @@
                             </div>
                             <div class="grade_box_cont">
                                 <p>기본정보 + 추가정보</p>
-                                <span>결혼유무 / 흡연유무 / 음주회수(주) / 종교 /</span><br />
-                                <span>MBTI/키/ 스타일 / 학력 / 학교명 / 전공 /</span><br />
-                                <span>직업/ 자산구간 / 소득구간</span>
+                                <span><?=lang('Korean.marryTrueFalse')?> / <?=lang('Korean.smokeType')?> / 음주회수(주) / <?=lang('Korean.religionType')?> /</span><br />
+                                <span>MBTI/<?=lang('Korean.height')?>/ <?=lang('Korean.styleType')?> / <?=lang('Korean.education')?> / <?=lang('Korean.schoolNname')?> / <?=lang('Korean.major')?> /</span><br />
+                                <span><?=lang('Korean.occupational')?>/ <?=lang('Korean.assetGroup')?> / <?=lang('Korean.incomeGroup')?></span>
                             </div>
                         </div>
                         <div class="grade_box">
@@ -92,8 +92,8 @@
                 </form>
 
                 <div class="btn_group multy">
-                    <button type="button" class="btn type02" onclick="moveToUrl('/')">취소</button>
-                    <button type="button" class="btn type01" onclick='signInType(<?php echo json_encode($postData); ?>)'>다음</button>
+                    <button type="button" class="btn type02" onclick="moveToUrl('/')"><?=lang('Korean.cancel')?></button>
+                    <button type="button" class="btn type01" onclick='signInType(<?php echo json_encode($postData); ?>)'><?=lang('Korean.next')?></button>
                 </div>
             </div>
         </div>
@@ -110,13 +110,13 @@
                 matchfy
             </div>
             <div class="footer_link mb40">
-                <a href="#">회사정보</a>
-                <a href="#">개인정보 처리방침</a>
-                <a href="#">서비스 이용약관</a>
+                <a href="#"><?=lang('Korean.companyName')?></a>
+                <a href="#"><?=lang('Korean.pravacyName')?></a>
+                <a href="#"><?=lang('Korean.serviceName')?></a>
             </div>
             <div class="footer_info mb40">
-                <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
+                <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
+                <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
                         src="/static/images/part_line.png" /> gildong@naver.com</span>
             </div>
             <div class="footer_copy">

@@ -108,7 +108,7 @@
                     } else { ?>
                         <button class="login_btn" onclick="moveToUrl('/mo')">
                             <img src="/static/images/login_ico.png" />
-                            <p>로그인</p>
+                            <p><?=lang('Korean.login')?></p>
                         </button>
                     <?php
                     }
@@ -123,9 +123,9 @@
     ?>
         <div class="content">
             <div class="main_bg_center_box">
-                <h2>AI가 분석하고 소개하는 <span>매치파이</span></h2>
-                <p>똑똑한 AI가 나와 딱 맞는 상대를 소개해드립니다.</p>
-                <button onclick="moveToUrl('/mo')">지금 매칭하기</button>
+                <h2><?=lang('Korean.mainCon')?></h2>
+                <p><?=lang('Korean.mainCon2')?></p>
+                <button onclick="moveToUrl('/mo')"><?=lang('Korean.mainConBtn')?></button>
             </div>
         </div>
 
@@ -228,7 +228,7 @@
             <div class="main_bg_center_box ">
                 <h2>똑똑한 AI가 주선하는 찰떡궁합 소개팅</h2>
                 <p>지금 바로, 함께해요</p>
-                <button onclick="moveToUrl('/mo')">로그인</button>
+                <button onclick="moveToUrl('/mo')"><?=lang('Korean.login')?></button>
             </div>
         </div>
     <?php
@@ -452,11 +452,11 @@
         </div>
         <div class="content_no_img login_main">
             <div class="login_main_title">
-                <h2>나와 딱 맞는 AI 매칭</h2>
+                <h2><?=lang('Korean.mainTitle')?></h2>
                 <div class="main_title_btn">
-                    <button onclick="clickOn(this)" class="on" value="9">전체</button>
-                    <button onclick="clickOn(this)" value="0">여성</button>
-                    <button onclick="clickOn(this)" value="1">남성</button>
+                    <button onclick="clickOn(this)" class="on" value="9"><?=lang('Korean.all')?></button>
+                    <button onclick="clickOn(this)" value="0"><?=lang('Korean.woman')?></button>
+                    <button onclick="clickOn(this)" value="1"><?=lang('Korean.man')?></button>
                 </div>
             </div>
             <div class="login_main_list AImatch_list">
@@ -481,7 +481,7 @@
                         식사/술/차
                     </h2>
                     <div class="main_title_btn">
-                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')">전체보기</button>
+                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.all')?>보기</button>
                         <button class="category01_left disabled" onclick="clickLeft('category01')">
                             < </button>
                                 <button class="category01_right" onclick="clickRight('category01')">></button>
@@ -507,7 +507,7 @@
                         여행
                     </h2>
                     <div class="main_title_btn">
-                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')">전체보기</button>
+                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.all')?>보기</button>
                         <button class="category02_left disabled" onclick="clickLeft('category02')">
                             < </button>
                                 <button class="category02_right" onclick="clickRight('category02')">></button>
@@ -538,7 +538,7 @@
                         식사/술/차
                     </h2>
                     <div class="main_title_btn">
-                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')">전체보기</button>
+                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.all')?>보기</button>
                         <button class="category03_left disabled" onclick="clickLeft('category03')">
                             < </button>
                                 <button class="category03_right" onclick="clickRight('category03')">></button>
@@ -564,7 +564,7 @@
                         여행
                     </h2>
                     <div class="main_title_btn">
-                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')">전체보기</button>
+                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.all')?>보기</button>
                         <button class="category04_left disabled" onclick="clickLeft('category04')">
                             < </button>
                                 <button class="category04_right" onclick="clickRight('category04')">></button>
@@ -597,13 +597,13 @@
             matchfy
         </div>
         <div class="footer_link mb40">
-            <a href="#">회사정보</a>
-            <a href="/mo/privacy">개인정보 처리방침</a>
-            <a href="/mo/terms">서비스 이용약관</a>
+            <a href="#"><?=lang('Korean.companyName')?></a>
+            <a href="/mo/privacy"><?=lang('Korean.pravacyName')?></a>
+            <a href="/mo/terms"><?=lang('Korean.serviceName')?></a>
         </div>
         <div class="footer_info mb40">
-            <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-            <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img src="/static/images/part_line.png" /> gildong@naver.com</span>
+            <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
+            <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img src="/static/images/part_line.png" /> gildong@naver.com</span>
         </div>
         <div class="footer_copy">
             COPYRIGHT 2023. ALL RIGHTS RESERVED.

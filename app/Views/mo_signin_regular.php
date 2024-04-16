@@ -39,55 +39,55 @@
                         </a>
                     </div>
                     <div class="btn_group">
-                        <button type="button" class="btn type02" onclick="editPhoto()">프로필 사진수정</button>
+                        <button type="button" class="btn type02" onclick="editPhoto()"><?=lang('Korean.profilePhoto')?></button>
                         <input type="file" id="main_photo" name="main_photo" style="display:none;" accept="image/*" />
                     </div>
                     <legend></legend>
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="marital" class="signin_label">결혼유무</label>
+                                <label for="marital" class="signin_label"><?=lang('Korean.marryTrueFalse')?></label>
                                 <select id="marital" name="marital" class="custom_select" value="">
-                                    <option value="">선택</option>
-                                    <option value="0">미혼</option>
-                                    <option value="1">기혼</option>
+                                    <option value=""><?=lang('Korean.selected')?></option>
+                                    <option value="0"><?=lang('Korean.single')?></option>
+                                    <option value="1"><?=lang('Korean.married')?></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="smoking" class="signin_label">흡연유무</label>
+                                <label for="smoking" class="signin_label"><?=lang('Korean.smokeType')?></label>
                                 <select id="smoking" name="smoking" class="custom_select" value="">
-                                    <option value="">선택</option>
-                                    <option value="0">전혀안함</option>
-                                    <option value="1">하루 1~2회</option>
-                                    <option value="2">하루 3~5회</option>
-                                    <option value="3">하루 5회 이상</option>
+                                    <option value=""><?=lang('Korean.selected')?></option>
+                                    <option value="0"><?=lang('Korean.NotAtAll')?></option>
+                                    <option value="1"><?=lang('Korean.oneday12')?></option>
+                                    <option value="2"><?=lang('Korean.oneday35')?></option>
+                                    <option value="3"><?=lang('Korean.oneday5')?></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="drinking" class="signin_label">음주 횟수</label>
+                                <label for="drinking" class="signin_label"><?=lang('Korean.drinkingType')?></label>
                                 <select id="drinking" name="drinking" class="custom_select" value="">
-                                    <option value="">선택</option>
+                                    <option value=""><?=lang('Korean.selected')?></option>
                                     <option value="1">전혀 안함</option>
-                                    <option value="2">주 1~2병</option>
-                                    <option value="3">주 3~5병</option>
-                                    <option value="4">주 5병 이상</option>
+                                    <option value="2"><?=lang('Korean.week12')?></option>
+                                    <option value="3"><?=lang('Korean.week35')?></option>
+                                    <option value="4"><?=lang('Korean.week5')?></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="religion" class="signin_label">종교</label>
+                                <label for="religion" class="signin_label"><?=lang('Korean.religionType')?></label>
                                 <select id="religion" name="religion" class="custom_select" value="">
-                                    <option value="">선택</option>
-                                    <option value="0">무교</option>
-                                    <option value="1">기독교</option>
-                                    <option value="2">천주교</option>
-                                    <option value="3">불교</option>
-                                    <option value="4">기타</option>
+                                    <option value=""><?=lang('Korean.selected')?></option>
+                                    <option value="0"><?=lang('Korean.atheism')?></option>
+                                    <option value="1"><?=lang('Korean.christian')?></option>
+                                    <option value="2"><?=lang('Korean.catholicism')?></option>
+                                    <option value="3"><?=lang('Korean.buddhism')?></option>
+                                    <option value="4"><?=lang('Korean.extra')?></option>
                                 </select>
                             </div>
                         </div>
@@ -95,7 +95,7 @@
                             <div class="signin_form_div">
                                 <label for="mbti" class="signin_label">MBTI</label>
                                 <select id="mbti" name="mbti" class="custom_select" value="">
-                                    <option value="">선택</option>
+                                    <option value=""><?=lang('Korean.selected')?></option>
                                     <option value="0">ENFP</option>
                                     <option value="1">ENFJ</option>
                                     <option value="2">ENTP</option>
@@ -118,113 +118,113 @@
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="height" class="signin_label">키</label>
-                                <input id="height" name="height" type="text" value="" placeholder="키 입력">
+                                <label for="height" class="signin_label"><?=lang('Korean.height')?></label>
+                                <input id="height" name="height" type="text" value="" placeholder="<?=lang('Korean.sinupHeightPlaceholder')?>">
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="bodyshape" class="signin_label">체형</label>
+                                <label for="bodyshape" class="signin_label"><?=lang('Korean.formType')?></label>
                                 <select id="bodyshape" name="bodyshape" class="custom_select" value="">
-                                    <option value="">선택</option>
-                                    <option value="0">보통</option>
-                                    <option value="1">마른</option>
-                                    <option value="2">조금마른</option>
-                                    <option value="3">조금통통한</option>
-                                    <option value="4">통통한</option>
+                                    <option value=""><?=lang('Korean.selected')?></option>
+                                    <option value="0"><?=lang('Korean.normal')?></option>
+                                    <option value="1"><?=lang('Korean.dry')?></option>
+                                    <option value="2"><?=lang('Korean.littleThin')?></option>
+                                    <option value="3"><?=lang('Korean.littleChubby')?></option>
+                                    <option value="4"><?=lang('Korean.chubby')?></option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="personal_style" class="signin_label">스타일</label>
+                                <label for="personal_style" class="signin_label"><?=lang('Korean.styleType')?></label>
                                 <select id="personal_style" name="personal_style" class="custom_select" value="">
-                                    <option value="">선택</option>
-                                    <option value="0">강인</option>
-                                    <option value="1">댄디</option>
-                                    <option value="2">너드</option>
-                                    <option value="3">프리</option>
-                                    <option value="4">등등...</option>
+                                    <option value=""><?=lang('Korean.selected')?></option>
+                                    <option value="0"><?=lang('Korean.strength')?></option>
+                                    <option value="1"><?=lang('Korean.dandy')?></option>
+                                    <option value="2"><?=lang('Korean.nerd')?></option>
+                                    <option value="3"><?=lang('Korean.Free')?></option>
+                                    <option value="4"><?=lang('Korean.AndSoExtra')?></option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="education" class="signin_label">학력</label>
+                                <label for="education" class="signin_label"><?=lang('Korean.education')?></label>
                                 <select id="education" name="education" class="custom_select" value="">
-                                    <option value="">선택</option>
-                                    <option value="0">고등학교졸업</option>
-                                    <option value="1">대학교재학</option>
-                                    <option value="2">대학교졸업</option>
-                                    <option value="3">대학원재학</option>
-                                    <option value="4">대학원졸업이상</option>
+                                    <option value=""><?=lang('Korean.selected')?></option>
+                                    <option value="0"><?=lang('Korean.highSchoolGradu')?></option>
+                                    <option value="1"><?=lang('Korean.attendingUniversity')?></option>
+                                    <option value="2"><?=lang('Korean.universityGraduation')?></option>
+                                    <option value="3"><?=lang('Korean.attendingGraduate')?></option>
+                                    <option value="4"><?=lang('Korean.GraduateSchoolHigher')?></option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="major" class="signin_label">전공</label>
-                                <input id="major" name="major" type="text" value="" placeholder="전공을 입력해주세요">
+                                <label for="major" class="signin_label"><?=lang('Korean.major')?></label>
+                                <input id="major" name="major" type="text" value="" placeholder="<?=lang('Korean.sinupMajorPlaceholder')?>">
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div input_btn">
-                                <h4 class="profile_photo_label">학교명</h4>
-                                <p class="profile_photo_desc">최종학교 졸업증명서를 업로드해주세요!</p>
+                                <h4 class="profile_photo_label"><?=lang('Korean.schoolNname')?></h4>
+                                <p class="profile_photo_desc"><?=lang('Korean.premiumCon2')?></p>
                                 <div class="input_btn">
-                                    <input id="school" name="school" type="text" value="" placeholder="학교를 입력해 주세요">
-                                    <button type="button" class="btn btn_input_form" onclick="showPopupRgt('school','<?php echo $ci ?>')">인증</button>
+                                    <input id="school" name="school" type="text" value="" placeholder="<?=lang('Korean.sinupSchoolPlaceholder')?>">
+                                    <button type="button" class="btn btn_input_form" onclick="showPopupRgt('school','<?php echo $ci ?>')"><?=lang('Korean.certification')?></button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div input_btn">
-                                <h4 class="profile_photo_label">직업</h4>
-                                <p class="profile_photo_desc">명함 혹은 재직증명서를 업로드해주세요</p>
+                                <h4 class="profile_photo_label"><?=lang('Korean.occupational')?></h4>
+                                <p class="profile_photo_desc"><?=lang('Korean.premiumCon3')?></p>
                                 <div class="input_btn">
                                     <select id="job" name="job" class="custom_select" value="">
-                                        <option value="">선택</option>
-                                        <option value="0">1군 : 중소기업 회사원/자영업/프리랜서 등 기타</option>
-                                        <option value="1">2군 : 상장사, 대기업 회사원/기업대표/공무원/공기업</option>
-                                        <option value="2">3군 : 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)</option>
+                                        <option value=""><?=lang('Korean.selected')?></option>
+                                        <option value="0"><?=lang('Korean.jobVal1')?></option>
+                                        <option value="1"><?=lang('Korean.jobVal2')?></option>
+                                        <option value="2"><?=lang('Korean.jobVal3')?></option>
                                     </select>
-                                    <button type="button" class="btn btn_input_form" onclick="showPopupRgt('job','<?php echo $ci ?>')">인증</button>
+                                    <button type="button" class="btn btn_input_form" onclick="showPopupRgt('job','<?php echo $ci ?>')"><?=lang('Korean.certification')?></button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="asset_range" class="signin_label">자산구간</label>
+                                <label for="asset_range" class="signin_label"><?=lang('Korean.assetGroup')?></label>
                                 <select id="asset_range" name="asset_range" class="custom_select" value="">
-                                    <option value="">선택</option>
-                                    <option value="0">1000만원 이하</option>
-                                    <option value="1">1000~2000만원</option>
-                                    <option value="2">2000~3000만원</option>
-                                    <option value="3">3000~4000만원</option>
-                                    <option value="4">4000~5000만원</option>
-                                    <option value="5">5000만원 이상</option>
+                                    <option value=""><?=lang('Korean.selected')?></option>
+                                    <option value="0"><?=lang('Korean.assetRange1000')?></option>
+                                    <option value="1"><?=lang('Korean.assetRange2000')?></option>
+                                    <option value="2"><?=lang('Korean.assetRange3000')?></option>
+                                    <option value="3"><?=lang('Korean.assetRange4000')?></option>
+                                    <option value="4"><?=lang('Korean.assetRange5000')?></option>
+                                    <option value="5"><?=lang('Korean.assetRange5000Up')?></option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="income_range" class="signin_label">소득구간</label>
+                                <label for="income_range" class="signin_label"><?=lang('Korean.incomeGroup')?></label>
                                 <select id="income_range" name="income_range" class="custom_select" value="">
-                                    <option value="">선택</option>
-                                    <option value="0">1000만원 이하</option>
-                                    <option value="1">1000~2000만원</option>
-                                    <option value="2">2000~3000만원</option>
-                                    <option value="3">3000~4000만원</option>
-                                    <option value="4">4000~5000만원</option>
-                                    <option value="5">5000만원 이상</option>
+                                    <option value=""><?=lang('Korean.selected')?></option>
+                                    <option value="0"><?=lang('Korean.assetRange1000')?></option>
+                                    <option value="1"><?=lang('Korean.assetRange2000')?></option>
+                                    <option value="2"><?=lang('Korean.assetRange3000')?></option>
+                                    <option value="3"><?=lang('Korean.assetRange4000')?></option>
+                                    <option value="4"><?=lang('Korean.assetRange5000')?></option>
+                                    <option value="5"><?=lang('Korean.assetRange5000Up')?></option>
                                 </select>
                             </div>
                         </div>
@@ -232,7 +232,7 @@
                         <input type="hidden" name="grade" value="<?php echo $grade ?>" />
                         <div id="main_photo_uploaded" style="display:none;"></div>
                         <div class="btn_group">
-                            <button type="button" class="btn type01" onclick="signUpdate()">가입</button>
+                            <button type="button" class="btn type01" onclick="signUpdate()"><?=lang('Korean.join')?></button>
                         </div>
                     </div>
                 </form>

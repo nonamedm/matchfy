@@ -60,7 +60,7 @@
 
                 <div class="layerPopup_bottom">
                     <div class="btn_group">
-                        <button class="btn type01">확인</button>
+                        <button class="btn type01"><?=lang('Korean.check')?></button>
                     </div>
                 </div>
             </div>

@@ -32,7 +32,7 @@
                         <th class="th">대표핸드폰번호</th>
                         <th class="th">업체이름</th>
                         <th class="th">업체 번호</th>
-                        <th class="th">사업자번호</th>
+                        <th class="th"><?=lang('Korean.allianceCeonum')?></th>
                         <th class="th">사업자등록증 파일확인</th>
                         <th class="th">신청 확인</th>
                     </tr>

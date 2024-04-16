@@ -24,10 +24,10 @@
                         <img src="/static/images/left_arrow.png" />
                     </li>
                     <li class="header_title">
-                        내모임
+                        <?=lang('Korean.myMeet')?>
                     </li>
                 </ul>
-                <div class="menu_right edit">삭제</div>
+                <div class="menu_right edit"><?=lang('Korean.delete')?></div>
             </div>
 
         </header>
@@ -37,20 +37,20 @@
                 <div class="notice_filter">
                     <p>09.01 ~ 09.30</p>
                     <select>
-                        <option>최근순</option>
-                        <option>최근순</option>
-                        <option>최근순</option>
+                        <option><?=lang('Korean.recent')?></option>
+                        <option><?=lang('Korean.recent')?></option>
+                        <option><?=lang('Korean.recent')?></option>
                     </select>
                 </div>
                 <div class="alliance_sch_list">
                     <div class="alliance_sch_item">
                         <div class="alliance_sch_sts">
-                            <div class="cancel">취소</div>
+                            <div class="cancel"><?=lang('Korean.cancel')?></div>
                             <img src="/static/images/right_arrow.png" />
                         </div>
                         <h2>레드버튼 (이수점)</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class="">인원 2명</span>
+                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
                     </div>
                 </div>
                 <div class="alliance_sch_list">
@@ -61,7 +61,7 @@
                         </div>
                         <h2>레드버튼 (이수점)</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class="">인원 2명</span>
+                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
                     </div>
                 </div>
                 <div class="alliance_sch_list">
@@ -72,7 +72,7 @@
                         </div>
                         <h2>레드버튼 (이수점)</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class="">인원 2명</span>
+                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
                     </div>
                 </div>
                 <div class="alliance_sch_list">
@@ -83,7 +83,7 @@
                         </div>
                         <h2>레드버튼 (이수점)</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class="">인원 2명</span>
+                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
                     </div>
                 </div>
                 <div class="alliance_sch_list">
@@ -94,7 +94,7 @@
                         </div>
                         <h2>레드버튼 (이수점)</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class="">인원 2명</span>
+                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
                     </div>
                 </div>
                 <div class="alliance_sch_list">
@@ -105,7 +105,7 @@
                         </div>
                         <h2>레드버튼 (이수점)</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class="">인원 2명</span>
+                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
                     </div>
                 </div>
             </div>
@@ -123,13 +123,13 @@
                 matchfy
             </div>
             <div class="footer_link mb40">
-                <a href="#">회사정보</a>
-                <a href="#">개인정보 처리방침</a>
-                <a href="#">서비스 이용약관</a>
+                <a href="#"><?=lang('Korean.companyName')?></a>
+                <a href="#"><?=lang('Korean.pravacyName')?></a>
+                <a href="#"><?=lang('Korean.serviceName')?></a>
             </div>
             <div class="footer_info mb40">
-                <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
+                <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
+                <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
                         src="/static/images/part_line.png" /> gildong@naver.com</span>
             </div>
             <div class="footer_copy">

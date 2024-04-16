@@ -38,10 +38,10 @@
                         </div>
                         <div class="schedule_calendar multy_select">
                             <select>
-                                <option value="">선택</option>
+                                <option value=""><?=lang('Korean.selected')?></option>
                             </select>
                             <select>
-                                <option value="">선택</option>
+                                <option value=""><?=lang('Korean.selected')?></option>
                             </select>
                         </div>
                     </div>

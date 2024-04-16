@@ -86,7 +86,7 @@
                                             <h2>김민지</h2>
                                             <button class="match_percent">99%</button>
                                         </div>
-                                        <p>96 · 서울 강남 · ESTJ</p>
+                                        <p>96 · <?=lang('Korean.seoul')?> 강남 · ESTJ</p>
                                     </div>
                                 </div>
                                 <p class="receive_match_msg">띵동 AI 소개팅이 도착했어요<br /> 정보를 확인하실래요?</p>

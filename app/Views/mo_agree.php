@@ -23,20 +23,20 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="content_title">
-                    <h2><span>매치파이</span>가 처음이시군요<br />약관 내용에 동의해주세요.</h2>
+                    <h2><?=lang('Korean.agreeCon')?></h2>
                 </div>
                 <form class="" method="post" action="/mo/signin">
                     <legend></legend>
                     <div class="login_box">
                         <div class="chk_box">
                             <input type="checkbox" id="totAgree" name="" onclick="totalAgree()" />
-                            <label class="totAgree_label" for="totAgree">네, 모두 동의합니다</label>
+                            <label class="totAgree_label" for="totAgree"><?=lang('Korean.agreeBtn')?></label>
                         </div>
                         <hr class="hoz_part" />
                         <div class="agree_cont">
                             <div class="chk_box">
                                 <input type="checkbox" id="agree1" name="agree1" value="1" onclick="chkAgree()">
-                                <label class="agree_cont_label" for="agree1">이용약관 <span>(필수)</span></label>
+                                <label class="agree_cont_label" for="agree1"><?=lang('Korean.agreeChk')?></label>
                             </div>
                             <div class="textarea">
                                 <b>
@@ -48,7 +48,7 @@
                             </div>
                             <div class="chk_box">
                                 <input type="checkbox" id="agree2" name="agree2" value="2" onclick="chkAgree()">
-                                <label class="agree_cont_label" for="agree2">개인정보 수집 이용 동의 <span>(필수)</span></label>
+                                <label class="agree_cont_label" for="agree2"><?=lang('Korean.agreePravacy')?></label>
                             </div>
                             <div class="textarea">
                                 <b>
@@ -60,7 +60,7 @@
                             </div>
                             <div class="chk_box">
                                 <input type="checkbox" id="agree3" name="agree3" value="3" onclick="chkAgree()">
-                                <label class="agree_cont_label" for="agree3">개인정보 제3자 제공동의 <span>(필수)</span></label>
+                                <label class="agree_cont_label" for="agree3"><?=lang('Korean.agreePravacy2')?></label>
                             </div>
                             <div class="textarea">
                                 <b>
@@ -82,7 +82,7 @@
                 <footer class="footer">
 
                     <div class="btn_group">
-                        <button type="button" class="btn type01" onclick="submitFormAgree()">다음</button>
+                        <button type="button" class="btn type01" onclick="submitFormAgree()"><?=lang('Korean.next')?></button>
                     </div>
                 </footer>
             </div>

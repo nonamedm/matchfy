@@ -48,7 +48,7 @@
                         <p class="group_detail_period"><?= $recruitment_start_date ?> ~ <?= $recruitment_end_date ?> 까지 모집중</p>
                         <p class="group_detail_schedule"><?= $meeting_start_date ?> 모임</p>
                         <div class="group_particpnt" onclick="meetingMemberList('<?= $idx ?>')">
-                            <span>신청 <?= $meeing_count ?></span>/<?= $number_of_people ?>명
+                            <span>신청 <?= $meeing_count ?></span>/<?= $number_of_people ?><?=lang('Korean.people')?>
                         </div>
                     </div>
                     <hr class="hoz_part" />
@@ -64,7 +64,7 @@
                                     <?= $meeting_place ?>
                                 </div>
                                 <p class="group_location_schedule"><?= $meeting_start_date ?></p>
-                                <p class="group_location_fee"><span><?= number_format($membership_fee) ?>원</span></p>
+                                <p class="group_location_fee"><span><?= number_format($membership_fee) ?><?=lang('Korean.won')?></span></p>
                             </div>
                         </div>
                     </div>
@@ -125,7 +125,7 @@
         //             position: coords
         //         });
 
-        //         // 인포윈도우로 장소에 대한 설명을 표시합니다
+        //         // 인포윈도우로 장소에 대한 설<?=lang('Korean.people')?>을 표시합니다
         //         var infowindow = new kakao.maps.InfoWindow({
         //             content: `<div style="width:150px;text-align:center;padding:6px 0;"><?= $meeting_place ?></div>`
         //         });

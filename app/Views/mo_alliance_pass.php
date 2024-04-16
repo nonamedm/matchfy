@@ -31,33 +31,32 @@
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
 
-        <?php $title = "휴대폰 본인인증";
-        include 'header.php'; ?>
+        <?php $title = "휴대폰 본인인증";include 'header.php'; ?>
 
         <div class="sub_wrap">
             <form class="temp_input" action="/mo/alliance/agree" method="post">
             <div class="content_wrap">
                     <div class="content_title">
-                        <h2>휴대폰 본인인증</h2>
-                        <p>원활한 서비스 이용을 위해 휴대전화 본인인증이 필요합니다. </p>
+                        <h2><?=lang('Korean.passTitle')?></h2>
+                        <p><?=lang('Korean.passCon')?> </p>
                     </div>
                     <div class="content_body">
                         <img src="/static/images/pass_phone_img.png" />
                     </div>
                     <div class="btn_group">
-                        <button type="button" class="btn type01" onclick="alianceCertIdentify()">휴대폰 본인인증</button>
+                        <button type="button" class="btn type01" onclick="alianceCertIdentify()"><?=lang('Korean.passTitle')?></button>
                     </div>
             </div>
             <div class="content_title">
-                <p>* 추후 본인인증 서비스를 연결할 때 까지는 개인정보 직접입력이 필요합니다.</p>
+                <p>* <?=lang('Korean.passCon2')?></p>
             </div>
-            <input id="input_ali_name" class="temp_input_text" type="text" name="name" placeholder="대표명" value="<?= $name ?>" />
-            <input id="input_ali_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="대표 연락처" value="<?= $mobile_no ?>" />
-            <input id="input_ali_company_name" class="temp_input_text" type="text" name="company" placeholder="업체명" value="<?= $company ?>" />
+            <input id="input_ali_name" class="temp_input_text" type="text" name="name" placeholder="<?=lang('Korean.allianceCeoName')?>" value="<?= $name ?>" />
+            <input id="input_ali_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="<?=lang('Korean.allianceCeoPhonenum')?>" value="<?= $mobile_no ?>" />
+            <input id="input_ali_company_name" class="temp_input_text" type="text" name="company" placeholder="<?=lang('Korean.allianceComName')?>" value="<?= $company ?>" />
             <select id="input_gender" class="temp_input_text" name="gender">
-                <option>성별을 선택하세요</option>
-                <option value="0" <?php if ($gender === '0') : ?>selected<?php endif ?>>여성</option>
-                <option value="1" <?php if ($gender === '1') : ?>selected<?php endif ?>>남성</option>
+                <option><?=lang('Korean.passGender')?></option>
+                <option value="0" <?php if ($gender === '0') : ?>selected<?php endif ?>><?=lang('Korean.woman')?></option>
+                <option value="1" <?php if ($gender === '1') : ?>selected<?php endif ?>><?=lang('Korean.man')?></option>
             </select>
             </form>
         </div>

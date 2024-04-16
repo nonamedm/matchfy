@@ -4,7 +4,7 @@
             <a onclick="closePopup()">X</a>
         </div>
         <div class="layerPopup_content">
-            <p class="txt">인증</p>
+            <p class="txt"><?=lang('Korean.authentication')?></p>
             <em class="desc">인증을 위한 <b id="type">혼인관계증명서</b>를<br />등록해주세요</em>
             <div class="">
                 <div class="regist_file">
@@ -24,7 +24,7 @@
             </div>
             <div class="layerPopup_bottom">
                 <div class="btn_group">
-                    <button type="button" class="btn type01" onclick="submitFile()">확인</button>
+                    <button type="button" class="btn type01" onclick="submitFile()"><?=lang('Korean.check')?></button>
                 </div>
             </div>
             <input id="ci" type="hidden" value="" />

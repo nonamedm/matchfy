@@ -57,8 +57,8 @@
                         <div id="profile_photo_uploaded" style="display:none;"></div>
                         <div id="profile_mov_uploaded" style="display:none;"></div>
                         <div class="btn_group multy">
-                            <button type="submit" class="btn type02">건너뛰기</button>
-                            <button type="submit" class="btn type01">저장</button>
+                            <button type="submit" class="btn type02"><?=lang('Korean.skip')?></button>
+                            <button type="submit" class="btn type01"><?=lang('Korean.save')?></button>
                         </div>
                     </div>
                 </form>

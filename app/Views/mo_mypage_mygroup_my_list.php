@@ -103,8 +103,8 @@ function formatDateTime($value)
                 <div class="notice_filter">
                     <!-- <p>09.01 ~ 09.30</p> -->
                     <select id="mygroup_order">
-                        <option value="all">전체</option>
-                        <option value="latest">최근순</option>
+                        <option value="all"><?=lang('Korean.all')?></option>
+                        <option value="latest"><?=lang('Korean.recent')?></option>
                     </select>
                 </div>
                 <div class="mygroup_list" id="mygroup_list_body">
@@ -117,7 +117,7 @@ function formatDateTime($value)
                                 </div>
                                 <h2><?= $meeting->meeting_place ?></h2>
                                 <p class=""><?= formatDateTime($meeting->meeting_start_date) ?></p>
-                                <span class="">인원 <?= $meeting->meeting_idx_count ?>명</span>
+                                <span class=""><?=lang('Korean.personnel')?> <?= $meeting->meeting_idx_count ?><?=lang('Korean.people')?></span>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -130,7 +130,7 @@ function formatDateTime($value)
                         </div>
                         <h2>레드버튼 (이수점)</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class="">인원 2명</span>
+                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
                     </div>
                 </div>
                 <div class="alliance_sch_list">
@@ -141,7 +141,7 @@ function formatDateTime($value)
                         </div>
                         <h2>레드버튼 (이수점)</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class="">인원 2명</span>
+                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
                     </div>
                 </div>
                 <div class="alliance_sch_list">
@@ -152,7 +152,7 @@ function formatDateTime($value)
                         </div>
                         <h2>레드버튼 (이수점)</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class="">인원 2명</span>
+                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
                     </div>
                 </div>
                 <div class="alliance_sch_list">
@@ -163,7 +163,7 @@ function formatDateTime($value)
                         </div>
                         <h2>레드버튼 (이수점)</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class="">인원 2명</span>
+                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
                     </div>
                 </div>
                 <div class="alliance_sch_list">
@@ -174,7 +174,7 @@ function formatDateTime($value)
                         </div>
                         <h2>레드버튼 (이수점)</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class="">인원 2명</span>
+                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
                     </div>
                 </div> -->
             </div>
@@ -192,13 +192,13 @@ function formatDateTime($value)
                 matchfy
             </div>
             <div class="footer_link mb40">
-                <a href="#">회사정보</a>
-                <a href="#">개인정보 처리방침</a>
-                <a href="#">서비스 이용약관</a>
+                <a href="#"><?=lang('Korean.companyName')?></a>
+                <a href="#"><?=lang('Korean.pravacyName')?></a>
+                <a href="#"><?=lang('Korean.serviceName')?></a>
             </div>
             <div class="footer_info mb40">
-                <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
+                <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
+                <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
                         src="/static/images/part_line.png" /> gildong@naver.com</span>
             </div>
             <div class="footer_copy">
