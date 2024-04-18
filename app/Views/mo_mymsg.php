@@ -136,6 +136,25 @@
             <input id="room_ci" type="hidden" value="<?= $room_ci ?>" />
             <?php if ($count_info[0]['count'] >= 2) {
                 include 'mo_mymsg_member_popup.php';
+                include 'mo_report_popup.php';
+            ?>
+                <script>
+                    const rptMbr = (contents) => {
+                        console.log(contents);
+                        var title = '';
+                        switch (contents) {
+                            case '':
+                                title = '단톡방 멤버';
+                                break;
+                            default:
+                                title = '단톡방 멤버';
+                        }
+                        $('#member_title').text(title);
+
+                        $('.layerPopup.member').css('display', 'flex');
+                    };
+                </script>
+            <?php
             } ?>
             <footer class="footer">
             </footer>
@@ -364,21 +383,6 @@
                     }
                 } else {}
             });
-        };
-
-        const rptMbr = (contents) => {
-            console.log(contents);
-            var title = '';
-            switch (contents) {
-                case '':
-                    title = '단톡방 멤버';
-                    break;
-                default:
-                    title = '단톡방 멤버';
-            }
-            $('#member_title').text(title);
-
-            $('.layerPopup.member').css('display', 'flex');
         };
     </script>
 

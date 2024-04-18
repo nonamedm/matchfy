@@ -314,7 +314,8 @@ class MoHome extends BaseController
                              (CASE
                                 WHEN member_ci = '" . $ci . "' THEN 'me'
                                 ELSE 'you' 
-                            END) AS chk
+                            END) AS chk,
+                            entry_num
                             FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
             $memberInfo = $ChatRoomMemberModel
                 ->query($query)->getResultArray();
