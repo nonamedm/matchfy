@@ -721,6 +721,8 @@ td {
     font-weight: 500;
     font-size: 15px;
     line-height: 24px;
+    max-width: 200px;
+    width: max-content;
 }
 .receive_msg .receive_text .receive_msg_area img {
     width: 150px;
@@ -1316,6 +1318,7 @@ a:active {
     font-weight: 500;
     font-size: 15px;
     line-height: 24px;
+    max-width: 230px;
 }
 .send_msg .send_text .send_msg_area img {
     width: 150px;

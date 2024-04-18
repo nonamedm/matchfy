@@ -70,14 +70,17 @@
                                 </div>
                                 <div class="receive_text">
                                     <p class="receive_profile_name"><?= $row['nickname'] ?><span class="match_percent"><?= number_format($row['match_rate'], 0) ?>%</span></p>
-                                    <div class="receive_msg_area">
-                                        <p><?= $row['msg_cont'] ?></p>
+                                    <div style="display: flex;">
+                                        <div class=" receive_msg_area">
+                                            <p><?= $row['msg_cont'] ?></p>
+                                        </div>
+                                        <div class="receive_time">
+                                            <p>
+                                                <?= $row['created_at'] ?>
+                                            </p>
+                                        </div>
+
                                     </div>
-                                </div>
-                                <div class="receive_time">
-                                    <p>
-                                        <?= $row['created_at'] ?>
-                                    </p>
                                 </div>
                             </div>
                     <?php
@@ -174,9 +177,9 @@
             });
             scrollToBottom();
             mymsgPhotoListener();
-            setInterval(function() {
-                reloadMsg();
-            }, 5000);
+            // setInterval(function() {
+            //     reloadMsg();
+            // }, 5000);
             $("#mymsg_menu").on("click", function() {
                 if (!($(".message_input_box").hasClass("on")) && !($(".chat_wrap").hasClass("on"))) {
                     $(".message_input_box").addClass("on");
