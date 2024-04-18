@@ -50,7 +50,7 @@
                 <footer class="footer">
                 
                 <div class="btn_group">
-                    <button type="button" class="btn type01" onclick="fn_clickList('notice');">목록으로</button>
+                    <button type="button" class="btn type01" onclick="fn_clickList('notice');"><?=lang('Korean.btnList')?></button>
                 </div>
             </footer>
         </div>

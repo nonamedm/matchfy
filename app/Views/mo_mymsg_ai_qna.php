@@ -27,9 +27,9 @@
                             <img src="/static/images/ai_send.png" />
                         </div>
                         <div class="receive_text">
-                            <p class="receive_profile_name">AI 매니저</p>
+                            <p class="receive_profile_name"><?=lang('Korean.AIManager')?></p>
                             <div class="receive_msg_area">
-                                <p>홍길동 님, <br />
+                                <p>홍길동 <?=lang('Korean.sir')?>, <br />
                                     일주일 만에 만난 애인이 집데이트를 하자고 한다면 어떠신가요? </p>
                             </div>
                         </div>
@@ -57,11 +57,11 @@
 <footer class="footer">
                 
                 <div class="btn_group multy ai_qna">
-                    <button type="button" class="btn on">아주 좋아</button>
-                    <button type="button" class="btn">좋아</button>
-                    <button type="button" class="btn">보통이야</button>
-                    <button type="button" class="btn">싫어</button>
-                    <button type="button" class="btn">아주 싫어</button>
+                    <button type="button" class="btn on"><?=lang('Korean.veryGood')?></button>
+                    <button type="button" class="btn"><?=lang('Korean.good')?></button>
+                    <button type="button" class="btn"><?=lang('Korean.normal')?></button>
+                    <button type="button" class="btn"><?=lang('Korean.dontLike')?></button>
+                    <button type="button" class="btn"><?=lang('Korean.verryHate')?></button>
                     <hr class="hoz_part" />
                 </div>
                 <div class="btn_group">

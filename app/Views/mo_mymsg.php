@@ -24,10 +24,10 @@
                 <div class="tab_wrap">
                     <ul>
                         <li>
-                            AI 메시지
+                            <?=lang('Korean.AIMsg')?>
                         </li>
                         <li class="on">
-                            메시지함
+                            <?=lang('Korean.messageBox')?>
                         </li>
                     </ul>
                 </div>
@@ -95,9 +95,9 @@
                 
                 <div class="message_input_box">
                     <!-- <div class="btn_group multy ai_date_check">
-                        <button type="button" class="btn type01">수락</button>
-                        <button type="button" class="btn type04">거절</button>
-                        <button type="button" class="btn type05">보류</button>
+                        <button type="button" class="btn type01"><?=lang('Korean.accept')?></button>
+                        <button type="button" class="btn type04"><?=lang('Korean.refuse')?></button>
+                        <button type="button" class="btn type05"><?=lang('Korean.hold')?></button>
                     </div>  -->
                     <hr class="hoz_part" />
                     <div class="chat_input_box">
@@ -105,7 +105,7 @@
                             <img src="/static/images/hamberger_menu.png" />
                         </div>
                         <div class="message_input_box_border">
-                            <textarea type="text" placeholder="메세지를 입력하세요"></textarea>
+                            <textarea type="text" placeholder="<?=lang('Korean.aiMsgPlaceholder')?>"></textarea>
                             <img style="position:absolute; right: 30px" src="/static/images/message_send_btn.png" />
                         </div>
                     </div>

@@ -21,7 +21,7 @@
         <div class="layerPopup_wrap">
             <div class="layerPopup_heading">
                 <!-- <img src="/static/images/invite_popup_img.png" style="position: absolute; right: 20px; top: -40px;" /> -->
-                <h2 class="heading">모임신청</h2>
+                <h2 class="heading"><?=lang('Korean.meetAppli')?></h2>
                 <a href="javascript:avoid(0)" class="btn_close"><?=lang('Korean.close')?></a>
             </div>
             <div class="layerPopup_content medium bg_white">
@@ -29,13 +29,13 @@
                     <div style="display:flex; flex-direction: column;">
                         <div style="margin-bottom: 20px">
                             <div class="group_search_detail">
-                                <h2>기간<?=lang('Korean.selected')?></h2>
+                                <h2><?=lang('Korean.selectPeriod')?></h2>
                             </div>
                             <div class="group_search_btn">
-                                <button class="search_period_btn">1주</button>
-                                <button class="search_period_btn">1개월</button>
-                                <button class="search_period_btn on">3개월</button>
-                                <button class="search_period_btn">직접입력</button>
+                                <button class="search_period_btn"><?=lang('Korean.1week')?></button>
+                                <button class="search_period_btn"><?=lang('Korean.1month')?></button>
+                                <button class="search_period_btn on"><?=lang('Korean.3month')?></button>
+                                <button class="search_period_btn"><?=lang('Korean.directInput')?></button>
                             </div>
                             <div class="schedule_calendar multy_select">
                                 <div class="" style="display:flex;">
@@ -50,24 +50,24 @@
                         </div>
                         <div>
                             <div class="group_search_detail">
-                                <h2>구분<?=lang('Korean.selected')?></h2>
+                                <h2><?=lang('Korean.categorySelect')?></h2>
                             </div>
                             <div class="group_search_btn">
                                 <button class="search_type_btn"><?=lang('Korean.all')?></button>
-                                <button class="search_type_btn">주중 모임</button>
-                                <button class="search_type_btn on">주중 여행</button>
-                                <button class="search_type_btn">주말 모임</button>
-                                <button class="search_type_btn">주말 여행</button>
+                                <button class="search_type_btn"><?=lang('Korean.weekdayMeeting')?></button>
+                                <button class="search_type_btn on"><?=lang('Korean.weekdayTrip')?></button>
+                                <button class="search_type_btn"><?=lang('Korean.holiMeeting')?></button>
+                                <button class="search_type_btn"><?=lang('Korean.holiTrip')?></button>
                             </div>
                         </div>
                         <div>
                             <div class="group_search_detail">
-                                <h2>정렬 기준</h2>
+                                <h2><?=lang('Korean.sortSelection')?></h2>
                             </div>
                             <div class="group_search_btn">
                                 <button class="search_order_btn on"><?=lang('Korean.recent')?></button>
-                                <button class="search_order_btn">회비 낮은순</button>
-                                <button class="search_order_btn">빠른 모임순</button>
+                                <button class="search_order_btn"><?=lang('Korean.dues')?> <?=lang('Korean.lowestOrder')?></button>
+                                <button class="search_order_btn"><?=lang('Korean.quickMeetingOrder')?></button>
                             </div>
                         </div>
                     </div>

@@ -78,7 +78,7 @@
                 <div class="alliance_sch_list">
                     <div class="alliance_sch_item">
                         <div class="alliance_sch_sts">
-                            <div class="finish">종료</div>
+                            <div class="finish"><?=lang('Korean.close')?></div>
                             <img src="/static/images/right_arrow.png" />
                         </div>
                         <h2>레드버튼 (이수점)</h2>
@@ -89,7 +89,7 @@
                 <div class="alliance_sch_list">
                     <div class="alliance_sch_item">
                         <div class="alliance_sch_sts">
-                            <div class="finish">종료</div>
+                            <div class="finish"><?=lang('Korean.close')?></div>
                             <img src="/static/images/right_arrow.png" />
                         </div>
                         <h2>레드버튼 (이수점)</h2>
@@ -100,7 +100,7 @@
                 <div class="alliance_sch_list">
                     <div class="alliance_sch_item">
                         <div class="alliance_sch_sts">
-                            <div class="finish">종료</div>
+                            <div class="finish"><?=lang('Korean.close')?></div>
                             <img src="/static/images/right_arrow.png" />
                         </div>
                         <h2>레드버튼 (이수점)</h2>

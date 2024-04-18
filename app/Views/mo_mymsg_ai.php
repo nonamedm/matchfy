@@ -24,10 +24,10 @@
                 <div class="tab_wrap">
                     <ul>
                         <li class="on">
-                            AI 메시지
+                            <?=lang('Korean.AIMsg')?>
                         </li>
                         <li>
-                            메시지함
+                            <?=lang('Korean.messageBox')?>
                         </li>
                     </ul>
                 </div>
@@ -37,7 +37,7 @@
                             <img src="/static/images/ai_send.png" />
                         </div>
                         <div class="receive_text">
-                            <p class="receive_profile_name">AI 매니저</p>
+                            <p class="receive_profile_name"><?=lang('Korean.AIManager')?></p>
                             <div class="receive_msg_area">
                                 <p>안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요</p>
                             </div>
@@ -77,7 +77,7 @@
                             <img src="/static/images/ai_send.png" />
                         </div>
                         <div class="receive_text">
-                            <p class="receive_profile_name">AI 매니저</p>
+                            <p class="receive_profile_name"><?=lang('Korean.AIManager')?></p>
                             <div class="receive_msg_area">
                                 <div class="recieve_profile">
                                     <img src="/static/images/ai_date_profile.png" />
@@ -89,8 +89,8 @@
                                         <p>96 · <?=lang('Korean.seoul')?> 강남 · ESTJ</p>
                                     </div>
                                 </div>
-                                <p class="receive_match_msg">띵동 AI 소개팅이 도착했어요<br /> 정보를 확인하실래요?</p>
-                                <button class="receive_profile_view">정보보기</button>
+                                <p class="receive_match_msg"><?=lang('Korean.AIMsgCon')?></p>
+                                <button class="receive_profile_view"><?=lang('Korean.viewInfo')?></button>
                             </div>
                         </div>
                         <div class="receive_time">
@@ -106,13 +106,13 @@
                 
                 <div class="message_input_box">
                     <div class="btn_group multy ai_date_check">
-                        <button type="button" class="btn type01">수락</button>
-                        <button type="button" class="btn type04">거절</button>
-                        <button type="button" class="btn type05">보류</button>
+                        <button type="button" class="btn type01"><?=lang('Korean.accept')?></button>
+                        <button type="button" class="btn type04"><?=lang('Korean.refuse')?></button>
+                        <button type="button" class="btn type05"><?=lang('Korean.hold')?></button>
                     </div>
                     <hr class="hoz_part" />
                     <div class="message_input_box_border">
-                        <textarea type="text" placeholder="메세지를 입력하세요"></textarea>
+                        <textarea type="text" placeholder="<?=lang('Korean.aiMsgPlaceholder')?>"></textarea>
                         <img style="position:absolute;" src="/static/images/message_send_btn.png" />
                     </div>
                 </div>

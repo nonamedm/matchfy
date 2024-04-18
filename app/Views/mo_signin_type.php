@@ -24,7 +24,7 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="content_title">
-                    <h2 class="member_grade">멤버십 등급에 따라<br />혜택을 제공 받으세요</h2>
+                    <h2 class="member_grade"><?=lang('Korean.signinType1')?></h2>
                 </div>
                 <form class="main_signin_form" method="post" action="">
                     <div class="content_body">
@@ -33,13 +33,13 @@
                                 <div class="chk_box radio_box">
                                     <input type="radio" id="grade01" name="grade" value="grade01" checked>
                                     <label for="grade01">
-                                        <h2>준회원</h2>
+                                        <h2><?=lang('Korean.signinType2')?></h2>
                                     </label>
                                 </div>
                                 <span>Free</span>
                             </div>
                             <div class="grade_box_cont">
-                                <p>기본정보</p>
+                                <p><?=lang('Korean.signinType3')?></p>
                                 <span><?=lang('Korean.name')?> / <?=lang('Korean.birthTrueFalse')?> / <?=lang('Korean.gender')?></span>
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                                 <div class="chk_box radio_box">
                                     <input type="radio" id="grade02" name="grade" value="grade02">
                                     <label for="grade02">
-                                        <h2>정회원 등급 업그레이드</h2>
+                                        <h2><?=lang('Korean.signinType4')?></h2>
                                     </label>
                                 </div>
                                 <div class="grade_box_price">
@@ -60,7 +60,7 @@
                                 </div>
                             </div>
                             <div class="grade_box_cont">
-                                <p>기본정보 + 추가정보</p>
+                                <p><?=lang('Korean.signinType5')?></p>
                                 <span><?=lang('Korean.marryTrueFalse')?> / <?=lang('Korean.smokeType')?> / 음주회수(주) / <?=lang('Korean.religionType')?> /</span><br />
                                 <span>MBTI/<?=lang('Korean.height')?>/ <?=lang('Korean.styleType')?> / <?=lang('Korean.education')?> / <?=lang('Korean.schoolNname')?> / <?=lang('Korean.major')?> /</span><br />
                                 <span><?=lang('Korean.occupational')?>/ <?=lang('Korean.assetGroup')?> / <?=lang('Korean.incomeGroup')?></span>
@@ -71,7 +71,7 @@
                                 <div class="chk_box radio_box">
                                     <input type="radio" id="grade03" name="grade" value="grade03">
                                     <label for="grade03">
-                                        <h2>프리미엄 등급 업그레이드</h2>
+                                        <h2><?=lang('Korean.signinType6')?></h2>
                                     </label>
                                 </div>
                                 <div class="grade_box_price">
@@ -83,9 +83,9 @@
                                 </div>
                             </div>
                             <div class="grade_box_cont">
-                                <p>기본정보 + 추가정보 인증</p>
-                                <span>추가 정보 중</span><br />
-                                <span>확인 가능한 정보 인증 </span>
+                                <p><?=lang('Korean.signinType5')?> <?=lang('Korean.certification')?></p>
+                                <span><?=lang('Korean.signinType8')?></span><br />
+                                <span><?=lang('Korean.signinType9')?> </span>
                             </div>
                         </div>
                     </div>

@@ -22,7 +22,7 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="group_search">
-                    <input style="text" placeholder="모임을 검색해보세요!" value="강남" />
+                    <input style="text" placeholder="<?=lang('Korean.placeholder')?>" value="강남" />
                     <img src="/static/images/ico_search_18x18.png" />
                 </div>
 
@@ -30,7 +30,7 @@
                     <div class="group_list_item">
                         <img src="/static/images/group_list_1.png" />
                         <div class="group_particpnt">
-                            <span>신청 2</span>/4<?=lang('Korean.people')?>
+                            <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                         </div>
                         <div class="group_location">
                             <img src="/static/images/ico_location_16x16.png" />
@@ -42,7 +42,7 @@
                     <div class="group_list_item">
                         <img src="/static/images/group_list_2.png" />
                         <div class="group_particpnt">
-                            <span>신청 5</span>/6<?=lang('Korean.people')?>
+                            <span><?=lang('Korean.application')?> 5</span>/6<?=lang('Korean.people')?>
                         </div>
                         <div class="group_location">
                             <img src="/static/images/ico_location_16x16.png" />
@@ -54,7 +54,7 @@
                     <div class="group_list_item">
                         <img src="/static/images/group_list_3.png" />
                         <div class="group_particpnt">
-                            <span>신청 2</span>/6<?=lang('Korean.people')?>
+                            <span><?=lang('Korean.application')?> 2</span>/6<?=lang('Korean.people')?>
                         </div>
                         <div class="group_location">
                             <img src="/static/images/ico_location_16x16.png" />
@@ -66,7 +66,7 @@
                     <div class="group_list_item">
                         <img src="/static/images/group_list_4.png" />
                         <div class="group_particpnt">
-                            <span>신청 4</span>/4<?=lang('Korean.people')?>
+                            <span><?=lang('Korean.application')?> 4</span>/4<?=lang('Korean.people')?>
                         </div>
                         <div class="group_location">
                             <img src="/static/images/ico_location_16x16.png" />
@@ -78,7 +78,7 @@
                     <div class="group_list_item">
                         <img src="/static/images/group_list_1.png" />
                         <div class="group_particpnt">
-                            <span>신청 2</span>/4<?=lang('Korean.people')?>
+                            <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                         </div>
                         <div class="group_location">
                             <img src="/static/images/ico_location_16x16.png" />
@@ -90,7 +90,7 @@
                     <div class="group_list_item">
                         <img src="/static/images/group_list_2.png" />
                         <div class="group_particpnt">
-                            <span>신청 5</span>/6<?=lang('Korean.people')?>
+                            <span><?=lang('Korean.application')?> 5</span>/6<?=lang('Korean.people')?>
                         </div>
                         <div class="group_location">
                             <img src="/static/images/ico_location_16x16.png" />

@@ -161,13 +161,13 @@
     </div>
     <div class="content_no_img login_main">
         <div class="login_main_title">
-            <h2>주중모임</h2>
+            <h2><?=lang('Korean.weekdayMeeting')?></h2>
         </div>
         <div class="group_row">
-            <p class="group_week">주중</p>
+            <p class="group_week"><?=lang('Korean.weekTitle')?></p>
             <div class="group_type">
                 <h2>
-                    식사/술/차
+                    <?=lang('Korean.indexCon11')?>
                 </h2>
                 <div class="main_title_btn">
                     <button class="total"><?=lang('Korean.all')?>보기</button>
@@ -180,7 +180,7 @@
                 <div class="ai_group_card">
                     <img src="/static/images/group_main_01.png" />
                     <div class="group_particpnt">
-                        <span>신청 2</span>/4<?=lang('Korean.people')?>
+                        <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                     </div>
                     <div class="group_location">
                         <img src="/static/images/ico_location_16x16.png">
@@ -193,7 +193,7 @@
                 <div class="ai_group_card">
                     <img src="/static/images/group_main_02.png" />
                     <div class="group_particpnt">
-                        <span>신청 2</span>/4<?=lang('Korean.people')?>
+                        <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                     </div>
                     <div class="group_location">
                         <img src="/static/images/ico_location_16x16.png">
@@ -206,7 +206,7 @@
                 <div class="ai_group_card">
                     <img src="/static/images/group_main_03.png" />
                     <div class="group_particpnt">
-                        <span>신청 2</span>/4<?=lang('Korean.people')?>
+                        <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                     </div>
                     <div class="group_location">
                         <img src="/static/images/ico_location_16x16.png">
@@ -219,7 +219,7 @@
                 <div class="ai_group_card">
                     <img src="/static/images/group_main_04.png" />
                     <div class="group_particpnt">
-                        <span>신청 2</span>/4<?=lang('Korean.people')?>
+                        <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                     </div>
                     <div class="group_location">
                         <img src="/static/images/ico_location_16x16.png">
@@ -233,10 +233,10 @@
             </div>
         </div>
         <div class="group_row">
-            <p class="group_week">주중</p>
+            <p class="group_week"><?=lang('Korean.weekTitle')?></p>
             <div class="group_type">
                 <h2>
-                    여행
+                    <?=lang('Korean.trip')?>
                 </h2>
                 <div class="main_title_btn">
                     <button class="total"><?=lang('Korean.all')?>보기</button>
@@ -249,7 +249,7 @@
                 <div class="ai_group_card">
                     <img src="/static/images/group_main_05.png" />
                     <div class="group_particpnt">
-                        <span>신청 2</span>/4<?=lang('Korean.people')?>
+                        <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                     </div>
                     <div class="group_location">
                         <img src="/static/images/ico_location_16x16.png">
@@ -262,7 +262,7 @@
                 <div class="ai_group_card">
                     <img src="/static/images/group_main_06.png" />
                     <div class="group_particpnt">
-                        <span>신청 2</span>/4<?=lang('Korean.people')?>
+                        <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                     </div>
                     <div class="group_location">
                         <img src="/static/images/ico_location_16x16.png">
@@ -275,7 +275,7 @@
                 <div class="ai_group_card">
                     <img src="/static/images/group_main_07.png" />
                     <div class="group_particpnt">
-                        <span>신청 2</span>/4<?=lang('Korean.people')?>
+                        <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                     </div>
                     <div class="group_location">
                         <img src="/static/images/ico_location_16x16.png">
@@ -288,7 +288,7 @@
                 <div class="ai_group_card">
                     <img src="/static/images/group_main_08.png" />
                     <div class="group_particpnt">
-                        <span>신청 2</span>/4<?=lang('Korean.people')?>
+                        <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                     </div>
                     <div class="group_location">
                         <img src="/static/images/ico_location_16x16.png">
@@ -304,13 +304,13 @@
     </div>
     <div class="content_no_img login_main">
         <div class="login_main_title">
-            <h2>주말모임</h2>
+            <h2><?=lang('Korean.holiMeeting')?></h2>
         </div>
         <div class="group_row">
-            <p class="group_week">주말</p>
+            <p class="group_week"><?=lang('Korean.holidayTitle')?></p>
             <div class="group_type">
                 <h2>
-                    식사/술/차
+                    <?=lang('Korean.indexCon11')?>
                 </h2>
                 <div class="main_title_btn">
                     <button class="total"><?=lang('Korean.all')?>보기</button>
@@ -323,7 +323,7 @@
                 <div class="ai_group_card">
                     <img src="/static/images/group_main_01.png" />
                     <div class="group_particpnt">
-                        <span>신청 2</span>/4<?=lang('Korean.people')?>
+                        <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                     </div>
                     <div class="group_location">
                         <img src="/static/images/ico_location_16x16.png">
@@ -336,7 +336,7 @@
                 <div class="ai_group_card">
                     <img src="/static/images/group_main_02.png" />
                     <div class="group_particpnt">
-                        <span>신청 2</span>/4<?=lang('Korean.people')?>
+                        <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                     </div>
                     <div class="group_location">
                         <img src="/static/images/ico_location_16x16.png">
@@ -349,7 +349,7 @@
                 <div class="ai_group_card">
                     <img src="/static/images/group_main_03.png" />
                     <div class="group_particpnt">
-                        <span>신청 2</span>/4<?=lang('Korean.people')?>
+                        <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                     </div>
                     <div class="group_location">
                         <img src="/static/images/ico_location_16x16.png">
@@ -362,7 +362,7 @@
                 <div class="ai_group_card">
                     <img src="/static/images/group_main_04.png" />
                     <div class="group_particpnt">
-                        <span>신청 2</span>/4<?=lang('Korean.people')?>
+                        <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                     </div>
                     <div class="group_location">
                         <img src="/static/images/ico_location_16x16.png">
@@ -376,10 +376,10 @@
             </div>
         </div>
         <div class="group_row">
-            <p class="group_week">주말</p>
+            <p class="group_week"><?=lang('Korean.holidayTitle')?></p>
             <div class="group_type">
                 <h2>
-                    여행
+                    <?=lang('Korean.trip')?>
                 </h2>
                 <div class="main_title_btn">
                     <button class="total"><?=lang('Korean.all')?>보기</button>
@@ -392,7 +392,7 @@
                 <div class="ai_group_card">
                     <img src="/static/images/group_main_05.png" />
                     <div class="group_particpnt">
-                        <span>신청 2</span>/4<?=lang('Korean.people')?>
+                        <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                     </div>
                     <div class="group_location">
                         <img src="/static/images/ico_location_16x16.png">
@@ -405,7 +405,7 @@
                 <div class="ai_group_card">
                     <img src="/static/images/group_main_06.png" />
                     <div class="group_particpnt">
-                        <span>신청 2</span>/4<?=lang('Korean.people')?>
+                        <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                     </div>
                     <div class="group_location">
                         <img src="/static/images/ico_location_16x16.png">
@@ -418,7 +418,7 @@
                 <div class="ai_group_card">
                     <img src="/static/images/group_main_07.png" />
                     <div class="group_particpnt">
-                        <span>신청 2</span>/4<?=lang('Korean.people')?>
+                        <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                     </div>
                     <div class="group_location">
                         <img src="/static/images/ico_location_16x16.png">
@@ -431,7 +431,7 @@
                 <div class="ai_group_card">
                     <img src="/static/images/group_main_08.png" />
                     <div class="group_particpnt">
-                        <span>신청 2</span>/4<?=lang('Korean.people')?>
+                        <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                     </div>
                     <div class="group_location">
                         <img src="/static/images/ico_location_16x16.png">

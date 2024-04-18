@@ -24,7 +24,7 @@
                         <img src="/static/images/left_arrow.png" />
                     </li>
                     <li class="header_title">
-                        모임
+                        <?=lang('Korean.meet')?>
                     </li>
                 </ul>
                 <div class="menu_right edit"><?=lang('Korean.delete')?></div>
@@ -51,7 +51,7 @@
                         <img src="/static/images/group_list_1.png" />
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt">
-                                <span>신청 2</span>/4<?=lang('Korean.people')?>
+                                <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                             </div>
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />
@@ -69,7 +69,7 @@
                         <img src="/static/images/group_list_2.png" />
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt">
-                                <span>신청 2</span>/4<?=lang('Korean.people')?>
+                                <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                             </div>
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />
@@ -87,7 +87,7 @@
                         <img src="/static/images/group_list_3.png" />
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt">
-                                <span>신청 2</span>/4<?=lang('Korean.people')?>
+                                <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                             </div>
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />
@@ -105,7 +105,7 @@
                         <img src="/static/images/group_list_4.png" />
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt">
-                                <span>신청 2</span>/4<?=lang('Korean.people')?>
+                                <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                             </div>
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />
@@ -123,7 +123,7 @@
                         <img src="/static/images/group_list_1.png" />
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt">
-                                <span>신청 2</span>/4<?=lang('Korean.people')?>
+                                <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                             </div>
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />
@@ -141,7 +141,7 @@
                         <img src="/static/images/group_list_2.png" />
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt">
-                                <span>신청 2</span>/4<?=lang('Korean.people')?>
+                                <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                             </div>
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />

@@ -33,12 +33,12 @@
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="appear_type" class="signin_label">외모유형</label>
+                                <label for="appear_type" class="signin_label"><?=lang('Korean.faceType')?></label>
                                 <select id="appear_type" value="">
                                     <option value=""><?=lang('Korean.selected')?></option>
-                                    <option value="0">강아지상</option>
-                                    <option value="1">고양이상</option>
-                                    <option value="2">여우상</option>
+                                    <option value="0"><?=lang('Korean.dagFace')?></option>
+                                    <option value="1"><?=lang('Korean.catFace')?></option>
+                                    <option value="2"><?=lang('Korean.foxFace')?></option>
                                     <option value="3"><?=lang('Korean.extra')?></option>
                                 </select>
                             </div>
@@ -47,10 +47,10 @@
                             <div class="signin_form_div">
                                 <label for="region1" class="signin_label"><?=lang('Korean.region')?></label>
                                 <select id="region1" value="">
-                                    <option>시/군/구</option>
-                                    <option value="0">서울특별시</option>
-                                    <option value="1">경기도</option>
-                                    <option value="2">인천광역시</option>
+                                    <option><?=lang('Korean.cityCountyDistrict')?></option>
+                                    <option value="0"><?=lang('Korean.seoul2')?></option>
+                                    <option value="1"><?=lang('Korean.gyeonggi2')?></option>
+                                    <option value="2"><?=lang('Korean.incheon2')?></option>
                                     <option value="3"><?=lang('Korean.extra')?></option>
                                 </select>
                             </div>
@@ -59,10 +59,10 @@
                             <div class="signin_form_div">
                                 <label for="region2" class="signin_label"><?=lang('Korean.region')?></label>
                                 <select id="region2" value="">
-                                    <option>시/군/구</option>
-                                    <option value="0">서울특별시</option>
-                                    <option value="1">경기도</option>
-                                    <option value="2">인천광역시</option>
+                                    <option><?=lang('Korean.cityCountyDistrict')?></option>
+                                    <option value="0"><?=lang('Korean.seoul2')?></option>
+                                    <option value="1"><?=lang('Korean.gyeonggi2')?></option>
+                                    <option value="2"><?=lang('Korean.incheon2')?></option>
                                     <option value="3"><?=lang('Korean.extra')?></option>
                                 </select>
                             </div>
@@ -72,8 +72,8 @@
                                 <h4 class="profile_photo_label"><?=lang('Korean.marryTrueFalse')?></h4>
                                 <select id="marital" class="custom_select" value="">
                                     <option value=""><?=lang('Korean.selected')?></option>
-                                    <option value="0">유</option>
-                                    <option value="1">무</option>
+                                    <option value="0"><?=lang('Korean.existence')?></option>
+                                    <option value="1"><?=lang('Korean.zero')?></option>
                                 </select>
                             </div>
                         </div>
@@ -82,8 +82,8 @@
                                 <label for="smoking" class="signin_label"><?=lang('Korean.smokeType')?></label>
                                 <select id="smoking" class="custom_select" value="">
                                     <option value=""><?=lang('Korean.selected')?></option>
-                                    <option value="0">유</option>
-                                    <option value="1">무</option>
+                                    <option value="0"><?=lang('Korean.existence')?></option>
+                                    <option value="1"><?=lang('Korean.zero')?></option>
                                 </select>
                             </div>
                         </div>
@@ -108,8 +108,8 @@
                                     <option value="1"><?=lang('Korean.christian')?></option>
                                     <option value="2"><?=lang('Korean.buddhism')?></option>
                                     <option value="3"><?=lang('Korean.catholicism')?></option>
-                                    <option value="4">원불교</option>
-                                    <option value="5">이슬람</option>
+                                    <option value="4"><?=lang('Korean.wonBuddhism')?></option>
+                                    <option value="5"><?=lang('Korean.Islam')?></option>
                                 </select>
                             </div>
                         </div>
@@ -140,7 +140,7 @@
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="height" class="signin_label">키</label>
+                                <label for="height" class="signin_label"><?=lang('Korean.height')?></label>
                                 <input id="height" type="text" value="" placeholder="<?=lang('Korean.sinupHeightPlaceholder')?>">
                             </div>
                         </div>
@@ -166,9 +166,9 @@
                                     <option value=""><?=lang('Korean.selected')?></option>
                                     <option value="0"><?=lang('Korean.highSchoolGradu')?></option>
                                     <option value="1"><?=lang('Korean.attendingUniversity')?></option>
-                                    <option value="2"><?=lang('Korean.universityGraduation')?></option>
+                                    <option value="2"><?=lang('Korean.universityGrad')?></option>
                                     <option value="3"><?=lang('Korean.attendingGraduate')?></option>
-                                    <option value="4"><?=lang('Korean.GraduateSchoolHigher')?></option>
+                                    <option value="4"><?=lang('Korean.GradSchoolHig')?></option>
                                 </select>
                             </div>
                         </div>
@@ -194,9 +194,9 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div input_btn">
                                 <h4 class="profile_photo_label"><?=lang('Korean.occupational')?></h4>
-                                <p class="profile_photo_desc">재직증명서 혹은 건강보험 자격득실확인서를 업로드해주세요</p>
+                                <p class="profile_photo_desc"><?=lang('Korean.premiumCon1')?></p>
                                 <div class="input_btn">
-                                    <input id="job" type="text" value="" placeholder="직업을 입력해 주세요">
+                                    <input id="job" type="text" value="" placeholder="<?=lang('Korean.premiumCon2')?>">
                                     <button class="btn btn_input_form"><?=lang('Korean.authentication')?></button>
                                 </div>
                             </div>
@@ -209,9 +209,9 @@
                                 <div class="input_btn">
                                     <select id="religion" class="custom_select" value="">
                                         <option value=""><?=lang('Korean.selected')?></option>
-                                        <option value="0">2천만원 이하</option>
-                                        <option value="1">2천만원~1억이하</option>
-                                        <option value="2">1억이상~</option>
+                                        <option value="0"><?=lang('Korean.2000thousand')?></option>
+                                        <option value="1"><?=lang('Korean.2000100million')?></option>
+                                        <option value="2"><?=lang('Korean.100million')?></option>
                                     </select>
                                     <button class="btn btn_input_form"><?=lang('Korean.authentication')?></button>
                                 </div>

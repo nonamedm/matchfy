@@ -26,8 +26,8 @@
                 <div class="content_body" style="margin-top:235px">
                     <img src="/static/images/point_fail.png" />
                     <div class="success_text">
-                        <p>환전 실패!</p>
-                        <em>다시 환전시도를 해주세요.</em>
+                        <p><?=lang('Korean.exchangeFailCon')?></p>
+                        <em><?=lang('Korean.reExchangeCon')?></em>
                     </div>
                 </div>
             </div>
@@ -35,7 +35,7 @@
             <footer class="footer">
 
                 <div class="btn_group">
-                    <button type="button" class="btn type01" onclick='loc_pointExchange()'>다시 환전하기</button>
+                    <button type="button" class="btn type01" onclick='loc_pointExchange()'><?=lang('Korean.reExchange')?></button>
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy

@@ -38,7 +38,7 @@
                         <legend></legend>
                         <div class="">
                             <div class="mypage_wallet_select">
-                                <p>구매포인트</p>
+                                <p><?=lang('Korean.purchasePoint')?></p>
                                 <div class="charge_select1 selected">
                                     <p data-points="5000" data-price="5500">5,000P (5,500<?=lang('Korean.won')?>)</p>
                                 </div>
@@ -48,10 +48,10 @@
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="quantity" class="signin_label">구매수량</label>
+                                    <label for="quantity" class="signin_label"><?=lang('Korean.purchaseQuantity')?></label>
                                     <div style="display: flex; align-items: center;">
-                                        <input id="quantity" type="number" value="1" min="1" style="width:225px;" placeholder="수량입력" />
-                                        <p style="margin-left:8px; font-size: 15px;">개</p>
+                                        <input id="quantity" type="number" value="1" min="1" style="width:225px;" placeholder="<?=lang('Korean.enterQuantity')?>" />
+                                        <p style="margin-left:8px; font-size: 15px;"><?=lang('Korean.piece')?></p>
                                         <a class="quantity_plus" style="margin-left:15px;"><img src="/static/images/ico_plus_30x30.png" /></a>
                                         <a class="quantity_minus" style="margin-left:12px;"><img src="/static/images/ico_minus_30x30.png" /></a>
                                     </div>
@@ -59,13 +59,13 @@
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="paymethod" class="signin_label">충전수단</label>
+                                    <label for="paymethod" class="signin_label"><?=lang('Korean.chargingMeans')?></label>
                                     <select id="paymethod" class="custom_select" value="">
                                         <option value=""><?=lang('Korean.selected')?></option>
-                                        <option value="card">신용카드</option>
-                                        <option value="kakaopayCard">간편결제</option>
-                                        <option value="bank">계좌이체</option>
-                                        <option value="cellphone">핸드폰결제</option>
+                                        <option value="card"><?=lang('Korean.creditCard')?></option>
+                                        <option value="kakaopayCard"><?=lang('Korean.easyPayment')?></option>
+                                        <option value="bank"><?=lang('Korean.accountTransfer')?></option>
+                                        <option value="cellphone"><?=lang('Korean.phonePaymen')?></option>
                                     </select>
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
                                         <h2><?=lang('Korean.allPay')?></h2>
                                     </div>
                                     <div class="amount_pay_right">
-                                        <p id="selected_pay_type">결제<?=lang('Korean.selected')?></p>
+                                        <p id="selected_pay_type"><?=lang('Korean.payment')?><?=lang('Korean.selected')?></p>
                                         <h2 id="total_price">5,500</h2>
                                     </div>
                                 </div>
@@ -95,7 +95,7 @@
                     <p>· <?=lang('Korean.paymentCon1')?></p>
                 </div>
                 <div class="btn_group">
-                    <button type="button" class="btn type01" onclick="serverAuth()">충전하기</button>
+                    <button type="button" class="btn type01" onclick="serverAuth()"><?=lang('Korean.btnCharge')?></button>
 
                 </div>
                 <!-- <div class="footer_logo mb40">

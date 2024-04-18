@@ -25,9 +25,9 @@
             <div class="content_wrap">
                 <div class="notice_filter">
                     <select class="small" id="notice_filter">
-                        <option value="create_at">등록순</option>
-                        <option value="meeting_start_date">빠른 모임순</option>
-                        <option value="membership_fee">예약금 낮은 순</option>
+                        <option value="create_at"><?=lang('Korean.registrationOrder')?></option>
+                        <option value="meeting_start_date"><?=lang('Korean.quickMeetingOrder')?></option>
+                        <option value="membership_fee"><?=lang('Korean.lowestReservationDeposit')?></option>
                     </select>
                 </div>
                 <div class="mygroup_list" id="mygroup_list_body">
@@ -39,7 +39,7 @@
                             </div>
                             <div class="relative-container <?= $meeting->isEnded ? 'grayscale' : '' ?>">
                                 <?php if ($meeting->isEnded) : ?>
-                                    <div class="ended_overlay">종료</div>
+                                    <div class="ended_overlay"><?=lang('Korean.close')?></div>
                                 <?php endif; ?>
                                 <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
                                     <img src="/<?= $meeting->file_path ?><?= $meeting->file_name ?>" />
@@ -47,7 +47,7 @@
                             </div>
                             <div class="group_list_item group_apply_item">
                                 <div class="group_particpnt" onclick="javascript:meetingMemberList(<?= $meeting->meeting_idx ?>);">
-                                    <span>신청 <?= $meeting->meeting_idx_count ?></span>/<?= $meeting->number_of_people ?><?=lang('Korean.people')?>
+                                    <span><?=lang('Korean.application')?> <?= $meeting->meeting_idx_count ?></span>/<?= $meeting->number_of_people ?><?=lang('Korean.people')?>
                                 </div>
                                 <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
                                     <div class="group_location">

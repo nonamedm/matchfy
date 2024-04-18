@@ -42,13 +42,13 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="name" class="signin_label"><?=lang('Korean.name')?></label>
-                                <input id="name" name="name" type="text" value="<?php echo $name ?>" placeholder="이름을 입력하세요" readonly>
+                                <input id="name" name="name" type="text" value="<?php echo $name ?>" placeholder="<?=lang('Korean.signUpNamePlaceholder')?>" readonly>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="birthday" class="signin_label"><?=lang('Korean.birthTrueFalse')?></label>
-                                <input id="birthday" name="birthday" type="text" value="<?php echo $birthday ?>" placeholder="생년월일을 입력하세요" readonly>
+                                <input id="birthday" name="birthday" type="text" value="<?php echo $birthday ?>" placeholder="<?=lang('Korean.signUpBirthPlaceholder')?>" readonly>
                             </div>
                         </div>
                         <div class="form_row signin_form">
@@ -73,7 +73,7 @@
                             <div class="signin_form_div">
                                 <label for="city" class="signin_label"><?=lang('Korean.region')?></label>
                                 <select id="city" name="city">
-                                    <option value>지역을 선택하세요</option>
+                                    <option value><?=lang('Korean.signUpCityPlaceholder')?></option>
                                     <?php
                                     foreach ($sidoCode as $item) {
                                     ?>
@@ -88,7 +88,7 @@
                         </div>
                         <!-- <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <h4 class="profile_photo_label">사진 (1장 이상 필수)</h4>
+                                <h4 class="profile_photo_label"><?=lang('Korean.signupCon2')?></h4>
                                 <div class="profile_photo_div">
                                     <label for="profile_photo" class="signin_label profile_photo_input"></label>
                                     <input id="profile_photo" name="profile_photo" type="file" value="" placeholder=""
@@ -100,7 +100,7 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <h4 class="profile_photo_label">동영상 프로필 (권장)</h4>
+                                <h4 class="profile_photo_label"><?=lang('Korean.signupCon3')?></h4>
                                 <div class="profile_photo_div">
                                     <label for="profile_mov" class="signin_label profile_photo_input"></label>
                                     <input id="profile_mov" name="profile_mov" type="file" value="" placeholder=""

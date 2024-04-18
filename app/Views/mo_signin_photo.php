@@ -24,13 +24,13 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="content_title">
-                    <h2><span>사진</span> 추가등록 또는<br><span>동영상</span>프로필 등록.</h2>
+                    <h2><?=lang('Korean.signupCon1')?></h2>
                 </div>
                 <form class="main_signin_form" method="post" action="/mo/signinType" enctype="multipart/form-data">
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <h4 class="profile_photo_label">사진 (1장 이상 필수)</h4>
+                                <h4 class="profile_photo_label"><?=lang('Korean.signupCon2')?></h4>
                                 <div class="profile_photo_div">
                                     <label for="profile_photo" class="signin_label profile_photo_input"></label>
                                     <input id="profile_photo" name="profile_photo" type="file" value="" placeholder="" multiple accept="image/*">
@@ -41,7 +41,7 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <h4 class="profile_photo_label">동영상 프로필 (권장)</h4>
+                                <h4 class="profile_photo_label"><?=lang('Korean.signupCon3')?></h4>
                                 <div class="profile_photo_div">
                                     <label for="profile_mov" class="signin_label profile_photo_input"></label>
                                     <input id="profile_mov" name="profile_mov" type="file" value="" placeholder="" multiple accept="video/mp4,video/mkv, video/x-m4v,video/*">

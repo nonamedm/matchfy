@@ -50,9 +50,9 @@
             <div class="content_title">
                 <p>* <?=lang('Korean.passCon2')?></p>
             </div>
-            <input id="input_name" class="temp_input_text" type="text" name="name" placeholder="이름 입력" value="<?= $name ?>" />
-            <input id="input_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="전화번호 입력" value="<?= $mobile_no ?>" />
-            <input id="input_birthday" class="temp_input_text" type="text" name="birthday" placeholder="생년월일 입력" value="<?= $birthday ?>" />
+            <input id="input_name" class="temp_input_text" type="text" name="name" placeholder="<?=lang('Korean.passCon1')?>" value="<?= $name ?>" />
+            <input id="input_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="<?=lang('Korean.passCon2')?>" value="<?= $mobile_no ?>" />
+            <input id="input_birthday" class="temp_input_text" type="text" name="birthday" placeholder="<?=lang('Korean.passCon3')?>" value="<?= $birthday ?>" />
             <select id="input_gender" class="temp_input_text" name="gender">
                 <option><?=lang('Korean.passGender')?></option>
                 <option value="0" <?php if ($gender === '0') : ?>selected<?php endif ?>><?=lang('Korean.woman')?></option>

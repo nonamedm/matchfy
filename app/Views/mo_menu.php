@@ -31,7 +31,7 @@
                         <p>
                             <a onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.matchMeet')?></a>
                         </p>
-                        <!-- <p><a onclick="moveToUrl('/mo/partner')">매칭정보 입력</a></p> -->
+                        <!-- <p><a onclick="moveToUrl('/mo/partner')"><?=lang('Korean.matchInfoBtn')?></a></p> -->
                         <p><a onclick="moveToUrl('/mo/matchFeed')"><?=lang('Korean.matchFeed')?></a></p>
                         <p><a onclick="moveToUrl('/mo/alliance/list')"><?=lang('Korean.matchAliiance')?></a></p>
                         <p><a onclick="moveToUrl('/mo/matchFeed')"><?=lang('Korean.matchUpgrade')?></a></p>

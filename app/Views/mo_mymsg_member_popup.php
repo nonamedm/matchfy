@@ -16,7 +16,7 @@
     <div class="layerPopup alert middle"><!-- class: imgPop 추가 -->
         <div class="layerPopup_wrap">
             <div class="layerPopup_content medium">
-                <p class="txt">단톡방 멤버</p>
+                <p class="txt"><?=lang('Korean.groupTalkMember')?></p>
                 
                 <div class="">
                     <div class="chat_member">
@@ -25,8 +25,8 @@
                             <p>장원영</p>
                         </div>
                         <div class="chat_member_report">
-                            <button class="type02">강퇴</button>
-                            <button class="type01">신고</button>
+                            <button class="type02"><?=lang('Korean.resign')?></button>
+                            <button class="type01"><?=lang('Korean.declaration')?></button>
                         </div>
                     </div>
                     <div class="chat_member">
@@ -35,8 +35,8 @@
                             <p>김여름</p>
                         </div>
                         <div class="chat_member_report">
-                            <button class="type02">강퇴</button>
-                            <button class="type01">신고</button>
+                            <button class="type02"><?=lang('Korean.resign')?></button>
+                            <button class="type01"><?=lang('Korean.declaration')?></button>
                         </div>
                     </div>
                     <div class="chat_member">
@@ -45,8 +45,8 @@
                             <p>정로라</p>
                         </div>
                         <div class="chat_member_report">
-                            <button class="type02">강퇴</button>
-                            <button class="type01">신고</button>
+                            <button class="type02"><?=lang('Korean.resign')?></button>
+                            <button class="type01"><?=lang('Korean.declaration')?></button>
                         </div>
                     </div>
                     <div class="chat_member">
@@ -55,8 +55,8 @@
                             <p>강해진</p>
                         </div>
                         <div class="chat_member_report">
-                            <button class="type02">강퇴</button>
-                            <button class="type01">신고</button>
+                            <button class="type02"><?=lang('Korean.resign')?></button>
+                            <button class="type01"><?=lang('Korean.declaration')?></button>
                         </div>
                     </div>
                     <div class="chat_member">
@@ -65,8 +65,8 @@
                             <p>유재니</p>
                         </div>
                         <div class="chat_member_report">
-                            <button class="type02">강퇴</button>
-                            <button class="type01">신고</button>
+                            <button class="type02"><?=lang('Korean.resign')?></button>
+                            <button class="type01"><?=lang('Korean.declaration')?></button>
                         </div>
                     </div>
                 </div>

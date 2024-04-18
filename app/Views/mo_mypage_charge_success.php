@@ -26,7 +26,7 @@
                 <div class="content_body" style="margin-top:235px">
                     <img src="/static/images/point_success.png" />
                     <div class="success_text">
-                        <p>충전완료!</p>
+                        <p><?=lang('Korean.chargeSuccCon')?></p>
                         <em><?=$msg?></em>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
             <footer class="footer">
 
                 <div class="btn_group">
-                    <button type="button" class="btn type01" onclick='loc_WalletLocation()'>입금내역 확인하기</button>
+                    <button type="button" class="btn type01" onclick='loc_WalletLocation()'><?=lang('Korean.checkDepositDetails')?></button>
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy

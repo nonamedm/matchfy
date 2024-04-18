@@ -33,7 +33,7 @@
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <h4 class="profile_photo_label">대표사진</h4>
+                                <h4 class="profile_photo_label"><?=lang('Korean.meetMainPhoto')?></h4>
                                 <div class="profile_photo_div">
                                     <label for="group_photo" class="signin_label profile_photo_input group_photo_input"></label>
                                     <input id="group_photo" name="meeting_photo" type="file" value="" placeholder="" multiple accept="image/*">
@@ -43,19 +43,19 @@
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="category" class="signin_label">카테고리</label>
+                                    <label for="category" class="signin_label"><?=lang('Korean.category')?></label>
                                     <select id="category" name="category" class="custom_select" value="">
                                         <option value=""><?=lang('Korean.selected')?></option>
-                                        <option value="01">주중모임</option>
-                                        <option value="02">주중여행</option>
-                                        <option value="03">주말모임</option>
-                                        <option value="04">주말여행</option>
+                                        <option value="01"><?=lang('Korean.weekdayMeeting')?></option>
+                                        <option value="02"><?=lang('Korean.weekdayTrip')?></option>
+                                        <option value="03"><?=lang('Korean.holiMeeting')?></option>
+                                        <option value="04"><?=lang('Korean.holiTrip')?></option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="name" class="signin_label">모집기간</label>
+                                    <label for="name" class="signin_label"><?=lang('Korean.recruitmentPeriod')?></label>
                                     <div class="schedule_calendar multy_select">
                                         <div class="schedule_calendar">
                                             <div class="schedule_calendar_div">
@@ -70,7 +70,7 @@
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="name" class="signin_label">모집일자</label>
+                                    <label for="name" class="signin_label"><?=lang('Korean.recruitmentDate')?></label>
                                     <div class="schedule_calendar multy_select">
                                         <div class="schedule_calendar">
                                             <div class="schedule_calendar_div">
@@ -86,16 +86,16 @@
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="number_of_people" class="signin_label"><?=lang('Korean.personnel')?></label>
-                                    <input id="number_of_people" name="number_of_people" type="text" value="<?php echo $name ?>" placeholder="모집 인원을 입력하세요">
+                                    <input id="number_of_people" name="number_of_people" type="text" value="<?php echo $name ?>" placeholder="<?=lang('Korean.meetCon1')?>">
                                 </div>
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="group_age" class="signin_label"><?=lang('Korean.ageType')?></label>
                                     <div class="multy_input">
-                                        <input id="group_min_age" type="text" name="group_min_age" value="" placeholder="나이를 입력하세요"><br />
+                                        <input id="group_min_age" type="text" name="group_min_age" value="" placeholder="<?=lang('Korean.meetCon2')?>"><br />
                                         -
-                                        <input id="group_max_age" type="text" name="group_max_age" value="" placeholder="나이를 입력하세요"><br />
+                                        <input id="group_max_age" type="text" name="group_max_age" value="" placeholder="<?=lang('Korean.meetCon2')?>"><br />
                                         <!-- <select id="group_age1" class="custom_select" value="">
                                         <option value=""><?=lang('Korean.selected')?></option>
                                         <option value="0">20대</option>
@@ -115,7 +115,7 @@
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="matching_rate" class="signin_label">매칭률</label>
+                                    <label for="matching_rate" class="signin_label"><?=lang('Korean.matchingRate')?></label>
                                     <input id="matching_rate" type="text" name="matching_rate" value="" placeholder="매칭률을 입력하세요"><br />
                                     <!-- <select id="matching_rate" class="custom_select" name="matching_rate" value="">
                                     <option value=""><?=lang('Korean.selected')?></option>
@@ -130,8 +130,8 @@
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="group_detail" class="signin_label">모임상세</label>
-                                    <input id="title" type="text" name="title" value="" placeholder="제목을 입력하세요"><br />
+                                    <label for="group_detail" class="signin_label"><?=lang('Korean.meetingDetails')?></label>
+                                    <input id="title" type="text" name="title" value="" placeholder="<?=lang('Korean.meetCon3')?>"><br />
                                 </div>
                             </div>
                             <div class="form_row signin_form">
@@ -152,20 +152,20 @@
                         </div> -->
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="meeting_place" class="signin_label">모임장소</label>
+                                    <label for="meeting_place" class="signin_label"><?=lang('Korean.meetingPlace')?></label>
                                     <div class="input_ico_search search_meet_place">
-                                        <input id="meeting_place" type="text" name="meeting_place" placeholder="주소검색">
+                                        <input id="meeting_place" type="text" name="meeting_place" placeholder="<?=lang('Korean.addressSearch')?>">
                                         <img src="/static/images/ico_search_18x18.png" onclick="searchPlaces()" />
                                     </div>
                                     <div class="input_ico_search search_meet_detail">
-                                        <input id="meeting_place_detail" type="text" name="meeting_place_detail" placeholder="상세주소 (동, 호수, 기타 상세주소)">
+                                        <input id="meeting_place_detail" type="text" name="meeting_place_detail" placeholder="<?=lang('Korean.addressDetails')?>">
                                     </div>
                                     <div id="map" style="width:335px;height:175px;margin-top: 20px;"></div>
                                 </div>
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="membership_fee" class="signin_label">회비</label>
+                                    <label for="membership_fee" class="signin_label"><?=lang('Korean.dues')?></label>
                                     <div class="input_ico_search">
                                         <input id="membership_fee" type="text" name="membership_fee" value="" placeholder="">
                                     </div>

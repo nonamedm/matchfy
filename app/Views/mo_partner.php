@@ -89,7 +89,7 @@
                             <div class="signin_form_div">
                                 <label for="region" class="signin_label"><?=lang('Korean.region')?></label>
                                 <select id="region" name="region" class="custom_select" value="">
-                                    <option value="0">무관</option>
+                                    <option value="0"><?=lang('Korean.irrelevant')?></option>
                                     <?php
                                     foreach ($sidoCode as $item) {
                                     ?>
@@ -107,8 +107,8 @@
                                 <div class="signin_form_div">
                                     <label for="marital" class="signin_label"><?=lang('Korean.marryType')?></label>
                                     <select id="marital" name="marital" class="custom_select" value="">
-                                        <option value="0">무관</option>
-                                        <option value="1">절대 안됨</option>
+                                        <option value="0"><?=lang('Korean.irrelevant')?></option>
+                                        <option value="1"><?=lang('Korean.absolutelyNot')?></option>
                                     </select>
                                 </div>
                             </div>
@@ -116,8 +116,8 @@
                                 <div class="signin_form_div">
                                     <label for="smoking" class="signin_label"><?=lang('Korean.smokeType')?></label>
                                     <select id="smoking" name="smoking" class="custom_select" value="">
-                                        <option value="0">무관</option>
-                                        <option value="1">절대 안됨</option>
+                                        <option value="0"><?=lang('Korean.irrelevant')?></option>
+                                        <option value="1"><?=lang('Korean.absolutelyNot')?></option>
                                     </select>
                                 </div>
                             </div>
@@ -125,8 +125,8 @@
                                 <div class="signin_form_div">
                                     <label for="drinking" class="signin_label"><?=lang('Korean.drinkingType')?></label>
                                     <select id="drinking" name="drinking" class="custom_select" value="">
-                                        <option value="0">무관</option>
-                                        <option value="1">전혀 안함</option>
+                                        <option value="0"><?=lang('Korean.irrelevant')?></option>
+                                        <option value="1"><?=lang('Korean.notAtAll')?></option>
                                         <option value="2"><?=lang('Korean.week12')?></option>
                                         <option value="3"><?=lang('Korean.week35')?></option>
                                         <option value="4"><?=lang('Korean.week5')?></option>
@@ -143,7 +143,7 @@
                                         <option value="2"><?=lang('Korean.catholicism')?></option>
                                         <option value="3"><?=lang('Korean.buddhism')?></option>
                                         <option value="4"><?=lang('Korean.extra')?></option>
-                                        <option value="5">관계없음</option>
+                                        <option value="5"><?=lang('Korean.notRelevant')?></option>
                                     </select>
                                 </div>
                             </div>
@@ -168,7 +168,7 @@
                                         <option value="13">ISFJ</option>
                                         <option value="14">ISTP</option>
                                         <option value="15">ISTJ</option>
-                                        <option value="16">무관</option>
+                                        <option value="16"><?=lang('Korean.irrelevant')?></option>
                                     </select>
                                 </div>
                             </div>
@@ -176,8 +176,8 @@
                                 <div class="signin_form_div">
                                     <label for="height" class="signin_label"><?=lang('Korean.height')?></label>
                                     <div style="display:flex;">
-                                        <input type="number" id="height" name="height" placeholder="최소 키 입력" style="width:260px;">
-                                        <p style="width:70px; margin-left: 20px;">cm 이상</p>
+                                        <input type="number" id="height" name="height" placeholder="<?=lang('Korean.parnerCon1')?>" style="width:260px;">
+                                        <p style="width:70px; margin-left: 20px;"><?=lang('Korean.cmmore')?></p>
                                     </div>
                                 </div>
                             </div>
@@ -191,7 +191,7 @@
                                         <option value="2"><?=lang('Korean.littleThin')?></option>
                                         <option value="3"><?=lang('Korean.littleChubby')?></option>
                                         <option value="4"><?=lang('Korean.chubby')?></option>
-                                        <option value="5" selected>무관</option>
+                                        <option value="5" selected><?=lang('Korean.irrelevant')?></option>
                                     </select>
                                 </div>
                             </div>
@@ -212,10 +212,10 @@
                                         <option value=""><?=lang('Korean.selected')?></option>
                                         <option value="0"><?=lang('Korean.highSchoolGradu')?></option>
                                         <option value="1"><?=lang('Korean.attendingUniversity')?></option>
-                                        <option value="2"><?=lang('Korean.universityGraduation')?></option>
+                                        <option value="2"><?=lang('Korean.universityGrad')?></option>
                                         <option value="3"><?=lang('Korean.attendingGraduate')?></option>
-                                        <option value="4"><?=lang('Korean.GraduateSchoolHigher')?></option>
-                                        <option value="5" selected>무관</option>
+                                        <option value="4"><?=lang('Korean.GradSchoolHig')?></option>
+                                        <option value="5" selected><?=lang('Korean.irrelevant')?></option>
                                     </select>
                                 </div>
                             </div>
@@ -245,7 +245,7 @@
                                         <option value="0"><?=lang('Korean.jobVal1')?></option>
                                         <option value="1"><?=lang('Korean.jobVal2')?></option>
                                         <option value="2"><?=lang('Korean.jobVal3')?></option>
-                                        <option value="3" selected>무관</option>
+                                        <option value="3" selected><?=lang('Korean.irrelevant')?></option>
                                     </select>
                                 </div>
                             </div>
@@ -262,7 +262,7 @@
                                             <option value="3"><?=lang('Korean.assetRange4000')?></option>
                                             <option value="4"><?=lang('Korean.assetRange5000')?></option>
                                             <option value="5"><?=lang('Korean.assetRange5000Up')?></option>
-                                            <option value="6" selected>무관</option>
+                                            <option value="6" selected><?=lang('Korean.irrelevant')?></option>
                                         </select>
                                     </div>
                                 </div>
@@ -280,7 +280,7 @@
                                             <option value="3"><?=lang('Korean.assetRange4000')?></option>
                                             <option value="4"><?=lang('Korean.assetRange5000')?></option>
                                             <option value="5"><?=lang('Korean.assetRange5000Up')?></option>
-                                            <option value="6" selected>무관</option>
+                                            <option value="6" selected><?=lang('Korean.irrelevant')?></option>
                                         </select>
                                     </div>
                                 </div>
@@ -295,7 +295,7 @@
                                         <option value="0"><?=lang('Korean.jobVal1')?></option>
                                         <option value="1"><?=lang('Korean.jobVal2')?></option>
                                         <option value="2"><?=lang('Korean.jobVal3')?></option>
-                                        <option value="3" selected>무관</option>
+                                        <option value="3" selected><?=lang('Korean.irrelevant')?></option>
                                     </select>
                                 </div>
                             </div>
@@ -307,7 +307,7 @@
                                         <option value="0"><?=lang('Korean.jobVal1')?></option>
                                         <option value="1"><?=lang('Korean.jobVal2')?></option>
                                         <option value="2"><?=lang('Korean.jobVal3')?></option>
-                                        <option value="3" selected>무관</option>
+                                        <option value="3" selected><?=lang('Korean.irrelevant')?></option>
                                     </select>
                                 </div>
                             </div>
@@ -322,7 +322,7 @@
                                         <option value="3"><?=lang('Korean.1boy2girl')?></option>
                                         <option value="4"><?=lang('Korean.2boy2girl')?></option>
                                         <option value="5"><?=lang('Korean.extra')?></option>
-                                        <option value="6" selected>무관</option>
+                                        <option value="6" selected><?=lang('Korean.irrelevant')?></option>
                                     </select>
                                 </div>
                             </div>
@@ -334,11 +334,11 @@
                                             <option value=""><?=lang('Korean.selected')?></option>
                                             <option value="0"><?=lang('Korean.apartment')?></option>
                                             <option value="1"><?=lang('Korean.house')?></option>
-                                            <option value="2"><?=lang('Korean.residentialCommercialComplex')?></option>
+                                            <option value="2"><?=lang('Korean.residentComComplex')?></option>
                                             <option value="3"><?=lang('Korean.officetels')?></option>
                                             <option value="4"><?=lang('Korean.multiFamilyHousing')?></option>
                                             <option value="5"><?=lang('Korean.extra')?></option>
-                                            <option value="6" selected>무관</option>
+                                            <option value="6" selected><?=lang('Korean.irrelevant')?></option>
                                         </select>
                                         <select id="residence2" name="residence2" class="custom_select" value="">
                                             <option value=""><?=lang('Korean.selected')?></option>
@@ -346,7 +346,7 @@
                                             <option value="1"><?=lang('Korean.charter')?></option>
                                             <option value="2"><?=lang('Korean.monthly')?></option>
                                             <option value="3"><?=lang('Korean.extra')?></option>
-                                            <option value="4" selected>무관</option>
+                                            <option value="4" selected><?=lang('Korean.irrelevant')?></option>
                                         </select>
                                     </div>
                                 </div>

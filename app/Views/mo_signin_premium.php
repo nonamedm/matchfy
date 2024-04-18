@@ -78,7 +78,7 @@
                                 <label for="drinking" class="signin_label"><?=lang('Korean.drinkingType')?></label>
                                 <select id="drinking" name="drinking" class="custom_select" value="">
                                     <option value=""><?=lang('Korean.selected')?></option>
-                                    <option value="1">전혀 안함</option>
+                                    <option value="1"><?=lang('Korean.notAtAll')?></option>
                                     <option value="2"><?=lang('Korean.week12')?></option>
                                     <option value="3"><?=lang('Korean.week35')?></option>
                                     <option value="4"><?=lang('Korean.week5')?></option>
@@ -165,9 +165,9 @@
                                     <option value=""><?=lang('Korean.selected')?></option>
                                     <option value="0"><?=lang('Korean.highSchoolGradu')?></option>
                                     <option value="1"><?=lang('Korean.attendingUniversity')?></option>
-                                    <option value="2"><?=lang('Korean.universityGraduation')?></option>
+                                    <option value="2"><?=lang('Korean.universityGrad')?></option>
                                     <option value="3"><?=lang('Korean.attendingGraduate')?></option>
-                                    <option value="4"><?=lang('Korean.GraduateSchoolHigher')?></option>
+                                    <option value="4"><?=lang('Korean.GradSchoolHig')?></option>
                                 </select>
                             </div>
                         </div>
@@ -231,7 +231,7 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div input_btn">
                                 <label for="income_range" class="signin_label"><?=lang('Korean.incomeGroup')?></label>
-                                <p class="profile_photo_desc"><?=lang('Korean.premiumCon4')?> <a href="#"> [<?=lang('Korean.government24')?> →]</a></p>
+                                <p class="profile_photo_desc"><?=lang('Korean.premiumCon5')?> <a href="#"> [<?=lang('Korean.government24')?> →]</a></p>
 
                                 <div class="input_btn">
                                     <select id="income_range" name="income_range" class="custom_select" value="">
@@ -325,7 +325,7 @@
                                         <option value=""><?=lang('Korean.selected')?></option>
                                         <option value="0"><?=lang('Korean.apartment')?></option>
                                         <option value="1"><?=lang('Korean.house')?></option>
-                                        <option value="2"><?=lang('Korean.residentialCommercialComplex')?></option>
+                                        <option value="2"><?=lang('Korean.residentComComplex')?></option>
                                         <option value="3"><?=lang('Korean.officetels')?></option>
                                         <option value="4"><?=lang('Korean.multiFamilyHousing')?></option>
                                         <option value="5"><?=lang('Korean.extra')?></option>

@@ -24,10 +24,10 @@
                 <div class="tab_wrap">
                     <ul>
                         <li>
-                            AI 메시지
+                            <?=lang('Korean.AIMsg')?>
                         </li>
                         <li class="on">
-                            메시지함
+                            <?=lang('Korean.messageBox')?>
                         </li>
                     </ul>
                 </div>
@@ -39,7 +39,7 @@
                         <div class="receive_text">
                             <p class="receive_profile_name">이유영<span class="match_percent">99%</span></p>
                             <div class="receive_msg_area">
-                                <p>안녕하세요. 길동님 만나서 반가워요</p>
+                                <p>안녕하세요. 길동<?=lang('Korean.sir')?> 만나서 반가워요</p>
                             </div>
                         </div>
                         <div class="receive_time">
@@ -134,7 +134,7 @@
                         <div class="receive_text">
                             <p class="receive_profile_name">오유리<span class="match_percent btw7080">79%</span></p>
                             <div class="receive_msg_area">
-                                <p>AI 소개팅방에 초대되었습니다.</p>
+                                <p><?=lang('Korean.AIMsgCon2')?></p>
                             </div>
                         </div>
                         <div class="receive_time">
@@ -154,7 +154,7 @@
                             <p class="receive_profile_name">김솔이, 최지원, 이유라<span class="match_percent btw8090">89%</span>
                             </p>
                             <div class="receive_msg_area">
-                                <p>모임 단톡방에 초대되었습니다.</p>
+                                <p><?=lang('Korean.AIMsgCon3')?></p>
                             </div>
                         </div>
                         <div class="receive_time">

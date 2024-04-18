@@ -30,33 +30,33 @@
                     </div>
                     <div class="mypage_wallet_charge">
                         <div class="btn_group multy">
-                            <button class="btn type01" onclick="loc_pointCharge();">포인트 충전</button>
-                            <button class="btn type03" onclick="loc_pointExchange();">환전</button>
+                            <button class="btn type01" onclick="loc_pointCharge();"><?=lang('Korean.btnPointCharge')?></button>
+                            <button class="btn type03" onclick="loc_pointExchange();"><?=lang('Korean.exchange')?></button>
                         </div>
                     </div>
                     <div class="tab_wrap">
                         <ul>
                             <li>
-                                <a href="/mo/mypage/wallet">입금 내역</a>
+                                <a href="/mo/mypage/wallet"><?=lang('Korean.DepositDetails')?></a>
                             </li>
                             <li class="on">
-                                <a href="/mo/mypage/wallet2">사용 내역</a>
+                                <a href="/mo/mypage/wallet2"><?=lang('Korean.useDetails')?></a>
                             </li>
                         </ul>
                     </div>
                     <div class="mypage_wallet_list">
                         <div class="mypage_wallet_filter">
                             <select class="point_order small use">
-                                <option value="latest"> 최신순</option>
-                                <option value="oldest"> 오래된순</option>
-                                <option value="highest_amount"> 금액많은순</option>
-                                <option value="lowest_amount"> 금액적은순</option>
+                                <option value="latest"> <?=lang('Korean.latestOrder')?></option>
+                                <option value="oldest"> <?=lang('Korean.oldOrder')?></option>
+                                <option value="highest_amount"> <?=lang('Korean.highestOrder')?></option>
+                                <option value="lowest_amount"> <?=lang('Korean.smallOrder')?></option>
                             </select>
                             <div class="mypage_wallet_period">
                                 <div class="btn_group multy">
-                                <button class="1week point_date btn type01 on" onclick="getPointSearch($('.point_order').val(),'1week','use')">1주일</button>
-                                    <button class="1month point_date btn type01" onclick="getPointSearch($('.point_order').val(),'1month','use')">1개월</button>
-                                    <button class="3month point_date btn type01" onclick="getPointSearch($('.point_order').val(),'3month','use')">3개월</button>
+                                <button class="1week point_date btn type01 on" onclick="getPointSearch($('.point_order').val(),'1week','use')"><?=lang('Korean.1week')?>일</button>
+                                    <button class="1month point_date btn type01" onclick="getPointSearch($('.point_order').val(),'1month','use')"><?=lang('Korean.1month')?></button>
+                                    <button class="3month point_date btn type01" onclick="getPointSearch($('.point_order').val(),'3month','use')"><?=lang('Korean.3month')?></button>
                                 </div>
                             </div>
                         </div>

@@ -26,7 +26,7 @@
                 <div class="content_body" style="margin-top:235px">
                     <img src="/static/images/point_fail.png" />
                     <div class="success_text">
-                        <p>충전 실패!</p>
+                        <p><?=lang('Korean.chargeFailCon')?></p>
                         <em><?=$msg?></em>
                     </div>
                 </div>
@@ -35,8 +35,8 @@
             <footer class="footer">
 
                 <div class="btn_group">
-                    <button type="button" class="btn type01" onclick='loc_WalletLocation()'>포인트 충전 다시하기</button>
-                    <button type="button" class="btn type01">메인으로</button>
+                    <button type="button" class="btn type01" onclick='loc_WalletLocation()'><?=lang('Korean.rePointCharge')?></button>
+                    <button type="button" class="btn type01"><?=lang('Korean.rootBtn')?></button>
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy

@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <!-- <div class="report_text">
-                    <textarea placeholder="기타 의견을 입력해주세요."></textarea>
+                    <textarea placeholder="<?=lang('Korean.reportCon1')?>"></textarea>
                 </div> -->
                 <input id="edit_type" name="edit_type" type="hidden" value="">
                 <input id="feed_idx" name="feed_idx" type="hidden" value="">
