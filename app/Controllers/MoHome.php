@@ -308,10 +308,23 @@ class MoHome extends BaseController
                     $today_date === date('Y-m-d', strtotime($row['created_at'])) ?  $row['created_at'] = date('H:i', strtotime($row['created_at'])) : $row['created_at'] = date('m-d', strtotime($row['created_at']));
                 }
             }
-            $query = "SELECT * FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND member_ci != '" . $ci . "' AND delete_yn='n'";
-
+            $query = "SELECT member_ci AS where_ci, (SELECT name FROM members WHERE ci = where_ci) AS name,
+                             (SELECT file_path FROM member_files WHERE member_ci = where_ci) AS file_path,
+                             (SELECT file_name FROM member_files WHERE member_ci = where_ci) AS file_name,
+                             (CASE
+                                WHEN member_ci = '" . $ci . "' THEN 'me'
+                                ELSE 'you' 
+                            END) AS chk
+                            FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
+            $memberInfo = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+            $query = "SELECT COUNT(*) AS count FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
+            $countInfo = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
             $data['room_ci'] = $room_ci;
             $data['allMsg'] = $allMsg;
+            $data['member_info'] = $memberInfo;
+            $data['count_info'] = $countInfo;
             // echo print_r($allMsg);
             return view('mo_mymsg', $data);
         } else {

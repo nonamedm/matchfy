@@ -121,15 +121,22 @@
                     <div class="chat_menu_func" onclick="extRm()"><img src="/static/images/chat_quit.png">
                         <p>방나가기</p>
                     </div>
-                    <div class="chat_menu_func" onclick="rptMbr()"><img src="/static/images/chat_report.png">
-                        <p>신고/강퇴</p>
-                    </div>
+                    <?php if ($count_info[0]['count'] >= 2) {
+                    ?>
+                        <div class="chat_menu_func" onclick="rptMbr()"><img src="/static/images/chat_report.png">
+                            <p>신고/강퇴</p>
+                        </div>
+                    <?php
+                    } ?>
                     <!-- <div class="chat_menu_func"><img src="/static/images/chat_call.png">
                         <p>안심번호<br /> 통화하기</p>
                     </div> -->
                 </div>
             </div>
             <input id="room_ci" type="hidden" value="<?= $room_ci ?>" />
+            <?php if ($count_info[0]['count'] >= 2) {
+                include 'mo_mymsg_member_popup.php';
+            } ?>
             <footer class="footer">
             </footer>
         </div>
@@ -357,6 +364,21 @@
                     }
                 } else {}
             });
+        };
+
+        const rptMbr = (contents) => {
+            console.log(contents);
+            var title = '';
+            switch (contents) {
+                case '':
+                    title = '단톡방 멤버';
+                    break;
+                default:
+                    title = '단톡방 멤버';
+            }
+            $('#member_title').text(title);
+
+            $('.layerPopup.member').css('display', 'flex');
         };
     </script>
 
