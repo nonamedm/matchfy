@@ -112,21 +112,21 @@
                         <p>앨범</p>
                         <input id="mymsg_photo" name="mymsg_photo" type="file" value="" placeholder="" multiple accept="image/*">
                     </div>
-                    <div class="chat_menu_func"><img src="/static/images/chat_location.png">
+                    <div class="chat_menu_func" onclick="crtMtng()"><img src="/static/images/chat_location.png">
                         <p>약속</p>
                     </div>
-                    <div class="chat_menu_func"><img src="/static/images/chat_banking.png">
+                    <div class="chat_menu_func" onclick="sndPnt()"><img src="/static/images/chat_banking.png">
                         <p>예약금<br />송금</p>
                     </div>
-                    <div class="chat_menu_func"><img src="/static/images/chat_quit.png">
+                    <div class="chat_menu_func" onclick="extRm()"><img src="/static/images/chat_quit.png">
                         <p>방나가기</p>
                     </div>
-                    <div class="chat_menu_func"><img src="/static/images/chat_report.png">
+                    <div class="chat_menu_func" onclick="rptMbr()"><img src="/static/images/chat_report.png">
                         <p>신고/강퇴</p>
                     </div>
-                    <div class="chat_menu_func"><img src="/static/images/chat_call.png">
+                    <!-- <div class="chat_menu_func"><img src="/static/images/chat_call.png">
                         <p>안심번호<br /> 통화하기</p>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <input id="room_ci" type="hidden" value="<?= $room_ci ?>" />
@@ -251,7 +251,36 @@
             $("#msgbox").val("");
         }
 
-        function scrollToBottom() {
+        const extRm = () => {
+            if (confirm('채팅방에서 나가시겠습니까? \n대화내용은 저장되지 않습니다.')) {
+                $.ajax({
+                    url: '/ajax/extRm',
+                    type: 'POST',
+                    data: {
+                        "room_ci": $("#room_ci").val(),
+                    },
+                    async: false,
+                    success: function(data) {
+                        console.log(data);
+                        if (data.status === 'success') {
+                            // 성공
+                            moveToUrl('/');
+                        } else if (data.status === 'error') {
+                            console.log('실패', data);
+                        } else {
+                            alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        }
+                        return false;
+                    },
+                    error: function(data, status, err) {
+                        console.log(err);
+                        alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    },
+                });
+            }
+        }
+
+        const scrollToBottom = () => {
             $("#chat_wrap").scrollTop($("#chat_wrap")[0].scrollHeight);
         }
 

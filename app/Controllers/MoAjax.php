@@ -2163,7 +2163,7 @@ class MoAjax extends BaseController
             } else {
                 // 내가 이 채팅에서 나간 상태이면 참가 상태를 참여로 바꿔준다
                 $query = "UPDATE wh_chat_room_member
-                SET delete_yn='n', entered_at=CURRENT_TIMESTAMP, updated_at=CURRENT_TIMESTAMP
+                SET delete_yn='n', updated_at=CURRENT_TIMESTAMP
                 WHERE room_ci='" . $room_ci . "' AND member_ci='" . $member_ci . "'";
                 $updateChatRoom1 = $ChatRoomMemberModel
                     ->query($query);
@@ -2288,6 +2288,38 @@ class MoAjax extends BaseController
 
             // echo print_r($allMsg);
             return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $data]]);
+        } else {
+            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
+
+    public function extRm()
+    {
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $room_ci = $this->request->getPost('room_ci');
+        // 내가 이 방의 참가자가 맞는지 다시 확인
+        $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "'";
+        $memberYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($memberYn) {
+            // 내가 방 참가자가 맞으면
+            $query = "UPDATE wh_chat_room_member SET DELETE_YN='y' WHERE member_ci='" . $ci . "'";
+            $extRm = $ChatRoomMemberModel
+                ->query($query);
+            if ($extRm) {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $extRm]]);
+            } else {
+                return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+            }
+
+            // echo print_r($allMsg);
         } else {
             echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
             return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);

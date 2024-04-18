@@ -128,6 +128,7 @@ $routes->post('/ajax/myAlliance', 'MoAjax::myAlliance');
 $routes->post('/ajax/myAllianceDetail', 'MoAjax::myAllianceDetail');
 $routes->post('/ajax/sendMsg', 'MoAjax::sendMsg');
 $routes->post('/ajax/reloadMsg', 'MoAjax::reloadMsg');
+$routes->post('/ajax/extRm', 'MoAjax::extRm');
 
 /* 채팅 */
 $routes->post('/ajax/createChat', 'MoAjax::createChat');
