@@ -94,6 +94,9 @@ $routes->get('/mo/factorInfo', 'MoHome::factorInfo');
 $routes->get('/mo/partner/regular', 'MoHome::partnerRegular');
 $routes->get('/mo/partner/premium', 'MoHome::partnerPremium');
 
+//Aouth2.0
+$routes->get('/auth/kakao/login', 'OAuth2::login');
+$routes->get('/auth/kakao/callback', 'OAuth2::callback');
 
 // file upload
 $routes->post('/upload', 'Upload::upload');

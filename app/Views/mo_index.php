@@ -46,6 +46,9 @@
                     <button type="button" style="width: 301px;" class="btn type00" onclick="moveToUrl('/mo/pass')">휴대폰 번호로 회원가입</button>
                 </div>
                 <div class="btn_group">
+                    <button type="button" class="btn naver_login" onclick="location.href='/auth/kakao/login'">카카오로 계속하기</button>
+                </div>
+                <div class="btn_group">
                     <button type="button" class="btn naver_login">네이버로 계속하기</button>
                 </div>
             </div>
