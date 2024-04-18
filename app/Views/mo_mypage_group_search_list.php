@@ -22,7 +22,7 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="group_search">
-                    <input style="text" placeholder="<?=lang('Korean.placeholder')?>" value="강남" />
+                    <input style="text" placeholder="<?=lang('Korean.meetplaceholder')?>" value="강남" />
                     <img src="/static/images/ico_search_18x18.png" />
                 </div>
 

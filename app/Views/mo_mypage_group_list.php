@@ -24,7 +24,7 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="group_search">
-                    <input type="text" placeholder="<?=lang('Korean.placeholder')?>" />
+                    <input type="text" placeholder="<?=lang('Korean.meetplaceholder')?>" />
                     <img src="/static/images/ico_search_18x18.png" class="group_serch_img" />
                 </div>
                 <div class="group_category">
