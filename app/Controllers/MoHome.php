@@ -739,8 +739,12 @@ class MoHome extends BaseController
                         'create_at' => date('Y-m-d H:i:s'),
                     ];
                     $meeting_members = new MeetingMembersModel();
-                    $meeting_members->where($meetMemdata)->first();
-                    if ($meeting_members) {
+                    $in_member = $meeting_members->where('meeting_idx',$meeting_idx)
+                                    ->where('member_ci',$ci)
+                                    ->where('delete_yn','Y')
+                                    ->first();
+                    
+                    if ($in_member) {
                         // 기존 참석했던 방이면 업데이트
                         $query = "UPDATE wh_meeting_members";
                         $query .= " SET create_at = '" . date('Y-m-d H:i:s') . "'";
