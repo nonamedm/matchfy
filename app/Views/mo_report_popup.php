@@ -4,36 +4,84 @@
             <a onclick="closePopup()">X</a>
         </div>
         <div class="layerPopup_content medium">
-            <p class="txt">신고</p>
+            <p class="txt report_title">신고</p>
 
             <div class="">
                 <div class="report_title">
                     <h2>신고사유</h2>
                 </div>
                 <div class="report_category">
-                    <select>
+                    <select id="report_category">
                         <option value="">선택</option>
-                        <option>욕설</option>
-                        <option>도용</option>
-                        <option>허위계정</option>
-                        <option>잦은불참</option>
-                        <option>직접입력</option>
+                        <option value="1">욕설</option>
+                        <option value="2">도용</option>
+                        <option value="3">허위계정</option>
+                        <option value="4">잦은불참</option>
+                        <option value="0">직접입력</option>
                     </select>
                 </div>
             </div>
             <div class="report_text">
-                <textarea placeholder="기타 의견을 입력해주세요."></textarea>
+                <textarea id="report_text" placeholder="기타 의견을 입력해주세요."></textarea>
             </div>
             <div class="review_caution">
                 <!-- <img src="/static/images/caution_mark.png"/>
                 <p class="">
                 입력해주신 정보는 AI 학습을 위해 이용되며, 상대방에게 <br/>전달되지 않습니다.</p> -->
             </div>
+            <input type="hidden" id="report_target" value="" />
             <div class="layerPopup_bottom">
                 <div class="btn_group">
-                    <button class="btn type01">후기 보내기</button>
+                    <button class="btn type01" onclick="sndRpt();">후기 보내기</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+
+    });
+    const sndRpt = () => {
+        const rptctgr = $("#report_category").val();
+        const rpttxt = $("#report_txt").val();
+        if (rptctgr === "" || rptctgr === null) {
+            alert('카테고리를 선택해 주세요');
+            return false;
+        }
+        if (rpttxt === "" || rpttxt === null) {
+            alert('상세 내용을 입력해 주세요');
+            return false;
+        }
+        if (confirm('후기를 전송하시겠습니까?')) {
+            $.ajax({
+                url: '/ajax/sndRpt',
+                type: 'POST',
+                data: {
+                    "room_ci": $("#room_ci").val(),
+                    "num": num,
+                    "rptctgr": rptctgr,
+                    "rpttxt": rpttxt
+                },
+                async: false,
+                success: function(data) {
+                    console.log(data);
+                    if (data.status === 'success') {
+                        // 성공
+                        // moveToUrl('/');
+                        alert('후기가 전송되었습니다!')
+                    } else if (data.status === 'error') {
+                        console.log('실패', data);
+                    } else {
+                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    }
+                    return false;
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
+            });
+        }
+    }
+</script>

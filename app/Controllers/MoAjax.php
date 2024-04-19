@@ -2358,4 +2358,40 @@ class MoAjax extends BaseController
             return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
         }
     }
+
+    public function sndRpt()
+    {
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $room_ci = $this->request->getPost('room_ci');
+        $entry_num = $this->request->getPost('num');
+        $rptctgr = $this->request->getPost('rptctgr');
+        $rpttxt = $this->request->getPost('rpttxt');
+
+        // 내가 이 방의 참가자가 맞는지 다시 확인
+        $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "'";
+        $memberYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($memberYn) {
+            // 내가 방 참가자가 맞으면
+            $query = "테이블 생성 후 insert 해준다. validation은 추가한다";
+            $banUsr = $ChatRoomMemberModel
+                ->query($query);
+            if ($banUsr) {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $banUsr]]);
+            } else {
+                return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+            }
+
+            // echo print_r($allMsg);
+        } else {
+            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
 }

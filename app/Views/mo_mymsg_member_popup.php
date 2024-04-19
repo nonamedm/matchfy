@@ -27,45 +27,46 @@
                 }
                 ?>
             </div>
-            <script>
-                $(document).ready(function() {
-
-
-                });
-                const banUsr = (num) => {
-                    if (confirm('강퇴하시겠습니까?')) {
-                        $.ajax({
-                            url: '/ajax/banUsr',
-                            type: 'POST',
-                            data: {
-                                "room_ci": $("#room_ci").val(),
-                                "num": num
-                            },
-                            async: false,
-                            success: function(data) {
-                                console.log(data);
-                                if (data.status === 'success') {
-                                    // 성공
-                                    // moveToUrl('/');
-                                } else if (data.status === 'error') {
-                                    console.log('실패', data);
-                                } else {
-                                    alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
-                                }
-                                return false;
-                            },
-                            error: function(data, status, err) {
-                                console.log(err);
-                                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-                            },
-                        });
-                    }
-                }
-                const reptUsr = (num) => {
-                    $('.layerPopup').css('display', 'none');
-                    $('.layerPopup.report').css('display', 'flex');
-                }
-            </script>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+
+
+    });
+    const banUsr = (num) => {
+        if (confirm('강퇴하시겠습니까?')) {
+            $.ajax({
+                url: '/ajax/banUsr',
+                type: 'POST',
+                data: {
+                    "room_ci": $("#room_ci").val(),
+                    "num": num
+                },
+                async: false,
+                success: function(data) {
+                    console.log(data);
+                    if (data.status === 'success') {
+                        // 성공
+                        // moveToUrl('/');
+                    } else if (data.status === 'error') {
+                        console.log('실패', data);
+                    } else {
+                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    }
+                    return false;
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
+            });
+        }
+    }
+    const reptUsr = (num) => {
+        $('.layerPopup').css('display', 'none');
+        $('.layerPopup.report').css('display', 'flex');
+        $('#report_target').val(num);
+    }
+</script>

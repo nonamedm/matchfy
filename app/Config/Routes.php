@@ -130,6 +130,7 @@ $routes->post('/ajax/sendMsg', 'MoAjax::sendMsg');
 $routes->post('/ajax/reloadMsg', 'MoAjax::reloadMsg');
 $routes->post('/ajax/extRm', 'MoAjax::extRm');
 $routes->post('/ajax/banUsr', 'MoAjax::banUsr');
+$routes->post('/ajax/sndRpt', 'MoAjax::sndRpt');
 
 /* 채팅 */
 $routes->post('/ajax/createChat', 'MoAjax::createChat');
