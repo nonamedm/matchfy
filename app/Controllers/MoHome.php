@@ -361,6 +361,10 @@ class MoHome extends BaseController
                 $roomCount = $ChatRoomModel
                     ->query($query)->getResultArray();
                 $item['room_count'] = $roomCount[0]['room_count'];
+                $query = "SELECT room_type FROM wh_chat_room WHERE room_ci = '" . $item['room_ci'] . "'";
+                $roomType = $ChatRoomModel
+                    ->query($query)->getResultArray();
+                $item['room_type'] = $roomType[0]['room_type'];
 
                 $query = "SELECT msg_cont, created_at FROM wh_chat_room_msg WHERE room_ci = '" . $item['room_ci'] . "' ORDER BY created_at DESC LIMIT 1";
                 $lastMsg = $ChatRoomMsgModel
@@ -369,12 +373,13 @@ class MoHome extends BaseController
                     $today_date === date('Y-m-d', strtotime($lastMsg[0]['created_at'])) ?  $lastMsg[0]['created_at'] = date('H:i', strtotime($lastMsg[0]['created_at'])) : $lastMsg[0]['created_at'] = date('m-d', strtotime($lastMsg[0]['created_at']));
                     $item['last_msg'] = $lastMsg[0];
                 }
-                if ($roomCount[0]['room_count'] !== '2' && $roomCount[0]['room_count'] !== '1') {
+                if ($roomType[0]['room_type'] === '1') {
+
                     $mbrNames = "";
                     foreach ($allMbr as $mbr) {
                         $mbrNames .= $mbr['name'] . ", ";
                     }
-                    $item['member_name'] = $mbrNames;
+                    $item['member_name'] = rtrim(trim($mbrNames), ',');
                     // 단톡방인 경우
                 } else {
                     // 1:1 채팅인 경우
@@ -913,7 +918,64 @@ class MoHome extends BaseController
                     $meetPointModel->insert($masterdata);
 
                     if ($result) {
-                        return $this->response->setJSON(['success' => true, 'msg' => '포인트 결제 완료 되었습니다.']);
+                        $ChatRoomModel = new ChatRoomModel();
+                        $ChatRoomMemberModel = new ChatRoomMemberModel();
+
+                        $query = "SELECT * FROM wh_chat_room WHERE room_ci = (SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "') AND delete_yn='n'";
+                        $chatroom = $ChatRoomModel
+                            ->query($query)->getResultArray();
+
+                        if ($chatroom) {
+                            // 기존에 채팅이 존재할 경우
+                            $query = "SELECT * FROM wh_chat_room_member WHERE delete_yn = 'n' AND room_ci='" . $chatroom[0]['room_ci'] . "' AND member_ci='" . $ci . "'";
+                            $checkYn = $ChatRoomMemberModel
+                                ->query($query)->getResultArray();
+
+                            if ($checkYn) {
+                                // 내가 이 채팅에 참여중인 상태이면 바로 이동한다
+                                return $this->response->setJSON(['success' => true, 'msg' => '포인트 결제 완료 되었습니다.']);
+                            } else {
+                                $query = "SELECT * FROM wh_chat_room_member WHERE delete_yn = 'y' AND room_ci='" . $chatroom[0]['room_ci'] . "' AND member_ci='" . $ci . "'";
+                                $deleteYn = $ChatRoomMemberModel
+                                    ->query($query)->getResultArray();
+                                if ($deleteYn) {
+                                    // 내가 나간 상태이면
+                                    $query = "UPDATE wh_chat_room_member
+                                        SET delete_yn='n', updated_at=CURRENT_TIMESTAMP
+                                        WHERE room_ci='" . $chatroom[0]['room_ci'] . "' AND member_ci='" . $ci . "'";
+                                    $updateChatRoom1 = $ChatRoomMemberModel
+                                        ->query($query);
+                                } else {
+                                    // 신규입장
+                                    $query = "SELECT MAX(entry_num)+1 AS entry_num FROM wh_chat_room_member WHERE room_ci='" . $chatroom[0]['room_ci'] . "';";
+                                    $entryNum = $ChatRoomMemberModel
+                                        ->query($query)->getResultArray();
+                                    $entryVal = $entryNum[0]['entry_num'];
+                                    $query = "INSERT INTO wh_chat_room_member
+                                    (room_ci, member_ci, entry_num, member_type, entered_at, updated_at)
+                                    VALUES('" . $chatroom[0]['room_ci']  . "','" . $ci . "','" . $entryVal . "','0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                                    $enterChatRoom1 = $ChatRoomMemberModel
+                                        ->query($query);
+                                }
+
+                                // $query = "UPDATE wh_chat_room_member
+                                // SET delete_yn='n', entered_at=CURRENT_TIMESTAMP, updated_at=CURRENT_TIMESTAMP
+                                // WHERE room_ci='" . $room_ci . "' AND member_ci='" . $sendto[0]['ci'] . "'";
+                                // $updateChatRoom2 = $ChatRoomMemberModel
+                                // ->query($query);
+                                $query = "UPDATE wh_chat_room SET room_count = (CAST(room_count AS UNSIGNED) + 1)
+                                           WHERE room_ci='" . $chatroom[0]['room_ci'] . "'";
+                                $updateChatRoomCount = $ChatRoomModel
+                                    ->query($query);
+                                if ($updateChatRoomCount) {
+                                    return $this->response->setJSON(['success' => true, 'msg' => '포인트 결제 완료 되었습니다.', 'query' =>  $query]);
+                                } else {
+                                    return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
+                                }
+                            }
+                        } else {
+                            return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
+                        }
                     } else {
                         return $this->response->setJSON(['success' => false, 'msg' => '포인트 결제가 실패 하였습니다.']);
                     }

@@ -1154,13 +1154,13 @@ class MoAjax extends BaseController
                     'required' => '모임일자를 입력해주세요.',
                 ]
             ],
-            'meeting_end_date' => [
-                'label' => 'meeting_end_date',
-                'rules' => 'required',
-                'errors' => [
-                    'required' => '모임일자를 입력해주세요.',
-                ]
-            ],
+            // 'meeting_end_date' => [
+            //     'label' => 'meeting_end_date',
+            //     'rules' => 'required',
+            //     'errors' => [
+            //         'required' => '모임일자를 입력해주세요.',
+            //     ]
+            // ],
             'number_of_people' => [
                 'label' => 'number_of_people',
                 'rules' => 'required|numeric',
@@ -1253,6 +1253,8 @@ class MoAjax extends BaseController
             $session = session();
             $member_ci = $session->get('ci');
 
+            $encrypter = \Config\Services::encrypter();
+            $chat_room_ci = base64_encode($encrypter->encrypt($member_ci, ['key' => 'nonamedm', 'blockSize' => 32]));
             $data = [
                 'member_ci' => $member_ci,
                 'category' => $category,
@@ -1269,6 +1271,7 @@ class MoAjax extends BaseController
                 //'reservation_previous' => $reservation_previous,
                 'meeting_place' => $meeting_place,
                 'membership_fee' => $membership_fee,
+                'chat_room_ci' => $chat_room_ci
             ];
 
             // 데이터 저장
@@ -1285,7 +1288,23 @@ class MoAjax extends BaseController
             $meeting_members = new MeetingMembersModel();
             $meetingMembersIdx = $meeting_members->insert($meetMemdata);
 
-            if ($insertedMeetingIdx && $meetingMembersIdx) {
+
+            $ChatRoomModel = new ChatRoomModel();
+            $ChatRoomMemberModel = new ChatRoomMemberModel();
+            $MemberModel = new MemberModel();
+            $chatquery = "INSERT INTO wh_chat_room
+            (room_ci, room_type, room_count, delete_yn, created_at, updated_at)
+            VALUES('" . $chat_room_ci . "', '1', '1', 'n', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+            $createMultyChat = $ChatRoomModel->query($chatquery);
+            if ($createMultyChat) {
+                $chatquery = "INSERT INTO wh_chat_room_member
+                (room_ci, member_ci, entry_num, member_type, delete_yn, entered_at, created_at, updated_at)
+                VALUES('" . $chat_room_ci . "', '" . $member_ci . "', '1','1', 'n', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                $enterMultyChat = $ChatRoomMemberModel->query($chatquery);
+            }
+
+
+            if ($insertedMeetingIdx && $meetingMembersIdx && $createMultyChat) {
                 $inserted_id = $MeetingModel->getInsertID();
 
                 $upload = new Upload();
@@ -1542,6 +1561,7 @@ class MoAjax extends BaseController
             FROM wh_alliance_reservation a
             
             WHERE " . $whereConditions . "
+            AND reservation_date > now()
             ORDER BY a.idx ASC";
 
         $reservations = $AllianceReservationModel->query($query, $bindParams)->getResultArray();
@@ -2222,6 +2242,58 @@ class MoAjax extends BaseController
             } else {
                 return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 생성 실패']);
             }
+        }
+    }
+    public function createMultyChat()
+    {
+        // 다중 채팅 생성하기
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $member_ci = $session->get('ci');
+
+        $room_ci = $this->request->getPost('room_ci');
+
+        $query = "SELECT * FROM wh_chat_room WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
+        $chatroom = $ChatRoomModel
+            ->query($query)->getResultArray();
+
+        if ($chatroom) {
+            // 기존에 채팅이 존재할 경우
+            $query = "SELECT * FROM wh_chat_room_member WHERE delete_yn = 'n' AND room_ci='" . $room_ci . "' AND member_ci='" . $member_ci . "'";
+            $checkYn = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            if ($checkYn) {
+                // 내가 이 채팅에 참여중인 상태이면 바로 이동한다
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["room_ci" => $room_ci]]);
+            } else {
+                // 내가 이 채팅에서 나간 상태이면 참가 상태를 참여로 바꿔준다
+                $query = "UPDATE wh_chat_room_member
+                SET delete_yn='n', updated_at=CURRENT_TIMESTAMP
+                WHERE room_ci='" . $room_ci . "' AND member_ci='" . $member_ci . "'";
+                $updateChatRoom1 = $ChatRoomMemberModel
+                    ->query($query);
+                // $query = "UPDATE wh_chat_room_member
+                // SET delete_yn='n', entered_at=CURRENT_TIMESTAMP, updated_at=CURRENT_TIMESTAMP
+                // WHERE room_ci='" . $room_ci . "' AND member_ci='" . $sendto[0]['ci'] . "'";
+                // $updateChatRoom2 = $ChatRoomMemberModel
+                // ->query($query);
+                $query = "UPDATE wh_chat_room SET room_count = (CAST(room_count AS UNSIGNED) + 1)
+                           WHERE room_ci='" . $room_ci . "'";
+                $updateChatRoomCount = $ChatRoomModel
+                    ->query($query);
+                if ($updateChatRoomCount) {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["room_ci" => $room_ci]]);
+                } else {
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
+                }
+            }
+        } else {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
         }
     }
     public function sendMsg()

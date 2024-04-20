@@ -69,7 +69,13 @@
                                     } ?>
                                 </div>
                                 <div class="receive_text">
-                                    <p class="receive_profile_name"><?= $row['nickname'] ?><span class="match_percent"><?= number_format($row['match_rate'], 0) ?>%</span></p>
+                                    <p class="receive_profile_name"><?= $row['nickname'] ?><span class="match_percent">
+                                            <?php
+                                            if ($row['match_rate']) {
+                                                echo number_format($row['match_rate'], 0) . "%";
+                                            }
+                                            ?>
+                                        </span></p>
                                     <div style="display: flex;">
                                         <div class=" receive_msg_area">
                                             <p><?= $row['msg_cont'] ?></p>

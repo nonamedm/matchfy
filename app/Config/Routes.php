@@ -126,14 +126,15 @@ $routes->post('/ajax/allianceFilter', 'MoAjax::allianceFiltering');
 $routes->get('/ajax/alliance/reservation', 'MoAjax::allianceReservation');
 $routes->post('/ajax/myAlliance', 'MoAjax::myAlliance');
 $routes->post('/ajax/myAllianceDetail', 'MoAjax::myAllianceDetail');
+
+/* 채팅 */
+$routes->post('/ajax/createChat', 'MoAjax::createChat');
+$routes->post('/ajax/createMultyChat', 'MoAjax::createMultyChat');
 $routes->post('/ajax/sendMsg', 'MoAjax::sendMsg');
 $routes->post('/ajax/reloadMsg', 'MoAjax::reloadMsg');
 $routes->post('/ajax/extRm', 'MoAjax::extRm');
 $routes->post('/ajax/banUsr', 'MoAjax::banUsr');
 $routes->post('/ajax/sndRpt', 'MoAjax::sndRpt');
-
-/* 채팅 */
-$routes->post('/ajax/createChat', 'MoAjax::createChat');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

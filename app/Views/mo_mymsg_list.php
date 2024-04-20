@@ -37,25 +37,39 @@
                 <?php
                 foreach ($my_chat_room as $row) {
                 ?>
-                    <?php if ($row['room_count'] !== '2' && $row['room_count'] !== '1') {
+                    <?php if ($row['room_type'] === '1') {
                         // 단톡방
                     ?>
-                        <div class="chat_list_wrap" onclick="enterCtRm(<?= $row['room_ci'] ?>)">
+                        <div class="chat_list_wrap" onclick="enterCtRm('<?= $row['room_ci'] ?>')">
                             <div class="chat_room_title">
                                 <div class="receive_profile">
                                     <img src="/static/images/group_chat_profile.png" />
                                 </div>
                                 <div class="receive_text">
-                                    <p class="receive_profile_name">김솔이, 최지원, 이유라<span class="match_percent btw8090">89%</span>
+                                    <p class="receive_profile_name"><?= $row['member_name'] ?><span class="match_percent btw8090">89%</span>
                                     </p>
                                     <div class="receive_msg_area">
-                                        <p>모임 단톡방에 초대되었습니다.</p>
+                                        <?php if ($row['last_msg']) {
+                                        ?>
+                                            <p><?= $row['last_msg']['msg_cont'] ?></p>
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <p>대화에 초대되었습니다</p>
+                                        <?php
+                                        } ?>
                                     </div>
                                 </div>
                                 <div class="receive_time">
-                                    <p>
-                                        2023.12.30
-                                    </p>
+                                    <?php if ($row['last_msg']) {
+                                    ?>
+                                        <p><?= $row['last_msg']['created_at'] ?></p>
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <p></p>
+                                    <?php
+                                    } ?>
                                 </div>
                             </div>
                         </div>
@@ -133,6 +147,34 @@
                 type: 'POST',
                 data: {
                     "nickname": nickname
+                },
+                async: false,
+                success: function(data) {
+                    if (data.status === 'success') {
+                        // 성공
+                        console.log(data)
+                        moveToUrl('/mo/mymsg', {
+                            room_ci: data.data.room_ci
+                        });
+                    } else if (data.status === 'error') {
+                        console.log('메세지 전송 실패', data);
+                    } else {
+                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    }
+                    return false;
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
+            });
+        }
+        const enterCtRm = (ci) => {
+            $.ajax({
+                url: '/ajax/createMultyChat',
+                type: 'POST',
+                data: {
+                    "room_ci": ci
                 },
                 async: false,
                 success: function(data) {
