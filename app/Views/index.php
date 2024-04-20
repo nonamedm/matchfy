@@ -280,8 +280,9 @@
                                 $(".AImatch_list").append(html);
                             });
                         } else {
-                            $(".AImatch_list").css("text-align", "center");
-                            $(".AImatch_list").removeClass("login_main_list");
+                            alert('검색결과가 없습니다')
+                            // $(".AImatch_list").css("text-align", "center");
+                            // $(".AImatch_list").removeClass("login_main_list");
                         }
                     },
                     error: function(data, status, err) {

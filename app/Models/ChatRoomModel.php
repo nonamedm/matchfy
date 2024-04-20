@@ -18,7 +18,7 @@ class ChatRoomModel extends Model
         'room_ci',
         'room_notice',
         'room_type',
-        'extra1',
+        'room_count',
         'extra2',
         'extra3',
         'extra4',

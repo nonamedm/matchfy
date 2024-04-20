@@ -44,7 +44,8 @@
     });
     const sndRpt = () => {
         const rptctgr = $("#report_category").val();
-        const rpttxt = $("#report_txt").val();
+        const rpttxt = $("#report_text").val();
+        const num = $("#report_target").val();
         if (rptctgr === "" || rptctgr === null) {
             alert('카테고리를 선택해 주세요');
             return false;
@@ -69,7 +70,11 @@
                     if (data.status === 'success') {
                         // 성공
                         // moveToUrl('/');
-                        alert('후기가 전송되었습니다!')
+                        alert('후기가 전송되었습니다!');
+                        closePopup();
+                        $("#report_category").val("");
+                        $("#report_text").val("");
+                        $("#report_target").val("");
                     } else if (data.status === 'error') {
                         console.log('실패', data);
                     } else {

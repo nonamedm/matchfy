@@ -169,7 +169,7 @@ input[type='checkbox'] + label:hover {
     margin-top: 20px;
     font-weight: 700;
     font-size: 20px;
-    line-height: 18px;
+    line-height: 25px;
     width: 350px;
     text-overflow: ellipsis;
     overflow: hidden;

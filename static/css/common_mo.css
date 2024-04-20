@@ -505,6 +505,7 @@ td {
 
 .chat_list_wrap {
     margin: 10px 0 20px 0;
+    cursor: pointer;
 }
 .chat_list_wrap .chat_room_title {
     padding-top: 7px;
@@ -527,6 +528,7 @@ td {
 .chat_list_wrap .chat_room_title .receive_profile img {
     width: 50px;
     height: 50px;
+    border-radius: 50%;
 }
 .chat_list_wrap .chat_room_title .receive_text {
     min-width: 270px;

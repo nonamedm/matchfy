@@ -42,6 +42,7 @@ class MoAjax extends BaseController
             $query .= " AND mb.gender = '" . $filter . "'";
         }
         $query .= " AND mr.match_score > '0'";
+        $query .= " AND mf.board_type = 'main_photo'";
         $query .= " ORDER BY CONVERT(mr.match_rate, SIGNED) DESC";
 
         $MemberModel = new MemberModel();
@@ -61,7 +62,7 @@ class MoAjax extends BaseController
             }
             return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => $result]);
         } else {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed', 'query' => $query]);
         }
     }
 
@@ -291,6 +292,18 @@ class MoAjax extends BaseController
                         'org_name' => $org_name,
                         'file_name' => $file_name,
                         'file_path' => $file_path,
+                        'ext' => $ext,
+                        'board_type' => 'main_photo',
+                    ];
+                    $data = array_merge($data, $data2);
+                    $MemberFileModel->insert($data2);
+                } else {
+                    // 프로필 첨부 없을때는 기본이미지로 저장
+                    $data2 = [
+                        'member_ci' => $ci,
+                        'org_name' => 'profile_noimg.png',
+                        'file_name' => 'profile_noimg.png',
+                        'file_path' => 'static/images/',
                         'ext' => $ext,
                         'board_type' => 'main_photo',
                     ];
@@ -1669,17 +1682,18 @@ class MoAjax extends BaseController
         $myFactor = $MatchFactorModel->where(['member_ci' => $ci])->first();
 
         $query = "SELECT * FROM members";
-        if (!empty($myFactor['except1']) && $myFactor['except1'] !== '') //배제항목 있을 시 조건에서 배제하기
+        $query .= " WHERE 1=1";
+        if (!empty($myFactor['except1']) || $myFactor['except1'] !== '') //배제항목 있을 시 조건에서 배제하기
         {
-            $query .= " WHERE (" . $myFactor['except1'] . " != '" . $myFactor['except1_detail'] . "'  OR " . $myFactor['except1'] . " IS NULL)";
+            $query .= " AND (" . $myFactor['except1'] . " != '" . $myFactor['except1_detail'] . "'  OR " . $myFactor['except1'] . " IS NULL)";
         }
-        if (!empty($myFactor['except2']) && $myFactor['except2'] !== '') //배제항목 있을 시 조건에서 배제하기
+        if (!empty($myFactor['except2']) || $myFactor['except2'] !== '') //배제항목 있을 시 조건에서 배제하기
         {
-            $query .= " OR (" . $myFactor['except2'] . " != '" . $myFactor['except2_detail'] . "'  OR " . $myFactor['except2'] . " IS NULL)";
+            $query .= " AND (" . $myFactor['except2'] . " != '" . $myFactor['except2_detail'] . "'  OR " . $myFactor['except2'] . " IS NULL)";
         }
-        if (!empty($myPartner['partner_gender']))  // 성별 거르기
+        if (!empty($myPartner['partner_gender']) || $myPartner['partner_gender'] != '')  // 성별 거르기
         {
-            $query .= " OR (gender = '" . $myPartner['partner_gender'] . "')";
+            $query .= " AND (gender = '" . $myPartner['partner_gender'] . "')";
         }
         $datas = $MemberModel
             ->query($query)->getResultArray();
@@ -2172,7 +2186,11 @@ class MoAjax extends BaseController
                 // WHERE room_ci='" . $room_ci . "' AND member_ci='" . $sendto[0]['ci'] . "'";
                 // $updateChatRoom2 = $ChatRoomMemberModel
                 // ->query($query);
-                if ($updateChatRoom1) {
+                $query = "UPDATE wh_chat_room SET room_count = (CAST(room_count AS UNSIGNED) + 1)
+                           WHERE room_ci='" . $room_ci . "'";
+                $updateChatRoomCount = $ChatRoomModel
+                    ->query($query);
+                if ($updateChatRoomCount) {
                     return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["room_ci" => $room_ci]]);
                 } else {
                     return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
@@ -2180,7 +2198,7 @@ class MoAjax extends BaseController
             }
         } else {
             // 없는 경우 신규 채팅방 생성
-            $query = "INSERT INTO wh_chat_room (room_ci, room_type) VALUES('" . $room_ci . "','0');";
+            $query = "INSERT INTO wh_chat_room (room_ci, room_type, room_count) VALUES('" . $room_ci . "','0','2');";
             $createChat = $ChatRoomModel
                 ->query($query);
 
@@ -2313,7 +2331,11 @@ class MoAjax extends BaseController
             $query = "UPDATE wh_chat_room_member SET DELETE_YN='y' WHERE member_ci='" . $ci . "'";
             $extRm = $ChatRoomMemberModel
                 ->query($query);
-            if ($extRm) {
+            $query = "UPDATE wh_chat_room SET room_count = (CAST(room_count AS UNSIGNED) - 1)
+                        WHERE room_ci='" . $room_ci . "'";
+            $updateChatRoomCount = $ChatRoomModel
+                ->query($query);
+            if ($updateChatRoomCount) {
                 return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $extRm]]);
             } else {
                 return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
@@ -2346,7 +2368,11 @@ class MoAjax extends BaseController
             $query = "UPDATE wh_chat_room_member SET DELETE_YN='y' WHERE room_ci='" . $room_ci . "' AND entry_num='" . $entry_num . "'";
             $banUsr = $ChatRoomMemberModel
                 ->query($query);
-            if ($banUsr) {
+            $query = "UPDATE wh_chat_room SET room_count = (CAST(room_count AS UNSIGNED) - 1)
+                WHERE room_ci='" . $room_ci . "'";
+            $updateChatRoomCount = $ChatRoomModel
+                ->query($query);
+            if ($updateChatRoomCount) {
                 return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $banUsr]]);
             } else {
                 return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
@@ -2361,10 +2387,7 @@ class MoAjax extends BaseController
 
     public function sndRpt()
     {
-        $ChatRoomModel = new ChatRoomModel();
-        $ChatRoomMsgModel = new ChatRoomMsgModel();
         $ChatRoomMemberModel = new ChatRoomMemberModel();
-        $MemberModel = new MemberModel();
 
         $session = session();
         $ci = $session->get('ci');
@@ -2379,11 +2402,16 @@ class MoAjax extends BaseController
             ->query($query)->getResultArray();
         if ($memberYn) {
             // 내가 방 참가자가 맞으면
-            $query = "테이블 생성 후 insert 해준다. validation은 추가한다";
-            $banUsr = $ChatRoomMemberModel
+            $query = "INSERT INTO wh_report_member (member_ci, member_name, target_ci, target_name, report_text, report_category)
+            VALUES('" . $ci . "', (SELECT name FROM members WHERE CI='" . $ci . "'), 
+                    (SELECT member_ci FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND ENTRY_NUM='" . $entry_num . "'), 
+                    (SELECT name FROM members WHERE ci=(SELECT member_ci FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND ENTRY_NUM='" . $entry_num . "')),
+                    '" . $rpttxt . "', '" . $rptctgr . "');";
+
+            $rptUsr = $ChatRoomMemberModel
                 ->query($query);
-            if ($banUsr) {
-                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $banUsr]]);
+            if ($rptUsr) {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $rptUsr]]);
             } else {
                 return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
             }

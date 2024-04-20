@@ -335,7 +335,80 @@ class MoHome extends BaseController
     }
     public function mymsgList(): string
     {
-        return view('mo_mymsg_list');
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+        date_default_timezone_set('Asia/Seoul');
+        $current_time = time();
+        $today_date = date('Y-m-d', $current_time);
+
+        // 내가 참여중인 대화방 목록 표출
+        $query = "SELECT * FROM wh_chat_room_member WHERE member_ci='" . $ci . "' AND delete_yn='n'";
+        $myChatRoom = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($myChatRoom) {
+            // 내가 참여중인 방이 있으면
+            foreach ($myChatRoom as &$item) {
+                // 해당 방의 인원을 모두 조회
+                $query = "SELECT member_ci AS mbr_ci, (SELECT name FROM members WHERE CI = mbr_ci) AS name, (SELECT nickname FROM members WHERE CI = mbr_ci) AS nickname FROM wh_chat_room_member WHERE room_ci = '" . $item['room_ci'] . "';";
+                $allMbr = $ChatRoomMemberModel
+                    ->query($query)->getResultArray();
+                $query = "SELECT room_count FROM wh_chat_room WHERE room_ci = '" . $item['room_ci'] . "'";
+                $roomCount = $ChatRoomModel
+                    ->query($query)->getResultArray();
+                $item['room_count'] = $roomCount[0]['room_count'];
+
+                $query = "SELECT msg_cont, created_at FROM wh_chat_room_msg WHERE room_ci = '" . $item['room_ci'] . "' ORDER BY created_at DESC LIMIT 1";
+                $lastMsg = $ChatRoomMsgModel
+                    ->query($query)->getResultArray();
+                if ($lastMsg) {
+                    $today_date === date('Y-m-d', strtotime($lastMsg[0]['created_at'])) ?  $lastMsg[0]['created_at'] = date('H:i', strtotime($lastMsg[0]['created_at'])) : $lastMsg[0]['created_at'] = date('m-d', strtotime($lastMsg[0]['created_at']));
+                    $item['last_msg'] = $lastMsg[0];
+                }
+                if ($roomCount[0]['room_count'] !== '2' && $roomCount[0]['room_count'] !== '1') {
+                    $mbrNames = "";
+                    foreach ($allMbr as $mbr) {
+                        $mbrNames .= $mbr['name'] . ", ";
+                    }
+                    $item['member_name'] = $mbrNames;
+                    // 단톡방인 경우
+                } else {
+                    // 1:1 채팅인 경우
+                    foreach ($allMbr as $mbr) {
+                        if ($ci !== $mbr['mbr_ci']) {
+                            // 상대방 정보 조회
+                            $query = "SELECT file_path, file_name FROM member_files WHERE member_ci = '" . $mbr['mbr_ci'] . "' AND board_type='main_photo'";
+                            $memberFile = $ChatRoomMemberModel
+                                ->query($query)->getResultArray();
+                            if ($memberFile) {
+                                $item['member_file'] = $memberFile[0];
+                            }
+                            $query = "SELECT CAST(match_rate AS DECIMAL(10,0)) as match_rate
+                            FROM wh_match_rate
+                            WHERE member_ci='" . $ci . "' 
+                            AND your_nickname=(SELECT nickname FROM members WHERE ci='" . $mbr['mbr_ci'] . "')";
+                            $matchRate = $ChatRoomMemberModel
+                                ->query($query)->getResultArray();
+                            if ($matchRate) {
+                                $item['match_rate'] = $matchRate[0];
+                            }
+                            $item['member_name'] = $mbr['name'];
+                            $item['member_nickname'] = $mbr['nickname'];
+                        }
+                    }
+                }
+            }
+            $data['my_chat_room'] = $myChatRoom;
+            // echo print_r($allMsg);
+            return view('mo_mymsg_list', $data);
+        } else {
+            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return view('index');
+        }
     }
     public function mymsgMenu(): string
     {
