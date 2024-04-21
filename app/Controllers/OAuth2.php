@@ -8,24 +8,48 @@ use CodeIgniter\HTTP\RedirectResponse;
 
 class OAuth2 extends BaseController
 {
-    protected $provider;
+    protected $kakaoProvider;
+    protected $naverProvider;
 
     public function __construct()
     {
-        $this->provider = new GenericProvider([
-            'clientId'                => 'dfeedb645765a4f5e27cfb8dda43a2c8',    // 카카오에서 제공한 클라이언트 ID
-            'clientSecret'            => '1LPjzMoxVrJjMqQ8AyW4UcqccZidHm5f', // 클라이언트 시크릿, 필요 없으면 생략 가능
-            'redirectUri'             => 'http://localhost:8081/auth/kakao/callback',
+        $kakaoClientId = $_SERVER['KAKAO_CLIENT_ID'];
+        $kakaoClientSecret = $_SERVER['KAKAO_CLIENT_SECRET'];
+        $naverClientId = $_SERVER['NAVER_CLIENT_ID'];
+        $naverClientSecret = $_SERVER['NAVER_CLIENT_SECRET'];
+
+        $this->kakaoProvider = new GenericProvider([
+            'clientId'                => $clientId,
+            'clientSecret'            => $clientSecret,
+            'redirectUri'             => 'http://localhost:8080/auth/kakao/callback',
             'urlAuthorize'            => 'https://kauth.kakao.com/oauth/authorize',
             'urlAccessToken'          => 'https://kauth.kakao.com/oauth/token',
             'urlResourceOwnerDetails' => null
         ]);
+
+        $this->naverProvider = new GenericProvider([
+            'clientId'                => $naverClientId,
+            'clientSecret'            => $naverClientSecret,
+            'redirectUri'             => 'http://localhost:8080/auth/naver/callback',
+            'urlAuthorize'            => 'https://nid.naver.com/oauth2.0/authorize',
+            'urlAccessToken'          => 'https://nid.naver.com/oauth2.0/token',
+            'urlResourceOwnerDetails' => null
+        ]);
     }
 
-    public function login()
+    public function loginKakao()
     {
-        $authorizationUrl = $this->provider->getAuthorizationUrl();
-        session()->set('oauth2state', $this->provider->getState());
+        $authorizationUrl = $this->kakaoProvider->getAuthorizationUrl();
+        session()->set('oauth2state', $this->kakaoProvider->getState());
+        session()->set('provider', 'kakao');
+        return redirect()->to($authorizationUrl);
+    }
+
+    public function loginNaver()
+    {
+        $authorizationUrl = $this->naverProvider->getAuthorizationUrl();
+        session()->set('oauth2state', $this->naverProvider->getState());
+        session()->set('provider', 'naver');
         return redirect()->to($authorizationUrl);
     }
 
@@ -33,51 +57,85 @@ class OAuth2 extends BaseController
     {
         $state = $this->request->getVar('state');
         $code = $this->request->getVar('code');
+        $providerName = session()->get('provider');
+        print_r("Provider from request: " . $providerName . "\n");
 
-        if (empty($state) || ($state !== session()->get('oauth2state'))) {
+        if (empty($state) || ($state !== session()->get('oauth2state'))) { 
             session()->remove('oauth2state');
+            session()->remove('provider');
             return redirect()->to('/error')->with('message', 'Invalid state');
         }
 
         try {
-            $accessToken = $this->provider->getAccessToken('authorization_code', [
+            $provider = $providerName === 'naver' ? $this->naverProvider : $this->kakaoProvider;
+            $accessToken = $provider->getAccessToken('authorization_code', [
                 'code' => $code
             ]);
-            $userDetails = $this->getUserDetails($accessToken);
+            print_r("AccessToken : " . json_encode($accessToken) . "\n");  // 토큰 정보 출력
+
+            $userDetails = $this->getUserDetails($accessToken, $provider);
+            print_r("userDetails : " . $userDetails . "\n");
 
             $memberModel = new MemberModel();
-            $user = $memberModel->findByKakaoId($userDetails['id']);
-            
+            $user = $memberModel->findByOauthId($userDetails['id'], $providerName);
+
             if ($user) {
-                //session()->set('user', $user);
-                return redirect()->to('/mo');
+                $session = session();
+                $session->set([
+                    'ci' => $user['ci'],
+                    'name' => $user['name'],
+                    'isLoggedIn' => true //로그인 상태
+                ]);
+                $session->setTempdata('ci', $user['ci'], 2592000);
+                return redirect()->to('/');
             } else {
-                print_r($userDetails);
-                print_r($userDetails['id']);
-                print_r($userDetails['properties']['nickname']);
-                return redirect()->to("/mo/pass")->with('data', [
-                     'nickname' => $userDetails['properties']['nickname'], 
-                     'sns_type' => 'kakao'
-                 ]);
+                if ($providerName === 'naver') {
+                    $postData = [
+                        'nickname' => $userDetails['nickname'],
+                        'sns_type' => $providerName,
+                        'oauth_id' => $userDetails['id'],
+                        'email' => $userDetails['email']
+                        //profile_image
+                    ];
+                } elseif ($providerName === 'kakao') {
+                    $postData = [
+                        'nickname' => $userDetails['properties']['nickname'], 
+                        'sns_type' => $providerName,
+                        'oauth_id' => $userDetails['id']
+                        //profile_image_url
+                    ];
+                }
+                return view('mo_pass', $postData);
             }
-            //moveToUrl('/mo/mypage');
         } catch (\Exception $e) {
-            //return redirect()->to('/error')->with('message', 'Error: ' . $e->getMessage());
+            return redirect()->to('/error')->with('message', 'Error: ' . $e->getMessage());
         }
     }
 
-    public function getUserDetails($accessToken)
+    public function getUserDetails($accessToken, $provider)
     {
-        $request = $this->provider->getAuthenticatedRequest(
+        $url = $provider === $this->naverProvider ? 'https://openapi.naver.com/v1/nid/me' : 'https://kapi.kakao.com/v2/user/me';
+        $request = $provider->getAuthenticatedRequest(
             'GET',
-            'https://kapi.kakao.com/v2/user/me',  // 카카오 사용자 정보 API
+            $url,
             $accessToken
         );
-        $response = $this->provider->getParsedResponse($request);
-        if (!array_key_exists('id', $response)) {
-            log_message('error', 'Failed to retrieve user details.');
-            throw new \RuntimeException('Failed to retrieve user details.');
+        $response = $provider->getParsedResponse($request);
+
+        if ($provider === $this->naverProvider) {
+            if (!isset($response['response']) || !array_key_exists('id', $response['response'])) {
+                log_message('error', 'Failed to retrieve Naver user details: ' . json_encode($response));
+                throw new \RuntimeException('Failed to retrieve Naver user details.');
+            }
+            return $response['response'];
         }
-        return $response;
+
+        if ($provider === $this->kakaoProvider) {
+            if (!array_key_exists('id', $response)) {
+                log_message('error', 'Failed to retrieve Kakao user details: ' . json_encode($response));
+                throw new \RuntimeException('Failed to retrieve Kakao user details.');
+            }
+            return $response;
+        }
     }
 }

@@ -95,8 +95,10 @@ $routes->get('/mo/partner/regular', 'MoHome::partnerRegular');
 $routes->get('/mo/partner/premium', 'MoHome::partnerPremium');
 
 //Aouth2.0
-$routes->get('/auth/kakao/login', 'OAuth2::login');
+$routes->get('/auth/kakao/login', 'OAuth2::loginKakao');
 $routes->get('/auth/kakao/callback', 'OAuth2::callback');
+$routes->get('/auth/naver/login', 'OAuth2::loginNaver');
+$routes->get('/auth/naver/callback', 'OAuth2::callback');
 
 // file upload
 $routes->post('/upload', 'Upload::upload');

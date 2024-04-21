@@ -228,16 +228,19 @@ class MoAjax extends BaseController
             ]);
         } else {
             $MemberModel = new MemberModel();
+            $random_word = $this->request->getPost('nickname');
 
-            $is_duplicate = true;
-            $random_word = '';
-            // 닉네임 중복확인
-            while ($is_duplicate) {
-                // 닉네임 랜덤 생성
-                $word_file_path = APPPATH . 'Data/RandomWord.php';
-                require($word_file_path);
-                $random_word = $randomadj[array_rand($randomadj)] . $randomword[array_rand($randomword)] . '@' . mt_rand(100000, 999999);
-                $is_duplicate = $MemberModel->where(['nickname' => $random_word])->first();
+            if (empty($random_word)) {
+                $is_duplicate = true;
+                $random_word = '';
+                // 닉네임 중복확인
+                while ($is_duplicate) {
+                    // 닉네임 랜덤 생성
+                    $word_file_path = APPPATH . 'Data/RandomWord.php';
+                    require($word_file_path);
+                    $random_word = $randomadj[array_rand($randomadj)] . $randomword[array_rand($randomword)] . '@' . mt_rand(100000, 999999);
+                    $is_duplicate = $MemberModel->where(['nickname' => $random_word])->first();
+                }
             }
 
             $mobile_no = $this->request->getPost('mobile_no');
@@ -253,6 +256,8 @@ class MoAjax extends BaseController
             $gender = $this->request->getPost('gender');
             $city = $this->request->getPost('city');
             $town = $this->request->getPost('town');
+            $snsType = $this->request->getPost('sns_type');
+            $oauthId = $this->request->getPost('oauth_id');
             // $town = $encrypter->decrypt(base64_decode($ci), ['key' => 'nonamedm', 'blockSize' => 32]);
 
 
@@ -268,6 +273,8 @@ class MoAjax extends BaseController
                 'city' => $city,
                 'town' => $town,
                 'nickname' => $random_word,
+                'sns_type' => $snsType,
+                'oauth_id' => $oauthId
             ];
 
             // 데이터 저장

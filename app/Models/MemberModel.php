@@ -99,10 +99,11 @@ class MemberModel extends Model
     }
 
     
-    public function findByKakaoId($oauthId)
+    public function findByOauthId($oauthId, $providerName)
     {
-        // 카카오 ID를 사용하여 데이터베이스에서 사용자 검색
-        $existingUser = $this->where('oauth_id', $oauthId)->first();
+        $existingUser = $this->where('sns_type', $providerName)
+            ->where('oauth_id', $oauthId)
+            ->first();
 
         return $existingUser;
     }

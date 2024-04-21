@@ -76,6 +76,9 @@
                     <input type="hidden" name="name" value="<?= $name ?>" />
                     <input type="hidden" name="birthday" value="<?= $birthday ?>" />
                     <input type="hidden" name="gender" value="<?= $gender ?>" />
+                    <input type="hidden" name="nickname" value="<?= $nickname ?>" />
+                    <input type="hidden" name="sns_type" value="<?= $sns_type ?>" />
+                    <input type="hidden" name="oauth_id" value="<?= $oauth_id ?>" />
                 </form>
 
                 <div style="height: 50px;"></div>
