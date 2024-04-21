@@ -340,8 +340,6 @@ class MoHome extends BaseController
             ->where('ci', $ci)
             ->first();
 
-        print_r($uniqueCode);
-
         return view('mo_invite', $uniqueCode);
     }
     public function invitePopup(): string

@@ -1,2 +1,4 @@
 /writable/session/
 /writable/logs/
+/vendor/
+.env

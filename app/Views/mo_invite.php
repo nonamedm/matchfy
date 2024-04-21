@@ -24,7 +24,7 @@
             <div class="content_wrap">
                 <div class="invite_wrap">
                     <div class="invite_img">
-                        <img src="/static/images/invite.jpg" style="width:335px" />
+                        <img src="/static/images/invite.png" style="width:335px" />
                     </div>
                     <div class="invite_code">
                         <a id="copyButton" data-code="<?=$unique_code?>">
