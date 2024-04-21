@@ -319,13 +319,17 @@ class MoHome extends BaseController
                             FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
             $memberInfo = $ChatRoomMemberModel
                 ->query($query)->getResultArray();
-            $query = "SELECT COUNT(*) AS count FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
-            $countInfo = $ChatRoomMemberModel
+            $query = "SELECT room_type FROM wh_chat_room WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
+            $roomType = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+            $query = "SELECT member_type FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND member_ci='" . $ci . "';";
+            $memberType = $ChatRoomMemberModel
                 ->query($query)->getResultArray();
             $data['room_ci'] = $room_ci;
             $data['allMsg'] = $allMsg;
             $data['member_info'] = $memberInfo;
-            $data['count_info'] = $countInfo;
+            $data['room_type'] = $roomType;
+            $data['member_type'] = $memberType;
             // echo print_r($allMsg);
             return view('mo_mymsg', $data);
         } else {
@@ -354,10 +358,13 @@ class MoHome extends BaseController
             // 내가 참여중인 방이 있으면
             foreach ($myChatRoom as &$item) {
                 // 해당 방의 인원을 모두 조회
-                $query = "SELECT member_ci AS mbr_ci, (SELECT name FROM members WHERE CI = mbr_ci) AS name, (SELECT nickname FROM members WHERE CI = mbr_ci) AS nickname FROM wh_chat_room_member WHERE room_ci = '" . $item['room_ci'] . "';";
+                $query = "SELECT member_ci AS mbr_ci, 
+                                (SELECT name FROM members WHERE CI = mbr_ci) AS name, 
+                                (SELECT nickname FROM members WHERE CI = mbr_ci) AS nickname 
+                            FROM wh_chat_room_member WHERE room_ci = '" . $item['room_ci'] . "' AND delete_yn='n';";
                 $allMbr = $ChatRoomMemberModel
                     ->query($query)->getResultArray();
-                $query = "SELECT room_count FROM wh_chat_room WHERE room_ci = '" . $item['room_ci'] . "'";
+                $query = "SELECT room_count FROM wh_chat_room WHERE room_ci = '" . $item['room_ci'] . "' AND delete_yn='n'";
                 $roomCount = $ChatRoomModel
                     ->query($query)->getResultArray();
                 $item['room_count'] = $roomCount[0]['room_count'];

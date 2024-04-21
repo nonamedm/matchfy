@@ -17,7 +17,11 @@
                         <div class="chat_member_report">
                             <?php if ($row['chk'] !== 'me') {
                             ?>
-                                <button class="type02" onclick="banUsr(<?= $row['entry_num'] ?>)">강퇴</button>
+                                <?php if ($member_type[0]['member_type']  === '1' || $member_type[0]['member_type'] === '9') {
+                                ?>
+                                    <button class="type02" onclick="banUsr(<?= $row['entry_num'] ?>)">강퇴</button>
+                                <?php
+                                } ?>
                                 <button class="type01" onclick="reptUsr(<?= $row['entry_num'] ?>)">신고</button>
                             <?php
                             } ?>

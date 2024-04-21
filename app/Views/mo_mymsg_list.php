@@ -51,7 +51,7 @@
                                     <div class="receive_msg_area">
                                         <?php if ($row['last_msg']) {
                                         ?>
-                                            <p><?= $row['last_msg']['msg_cont'] ?></p>
+                                            <p style="width: 220px;"><?= $row['last_msg']['msg_cont'] ?></p>
                                         <?php
                                         } else {
                                         ?>
@@ -63,11 +63,11 @@
                                 <div class="receive_time">
                                     <?php if ($row['last_msg']) {
                                     ?>
-                                        <p><?= $row['last_msg']['created_at'] ?></p>
+                                        <p style="width: 220px;"><?= $row['last_msg']['created_at'] ?></p>
                                     <?php
                                     } else {
                                     ?>
-                                        <p></p>
+                                        <p style="width: 220px;"></p>
                                     <?php
                                     } ?>
                                 </div>
@@ -91,11 +91,11 @@
                                     <div class="receive_msg_area">
                                         <?php if ($row['last_msg']) {
                                         ?>
-                                            <p><?= $row['last_msg']['msg_cont'] ?></p>
+                                            <p style="width: 220px;"><?= $row['last_msg']['msg_cont'] ?></p>
                                         <?php
                                         } else {
                                         ?>
-                                            <p>대화에 초대되었습니다</p>
+                                            <p style="width: 220px;">대화에 초대되었습니다</p>
                                         <?php
                                         } ?>
                                     </div>
@@ -103,7 +103,7 @@
                                 <div class="receive_time">
                                     <?php if ($row['last_msg']) {
                                     ?>
-                                        <p><?= $row['last_msg']['created_at'] ?></p>
+                                        <p style="width: 220px; max-height: 15px;"><?= $row['last_msg']['created_at'] ?></p>
                                     <?php
                                     } else {
                                     ?>

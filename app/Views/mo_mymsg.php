@@ -130,7 +130,7 @@
                     <div class="chat_menu_func" onclick="extRm()"><img src="/static/images/chat_quit.png">
                         <p>방나가기</p>
                     </div>
-                    <?php if ($count_info[0]['count'] >= 2) {
+                    <?php if ($room_type[0]['room_type'] === '1') {
                     ?>
                         <div class="chat_menu_func" onclick="rptMbr()"><img src="/static/images/chat_report.png">
                             <p>신고/강퇴</p>
@@ -143,7 +143,7 @@
                 </div>
             </div>
             <input id="room_ci" type="hidden" value="<?= $room_ci ?>" />
-            <?php if ($count_info[0]['count'] >= 2) {
+            <?php if ($room_type[0]['room_type'] === '1') {
                 include 'mo_mymsg_member_popup.php';
                 include 'mo_report_popup.php';
             ?>
@@ -162,9 +162,32 @@
 
                         $('.layerPopup.member').css('display', 'flex');
                     };
+                    const crtMtng = (contents) => {
+                        alert('1:1 채팅에서만 사용 가능합니다');
+                    };
                 </script>
-            <?php
-            } ?>
+            <?php } ?>
+
+            <?php if ($room_type[0]['room_type'] === '0') {
+                include 'mo_schedule_popup.php';
+            ?>
+                <script>
+                    const crtMtng = (contents) => {
+                        console.log(contents);
+                        var title = '';
+                        switch (contents) {
+                            case '':
+                                title = '단톡방 멤버';
+                                break;
+                            default:
+                                title = '단톡방 멤버';
+                        }
+                        $('#member_title').text(title);
+
+                        $('.layerPopup.mtng').css('display', 'flex');
+                    };
+                </script>
+            <?php } ?>
             <footer class="footer">
             </footer>
         </div>
@@ -210,7 +233,6 @@
                     if (data.status === 'success') {
                         // 성공
                         $("#chat_wrap").html("");
-                        var member_ci = "<?= $member_ci ?>";
                         var html = "";
                         data.data.reulst_value.allMsg.forEach(item => {
                             if (item.chk === 'me') {

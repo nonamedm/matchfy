@@ -8,6 +8,7 @@ use App\Models\MemberFeedModel;
 use App\Models\MemberFeedFileModel;
 use App\Models\UniversityModel;
 use App\Models\MeetingModel;
+use App\Models\MeetingPersonModel;
 use App\Models\MeetingFileModel;
 use App\Models\MatchPartnerModel;
 use App\Models\MatchFactorModel;
@@ -1238,7 +1239,7 @@ class MoAjax extends BaseController
             $recruitment_start_date = $this->request->getPost('recruitment_start_date');
             $recruitment_end_date = $this->request->getPost('recruitment_end_date');
             $meeting_start_date = $this->request->getPost('meeting_start_date');
-            $meeting_end_date = $this->request->getPost('meeting_end_date');
+            $meeting_end_date = $this->request->getPost('meeting_start_date'); // 모임일자 시작/끝 동일하게 변경
             $number_of_people = $this->request->getPost('number_of_people');
             $group_min_age = $this->request->getPost('group_min_age');
             $group_max_age = $this->request->getPost('group_max_age');
@@ -2486,6 +2487,122 @@ class MoAjax extends BaseController
                 return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $rptUsr]]);
             } else {
                 return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+            }
+
+            // echo print_r($allMsg);
+        } else {
+            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
+    public function submitScdl()
+    {
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $MeetingPersonModel = new MeetingPersonModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $room_ci = $this->request->getPost('room_ci');
+        $scdl_date = $this->request->getPost('scdl_date');
+        $scdl_type = $this->request->getPost('scdl_type');
+        $scdl_fee = "5000";
+        $scdl_type === '1' ?  $scdl_fee = '5000' :  $scdl_fee = '10000';
+
+        // 내가 이 방의 참가자가 맞는지 다시 확인
+        $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "' AND delete_yn='n'";
+        $memberYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($memberYn) {
+            // 내가 방 참가자가 맞으면
+            $query = "SELECT * FROM wh_meeting_person WHERE chat_room_ci='" . $room_ci . "' AND delete_yn='n'";
+            $scheduleYn = $MeetingPersonModel
+                ->query($query)->getResultArray();
+            if ($scheduleYn) {
+                // 기존에 약속이 있다면
+
+                // 기존 약속은 delete_yn = y 업데이트 후
+                $query = "UPDATE wh_meeting_person
+                SET delete_yn='y'
+                WHERE chat_room_ci='" . $room_ci . "' AND delete_yn='n'";
+                $makeSchedule = $MeetingPersonModel
+                    ->query($query);
+
+                // 새로운 약속 정보 INSERT
+                $query = "INSERT INTO wh_meeting_person
+                (member_ci, scdl_type, scdl_date, number_of_people, membership_fee, chat_room_ci)
+                VALUES('" . $ci . "', '" . $scdl_type . "', STR_TO_DATE('" . $scdl_date . "', '%Y-%m-%d %H:%i'), 2, '" . $scdl_fee . "', '" . $room_ci . "')";
+                $makeSchedule = $MeetingPersonModel
+                    ->query($query);
+            } else {
+                // 신규면 INSERT
+                $query = "INSERT INTO wh_meeting_person
+                (member_ci, scdl_type, scdl_date, number_of_people, membership_fee, chat_room_ci)
+                VALUES('" . $ci . "', '" . $scdl_type . "', STR_TO_DATE('" . $scdl_date . "', '%Y-%m-%d %H:%i'), 2, '" . $scdl_fee . "', '" . $room_ci . "')";
+                $makeSchedule = $MeetingPersonModel
+                    ->query($query);
+            }
+            $msg_cont = '모임 생성 <br/>';
+            $msg_cont .= '날짜 : ' . $scdl_date . '<br/>';
+            $msg_cont .= '회비 : ' . number_format($scdl_fee) . ' 원<br/>';
+            $msg_cont .= '<br/>';
+            $msg_cont .= '참석하시려면 확인 버튼을 눌러주세요<br/><br/>';
+            $msg_cont .= '<button class="scdl_confirm" onclick="partScdl()">확인</button>';
+            $msgQuery = "INSERT INTO wh_chat_room_msg
+            (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
+            VALUES('" . $room_ci . "','" . $ci . "','9','0','" . $msg_cont . "','9','9');";
+
+            $ChatRoomMsgModel->query($msgQuery);
+
+            if ($makeSchedule) {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $makeSchedule]]);
+            } else {
+                return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+            }
+
+            // echo print_r($allMsg);
+        } else {
+            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
+    public function partScdl()
+    {
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $MeetingPersonModel = new MeetingPersonModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $room_ci = $this->request->getPost('room_ci');
+
+        // 내가 이 방의 참가자가 맞는지 다시 확인
+        $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "' AND delete_yn='n'";
+        $memberYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($memberYn) {
+            // 내가 방 참가자가 맞으면 모임에 참석중인지 확인
+            $query = "SELECT * FROM wh_meeting_person WHERE chat_room_ci='" . $room_ci . "' AND member_ci='" . $ci . "' AND delete_yn='n'";
+            $scheduleYn = $MeetingPersonModel
+                ->query($query)->getResultArray();
+            if ($scheduleYn) {
+                // 이미 참석중이면
+                return $this->response->setJSON(['status' => 'success', 'message' => '이미 참석중입니다', 'result' => '1']);
+            } else {
+                // 신규면 INSERT
+                $query = "INSERT INTO wh_meeting_person
+                (member_ci, chat_room_ci)
+                VALUES('" . $ci . "', '" . $room_ci . "')";
+                $makeSchedule = $MeetingPersonModel
+                    ->query($query);
+
+                $msg_cont = '모임 참가에 동의하였습니다 <br/>';
+                $msgQuery = "INSERT INTO wh_chat_room_msg
+                    (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
+                    VALUES('" . $room_ci . "','" . $ci . "','9','0','" . $msg_cont . "','9','9');";
+
+                $ChatRoomMsgModel->query($msgQuery);
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '0', 'data' => ["reulst_value" => $makeSchedule]]);
             }
 
             // echo print_r($allMsg);

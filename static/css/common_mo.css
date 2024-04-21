@@ -563,6 +563,18 @@ td {
     position: relative;
     right: 33px;
     top: -7px;
+    text-wrap: nowrap;
+}
+.chat_wrap .receive_msg_area .scdl_confirm {
+    width: 200px;
+}
+.chat_wrap .scdl_confirm {
+    width: 215px;
+    height: 30px;
+    border: 1px solid #eee;
+    border-radius: 7px;
+    background-color: #fff;
+    font-family: 'Pretendard-Regular';
 }
 .chat_list_wrap .chat_room_title .receive_time p {
     font-size: 12px;
@@ -578,6 +590,8 @@ td {
     margin: 6px 0;
     font-size: 14px;
     line-height: 17px;
+    max-height: 15px;
+    width: 220px;
 }
 
 .message_input_box {

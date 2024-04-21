@@ -135,6 +135,8 @@ $routes->post('/ajax/reloadMsg', 'MoAjax::reloadMsg');
 $routes->post('/ajax/extRm', 'MoAjax::extRm');
 $routes->post('/ajax/banUsr', 'MoAjax::banUsr');
 $routes->post('/ajax/sndRpt', 'MoAjax::sndRpt');
+$routes->post('/ajax/submitScdl', 'MoAjax::submitScdl');
+$routes->post('/ajax/partScdl', 'MoAjax::partScdl');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');
