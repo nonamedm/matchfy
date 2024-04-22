@@ -19,8 +19,8 @@ class OAuth2 extends BaseController
         $naverClientSecret = $_SERVER['NAVER_CLIENT_SECRET'];
 
         $this->kakaoProvider = new GenericProvider([
-            'clientId'                => $clientId,
-            'clientSecret'            => $clientSecret,
+            'clientId'                => $kakaoClientId,
+            'clientSecret'            => $kakaoClientSecret,
             'redirectUri'             => 'http://localhost:8080/auth/kakao/callback',
             'urlAuthorize'            => 'https://kauth.kakao.com/oauth/authorize',
             'urlAccessToken'          => 'https://kauth.kakao.com/oauth/token',
