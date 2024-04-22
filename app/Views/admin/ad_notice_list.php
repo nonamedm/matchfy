@@ -26,7 +26,7 @@
         </div>
         <div class="ad_con">
             <h2>공지사항 목록</h2> 
-            <input class="btn type01 edit" type="button" value="등록" Onclick="fn_EditClick('notice');"/>
+            <input class="btn type01 edit" type="button" value="<?=lang('Korean.registration')?>" Onclick="fn_EditClick('notice');"/>
             <table>
                 <thead>
                     <tr class="tr">
@@ -35,7 +35,7 @@
                         <th class="th text_left" style="width:50%;">내용</th>
                         <th class="th" style="width:15%;">파일</th>
                         <th class="th" style="width:5%;">수정</th>
-                        <th class="th" style="width:5%;">삭제</th>
+                        <th class="th" style="width:5%;"><?=lang('Korean.delete')?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,7 +70,7 @@
                                 <input type="button" class="btn type01" value="수정" Onclick="fn_clickUpdate('notice','<?= $data['notice_id']?>')"/>
                             </td>
                             <td class="td">
-                                <input type="button" class="btn type02" value="삭제" Onclick="fn_clickBoFileDelete('<?= $data['notice_id']?>','<?= $data['file_id']?>')"/>
+                                <input type="button" class="btn type02" value="<?=lang('Korean.delete')?>" Onclick="fn_clickBoFileDelete('<?= $data['notice_id']?>','<?= $data['file_id']?>')"/>
                             </td>
                         </tr>
                     <?php endforeach; ?>

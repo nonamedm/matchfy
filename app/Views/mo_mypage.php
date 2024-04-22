@@ -33,7 +33,7 @@
                     <div class="content_mypage_info">
                         <div class="profile">
                             <h2 onclick="moveToUrl('/mo/viewProfile/<?= $nickname ?>')">
-                                <?= $nickname ?><span style="font-size:15px;"> 님</span>
+                                <?= $nickname ?><span style="font-size:15px;"> <?=lang('Korean.sir')?></span>
                             </h2>
                             <button class="myinfo_level">Lv.10</button>
                         </div>
@@ -56,7 +56,7 @@
                             <circle cx="10" cy="8" r="1" fill="#FF0267" />
                             <circle cx="14" cy="8" r="1" fill="#FF0267" />
                         </svg>
-                        <p>AI 문답하면 매칭 확률 UP!</p>
+                        <p><?=lang('Korean.mypageCon')?></p>
                     </a>
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4.65685 1.34315L10.3137 7L4.65685 12.6569" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -73,7 +73,7 @@
                                 <path d="M4 8H14" stroke="#111111" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                             <p>
-                                내 지갑
+                                <?=lang('Korean.mywallet')?>
                             </p>
                         </li>
                         <hr class="hoz_part" />
@@ -83,7 +83,7 @@
                             </svg>
 
                             <p>
-                                내 피드
+                                <?=lang('Korean.myfeed')?>
                             </p>
                         </li>
                         <hr class="hoz_part" />
@@ -93,7 +93,7 @@
                                 <circle cx="9.00006" cy="4.50015" r="2.85" stroke="#111111" stroke-width="1.5" />
                             </svg>
                             <p>
-                                내 모임
+                                <?=lang('Korean.myMeet')?>
                             </p>
                         </li>
                         <hr class="hoz_part" />
@@ -103,7 +103,7 @@
                                 <circle cx="9.00006" cy="4.50015" r="2.85" stroke="#111111" stroke-width="1.5" />
                             </svg>
                             <p>
-                                내 모임 관리
+                                <?=lang('Korean.myMeetSetting')?>
                             </p>
                         </li>
                         <hr class="hoz_part" />
@@ -112,7 +112,7 @@
                                 <path d="M9.00083 16L15.7473 9.23865L16.2639 8.64554C17.4092 6.96552 17.2002 4.71487 15.7611 3.27291C14.1158 1.6244 11.4392 1.6244 9.79357 3.27328L9.01664 4.0523L8.20275 3.23625C6.55714 1.58792 3.88088 1.58792 2.23619 3.23625C1.43884 4.03609 1 5.09775 1 6.2263C1 6.81223 1.12373 7.40073 1.35869 7.93506L1.42818 8.03788C1.63298 8.4694 1.90949 8.86112 2.24997 9.20272L3.06184 10.0483L9.00083 16Z" stroke="#111111" stroke-width="1.5" stroke-linejoin="round" />
                             </svg>
                             <p>
-                                내 상대
+                                <?=lang('Korean.myPartner')?>
                             </p>
                         </li>
                         <hr class="hoz_part" />
@@ -132,7 +132,7 @@
 
             <footer class="footer">
                 <button class="content_mypage_logout" onclick="userLogout()">
-                    로그아웃
+                    <?=lang('Korean.logout')?>
                 </button>
             </footer>
         </div>

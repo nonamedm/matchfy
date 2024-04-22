@@ -35,31 +35,31 @@
 
         <div class="sub_wrap">
             <div class="content_wrap">
-                <form class="temp_input" action="/mo/agree" method="post" >
+                <form class="temp_input" action="/mo/agree" method="post">
                     <div class="content_title">
-                        <h2>휴대폰 본인인증</h2>
-                        <p>원활한 서비스 이용을 위해 휴대전화 본인인증이 필요합니다. </p>
+                        <h2><?= lang('Korean.passTitle') ?></h2>
+                        <p><?= lang('Korean.passCon') ?> </p>
                     </div>
                     <div class="content_body">
                         <img src="/static/images/pass_phone_img.png" />
                     </div>
                     <div class="btn_group">
-                        <button type="button" class="btn type01" onclick="certIdentify()">휴대폰 본인인증</button>
+                        <button type="button" class="btn type01" onclick="certIdentify()"><?= lang('Korean.passTitle') ?></button>
                     </div>
             </div>
             <div class="content_title">
-                <p>* 추후 본인인증 서비스를 연결할 때 까지는 개인정보 직접입력이 필요합니다.</p>
+                <p>* <?= lang('Korean.passCon2') ?></p>
             </div>
             <input type="hidden" name="nickname" value="<?= $nickname ?>" />
             <input type="hidden" name="sns_type" value="<?= $sns_type ?>" />
             <input type="hidden" name="oauth_id" value="<?= $oauth_id ?>" />
-            <input id="input_name" class="temp_input_text" type="text" name="name" placeholder="이름 입력" value="<?= $name ?>" />
-            <input id="input_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="전화번호 입력" value="<?= $mobile_no ?>" />
-            <input id="input_birthday" class="temp_input_text" type="text" name="birthday" placeholder="생년월일 입력" value="<?= $birthday ?>" />
+            <input id="input_name" class="temp_input_text" type="text" name="name" placeholder="<?= lang('Korean.passCon1') ?>" value="<?= $name ?>" />
+            <input id="input_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="<?= lang('Korean.passCon2') ?>" value="<?= $mobile_no ?>" />
+            <input id="input_birthday" class="temp_input_text" type="text" name="birthday" placeholder="<?= lang('Korean.passCon3') ?>" value="<?= $birthday ?>" />
             <select id="input_gender" class="temp_input_text" name="gender">
-                <option>성별을 선택하세요</option>
-                <option value="0" <?php if ($gender === '0') : ?>selected<?php endif ?>>여성</option>
-                <option value="1" <?php if ($gender === '1') : ?>selected<?php endif ?>>남성</option>
+                <option><?= lang('Korean.passGender') ?></option>
+                <option value="0" <?php if ($gender === '0') : ?>selected<?php endif ?>><?= lang('Korean.woman') ?></option>
+                <option value="1" <?php if ($gender === '1') : ?>selected<?php endif ?>><?= lang('Korean.man') ?></option>
             </select>
             </form>
         </div>

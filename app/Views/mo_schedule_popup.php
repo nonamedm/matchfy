@@ -4,12 +4,12 @@
             <a onclick="closePopup()">X</a>
         </div>
         <div class="layerPopup_content medium">
-            <p class="txt">약속</p>
+            <p class="txt"><?= lang('Korean.promise') ?></p>
 
             <div class="">
                 <div>
                     <div class="schedule_title">
-                        <h2>날짜</h2>
+                        <h2><?= lang('Korean.date') ?></h2>
                     </div>
                     <div class="schedule_calendar">
                         <input type="text" id="scdl_date" />
@@ -17,7 +17,7 @@
                 </div>
                 <div>
                     <div class="schedule_title">
-                        <h2>시간</h2>
+                        <h2><?= lang('Korean.time') ?></h2>
                     </div>
                     <div class="schedule_calendar multy_select">
                         <select id="scdl_hour">
@@ -38,26 +38,26 @@
                 </div>
                 <div style="display:flex;">
                     <div class="schedule_title">
-                        <h2>구분</h2>
+                        <h2><?= lang('Korean.division') ?></h2>
                     </div>
                     <div class="schedule_calendar">
                         <div class="chk_box radio_box">
                             <input type="radio" id="scdl_type01" name="scdl_type" value="1" onclick="scdlType(this)" checked>
                             <label for="scdl_type01">
-                                <h2>식사/차</h2>
+                                <h2><?= lang('Korean.mealTea') ?></h2>
                             </label>
                         </div>
                         <div class="chk_box radio_box">
                             <input type="radio" id="scdl_type02" name="scdl_type" value="2" onclick="scdlType(this)">
                             <label for="scdl_type02">
-                                <h2>술</h2>
+                                <h2><?= lang('Korean.alcohol') ?></h2>
                             </label>
                         </div>
                     </div>
                 </div>
                 <div style="display: flex; height: 110px;">
                     <div class="schedule_title">
-                        <h2>예약금액</h2>
+                        <h2><?= lang('Korean.reservationAmount') ?></h2>
                     </div>
                     <div class="schedule_fee">
                         <p id="scdl_point">5,000 P</p>
@@ -67,7 +67,7 @@
 
             <div class="layerPopup_bottom">
                 <div class="btn_group">
-                    <button class="btn type01" onclick="submitScdl()">완료</button>
+                    <button class="btn type01" onclick="submitScdl()"><?= lang('Korean.complete') ?></button>
                 </div>
             </div>
         </div>

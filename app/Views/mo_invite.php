@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -18,7 +17,8 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        <?php $title = "친구 초대"; include 'header.php'; ?>
+        <?php $title = lang('Korean.friendsInvite');
+        include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
@@ -27,30 +27,30 @@
                         <img src="/static/images/invite.png" style="width:335px" />
                     </div>
                     <div class="invite_code">
-                        <a id="copyButton" data-code="<?=$unique_code?>">
-                            <h2><?=$unique_code?></h2>
-                            <p><img src="/static/images/ico_copy_14x14.png" />초대링크 복사하기</p>
+                        <a id="copyButton" data-code="<?= $unique_code ?>">
+                            <h2><?= $unique_code ?></h2>
+                            <p><img src="/static/images/ico_copy_14x14.png" /><?= lang('Korean.friendsLinkCopy') ?></p>
                         </a>
                     </div>
                 </div>
             </div>
             <div style="height: 50px;"></div>
-<footer class="footer">
-                
+            <footer class="footer">
+
                 <div class="btn_group invite">
-                    <button type="button" class="btn type01" id="shareButton" data-code="<?=$unique_code?>">친구에게 공유하기</button>
+                    <button type="button" class="btn type01" id="shareButton" data-code="<?= $unique_code ?>"><?= lang('Korean.friendsShare') ?></button>
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy
                 </div>
                 <div class="footer_link mb40">
-                    <a href="#">회사정보</a>
-                    <a href="#">개인정보 처리방침</a>
-                    <a href="#">서비스 이용약관</a>
+                    <a href="#"><?= lang('Korean.companyName') ?></a>
+                    <a href="#"><?= lang('Korean.pravacyName') ?></a>
+                    <a href="#"><?= lang('Korean.serviceName') ?></a>
                 </div>
                 <div class="footer_info mb40">
-                    <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                    <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
+                    <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>
+                    <span><?= lang('Korean.footerInfo3') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo4') ?><img
                             src="/static/images/part_line.png" /> gildong@naver.com</span>
                 </div>
                 <div class="footer_copy">

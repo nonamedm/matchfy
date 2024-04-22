@@ -15,6 +15,7 @@ class AllianceModel extends Model
     protected $allowedFields    = [
                                     'member_ci',
                                     'alliance_ci',
+                                    'alliance_ceo_num',
                                     'alliance_type',
                                     'company_contact',
                                     'email',

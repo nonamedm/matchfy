@@ -4,7 +4,7 @@
             <a onclick="closePopup()">X</a>
         </div>
         <div class="layerPopup_content medium">
-            <p id="feed_title" class="txt">피드 상세</p>
+            <p id="feed_title" class="txt"><?=lang('Korean.feedDetail')?></p>
 
             <div class="myfeed_detail">
                 <img id="myfeed_detail_img" src="/static/images/profile_img_detail.png" style="display:none"/>
@@ -12,11 +12,11 @@
             </div>
             <div class="myfeed_cont">
                 <p id="myfeed_cont">
-                    피드 상세 내용
+                    <?=lang('Korean.feedDetailCon')?>
                 </p>
             </div>
             <!-- <div class="report_text">
-                <textarea placeholder="기타 의견을 입력해주세요."></textarea>
+                <textarea placeholder="<?=lang('Korean.reportCon1')?>"></textarea>
             </div> -->
             <input id="feed_idx" type="hidden" value="" />
             <?php 
@@ -26,7 +26,7 @@
             ?>
             <div class="layerPopup_bottom">
                 <div class="btn_group multy">
-                    <button class="btn type02" onclick="myFeedDelete()">삭제</button>
+                    <button class="btn type02" onclick="myFeedDelete()"><?=lang('Korean.delete')?></button>
                     <button class="btn type01" onclick="myFeedModify()">수정</button>
                 </div>
             </div>
@@ -34,7 +34,7 @@
             ?>
             <div class="layerPopup_bottom">
                 <div class="btn_group">
-                    <button class="btn type01" onclick="closePopup()">닫기</button>
+                    <button class="btn type01" onclick="closePopup()"><?=lang('Korean.close')?></button>
                 </div>
             </div>
             <?php

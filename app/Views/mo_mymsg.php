@@ -30,10 +30,10 @@
                 <div class="tab_wrap">
                     <ul>
                         <li>
-                            AI 메시지
+                            <?= lang('Korean.AIMsg') ?>
                         </li>
                         <li class="on">
-                            메시지함
+                            <?= lang('Korean.messageBox') ?>
                         </li>
                     </ul>
                 </div>
@@ -110,7 +110,7 @@
                         <img class="hamberger_cancel" src="/static/images/hamberger_cancel.png" />
                     </div>
                     <div class="message_input_box_border">
-                        <textarea id="msgbox" type="text" placeholder="메세지를 입력하세요" rows={1}></textarea>
+                        <textarea id="msgbox" type="text" placeholder="<?= lang('Korean.aiMsgPlaceholder') ?>" rows={1}></textarea>
                         <img style="position:absolute; right: 30px" src="/static/images/message_send_btn.png" onclick="sendMsg()" />
                     </div>
                 </div>

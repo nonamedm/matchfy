@@ -4,7 +4,7 @@
             <a onclick="closePopup()">X</a>
         </div>
         <div class="layerPopup_content medium">
-            <p class="member_title txt">단톡방 멤버</p>
+            <p class="member_title txt"><?= lang('Korean.groupTalkMember') ?></p>
             <div class="" style="height: 300px; overflow-y: scroll;">
                 <?php
                 foreach ($member_info as $row) {
@@ -19,10 +19,10 @@
                             ?>
                                 <?php if ($member_type[0]['member_type']  === '1' || $member_type[0]['member_type'] === '9') {
                                 ?>
-                                    <button class="type02" onclick="banUsr(<?= $row['entry_num'] ?>)">강퇴</button>
+                                    <button class="type02" onclick="banUsr(<?= $row['entry_num'] ?>)"><?= lang('Korean.resign') ?></button>
                                 <?php
                                 } ?>
-                                <button class="type01" onclick="reptUsr(<?= $row['entry_num'] ?>)">신고</button>
+                                <button class="type01" onclick="reptUsr(<?= $row['entry_num'] ?>)"><?= lang('Korean.declaration') ?></button>
                             <?php
                             } ?>
                         </div>

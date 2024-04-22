@@ -38,7 +38,7 @@
             <p><?=nl2br($terms['content']); ?></p>
             <div class="btn_up_del_box">
                 <input type="button" value="수정" Onclick="fn_clickUpdate('terms','<?= $terms['id']?>')"/>
-                <input type="button" value="삭제"  Onclick="fn_clickDelete('<?= $terms['id']?>','terms')"/>
+                <input type="button" value="<?=lang('Korean.delete')?>"  Onclick="fn_clickDelete('<?= $terms['id']?>','terms')"/>
             </div>
 
         </div>

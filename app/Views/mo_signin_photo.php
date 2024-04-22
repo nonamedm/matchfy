@@ -24,13 +24,13 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="content_title">
-                    <h2><span>사진</span> 추가등록 또는<br><span>동영상</span>프로필 등록.</h2>
+                    <h2><?= lang('Korean.signupCon1') ?></h2>
                 </div>
                 <form class="main_signin_form" method="post" action="/mo/signinType" enctype="multipart/form-data">
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <h4 class="profile_photo_label">사진 (1장 이상 필수)</h4>
+                                <h4 class="profile_photo_label"><?= lang('Korean.signupCon2') ?></h4>
                                 <div class="profile_photo_div">
                                     <label for="profile_photo" class="signin_label profile_photo_input"></label>
                                     <input id="profile_photo" name="profile_photo" type="file" value="" placeholder="" multiple accept="image/*">
@@ -41,7 +41,7 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <h4 class="profile_photo_label">동영상 프로필 (권장)</h4>
+                                <h4 class="profile_photo_label"><?= lang('Korean.signupCon3') ?></h4>
                                 <div class="profile_photo_div">
                                     <label for="profile_mov" class="signin_label profile_photo_input"></label>
                                     <input id="profile_mov" name="profile_mov" type="file" value="" placeholder="" multiple accept="video/mp4,video/mkv, video/x-m4v,video/*">
@@ -53,16 +53,16 @@
                         <div class="layerPopup bottom" style="display: none;">
                             <div class="layerPopup_wrap">
                                 <div class="layerPopup_heading">
-                                    <img src="/static/images/invite_popup_img.png" style="position: absolute; right: 20px; top: -40px;"/>
+                                    <img src="/static/images/invite_popup_img.png" style="position: absolute; right: 20px; top: -40px;" />
                                     <!-- <h2 class="heading">상담안내</h2> -->
                                     <!-- <a href="javascript:avoid(0)" class="btn_close">닫기</a> -->
                                 </div>
                                 <div class="layerPopup_content bg_white">
-                                    <h2 class="title">초대코드 입력 시<br/>
-                                    정회원 / 프리미엄 회원 <span>50% 할인!</span></h2>
+                                    <h2 class="title">초대코드 입력 시<br />
+                                        정회원 / 프리미엄 회원 <span>50% 할인!</span></h2>
 
                                     <div class="invite_code_popup">
-                                        <input type="text" id="invite_code" name="invite_code" placeholder="초대코드를 입력해주세요"/>
+                                        <input type="text" id="invite_code" name="invite_code" placeholder="초대코드를 입력해주세요" />
                                     </div>
                                 </div>
                                 <div class="layerPopup_bottom">
@@ -81,8 +81,8 @@
                         <div id="profile_photo_uploaded" style="display:none;"></div>
                         <div id="profile_mov_uploaded" style="display:none;"></div>
                         <div class="btn_group multy">
-                            <button type="submit" class="btn type02" id="skipButton">건너뛰기</button>
-                            <button type="submit" class="btn type01" id="saveButton">저장</button>
+                            <button type="submit" class="btn type02" id="skipButton"><?= lang('Korean.skip') ?></button>
+                            <button type="submit" class="btn type01" id="saveButton"><?= lang('Korean.save') ?></button>
                         </div>
                     </div>
                 </form>
@@ -119,7 +119,7 @@
                     });
                 } else {
                     $('#invite_code').val(null);
-                    $('.main_signin_form').submit(); 
+                    $('.main_signin_form').submit();
                 }
             });
         });

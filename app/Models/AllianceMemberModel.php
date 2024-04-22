@@ -15,6 +15,7 @@ class AllianceMemberModel extends Model
     protected $allowedFields    = [
                                     'member_ci',
                                     'alliance_ci',
+                                    'alliance_ceo_num',
                                     'mobile_no',
                                     'company_name',
                                     'ceo_name',

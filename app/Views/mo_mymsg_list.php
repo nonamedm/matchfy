@@ -27,10 +27,10 @@
                 <div class="tab_wrap">
                     <ul>
                         <li>
-                            AI 메시지
+                            <?= lang('Korean.AIMsg') ?>
                         </li>
                         <li class="on">
-                            메시지함
+                            <?= lang('Korean.messageBox') ?>
                         </li>
                     </ul>
                 </div>

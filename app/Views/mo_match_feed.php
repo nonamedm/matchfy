@@ -67,7 +67,7 @@
                                 </p>
                             </div>
                             <div class="profile_btn">
-                                <button class="popup_view_profile" onclick="moveToUrl('/mo/viewProfile/<?= $feed['nickname'] ?>')">프로필</button>
+                                <button class="popup_view_profile" onclick="moveToUrl('/mo/viewProfile/<?= $feed['nickname'] ?>')"><?=lang('Korean.profile')?></button>
                             </div>
                         </div>
                         <div class="feed_img_box" style="background-color: #e7e7e7;">

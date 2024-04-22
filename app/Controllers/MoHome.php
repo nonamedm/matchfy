@@ -915,8 +915,12 @@ class MoHome extends BaseController
                         'create_at' => date('Y-m-d H:i:s'),
                     ];
                     $meeting_members = new MeetingMembersModel();
-                    $selected = $meeting_members->where($meetMemdata)->first();
-                    if ($selected) {
+                    $in_member = $meeting_members->where('meeting_idx', $meeting_idx)
+                        ->where('member_ci', $ci)
+                        ->where('delete_yn', 'Y')
+                        ->first();
+
+                    if ($in_member) {
                         // 기존 참석했던 방이면 업데이트
                         $query = "UPDATE wh_meeting_members";
                         $query .= " SET create_at = '" . date('Y-m-d H:i:s') . "'";
@@ -1782,12 +1786,12 @@ class MoHome extends BaseController
 
         $selected = $AllianceMember->where('mobile_no', $mobile_no)->first();
 
-        if ($selected) {
-            echo '<script>alert("이미 가입된 휴대폰 번호입니다");</script>';
-            return view('mo_alliance_pass', $postData);
-        } else {
-            return view('mo_aliance_agree', $postData);
-        }
+        // if ($selected) {
+        //     echo '<script>alert("이미 가입된 휴대폰 번호입니다");</script>';
+        //     return view('mo_alliance_pass', $postData);
+        // } else {
+        // }
+        return view('mo_aliance_agree', $postData);
     }
     /*제휴 신청하기 */
     public function allianceApply(): string

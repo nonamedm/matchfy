@@ -16,11 +16,11 @@
     <div class="layerPopup alert middle"><!-- class: imgPop 추가 -->
         <div class="layerPopup_wrap">
             <div class="layerPopup_content">
-                <p class="txt">후기작성</p>
+                <p class="txt"><?=lang('Korean.reviewEdit')?></p>
                 
                 <div class="">
                     <div class="review_title">
-                        <h2><span>장원영</span>님과의 만남은 어떠셨나요?</h2>
+                        <h2><span>장원영</span><?=lang('Korean.reviewCon')?></h2>
                     </div>
                     <div class="review_point">
                         <button class="review_point_on"></button>
@@ -30,24 +30,24 @@
                         <button class="review_point_off"></button>
                     </div>
                     <div class="review_button">
-                        <button class="review_button_on">아주 좋아요</button>
-                        <button class="review_button_off">좋아요</button>
-                        <button class="review_button_off">보통이예요</button>
-                        <button class="review_button_off">별로예요</button>
-                        <button class="review_button_off">아주 별로예요</button>
+                        <button class="review_button_on"><?=lang('Korean.veryGood2')?></button>
+                        <button class="review_button_off"><?=lang('Korean.good2')?></button>
+                        <button class="review_button_off"><?=lang('Korean.normal2')?></button>
+                        <button class="review_button_off"><?=lang('Korean.dontLike2')?></button>
+                        <button class="review_button_off"><?=lang('Korean.verryHate2')?></button>
                     </div>
                 </div>
                 <div class="review_text">
-                    <textarea placeholder="리뷰를 작성해주세요"></textarea>
+                    <textarea placeholder="<?=lang('Korean.reviewPlaceholder')?>"></textarea>
                 </div>
                 <div class="review_caution">
                     <img src="/static/images/caution_mark.png"/>
                     <p class="">
-                    입력해주신 정보는 AI 학습을 위해 이용되며, 상대방에게 <br/>전달되지 않습니다.</p>
+                    <?=lang('Korean.reviewCon2')?></p>
                 </div>
                 <div class="layerPopup_bottom">
                     <div class="btn_group">
-                        <button class="btn type01">후기 보내기</button>
+                        <button class="btn type01"><?=lang('Korean.reviewSub')?></button>
                     </div>
                 </div>
             </div>

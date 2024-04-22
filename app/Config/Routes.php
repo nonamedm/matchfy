@@ -146,6 +146,7 @@ $routes->post('/ajax/partScdl', 'MoAjax::partScdl');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');
+$routes->get('/downloadCeonumFile/(:num)', 'download::downloadCeonumFile/$1');
 $routes->post('/ad/BoardDelete', 'AdminHome::boardDelete');
 
 $routes->get('/ad/header', 'AdminHome::header');

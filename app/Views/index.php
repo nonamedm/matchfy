@@ -92,7 +92,7 @@
                     ?>
                         <!-- <button class="login_btn" onclick="userLogout()">
                             <p>
-                                로그아웃
+                                <?=lang('Korean.logout')?>
                             </p>
                         </button>
                         <button class="login_btn" onclick="moveToUrl('/mo/mypage')">
@@ -108,7 +108,7 @@
                     } else { ?>
                         <button class="login_btn" onclick="moveToUrl('/mo')">
                             <img src="/static/images/login_ico.png" />
-                            <p>로그인</p>
+                            <p><?=lang('Korean.login')?></p>
                         </button>
                     <?php
                     }
@@ -123,17 +123,17 @@
     ?>
         <div class="content">
             <div class="main_bg_center_box">
-                <h2>AI가 분석하고 소개하는 <span>매치파이</span></h2>
-                <p>똑똑한 AI가 나와 딱 맞는 상대를 소개해드립니다.</p>
-                <button onclick="moveToUrl('/mo')">지금 매칭하기</button>
+                <h2><?=lang('Korean.mainCon')?></h2>
+                <p><?=lang('Korean.mainCon2')?></p>
+                <button onclick="moveToUrl('/mo')"><?=lang('Korean.mainConBtn')?></button>
             </div>
         </div>
 
         <div class="content_no_img">
             <div class="main_cont_center_box main_cont_left_box">
-                <h3 class="circle_h"><img src="/static/images/circle_1.png" />프로필</h3>
-                <h2>프로필 등록으로<br /> 매칭 99% 멤버찾기</h2>
-                <p>등록한 프로필로 매칭점수가 일치하는<br /> 멤버들을 찾을 수 있어요</p>
+                <h3 class="circle_h"><img src="/static/images/circle_1.png" /><?=lang('Korean.profile')?></h3>
+                <h2><?=lang('Korean.indexCon1')?></h2>
+                <p><?=lang('Korean.indexCon2')?></p>
             </div>
             <div class="main_cont_right_img">
                 <img src="/static/images/main_profile_img.png" />
@@ -143,8 +143,8 @@
         <div class="content_no_img bg_color_theme">
             <div class="main_cont_center_box main_cont_right_box">
                 <h3 class="circle_h text_white"><img src="/static/images/circle_2.png" />매칭점수</h3>
-                <h2 class="text_white">매칭점수 기반의<br />멤버들 모아보기</h2>
-                <p class="text_white">매칭점수가 70% 이상 일치하는 멤버들과 <br />소통을 할 수 있어요</p>
+                <h2 class="text_white"><?=lang('Korean.indexCon3')?></h2>
+                <p class="text_white"><?=lang('Korean.indexCon4')?></p>
             </div>
             <div class="main_cont_left_img">
                 <img src="/static/images/main_point_img.png" />
@@ -153,9 +153,9 @@
 
         <div class="content_no_img">
             <div class="main_cont_center_box main_cont_left_box">
-                <h3 class="circle_h"><img src="/static/images/circle_3.png" />제휴</h3>
-                <h2>오프라인 만남은<br />제휴점에서 저렴하게</h2>
-                <p>소개팅 또는 모임활동시 소비하는 비용을<br />제휴점 이용을 통해 절약할 수 있어요</p>
+                <h3 class="circle_h"><img src="/static/images/circle_3.png" /><?=lang('Korean.alliance')?></h3>
+                <h2><?=lang('Korean.indexCon5')?></h2>
+                <p><?=lang('Korean.indexCon6')?></p>
             </div>
             <div class="main_cont_right_img">
                 <img src="/static/images/main_allience_img.png" />
@@ -164,15 +164,15 @@
 
         <div class="content_no_img bg_color_theme2 content_chat_img">
             <div class="main_cont">
-                <h2>매치파이 멤버들의 <br style="display:none">따끈따끈한 후기</h2>
+                <h2><?=lang('Korean.indexCon7')?></h2>
             </div>
             <div class="main_cont chat_div chat_div_left">
                 <div class="chat_profile_div">
                     <img src="/static/images/chat_img_1.png" />
-                    <span>뽀로로님</span>
+                    <span>뽀로로<?=lang('Korean.sir')?></span>
                 </div>
                 <div class="chat_talk_div">
-                    <p>매치파이를 통해 운명의 상대를 만났어요! 성격이 비슷하니 싸울 일도 없어서 안정적이고 잔잔한 연애를 하고 있답니다</p>
+                    <p><?=lang('Korean.indexCon8')?></p>
                     <img src="/static/images/review_star.png" />
                     <img src="/static/images/review_star.png" />
                     <img src="/static/images/review_star.png" />
@@ -183,10 +183,10 @@
             <div class="main_cont chat_div chat_div_right">
                 <div class="chat_profile_div">
                     <img src="/static/images/chat_img_2.png" />
-                    <span>홍길동님</span>
+                    <span>홍길동<?=lang('Korean.sir')?></span>
                 </div>
                 <div class="chat_talk_div">
-                    <p>매치파이를 통해 운명의 상대를 만났어요! 성격이 비슷하니 싸울 일도 없어서 안정적이고 잔잔한 연애를 하고 있답니다</p>
+                    <p><?=lang('Korean.indexCon8')?></p>
                     <img src="/static/images/review_star.png" />
                     <img src="/static/images/review_star.png" />
                     <img src="/static/images/review_star.png" />
@@ -197,10 +197,10 @@
             <div class="main_cont chat_div chat_div_left">
                 <div class="chat_profile_div">
                     <img src="/static/images/chat_img_3.png" />
-                    <span>손흥민님</span>
+                    <span>손흥민<?=lang('Korean.sir')?></span>
                 </div>
                 <div class="chat_talk_div">
-                    <p>매치파이를 통해 운명의 상대를 만났어요! 성격이 비슷하니 싸울 일도 없어서 안정적이고 잔잔한 연애를 하고 있답니다</p>
+                    <p><?=lang('Korean.indexCon8')?></p>
                     <img src="/static/images/review_star.png" />
                     <img src="/static/images/review_star.png" />
                     <img src="/static/images/review_star.png" />
@@ -211,10 +211,10 @@
             <div class="main_cont chat_div chat_div_right no_margin">
                 <div class="chat_profile_div">
                     <img src="/static/images/chat_img_4.png" />
-                    <span>김철수님</span>
+                    <span>김철수<?=lang('Korean.sir')?></span>
                 </div>
                 <div class="chat_talk_div">
-                    <p>매치파이를 통해 운명의 상대를 만났어요! 성격이 비슷하니 싸울 일도 없어서 안정적이고 잔잔한 연애를 하고 있답니다</p>
+                    <p><?=lang('Korean.indexCon8')?></p>
                     <img src="/static/images/review_star.png" />
                     <img src="/static/images/review_star.png" />
                     <img src="/static/images/review_star.png" />
@@ -226,9 +226,9 @@
 
         <div class="content content_bottom">
             <div class="main_bg_center_box ">
-                <h2>똑똑한 AI가 주선하는 찰떡궁합 소개팅</h2>
-                <p>지금 바로, 함께해요</p>
-                <button onclick="moveToUrl('/mo')">로그인</button>
+                <h2><?=lang('Korean.indexCon9')?></h2>
+                <p><?=lang('Korean.indexCon10')?></p>
+                <button onclick="moveToUrl('/mo')"><?=lang('Korean.login')?></button>
             </div>
         </div>
     <?php
@@ -454,18 +454,18 @@
         </div>
         <div class="content_no_img login_main">
             <div class="login_main_title">
-                <h2>나와 딱 맞는 AI 매칭</h2>
+                <h2><?=lang('Korean.mainTitle')?></h2>
                 <div class="main_title_btn">
-                    <button onclick="clickOn(this)" class="on" value="9">전체</button>
-                    <button onclick="clickOn(this)" value="0">여성</button>
-                    <button onclick="clickOn(this)" value="1">남성</button>
+                    <button onclick="clickOn(this)" class="on" value="9"><?=lang('Korean.all')?></button>
+                    <button onclick="clickOn(this)" value="0"><?=lang('Korean.woman')?></button>
+                    <button onclick="clickOn(this)" value="1"><?=lang('Korean.man')?></button>
                 </div>
             </div>
             <div class="login_main_list AImatch_list">
                 <div class="ai_mat_card" style="padding-top: 50px;">
-                    <h2>파트너 정보를 설정해 주세요</h2>
+                    <h2><?=lang('Korean.indexCon')?></h2>
                     <a onclick="moveToUrl('/mo/partner')">
-                        <p class="">설정하러 가기</p>
+                        <p class=""><?=lang('Korean.settingBtn')?></p>
                     </a>
                     <div class="profile_row">
                     </div>
@@ -474,16 +474,16 @@
         </div>
         <div class="content_no_img login_main">
             <div class="login_main_title">
-                <h2>주중모임</h2>
+                <h2><?=lang('Korean.weekdayMeeting')?></h2>
             </div>
             <div class="group_row">
-                <p class="group_week">주중</p>
+                <p class="group_week"><?=lang('Korean.weekTitle')?></p>
                 <div class="group_type">
                     <h2>
-                        식사/술/차
+                        <?=lang('Korean.indexCon11')?>
                     </h2>
                     <div class="main_title_btn">
-                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')">전체보기</button>
+                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.all')?>보기</button>
                         <button class="category01_left disabled" onclick="clickLeft('category01')">
                             < </button>
                                 <button class="category01_right" onclick="clickRight('category01')">></button>
@@ -492,24 +492,24 @@
                 <div class="login_main_list category01">
                     <div class="ai_group_card" style="text-align: center;">
                         <div class="group_location" style="margin: 0 auto; padding-top: 50px;">
-                            등록된 모임이 없습니다.<br /> 모임을 생성해 보세요
+                            <?=lang('Korean.noMeetList')?>
                         </div>
                         <div class="schedule_row" style="display: block;">
                             <a onclick="moveToUrl('/mo/mypage/group/list')">
-                                <p>생성하러 가기</p>
+                                <p><?=lang('Korean.createBtn')?></p>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="group_row">
-                <p class="group_week">주중</p>
+                <p class="group_week"><?=lang('Korean.weekTitle')?></p>
                 <div class="group_type">
                     <h2>
-                        여행
+                        <?=lang('Korean.trip')?>
                     </h2>
                     <div class="main_title_btn">
-                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')">전체보기</button>
+                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.all')?>보기</button>
                         <button class="category02_left disabled" onclick="clickLeft('category02')">
                             < </button>
                                 <button class="category02_right" onclick="clickRight('category02')">></button>
@@ -518,11 +518,11 @@
                 <div class="login_main_list category02">
                     <div class="ai_group_card" style="text-align: center;">
                         <div class="group_location" style="margin: 0 auto; padding-top: 50px;">
-                            등록된 모임이 없습니다.<br /> 모임을 생성해 보세요
+                            <?=lang('Korean.noMeetList')?>
                         </div>
                         <div class="schedule_row" style="display: block;">
                             <a onclick="moveToUrl('/mo/mypage/group/list')">
-                                <p>생성하러 가기</p>
+                                <p><?=lang('Korean.createBtn')?></p>
                             </a>
                         </div>
                     </div>
@@ -531,16 +531,16 @@
         </div>
         <div class="content_no_img login_main">
             <div class="login_main_title">
-                <h2>주말모임</h2>
+                <h2><?=lang('Korean.holiMeeting')?></h2>
             </div>
             <div class="group_row">
-                <p class="group_week">주말</p>
+                <p class="group_week"><?=lang('Korean.holidayTitle')?></p>
                 <div class="group_type">
                     <h2>
-                        식사/술/차
+                        <?=lang('Korean.indexCon11')?>
                     </h2>
                     <div class="main_title_btn">
-                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')">전체보기</button>
+                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.all')?>보기</button>
                         <button class="category03_left disabled" onclick="clickLeft('category03')">
                             < </button>
                                 <button class="category03_right" onclick="clickRight('category03')">></button>
@@ -549,24 +549,24 @@
                 <div class="login_main_list category03">
                     <div class="ai_group_card" style="text-align: center;">
                         <div class="group_location" style="margin: 0 auto; padding-top: 50px;">
-                            등록된 모임이 없습니다.<br /> 모임을 생성해 보세요
+                            <?=lang('Korean.noMeetList')?>
                         </div>
                         <div class="schedule_row" style="display: block;">
                             <a onclick="moveToUrl('/mo/mypage/group/list')">
-                                <p>생성하러 가기</p>
+                                <p><?=lang('Korean.createBtn')?></p>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="group_row">
-                <p class="group_week">주말</p>
+                <p class="group_week"><?=lang('Korean.holidayTitle')?></p>
                 <div class="group_type">
                     <h2>
-                        여행
+                        <?=lang('Korean.trip')?>
                     </h2>
                     <div class="main_title_btn">
-                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')">전체보기</button>
+                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.all')?>보기</button>
                         <button class="category04_left disabled" onclick="clickLeft('category04')">
                             < </button>
                                 <button class="category04_right" onclick="clickRight('category04')">></button>
@@ -575,11 +575,11 @@
                 <div class="login_main_list category04">
                     <div class="ai_group_card" style="text-align: center;">
                         <div class="group_location" style="margin: 0 auto; padding-top: 50px;">
-                            등록된 모임이 없습니다.<br /> 모임을 생성해 보세요
+                            <?=lang('Korean.noMeetList')?>
                         </div>
                         <div class="schedule_row" style="display: block;">
                             <a onclick="moveToUrl('/mo/mypage/group/list')">
-                                <p>생성하러 가기</p>
+                                <p><?=lang('Korean.createBtn')?></p>
                             </a>
                         </div>
                     </div>
@@ -599,13 +599,13 @@
             matchfy
         </div>
         <div class="footer_link mb40">
-            <a href="#">회사정보</a>
-            <a href="/mo/privacy">개인정보 처리방침</a>
-            <a href="/mo/terms">서비스 이용약관</a>
+            <a href="#"><?=lang('Korean.companyName')?></a>
+            <a href="/mo/privacy"><?=lang('Korean.pravacyName')?></a>
+            <a href="/mo/terms"><?=lang('Korean.serviceName')?></a>
         </div>
         <div class="footer_info mb40">
-            <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-            <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img src="/static/images/part_line.png" /> gildong@naver.com</span>
+            <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
+            <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img src="/static/images/part_line.png" /> gildong@naver.com</span>
         </div>
         <div class="footer_copy">
             COPYRIGHT 2023. ALL RIGHTS RESERVED.

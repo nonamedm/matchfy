@@ -4,25 +4,25 @@
             <a onclick="closePopup()">X</a>
         </div>
         <div class="layerPopup_content medium">
-            <p class="txt report_title">신고</p>
+            <p class="txt report_title"><?= lang('Korean.declaration') ?></p>
 
             <div class="">
                 <div class="report_title">
-                    <h2>신고사유</h2>
+                    <h2><?= lang('Korean.ReasonReport') ?></h2>
                 </div>
                 <div class="report_category">
                     <select id="report_category">
-                        <option value="">선택</option>
-                        <option value="1">욕설</option>
-                        <option value="2">도용</option>
-                        <option value="3">허위계정</option>
-                        <option value="4">잦은불참</option>
-                        <option value="0">직접입력</option>
+                        <option value=""><?= lang('Korean.selected') ?></option>
+                        <option value="1"><?= lang('Korean.abuse') ?></option>
+                        <option value="2"><?= lang('Korean.embezzlement') ?></option>
+                        <option value="3"><?= lang('Korean.fakeAccount') ?></option>
+                        <option value="4"><?= lang('Korean.frequentAbsence') ?></option>
+                        <option value="0"><?= lang('Korean.directInput') ?></option>
                     </select>
                 </div>
             </div>
             <div class="report_text">
-                <textarea id="report_text" placeholder="기타 의견을 입력해주세요."></textarea>
+                <textarea id="report_text" placeholder="<?= lang('Korean.reportCon1') ?>"></textarea>
             </div>
             <div class="review_caution">
                 <!-- <img src="/static/images/caution_mark.png"/>
@@ -32,7 +32,7 @@
             <input type="hidden" id="report_target" value="" />
             <div class="layerPopup_bottom">
                 <div class="btn_group">
-                    <button class="btn type01" onclick="sndRpt();">후기 보내기</button>
+                    <button class="btn type01" onclick="sndRpt();"><?= lang('Korean.reviewSub') ?></button>
                 </div>
             </div>
         </div>

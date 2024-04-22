@@ -40,7 +40,7 @@
                 
             <?php endif?>
             <div class="btn_up_del_box">
-                <input type="button"  class="btn type02" value="삭제" Onclick="fn_clickBoFileDelete('<?= $notice['id']?>','<?= $file['id']?>')"/>
+                <input type="button"  class="btn type02" value="<?=lang('Korean.delete')?>" Onclick="fn_clickBoFileDelete('<?= $notice['id']?>','<?= $file['id']?>')"/>
                 <input type="button"  class="btn type01" value="수정" Onclick="fn_clickUpdate('notice','<?= $notice['id']?>')"/>
             </div>
         </div>

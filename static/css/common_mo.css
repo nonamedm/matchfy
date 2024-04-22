@@ -1923,6 +1923,13 @@ a:active {
     border-radius: 10px;
     border: 1px solid #dddddd;
 }
+.form_row.signin_form .profile_photo_posted_detail {
+    /* margin-left: 10px; */
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    border: 1px solid #dddddd;
+}
 .layerPopup_content .form_row.signin_form .profile_photo_input {
     width: 90px;
     height: 90px;
@@ -2270,6 +2277,8 @@ form input[type='file'] {
     border-radius: 10px;
     border: none;
     color: #ffffff;
+    text-align: center;
+    line-height: 48px;
 }
 
 .hoz_part {
@@ -3505,6 +3514,23 @@ input[type='number']::-webkit-inner-spin-button {
 .form_row.signin_form .signin_form_div .multy_input input {
     width: 160px !important;
     margin: 3px;
+}
+
+/*alliance apply*/
+.filebox{
+    display: flex;
+}
+.filebox .upload-name {
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: 78%;
+    color: #999999;
+}
+.alliance_detail_post div{
+    margin:4px;
 }
 
 .ui-menu.ui-widget.ui-widget-content.ui-autocomplete.ui-front {

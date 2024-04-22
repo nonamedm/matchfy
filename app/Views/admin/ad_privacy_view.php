@@ -39,7 +39,7 @@
             
             <div class="btn_up_del_box">
                 <input type="button" value="수정" Onclick="fn_clickUpdate('privacy','<?= $privacy['id']?>')"/>
-                <input type="button" value="삭제"  Onclick="fn_clickDelete('<?= $privacy['id']?>','privacy')"/>
+                <input type="button" value="<?=lang('Korean.delete')?>"  Onclick="fn_clickDelete('<?= $privacy['id']?>','privacy')"/>
             </div>
             
         </div>
