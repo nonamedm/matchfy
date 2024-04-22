@@ -27,23 +27,18 @@
                 <div class="content_partner">
                     <div class="content_partner_header">
                         <p>
-                            <?= $name ?>님, 반갑습니다.<br />
-                            어떤 친구를 원하시나요?
+                            <?= $name ?><?=lang('Korean.factorCon1')?>
                         </p>
-                        <h2>만나고 싶은 친구의 정보를<br />
-                            입력해주세요! </h2>
+                        <h2><?=lang('Korean.factorCon2')?></h2>
                     </div>
                     <img src="/static/images/partner.png" />
                 </div>
                 <div class="content_partner" style="margin: 50px 5px;">
                     <div class="content_partner_header">
-                        <h2>기본 배점 설정 </h2>
-                        <p style="margin-top: 20px;">[선택 사항]</p>
+                        <h2><?=lang('Korean.factorCon3')?> </h2>
+                        <p style="margin-top: 20px;">[<?=lang('Korean.factorCon4')?>]</p>
                         <p style="text-indent: -10px;">
-                            * 입력하는 각 항목에 대해 아래와 같이 세 그룹으로 나뉘고<br />
-                            각각에 기본 배점이 적용 되어있습니다.<br />
-                            더 정확한 매칭을 위해 본인이 원하는 대로 각 항목의<br />
-                            배점을 수정할 수 있습니다.
+                            * <?=lang('Korean.factorCon5')?>
                         </p>
                     </div>
                 </div>
@@ -52,7 +47,7 @@
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div flex">
-                                <label for="group1" class="signin_label">MBTI / 얼굴형 / 스타일 / 음주횟수</label>
+                                <label for="group1" class="signin_label">MBTI / <?=lang('Korean.faceType')?> / <?=lang('Korean.styleType')?> / <?=lang('Korean.drinkingType')?></label>
                                 <select id="group1" name="group1">
                                     <option value="5" selected>5</option>
                                     <option value="10">10</option>
@@ -64,7 +59,7 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div flex">
-                                <label for="group2" class="signin_label">나이 / 체형 / 지역<br />결혼경험 / 흡연유무 / 종교</label>
+                                <label for="group2" class="signin_label"><?=lang('Korean.ageType')?> / <?=lang('Korean.formType')?> / <?=lang('Korean.region')?><br /><?=lang('Korean.marryType')?> / <?=lang('Korean.smokeType')?> / <?=lang('Korean.religionType')?></label>
                                 <select id="group2" name="group2">
                                     <option value="5">5</option>
                                     <option value="10" selected>10</option>
@@ -76,7 +71,7 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div flex">
-                                <label for="group3" class="signin_label">성별 / 키 / 학력 / 직업<br /> 자산구간 / 소득구간</label>
+                                <label for="group3" class="signin_label"><?=lang('Korean.gender')?> / <?=lang('Korean.height')?> / <?=lang('Korean.education')?> / <?=lang('Korean.occupational')?><br /> <?=lang('Korean.assetGroup')?> / <?=lang('Korean.incomeGroup')?></label>
                                 <select id="group3" name="group3">
                                     <option value="5">5</option>
                                     <option value="10">10</option>
@@ -87,7 +82,7 @@
                             </div>
                         </div>
                         <div class="btn_group">
-                            <button type="button" class="btn type01" onclick="saveFactorBasic()">저장</button>
+                            <button type="button" class="btn type01" onclick="saveFactorBasic()"><?=lang('Korean.save')?></button>
                         </div>
                     </div>
                 </form>
@@ -105,13 +100,13 @@
                 matchfy
             </div>
             <div class="footer_link mb40">
-                <a href="#">회사정보</a>
-                <a href="#">개인정보 처리방침</a>
-                <a href="#">서비스 이용약관</a>
+                <a href="#"><?=lang('Korean.companyName')?></a>
+                <a href="#"><?=lang('Korean.pravacyName')?></a>
+                <a href="#"><?=lang('Korean.serviceName')?></a>
             </div>
             <div class="footer_info mb40">
-                <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
+                <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
+                <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
                         src="/static/images/part_line.png" /> gildong@naver.com</span>
             </div>
             <div class="footer_copy">

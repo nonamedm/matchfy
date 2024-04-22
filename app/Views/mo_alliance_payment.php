@@ -33,32 +33,32 @@
             <div class="content_wrap">
                 <div class="alliance_payment">
                     <div class="alliance_payment_point">
-                        <p>보유포인트</p>
-                        <h2><?=number_format($points, 0)?> 원</h2>
+                        <p><?=lang('Korean.mypoint')?></p>
+                        <h2><?=number_format($points, 0)?> <?=lang('Korean.won')?></h2>
                     </div>
                     <div class="amount_pay">
                         <div class="amount_pay_left alliance">
-                            <h2>총 결제금액</h2>
+                            <h2><?=lang('Korean.allPay')?></h2>
                         </div>
                         <div class="amount_pay_right">
-                            <h2><?=number_format($alliancePay, 0)?> 원</h2>
+                            <h2><?=number_format($alliancePay, 0)?> <?=lang('Korean.won')?></h2>
                         </div>
                     </div>
                     <hr class="hoz_part" />
                     <div class="alliance_detail_cont">
-                        <h2>예매자 정보</h2>
+                        <h2><?=lang('Korean.ticketInfo')?></h2>
                         <div class="alliance_profile_content">
-                            <h2>예매자</h2>
+                            <h2><?=lang('Korean.ticketHolder')?></h2>
                             <p><?=$user['name']?></p>
                         </div>                            
                         <div class="alliance_profile_content">
-                            <h2>연락처</h2>
+                            <h2><?=lang('Korean.allianceCompanyContact')?></h2>
                             <p><?=$user['mobile_no']?></p>
                         </div>                           
                     </div>
                     <hr class="hoz_part" />
                     <div class="alliance_detail_cont">
-                        <h2>개인정보 수집 제공</h2>
+                        <h2><?=lang('Korean.paymentPravacy')?></h2>
                         <div class="alliance_terms_agree allance_btn">
                             <p><?= nl2br($privacys['title']); ?></p>
                             <img src="/static/images/select_arrow.png"/>
@@ -76,15 +76,15 @@
                     </div>
                     <hr class="hoz_part" />
                     <div class="alliance_detail_cont">
-                        <h2>취소/환불 규정</h2>                        
+                        <h2><?=lang('Korean.allianceCancelCon')?></h2>                        
                         <table class="basic_table">
                             <tr>
-                                <td>이용 1일 전까지</td>
-                                <td>결제 금액에 대한 취소 수수료 없음</td>
+                                <td><?=lang('Korean.allianceCancelCon2')?></td>
+                                <td><?=lang('Korean.allianceCancelCon3')?></td>
                             </tr>
                             <tr>
-                                <td>이용 당일</td>
-                                <td>결제 금액의 100% 차감</td>
+                                <td><?=lang('Korean.allianceCancelCon4')?></td>
+                                <td><?=lang('Korean.allianceCancelCon5')?></td>
                             </tr>
                         </table>
                     </div>
@@ -98,26 +98,25 @@
                 <div class="pay_agree_desc">
                     <div class="chk_box">
                         <input type="checkbox" id="agree01" name="chkDefault00" checked="">
-                        <label class="agree_cont_label" for="agree01">위 구매조건 확인 및 결제진행에 동의</label>
+                        <label class="agree_cont_label" for="agree01"><?=lang('Korean.allianceAgreeTrue')?></label>
                     </div>
-                    <p>· 회원탈퇴 시 회원정보가 삭제됨으로 구매하신 포인트는
-                        자동 소멸됩니다.</p>
+                    <p>· <?=lang('Korean.paymentCon1')?></p>
                 </div>
                 <div class="btn_group multy">
-                    <button type="button" class="btn type02" id="cancelButton">취소</button>
-                    <button type="button" class="btn type01" id="alliance_reserve" onclick="alliancePaymentChk()">동의하고 결제</button>
+                    <button type="button" class="btn type02" id="cancelButton"><?=lang('Korean.cancel')?></button>
+                    <button type="button" class="btn type01" id="alliance_reserve" onclick="alliancePaymentChk()"><?=lang('Korean.paymentChk')?></button>
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy
                 </div>
                 <div class="footer_link mb40">
-                    <a href="#">회사정보</a>
-                    <a href="#">개인정보 처리방침</a>
-                    <a href="#">서비스 이용약관</a>
+                    <a href="#"><?=lang('Korean.companyName')?></a>
+                    <a href="#"><?=lang('Korean.pravacyName')?></a>
+                    <a href="#"><?=lang('Korean.serviceName')?></a>
                 </div>
                 <div class="footer_info mb40">
-                    <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                    <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
+                    <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
+                    <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
                             src="/static/images/part_line.png" /> gildong@naver.com</span>
                 </div>
                 <div class="footer_copy">

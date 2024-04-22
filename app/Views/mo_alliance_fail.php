@@ -26,7 +26,7 @@
                 <div class="content_body" style="margin-top:235px">
                     <img src="/static/images/alliance_fail.png" />
                     <div class="success_text">
-                        <p>제휴 신청 에러</p>
+                        <p><?=lang('Korean.allianceFailTitle')?></p>
                         <em><?=$msg?></em>
                     </div>
                 </div>
@@ -35,19 +35,19 @@
             <footer class="footer">
 
                 <div class="btn_group">
-                    <button type="button" class="btn type01" onclick='moveToUrl("/")'>메인으로 돌아가기</button>
+                    <button type="button" class="btn type01" onclick='moveToUrl("/")'><?=lang('Korean.rootBtn')?></button>
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy
                 </div>
                 <div class="footer_link mb40">
-                    <a href="#">회사정보</a>
-                    <a href="#">개인정보 처리방침</a>
-                    <a href="#">서비스 이용약관</a>
+                    <a href="#"><?=lang('Korean.companyName')?></a>
+                    <a href="#"><?=lang('Korean.pravacyName')?></a>
+                    <a href="#"><?=lang('Korean.serviceName')?></a>
                 </div>
                 <div class="footer_info mb40">
-                    <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                    <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
+                    <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
+                    <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
                             src="/static/images/part_line.png" /> gildong@naver.com</span>
                 </div>
                 <div class="footer_copy">

@@ -16,33 +16,33 @@
     <div class="layerPopup alert middle"><!-- class: imgPop 추가 -->
         <div class="layerPopup_wrap">
             <div class="layerPopup_content">
-                <p class="txt">지역 선택</p>
+                <p class="txt"><?=lang('Korean.region')?> <?=lang('Korean.selected')?></p>
                 <!-- <em class="desc">인증을 위한 혼인관계증명서를<br/>등록해주세요</em> -->
 
                 <div class="region_list">
-                    <div class="region_list_box">전체</div>
-                    <div class="region_list_box on">서울</div>
-                    <div class="region_list_box">경기</div>
-                    <div class="region_list_box">인천</div>
-                    <div class="region_list_box">대전</div>
-                    <div class="region_list_box">세종</div>
-                    <div class="region_list_box">충남</div>
-                    <div class="region_list_box">충북</div>
-                    <div class="region_list_box">광주</div>
-                    <div class="region_list_box">전남</div>
-                    <div class="region_list_box">전북</div>
-                    <div class="region_list_box">대구</div>
-                    <div class="region_list_box">경북</div>
-                    <div class="region_list_box">부산</div>
-                    <div class="region_list_box">울산</div>
-                    <div class="region_list_box">경남</div>
-                    <div class="region_list_box">강원</div>
-                    <div class="region_list_box">제주</div>
+                    <div class="region_list_box"><?=lang('Korean.all')?></div>
+                    <div class="region_list_box on"><?=lang('Korean.seoul')?></div>
+                    <div class="region_list_box"><?=lang('Korean.gyeonggi')?></div>
+                    <div class="region_list_box"><?=lang('Korean.incheon')?></div>
+                    <div class="region_list_box"><?=lang('Korean.daejeon')?></div>
+                    <div class="region_list_box"><?=lang('Korean.sejong')?></div>
+                    <div class="region_list_box"><?=lang('Korean.chungnam')?></div>
+                    <div class="region_list_box"><?=lang('Korean.chungbuk')?></div>
+                    <div class="region_list_box"><?=lang('Korean.gwangju')?></div>
+                    <div class="region_list_box"><?=lang('Korean.jeonnam')?></div>
+                    <div class="region_list_box"><?=lang('Korean.jeonbuk')?></div>
+                    <div class="region_list_box"><?=lang('Korean.daegu')?></div>
+                    <div class="region_list_box"><?=lang('Korean.gyeongbuk')?></div>
+                    <div class="region_list_box"><?=lang('Korean.busan')?></div>
+                    <div class="region_list_box"><?=lang('Korean.ulsan')?></div>
+                    <div class="region_list_box"><?=lang('Korean.gyeongnam')?></div>
+                    <div class="region_list_box"><?=lang('Korean.gangwon')?></div>
+                    <div class="region_list_box"><?=lang('Korean.jeju')?></div>
                 </div>
                 <div class="layerPopup_bottom">
                     <div class="btn_group multy">
-                        <button class="btn type03">초기화</button>
-                        <button class="btn type01">확인</button>
+                        <button class="btn type03"><?=lang('Korean.reset')?></button>
+                        <button class="btn type01"><?=lang('Korean.check')?></button>
                     </div>
                 </div>
             </div>

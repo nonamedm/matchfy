@@ -32,7 +32,7 @@
                         <p></p>
                         <p>제2조(용어정의)</p>
                         <p></p>
-                        <p>본 약관에서 사용하는 용어의 정의는 다음과 같습니다. </p>
+                        <p>본 약관에서 사용하는 용어의 정의는 <?=lang('Korean.next')?>과 같습니다. </p>
                         <p>본 약관은 등록한 약관을 보여주는 영역입니다. 약관은 회사마다, 서비스마다 다르기 때문에 사용하시는 약관으로 등록하여 보여주시면 됩니다. </p>
                         <p>본 약관은 등록한 약관을 보여주는 영역입니다. 약관은 회사마다, 서비스마다 다르기 때문에 사용하시는 약관으로 등록하여 보여주시면 됩니다. </p>
                         <p>본 약관은 등록한 약관을 보여주는 영역입니다. 약관은 회사마다, 서비스마다 다르기 때문에 사용하시는 약관으로 등록하여 보여주시면 됩니다. </p>
@@ -56,13 +56,13 @@
                 matchfy
             </div>
             <div class="footer_link mb40">
-                <a href="#">회사정보</a>
-                <a href="#">개인정보 처리방침</a>
-                <a href="#">서비스 이용약관</a>
+                <a href="#"><?=lang('Korean.companyName')?></a>
+                <a href="#"><?=lang('Korean.pravacyName')?></a>
+                <a href="#"><?=lang('Korean.serviceName')?></a>
             </div>
             <div class="footer_info mb40">
-                <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
+                <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
+                <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
                         src="/static/images/part_line.png" /> gildong@naver.com</span>
             </div>
             <div class="footer_copy">

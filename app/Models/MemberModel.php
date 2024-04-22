@@ -33,6 +33,7 @@ class MemberModel extends Model
         'grade',
         'status',
         'sns_type',
+        'oauth_id',
         'os_type',
         // 정회원 구간
         'married',
@@ -95,6 +96,16 @@ class MemberModel extends Model
     public function getTableName()
     {
         return $this->table;
+    }
+
+    
+    public function findByOauthId($oauthId, $providerName)
+    {
+        $existingUser = $this->where('sns_type', $providerName)
+            ->where('oauth_id', $oauthId)
+            ->first();
+
+        return $existingUser;
     }
 
 }

@@ -27,10 +27,10 @@
                 <input type="text" id="title" class="temp_input_text" name="title"><br>
                 <label for="content">내용:</label><br>
                 <textarea id="content" name="content"></textarea><br>
-                <label for="userfile">파일 선택:</label><br>
+                <label for="userfile">파일 <?=lang('Korean.selected')?>:</label><br>
                 <input type="file" name="userfile"><br>
                 
-                <input class='btn type01 edit' type="submit" value="등록">
+                <input class='btn type01 edit' type="submit" value="<?=lang('Korean.registration')?>">
             </form>
         </div>
     </div>

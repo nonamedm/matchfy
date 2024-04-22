@@ -27,16 +27,16 @@
                     <img class="profile_img" src="/static/images/mypage_pfofile.png" />
                     <div class="content_mypage_info">
                         <div class="profile">
-                            <h2>장원영<span style="font-size:15px;"> 님</span></h2>
+                            <h2>장원영<span style="font-size:15px;"> <?=lang('Korean.sir')?></span></h2>
                         </div>
-                        <p>96 · 서울 강남 · ESTJ</p>
+                        <p>96 · <?=lang('Korean.seoul')?> 강남 · ESTJ</p>
                     </div>
                     <div>
-                        <button class="popup_view_profile">프로필</button>
+                        <button class="popup_view_profile"><?=lang('Korean.profile')?></button>
                     </div>
                 </div>
                 <div class="sns_img_filter">
-                    <p>SNS 사진 가져오기</p>
+                    <p><?=lang('Korean.getSnsPhoto')?></p>
                 </div>
                 <div class="profile_img_box">
                     <form class="main_signin_form">

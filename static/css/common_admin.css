@@ -96,10 +96,10 @@ table {
 .th .num{
     width: 5%;
 }
-.td:nth-child(8){
+/* .td:nth-child(8){
     width:21%;
     display: flex;
-}
+} */
 .th{
     font-size: 13px;
     font-weight: 300;

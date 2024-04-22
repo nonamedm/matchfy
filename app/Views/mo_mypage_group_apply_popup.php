@@ -16,7 +16,7 @@
     <div class="layerPopup alert middle"><!-- class: imgPop 추가 -->
         <div class="layerPopup_wrap">
             <div class="layerPopup_content medium">
-                <p class="txt">모임신청</p>
+                <p class="txt"><?=lang('Korean.meetAppli')?></p>
 
                 <div class="apply_group">
                     <div style="padding:20px;">
@@ -24,30 +24,30 @@
                             <img src="/static/images/group_list_4.png" />
                             <div class="group_list_item group_apply_item">
                                 <div class="group_particpnt">
-                                    <span>신청 5</span>/6명
+                                    <span><?=lang('Korean.application')?> 5</span>/6<?=lang('Korean.people')?>
                                 </div>
                                 <div class="group_location">
                                     <img src="/static/images/ico_location_16x16.png" />
-                                    서울/성동구
+                                    <?=lang('Korean.seoul')?>/성동구
                                 </div>
-                                <p class="group_price">25,000원</p>
+                                <p class="group_price">25,000<?=lang('Korean.won')?></p>
                                 <p class="group_schedule">2024. 02. 24(토) 19:30 </p>
                             </div>
                         </div>
                         <hr class="hoz_part" />
                         <div class="apply_group_point">
-                            <p>보유 포인트</p>
-                            <h2>234,000원</h2>
+                            <p><?=lang('Korean.myPoint')?></p>
+                            <h2>234,000<?=lang('Korean.won')?></h2>
                         </div>
                         <div class="apply_group_point">
-                            <p>모임 금액</p>
-                            <h2 class="minus">-30,000 원</h2>
+                            <p><?=lang('Korean.meetPay')?></p>
+                            <h2 class="minus">-30,000 <?=lang('Korean.won')?></h2>
                         </div>
                     </div>
 
                     <div class="layerPopup_bottom">
                         <div class="btn_group">
-                            <button class="btn type01">결제</button>
+                            <button class="btn type01"><?=lang('Korean.payment')?></button>
                         </div>
                     </div>
                 </div>

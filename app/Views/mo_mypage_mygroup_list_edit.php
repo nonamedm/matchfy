@@ -24,10 +24,10 @@
                         <img src="/static/images/left_arrow.png" />
                     </li>
                     <li class="header_title">
-                        모임
+                        <?=lang('Korean.meet')?>
                     </li>
                 </ul>
-                <div class="menu_right edit">삭제</div>
+                <div class="menu_right edit"><?=lang('Korean.delete')?></div>
             </div>
 
         </header>
@@ -37,9 +37,9 @@
                 <div class="notice_filter">
                     <p>09.01 ~ 09.30</p>
                     <select>
-                        <option>최근순</option>
-                        <option>최근순</option>
-                        <option>최근순</option>
+                        <option><?=lang('Korean.recent')?></option>
+                        <option><?=lang('Korean.recent')?></option>
+                        <option><?=lang('Korean.recent')?></option>
                     </select>
                 </div>
                 <div class="mygroup_list">
@@ -51,13 +51,13 @@
                         <img src="/static/images/group_list_1.png" />
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt">
-                                <span>신청 2</span>/4명
+                                <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                             </div>
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
+                                <?=lang('Korean.seoul')?>/강남구
                             </div>
-                            <p class="group_price">20,000원</p>
+                            <p class="group_price">20,000<?=lang('Korean.won')?></p>
                             <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
                         </div>
                     </div>
@@ -69,13 +69,13 @@
                         <img src="/static/images/group_list_2.png" />
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt">
-                                <span>신청 2</span>/4명
+                                <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                             </div>
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
+                                <?=lang('Korean.seoul')?>/강남구
                             </div>
-                            <p class="group_price">20,000원</p>
+                            <p class="group_price">20,000<?=lang('Korean.won')?></p>
                             <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
                         </div>
                     </div>
@@ -87,13 +87,13 @@
                         <img src="/static/images/group_list_3.png" />
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt">
-                                <span>신청 2</span>/4명
+                                <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                             </div>
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
+                                <?=lang('Korean.seoul')?>/강남구
                             </div>
-                            <p class="group_price">20,000원</p>
+                            <p class="group_price">20,000<?=lang('Korean.won')?></p>
                             <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
                         </div>
                     </div>
@@ -105,13 +105,13 @@
                         <img src="/static/images/group_list_4.png" />
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt">
-                                <span>신청 2</span>/4명
+                                <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                             </div>
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
+                                <?=lang('Korean.seoul')?>/강남구
                             </div>
-                            <p class="group_price">20,000원</p>
+                            <p class="group_price">20,000<?=lang('Korean.won')?></p>
                             <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
                         </div>
                     </div>
@@ -123,13 +123,13 @@
                         <img src="/static/images/group_list_1.png" />
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt">
-                                <span>신청 2</span>/4명
+                                <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                             </div>
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
+                                <?=lang('Korean.seoul')?>/강남구
                             </div>
-                            <p class="group_price">20,000원</p>
+                            <p class="group_price">20,000<?=lang('Korean.won')?></p>
                             <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
                         </div>
                     </div>
@@ -141,13 +141,13 @@
                         <img src="/static/images/group_list_2.png" />
                         <div class="group_list_item group_apply_item">
                             <div class="group_particpnt">
-                                <span>신청 2</span>/4명
+                                <span><?=lang('Korean.application')?> 2</span>/4<?=lang('Korean.people')?>
                             </div>
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />
-                                서울/강남구
+                                <?=lang('Korean.seoul')?>/강남구
                             </div>
-                            <p class="group_price">20,000원</p>
+                            <p class="group_price">20,000<?=lang('Korean.won')?></p>
                             <p class="group_schedule">2023. 01. 24(수) 19:30 </p>
                         </div>
                     </div>
@@ -166,13 +166,13 @@
                 matchfy
             </div>
             <div class="footer_link mb40">
-                <a href="#">회사정보</a>
-                <a href="#">개인정보 처리방침</a>
-                <a href="#">서비스 이용약관</a>
+                <a href="#"><?=lang('Korean.companyName')?></a>
+                <a href="#"><?=lang('Korean.pravacyName')?></a>
+                <a href="#"><?=lang('Korean.serviceName')?></a>
             </div>
             <div class="footer_info mb40">
-                <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
+                <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
+                <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
                         src="/static/images/part_line.png" /> gildong@naver.com</span>
             </div>
             <div class="footer_copy">

@@ -43,12 +43,12 @@
                 <textarea id="content" name="content"><?=htmlspecialchars($notice['content']); ?></textarea><br>
             
                 <br>
-                <label for="userfile">파일 선택:</label><br>
+                <label for="userfile">파일 <?=lang('Korean.selected')?>:</label><br>
                 <input type="file" id="userfile" name="userfile"><br>
 
                 <?php if ($file): ?>
                     <span class="attatch_file_div"><a class="attatch_file"><?= $file['org_name'] ?></a></span>
-                    <input type="button" value="파일 삭제" Onclick="fn_clickFileDelete('<?= $file['id']?>')"/></p>
+                    <input type="button" value="파일 <?=lang('Korean.delete')?>" Onclick="fn_clickFileDelete('<?= $file['id']?>')"/></p>
                 <?php endif; ?>
 
                 <br>

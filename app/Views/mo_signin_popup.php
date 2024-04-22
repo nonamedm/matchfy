@@ -4,8 +4,8 @@
             <a onclick="closePopup()">X</a>
         </div>
         <div class="layerPopup_content">
-            <p class="txt">인증</p>
-            <em class="desc">인증을 위한 <b id="type">혼인관계증명서</b>를<br />등록해주세요</em>
+            <p class="txt"><?=lang('Korean.authentication')?></p>
+            <em class="desc"><?=lang('Korean.certificationCon1')?></em>
             <div class="">
                 <div class="regist_file">
                     <label id="profile_regist_label" for="profile_regist"
@@ -15,16 +15,14 @@
             </div>
             <div class="chk_box">
                 <input type="checkbox" id="totAgree" name="chkDefault00">
-                <label class="totAgree_label" for="totAgree">동의합니다</label>
+                <label class="totAgree_label" for="totAgree"><?=lang('Korean.certificationCon2')?></label>
             </div>
             <div class="notice_box">
-                <p class="notice_text">본인은 업로드한 문서에 허위 사항이 없음을 확인하며,<br />
-                    허위 사실이 있을경우 그 손해에 대해<br />
-                    법정 최대 손해배상을 할 것을 동의합니다.</p>
+                <p class="notice_text"><?=lang('Korean.certificationCon3')?></p>
             </div>
             <div class="layerPopup_bottom">
                 <div class="btn_group">
-                    <button type="button" class="btn type01" onclick="submitFile()">확인</button>
+                    <button type="button" class="btn type01" onclick="submitFile()"><?=lang('Korean.check')?></button>
                 </div>
             </div>
             <input id="ci" type="hidden" value="" />

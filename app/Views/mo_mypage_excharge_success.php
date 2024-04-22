@@ -26,8 +26,8 @@
                 <div class="content_body" style="margin-top:235px">
                     <img src="/static/images/point_success.png" />
                     <div class="success_text">
-                        <p>환전 신청 완료</p>
-                        <em>환전 신청 후 3~5 영업일 이내에 본인계좌에 입급됩니다.</em>
+                        <p><?=lang('Korean.exchangeSuss')?></p>
+                        <em><?=lang('Korean.exchangeCon')?></em>
                     </div>
                 </div>
             </div>
@@ -35,19 +35,19 @@
             <footer class="footer">
 
                 <div class="btn_group">
-                    <button type="button" class="btn type01" onclick='loc_WalletLocation()'>내역 확인하기</button>
+                    <button type="button" class="btn type01" onclick='loc_WalletLocation()'><?=lang('Korean.paymentDetails')?></button>
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy
                 </div>
                 <div class="footer_link mb40">
-                    <a href="#">회사정보</a>
-                    <a href="#">개인정보 처리방침</a>
-                    <a href="#">서비스 이용약관</a>
+                    <a href="#"><?=lang('Korean.companyName')?></a>
+                    <a href="#"><?=lang('Korean.pravacyName')?></a>
+                    <a href="#"><?=lang('Korean.serviceName')?></a>
                 </div>
                 <div class="footer_info mb40">
-                    <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                    <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
+                    <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
+                    <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
                             src="/static/images/part_line.png" /> gildong@naver.com</span>
                 </div>
                 <div class="footer_copy">
