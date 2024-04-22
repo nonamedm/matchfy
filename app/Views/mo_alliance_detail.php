@@ -82,8 +82,6 @@
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <div style="display: flex; align-items: center;">
-                                        <input id="quantity" type="number" value="0" style="width:225px;" placeholder="인원수" />
-                                        <p style="margin-left:8px; font-size: 15px;">명</p>
                                         <input id="quantity" type="number" value="0" style="width:225px;" placeholder="<?= lang('Korean.peopleNum') ?>" />
                                         <p style="margin-left:8px; font-size: 15px;"><?= lang('Korean.people') ?></p>
                                         <a style="margin-left:15px;" id="plus"><img src="/static/images/ico_plus_30x30.png" /></a>
