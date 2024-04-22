@@ -1132,6 +1132,7 @@ class MoHome extends BaseController
                             b.title, 
                             b.meeting_place, 
                             b.membership_fee,
+                            b.chat_room_ci,
                             (
                                 SELECT SUM(CASE WHEN wmm.delete_yn = \'N\' THEN 1 ELSE 0 END) 
                                 FROM wh_meeting_members wmm 
@@ -1233,6 +1234,7 @@ class MoHome extends BaseController
                             b.title, 
                             b.meeting_place, 
                             b.membership_fee,
+                            b.chat_room_ci,
                             (
                                 SELECT SUM(CASE WHEN wmm.delete_yn = \'N\' THEN 1 ELSE 0 END) 
                                 FROM wh_meeting_members wmm 

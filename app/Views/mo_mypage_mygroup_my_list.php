@@ -9,6 +9,7 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
     <script src="/static/js/mygroup.js"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
 </head>
@@ -103,8 +104,8 @@ function formatDateTime($value)
                 <div class="notice_filter">
                     <!-- <p>09.01 ~ 09.30</p> -->
                     <select id="mygroup_order">
-                        <option value="all"><?=lang('Korean.all')?></option>
-                        <option value="latest"><?=lang('Korean.recent')?></option>
+                        <option value="all"><?= lang('Korean.all') ?></option>
+                        <option value="latest"><?= lang('Korean.recent') ?></option>
                     </select>
                 </div>
                 <div class="mygroup_list" id="mygroup_list_body">
@@ -117,7 +118,7 @@ function formatDateTime($value)
                                 </div>
                                 <h2><?= $meeting->meeting_place ?></h2>
                                 <p class=""><?= formatDateTime($meeting->meeting_start_date) ?></p>
-                                <span class=""><?=lang('Korean.personnel')?> <?= $meeting->meeting_idx_count ?><?=lang('Korean.people')?></span>
+                                <span class=""><?= lang('Korean.personnel') ?> <?= $meeting->meeting_idx_count ?><?= lang('Korean.people') ?></span>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -130,7 +131,7 @@ function formatDateTime($value)
                         </div>
                         <h2>레드버튼 (이수점)</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
+                        <span class=""><?= lang('Korean.personnel') ?> 2<?= lang('Korean.people') ?></span>
                     </div>
                 </div>
                 <div class="alliance_sch_list">
@@ -141,40 +142,40 @@ function formatDateTime($value)
                         </div>
                         <h2>레드버튼 (이수점)</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
+                        <span class=""><?= lang('Korean.personnel') ?> 2<?= lang('Korean.people') ?></span>
                     </div>
                 </div>
                 <div class="alliance_sch_list">
                     <div class="alliance_sch_item">
                         <div class="alliance_sch_sts">
-                            <div class="finish"><?=lang('Korean.close')?></div>
+                            <div class="finish"><?= lang('Korean.close') ?></div>
                             <img src="/static/images/right_arrow.png" />
                         </div>
                         <h2>레드버튼 (이수점)</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
+                        <span class=""><?= lang('Korean.personnel') ?> 2<?= lang('Korean.people') ?></span>
                     </div>
                 </div>
                 <div class="alliance_sch_list">
                     <div class="alliance_sch_item">
                         <div class="alliance_sch_sts">
-                            <div class="finish"><?=lang('Korean.close')?></div>
+                            <div class="finish"><?= lang('Korean.close') ?></div>
                             <img src="/static/images/right_arrow.png" />
                         </div>
                         <h2>레드버튼 (이수점)</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
+                        <span class=""><?= lang('Korean.personnel') ?> 2<?= lang('Korean.people') ?></span>
                     </div>
                 </div>
                 <div class="alliance_sch_list">
                     <div class="alliance_sch_item">
                         <div class="alliance_sch_sts">
-                            <div class="finish"><?=lang('Korean.close')?></div>
+                            <div class="finish"><?= lang('Korean.close') ?></div>
                             <img src="/static/images/right_arrow.png" />
                         </div>
                         <h2>레드버튼 (이수점)</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
+                        <span class=""><?= lang('Korean.personnel') ?> 2<?= lang('Korean.people') ?></span>
                     </div>
                 </div> -->
             </div>
@@ -192,13 +193,13 @@ function formatDateTime($value)
                 matchfy
             </div>
             <div class="footer_link mb40">
-                <a href="#"><?=lang('Korean.companyName')?></a>
-                <a href="#"><?=lang('Korean.pravacyName')?></a>
-                <a href="#"><?=lang('Korean.serviceName')?></a>
+                <a href="#"><?= lang('Korean.companyName') ?></a>
+                <a href="#"><?= lang('Korean.pravacyName') ?></a>
+                <a href="#"><?= lang('Korean.serviceName') ?></a>
             </div>
             <div class="footer_info mb40">
-                <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
-                <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
+                <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>
+                <span><?= lang('Korean.footerInfo3') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo4') ?><img
                         src="/static/images/part_line.png" /> gildong@naver.com</span>
             </div>
             <div class="footer_copy">
@@ -212,13 +213,6 @@ function formatDateTime($value)
     <!-- SCRIPTS -->
 
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
     </script>
 
     <!-- -->
