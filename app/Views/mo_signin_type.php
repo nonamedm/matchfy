@@ -55,7 +55,7 @@
                                     <img src="/static/images/now_signin.png" />
                                     <div class="price_box">
                                         <p class="org_price">109,900</p>
-                                        <p class="tot_price">99,000</p>
+                                        <p class="tot_price"><?= $isDiscounted ? number_format(99000 / 2) : '99,000' ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +78,7 @@
                                     <img src="/static/images/now_signin.png" />
                                     <div class="price_box">
                                         <p class="org_price">1,399,900</p>
-                                        <p class="tot_price">990,000</p>
+                                        <p class="tot_price"><?= $isDiscounted ? number_format(990000 / 2) : '990,000' ?></p>
                                     </div>
                                 </div>
                             </div>
