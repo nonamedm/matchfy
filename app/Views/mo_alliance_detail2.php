@@ -26,7 +26,7 @@
                 </div>
                 <div class="group_detail_info">
                     <div class="group_detail_header">
-                        <div class="group_detail_type">기타</div>
+                        <div class="group_detail_type"><?=lang('Korean.extra')?></div>
                         <p>　</p>
                     </div>
                     <div class="group_detail_title">
@@ -36,15 +36,15 @@
                     <div class="tab_wrap">
                         <ul>
                             <li>
-                                예약하기
+                                <?=lang('Korean.reservBtn')?>
                             </li>
                             <li class="on">
-                                상세정보
+                                <?=lang('Korean.allianceDetailInfo')?>
                             </li>
                         </ul>
                     </div>
                     <div class="alliance_detail_cont">
-                        <h2>소개</h2>
+                        <h2><?=lang('Korean.intro')?></h2>
                         <p>· 최소 2인 이상 예약 및 체험이 가능합니다.</p>
                         <p>· 입장 시간 10분 전까지 도착해주세요.</p>
                         <p>· 예약처리 기준 15분 내 미 방문 시 자동 사용 완료 처리 됩니다.</p>
@@ -53,20 +53,20 @@
 
                     </div>
                     <div class="alliance_detail_cont">
-                        <h2>취소/환불 규정</h2>                        
+                        <h2><?=lang('Korean.allianceCancelCon')?></h2>                        
                         <table class="basic_table">
                             <tr>
-                                <td>이용 1일 전까지</td>
-                                <td>결제 금액에 대한 취소 수수료 없음</td>
+                                <td><?=lang('Korean.allianceCancelCon2')?></td>
+                                <td><?=lang('Korean.allianceCancelCon3')?></td>
                             </tr>
                             <tr>
-                                <td>이용 당일</td>
-                                <td>결제 금액의 100% 차감</td>
+                                <td><?=lang('Korean.allianceCancelCon4')?></td>
+                                <td><?=lang('Korean.allianceCancelCon5')?></td>
                             </tr>
                         </table>
                     </div>
                     <div class="alliance_detail_cont">
-                        <h2>오시는 길</h2>
+                        <h2><?=lang('Korean.allianceLocation')?></h2>
                         <div class="group_location">
                             <img src="/static/images/ico_location_16x16.png" />
                             서울시 동작구 상도동 205-23 2층
@@ -76,21 +76,21 @@
                         </div>
                     </div>
                     <div class="alliance_detail_cont">
-                        <h2>판매자 정보</h2>
+                        <h2><?=lang('Korean.allianceSellerInfo')?></h2>
                         <div class="alliance_profile_content">
-                            <h2>상호</h2>
+                            <h2><?=lang('Korean.allianceMutual')?></h2>
                             <p>레드버튼 이수</p>
                         </div>                            
                         <div class="alliance_profile_content">
-                            <h2>대표자명</h2>
+                            <h2><?=lang('Korean.allianceRepresentativeName')?></h2>
                             <p>홍길동</p>
                         </div>                            
                         <div class="alliance_profile_content">
-                            <h2>사업자번호</h2>
+                            <h2><?=lang('Korean.allianceCeonum')?></h2>
                             <p>112-34-55667</p>
                         </div>                            
                         <div class="alliance_profile_content">
-                            <h2>연락처</h2>
+                            <h2><?=lang('Korean.allianceCompanyContact')?></h2>
                             <p>02-1234-1234</p>
                         </div>                            
                     </div>
@@ -99,7 +99,7 @@
                 <footer class="footer">
 
                     <div class="btn_group">
-                        <button type="button" class="btn type01">예약하기</button>
+                        <button type="button" class="btn type01"><?=lang('Korean.reservBtn')?></button>
                     </div>
                 </footer>
             </div>

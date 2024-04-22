@@ -26,11 +26,9 @@
                 <div class="content_partner">
                     <div class="content_partner_header">
                         <p>
-                            <?= $name ?>님, 반갑습니다.<br />
-                            어떤 친구를 원하시나요?
+                            <?= $name ?><?=lang('Korean.factorCon1')?>
                         </p>
-                        <h2>만나고 싶은 친구의 정보를<br />
-                            입력해주세요! </h2>
+                        <h2><?=lang('Korean.factorCon2')?></h2>
                     </div>
                     <img src="/static/images/partner.png" />
                 </div>
@@ -38,133 +36,132 @@
                     <legend></legend>
                     <div class="content_partner" style="margin: 50px 5px;">
                         <div class="content_partner_header">
-                            <h2>가중치 항목 설정 </h2>
-                            <p style="margin-top: 20px;">[선택 사항]</p>
+                            <h2><?=lang('Korean.matchCon1')?> </h2>
+                            <p style="margin-top: 20px;">[<?=lang('Korean.factorCon4')?>]</p>
                             <p style="text-indent: -10px;">
-                                * 더 정확한 매칭을 위해, 상대를 선택할때<br />
-                                중점을 두는 사항에 대해 가중치를 설정해보세요
+                                * <?=lang('Korean.matchCon2')?>
                             </p>
                         </div>
                     </div>
                     <div class="content_partner content_factor" style="margin: 50px 5px;">
                         <div class="content_partner_header">
-                            <p style="margin-top: 20px;">4순위까지 선택이 가능하며</p>
+                            <p style="margin-top: 20px;"><?=lang('Korean.matchCon3')?></p>
                             <br />
-                            <p>4개 항목 선택시<br />
-                                1순위 X 40점<br />
-                                2순위 X 30점<br />
-                                3순위 X 20점<br />
-                                4순위 X 10점<br />
+                            <p>4<?=lang('Korean.matchCon4')?><br />
+                                1<?=lang('Korean.ranking')?> X 40<?=lang('Korean.score')?><br />
+                                2<?=lang('Korean.ranking')?> X 30<?=lang('Korean.score')?><br />
+                                3<?=lang('Korean.ranking')?> X 20<?=lang('Korean.score')?><br />
+                                4<?=lang('Korean.ranking')?> X 10<?=lang('Korean.score')?><br />
                             </p>
                             <br />
-                            <p>3개 항목 선택시<br />
-                                1순위 X 50점<br />
-                                2순위 X 30점<br />
-                                3순위 X 20점<br />
+                            <p>3<?=lang('Korean.matchCon4')?><br />
+                                1<?=lang('Korean.ranking')?> X 50<?=lang('Korean.score')?><br />
+                                2<?=lang('Korean.ranking')?> X 30<?=lang('Korean.score')?><br />
+                                3<?=lang('Korean.ranking')?> X 20<?=lang('Korean.score')?><br />
                             </p>
                             <br />
-                            <p>2개 항목 선택시<br />
-                                1순위 X 60점<br />
-                                2순위 X 40점<br />
+                            <p>2<?=lang('Korean.matchCon4')?><br />
+                                1<?=lang('Korean.ranking')?> X 60<?=lang('Korean.score')?><br />
+                                2<?=lang('Korean.ranking')?> X 40<?=lang('Korean.score')?><br />
                             </p>
                             <br />
-                            <p>과 같이 가중치가 반영됩니다</p>
+                            <p><?=lang('Korean.matchCon5')?></p>
                         </div>
                     </div>
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="first_factor" class="signin_label">1순위</label>
+                                <label for="first_factor" class="signin_label">1<?=lang('Korean.ranking')?></label>
                                 <select id="first_factor" name="first_factor">
-                                    <option value>미선택</option>
+                                    <option value><?=lang('Korean.noSelected')?></option>
                                     <option value="mbti">MBTI</option>
-                                    <option value="animal_type1">얼굴형</option>
-                                    <option value="stylish">스타일</option>
-                                    <option value="drinking">음주횟수</option>
-                                    <option value="birthday">나이</option>
-                                    <option value="bodyshape">체형</option>
-                                    <option value="city">지역</option>
-                                    <option value="married">결혼경험</option>
-                                    <option value="smoker">흡연유무</option>
-                                    <option value="religion">종교</option>
-                                    <option value="gender">성별</option>
-                                    <option value="height">키</option>
-                                    <option value="education">학력</option>
-                                    <option value="job">직업</option>
-                                    <option value="asset_range">자산구간</option>
-                                    <option value="income_range">소득구간</option>
+                                    <option value="animal_type1"><?=lang('Korean.faceType')?></option>
+                                    <option value="stylish"><?=lang('Korean.styleType')?></option>
+                                    <option value="drinking"><?=lang('Korean.drinkingType')?></option>
+                                    <option value="birthday"><?=lang('Korean.ageType')?></option>
+                                    <option value="bodyshape"><?=lang('Korean.formType')?></option>
+                                    <option value="city"><?=lang('Korean.region')?></option>
+                                    <option value="married"><?=lang('Korean.marryType')?></option>
+                                    <option value="smoker"><?=lang('Korean.smokeType')?></option>
+                                    <option value="religion"><?=lang('Korean.religionType')?></option>
+                                    <option value="gender"><?=lang('Korean.gender')?></option>
+                                    <option value="height"><?=lang('Korean.height')?></option>
+                                    <option value="education"><?=lang('Korean.education')?></option>
+                                    <option value="job"><?=lang('Korean.occupational')?></option>
+                                    <option value="asset_range"><?=lang('Korean.assetGroup')?></option>
+                                    <option value="income_range"><?=lang('Korean.incomeGroup')?></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="second_factor" class="signin_label">2순위</label>
+                                <label for="second_factor" class="signin_label">2<?=lang('Korean.ranking')?></label>
                                 <select id="second_factor" name="second_factor">
-                                    <option value>미선택</option>
+                                    <option value><?=lang('Korean.noSelected')?></option>
                                     <option value="mbti">MBTI</option>
-                                    <option value="animal_type1">얼굴형</option>
-                                    <option value="stylish">스타일</option>
-                                    <option value="drinking">음주횟수</option>
-                                    <option value="birthday">나이</option>
-                                    <option value="bodyshape">체형</option>
-                                    <option value="city">지역</option>
-                                    <option value="married">결혼경험</option>
-                                    <option value="smoker">흡연유무</option>
-                                    <option value="religion">종교</option>
-                                    <option value="gender">성별</option>
-                                    <option value="height">키</option>
-                                    <option value="education">학력</option>
-                                    <option value="job">직업</option>
-                                    <option value="asset_range">자산구간</option>
-                                    <option value="income_range">소득구간</option>
+                                    <option value="animal_type1"><?=lang('Korean.faceType')?></option>
+                                    <option value="stylish"><?=lang('Korean.styleType')?></option>
+                                    <option value="drinking"><?=lang('Korean.drinkingType')?></option>
+                                    <option value="birthday"><?=lang('Korean.ageType')?></option>
+                                    <option value="bodyshape"><?=lang('Korean.formType')?></option>
+                                    <option value="city"><?=lang('Korean.region')?></option>
+                                    <option value="married"><?=lang('Korean.marryType')?></option>
+                                    <option value="smoker"><?=lang('Korean.smokeType')?></option>
+                                    <option value="religion"><?=lang('Korean.religionType')?></option>
+                                    <option value="gender"><?=lang('Korean.gender')?></option>
+                                    <option value="height"><?=lang('Korean.height')?></option>
+                                    <option value="education"><?=lang('Korean.education')?></option>
+                                    <option value="job"><?=lang('Korean.occupational')?></option>
+                                    <option value="asset_range"><?=lang('Korean.assetGroup')?></option>
+                                    <option value="income_range"><?=lang('Korean.incomeGroup')?></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="third_factor" class="signin_label">3순위</label>
+                                <label for="third_factor" class="signin_label">3<?=lang('Korean.ranking')?></label>
                                 <select id="third_factor" name="third_factor">
-                                    <option value>미선택</option>
+                                    <option value><?=lang('Korean.noSelected')?></option>
                                     <option value="mbti">MBTI</option>
-                                    <option value="animal_type1">얼굴형</option>
-                                    <option value="stylish">스타일</option>
-                                    <option value="drinking">음주횟수</option>
-                                    <option value="birthday">나이</option>
-                                    <option value="bodyshape">체형</option>
-                                    <option value="city">지역</option>
-                                    <option value="married">결혼경험</option>
-                                    <option value="smoker">흡연유무</option>
-                                    <option value="religion">종교</option>
-                                    <option value="gender">성별</option>
-                                    <option value="height">키</option>
-                                    <option value="education">학력</option>
-                                    <option value="job">직업</option>
-                                    <option value="asset_range">자산구간</option>
-                                    <option value="income_range">소득구간</option>
+                                    <option value="animal_type1"><?=lang('Korean.faceType')?></option>
+                                    <option value="stylish"><?=lang('Korean.styleType')?></option>
+                                    <option value="drinking"><?=lang('Korean.drinkingType')?></option>
+                                    <option value="birthday"><?=lang('Korean.ageType')?></option>
+                                    <option value="bodyshape"><?=lang('Korean.formType')?></option>
+                                    <option value="city"><?=lang('Korean.region')?></option>
+                                    <option value="married"><?=lang('Korean.marryType')?></option>
+                                    <option value="smoker"><?=lang('Korean.smokeType')?></option>
+                                    <option value="religion"><?=lang('Korean.religionType')?></option>
+                                    <option value="gender"><?=lang('Korean.gender')?></option>
+                                    <option value="height"><?=lang('Korean.height')?></option>
+                                    <option value="education"><?=lang('Korean.education')?></option>
+                                    <option value="job"><?=lang('Korean.occupational')?></option>
+                                    <option value="asset_range"><?=lang('Korean.assetGroup')?></option>
+                                    <option value="income_range"><?=lang('Korean.incomeGroup')?></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="fourth_factor" class="signin_label">4순위</label>
+                                <label for="fourth_factor" class="signin_label">4<?=lang('Korean.ranking')?></label>
                                 <select id="fourth_factor" name="fourth_factor">
-                                    <option value>미선택</option>
+                                    <option value><?=lang('Korean.noSelected')?></option>
                                     <option value="mbti">MBTI</option>
-                                    <option value="animal_type1">얼굴형</option>
-                                    <option value="stylish">스타일</option>
-                                    <option value="drinking">음주횟수</option>
-                                    <option value="birthday">나이</option>
-                                    <option value="bodyshape">체형</option>
-                                    <option value="city">지역</option>
-                                    <option value="married">결혼경험</option>
-                                    <option value="smoker">흡연유무</option>
-                                    <option value="religion">종교</option>
-                                    <option value="gender">성별</option>
-                                    <option value="height">키</option>
-                                    <option value="education">학력</option>
-                                    <option value="job">직업</option>
-                                    <option value="asset_range">자산구간</option>
-                                    <option value="income_range">소득구간</option>
+                                    <option value="animal_type1"><?=lang('Korean.faceType')?></option>
+                                    <option value="stylish"><?=lang('Korean.styleType')?></option>
+                                    <option value="drinking"><?=lang('Korean.drinkingType')?></option>
+                                    <option value="birthday"><?=lang('Korean.ageType')?></option>
+                                    <option value="bodyshape"><?=lang('Korean.formType')?></option>
+                                    <option value="city"><?=lang('Korean.region')?></option>
+                                    <option value="married"><?=lang('Korean.marryType')?></option>
+                                    <option value="smoker"><?=lang('Korean.smokeType')?></option>
+                                    <option value="religion"><?=lang('Korean.religionType')?></option>
+                                    <option value="gender"><?=lang('Korean.gender')?></option>
+                                    <option value="height"><?=lang('Korean.height')?></option>
+                                    <option value="education"><?=lang('Korean.education')?></option>
+                                    <option value="job"><?=lang('Korean.occupational')?></option>
+                                    <option value="asset_range"><?=lang('Korean.assetGroup')?></option>
+                                    <option value="income_range"><?=lang('Korean.incomeGroup')?></option>
                                 </select>
                             </div>
                         </div>
@@ -177,64 +174,64 @@
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div flex">
-                                <label for="except1" class="signin_label">배제항목1</label>
+                                <label for="except1" class="signin_label"><?=lang('Korean.exclusionItems')?>1</label>
                                 <div class="multy_select">
                                     <select id="except1" name="except1" onchange="chgExcept(this);">
-                                        <option value>미선택</option>
+                                        <option value><?=lang('Korean.noSelected')?></option>
                                         <option value="mbti">MBTI</option>
-                                        <option value="animal_type1">얼굴형</option>
-                                        <option value="stylish">스타일</option>
-                                        <option value="drinking">음주횟수</option>
-                                        <!-- <option value="birthday">나이</option> -->
-                                        <option value="bodyshape">체형</option>
-                                        <option value="city">지역</option>
-                                        <option value="married">결혼경험</option>
-                                        <option value="smoker">흡연유무</option>
-                                        <option value="religion">종교</option>
-                                        <!-- <option value="gender">성별</option> -->
-                                        <!-- <option value="height">키</option> -->
-                                        <option value="education">학력</option>
-                                        <option value="job">직업</option>
-                                        <option value="asset_range">자산구간</option>
-                                        <option value="income_range">소득구간</option>
+                                        <option value="animal_type1"><?=lang('Korean.faceType')?></option>
+                                        <option value="stylish"><?=lang('Korean.styleType')?></option>
+                                        <option value="drinking"><?=lang('Korean.drinkingType')?></option>
+                                        <!-- <option value="birthday"><?=lang('Korean.ageType')?></option> -->
+                                        <option value="bodyshape"><?=lang('Korean.formType')?></option>
+                                        <option value="city"><?=lang('Korean.region')?></option>
+                                        <option value="married"><?=lang('Korean.marryType')?></option>
+                                        <option value="smoker"><?=lang('Korean.smokeType')?></option>
+                                        <option value="religion"><?=lang('Korean.religionType')?></option>
+                                        <!-- <option value="gender"><?=lang('Korean.gender')?></option> -->
+                                        <!-- <option value="height"><?=lang('Korean.height')?></option> -->
+                                        <option value="education"><?=lang('Korean.education')?></option>
+                                        <option value="job"><?=lang('Korean.occupational')?></option>
+                                        <option value="asset_range"><?=lang('Korean.assetGroup')?></option>
+                                        <option value="income_range"><?=lang('Korean.incomeGroup')?></option>
                                     </select>
                                     <select id="except1_detail" name="except1_detail">
-                                        <option value>미선택</option>
+                                        <option value><?=lang('Korean.noSelected')?></option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div flex">
-                                <label for="except2" class="signin_label">배제항목2</label>
+                                <label for="except2" class="signin_label"><?=lang('Korean.exclusionItems')?>2</label>
                                 <div class="multy_select">
                                     <select id="except2" name="except2" onchange="chgExcept(this);">
-                                        <option value>미선택</option>
+                                        <option value><?=lang('Korean.noSelected')?></option>
                                         <option value="mbti">MBTI</option>
-                                        <option value="animal_type1">얼굴형</option>
-                                        <option value="stylish">스타일</option>
-                                        <option value="drinking">음주횟수</option>
-                                        <!-- <option value="birthday">나이</option> -->
-                                        <option value="bodyshape">체형</option>
-                                        <option value="city">지역</option>
-                                        <option value="married">결혼경험</option>
-                                        <option value="smoker">흡연유무</option>
-                                        <option value="religion">종교</option>
-                                        <!-- <option value="gender">성별</option> -->
-                                        <!-- <option value="height">키</option> -->
-                                        <option value="education">학력</option>
-                                        <option value="job">직업</option>
-                                        <option value="asset_range">자산구간</option>
-                                        <option value="income_range">소득구간</option>
+                                        <option value="animal_type1"><?=lang('Korean.faceType')?></option>
+                                        <option value="stylish"><?=lang('Korean.styleType')?></option>
+                                        <option value="drinking"><?=lang('Korean.drinkingType')?></option>
+                                        <!-- <option value="birthday"><?=lang('Korean.ageType')?></option> -->
+                                        <option value="bodyshape"><?=lang('Korean.formType')?></option>
+                                        <option value="city"><?=lang('Korean.region')?></option>
+                                        <option value="married"><?=lang('Korean.marryType')?></option>
+                                        <option value="smoker"><?=lang('Korean.smokeType')?></option>
+                                        <option value="religion"><?=lang('Korean.religionType')?></option>
+                                        <!-- <option value="gender"><?=lang('Korean.gender')?></option> -->
+                                        <!-- <option value="height"><?=lang('Korean.height')?></option> -->
+                                        <option value="education"><?=lang('Korean.education')?></option>
+                                        <option value="job"><?=lang('Korean.occupational')?></option>
+                                        <option value="asset_range"><?=lang('Korean.assetGroup')?></option>
+                                        <option value="income_range"><?=lang('Korean.incomeGroup')?></option>
                                     </select>
                                     <select id="except2_detail" name="except2_detail">
-                                        <option value>미선택</option>
+                                        <option value><?=lang('Korean.noSelected')?></option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="btn_group">
-                            <button type="button" class="btn type01" onclick="saveFactorInfo()">저장</button>
+                            <button type="button" class="btn type01" onclick="saveFactorInfo()"><?=lang('Korean.save')?></button>
                         </div>
                     </div>
                 </form>
@@ -319,7 +316,7 @@
                 });
             } else {
                 $("#" + e.id + "_detail").html('');
-                $("#" + e.id + "_detail").append('<option>미선택</option>');
+                $("#" + e.id + "_detail").append('<option><?=lang('Korean.noSelected')?></option>');
             }
         }
         const saveFactorInfo = () => {

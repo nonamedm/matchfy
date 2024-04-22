@@ -16,18 +16,18 @@
     <div class="layerPopup alert middle"><!-- class: imgPop 추가 -->
         <div class="layerPopup_wrap">
             <div class="layerPopup_content">
-                <p class="txt">정보보기</p>
+                <p class="txt"><?=lang('Korean.viewInfo')?></p>
                 <!-- <em class="desc">인증을 위한 혼인관계증명서를<br/>등록해주세요</em> -->
                 <div class="content_mypage">
                     <img class="profile_img" src="/static/images/mypage_pfofile.png" />
                     <div class="content_mypage_info">
                         <div class="profile">
-                            <h2>장원영<span style="font-size:15px;"> 님</span></h2>
+                            <h2>장원영<span style="font-size:15px;"> <?=lang('Korean.sir')?></span></h2>
                         </div>
-                        <p>96 · 서울 강남 · ESTJ</p>
+                        <p>96 · <?=lang('Korean.seoul')?> 강남 · ESTJ</p>
                     </div>
                     <div>
-                        <button class="popup_view_profile">프로필</button>
+                        <button class="popup_view_profile"><?=lang('Korean.profile')?></button>
                     </div>
                 </div>
 
@@ -44,7 +44,7 @@
                 </div>
                 <!-- <div class="layerPopup_bottom">
                     <div class="btn_group">
-                        <button class="btn type01">확인</button>
+                        <button class="btn type01"><?=lang('Korean.check')?></button>
                     </div>
                 </div> -->
             </div>

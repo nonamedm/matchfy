@@ -42,7 +42,7 @@
                     <div class="content_mypage_info">
                         <div class="profile">
                             <h2>
-                                <?= $user['nickname'] ?><span style="font-size:15px;"> 님</span>
+                                <?= $user['nickname'] ?><span style="font-size:15px;"> <?=lang('Korean.sir')?></span>
                             </h2>
                         </div>
                         <p>
@@ -56,7 +56,7 @@
                         </p>
                     </div>
                     <div>
-                        <button class="popup_view_profile" onclick="moveToUrl('/mo/viewProfile/<?= $user['nickname'] ?>')">프로필</button>
+                        <button class="popup_view_profile" onclick="moveToUrl('/mo/viewProfile/<?= $user['nickname'] ?>')"><?=lang('Korean.profile')?></button>
                     </div>
                 </div>
                 <div class="profile_img_box">

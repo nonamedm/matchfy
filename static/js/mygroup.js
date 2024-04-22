@@ -390,6 +390,7 @@ function MygroupPopup(idx, idValue, master) {
         data: { meetingIdx: idx },
         type: 'post',
         success: function (data) {
+            console.log('무야호', data);
             var html = '';
             if (data.success == true) {
                 var data = data.data;
@@ -399,7 +400,7 @@ function MygroupPopup(idx, idValue, master) {
                     html += '<div class="layerPopup_wrap">';
                     html += '<div class="layerPopup_content small">';
                     html += '<div style="position: relative;display: flex;">';
-                    html += '<p class="txt" style="width: 90%;padding-left: 5%;">에약확인</p>';
+                    html += '<p class="txt" style="width: 90%;padding-left: 5%;">예약확인</p>';
                     html += '<a href="#" class="btn_close" onclick="alertClose();" style="float: right;">닫기</a>';
                     html += '</div>';
                     html += '<div class="alliance_sch_list popup">';
@@ -430,7 +431,10 @@ function MygroupPopup(idx, idValue, master) {
                         cancel_rsv == '3일전'
                     ) {
                         html += '<div class="btn_group">';
-                        html += '<button class="btn type01">대화방입장</button>';
+                        html +=
+                            `<button class="btn type01" onclick="enterChatRoom('` +
+                            data[i].chat_room_ci +
+                            `')">대화방입장</button>`;
                         html += '</div>';
                     } else if (cancel_rsv == '종료' || cancel_rsv == '취소') {
                         html += '<div class="btn_group">';
@@ -446,7 +450,10 @@ function MygroupPopup(idx, idValue, master) {
                                 data[i].meeting_idx +
                                 ');">예약 취소</button>';
                         }
-                        html += '<button class="btn type01">대화방 입장</button>';
+                        html +=
+                            `<button class="btn type01" onclick="enterChatRoom('` +
+                            data[i].chat_room_ci +
+                            `')">대화방 입장</button>`;
                         html += '</div>';
                     }
                     html += '</div>';
@@ -462,6 +469,35 @@ function MygroupPopup(idx, idValue, master) {
         },
     });
 }
+
+const enterChatRoom = (ci) => {
+    $.ajax({
+        url: '/ajax/createMultyChat',
+        type: 'POST',
+        data: {
+            room_ci: ci,
+        },
+        async: false,
+        success: function (data) {
+            if (data.status === 'success') {
+                // 성공
+                console.log(data);
+                moveToUrl('/mo/mymsg', {
+                    room_ci: data.data.room_ci,
+                });
+            } else if (data.status === 'error') {
+                console.log('메세지 전송 실패', data);
+            } else {
+                alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+            }
+            return false;
+        },
+        error: function (data, status, err) {
+            console.log(err);
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
+};
 
 function locationMygroup() {
     window.location.href = '/mo/mypage/mygroup/list';

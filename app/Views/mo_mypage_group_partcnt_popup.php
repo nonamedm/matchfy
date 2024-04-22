@@ -16,7 +16,7 @@
     <div class="layerPopup alert middle"><!-- class: imgPop 추가 -->
         <div class="layerPopup_wrap">
             <div class="layerPopup_content medium">
-                <p class="txt">참석 멤버</p>
+                <p class="txt"><?=lang('Korean.attendingMember')?></p>
 
                 <div class="">
                     <div class="chat_member">
@@ -60,7 +60,7 @@
 
                 <div class="layerPopup_bottom">
                     <div class="btn_group">
-                        <button class="btn type01">확인</button>
+                        <button class="btn type01"><?=lang('Korean.check')?></button>
                     </div>
                 </div>
             </div>

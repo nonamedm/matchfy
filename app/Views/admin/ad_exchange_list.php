@@ -27,11 +27,11 @@
                 <thead>
                     <tr class="tr">
                         <th class="th num">번호</th>
-                        <th class="th">이름</th>
+                        <th class="th"><?=lang('Korean.name')?></th>
                         <th class="th">핸드폰번호</th>
                         <th class="th">환전금액</th>
-                        <th class="th">은행</th>
-                        <th class="th">계좌번호</th>
+                        <th class="th"><?=lang('Korean.bank')?></th>
+                        <th class="th"><?=lang('Korean.exchangeAccount')?></th>
                         <th class="th">환전신청 상황</th>
                     </tr>
                 </thead>
@@ -53,7 +53,7 @@
                                 } elseif ($exchange_level == 1) {
                                     echo "<button class='exchangebtn btn00 btn type02'  data-idx='".$data['idx']."' data-exchange-level='2'>완료</button>";
                                 } elseif ($exchange_level == 2) {
-                                    echo "<span class='exc_text'>환전완료</span>";
+                                    echo "<span class='exc_text'><?=lang('Korean.exchange')?>완료</span>";
                                 }
                                 ?>  
                             </td>

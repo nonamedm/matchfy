@@ -24,40 +24,40 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="group_search">
-                    <input type="text" placeholder="모임을 검색해보세요!" />
+                    <input type="text" placeholder="<?=lang('Korean.meetplaceholder')?>" />
                     <img src="/static/images/ico_search_18x18.png" class="group_serch_img" />
                 </div>
                 <div class="group_category">
                     <div class="group_category_all" data-category="">
                         <img src="/static/images/group_category_all.png" />
-                        <p>전체</p>
+                        <p><?=lang('Korean.all')?></p>
                     </div>
                     <div class="group_category_1" data-category="01">
                         <img src="/static/images/group_category_1.png" />
-                        <p>주중 모임</p>
+                        <p><?=lang('Korean.weekdayMeeting')?></p>
                     </div>
                     <div class="group_category_2" data-category="02">
                         <img src="/static/images/group_category_2.png" />
-                        <p>주중 여행</p>
+                        <p><?=lang('Korean.weekdayTrip')?></p>
                     </div>
                     <div class="group_category_3" data-category="03">
                         <img src="/static/images/group_category_3.png" />
-                        <p>주말 모임</p>
+                        <p><?=lang('Korean.holiMeeting')?></p>
                     </div>
                     <div class="group_category_4 " data-category="04">
                         <img src="/static/images/group_category_4.png" />
-                        <p>주말 여행</p>
+                        <p><?=lang('Korean.holiTrip')?></p>
                     </div>
                 </div>
                 <div class="group_search_filter">
                     <select class="small" id="groupFilterSelect">
-                        <option value="create_at">등록순</option>
-                        <option value="meeting_start_date">빠른 모임순</option>
-                        <option value="membership_fee">예약금 낮은 순</option>
+                        <option value="create_at"><?=lang('Korean.registrationOrder')?></option>
+                        <option value="meeting_start_date"><?=lang('Korean.quickMeetingOrder')?></option>
+                        <option value="membership_fee"><?=lang('Korean.lowestReservationDeposit')?></option>
                     </select>
                     <div class="group_create_btn">
                         <img src="/static/images/ico_btn_plus_8x8.png" />
-                        <button class="btn type01 on" onclick="moveToUrl('/mo/mypage/group/create')">모임등록</button>
+                        <button class="btn type01 on" onclick="moveToUrl('/mo/mypage/group/create')"><?=lang('Korean.meet')?><?=lang('Korean.registration')?></button>
                     </div>
                 </div>
                 <div class="group_search_list">
@@ -71,7 +71,7 @@
                                 <?php endif; ?>
 
                                 <div class="group_particpnt">
-                                    <span>신청 <?= $meeting['count'] ?></span>/<?= $meeting['number_of_people'] ?>명
+                                    <span><?=lang('Korean.application')?> <?= $meeting['count'] ?></span>/<?= $meeting['number_of_people'] ?><?=lang('Korean.people')?>
                                 </div>
                                 <div class="group_location">
                                     <?= $meeting['title'] ?>
@@ -80,7 +80,7 @@
                                     <img src="/static/images/ico_location_16x16.png" />
                                     <?= $meeting['meeting_place'] ?>
                                 </div>
-                                <p class="group_price"><?= number_format($meeting['membership_fee']) ?>원</p>
+                                <p class="group_price"><?= number_format($meeting['membership_fee']) ?><?=lang('Korean.won')?></p>
                                 <p class="group_schedule"><?= $meeting['meetingDateTime'] ?></p>
                             </div>
                         </a>
@@ -101,13 +101,13 @@
                 matchfy
             </div>
             <div class="footer_link mb40">
-                <a href="#">회사정보</a>
-                <a href="#">개인정보 처리방침</a>
-                <a href="#">서비스 이용약관</a>
+                <a href="#"><?=lang('Korean.companyName')?></a>
+                <a href="#"><?=lang('Korean.pravacyName')?></a>
+                <a href="#"><?=lang('Korean.serviceName')?></a>
             </div>
             <div class="footer_info mb40">
-                <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
+                <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
+                <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
                         src="/static/images/part_line.png" /> gildong@naver.com</span>
             </div>
             <div class="footer_copy">

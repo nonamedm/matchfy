@@ -20,22 +20,22 @@
     <div class="layerPopup alert middle"><!-- class: imgPop 추가 -->
         <div class="layerPopup_wrap">
             <div class="layerPopup_content medium">
-                <p class="txt">예약금 송금</p>
+                <p class="txt"><?=lang('Korean.reservDepoRemit')?></p>
                 
                 <div class="">
                     <div>
                         <div class="schedule_title">
-                            <h2>금액</h2>
+                            <h2><?=lang('Korean.amount')?></h2>
                         </div>
                         <div class="schedule_deposit">
                             <input type="number" id=""/>
-                            <p>원</p>
+                            <p><?=lang('Korean.won')?></p>
                         </div>
                     </div>
                     
-                    <div style="schedule_photo">
+                    <div class="schedule_photo"> 
                         <div class="schedule_title">
-                            <h2>사진을 첨부해주세요</h2>
+                            <h2><?=lang('Korean.attachPicturesPlace')?></h2>
                         </div>
                         <div class="form_row signin_form" style="height:150px;">
                             <div class="signin_form_div">
@@ -55,7 +55,7 @@
                 
                 <div class="layerPopup_bottom">
                     <div class="btn_group">
-                        <button class="btn type01">보내기</button>
+                        <button class="btn type01"><?=lang('Korean.send')?></button>
                     </div>
                 </div>
             </div>

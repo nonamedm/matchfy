@@ -18,7 +18,7 @@
         </div>
         <div class="ad_con">
             <h2>개인정보처리방침 목록</h2> 
-            <input class="edit btn type01" type="button" value="등록" Onclick="fn_EditClick('privacy');"/>
+            <input class="edit btn type01" type="button" value="<?=lang('Korean.registration')?>" Onclick="fn_EditClick('privacy');"/>
             <table>
                 <thead>
                     <tr class="tr">
@@ -26,7 +26,7 @@
                         <th class="th text_left" style="width:20%;">제목</th>
                         <th class="th text_left" style="width:65%;">내용</th>
                         <th class="th" style="width:5%;">수정</th>
-                        <th class="th" style="width:5%;">삭제</th>
+                        <th class="th" style="width:5%;"><?=lang('Korean.delete')?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,7 +57,7 @@
                                 <input type="button" class="btn type01" value="수정" Onclick="fn_clickUpdate('privacy','<?= $privacy['id']?>')"/>
                             </td>
                             <td class="td">
-                                <input type="button" class="btn type02" value="삭제"  Onclick="fn_clickDelete('<?= $privacy['id']?>','privacy')"/>
+                                <input type="button" class="btn type02" value="<?=lang('Korean.delete')?>"  Onclick="fn_clickDelete('<?= $privacy['id']?>','privacy')"/>
                             </td>
                         </tr>
                     <?php endforeach; ?>

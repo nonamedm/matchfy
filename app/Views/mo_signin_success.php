@@ -24,16 +24,16 @@
                 <div class="content_body" style="margin-top:235px">
                     <img src="/static/images/signup_success.png" />
                     <div class="success_text">
-                        <p>가입 완료!</p>
-                        <em>준회원 가입을 축하합니다.</em>
+                        <p><?=lang('Korean.siginSuccessTitle')?></p>
+                        <em><?=lang('Korean.siginSuccessCon1')?></em>
                     </div>
                 </div>
             </div>
             <div style="height: 50px;"></div>
             <footer class="footer" style="text-align: center;">
                 <div class="btn_group multy">
-                    <button type="button" class="btn type02" onclick='moveToUrl("/")'>메인화면으로 이동</button>
-                    <button type="button" class="btn type01" onclick='moveToUrl("/mo/partner")'>매칭정보 입력</button>
+                    <button type="button" class="btn type02" onclick='moveToUrl("/")'><?=lang('Korean.rootBtn2')?></button>
+                    <button type="button" class="btn type01" onclick='moveToUrl("/mo/partner")'><?=lang('Korean.matchInfoBtn')?></button>
                 </div>
 
 

@@ -34,26 +34,26 @@
                         </a>
                     </div>
                     <div class="btn_group">
-                        <button type="button" class="btn type02" onclick="editPhoto()">프로필 사진수정</button>
+                        <button type="button" class="btn type02" onclick="editPhoto()"><?=lang('Korean.profilePhoto')?></button>
                         <input type="file" id="main_photo" name="main_photo" style="display:none;" accept="image/*" />
                     </div>
                     <legend></legend>
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="name" class="signin_label">이름</label>
-                                <input id="name" name="name" type="text" value="<?php echo $name ?>" placeholder="이름을 입력하세요" readonly>
+                                <label for="name" class="signin_label"><?=lang('Korean.name')?></label>
+                                <input id="name" name="name" type="text" value="<?php echo $name ?>" placeholder="<?=lang('Korean.signUpNamePlaceholder')?>" readonly>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="birthday" class="signin_label">생년월일</label>
-                                <input id="birthday" name="birthday" type="text" value="<?php echo $birthday ?>" placeholder="생년월일을 입력하세요" readonly>
+                                <label for="birthday" class="signin_label"><?=lang('Korean.birthTrueFalse')?></label>
+                                <input id="birthday" name="birthday" type="text" value="<?php echo $birthday ?>" placeholder="<?=lang('Korean.signUpBirthPlaceholder')?>" readonly>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="gender" class="signin_label">성별</label>
+                                <label for="gender" class="signin_label"><?=lang('Korean.gender')?></label>
                                 <select id="gender" name="gender">
                                     <?php
                                     foreach ($genderCode as $item) {
@@ -71,9 +71,9 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="city" class="signin_label">지역</label>
+                                <label for="city" class="signin_label"><?=lang('Korean.region')?></label>
                                 <select id="city" name="city">
-                                    <option value>지역을 선택하세요</option>
+                                    <option value><?=lang('Korean.signUpCityPlaceholder')?></option>
                                     <?php
                                     foreach ($sidoCode as $item) {
                                     ?>
@@ -88,7 +88,7 @@
                         </div>
                         <!-- <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <h4 class="profile_photo_label">사진 (1장 이상 필수)</h4>
+                                <h4 class="profile_photo_label"><?=lang('Korean.signupCon2')?></h4>
                                 <div class="profile_photo_div">
                                     <label for="profile_photo" class="signin_label profile_photo_input"></label>
                                     <input id="profile_photo" name="profile_photo" type="file" value="" placeholder=""
@@ -100,7 +100,7 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <h4 class="profile_photo_label">동영상 프로필 (권장)</h4>
+                                <h4 class="profile_photo_label"><?=lang('Korean.signupCon3')?></h4>
                                 <div class="profile_photo_div">
                                     <label for="profile_mov" class="signin_label profile_photo_input"></label>
                                     <input id="profile_mov" name="profile_mov" type="file" value="" placeholder=""
@@ -112,11 +112,14 @@
                         </div> -->
                         <input type="hidden" name="town" value="town value" />
                         <input type="hidden" name="mobile_no" value="<?= $mobile_no ?>" />
+                        <input type="hidden" name="nickname" value="<?= $nickname ?>" />
+                        <input type="hidden" name="sns_type" value="<?= $sns_type ?>" />
+                        <input type="hidden" name="oauth_id" value="<?= $oauth_id ?>" />
                         <div id="main_photo_uploaded" style="display:none;"></div>
                         <!-- <div id="profile_photo_uploaded" style="display:none;"></div>
                         <div id="profile_mov_uploaded" style="display:none;"></div> -->
                         <div class="btn_group multy">
-                            <button type="button" class="btn type02">취소</button>
+                            <button type="button" class="btn type02"><?=lang('Korean.cancel')?></button>
                             <button type="button" class="btn type01" onclick="signUp()">회원가입</button>
                         </div>
                     </div>
@@ -135,13 +138,13 @@
                 matchfy
             </div>
             <div class="footer_link mb40">
-                <a href="#">회사정보</a>
-                <a href="#">개인정보 처리방침</a>
-                <a href="#">서비스 이용약관</a>
+                <a href="#"><?=lang('Korean.companyName')?></a>
+                <a href="#"><?=lang('Korean.pravacyName')?></a>
+                <a href="#"><?=lang('Korean.serviceName')?></a>
             </div>
             <div class="footer_info mb40">
-                <span>(주)회사명 <img src="/static/images/part_line.png" /> 서울특별시 강남구 논현로 9길 26 길동빌딩 502호</span>
-                <span>대표이사 : 홍길동 <img src="/static/images/part_line.png" /> 사업자등록번호 : 123-45-6789<img
+                <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
+                <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
                         src="/static/images/part_line.png" /> gildong@naver.com</span>
             </div>
             <div class="footer_copy">

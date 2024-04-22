@@ -16,7 +16,7 @@
     <div class="layerPopup alert"><!-- class: imgPop 추가 -->
         <div class="layerPopup_wrap">
             <div class="layerPopup_content small">
-                <p class="txt">예약 확인</p>
+                <p class="txt"><?=lang('Korean.reservChk')?></p>
 
                 <div class="alliance_sch_list popup">
                     <div class="alliance_sch_item">
@@ -26,14 +26,14 @@
                         </div>
                         <h2>박효신 연말 콘서트</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class="">인원 2명</span>
+                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
                     </div>
                 </div>
                 <div style="height: 50px;"></div>
                 <div class="layerPopup_bottom">
                     <div class="btn_group multy">
-                        <button class="btn type03">예약 취소</button>
-                        <button class="btn type01">대화방 입장</button>
+                        <button class="btn type03"><?=lang('Korean.reserv')?> <?=lang('Korean.cancel')?></button>
+                        <button class="btn type01"><?=lang('Korean.chatRoom')?></button>
                     </div>
                 </div>
             </div>

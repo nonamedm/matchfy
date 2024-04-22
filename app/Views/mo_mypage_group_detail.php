@@ -40,14 +40,14 @@
                                                             }
                                                         }
                                                         ?><?php $postData ?></div>
-                        <p>매칭률 <span><?= $matching_rate ?>%</span></p>
+                        <p><?= lang('Korean.matchingRate') ?> <span><?= $matching_rate ?>%</span></p>
                     </div>
                     <div class="group_detail_title">
                         <h2><?= $meeting_title ?></h2>
-                        <p class="group_detail_period"><?= $recruitment_start_date ?> ~ <?= $recruitment_end_date ?> 까지 모집중</p>
-                        <p class="group_detail_schedule"><?= $meeting_start_date ?> 모임</p>
+                        <p class="group_detail_period"><?= $recruitment_start_date ?> ~ <?= $recruitment_end_date ?> <?= lang('Korean.dateCon') ?></p>
+                        <p class="group_detail_schedule"><?= $meeting_start_date ?> <?= lang('Korean.meet') ?></p>
                         <div class="group_particpnt" onclick="meetingMemberList('<?= $idx ?>')">
-                            <span>신청 <?= $meeing_count ?></span>/<?= $number_of_people ?>명
+                            <span><?= lang('Korean.application') ?> <?= $meeing_count ?></span>/<?= $number_of_people ?><?= lang('Korean.people') ?>
                         </div>
                     </div>
                     <hr class="hoz_part" />
@@ -63,12 +63,12 @@
                                     <?= $meeting_place ?>
                                 </div>
                                 <p class="group_location_schedule"><?= $meeting_start_date ?></p>
-                                <p class="group_location_fee"><span><?= number_format($membership_fee) ?>원</span></p>
+                                <p class="group_location_fee"><span><?= number_format($membership_fee) ?><?= lang('Korean.won') ?></span></p>
                             </div>
                         </div>
                     </div>
                     <div class="group_detail_map">
-                        <h2>모임장소</h2>
+                        <h2><?= lang('Korean.meetingPlace') ?></h2>
                         <div id="map" style="width:335px;height:175px;margin-top: 20px;"></div>
                     </div>
                 </div>
@@ -77,9 +77,9 @@
             <footer class="footer">
                 <div class="btn_group">
                     <?php if ($is_recruitment_full) : ?>
-                        <button type="button" class="btn type01 disabled">모집 마감</button>
+                        <button type="button" class="btn type01 disabled"><?= lang('Korean.recruitmentDeadline') ?></button>
                     <?php else : ?>
-                        <button type="button" class="btn type01" onclick="meetingApplication('<?= $idx ?>')">함께하기</button>
+                        <button type="button" class="btn type01" onclick="meetingApplication('<?= $idx ?>')"><?= lang('Korean.withBtn') ?></button>
                     <?php endif; ?>
                 </div>
             </footer>

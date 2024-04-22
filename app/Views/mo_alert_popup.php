@@ -16,14 +16,14 @@
     <div class="layerPopup alert small"><!-- class: imgPop 추가 -->
         <div class="layerPopup_wrap">
             <div class="layerPopup_heading">
-                <a href="javascript:avoid(0)" class="btn_close">닫기</a>
+                <a href="javascript:avoid(0)" class="btn_close"><?=lang('Korean.close')?></a>
             </div>
             <div class="layerPopup_content small">
-                <p class="txt">상대방에게 메시지를 보내기 위해서는<br />등업이 필요합니다</p>
+                <p class="txt"><?=lang('Korean.alertText')?></p>
 
                 <div class="layerPopup_bottom">
                     <div class="btn_group">
-                        <button class="btn type01">등업하러 가기</button>
+                        <button class="btn type01"><?=lang('Korean.alertBtn')?></button>
                     </div>
                 </div>
             </div>
