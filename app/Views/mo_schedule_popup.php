@@ -143,9 +143,11 @@
                         // 성공
                         alert('약속이 전송되었습니다!');
                         closePopup();
+                        reloadMsg();
                     } else if (data.status === 'error') {
                         console.log('실패', data);
                     } else {
+                        console.log('실패', data);
                         alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                     }
                     return false;
@@ -172,10 +174,13 @@
                     if (data.result === '0') {
                         // 성공
                         alert('모임 참석자로 등록되었습니다!');
+                        reloadMsg();
                     } else if (data.result === '1') {
-                        alert('이미 참석중입니다!');
+                        alert('참석 정보를 업데이트 했습니다!');
+                    } else if (data.result === '3') {
+                        alert('포인트가 부족합니다. \n충전 후 시도해 주세요.');
                     } else {
-                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        alert('오류가 발생하였습니다. \n모임을 다시 생성해 주세요.');
                     }
                     return false;
                 },

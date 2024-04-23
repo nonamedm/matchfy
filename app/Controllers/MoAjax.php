@@ -2615,8 +2615,7 @@ class MoAjax extends BaseController
                             return $this->response->setJSON(['status' => 'failed', 'message' => '모임 생성 실패']);
                         }
                     } else {
-                        echo "<script>alert('포인트가 부족합니다. 충전해 주세요 : A');</script>";
-                        return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+                        return $this->response->setJSON(['status' => 'failed', 'message' => 'no_point', 'result' => '3']);
                     }
                 }
             } else {
@@ -2648,15 +2647,14 @@ class MoAjax extends BaseController
                         return $this->response->setJSON(['status' => 'failed', 'message' => '모임 생성 실패']);
                     }
                 } else {
-                    echo "<script>alert('포인트가 부족합니다. 충전해 주세요 : B , " . $myPoint . " , " . $usablePoint . "');</script>";
-                    return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+                    return $this->response->setJSON(['status' => 'failed', 'message' => 'no_point', 'result' => '3']);
                 }
             }
             $msg_cont = '모임 생성 <br/>';
             $msg_cont .= '날짜 : ' . $scdl_date . '<br/>';
             $msg_cont .= '회비 : ' . number_format($scdl_fee) . ' 원<br/>';
             $msg_cont .= '<br/>';
-            $msg_cont .= '참석하시려면 확인 버튼을 눌러주세요<br/><br/>';
+            $msg_cont .= '<span class="scdl_part_msg">참석하시려면 확인 버튼을 눌러주세요<br/><br/></span>';
             $msg_cont .= '<button class="scdl_confirm" onclick="partScdl()">확인</button>';
             $msgQuery = "INSERT INTO wh_chat_room_msg
             (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
@@ -2698,18 +2696,97 @@ class MoAjax extends BaseController
                 ->query($query)->getResultArray();
             if ($scheduleYn) {
                 // 이미 참석중이면
-                return $this->response->setJSON(['status' => 'success', 'message' => '이미 참석중입니다', 'result' => '1']);
+                // 내 포인트 먼저 조회
+                $query = "SELECT my_point, 
+                                (SELECT usable_point FROM wh_meeting_person WHERE chat_room_ci='" . $room_ci . "' AND member_ci = '" . $ci . "' AND delete_yn='n') AS usable_point 
+                            FROM wh_points WHERE member_ci='" . $ci . "' ORDER BY idx DESC LIMIT 1";
+                $myPointQuery = $pointModel
+                    ->query($query)->getResultArray();
+                $myPoint = $myPointQuery[0]['my_point'] ? intval($myPointQuery[0]['my_point']) : 0;
+                $usablePoint = $myPointQuery[0]['usable_point'] ? intval($myPointQuery[0]['usable_point']) : 0;
+
+                // 기존 약속은 delete_yn = y 업데이트 후
+                $query = "UPDATE wh_meeting_person
+                SET delete_yn='y'
+                WHERE chat_room_ci='" . $room_ci . "' AND member_ci='" . $ci . "' AND delete_yn='n'";
+                $makeSchedule = $MeetingPersonModel
+                    ->query($query);
+
+                // 기존 예약금액 환불시키기
+                $query = "INSERT INTO wh_points (member_ci, my_point, add_point, point_details, point_type)
+                VALUES ('" . $ci . "', '" . ($myPoint + $usablePoint) . "','" . $usablePoint . "','모임 환불(+" . $usablePoint . ")','A');";
+                $refundPoint = $pointModel->query($query);
+
+                // 최신 약속에 맞춰서 내용 업데이트
+                $query = "SELECT * FROM wh_meeting_person WHERE  chat_room_ci='" . $room_ci . "' AND delete_yn='n'";
+                $newScdlQuery = $pointModel
+                    ->query($query)->getResultArray();
+                $scdl_fee = $newScdlQuery[0]['membership_fee'];
+                $scdl_type = $newScdlQuery[0]['scdl_type'];
+                $scdl_date = $newScdlQuery[0]['scdl_date'];
+
+                // 환불 진행 성공시
+                if (!$newScdlQuery) {
+                    return $this->response->setJSON(['status' => 'failed', 'message' => 'refund_fail', 'result' => '4']);
+                } else if ($refundPoint) {
+                    // 포인트가 충분히 있으면
+                    if ($myPoint + $usablePoint > $scdl_fee) {
+                        // 새로운 약속 정보 INSERT
+                        $query = "INSERT INTO wh_meeting_person
+                        (member_ci, scdl_type, scdl_date, number_of_people, membership_fee, chat_room_ci, usable_point)
+                        VALUES('" . $ci . "', '" . $scdl_type . "', STR_TO_DATE('" . $scdl_date . "', '%Y-%m-%d %H:%i'), 2, '" . $scdl_fee . "', '" . $room_ci . "','" . $scdl_fee . "')";
+                        $makeSchedule = $MeetingPersonModel
+                            ->query($query);
+
+                        // 포인트 정보 업데이트 (환불 후 다시 모임에 포인트 입력)
+                        $query = "INSERT INTO wh_points (member_ci, my_point, use_point, point_details, point_type)
+                                VALUES ('" . $ci . "', '" . ($myPoint + $usablePoint - $scdl_fee) . "','" . $scdl_fee . "','모임 예약금(-" . $scdl_fee . ")','U');";
+                        $usePoint = $pointModel->query($query);
+                        if (!$usePoint) {
+                            return $this->response->setJSON(['status' => 'failed', 'message' => '모임 생성 실패']);
+                        } else {
+                            return $this->response->setJSON(['status' => 'success', 'message' => '참석 정보를 업데이트 했습니다', 'result' => '1']);
+                        }
+                    } else {
+                        return $this->response->setJSON(['status' => 'failed', 'message' => 'no-point', 'result' => '3']);
+                    }
+                } else {
+                    return $this->response->setJSON(['status' => 'failed', 'message' => 'refund_fail', 'result' => '4']);
+                }
             } else {
                 // 신규면 INSERT
+                // 내 포인트 먼저 조회
+                $query = "SELECT my_point, 
+                        (SELECT usable_point FROM wh_meeting_person WHERE chat_room_ci='" . $room_ci . "' AND member_ci = '" . $ci . "' AND delete_yn='n') AS usable_point 
+                        FROM wh_points WHERE member_ci='" . $ci . "' ORDER BY idx DESC LIMIT 1";
+                $myPointQuery = $pointModel
+                    ->query($query)->getResultArray();
+                $myPoint = $myPointQuery[0]['my_point'] ? intval($myPointQuery[0]['my_point']) : 0;
+                $usablePoint = $myPointQuery[0]['usable_point'] ? intval($myPointQuery[0]['usable_point']) : 0;
+
                 $query = "SELECT * FROM wh_meeting_person WHERE chat_room_ci = '" . $room_ci . "' AND delete_yn='n'";
                 $scheduleData = $MeetingPersonModel
                     ->query($query)->getResultArray();
                 if ($scheduleData) {
+                    $scdl_fee = $scheduleData[0]['membership_fee'];
+
                     $query = "INSERT INTO wh_meeting_person
-                    (member_ci, chat_room_ci, scdl_type, scdl_date, number_of_people, membership_fee)
-                    VALUES('" . $ci . "', '" . $room_ci . "','" . $scheduleData[0]['scdl_type'] . "','" . $scheduleData[0]['scdl_date'] . "','" . $scheduleData[0]['number_of_people'] . "','" . $scheduleData[0]['membership_fee'] . "')";
+                    (member_ci, chat_room_ci, scdl_type, scdl_date, number_of_people, membership_fee, usable_point)
+                    VALUES('" . $ci . "', '" . $room_ci . "','" . $scheduleData[0]['scdl_type'] . "','" . $scheduleData[0]['scdl_date'] . "','" . $scheduleData[0]['number_of_people'] . "','" . $scheduleData[0]['membership_fee'] . "', '" . $scheduleData[0]['membership_fee'] . "')";
                     $makeSchedule = $MeetingPersonModel
                         ->query($query);
+
+
+                    // 포인트 정보 업데이트
+                    if ($myPoint > $scdl_fee) {
+                        $query = "INSERT INTO wh_points (member_ci, my_point, use_point, point_details, point_type)
+                                VALUES ('" . $ci . "', '" . ($myPoint - $scdl_fee) . "','" . $scdl_fee . "','모임 예약금(-" . $scdl_fee . ")','U');";
+                        $usePoint = $pointModel->query($query);
+                        if (!$usePoint) {
+                            return $this->response->setJSON(['status' => 'failed', 'message' => '모임 생성 실패']);
+                        }
+                    }
+
                     $msg_cont = '모임 참가에 동의하였습니다 <br/>';
                     $msgQuery = "INSERT INTO wh_chat_room_msg
                         (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)

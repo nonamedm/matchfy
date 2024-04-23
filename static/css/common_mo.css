@@ -568,6 +568,12 @@ td {
 .chat_wrap .receive_msg_area .scdl_confirm {
     width: 200px;
 }
+.chat_wrap .send_msg_area .scdl_part_msg {
+    display: none;
+}
+.chat_wrap .send_msg_area .scdl_confirm {
+    display: none;
+}
 .chat_wrap .scdl_confirm {
     width: 215px;
     height: 30px;
@@ -2264,7 +2270,7 @@ form input[type='file'] {
     width: 301px;
     height: 50px;
     display: block;
-    margin: 10px auto 0; 
+    margin: 10px auto 0;
     color: white;
     cursor: pointer;
     background-size: cover;
@@ -3517,7 +3523,7 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 /*alliance apply*/
-.filebox{
+.filebox {
     display: flex;
 }
 .filebox .upload-name {
@@ -3529,8 +3535,8 @@ input[type='number']::-webkit-inner-spin-button {
     width: 78%;
     color: #999999;
 }
-.alliance_detail_post div{
-    margin:4px;
+.alliance_detail_post div {
+    margin: 4px;
 }
 
 .ui-menu.ui-widget.ui-widget-content.ui-autocomplete.ui-front {
