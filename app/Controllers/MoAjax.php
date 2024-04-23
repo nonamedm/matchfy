@@ -2455,7 +2455,7 @@ class MoAjax extends BaseController
             ->query($query)->getResultArray();
         if ($memberYn) {
             // 내가 방 참가자가 맞으면
-            $query = "UPDATE wh_chat_room_member SET DELETE_YN='y' WHERE member_ci='" . $ci . "'";
+            $query = "UPDATE wh_chat_room_member SET DELETE_YN='y' WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "'";
             $extRm = $ChatRoomMemberModel
                 ->query($query);
             $query = "UPDATE wh_chat_room SET room_count = (CAST(room_count AS UNSIGNED) - 1)
