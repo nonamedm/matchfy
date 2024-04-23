@@ -1,96 +1,76 @@
-<html lang="ko">
-
-<head>
-    <title>Matchfy</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta http-equiv="cache-control" content="no-cache">
-    <meta http-equiv="pragma" content="no-cache">
-    <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="/static/css/common_mo.css">
-</head>
-
-<body class="mo_wrap">
-    <div class="layerPopup alert middle"><!-- class: imgPop 추가 -->
-        <div class="layerPopup_wrap">
-            <div class="layerPopup_content medium">
-                <p class="txt"><?=lang('Korean.groupTalkMember')?></p>
-                
-                <div class="">
+<div class="layerPopup alert middle member" style="display:none;">
+    <div class="layerPopup_wrap">
+        <div class="layerPopup_header">
+            <a onclick="closePopup()">X</a>
+        </div>
+        <div class="layerPopup_content medium">
+            <p class="member_title txt"><?= lang('Korean.groupTalkMember') ?></p>
+            <div class="" style="height: 300px; overflow-y: scroll;">
+                <?php
+                foreach ($member_info as $row) {
+                ?>
                     <div class="chat_member">
                         <div class="chat_member_profile">
-                            <img class="profile_img" src="/static/images/mypage_pfofile.png"/>
-                            <p>장원영</p>
+                            <img class="profile_img" src="/<?= $row['file_path'] ?><?= $row['file_name'] ?>" />
+                            <p><?= $row['name'] ?></p>
                         </div>
                         <div class="chat_member_report">
-                            <button class="type02"><?=lang('Korean.resign')?></button>
-                            <button class="type01"><?=lang('Korean.declaration')?></button>
+                            <?php if ($row['chk'] !== 'me') {
+                            ?>
+                                <?php if ($member_type[0]['member_type']  === '1' || $member_type[0]['member_type'] === '9') {
+                                ?>
+                                    <button class="type02" onclick="banUsr(<?= $row['entry_num'] ?>)"><?= lang('Korean.resign') ?></button>
+                                <?php
+                                } ?>
+                                <button class="type01" onclick="reptUsr(<?= $row['entry_num'] ?>)"><?= lang('Korean.declaration') ?></button>
+                            <?php
+                            } ?>
                         </div>
                     </div>
-                    <div class="chat_member">
-                        <div class="chat_member_profile">
-                            <img class="profile_img" src="/static/images/mypage_pfofile_1.png"/>
-                            <p>김여름</p>
-                        </div>
-                        <div class="chat_member_report">
-                            <button class="type02"><?=lang('Korean.resign')?></button>
-                            <button class="type01"><?=lang('Korean.declaration')?></button>
-                        </div>
-                    </div>
-                    <div class="chat_member">
-                        <div class="chat_member_profile">
-                            <img class="profile_img" src="/static/images/mypage_pfofile_2.png"/>
-                            <p>정로라</p>
-                        </div>
-                        <div class="chat_member_report">
-                            <button class="type02"><?=lang('Korean.resign')?></button>
-                            <button class="type01"><?=lang('Korean.declaration')?></button>
-                        </div>
-                    </div>
-                    <div class="chat_member">
-                        <div class="chat_member_profile">
-                            <img class="profile_img" src="/static/images/mypage_pfofile_3.png"/>
-                            <p>강해진</p>
-                        </div>
-                        <div class="chat_member_report">
-                            <button class="type02"><?=lang('Korean.resign')?></button>
-                            <button class="type01"><?=lang('Korean.declaration')?></button>
-                        </div>
-                    </div>
-                    <div class="chat_member">
-                        <div class="chat_member_profile">
-                            <img class="profile_img" src="/static/images/mypage_pfofile_4.png"/>
-                            <p>유재니</p>
-                        </div>
-                        <div class="chat_member_report">
-                            <button class="type02"><?=lang('Korean.resign')?></button>
-                            <button class="type01"><?=lang('Korean.declaration')?></button>
-                        </div>
-                    </div>
-                </div>
-                
+                <?php
+                }
+                ?>
             </div>
         </div>
     </div>
+</div>
+<script>
+    $(document).ready(function() {
 
 
-    <!-- SCRIPTS -->
-
-    <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
+    });
+    const banUsr = (num) => {
+        if (confirm('강퇴하시겠습니까?')) {
+            $.ajax({
+                url: '/ajax/banUsr',
+                type: 'POST',
+                data: {
+                    "room_ci": $("#room_ci").val(),
+                    "num": num
+                },
+                async: false,
+                success: function(data) {
+                    console.log(data);
+                    if (data.status === 'success') {
+                        // 성공
+                        // moveToUrl('/');
+                    } else if (data.status === 'error') {
+                        console.log('실패', data);
+                    } else {
+                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    }
+                    return false;
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
+            });
         }
-    </script>
-
-    <!-- -->
-
-
-</body>
-
-</html>
+    }
+    const reptUsr = (num) => {
+        $('.layerPopup').css('display', 'none');
+        $('.layerPopup.report').css('display', 'flex');
+        $('#report_target').val(num);
+    }
+</script>

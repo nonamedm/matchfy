@@ -280,8 +280,9 @@
                                 $(".AImatch_list").append(html);
                             });
                         } else {
-                            $(".AImatch_list").css("text-align", "center");
-                            $(".AImatch_list").removeClass("login_main_list");
+                            alert('검색결과가 없습니다')
+                            // $(".AImatch_list").css("text-align", "center");
+                            // $(".AImatch_list").removeClass("login_main_list");
                         }
                     },
                     error: function(data, status, err) {
@@ -303,7 +304,8 @@
                             $(".category" + item.category).css("display", "flex");
                         });
                         data.result.forEach(function(item) {
-                            var html = '<div class="ai_group_card">';
+                            var html = `<div class="ai_group_card">`;
+                            html += `<a onclick="moveToUrl('/mo/mypage/group/detail/` + item.idx + `')" >`
                             if (item.file_path !== "" && item.file_path !== null) {
                                 html += '<img src="/' + item.file_path + item.file_name + '" />';
                             } else {
@@ -318,7 +320,7 @@
                             html += ' ' + item.meeting_place + ' </div>';
                             html += '<div class = "schedule_row" >';
                             html += '<p> ' + item.membership_fee.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' 원 <span> ' + item.meetingDateTime + ' </span></p>';
-                            html += '</div></div>';
+                            html += '</div></a></div>';
                             $(".category" + item.category).append(html);
                         });
                     },

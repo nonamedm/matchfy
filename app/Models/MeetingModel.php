@@ -12,10 +12,12 @@ class MeetingModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['idx', 'member_ci', 'category', 'recruitment_start_date', 'recruitment_end_date',
-                                    'meeting_start_date', 'meeting_end_date', 'number_of_people', 'group_min_age', 'group_max_age',
-                                    'matching_rate', 'title', 'content', 'reservation_previous', 'meeting_place', 'membership_fee',
-                                    'create_at', 'update_at', 'delete_yn'];
+    protected $allowedFields    = [
+        'idx', 'member_ci', 'category', 'recruitment_start_date', 'recruitment_end_date',
+        'meeting_start_date', 'meeting_end_date', 'number_of_people', 'group_min_age', 'group_max_age',
+        'matching_rate', 'title', 'content', 'reservation_previous', 'meeting_place', 'membership_fee', 'chat_room_ci',
+        'create_at', 'update_at', 'delete_yn'
+    ];
 
 
     protected bool $allowEmptyInserts = false;

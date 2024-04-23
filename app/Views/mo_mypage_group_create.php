@@ -33,7 +33,7 @@
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <h4 class="profile_photo_label"><?=lang('Korean.meetMainPhoto')?></h4>
+                                <h4 class="profile_photo_label"><?= lang('Korean.meetMainPhoto') ?></h4>
                                 <div class="profile_photo_div">
                                     <label for="group_photo" class="signin_label profile_photo_input group_photo_input"></label>
                                     <input id="group_photo" name="meeting_photo" type="file" value="" placeholder="" multiple accept="image/*">
@@ -43,41 +43,41 @@
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="category" class="signin_label"><?=lang('Korean.category')?></label>
+                                    <label for="category" class="signin_label"><?= lang('Korean.category') ?></label>
                                     <select id="category" name="category" class="custom_select" value="">
-                                        <option value=""><?=lang('Korean.selected')?></option>
-                                        <option value="01"><?=lang('Korean.weekdayMeeting')?></option>
-                                        <option value="02"><?=lang('Korean.weekdayTrip')?></option>
-                                        <option value="03"><?=lang('Korean.holiMeeting')?></option>
-                                        <option value="04"><?=lang('Korean.holiTrip')?></option>
+                                        <option value=""><?= lang('Korean.selected') ?></option>
+                                        <option value="01"><?= lang('Korean.weekdayMeeting') ?></option>
+                                        <option value="02"><?= lang('Korean.weekdayTrip') ?></option>
+                                        <option value="03"><?= lang('Korean.holiMeeting') ?></option>
+                                        <option value="04"><?= lang('Korean.holiTrip') ?></option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="name" class="signin_label"><?=lang('Korean.recruitmentPeriod')?></label>
+                                    <label for="name" class="signin_label"><?= lang('Korean.recruitmentPeriod') ?></label>
                                     <div class="schedule_calendar multy_select">
                                         <div class="schedule_calendar">
                                             <div class="schedule_calendar_div">
                                                 <input type="text" id="datepicker" name="recruitment_start_date" />
                                             </div>
+                                            <br />
+                                            -
                                             <div class="schedule_calendar_div" style="margin-left: 8px;">
                                                 <input type="text" id="datepicker1" name="recruitment_end_date" />
                                             </div>
+                                            <br />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="name" class="signin_label"><?=lang('Korean.recruitmentDate')?></label>
-                                    <div class="schedule_calendar multy_select">
+                                    <label for="name" class="signin_label"><?= lang('Korean.recruitmentDate') ?></label>
+                                    <div class="schedule_calendar">
                                         <div class="schedule_calendar">
                                             <div class="schedule_calendar_div">
-                                                <input type="text" id="datepicker2" name="meeting_start_date" />
-                                            </div>
-                                            <div class="schedule_calendar_div" style="margin-left: 8px;">
-                                                <input type="text" id="datepicker3" name="meeting_end_date" />
+                                                <input type="text" id="datepicker2" name="meeting_start_date" class="datepicker2" />
                                             </div>
                                         </div>
                                     </div>
@@ -85,40 +85,26 @@
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="number_of_people" class="signin_label"><?=lang('Korean.personnel')?></label>
-                                    <input id="number_of_people" name="number_of_people" type="text" value="<?php echo $name ?>" placeholder="<?=lang('Korean.meetCon1')?>">
+                                    <label for="number_of_people" class="signin_label"><?= lang('Korean.personnel') ?></label>
+                                    <input id="number_of_people" name="number_of_people" type="text" value="<?php echo $name ?>" placeholder="<?= lang('Korean.meetCon1') ?>">
                                 </div>
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="group_age" class="signin_label"><?=lang('Korean.ageType')?></label>
+                                    <label for="group_age" class="signin_label"><?= lang('Korean.ageType') ?></label>
                                     <div class="multy_input">
-                                        <input id="group_min_age" type="text" name="group_min_age" value="" placeholder="<?=lang('Korean.meetCon2')?>"><br />
+                                        <input id="group_min_age" type="text" name="group_min_age" value="" placeholder="<?= lang('Korean.meetCon2') ?>"><br />
                                         -
-                                        <input id="group_max_age" type="text" name="group_max_age" value="" placeholder="<?=lang('Korean.meetCon2')?>"><br />
-                                        <!-- <select id="group_age1" class="custom_select" value="">
-                                        <option value=""><?=lang('Korean.selected')?></option>
-                                        <option value="0">20대</option>
-                                        <option value="1">30대</option>
-                                        <option value="2">40대</option>
-                                        <option value="2">50대 이상</option>
-                                    </select>
-                                    <select id="group_age2" class="custom_select" value="">
-                                        <option value=""><?=lang('Korean.selected')?></option>
-                                        <option value="0">20대</option>
-                                        <option value="1">30대</option>
-                                        <option value="2">40대</option>
-                                        <option value="2">50대 이상</option>
-                                    </select> -->
+                                        <input id="group_max_age" type="text" name="group_max_age" value="" placeholder="<?= lang('Korean.meetCon2') ?>"><br />
                                     </div>
                                 </div>
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="matching_rate" class="signin_label"><?=lang('Korean.matchingRate')?></label>
+                                    <label for="matching_rate" class="signin_label"><?= lang('Korean.matchingRate') ?></label>
                                     <input id="matching_rate" type="text" name="matching_rate" value="" placeholder="매칭률을 입력하세요"><br />
                                     <!-- <select id="matching_rate" class="custom_select" name="matching_rate" value="">
-                                    <option value=""><?=lang('Korean.selected')?></option>
+                                    <option value=""><?= lang('Korean.selected') ?></option>
                                     <option value="01">~50%</option>
                                     <option value="02">50~60%</option>
                                     <option value="03">60~70%</option>
@@ -130,50 +116,47 @@
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="group_detail" class="signin_label"><?=lang('Korean.meetingDetails')?></label>
-                                    <input id="title" type="text" name="title" value="" placeholder="<?=lang('Korean.meetCon3')?>"><br />
+                                    <label for="group_detail" class="signin_label"><?= lang('Korean.meetingDetails') ?></label>
+                                    <input id="title" type="text" name="title" value="" placeholder="<?= lang('Korean.meetCon3') ?>"><br />
                                 </div>
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <textarea id="content" name="content" value="" placeholder="<?=lang('Korean.Placehoder1')?>"></textarea></br />
+                                    <textarea id="content" name="content" value="" placeholder="<?= lang('Korean.Placehoder1') ?>"></textarea></br />
                                 </div>
                             </div>
-                            <!-- <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <select id="reservation_previous" name= "reservation_previous" class="custom_select" value="">
-                                    <option>예약 내역 선택</option>
-                                    <option value="0">20대</option>
-                                    <option value="1">30대</option>
-                                    <option value="2">40대</option>
-                                    <option value="2">50대 이상</option>
-                                </select>
-                            </div>
-                        </div> -->
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="meeting_place" class="signin_label"><?=lang('Korean.meetingPlace')?></label>
+                                    <label for="group_detail" class="signin_label">예약내역</label>
+                                    <select id="reservation_previous" name="reservation_previous" class="custom_select" onchange="myAllianceDetail(this)">
+                                        <option value="">예약 내역 선택</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form_row signin_form">
+                                <div class="signin_form_div">
+                                    <label for="meeting_place" class="signin_label"><?= lang('Korean.meetingPlace') ?></label>
                                     <div class="input_ico_search search_meet_place">
-                                        <input id="meeting_place" type="text" name="meeting_place" placeholder="<?=lang('Korean.addressSearch')?>">
+                                        <input id="meeting_place" type="text" name="meeting_place" placeholder="<?= lang('Korean.addressSearch') ?>">
                                         <img src="/static/images/ico_search_18x18.png" onclick="searchPlaces()" />
                                     </div>
                                     <div class="input_ico_search search_meet_detail">
-                                        <input id="meeting_place_detail" type="text" name="meeting_place_detail" placeholder="<?=lang('Korean.addressDetails')?>">
+                                        <input id="meeting_place_detail" type="text" name="meeting_place_detail" placeholder="<?= lang('Korean.addressDetails') ?>">
                                     </div>
                                     <div id="map" style="width:335px;height:175px;margin-top: 20px;"></div>
                                 </div>
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <label for="membership_fee" class="signin_label"><?=lang('Korean.dues')?></label>
+                                    <label for="membership_fee" class="signin_label"><?= lang('Korean.dues') ?></label>
                                     <div class="input_ico_search">
                                         <input id="membership_fee" type="text" name="membership_fee" value="" placeholder="">
                                     </div>
                                 </div>
                             </div>
                             <div class="btn_group multy">
-                                <button type="button" class="btn type02"><?=lang('Korean.cancel')?></button>
-                                <button type="button" class="btn type01" onclick="meetingSave()"><?=lang('Korean.save')?></button>
+                                <button type="button" class="btn type02"><?= lang('Korean.cancel') ?></button>
+                                <button type="button" class="btn type01" onclick="meetingSave()"><?= lang('Korean.save') ?></button>
                             </div>
 
                         </div>
@@ -192,13 +175,13 @@
                 matchfy
             </div>
             <div class="footer_link mb40">
-                <a href="#"><?=lang('Korean.companyName')?></a>
-                <a href="#"><?=lang('Korean.pravacyName')?></a>
-                <a href="#"><?=lang('Korean.serviceName')?></a>
+                <a href="#"><?= lang('Korean.companyName') ?></a>
+                <a href="#"><?= lang('Korean.pravacyName') ?></a>
+                <a href="#"><?= lang('Korean.serviceName') ?></a>
             </div>
             <div class="footer_info mb40">
-                <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
-                <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
+                <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>
+                <span><?= lang('Korean.footerInfo3') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo4') ?><img
                         src="/static/images/part_line.png" /> gildong@naver.com</span>
             </div>
             <div class="footer_copy">
@@ -210,8 +193,178 @@
 
 
     <!-- SCRIPTS -->
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=smqlge9tsx&submodules=geocoder"></script>
     <script>
         $(function() {
+            initMap();
+            setDatepicker();
+            searchAddr();
+            loadMyAlliance();
+
+        });
+
+        function loadMyAlliance() {
+            $.ajax({
+                url: '/ajax/myAlliance',
+                type: 'POST',
+                //data: postData,
+                async: false,
+                success: function(data) {
+                    data.forEach(function(key, index) {
+                        $("#reservation_previous").append('<option value="' + key.wh_alliance_idx + '" >' + key.alliance_name + '(' + key.reservation_date + ')' + '</option>');
+                    });
+
+                }
+            });
+        }
+
+        function myAllianceDetail(e) {
+            console.log(e.value);
+            if (e.value === "" || e.value === null) {
+                // 예약내역 미선택, 직접입력
+                $("#meeting_place").val("");
+                $("#meeting_place_detail").val("");
+                $("#membership_fee").val("");
+                $('#datepicker2').datepicker('setDate', '+1D');
+            } else {
+                // 예약내역 선택
+                $.ajax({
+                    url: '/ajax/myAllianceDetail',
+                    type: 'POST',
+                    data: {
+                        "value": e.value
+                    },
+                    async: false,
+                    success: function(data) {
+                        console.log(data);
+                        $("#meeting_place").val(data[0].address);
+                        $("#meeting_place_detail").val(data[0].detailed_address);
+                        $("#membership_fee").val(data[0].alliance_pay);
+                        $("#datepicker2").val(data.reservation.reservation_date);
+                        naver.maps.Service.geocode({
+                            address: data[0].address
+                        }, function(status, response) {
+                            if (status === naver.maps.Service.Status.ERROR) {
+                                console.log('올바른 주소를 입력해 주세요');
+                            }
+                            // 성공 시의 response 처리
+                            // todo: 로딩화면 종료
+                            map = new naver.maps.Map('map', {
+                                center: new naver.maps.LatLng(response.result.items[0].point.y, response.result.items[0].point.x),
+                                zoom: 18
+                            });
+                            var marker = new naver.maps.Marker({
+                                position: new naver.maps.LatLng(response.result.items[0].point.y, response.result.items[0].point.x),
+                                map: map
+                            });
+                        });
+                        // data.forEach(function(key, index) {
+                        //     $("#reservation_previous").append('<option value="' + key.wh_alliance_idx + '" >' + key.alliance_name + '(' + key.reservation_date + ')' + '</option>');
+                        // });
+
+                    }
+                });
+            }
+        }
+
+
+        var map = null;
+
+        function initMap() {
+            map = new naver.maps.Map('map', {
+                center: new naver.maps.LatLng(37.3595704, 127.105399),
+                zoom: 10
+            });
+        }
+
+        function searchAddr() {
+            $('#meeting_place').autocomplete({
+                source: function(request, response) {
+                    console.log(request);
+                    const postData = {
+                        'confmKey': 'devU01TX0FVVEgyMDI0MDQwMjIzMDExNzExNDY1NTU=',
+                        'currentPage': '1',
+                        'countPerPage': '100',
+                        'keyword': request.term,
+                        'resultType': 'json'
+                    }
+                    $.ajax({
+                        url: 'https://business.juso.go.kr/addrlink/addrLinkApi.do',
+                        type: 'POST',
+                        data: postData,
+                        async: false,
+                        success: function(data) {
+                            console.log(data)
+                            response(
+                                $.map(data.results.juso, function(item) {
+                                    return {
+                                        label: item.jibunAddr,
+                                        value: item.jibunAddr,
+                                        idx: item.zipNo,
+                                    }
+                                })
+                            )
+                        }
+                    });
+                },
+                minLength: 2, // 최소 문자 수
+                select: function(event, ui) {
+                    // 아이템 선택 시 동작
+                    console.log(ui.item.value); // 선택된 주소명                    
+
+                    // todo: 로딩화면 호출
+                    naver.maps.Service.geocode({
+                        address: ui.item.value
+                    }, function(status, response) {
+                        if (status === naver.maps.Service.Status.ERROR) {
+                            console.log('올바른 주소를 입력해 주세요');
+                        }
+                        // 성공 시의 response 처리
+                        // todo: 로딩화면 종료
+                        map = new naver.maps.Map('map', {
+                            center: new naver.maps.LatLng(response.result.items[0].point.y, response.result.items[0].point.x),
+                            zoom: 18
+                        });
+                        var marker = new naver.maps.Marker({
+                            position: new naver.maps.LatLng(response.result.items[0].point.y, response.result.items[0].point.x),
+                            map: map
+                        });
+                    });
+                }
+            });
+        }
+
+        function searchPlaces() {
+            var keyword = document.getElementById('meeting_place').value;
+
+            if (!keyword.replace(/^\s+|\s+$/g, '')) {
+                alert('키워드를 입력해주세요!');
+                return false;
+            }
+            const postData = {
+                'confmKey': 'devU01TX0FVVEgyMDI0MDQwMjIzMDExNzExNDY1NTU=',
+                'currentPage': '1',
+                'countPerPage': '20',
+                'keyword': keyword,
+                'resultType': 'json'
+            }
+            // 키워드로 장소 검색
+            $.ajax({
+                url: 'https://business.juso.go.kr/addrlink/addrLinkApi.do',
+                type: 'POST',
+                data: postData,
+                async: false,
+                success: function(data) {
+
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
+            });
+        }
+
+        function setDatepicker() {
             //input을 datepicker로 선언
             $("#datepicker").datepicker({
                 dateFormat: 'yy-mm-dd' //달력 날짜 형태
@@ -237,9 +390,9 @@
                     ,
                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
                     ,
-                minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                minDate: "-1Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
                     ,
-                maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
+                maxDate: "+1y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
                     ,
                 zIndex: 9999
             });
@@ -270,9 +423,9 @@
                     ,
                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
                     ,
-                minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                minDate: "-1Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
                     ,
-                maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
+                maxDate: "+1y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
                     ,
                 zIndex: 9999
             });
@@ -303,115 +456,48 @@
                     ,
                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
                     ,
-                minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                minDate: "-1Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
                     ,
-                maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
+                maxDate: "+1y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
                     ,
                 zIndex: 9999
             });
 
             //초기값을 오늘 날짜로 설정
             $('#datepicker2').datepicker('setDate', 'today'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
-            $("#datepicker3").datepicker({
-                dateFormat: 'yy-mm-dd' //달력 날짜 형태
-                    // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
-                    ,
-                showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
-                    // ,changeYear: true //option값 년 선택 가능
-                    // ,changeMonth: true //option값  월 선택 가능                
-                    ,
-                showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
-                    ,
-                buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
-                    ,
-                buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
-                    ,
-                buttonText: "선택" //버튼 호버 텍스트        
-                    ,
-                monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
-                    ,
-                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
-                    ,
-                dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
-                    ,
-                dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
-                    ,
-                minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                    ,
-                maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
-                    ,
-                zIndex: 9999
-            });
+            // $("#datepicker3").datepicker({
+            //     dateFormat: 'yy-mm-dd' //달력 날짜 형태
+            //         // ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
+            //         ,
+            //     showMonthAfterYear: true // 월- 년 순서가아닌 년도 - 월 순서
+            //         // ,changeYear: true //option값 년 선택 가능
+            //         // ,changeMonth: true //option값  월 선택 가능                
+            //         ,
+            //     showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
+            //         ,
+            //     buttonImage: "/static/images/calendar_img.png" //버튼 이미지 경로
+            //         ,
+            //     buttonImageOnly: true //버튼 이미지만 깔끔하게 보이게함
+            //         ,
+            //     buttonText: "선택" //버튼 호버 텍스트        
+            //         ,
+            //     monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 텍스트
+            //         ,
+            //     monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'] //달력의 월 부분 Tooltip
+            //         ,
+            //     dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'] //달력의 요일 텍스트
+            //         ,
+            //     dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
+            //         ,
+            //     minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+            //         ,
+            //     maxDate: "+5y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
+            //         ,
+            //     zIndex: 9999
+            // });
 
-            //초기값을 오늘 날짜로 설정
-            $('#datepicker3').datepicker('setDate', '+1D'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
-
-            $('#meeting_place').autocomplete({
-                source: function(request, response) {
-                    console.log(request);
-                    const postData = {
-                        'confmKey': 'devU01TX0FVVEgyMDI0MDQwMjIzMDExNzExNDY1NTU=',
-                        'currentPage': '1',
-                        'countPerPage': '20',
-                        'keyword': request.term,
-                        'resultType': 'json'
-                    }
-                    $.ajax({
-                        url: 'https://business.juso.go.kr/addrlink/addrLinkApi.do',
-                        type: 'POST',
-                        data: postData,
-                        async: false,
-                        success: function(data) {
-                            console.log(data)
-                            response(
-                                $.map(data.results.juso, function(item) {
-                                    return {
-                                        label: item.detBdNmList,
-                                        value: item.jibunAddr ? item.jibunAddr : item.rn + " " + item.bdNm,
-                                        idx: item.zipNo,
-                                    }
-                                })
-                            )
-                        }
-                    });
-                },
-                minLength: 2, // 최소 문자 수
-                select: function(event, ui) {
-                    // 아이템 선택 시 동작
-                    console.log(ui.item.value); // 선택된 주소명
-                }
-            });
-        });
-
-
-        function searchPlaces() {
-            var keyword = document.getElementById('meeting_place').value;
-
-            if (!keyword.replace(/^\s+|\s+$/g, '')) {
-                alert('키워드를 입력해주세요!');
-                return false;
-            }
-            const postData = {
-                'confmKey': 'devU01TX0FVVEgyMDI0MDQwMjIzMDExNzExNDY1NTU=',
-                'currentPage': '1',
-                'countPerPage': '20',
-                'keyword': keyword,
-                'resultType': 'json'
-            }
-            // 키워드로 장소 검색
-            $.ajax({
-                url: 'https://business.juso.go.kr/addrlink/addrLinkApi.do',
-                type: 'POST',
-                data: postData,
-                async: false,
-                success: function(data) {
-
-                },
-                error: function(data, status, err) {
-                    console.log(err);
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-                },
-            });
+            // //초기값을 오늘 날짜로 설정
+            // $('#datepicker3').datepicker('setDate', '+1D'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
         }
 
         //앤터 추가

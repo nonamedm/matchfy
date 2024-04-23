@@ -27,6 +27,7 @@ $routes->get('/mo/privacy', 'MoHome::privacy');
 $routes->get('/mo/mypage', 'MoHome::mypage');
 $routes->get('/mo/mymsg/ai', 'MoHome::mymsgAi');
 $routes->get('/mo/mymsg', 'MoHome::mymsg');
+$routes->post('/mo/mymsg', 'MoHome::mymsg');
 $routes->get('/mo/mymsg/list', 'MoHome::mymsgList');
 $routes->get('/mo/mymsg/menu', 'MoHome::mymsgMenu');
 $routes->get('/mo/mymsg/ai/profilePopup', 'MoHome::mymsgAiProfilePopup');
@@ -94,6 +95,11 @@ $routes->get('/mo/factorInfo', 'MoHome::factorInfo');
 $routes->get('/mo/partner/regular', 'MoHome::partnerRegular');
 $routes->get('/mo/partner/premium', 'MoHome::partnerPremium');
 
+//Aouth2.0
+$routes->get('/auth/kakao/login', 'OAuth2::loginKakao');
+$routes->get('/auth/kakao/callback', 'OAuth2::callback');
+$routes->get('/auth/naver/login', 'OAuth2::loginNaver');
+$routes->get('/auth/naver/callback', 'OAuth2::callback');
 
 // file upload
 $routes->post('/upload', 'Upload::upload');
@@ -102,6 +108,7 @@ $routes->post('/upload', 'Upload::upload');
 $routes->post('/ajax/signUp', 'MoAjax::signUp');
 $routes->post('/ajax/alianceUp', 'MoAjax::alianceUp');
 $routes->post('/ajax/signUpdate', 'MoAjax::signUpdate');
+$routes->post('/ajax/isValidRecommendCode', 'MoAjax::isValidRecommendCode');
 $routes->post('/ajax/login', 'MoAjax::login');
 $routes->post('/ajax/logout', 'MoAjax::logout');
 $routes->post('/ajax/mbrFileRegUp', 'MoAjax::mbrFileRegUp');
@@ -123,6 +130,19 @@ $routes->post('/ajax/AImatch', 'MoAjax::AImatch');
 $routes->post('/ajax/mainMeetingList', 'MoAjax::mainMeetingList');
 $routes->post('/ajax/allianceFilter', 'MoAjax::allianceFiltering');
 $routes->get('/ajax/alliance/reservation', 'MoAjax::allianceReservation');
+$routes->post('/ajax/myAlliance', 'MoAjax::myAlliance');
+$routes->post('/ajax/myAllianceDetail', 'MoAjax::myAllianceDetail');
+
+/* 채팅 */
+$routes->post('/ajax/createChat', 'MoAjax::createChat');
+$routes->post('/ajax/createMultyChat', 'MoAjax::createMultyChat');
+$routes->post('/ajax/sendMsg', 'MoAjax::sendMsg');
+$routes->post('/ajax/reloadMsg', 'MoAjax::reloadMsg');
+$routes->post('/ajax/extRm', 'MoAjax::extRm');
+$routes->post('/ajax/banUsr', 'MoAjax::banUsr');
+$routes->post('/ajax/sndRpt', 'MoAjax::sndRpt');
+$routes->post('/ajax/submitScdl', 'MoAjax::submitScdl');
+$routes->post('/ajax/partScdl', 'MoAjax::partScdl');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

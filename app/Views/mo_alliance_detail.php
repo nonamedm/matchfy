@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -19,17 +18,18 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
         <mobileheader style="height:44px; display: block;"></mobileheader>
-        
-        <?php $title = "제휴"; include 'header.php'; ?>
+
+        <?php $title = "제휴";
+        include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="group_deatil_img">
                     <div id="imageSlider" class="slider">
-                        <?php foreach ($files as $file): ?>
-                        <div class="slide">
-                            <img src="/<?= htmlspecialchars($file['file_path']) . htmlspecialchars($file['file_name']) ?>" alt="Slide Image" />
-                        </div>
+                        <?php foreach ($files as $file) : ?>
+                            <div class="slide">
+                                <img src="/<?= htmlspecialchars($file['file_path']) . htmlspecialchars($file['file_name']) ?>" alt="Slide Image" />
+                            </div>
                         <?php endforeach; ?>
                     </div>
                     <a href="#" id="prev">&#10094;</a>
@@ -46,19 +46,19 @@
                     </div>
                     <div class="tab_wrap">
                         <ul>
-                            <li class="tab on" data-target="#tab-reservation"><?=lang('Korean.reservBtn')?></li>
-                            <li class="tab" data-target="#tab-detail"><?=lang('Korean.allianceDetailInfo')?></li>
+                            <li class="tab on" data-target="#tab-reservation"><?= lang('Korean.reservBtn') ?></li>
+                            <li class="tab" data-target="#tab-detail"><?= lang('Korean.allianceDetailInfo') ?></li>
                         </ul>
                     </div>
                     <div id="tab-reservation" class="alliance_tab_content active">
                         <div class="alliance_detail_cont">
-                            <h2><?=lang('Korean.allianceDaySelected')?></h2>
+                            <h2><?= lang('Korean.allianceDaySelected') ?></h2>
                             <div id="calendar"></div>
                         </div>
                         <div class="alliance_detail_cont">
-                            <h2><?=lang('Korean.allianceRoundSelected')?></h2>
+                            <h2><?= lang('Korean.allianceRoundSelected') ?></h2>
                             <div class="alliance_reserv_list">
-                                <?php foreach ($time_slots as $time_slot): ?>
+                                <?php foreach ($time_slots as $time_slot) : ?>
                                     <?php
                                     $time_slot_time = explode(' ', $time_slot)[1];
                                     $isReserved = false;
@@ -78,13 +78,12 @@
                             </div>
                         </div>
                         <div class="alliance_detail_cont">
-                            <h2><?=lang('Korean.alliancePeopleNumSelected')?></h2>
+                            <h2><?= lang('Korean.alliancePeopleNumSelected') ?></h2>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <div style="display: flex; align-items: center;">
-                                        <input id="quantity" type="number" value="0" style="width:225px;"
-                                            placeholder="<?=lang('Korean.peopleNum')?>" />
-                                        <p style="margin-left:8px; font-size: 15px;"><?=lang('Korean.people')?></p>
+                                        <input id="quantity" type="number" value="0" style="width:225px;" placeholder="<?= lang('Korean.peopleNum') ?>" />
+                                        <p style="margin-left:8px; font-size: 15px;"><?= lang('Korean.people') ?></p>
                                         <a style="margin-left:15px;" id="plus"><img src="/static/images/ico_plus_30x30.png" /></a>
                                         <a style="margin-left:12px;" id="minus"><img src="/static/images/ico_minus_30x30.png" /></a>
                                     </div>
@@ -94,64 +93,64 @@
                         <div class="form_row signin_form">
                             <div class="amount_pay">
                                 <div class="amount_pay_left alliance">
-                                    <h2><?=lang('Korean.allPay')?></h2>
+                                    <h2><?= lang('Korean.allPay') ?></h2>
                                 </div>
                                 <div class="amount_pay_right">
-                                    <h2 id="totalAmount"><?= number_format($alliance_pay, 0) ?> <?=lang('Korean.won')?></h2>
+                                    <h2 id="totalAmount"><?= number_format($alliance_pay, 0) ?> <?= lang('Korean.won') ?></h2>
                                 </div>
                             </div>
                         </div>
                         <div class="chk_box">
                             <input type="checkbox" id="totAgree" name="chkDefault00" checked="">
-                            <label class="totAgree_label" for="totAgree"><?=lang('Korean.allianceAgreeTrue')?></label>
+                            <label class="totAgree_label" for="totAgree"><?= lang('Korean.allianceAgreeTrue') ?></label>
                         </div>
                     </div>
                     <div id="tab-detail" class="alliance_tab_content">
                         <div class="alliance_detail_cont">
-                            <h2><?=lang('Korean.intro')?></h2>
+                            <h2><?= lang('Korean.intro') ?></h2>
                             <?= $detailed_content ?>
                         </div>
                         <div class="alliance_detail_cont">
-                            <h2><?=lang('Korean.allianceCancelCon')?></h2>                        
+                            <h2>취소/환불 규정</h2>
                             <table class="basic_table">
                                 <tr>
-                                    <td><?=lang('Korean.allianceCancelCon2')?></td>
-                                    <td><?=lang('Korean.allianceCancelCon3')?></td>
+                                    <td><?= lang('Korean.allianceCancelCon2') ?></td>
+                                    <td><?= lang('Korean.allianceCancelCon3') ?></td>
                                 </tr>
                                 <tr>
-                                    <td><?=lang('Korean.allianceCancelCon4')?></td>
-                                    <td><?=lang('Korean.allianceCancelCon5')?></td>
+                                    <td><?= lang('Korean.allianceCancelCon4') ?></td>
+                                    <td><?= lang('Korean.allianceCancelCon5') ?></td>
                                 </tr>
                             </table>
                         </div>
                         <div class="alliance_detail_cont">
-                            <h2><?=lang('Korean.allianceLocation')?></h2>
+                            <h2><?= lang('Korean.allianceLocation') ?></h2>
                             <div class="group_location">
                                 <img src="/static/images/ico_location_16x16.png" />
                                 <?= $address ?> <?= $detailed_address ?>
-                            </div>                        
+                            </div>
                             <div class="group_detail_map">
-                                <img src="/static/images/group_naver_map.png" />
+                                <div id="map" style="width:335px;height:208px;margin-top: 20px;"></div>
                             </div>
                         </div>
                         <div class="alliance_detail_cont">
-                            <h2><?=lang('Korean.allianceSellerInfo')?></h2>
+                            <h2><?= lang('Korean.allianceSellerInfo') ?></h2>
                             <div class="alliance_profile_content">
-                                <h2><?=lang('Korean.allianceMutual')?></h2>
+                                <h2><?= lang('Korean.allianceMutual') ?></h2>
                                 <p><?= $company_name ?></p>
-                            </div>                            
+                            </div>
                             <div class="alliance_profile_content">
-                                <h2><?=lang('Korean.allianceRepresentativeName')?></h2>
+                                <h2><?= lang('Korean.allianceRepresentativeName') ?></h2>
                                 <p><?= $representative_name ?></p>
-                            </div>                            
+                            </div>
                             <div class="alliance_profile_content">
-                                <h2><?=lang('Korean.allianceCeonum')?></h2>
+                                <h2><?= lang('Korean.allianceCeonum') ?></h2>
                                 <p>추가필요</p>
-                            </div>                            
+                            </div>
                             <div class="alliance_profile_content">
-                                <h2><?=lang('Korean.allianceCompanyContact')?></h2>
+                                <h2><?= lang('Korean.allianceCompanyContact') ?></h2>
                                 <p><?= $company_contact ?></p>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -159,7 +158,7 @@
                 <footer class="footer">
 
                     <div class="btn_group">
-                        <button type="button" class="btn type01" id="alliance_reserve"><?=lang('Korean.reservBtn')?></button>
+                        <button type="button" class="btn type01" id="alliance_reserve"><?= lang('Korean.reservBtn') ?></button>
                     </div>
                 </footer>
             </div>
@@ -169,17 +168,12 @@
 
 
     <!-- SCRIPTS -->
-
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=smqlge9tsx&submodules=geocoder"></script>
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
-
         $(document).ready(function() {
+            // 지도 호출
+            initMap();
+
             // 이미지 슬라이드
             let slideIndex = 0;
             showSlides(slideIndex);
@@ -199,7 +193,7 @@
                 if (n >= slides.length) slideIndex = 0;
                 if (n < 0) slideIndex = slides.length - 1;
 
-                slides.hide(); 
+                slides.hide();
                 $(slides[slideIndex]).show();
             }
 
@@ -207,7 +201,7 @@
             $('.tab').click(function() {
                 $('.tab').removeClass('on');
                 $(this).addClass('on');
-                
+
                 $('.alliance_tab_content').hide();
                 $($(this).data('target')).show();
             });
@@ -265,7 +259,7 @@
                 }
 
                 // moveToUrl('/mo/alliance/payment/<?= $idx ?>?totalAmount=' + totalAmount);
-                moveToUrl('/mo/alliance/payment/<?= $idx ?>/'+quantity+'/'+selectedDate+'/'+reserveTime);
+                moveToUrl('/mo/alliance/payment/<?= $idx ?>/' + quantity + '/' + selectedDate + '/' + reserveTime);
             });
         });
 
@@ -283,14 +277,14 @@
                     right: 'next'
                 },
                 locale: "ko",
-                contentHeight:"auto",
+                contentHeight: "auto",
                 dateClick: function(info) {
                     // 이전 테두리를 제거
                     if (lastSelectedDay) {
                         lastSelectedDay.classList.remove('selected-day');
                         lastSelectedDay.style.border = '';
                     }
-                    
+
                     // 선택한 날자 데이터 표시
                     info.dayEl.classList.add('selected-day');
                     lastSelectedDay = info.dayEl;
@@ -303,18 +297,20 @@
                     $.ajax({
                         url: '/ajax/alliance/reservation',
                         type: 'GET',
-                        data: { date: selectedDate,
-                                idx: allianceIdx },
+                        data: {
+                            date: selectedDate,
+                            idx: allianceIdx
+                        },
                         success: function(response) {
                             //console.log(response);
-                            updateReservationList(response);// 예약 시간 표현
+                            updateReservationList(response); // 예약 시간 표현
                         },
                         error: function(xhr, status, error) {
                             console.error("Error fetching reservation data:", error);
                         }
                     });
                 },
-                dayCellContent: function (info) {
+                dayCellContent: function(info) {
                     var number = document.createElement("a");
                     number.classList.add("fc-daygrid-day-number");
                     number.innerHTML = info.dayNumberText.replace("일", '');
@@ -343,6 +339,27 @@
             document.querySelector('.alliance_reserv_list').innerHTML = listHtml;
         }
 
+        function initMap() {
+            var add1 = '<?= $address ?>';
+            var add2 = '<?= $detailed_address ?>';
+            naver.maps.Service.geocode({
+                address: add1 + ' ' + add2
+            }, function(status, response) {
+                if (status === naver.maps.Service.Status.ERROR) {
+                    console.log('올바른 주소를 입력해 주세요');
+                }
+                // 성공 시의 response 처리
+                // todo: 로딩화면 종료
+                map = new naver.maps.Map('map', {
+                    center: new naver.maps.LatLng(response.result.items[0].point.y, response.result.items[0].point.x),
+                    zoom: 18
+                });
+                var marker = new naver.maps.Marker({
+                    position: new naver.maps.LatLng(response.result.items[0].point.y, response.result.items[0].point.x),
+                    map: map
+                });
+            });
+        }
     </script>
 
     <!-- -->

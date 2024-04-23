@@ -51,19 +51,19 @@
                         <hr class="hoz_part" />
                         <li class="profile_body">
                             <div class="profile_content">
-                                <h2><?=lang('Korean.name')?></h2>
+                                <h2><?= lang('Korean.name') ?></h2>
                                 <p>
                                     <?= $name ?>
                                 </p>
                             </div>
                             <div class="profile_content">
-                                <h2><?=lang('Korean.birthTrueFalse')?></h2>
+                                <h2><?= lang('Korean.birthTrueFalse') ?></h2>
                                 <p>
                                     <?= $birthday ?>
                                 </p>
                             </div>
                             <div class="profile_content">
-                                <h2><?=lang('Korean.gender')?></h2>
+                                <h2><?= lang('Korean.gender') ?></h2>
                                 <p>
                                     <?php foreach ($genderCode as $item) {
                                         if ($item['id'] === $gender) echo $item['name'];
@@ -71,7 +71,7 @@
                                 </p>
                             </div>
                             <div class="profile_content">
-                                <h2><?=lang('Korean.region')?></h2>
+                                <h2><?= lang('Korean.region') ?></h2>
                                 <p>
                                     <?php foreach ($sidoCode as $item) {
                                         if ($item['id'] === $city) echo $item['name'];
@@ -87,13 +87,13 @@
                             <hr class="hoz_part" />
                             <li class="profile_body">
                                 <div class="profile_content">
-                                    <h2><?=lang('Korean.marryTrueFalse')?></h2>
+                                    <h2><?= lang('Korean.marryTrueFalse') ?></h2>
                                     <p>
                                         <?= $married === 0 ? '미혼' : '기혼' ?>
                                     </p>
                                 </div>
                                 <div class="profile_content">
-                                    <h2><?=lang('Korean.smokeType')?></h2>
+                                    <h2><?= lang('Korean.smokeType') ?></h2>
                                     <p>
                                         <?php foreach ($smokingCode as $item) {
                                             if ($item['id'] === $smoker) echo $item['name'];
@@ -101,7 +101,7 @@
                                     </p>
                                 </div>
                                 <div class="profile_content">
-                                    <h2><?=lang('Korean.drinkingType')?></h2>
+                                    <h2><?= lang('Korean.drinkingType') ?></h2>
                                     <p>
                                         <?php foreach ($drinkingCode as $item) {
                                             if ($item['id'] === $drinking) echo $item['name'];
@@ -109,7 +109,7 @@
                                     </p>
                                 </div>
                                 <div class="profile_content">
-                                    <h2><?=lang('Korean.religionType')?></h2>
+                                    <h2><?= lang('Korean.religionType') ?></h2>
                                     <p>
                                         <?php foreach ($religionCode as $item) {
                                             if ($item['id'] === $religion) echo $item['name'];
@@ -125,13 +125,13 @@
                                     </p>
                                 </div>
                                 <div class="profile_content">
-                                    <h2><?=lang('Korean.height')?> </h2>
+                                    <h2><?= lang('Korean.height') ?> </h2>
                                     <p>
                                         <?= $height ?> cm
                                     </p>
                                 </div>
                                 <div class="profile_content">
-                                    <h2><?=lang('Korean.styleType')?></h2>
+                                    <h2><?= lang('Korean.styleType') ?></h2>
                                     <p>
                                         <?php
                                         if ($gender === '0') {
@@ -151,7 +151,7 @@
                             <hr class="hoz_part" />
                             <li class="profile_body">
                                 <div class="profile_content">
-                                    <h2><?=lang('Korean.education')?></h2>
+                                    <h2><?= lang('Korean.education') ?></h2>
                                     <p>
                                         <?php foreach ($educationCode as $item) {
                                             if ($item['id'] === $education) echo $item['name'];
@@ -159,19 +159,19 @@
                                     </p>
                                 </div>
                                 <div class="profile_content">
-                                    <h2><?=lang('Korean.school')?><?=lang('Korean.people')?></h2>
+                                    <h2><?= lang('Korean.school') ?><?= lang('Korean.people') ?></h2>
                                     <p>
                                         <?= $school ?>
                                     </p>
                                 </div>
                                 <div class="profile_content">
-                                    <h2><?=lang('Korean.major')?></h2>
+                                    <h2><?= lang('Korean.major') ?></h2>
                                     <p>
                                         <?= $major ?>
                                     </p>
                                 </div>
                                 <div class="profile_content">
-                                    <h2><?=lang('Korean.assetGroup')?></h2>
+                                    <h2><?= lang('Korean.assetGroup') ?></h2>
                                     <p>
                                         <?php foreach ($asset as $item) {
                                             if ($item['id'] === $asset_range) echo $item['name'];
@@ -179,7 +179,7 @@
                                     </p>
                                 </div>
                                 <div class="profile_content">
-                                    <h2><?=lang('Korean.incomeGroup')?></h2>
+                                    <h2><?= lang('Korean.incomeGroup') ?></h2>
                                     <p>
                                         <?php foreach ($income as $item) {
                                             if ($item['id'] === $income_range) echo $item['name'];
@@ -204,27 +204,27 @@
                             <hr class="hoz_part" />
                             <li class="profile_body">
                                 <div class="profile_content">
-                                    <h2><?=lang('Korean.father')?></h2>
+                                    <h2><?= lang('Korean.father') ?></h2>
                                     <p>
-                                        <?= $father_birth_year ?><?=lang('Korean.year')?> /
+                                        <?= $father_birth_year ?><?= lang('Korean.year') ?> /
                                         <?= $father_job ?>
                                     </p>
                                 </div>
                                 <div class="profile_content">
-                                    <h2><?=lang('Korean.mather')?></h2>
+                                    <h2><?= lang('Korean.mather') ?></h2>
                                     <p>
-                                        <?= $mother_birth_year ?><?=lang('Korean.year')?> /
+                                        <?= $mother_birth_year ?><?= lang('Korean.year') ?> /
                                         <?= $mother_job ?>
                                     </p>
                                 </div>
                                 <div class="profile_content">
-                                    <h2><?=lang('Korean.sibling')?></h2>
+                                    <h2><?= lang('Korean.sibling') ?></h2>
                                     <p>
                                         <?= $siblings ?>
                                     </p>
                                 </div>
                                 <div class="profile_content">
-                                    <h2><?=lang('Korean.ResidenceType')?></h2>
+                                    <h2><?= lang('Korean.ResidenceType') ?></h2>
                                     <p>
                                         <?= $residence1 ?>/
                                         <?= $residence2 ?>(
@@ -242,10 +242,18 @@
                 </div>
                 <div style="height: 50px;"></div>
                 <footer class="footer">
-
-                    <div class="btn_group">
-                        <button type="button" class="btn type01" onclick="moveToUrl('/mo/mymsg')"><?=lang('Korean.msgBtn')?></button>
-                    </div>
+                    <!-- 본인계정 아닐때만 메세지보내기 활성 -->
+                    <?php
+                    $session = $session = session();
+                    $now_ci = $session->get('ci');
+                    if ($now_ci !== $ci) {
+                    ?>
+                        <div class="btn_group">
+                            <button type="button" class="btn type01" onclick="sendMsg()"><?= lang('Korean.msgBtn') ?></button>
+                        </div>
+                    <?php
+                    }
+                    ?>
                 </footer>
             </div>
         </div>
@@ -260,12 +268,33 @@
     <!-- SCRIPTS -->
 
     <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
+        const sendMsg = () => {
+            $.ajax({
+                url: '/ajax/createChat',
+                type: 'POST',
+                data: {
+                    "nickname": "<?= $nickname ?>"
+                },
+                async: false,
+                success: function(data) {
+                    if (data.status === 'success') {
+                        // 성공
+                        console.log(data)
+                        moveToUrl('/mo/mymsg', {
+                            room_ci: data.data.room_ci
+                        });
+                    } else if (data.status === 'error') {
+                        console.log('메세지 전송 실패', data);
+                    } else {
+                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    }
+                    return false;
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
+            });
         }
     </script>
 

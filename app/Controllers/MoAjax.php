@@ -8,6 +8,7 @@ use App\Models\MemberFeedModel;
 use App\Models\MemberFeedFileModel;
 use App\Models\UniversityModel;
 use App\Models\MeetingModel;
+use App\Models\MeetingPersonModel;
 use App\Models\MeetingFileModel;
 use App\Models\MatchPartnerModel;
 use App\Models\MatchFactorModel;
@@ -18,6 +19,10 @@ use App\Models\AllianceModel;
 use App\Models\AllianceFileModel;
 use App\Config\Encryption;
 use App\Models\AllianceReservationModel;
+use App\Models\ChatRoomModel;
+use App\Models\ChatRoomMsgModel;
+use App\Models\ChatRoomMemberModel;
+use App\Models\PointModel;
 
 
 class MoAjax extends BaseController
@@ -39,6 +44,7 @@ class MoAjax extends BaseController
             $query .= " AND mb.gender = '" . $filter . "'";
         }
         $query .= " AND mr.match_score > '0'";
+        $query .= " AND mf.board_type = 'main_photo'";
         $query .= " ORDER BY CONVERT(mr.match_rate, SIGNED) DESC";
 
         $MemberModel = new MemberModel();
@@ -58,7 +64,7 @@ class MoAjax extends BaseController
             }
             return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => $result]);
         } else {
-            return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed', 'query' => $query]);
         }
     }
 
@@ -229,15 +235,20 @@ class MoAjax extends BaseController
         } else {
             $MemberModel = new MemberModel();
 
-            $is_duplicate = true;
-            $random_word = '';
-            // 닉네임 중복확인
-            while ($is_duplicate) {
-                // 닉네임 랜덤 생성
-                $word_file_path = APPPATH . 'Data/RandomWord.php';
-                require($word_file_path);
-                $random_word = $randomadj[array_rand($randomadj)] . $randomword[array_rand($randomword)] . '@' . mt_rand(100000, 999999);
-                $is_duplicate = $MemberModel->where(['nickname' => $random_word])->first();
+            $unique_code = $this->generateUniqueCode($MemberModel);
+            $random_word = $this->request->getPost('nickname');
+
+            if (empty($random_word)) {
+                $is_duplicate = true;
+                $random_word = '';
+                // 닉네임 중복확인
+                while ($is_duplicate) {
+                    // 닉네임 랜덤 생성
+                    $word_file_path = APPPATH . 'Data/RandomWord.php';
+                    require($word_file_path);
+                    $random_word = $randomadj[array_rand($randomadj)] . $randomword[array_rand($randomword)] . '@' . mt_rand(100000, 999999);
+                    $is_duplicate = $MemberModel->where(['nickname' => $random_word])->first();
+                }
             }
 
             $mobile_no = $this->request->getPost('mobile_no');
@@ -253,6 +264,8 @@ class MoAjax extends BaseController
             $gender = $this->request->getPost('gender');
             $city = $this->request->getPost('city');
             $town = $this->request->getPost('town');
+            $snsType = $this->request->getPost('sns_type');
+            $oauthId = $this->request->getPost('oauth_id');
             // $town = $encrypter->decrypt(base64_decode($ci), ['key' => 'nonamedm', 'blockSize' => 32]);
 
 
@@ -268,6 +281,9 @@ class MoAjax extends BaseController
                 'city' => $city,
                 'town' => $town,
                 'nickname' => $random_word,
+                'unique_code' => $unique_code,
+                'sns_type' => $snsType,
+                'oauth_id' => $oauthId
             ];
 
             // 데이터 저장
@@ -293,6 +309,18 @@ class MoAjax extends BaseController
                     ];
                     $data = array_merge($data, $data2);
                     $MemberFileModel->insert($data2);
+                } else {
+                    // 프로필 첨부 없을때는 기본이미지로 저장
+                    $data2 = [
+                        'member_ci' => $ci,
+                        'org_name' => 'profile_noimg.png',
+                        'file_name' => 'profile_noimg.png',
+                        'file_path' => 'static/images/',
+                        'ext' => $ext,
+                        'board_type' => 'main_photo',
+                    ];
+                    $data = array_merge($data, $data2);
+                    $MemberFileModel->insert($data2);
                 }
                 if ($inserted) {
                     return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
@@ -303,6 +331,44 @@ class MoAjax extends BaseController
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy']);
             }
         }
+    }
+    protected function generateUniqueCode($MemberModel)
+    {
+        $length = 6;
+        $charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $code = '';
+        $is_duplicate = true;
+
+        while ($is_duplicate) {
+            $code = '';
+            for ($i = 0; $i < $length; $i++) {
+                $code .= $charset[rand(0, strlen($charset) - 1)];
+            }
+            $is_duplicate = $MemberModel
+                ->where(['unique_code' => $code])
+                ->first() ? true : false;
+        }
+
+        return $code;
+    }
+
+    public function isValidRecommendCode()
+    {
+        $inviteCode = $this->request->getPost('inviteCode');
+
+        $MemberModel = new MemberModel();
+
+        $result = $MemberModel
+            ->select('unique_code')
+            ->where('unique_code', $inviteCode)
+            ->where('delete_yn', 'N')
+            ->first();
+
+        $isValid = $result !== null;
+
+        return $this->response->setJSON([
+            'isValid' => $isValid
+        ]);
     }
 
     public function signUpdate()
@@ -1138,13 +1204,13 @@ class MoAjax extends BaseController
                     'required' => '모임일자를 입력해주세요.',
                 ]
             ],
-            'meeting_end_date' => [
-                'label' => 'meeting_end_date',
-                'rules' => 'required',
-                'errors' => [
-                    'required' => '모임일자를 입력해주세요.',
-                ]
-            ],
+            // 'meeting_end_date' => [
+            //     'label' => 'meeting_end_date',
+            //     'rules' => 'required',
+            //     'errors' => [
+            //         'required' => '모임일자를 입력해주세요.',
+            //     ]
+            // ],
             'number_of_people' => [
                 'label' => 'number_of_people',
                 'rules' => 'required|numeric',
@@ -1222,7 +1288,7 @@ class MoAjax extends BaseController
             $recruitment_start_date = $this->request->getPost('recruitment_start_date');
             $recruitment_end_date = $this->request->getPost('recruitment_end_date');
             $meeting_start_date = $this->request->getPost('meeting_start_date');
-            $meeting_end_date = $this->request->getPost('meeting_end_date');
+            $meeting_end_date = $this->request->getPost('meeting_start_date'); // 모임일자 시작/끝 동일하게 변경
             $number_of_people = $this->request->getPost('number_of_people');
             $group_min_age = $this->request->getPost('group_min_age');
             $group_max_age = $this->request->getPost('group_max_age');
@@ -1237,6 +1303,8 @@ class MoAjax extends BaseController
             $session = session();
             $member_ci = $session->get('ci');
 
+            $encrypter = \Config\Services::encrypter();
+            $chat_room_ci = base64_encode($encrypter->encrypt($member_ci, ['key' => 'nonamedm', 'blockSize' => 32]));
             $data = [
                 'member_ci' => $member_ci,
                 'category' => $category,
@@ -1253,6 +1321,7 @@ class MoAjax extends BaseController
                 //'reservation_previous' => $reservation_previous,
                 'meeting_place' => $meeting_place,
                 'membership_fee' => $membership_fee,
+                'chat_room_ci' => $chat_room_ci
             ];
 
             // 데이터 저장
@@ -1269,7 +1338,23 @@ class MoAjax extends BaseController
             $meeting_members = new MeetingMembersModel();
             $meetingMembersIdx = $meeting_members->insert($meetMemdata);
 
-            if ($insertedMeetingIdx && $meetingMembersIdx) {
+
+            $ChatRoomModel = new ChatRoomModel();
+            $ChatRoomMemberModel = new ChatRoomMemberModel();
+            $MemberModel = new MemberModel();
+            $chatquery = "INSERT INTO wh_chat_room
+            (room_ci, room_type, room_count, delete_yn, created_at, updated_at)
+            VALUES('" . $chat_room_ci . "', '1', '1', 'n', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+            $createMultyChat = $ChatRoomModel->query($chatquery);
+            if ($createMultyChat) {
+                $chatquery = "INSERT INTO wh_chat_room_member
+                (room_ci, member_ci, entry_num, member_type, delete_yn, entered_at, created_at, updated_at)
+                VALUES('" . $chat_room_ci . "', '" . $member_ci . "', '1','1', 'n', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                $enterMultyChat = $ChatRoomMemberModel->query($chatquery);
+            }
+
+
+            if ($insertedMeetingIdx && $meetingMembersIdx && $createMultyChat) {
                 $inserted_id = $MeetingModel->getInsertID();
 
                 $upload = new Upload();
@@ -1428,7 +1513,7 @@ class MoAjax extends BaseController
         $AllianceModel = new AllianceModel();
 
         // 동적 WHERE 절 구성 시작
-        $whereConditions = "a.delete_yn = 'N'";
+        $whereConditions = "a.delete_yn = 'N' AND a.alliance_application = '2'";
         $bindParams = [];
 
         // 카테고리 필터링 조건
@@ -1458,9 +1543,10 @@ class MoAjax extends BaseController
             ) AS bf ON bf.alliance_idx = a.idx
             LEFT JOIN wh_alliance_files b ON b.idx = bf.idx
             WHERE " . $whereConditions . "
-            ORDER BY a.idx ASC";   
+            ORDER BY a.idx ASC";
 
-        $alliances = $AllianceModel->query($query, $bindParams)->getResultArray();
+        $alliances = $AllianceModel
+            ->query($query, $bindParams)->getResultArray();
 
         // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
         return $this->response->setJSON($alliances);
@@ -1503,6 +1589,90 @@ class MoAjax extends BaseController
         // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
         return $this->response->setJSON($reservations);
     }
+
+    public function myAlliance()
+    {
+        $session = session();
+        $member_ci = $session->get('ci');
+
+
+        $AllianceReservationModel = new AllianceReservationModel();
+
+        // 동적 WHERE 절 구성 시작
+        $whereConditions = "a.delete_yn = 'N'";
+        $bindParams = [];
+
+        // 카테고리 필터링 조건
+        if (!empty($member_ci)) {
+            $whereConditions .= " AND member_ci = :member_ci:";
+            $bindParams['member_ci'] = $member_ci;
+        }
+
+        $query = "SELECT *
+            FROM wh_alliance_reservation a
+            
+            WHERE " . $whereConditions . "
+            AND reservation_date > now()
+            ORDER BY a.idx ASC";
+
+        $reservations = $AllianceReservationModel->query($query, $bindParams)->getResultArray();
+        // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
+        return $this->response->setJSON($reservations);
+    }
+    public function myAllianceDetail()
+    {
+        $session = session();
+        $member_ci = $session->get('ci');
+        $idx = $this->request->getPost('value');
+
+        $AllianceReservationModel = new AllianceReservationModel();
+
+        // 동적 WHERE 절 구성 시작
+        $whereConditions = "a.delete_yn = 'N'";
+        $bindParams = [];
+
+        // 카테고리 필터링 조건
+        if (!empty($member_ci)) {
+            $whereConditions .= " AND member_ci = :member_ci:";
+            $bindParams['member_ci'] = $member_ci;
+        }
+        if (!empty($idx)) {
+            $whereConditions .= " AND wh_alliance_idx = :wh_alliance_idx:";
+            $bindParams['wh_alliance_idx'] = $idx;
+        }
+        // idx 조작방지를 위해 한번 더 조회하는것
+        $query = "SELECT *
+            FROM wh_alliance_reservation a
+            
+            WHERE " . $whereConditions . "
+            ORDER BY a.idx ASC";
+
+        $reservations = $AllianceReservationModel->query($query, $bindParams)->getResultArray();
+
+        if ($reservations) {
+            $AllianceModel = new AllianceModel();
+
+            // 동적 WHERE 절 구성 시작
+            $whereConditions = "a.delete_yn = 'N'";
+            $bindParams = [];
+
+            // 카테고리 필터링 조건
+            $whereConditions .= " AND idx = :wh_alliance_idx:";
+            $bindParams['wh_alliance_idx'] = $reservations[0]['wh_alliance_idx'];
+
+            // idx 조작방지를 위해 한번 더 조회하는것
+            $query = "SELECT a.address, a.alliance_pay, a.detailed_address
+            FROM wh_alliance a
+            WHERE " . $whereConditions . "
+            ORDER BY a.idx ASC";
+
+            $alliance = $AllianceReservationModel->query($query, $bindParams)->getResultArray();
+            $alliance['reservation'] = $reservations[0];
+        }
+        // 조회된 모임 정보를 JSON 형식으로 클라이언트에 응답
+        return $this->response->setJSON($alliance);
+    }
+
     public function chgExcept()
     {
         $word_file_path = APPPATH . 'Data/MemberCode.php';
@@ -1583,17 +1753,18 @@ class MoAjax extends BaseController
         $myFactor = $MatchFactorModel->where(['member_ci' => $ci])->first();
 
         $query = "SELECT * FROM members";
-        if (!empty($myFactor['except1']) && $myFactor['except1'] !== '') //배제항목 있을 시 조건에서 배제하기
+        $query .= " WHERE 1=1";
+        if (!empty($myFactor['except1']) || $myFactor['except1'] !== '') //배제항목 있을 시 조건에서 배제하기
         {
-            $query .= " WHERE (" . $myFactor['except1'] . " != '" . $myFactor['except1_detail'] . "'  OR " . $myFactor['except1'] . " IS NULL)";
+            $query .= " AND (" . $myFactor['except1'] . " != '" . $myFactor['except1_detail'] . "'  OR " . $myFactor['except1'] . " IS NULL)";
         }
-        if (!empty($myFactor['except2']) && $myFactor['except2'] !== '') //배제항목 있을 시 조건에서 배제하기
+        if (!empty($myFactor['except2']) || $myFactor['except2'] !== '') //배제항목 있을 시 조건에서 배제하기
         {
-            $query .= " OR (" . $myFactor['except2'] . " != '" . $myFactor['except2_detail'] . "'  OR " . $myFactor['except2'] . " IS NULL)";
+            $query .= " AND (" . $myFactor['except2'] . " != '" . $myFactor['except2_detail'] . "'  OR " . $myFactor['except2'] . " IS NULL)";
         }
-        if (!empty($myPartner['partner_gender']))  // 성별 거르기
+        if (!empty($myPartner['partner_gender']) || $myPartner['partner_gender'] != '')  // 성별 거르기
         {
-            $query .= " OR (gender = '" . $myPartner['partner_gender'] . "')";
+            $query .= " AND (gender = '" . $myPartner['partner_gender'] . "')";
         }
         $datas = $MemberModel
             ->query($query)->getResultArray();
@@ -1905,7 +2076,7 @@ class MoAjax extends BaseController
     }
     public function alianceUp()
     {
-       
+
         $session = session();
         $ci = $session->get('ci');
 
@@ -1914,10 +2085,10 @@ class MoAjax extends BaseController
         $AllianceFileModel = new AllianceFileModel();
 
         $mobile_no = $this->request->getPost('mobile_no');
-        
+
         $encrypter = \Config\Services::encrypter();
         $alliance_ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 24]));
-        
+
         $agree1 = $this->request->getPost('agree1');
         $agree2 = $this->request->getPost('agree2');
         $agree3 = $this->request->getPost('agree3');
@@ -1935,18 +2106,18 @@ class MoAjax extends BaseController
         $business_hour_start = $this->request->getPost('alliance_biztime1');
         $business_hour_end = $this->request->getPost('alliance_biztime2');
         $detailed_content = $this->request->getPost('detailed_content');
-        
+
         $alliance_ceo_num = $this->request->getPost('alliance_ceo_num');
         $alliance_ceonum_file = $this->request->getFile('alliance_ceonum_file');
         $alliance_photo = $this->request->getFile('alliance_photo');
         $alliance_photo_detail = $this->request->getFiles('alliance_photo_detail');
 
-        
+
         $data = [
             'mobile_no' => $mobile_no,
-            'member_ci'=>$ci,
+            'member_ci' => $ci,
             'alliance_ci' => $alliance_ci,
-            'alliance_ceo_num'=>$alliance_ceo_num,
+            'alliance_ceo_num' => $alliance_ceo_num,
             'ceo_name' => $representative_name,
             'company_name' => $representative_name,
             'gender' => $gender,
@@ -1961,108 +2132,600 @@ class MoAjax extends BaseController
         // 제휴신청
         $session = session();
         $ci = $session->get('ci');
-        
-        $allianceData = [
-            'member_ci'=>$ci,
-            'alliance_ci'=>$alliance_ci,
-            'alliance_ceo_num'=>$alliance_ceo_num,
-            'alliance_type'=>$alliance_type,
-            'company_contact'=>$company_contact,
-            'email'=>$email,
-            'company_name'=>$company_name,
-            'representative_name'=>$representative_name,
-            'address'=>$address,
-            'detailed_address'=>$detailed_address,
-            'representative_contact'=>$representative_contact,
-            'business_day'=>$business_day,
-            'business_hour_start'=>$business_hour_start.":00:00",
-            'business_hour_end'=>$business_hour_end.":00:00",
-            'detailed_content'=>$detailed_content,
-            'alliance_pay'=>$alliance_pay,
-            'alliance_application'=>'1',
-            'delete_yn'=>'n',
-            'create_at'=>date('Y-m-d H:i:s'),
-            'update_at'=>date('Y-m-d H:i:s'),
-        ];
-        
-        $allianceId = $AllianceModel->insert($allianceData);
-        if ($alliance_ceonum_file && $alliance_ceonum_file->isValid() && !$alliance_ceonum_file->hasMoved()){
-            
-            // return var_dump($alliance_ceonum_file->getClientName());
-            $upload = new Upload();
-            $fileData = $upload->allianceUpload($alliance_ceonum_file);
-            $fileMainData=[
-                'member_ci'=>$ci, 
-                'alliance_idx'=>$allianceId,
-                'file_path'=>$fileData['file_path'], 
-                'file_name'=>$fileData['file_name'], 
-                'org_name'=>$fileData['org_name'], 
-                'ext'=>$fileData['ext'],  
-                'delete_yn'=>'n', 
-                'board_type'=>'ceonum', 
-                'extra1', 
-                'extra2', 
-                'extra3'
-            ];
-            $AllianceFileModel->insert($fileMainData);
-        }else{
-            $msg =  "사업자등록증 첨부파일이 등록되지 않았습니다.";
-        }
 
-        if ($alliance_photo && $alliance_photo->isValid() && !$alliance_photo->hasMoved()){
+        $allianceData = [
+            'member_ci' => $ci,
+            'alliance_ci' => $alliance_ci,
+            'alliance_ceo_num' => $alliance_ceo_num,
+            'alliance_type' => $alliance_type,
+            'company_contact' => $company_contact,
+            'email' => $email,
+            'company_name' => $company_name,
+            'representative_name' => $representative_name,
+            'address' => $address,
+            'detailed_address' => $detailed_address,
+            'representative_contact' => $representative_contact,
+            'business_day' => $business_day,
+            'business_hour_start' => $business_hour_start . ":00:00",
+            'business_hour_end' => $business_hour_end . ":00:00",
+            'detailed_content' => $detailed_content,
+            'alliance_pay' => $alliance_pay,
+            'alliance_application' => '1',
+            'delete_yn' => 'n',
+            'create_at' => date('Y-m-d H:i:s'),
+            'update_at' => date('Y-m-d H:i:s'),
+        ];
+
+        $allianceId = $AllianceModel->insert($allianceData);
+
+        if ($alliance_photo && $alliance_photo->isValid() && !$alliance_photo->hasMoved()) {
             $upload = new Upload();
             $fileData = $upload->allianceUpload($alliance_photo);
 
-            $fileMainData=[
-                'member_ci'=>$ci, 
-                'alliance_idx'=>$allianceId,
-                'file_path'=>$fileData['file_path'], 
-                'file_name'=>$fileData['file_name'], 
-                'org_name'=>$fileData['org_name'], 
-                'ext'=>$fileData['ext'],  
-                'delete_yn'=>'n', 
-                'board_type'=>'m', 
-                'extra1', 
-                'extra2', 
+            $fileMainData = [
+                'member_ci' => $ci,
+                'alliance_idx' => $allianceId,
+                'file_path' => $fileData['file_path'],
+                'file_name' => $fileData['file_name'],
+                'org_name' => $fileData['org_name'],
+                'ext' => $fileData['ext'],
+                'delete_yn' => 'n',
+                'board_type' => 'm',
+                'extra1',
+                'extra2',
                 'extra3'
             ];
             $AllianceFileModel->insert($fileMainData);
-        }else{
+        } else {
             $msg =  "메인 사진파일이 전송 되지 않았습니다.";
         }
 
         if (!empty($alliance_photo_detail)) {
-            
-                foreach ($alliance_photo_detail as $fileArray) {                  
-                    foreach ($fileArray as $file) {
-                        // 각 파일을 처리하는 코드
-                        $upload = new Upload();
-                        $fileData = $upload->allianceUpload($file);
 
-                        $fileDetailsData=[
-                            'member_ci'=>$ci, 
-                            'alliance_idx'=>$allianceId,
-                            'file_path'=>$fileData['file_path'], 
-                            'file_name'=>$fileData['file_name'], 
-                            'org_name'=>$fileData['org_name'], 
-                            'ext'=>$fileData['ext'],  
-                            'delete_yn'=>'n', 
-                            'board_type'=>'d'
-                        ];
-   
-                        $fileDetailsInsert = $AllianceFileModel->insert($fileDetailsData);
-                    }
+            foreach ($alliance_photo_detail as $fileArray) {
+                foreach ($fileArray as $file) {
+                    // 각 파일을 처리하는 코드
+                    $upload = new Upload();
+                    $fileData = $upload->allianceUpload($file);
+
+                    $fileDetailsData = [
+                        'member_ci' => $ci,
+                        'alliance_idx' => $allianceId,
+                        'file_path' => $fileData['file_path'],
+                        'file_name' => $fileData['file_name'],
+                        'org_name' => $fileData['org_name'],
+                        'ext' => $fileData['ext'],
+                        'delete_yn' => 'n',
+                        'board_type' => 'd'
+                    ];
+
+                    $fileDetailsInsert = $AllianceFileModel->insert($fileDetailsData);
                 }
-            
+            }
         } else {
             $msg =  "상세 사진파일이 전송 되지 않았습니다.";
         }
 
-        if($allianceId){
+        if ($allianceId) {
             $msg =  "제휴 신청 후 관리자 승인으로 제휴점에 입점 됩니다.";
             // return view('mo_alliance_success',['msg' => $msg]);
             return $this->response->setJSON(['status' => 'success', 'msg' => $msg]);
         }
-        
+    }
+
+    public function createChat()
+    {
+        // 1:1 채팅 생성하기
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $member_ci = $session->get('ci');
+
+        $nickname = $this->request->getPost('nickname');
+        $query = "SELECT * FROM members WHERE nickname = '" . $nickname . "'";
+        $sendto = $MemberModel
+            ->query($query)->getResultArray();
+
+        // 보내는사람, 받는사람의 member_ci 를 알파벳순으로 정렬 후
+        // 두 값을 조합해서 room_ci를 생성함
+        $sorted_values = [$member_ci, $sendto[0]['ci']];
+        sort($sorted_values);
+        $combined = implode('', $sorted_values);
+        $room_ci = hash('sha256', $combined);
+
+        $query = "SELECT * FROM wh_chat_room WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
+        $chatroom = $ChatRoomModel
+            ->query($query)->getResultArray();
+
+        if ($chatroom) {
+            // 기존에 채팅이 존재할 경우
+            $query = "SELECT * FROM wh_chat_room_member WHERE delete_yn = 'n' AND room_ci='" . $room_ci . "' AND member_ci='" . $member_ci . "'";
+            $checkYn = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            if ($checkYn) {
+                // 내가 이 채팅에 참여중인 상태이면 바로 이동한다
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["room_ci" => $room_ci]]);
+            } else {
+                // 내가 이 채팅에서 나간 상태이면 참가 상태를 참여로 바꿔준다
+                $query = "UPDATE wh_chat_room_member
+                SET delete_yn='n', updated_at=CURRENT_TIMESTAMP
+                WHERE room_ci='" . $room_ci . "' AND member_ci='" . $member_ci . "'";
+                $updateChatRoom1 = $ChatRoomMemberModel
+                    ->query($query);
+                // $query = "UPDATE wh_chat_room_member
+                // SET delete_yn='n', entered_at=CURRENT_TIMESTAMP, updated_at=CURRENT_TIMESTAMP
+                // WHERE room_ci='" . $room_ci . "' AND member_ci='" . $sendto[0]['ci'] . "'";
+                // $updateChatRoom2 = $ChatRoomMemberModel
+                // ->query($query);
+                $query = "UPDATE wh_chat_room SET room_count = (CAST(room_count AS UNSIGNED) + 1)
+                           WHERE room_ci='" . $room_ci . "'";
+                $updateChatRoomCount = $ChatRoomModel
+                    ->query($query);
+                if ($updateChatRoomCount) {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["room_ci" => $room_ci]]);
+                } else {
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
+                }
+            }
+        } else {
+            // 없는 경우 신규 채팅방 생성
+            $query = "INSERT INTO wh_chat_room (room_ci, room_type, room_count) VALUES('" . $room_ci . "','0','2');";
+            $createChat = $ChatRoomModel
+                ->query($query);
+
+            // 채팅방 멤버 업데이트
+            if ($createChat) {
+                $query = "INSERT INTO wh_chat_room_member
+                            (room_ci, member_ci, entry_num, member_type, entered_at, updated_at)
+                            VALUES('" . $room_ci . "','" . $member_ci . "','1','0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                $enterChatRoom1 = $ChatRoomMemberModel
+                    ->query($query);
+                $query = "INSERT INTO wh_chat_room_member
+                            (room_ci, member_ci, entry_num, member_type, entered_at, updated_at)
+                            VALUES('" . $room_ci . "','" . $sendto[0]['ci'] . "','2','0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                $enterChatRoom2 = $ChatRoomMemberModel
+                    ->query($query);
+                if ($enterChatRoom1 && $enterChatRoom2) {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["room_ci" => $room_ci]]);
+                } else {
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
+                }
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 생성 실패']);
+            }
+        }
+    }
+    public function createMultyChat()
+    {
+        // 다중 채팅 생성하기
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $member_ci = $session->get('ci');
+
+        $room_ci = $this->request->getPost('room_ci');
+
+        $query = "SELECT * FROM wh_chat_room WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
+        $chatroom = $ChatRoomModel
+            ->query($query)->getResultArray();
+
+        if ($chatroom) {
+            // 기존에 채팅이 존재할 경우
+            $query = "SELECT * FROM wh_chat_room_member WHERE delete_yn = 'n' AND room_ci='" . $room_ci . "' AND member_ci='" . $member_ci . "'";
+            $checkYn = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            if ($checkYn) {
+                // 내가 이 채팅에 참여중인 상태이면 바로 이동한다
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["room_ci" => $room_ci]]);
+            } else {
+                // 내가 이 채팅에서 나간 상태이면 참가 상태를 참여로 바꿔준다
+                $query = "UPDATE wh_chat_room_member
+                SET delete_yn='n', updated_at=CURRENT_TIMESTAMP
+                WHERE room_ci='" . $room_ci . "' AND member_ci='" . $member_ci . "'";
+                $updateChatRoom1 = $ChatRoomMemberModel
+                    ->query($query);
+                // $query = "UPDATE wh_chat_room_member
+                // SET delete_yn='n', entered_at=CURRENT_TIMESTAMP, updated_at=CURRENT_TIMESTAMP
+                // WHERE room_ci='" . $room_ci . "' AND member_ci='" . $sendto[0]['ci'] . "'";
+                // $updateChatRoom2 = $ChatRoomMemberModel
+                // ->query($query);
+                $query = "UPDATE wh_chat_room SET room_count = (CAST(room_count AS UNSIGNED) + 1)
+                           WHERE room_ci='" . $room_ci . "'";
+                $updateChatRoomCount = $ChatRoomModel
+                    ->query($query);
+                if ($updateChatRoomCount) {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["room_ci" => $room_ci]]);
+                } else {
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
+                }
+            }
+        } else {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
+        }
+    }
+    public function sendMsg()
+    {
+        // 1:1 채팅 생성하기
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $member_ci = $session->get('ci');
+
+        $room_ci = $this->request->getPost('room_ci');
+        // 여기서 member_ci로 내가 방 참가자 맞는지 조회 한번 해야함
+        $query = "SELECT * FROM wh_chat_room_member WHERE member_ci = '" . $member_ci . "'
+                  AND room_ci = '" . $room_ci . "'";
+        $checkYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($checkYn) {
+            // 해당 채팅방의 멤버가 맞다면 메세지 전송
+            $msg_cont = $this->request->getPost('msg_cont');
+            $msg_type = $this->request->getPost('msg_type');
+
+            if ($msg_type == '0') {
+                $msg_cont = htmlspecialchars($msg_cont, ENT_QUOTES);
+                $msg_cont = str_replace("\n", "<br>", $msg_cont);
+            }
+            $query = "INSERT INTO wh_chat_room_msg
+            (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
+            VALUES('" . $room_ci . "','" . $member_ci . "','9','0','" . $msg_cont . "','9','9');";
+
+            $sendMsg = $ChatRoomMsgModel
+                ->query($query);
+
+
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $sendMsg]]);
+        } else {
+            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
+    public function reloadMsg()
+    {
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $room_ci = $this->request->getPost('room_ci');
+        // 내가 이 방의 참가자가 맞는지 다시 확인
+        $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "'";
+        $memberYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($memberYn) {
+            // 내가 방 참가자가 맞으면
+            $query = "SELECT crm.chk_entry_num, crm.chk_num, crm.created_at, crm.entry_num, crm.msg_cont, crm.msg_type, crm.updated_at,
+                            (SELECT nickname FROM members WHERE ci = crm.member_ci) as nickname,
+                            (CASE
+                                WHEN member_ci = '" . $ci . "' THEN 'me'
+                                ELSE 'you' 
+                                END) AS chk,
+                                (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname) as match_rate,
+                            (SELECT file_path FROM member_files WHERE member_ci = crm.member_ci) AS file_path,
+                            (SELECT file_name FROM member_files WHERE member_ci = crm.member_ci) AS file_name
+                            FROM wh_chat_room_msg  crm WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at ASC";
+            $allMsg = $ChatRoomMsgModel
+                ->query($query)->getResultArray();
+            if ($allMsg) {
+                date_default_timezone_set('Asia/Seoul');
+                $current_time = time();
+                $today_date = date('Y-m-d', $current_time);
+                foreach ($allMsg as &$row) {
+                    $today_date === date('Y-m-d', strtotime($row['created_at'])) ?  $row['created_at'] = date('H:i', strtotime($row['created_at'])) : $row['created_at'] = date('m-d', strtotime($row['created_at']));
+                }
+            }
+            $query = "SELECT * FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND member_ci != '" . $ci . "' AND delete_yn='n'";
+
+            $data['allMsg'] = $allMsg;
+
+            // echo print_r($allMsg);
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $data]]);
+        } else {
+            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
+
+    public function extRm()
+    {
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $room_ci = $this->request->getPost('room_ci');
+        // 내가 이 방의 참가자가 맞는지 다시 확인
+        $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "'";
+        $memberYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($memberYn) {
+            // 내가 방 참가자가 맞으면
+            $query = "UPDATE wh_chat_room_member SET DELETE_YN='y' WHERE member_ci='" . $ci . "'";
+            $extRm = $ChatRoomMemberModel
+                ->query($query);
+            $query = "UPDATE wh_chat_room SET room_count = (CAST(room_count AS UNSIGNED) - 1)
+                        WHERE room_ci='" . $room_ci . "'";
+            $updateChatRoomCount = $ChatRoomModel
+                ->query($query);
+            if ($updateChatRoomCount) {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $extRm]]);
+            } else {
+                return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+            }
+
+            // echo print_r($allMsg);
+        } else {
+            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
+
+    public function banUsr()
+    {
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $room_ci = $this->request->getPost('room_ci');
+        $entry_num = $this->request->getPost('num');
+        // 내가 이 방의 참가자가 맞는지 다시 확인
+        $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "'";
+        $memberYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($memberYn) {
+            // 내가 방 참가자가 맞으면
+            $query = "UPDATE wh_chat_room_member SET DELETE_YN='y' WHERE room_ci='" . $room_ci . "' AND entry_num='" . $entry_num . "'";
+            $banUsr = $ChatRoomMemberModel
+                ->query($query);
+            $query = "UPDATE wh_chat_room SET room_count = (CAST(room_count AS UNSIGNED) - 1)
+                WHERE room_ci='" . $room_ci . "'";
+            $updateChatRoomCount = $ChatRoomModel
+                ->query($query);
+            if ($updateChatRoomCount) {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $banUsr]]);
+            } else {
+                return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+            }
+
+            // echo print_r($allMsg);
+        } else {
+            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
+
+    public function sndRpt()
+    {
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $room_ci = $this->request->getPost('room_ci');
+        $entry_num = $this->request->getPost('num');
+        $rptctgr = $this->request->getPost('rptctgr');
+        $rpttxt = $this->request->getPost('rpttxt');
+
+        // 내가 이 방의 참가자가 맞는지 다시 확인
+        $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "'";
+        $memberYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($memberYn) {
+            // 내가 방 참가자가 맞으면
+            $query = "INSERT INTO wh_report_member (member_ci, member_name, target_ci, target_name, report_text, report_category)
+            VALUES('" . $ci . "', (SELECT name FROM members WHERE CI='" . $ci . "'), 
+                    (SELECT member_ci FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND ENTRY_NUM='" . $entry_num . "'), 
+                    (SELECT name FROM members WHERE ci=(SELECT member_ci FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND ENTRY_NUM='" . $entry_num . "')),
+                    '" . $rpttxt . "', '" . $rptctgr . "');";
+
+            $rptUsr = $ChatRoomMemberModel
+                ->query($query);
+            if ($rptUsr) {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $rptUsr]]);
+            } else {
+                return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+            }
+
+            // echo print_r($allMsg);
+        } else {
+            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
+    public function submitScdl()
+    {
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $MeetingPersonModel = new MeetingPersonModel();
+        $pointModel = new PointModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $room_ci = $this->request->getPost('room_ci');
+        $scdl_date = $this->request->getPost('scdl_date');
+        $scdl_type = $this->request->getPost('scdl_type');
+        $scdl_fee = "5000";
+        $scdl_type === '1' ?  $scdl_fee = '5000' :  $scdl_fee = '10000';
+
+        // 내가 이 방의 참가자가 맞는지 다시 확인
+        $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "' AND delete_yn='n'";
+        $memberYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($memberYn) {
+            // 내가 방 참가자가 맞으면
+            $query = "SELECT * FROM wh_meeting_person WHERE chat_room_ci='" . $room_ci . "' AND delete_yn='n'";
+            $scheduleYn = $MeetingPersonModel
+                ->query($query)->getResultArray();
+            if ($scheduleYn) {
+                // 기존에 약속이 있다면
+
+                // 기존 약속은 delete_yn = y 업데이트 후
+                $query = "UPDATE wh_meeting_person
+                SET delete_yn='y'
+                WHERE chat_room_ci='" . $room_ci . "' AND delete_yn='n'";
+                $makeSchedule = $MeetingPersonModel
+                    ->query($query);
+
+                // 내 포인트 먼저 조회
+                $query = "SELECT my_point, 
+                                (SELECT usable_point FROM wh_meeting_person WHERE chat_room_ci='" . $room_ci . "' AND member_ci = '" . $ci . "' AND delete_yn='n') AS return_point 
+                            FROM wh_points WHERE member_ci='" . $ci . "' ORDER BY my_point DESC LIMIT 1";
+                $myPointQuery = $pointModel
+                    ->query($query)->getResultArray();
+                $myPoint = $myPointQuery[0]['my_point'] ? intval($myPointQuery[0]['my_point']) : 0;
+                $returnPoint = $myPointQuery[0]['return_point'] ? intval($myPointQuery[0]['return_point']) : 0;
+                // 기존 예약금액 환불시키기
+                $query = "INSERT INTO wh_points (member_ci, my_point, add_point, point_details, point_type)
+                VALUES ('" . $ci . "', '" . $myPoint + $returnPoint . "','" . $returnPoint . "','모임 환불(+" . $returnPoint . ")','A');";
+                $refundPoint = $pointModel->query($query);
+
+                // 환불 진행 성공시
+                if ($refundPoint) {
+                    // 포인트가 충분히 있으면
+                    if ($myPoint + $returnPoint > $scdl_fee) {
+                        // 새로운 약속 정보 INSERT
+                        $query = "INSERT INTO wh_meeting_person
+                        (member_ci, scdl_type, scdl_date, number_of_people, membership_fee, chat_room_ci, usable_point)
+                        VALUES('" . $ci . "', '" . $scdl_type . "', STR_TO_DATE('" . $scdl_date . "', '%Y-%m-%d %H:%i'), 2, '" . $scdl_fee . "', '" . $room_ci . "','" . $scdl_fee . "')";
+                        $makeSchedule = $MeetingPersonModel
+                            ->query($query);
+
+                        // 포인트 정보 업데이트 (환불 후 다시 모임에 포인트 입력)
+                        $query = "INSERT INTO wh_points (member_ci, my_point, use_point, point_details, point_type)
+                                VALUES ('" . $ci . "', '" . $myPoint - $scdl_date . "','" . $scdl_date . "','모임 예약금(+" . $scdl_date . ")','U');";
+                        $usePoint = $pointModel->query($query);
+                        if (!$usePoint) {
+                            return $this->response->setJSON(['status' => 'failed', 'message' => '모임 생성 실패']);
+                        }
+                    } else {
+                        echo "<script>alert('포인트가 부족합니다. 충전해 주세요');</script>";
+                        return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+                    }
+                }
+            } else {
+                // 포인트 사용 추가
+                $myPointQuery = $pointModel
+                    ->query($query)->getResultArray();
+                $myPoint = $myPointQuery[0]['my_point'] ? intval($myPointQuery[0]['my_point']) : 0;
+                $returnPoint = $myPointQuery[0]['return_point'] ? intval($myPointQuery[0]['return_point']) : 0;
+                if ($myPoint + $returnPoint > $scdl_fee) {
+
+                    // 신규면 INSERT
+                    $query = "INSERT INTO wh_meeting_person
+                        (member_ci, scdl_type, scdl_date, number_of_people, membership_fee, chat_room_ci)
+                        VALUES('" . $ci . "', '" . $scdl_type . "', STR_TO_DATE('" . $scdl_date . "', '%Y-%m-%d %H:%i'), 2, '" . $scdl_fee . "', '" . $room_ci . "')";
+                    $makeSchedule = $MeetingPersonModel
+                        ->query($query);
+
+                    // 포인트 정보 업데이트
+                    $query = "INSERT INTO wh_points (member_ci, my_point, use_point, point_details, point_type)
+                            VALUES ('" . $ci . "', '" . $myPoint - $scdl_date . "','" . $scdl_date . "','모임 예약금(+" . $scdl_date . ")','U');";
+                    $usePoint = $pointModel->query($query);
+                    if (!$usePoint) {
+                        return $this->response->setJSON(['status' => 'failed', 'message' => '모임 생성 실패']);
+                    }
+                } else {
+                    echo "<script>alert('포인트가 부족합니다. 충전해 주세요');</script>";
+                    return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+                }
+            }
+            $msg_cont = '모임 생성 <br/>';
+            $msg_cont .= '날짜 : ' . $scdl_date . '<br/>';
+            $msg_cont .= '회비 : ' . number_format($scdl_fee) . ' 원<br/>';
+            $msg_cont .= '<br/>';
+            $msg_cont .= '참석하시려면 확인 버튼을 눌러주세요<br/><br/>';
+            $msg_cont .= '<button class="scdl_confirm" onclick="partScdl()">확인</button>';
+            $msgQuery = "INSERT INTO wh_chat_room_msg
+            (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
+            VALUES('" . $room_ci . "','" . $ci . "','9','0','" . $msg_cont . "','9','9');";
+
+            $ChatRoomMsgModel->query($msgQuery);
+
+            if ($makeSchedule) {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $makeSchedule]]);
+            } else {
+                return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+            }
+
+            // echo print_r($allMsg);
+        } else {
+            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
+    public function partScdl()
+    {
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $MeetingPersonModel = new MeetingPersonModel();
+        $pointModel = new PointModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $room_ci = $this->request->getPost('room_ci');
+
+        // 내가 이 방의 참가자가 맞는지 다시 확인
+        $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "' AND delete_yn='n'";
+        $memberYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($memberYn) {
+            // 내가 방 참가자가 맞으면 모임에 참석중인지 확인
+            $query = "SELECT * FROM wh_meeting_person WHERE chat_room_ci='" . $room_ci . "' AND member_ci='" . $ci . "' AND delete_yn='n'";
+            $scheduleYn = $MeetingPersonModel
+                ->query($query)->getResultArray();
+            if ($scheduleYn) {
+                // 이미 참석중이면
+                return $this->response->setJSON(['status' => 'success', 'message' => '이미 참석중입니다', 'result' => '1']);
+            } else {
+                // 신규면 INSERT
+                $query = "SELECT * FROM wh_meeting_person WHERE chat_room_ci = '" . $room_ci . "' AND delete_yn='n'";
+                $scheduleData = $MeetingPersonModel
+                    ->query($query)->getResultArray();
+                if ($scheduleData) {
+                    $query = "INSERT INTO wh_meeting_person
+                    (member_ci, chat_room_ci, scdl_type, scdl_date, number_of_people, membership_fee)
+                    VALUES('" . $ci . "', '" . $room_ci . "','" . $scheduleData[0]['scdl_type'] . "','" . $scheduleData[0]['scdl_date'] . "','" . $scheduleData[0]['number_of_people'] . "','" . $scheduleData[0]['membership_fee'] . "')";
+                    $makeSchedule = $MeetingPersonModel
+                        ->query($query);
+                    $msg_cont = '모임 참가에 동의하였습니다 <br/>';
+                    $msgQuery = "INSERT INTO wh_chat_room_msg
+                        (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
+                        VALUES('" . $room_ci . "','" . $ci . "','9','0','" . $msg_cont . "','9','9');";
+
+                    $ChatRoomMsgModel->query($msgQuery);
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '0', 'data' => ["reulst_value" => $makeSchedule]]);
+                } else {
+                    $msg_cont = '모임을 확인할 수 없습니다 <br/> 모임을 다시 등록해 주세요';
+                    $msgQuery = "INSERT INTO wh_chat_room_msg
+                        (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
+                        VALUES('" . $room_ci . "','" . $ci . "','9','0','" . $msg_cont . "','9','9');";
+
+                    $ChatRoomMsgModel->query($msgQuery);
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '0']);
+                }
+            }
+
+            // echo print_r($allMsg);
+        } else {
+            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
     }
 }

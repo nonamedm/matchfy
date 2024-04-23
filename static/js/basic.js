@@ -300,6 +300,28 @@ const signUp = () => {
     }
 };
 
+const isValidRecommendCode = (inviteCode, callback) => {
+    $.ajax({
+        url: '/ajax/isValidRecommendCode',
+        type: 'POST',
+        data: { inviteCode: inviteCode },
+        success: function (data) {
+            console.log(data);
+            if (data.isValid) {
+                callback(true);
+            } else {
+                alert('유효하지 않은 초대 코드입니다.');
+                callback(false);
+            }
+        },
+        error: function (data, status, err) {
+            console.log(err);
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            callback(false);
+        },
+    });
+};
+
 const signUpdate = (postData) => {
     let tempValidation = false;
     if ($('#marital').val().trim() === '') {
@@ -885,15 +907,15 @@ const meetingSave = (postData) => {
         return;
     }
     if ($('#datepicker2').val().trim() === '') {
-        alert('모임일자 시작일을 입력해 주세요.');
+        alert('모임일자를 입력해 주세요.');
         $('#datepicker2').focus();
         return;
     }
-    if ($('#datepicker3').val().trim() === '') {
-        alert('모임일자 종료일을 입력해 주세요.');
-        $('#datepicker3').focus();
-        return;
-    }
+    // if ($('#datepicker3').val().trim() === '') {
+    //     alert('모임일자 종료일을 입력해 주세요.');
+    //     $('#datepicker3').focus();
+    //     return;
+    // }
     if ($('#number_of_people').val().trim() === '') {
         alert('모집 인원을 입력해 주세요.');
         $('#number_of_people').focus();
@@ -1327,16 +1349,15 @@ const allianceUp = () => {
     //     filesArray.length !== 0 &&
     //     $('#alliance_cont').val() !== ''&&
     //     $('#agree01').is(':checked')
-        
+
     // ) {
     //     tempValidation = true;
     // }
-    
+
     tempValidation = true;
-    
-    if(tempValidation){
-        
-        setTimeout(function(){
+
+    if (tempValidation) {
+        setTimeout(function () {
             $.ajax({
                 url: '/ajax/alianceUp', // todo : 추후 본인인증 연결
                 type: 'POST',
@@ -1345,17 +1366,16 @@ const allianceUp = () => {
                 contentType: false,
                 async: false,
                 success: function (data) {
-    
                     console.log(data);
                     $('.loading').show();
                     $('.loading_bg').show();
                     if (data.status === 'success') {
                         // moveToUrl
-                        window.location.href ="/mo/alliance/alert/1";
+                        window.location.href = '/mo/alliance/alert/1';
                     } else if (data.status === 'error') {
-                        window.location.href ="/mo/alliance/fail/0";
+                        window.location.href = '/mo/alliance/fail/0';
                     }
-                    
+
                     $('.loading').hide();
                     $('.loading_bg').hide();
                     return false;
@@ -1369,7 +1389,6 @@ const allianceUp = () => {
             });
         }, 2000);
     }
-
 };
 
 const allianceFiltering = (category, searchText, filterOption) => {
@@ -1430,7 +1449,6 @@ const allianceFiltering = (category, searchText, filterOption) => {
 };
 
 const allianceSave = () => {
-
     if ($('.alliance_reserv_time.on').length === 0) {
         alert('회차를 선택해 주세요.');
         return;
@@ -1463,24 +1481,24 @@ const alliancePaymentChk = () => {
     $('.loading').show();
     $('.loading_bg').show();
 
-    setTimeout(function(){
+    setTimeout(function () {
         $.ajax({
             url: '/mo/alliance/alliancePaymentChk', // todo : 추후 본인인증 연결
             type: 'POST',
             data: {
-                allianceIdx:alliance_idx,
-                numberPeople:reserv_people,
-                reservationDate:reserv_date,
-                reservationTime:reserv_time,
+                allianceIdx: alliance_idx,
+                numberPeople: reserv_people,
+                reservationDate: reserv_date,
+                reservationTime: reserv_time,
             },
             success: function (data) {
                 console.log(data);
                 $('.loading').show();
                 $('.loading_bg').show();
                 if (data.status === 'success') {
-                    window.location.href ="/mo/alliance/alert/2";
+                    window.location.href = '/mo/alliance/alert/2';
                 } else if (data.status === 'error') {
-                    window.location.href ="/mo/alliance/alert/0";
+                    window.location.href = '/mo/alliance/alert/0';
                 } else {
                     alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                 }
@@ -1496,5 +1514,4 @@ const alliancePaymentChk = () => {
             },
         });
     }, 2000);
-
 };

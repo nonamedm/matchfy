@@ -35,28 +35,31 @@
 
         <div class="sub_wrap">
             <div class="content_wrap">
-                <form class="temp_input" action="/mo/agree" method="post" >
+                <form class="temp_input" action="/mo/agree" method="post">
                     <div class="content_title">
-                        <h2><?=lang('Korean.passTitle')?></h2>
-                        <p><?=lang('Korean.passCon')?> </p>
+                        <h2><?= lang('Korean.passTitle') ?></h2>
+                        <p><?= lang('Korean.passCon') ?> </p>
                     </div>
                     <div class="content_body">
                         <img src="/static/images/pass_phone_img.png" />
                     </div>
                     <div class="btn_group">
-                        <button type="button" class="btn type01" onclick="certIdentify()"><?=lang('Korean.passTitle')?></button>
+                        <button type="button" class="btn type01" onclick="certIdentify()"><?= lang('Korean.passTitle') ?></button>
                     </div>
             </div>
             <div class="content_title">
-                <p>* <?=lang('Korean.passCon2')?></p>
+                <p>* <?= lang('Korean.passCon2') ?></p>
             </div>
-            <input id="input_name" class="temp_input_text" type="text" name="name" placeholder="<?=lang('Korean.passCon1')?>" value="<?= $name ?>" />
-            <input id="input_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="<?=lang('Korean.passCon2')?>" value="<?= $mobile_no ?>" />
-            <input id="input_birthday" class="temp_input_text" type="text" name="birthday" placeholder="<?=lang('Korean.passCon3')?>" value="<?= $birthday ?>" />
+            <input type="hidden" name="nickname" value="<?= $nickname ?>" />
+            <input type="hidden" name="sns_type" value="<?= $sns_type ?>" />
+            <input type="hidden" name="oauth_id" value="<?= $oauth_id ?>" />
+            <input id="input_name" class="temp_input_text" type="text" name="name" placeholder="<?= lang('Korean.passCon1') ?>" value="<?= $name ?>" />
+            <input id="input_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="<?= lang('Korean.passCon2') ?>" value="<?= $mobile_no ?>" />
+            <input id="input_birthday" class="temp_input_text" type="text" name="birthday" placeholder="<?= lang('Korean.passCon3') ?>" value="<?= $birthday ?>" />
             <select id="input_gender" class="temp_input_text" name="gender">
-                <option><?=lang('Korean.passGender')?></option>
-                <option value="0" <?php if ($gender === '0') : ?>selected<?php endif ?>><?=lang('Korean.woman')?></option>
-                <option value="1" <?php if ($gender === '1') : ?>selected<?php endif ?>><?=lang('Korean.man')?></option>
+                <option><?= lang('Korean.passGender') ?></option>
+                <option value="0" <?php if ($gender === '0') : ?>selected<?php endif ?>><?= lang('Korean.woman') ?></option>
+                <option value="1" <?php if ($gender === '1') : ?>selected<?php endif ?>><?= lang('Korean.man') ?></option>
             </select>
             </form>
         </div>
