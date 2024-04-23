@@ -23,7 +23,7 @@ class MeetingPersonModel extends Model
         'update_at',
         'delete_yn',
         'chat_room_ci',
-        'extra_field1',
+        'usable_point',
         'extra_field2',
         'extra_field3'
     ];

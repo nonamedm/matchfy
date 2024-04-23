@@ -390,7 +390,6 @@ function MygroupPopup(idx, idValue, master) {
         data: { meetingIdx: idx },
         type: 'post',
         success: function (data) {
-            console.log('무야호', data);
             var html = '';
             if (data.success == true) {
                 var data = data.data;
