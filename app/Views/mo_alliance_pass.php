@@ -12,19 +12,6 @@
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/basic.js"></script>
 </head>
-<style>
-    .temp_input_text {
-        border: 1px solid #dddddd;
-        width: 335px;
-        height: 50px;
-        background: #ffffff;
-        border-radius: 15px;
-        font-size: 15px;
-        color: #999999;
-        margin: 10px;
-        padding: 10px;
-    }
-</style>
 
 <body class="mo_wrap">
     <div class="wrap">
@@ -50,14 +37,16 @@
             <div class="content_title">
                 <p>* <?=lang('Korean.passCon2')?></p>
             </div>
-            <input id="input_ali_name" class="temp_input_text" type="text" name="name" placeholder="<?=lang('Korean.allianceCeoName')?>" value="<?= $name ?>" />
-            <input id="input_ali_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="<?=lang('Korean.allianceCeoPhonenum')?>" value="<?= $mobile_no ?>" />
-            <input id="input_ali_company_name" class="temp_input_text" type="text" name="company" placeholder="<?=lang('Korean.allianceComName')?>" value="<?= $company ?>" />
-            <select id="input_gender" class="temp_input_text" name="gender">
-                <option><?=lang('Korean.passGender')?></option>
-                <option value="0" <?php if ($gender === '0') : ?>selected<?php endif ?>><?=lang('Korean.woman')?></option>
-                <option value="1" <?php if ($gender === '1') : ?>selected<?php endif ?>><?=lang('Korean.man')?></option>
-            </select>
+            <div class="input_ali_box">
+                <input id="input_ali_name" class="temp_input_text" type="text" name="name" placeholder="<?=lang('Korean.allianceCeoName')?>" value="<?= $name ?>" />
+                <input id="input_ali_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="<?=lang('Korean.allianceCeoPhonenum')?>" value="<?= $mobile_no ?>" />
+                <input id="input_ali_company_name" class="temp_input_text" type="text" name="company" placeholder="<?=lang('Korean.allianceComName')?>" value="<?= $company ?>" />
+                <select id="input_gender" class="temp_input_text" name="gender">
+                    <option><?=lang('Korean.passGender')?></option>
+                    <option value="0" <?php if ($gender === '0') : ?>selected<?php endif ?>><?=lang('Korean.woman')?></option>
+                    <option value="1" <?php if ($gender === '1') : ?>selected<?php endif ?>><?=lang('Korean.man')?></option>
+                </select>
+            </div>
             </form>
         </div>
 

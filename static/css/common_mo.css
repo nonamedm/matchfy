@@ -186,6 +186,8 @@ header .menu_right.edit {
     text-align: center;
 }
 .mo_wrap .sub_wrap .content_wrap .content_partner {
+    width: 315px;
+    margin:0 auto;
     display: flex;
     justify-content: space-between;
 }
@@ -301,7 +303,11 @@ header .menu_right.edit {
 
 /* alliance*/
 .alliance_banner {
+    width: 100%;
     margin-bottom: 20px;
+}
+.alliance_banner img{
+    width: 100%;
 }
 .region_list {
     display: flex;
@@ -863,7 +869,8 @@ a.ended:hover .ended_overlay {
 
 /* group detail*/
 .group_deatil_img img {
-    width: 335px;
+    /* width: 335px; */
+    width: 100%;
     height: 248px;
 }
 .group_detail_header {
@@ -912,7 +919,8 @@ a.ended:hover .ended_overlay {
     line-height: 20px;
 }
 .group_detail_location {
-    width: 335px;
+    /* width: 335px; */
+    width: 100%;
     min-height: 90px;
     border: 1px solid #dddddd;
     border-radius: 5px;
@@ -988,7 +996,7 @@ a:active {
     outline: none;
 }
 .group_list_item {
-    /* width: 162px; */
+    width: 162px;
     margin-bottom: 30px;
 }
 .group_apply_item {
@@ -1147,7 +1155,7 @@ a:active {
     color: #555555;
     text-indent: -10px;
     padding-left: 10px;
-    width: 250px;
+    width: 100%;
 }
 .amount_pay .amount_pay_left h2 {
     font-weight: 700;
@@ -1184,7 +1192,8 @@ a:active {
     margin: 5px 0;
 }
 .content_wrap .mypage_wallet.charge .charge_select1 {
-    width: 331px;
+    /* width: 331px; */
+    width: 100%;
     height: 60px;
     background: rgba(255, 2, 103, 0.05);
     border: 2px solid #ff0267;
@@ -1200,7 +1209,8 @@ a:active {
     margin: 20 0px;
 }
 .content_wrap .mypage_wallet.charge .charge_select2 {
-    width: 331px;
+    /* width: 331px; */
+    width: 100%;
     height: 60px;
     border: 2px solid #dddddd;
     background: '#ffffff';
@@ -1554,7 +1564,7 @@ a:active {
     display: flex;
 }
 .line_banner {
-    width: 307px;
+    width: 97%;
     height: 17px;
     background: #ff0267;
     border-radius: 10px;
@@ -1736,8 +1746,17 @@ a:active {
 .form_row.signin_form .signin_form_div {
     display: flex;
     flex-direction: column;
-    width: 335px;
-    margin: 0 auto;
+    width: 776px;
+    /* margin: 0 auto; */
+}
+.form_row.signin_form .signin_form_div .height_cm {
+    width: 70px;
+    margin-left: 20px;
+    font-family: 'Pretendard-SemiBold';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 0;
 }
 .form_row.signin_form .signin_form_div.flex {
     justify-content: space-between;
@@ -2075,16 +2094,14 @@ form input[type='file'] {
     width: 120px;
 }
 .agree_cont .textarea {
-    width: 305px;
+    width: 96%;
     height: 110px;
     border: 1px solid #dddddd;
     border-radius: 10px;
     font-size: 12px;
     line-height: 14px;
-
     color: #777777;
     padding: 15px;
-
     overflow-y: scroll;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE, Edge */
@@ -2508,7 +2525,8 @@ input[type='number']::-webkit-inner-spin-button {
 .commerce_banner {
     position: absolute;
     bottom: 0px;
-    width: 375px;
+    /* width: 375px; */
+    width: 100%;
     height: 80px;
     background-color: #d9d9d9;
     font-weight: 300;
@@ -2597,7 +2615,8 @@ input[type='number']::-webkit-inner-spin-button {
 
 /* feed list */
 .feed_img_box img {
-    width: 335px;
+    /* width: 335px; */
+    width: 100%;
     height: 335px;
     border-radius: 3px;
 }
@@ -2698,6 +2717,17 @@ input[type='number']::-webkit-inner-spin-button {
 .mo_wrap .layerPopup .btn_close {
     position: absolute;
     right: 20px;
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+    text-indent: -999rem;
+    background: url(/static/images/ico_close_20x20.png) no-repeat center / 20px;
+    outline: none;
+    z-index: 2;
+}
+.mo_wrap .layerPopup .btn_popup_close {
+    position: relative;
+    right: 0px;
     width: 24px;
     height: 24px;
     overflow: hidden;
@@ -2922,6 +2952,11 @@ input[type='number']::-webkit-inner-spin-button {
 .layerPopup_content .chat_member .chat_member_profile img {
     width: 40px;
     height: 40px;
+    border-radius: 50%;
+}
+.layerPopup_content .chat_member .chat_member_profile .group_master {
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
 }
 .layerPopup_content .chat_member .chat_member_profile p {
@@ -3520,6 +3555,10 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 /*alliance apply*/
+.input_ali_box{
+    width:95%;
+    margin:0 auto;
+}
 .filebox{
     display: flex;
 }
@@ -3535,13 +3574,57 @@ input[type='number']::-webkit-inner-spin-button {
 .alliance_detail_post div{
     margin:4px;
 }
+.temp_input_text {
+    border: 1px solid #dddddd;
+    width: 100%;
+    height: 50px;
+    background: #ffffff;
+    border-radius: 15px;
+    font-size: 15px;
+    color: #999999;
+    margin: 10px;
+    padding: 10px;
+}
+.invite_img{
+    width:335px;
+    margin:0 auto;
+}
+
 @media (max-width: 767px) {
     .mo_wrap .wrap {
       max-width: 375px;
       margin: 0 auto;
       min-height: 100%;
     }
-
+    .form_row.signin_form .signin_form_div {
+        display: flex;
+        flex-direction: column;
+        width: 335px;
+        margin: 0 auto;
+    }
+    .line_banner {
+        width: 307px;
+        height: 17px;
+        background: #ff0267;
+        border-radius: 10px;
+        padding: 14px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .agree_cont .textarea {
+        width: 305px;
+        height: 110px;
+        border: 1px solid #dddddd;
+        border-radius: 10px;
+        font-size: 12px;
+        line-height: 14px;
+        color: #777777;
+        padding: 15px;
+        overflow-y: scroll;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE, Edge */
+        overflow: -moz-scrollbars-none; /* Firefox */
+    }
     /* mygroup list*/
     .mygroup_list {
         margin-top: 20px;
@@ -3568,5 +3651,26 @@ input[type='number']::-webkit-inner-spin-button {
     }
     .btn_group.multy {
         display: contents;
+    }
+    /*alliance apply*/
+    .temp_input_text {
+        border: 1px solid #dddddd;
+        width: 335px;
+        height: 50px;
+        background: #ffffff;
+        border-radius: 15px;
+        font-size: 15px;
+        color: #999999;
+        margin: 10px;
+        padding: 10px;
+    }
+    .pay_agree_desc p {
+        font-size: 12px;
+        line-height: 18px;
+        /* or 150% */
+        color: #555555;
+        text-indent: -10px;
+        padding-left: 10px;
+        width: 250px;
     }
   }

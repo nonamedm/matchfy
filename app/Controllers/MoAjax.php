@@ -2387,7 +2387,7 @@ class MoAjax extends BaseController
 
             return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $sendMsg]]);
         } else {
-            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
             return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
         }
     }
@@ -2434,7 +2434,7 @@ class MoAjax extends BaseController
             // echo print_r($allMsg);
             return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $data]]);
         } else {
-            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
             return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
         }
     }
@@ -2470,7 +2470,7 @@ class MoAjax extends BaseController
 
             // echo print_r($allMsg);
         } else {
-            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
             return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
         }
     }
@@ -2507,7 +2507,7 @@ class MoAjax extends BaseController
 
             // echo print_r($allMsg);
         } else {
-            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
             return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
         }
     }
@@ -2545,7 +2545,7 @@ class MoAjax extends BaseController
 
             // echo print_r($allMsg);
         } else {
-            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
             return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
         }
     }
@@ -2615,7 +2615,7 @@ class MoAjax extends BaseController
                             return $this->response->setJSON(['status' => 'failed', 'message' => '모임 생성 실패']);
                         }
                     } else {
-                        echo "<script>alert('포인트가 부족합니다. 충전해 주세요');</script>";
+                        echo "<script>fn_alert('포인트가 부족합니다. 충전해 주세요');</script>";
                         return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
                     }
                 }
@@ -2642,7 +2642,7 @@ class MoAjax extends BaseController
                         return $this->response->setJSON(['status' => 'failed', 'message' => '모임 생성 실패']);
                     }
                 } else {
-                    echo "<script>alert('포인트가 부족합니다. 충전해 주세요');</script>";
+                    echo "<script>fn_alert('포인트가 부족합니다. 충전해 주세요');</script>";
                     return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
                 }
             }
@@ -2666,7 +2666,7 @@ class MoAjax extends BaseController
 
             // echo print_r($allMsg);
         } else {
-            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
             return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
         }
     }
@@ -2724,7 +2724,7 @@ class MoAjax extends BaseController
 
             // echo print_r($allMsg);
         } else {
-            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
             return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
         }
     }
