@@ -143,6 +143,7 @@
                 </div>
             </div>
             <input id="room_ci" type="hidden" value="<?= $room_ci ?>" />
+            <?php include 'mo_sch_deposit_popup.php'; ?>
             <?php if ($room_type[0]['room_type'] === '1') {
                 include 'mo_mymsg_member_popup.php';
                 include 'mo_report_popup.php';
@@ -258,6 +259,7 @@
                             }
                         });
                         $("#chat_wrap").html(html);
+                        scrollToBottom();
                         // moveToUrl('/mo/factorInfo');
                     } else if (data.status === 'error') {
                         console.log('실패', data);
@@ -413,6 +415,37 @@
                         }
                     }
                 } else {}
+            });
+        };
+
+        const sndPnt = () => {
+            $.ajax({
+                url: '/ajax/usablePoint',
+                type: 'POST',
+                data: {
+                    "room_ci": $("#room_ci").val(),
+                },
+                async: false,
+                success: function(data) {
+                    console.log(data);
+                    if (data.status === 'success') {
+                        // 성공
+                        // 보유포인트 만큼 차감 후 전송
+                        $("#usable_point").html(data.data.reulst_value[0].usable_point);
+                        $('.layerPopup.deposit').css('display', 'flex');
+                        // moveToUrl('/');
+                    } else if (data.status === 'error') {
+                        // 사용가능한 예약금 없음
+                        alert('사용 가능한 예약금이 없습니다. \n모임에 참여 후 시도해 주세요')
+                    } else {
+                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    }
+                    return false;
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
             });
         };
     </script>
