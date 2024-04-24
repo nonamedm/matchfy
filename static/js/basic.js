@@ -502,6 +502,56 @@ const signInType = (postData) => {
     // })
 };
 
+const upgradeGrade = (selectedGrade) => {
+    
+    var url = '';
+
+    switch (selectedGrade) {
+        case 'grade02':
+            url = '/mo/signinRegular';
+            break;
+        case 'grade03':
+            url = '/mo/signinPremium';
+            break;
+    }
+
+    // todo : 추후 정회원, 프리미엄이면 결제 연결
+    // $.ajax({
+    //     url: url,
+    //     type: 'POST',
+    //     data: postData,
+    //     async: false,
+    //     success: function (data) {
+    //         console.log(data)
+    //         if (data) {
+
+    $.ajax({
+        url: '/ajax/upgradeGrade', 
+        type: 'POST',
+        data: { grade: selectedGrade },
+        async: false,
+        success: function(response) {
+            console.log('Grade submitted successfully:', response.data);
+            moveToUrl(url, response.data);
+        },
+        error: function (data, status, err) {
+            console.log(err)
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+        },
+    });
+
+    //         } else {
+    //             alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+    //         }
+    //         return false
+    //     },
+    //     error: function (data, status, err) {
+    //         console.log(err)
+    //         alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+    //     },
+    // })
+};
+
 const totalAgree = () => {
     // agree1, agree2, agree3 요소들을 가져옴
     const agree1 = document.getElementById('agree1');

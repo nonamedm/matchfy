@@ -14,6 +14,7 @@ $routes->post('/mo/agree', 'MoHome::agree');
 $routes->post('/mo/signin', 'MoHome::signin');
 $routes->post('/mo/signinPhoto', 'MoHome::signinPhoto');
 $routes->post('/mo/signinType', 'MoHome::signinType');
+$routes->get('/mo/upgradeGrade', 'MoHome::upgradeGrade');
 $routes->get('/mo/signinSuccess', 'MoHome::signinSuccess');
 $routes->post('/mo/signinRegular', 'MoHome::signinRegular');
 $routes->post('/mo/signinPremium', 'MoHome::signinPremium');
@@ -132,6 +133,7 @@ $routes->post('/ajax/allianceFilter', 'MoAjax::allianceFiltering');
 $routes->get('/ajax/alliance/reservation', 'MoAjax::allianceReservation');
 $routes->post('/ajax/myAlliance', 'MoAjax::myAlliance');
 $routes->post('/ajax/myAllianceDetail', 'MoAjax::myAllianceDetail');
+$routes->post('/ajax/upgradeGrade', 'MoAjax::upgradeGrade');
 
 /* 채팅 */
 $routes->post('/ajax/createChat', 'MoAjax::createChat');
