@@ -177,6 +177,7 @@
                         reloadMsg();
                     } else if (data.result === '1') {
                         alert('참석 정보를 업데이트 했습니다!');
+                        reloadMsg();
                     } else if (data.result === '3') {
                         alert('포인트가 부족합니다. \n충전 후 시도해 주세요.');
                     } else {

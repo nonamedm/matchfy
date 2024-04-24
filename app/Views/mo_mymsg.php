@@ -258,6 +258,7 @@
                             }
                         });
                         $("#chat_wrap").html(html);
+                        scrollToBottom();
                         // moveToUrl('/mo/factorInfo');
                     } else if (data.status === 'error') {
                         console.log('실패', data);
