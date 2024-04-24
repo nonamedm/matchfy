@@ -143,6 +143,7 @@ $routes->post('/ajax/banUsr', 'MoAjax::banUsr');
 $routes->post('/ajax/sndRpt', 'MoAjax::sndRpt');
 $routes->post('/ajax/submitScdl', 'MoAjax::submitScdl');
 $routes->post('/ajax/partScdl', 'MoAjax::partScdl');
+$routes->post('/ajax/usablePoint', 'MoAjax::usablePoint');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

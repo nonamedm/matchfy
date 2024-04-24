@@ -2807,8 +2807,39 @@ class MoAjax extends BaseController
                         VALUES('" . $room_ci . "','" . $ci . "','9','0','" . $msg_cont . "','9','9');";
 
                     $ChatRoomMsgModel->query($msgQuery);
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '0']);
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '2']);
                 }
+            }
+
+            // echo print_r($allMsg);
+        } else {
+            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
+    public function usablePoint()
+    {
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MeetingPersonModel = new MeetingPersonModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $room_ci = $this->request->getPost('room_ci');
+
+        // 내가 이 방의 참가자가 맞는지 다시 확인
+        $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "'";
+        $memberYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($memberYn) {
+            // 내가 방 참가자가 맞으면 
+            // 참가중인 약속이 있는지 확인 및 사용가능 포인트 확인
+            $query = "SELECT FORMAT(CAST(usable_point AS UNSIGNED),0) AS usable_point FROM wh_meeting_person WHERE chat_room_ci='" . $room_ci . "' AND member_ci='" . $ci . "' AND delete_yn='n'";
+            $usblPoint = $MeetingPersonModel
+                ->query($query)->getResultArray();
+            if ($usblPoint) {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $usblPoint]]);
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'error']);
             }
 
             // echo print_r($allMsg);

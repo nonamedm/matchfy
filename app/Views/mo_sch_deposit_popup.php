@@ -1,83 +1,56 @@
-<html lang="ko">
+<div class="layerPopup alert middle deposit" style="display:none;"><!-- class: imgPop 추가 -->
+    <div class="layerPopup_wrap">
+        <div class="layerPopup_header">
+            <a onclick="closePopup()">X</a>
+        </div>
+        <div class="layerPopup_content medium">
+            <p class="txt"><?= lang('Korean.reservDepoRemit') ?></p>
 
-<head>
-    <title>Matchfy</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta http-equiv="cache-control" content="no-cache">
-    <meta http-equiv="pragma" content="no-cache">
-    <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="/static/css/common_mo.css">
-
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-</head>
-
-<body class="mo_wrap">
-    <div class="layerPopup alert middle"><!-- class: imgPop 추가 -->
-        <div class="layerPopup_wrap">
-            <div class="layerPopup_content medium">
-                <p class="txt"><?=lang('Korean.reservDepoRemit')?></p>
-                
-                <div class="">
-                    <div>
-                        <div class="schedule_title">
-                            <h2><?=lang('Korean.amount')?></h2>
-                        </div>
-                        <div class="schedule_deposit">
-                            <input type="number" id=""/>
-                            <p><?=lang('Korean.won')?></p>
-                        </div>
+            <div class="">
+                <div>
+                    <div class="schedule_title">
+                        <h2><?= lang('Korean.amount') ?></h2>
                     </div>
-                    
-                    <div class="schedule_photo"> 
-                        <div class="schedule_title">
-                            <h2><?=lang('Korean.attachPicturesPlace')?></h2>
-                        </div>
-                        <div class="form_row signin_form" style="height:150px;">
-                            <div class="signin_form_div">
-                                <div class="profile_photo_div">
-                                    <label for="profile_photo" class="signin_label profile_photo_input"></label>
-                                    <input id="profile_photo" type="file" value="" placeholder="">
-                                    <div>
-                                        <img class="profile_photo_posted" src="/static/images/input_img_1.png" />
-                                        <img class="profile_photo_posted" src="/static/images/input_img_2.png" />
-                                        <!-- <img class="profile_photo_posted" src="/static/images/input_img_3.png" /> -->
-                                    </div>
+                    <div class="schedule_deposit">
+                        <input type="number" id="" />
+                        <p><?= lang('Korean.won') ?></p>
+                    </div>
+                </div>
+                <p style="text-align: right; margin-right: 25px;">사용가능한 예약금 <span id="usable_point">0</span>원</p>
+
+                <div class="schedule_photo">
+                    <div class="schedule_title">
+                        <h2><?= lang('Korean.attachPicturesPlace') ?></h2>
+                    </div>
+                    <div class="form_row signin_form" style="height:150px;">
+                        <div class="signin_form_div">
+                            <div class="profile_photo_div">
+                                <label for="profile_photo" class="signin_label profile_photo_input"></label>
+                                <input id="profile_photo" type="file" value="" placeholder="">
+                                <div>
+                                    <img class="profile_photo_posted" src="/static/images/input_img_1.png" />
+                                    <img class="profile_photo_posted" src="/static/images/input_img_2.png" />
+                                    <!-- <img class="profile_photo_posted" src="/static/images/input_img_3.png" /> -->
                                 </div>
                             </div>
                         </div>
-                    </div>                    
-                </div>
-                
-                <div class="layerPopup_bottom">
-                    <div class="btn_group">
-                        <button class="btn type01"><?=lang('Korean.send')?></button>
                     </div>
+                </div>
+            </div>
+
+            <div class="layerPopup_bottom">
+                <div class="btn_group">
+                    <button class="btn type01"><?= lang('Korean.send') ?></button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
-    <!-- SCRIPTS -->
+<!-- SCRIPTS -->
 
-    <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
-    </script>
+<script>
+</script>
 
-    <!-- -->
-
-
-</body>
-
-</html>
+<!-- -->
