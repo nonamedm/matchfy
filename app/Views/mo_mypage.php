@@ -36,6 +36,7 @@
                                 <?= $nickname ?><span style="font-size:15px;"> <?=lang('Korean.sir')?></span>
                             </h2>
                             <button class="myinfo_level">Lv.10</button>
+                            <button onclick="moveToUrl('/mo/updateRegular')">프로필 수정</button>
                         </div>
                         <p>
                             <?= $birthday ?>

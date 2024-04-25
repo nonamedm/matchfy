@@ -153,6 +153,19 @@ class MoHome extends BaseController
 
         return view('mo_signin_regular', $postData);
     }
+    public function updateRegular(): string
+    {
+        $session = session();
+        $ci = $session->get('ci');
+
+        $MemberModel = new MemberModel();
+        $user = $MemberModel
+                    ->where('ci', $ci)
+                    ->first();
+
+        print_r($user);
+        return view('mo_signin_regular_update', $user);
+    }
     public function signinPremium(): string
     {
         $postData = $this->request->getPost();

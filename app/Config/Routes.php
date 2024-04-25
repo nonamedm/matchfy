@@ -17,6 +17,7 @@ $routes->post('/mo/signinType', 'MoHome::signinType');
 $routes->get('/mo/upgradeGrade', 'MoHome::upgradeGrade');
 $routes->get('/mo/signinSuccess', 'MoHome::signinSuccess');
 $routes->post('/mo/signinRegular', 'MoHome::signinRegular');
+$routes->get('/mo/updateRegular', 'MoHome::updateRegular');
 $routes->post('/mo/signinPremium', 'MoHome::signinPremium');
 $routes->get('/mo/signinPopup', 'MoHome::signinPopup');
 $routes->get('/mo/menu', 'MoHome::menu');
