@@ -431,12 +431,13 @@
                     if (data.status === 'success') {
                         // 성공
                         // 보유포인트 만큼 차감 후 전송
+                        $("#snd_dpst").val("");
                         $("#usable_point").html(data.data.reulst_value[0].usable_point);
                         $('.layerPopup.deposit').css('display', 'flex');
                         // moveToUrl('/');
                     } else if (data.status === 'error') {
-                        // 사용가능한 예약금 없음
-                        alert('사용 가능한 예약금이 없습니다. \n모임에 참여 후 시도해 주세요')
+                        // 사용가능한 예약금 없음 -> 또는 예약자 본인인 경우
+                        alert('사용 가능한 예약금이 없습니다. \n예약생성자가 아닌 경우 모임에 참여 후 시도해 주세요')
                     } else {
                         alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                     }
