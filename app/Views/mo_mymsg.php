@@ -37,7 +37,7 @@
                         </li>
                     </ul>
                 </div>
-                <div id="chat_wrap" class="chat_wrap">
+                <div id="chat_wrap" class="chat_wrap scroll_body">
                     <?php foreach ($allMsg as $row) {
                         if ($row['chk'] === 'me') {
                     ?>

@@ -129,6 +129,8 @@ header .menu_right.edit {
 .mo_wrap .sub_wrap {
     position: relative;
     height: 784px;
+    width: 331px;
+    margin:0 auto;
 }
 
 .mo_wrap .sub_wrap .content_wrap {
@@ -137,6 +139,9 @@ header .menu_right.edit {
 
 .mo_wrap .sub_wrap .content_wrap {
     padding: 20px;
+    /*myfeed width 추가*/
+    width: 331px;
+    margin: 0 auto;
 }
 .mo_wrap .sub_wrap .content_wrap.center_wrap {
     position: relative;
@@ -240,6 +245,7 @@ header .menu_right.edit {
     width: 50%;
     padding: 15px 0px;
     text-align: center;
+    font-size: 17px;
 }
 .tab_wrap ul li a {
     font-weight: 600;
@@ -267,7 +273,8 @@ header .menu_right.edit {
 }
 .content_feed_list .profile_btn {
     position: absolute;
-    right: 20px;
+    /* right: 20px; */
+    right: 0px;
 }
 .content_mypage_list li {
     cursor: pointer;
@@ -338,6 +345,7 @@ header .menu_right.edit {
 }
 .alliance_detail_cont {
     margin: 30px 0;
+    font-size: 15px;
 }
 
 .alliance_detail_cont h2 {
@@ -872,6 +880,7 @@ a.ended:hover .ended_overlay {
     /* width: 335px; */
     width: 100%;
     height: 248px;
+    object-fit: cover;
 }
 .group_detail_header {
     display: flex;
@@ -1020,6 +1029,7 @@ a:active {
     width: 162px;
     height: 162px;
     border-radius: 10px;
+    object-fit: cover;
 }
 .group_list_item .group_location {
     margin-top: 8px;
@@ -1746,7 +1756,8 @@ a:active {
 .form_row.signin_form .signin_form_div {
     display: flex;
     flex-direction: column;
-    width: 776px;
+    width: 335px;
+    /* width: 776px; */
     /* margin: 0 auto; */
 }
 .form_row.signin_form .signin_form_div .height_cm {
@@ -1902,6 +1913,16 @@ a:active {
     border-radius: 10px;
     background: url('/static/images/input_img_plus.png') no-repeat center;
 }
+.feed_close_button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: url('/static/images/alliance_cancel.png');
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    margin: 24px;
+}
 .profile_photo_view {
     width: 235px;
     display: flex;
@@ -1948,6 +1969,7 @@ a:active {
     height: 100px;
     border-radius: 10px;
     border: 1px solid #dddddd;
+    object-fit: cover;
 }
 .layerPopup_content .form_row.signin_form .profile_photo_input {
     width: 90px;
@@ -2560,6 +2582,7 @@ input[type='number']::-webkit-inner-spin-button {
     margin-bottom: 10px;
     margin-right: 10px;
     cursor: pointer;
+    object-fit: cover;
 }
 .content_wrap .myfeed_list video {
     width: 98px;
@@ -2569,6 +2592,7 @@ input[type='number']::-webkit-inner-spin-button {
     margin-bottom: 10px;
     margin-right: 10px;
     cursor: pointer;
+    object-fit: cover;
 }
 .content_wrap .content_mypage .profile_img {
     width: 60px;
@@ -2576,6 +2600,7 @@ input[type='number']::-webkit-inner-spin-button {
     border-radius: 50%;
 }
 .content_wrap .content_mypage {
+    position: relative;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -2619,11 +2644,14 @@ input[type='number']::-webkit-inner-spin-button {
     width: 100%;
     height: 335px;
     border-radius: 3px;
+    object-fit: cover;
 }
 .feed_img_box video {
-    width: 335px;
+    /* width: 335px; */
+    width: 100%;
     height: 335px;
     border-radius: 3px;
+    object-fit: cover;
 }
 .sns_img_filter {
     width: 335px;
@@ -2735,6 +2763,7 @@ input[type='number']::-webkit-inner-spin-button {
     background: url(/static/images/ico_close_20x20.png) no-repeat center / 20px;
     outline: none;
     z-index: 2;
+    cursor: pointer;
 }
 .mo_wrap .layerPopup.bottom .layerPopup_content {
     display: flex;
@@ -2873,11 +2902,13 @@ input[type='number']::-webkit-inner-spin-button {
     width: 295px;
     height: 295px;
     margin: 20px;
+    object-fit: cover;
 }
 .mo_wrap .layerPopup.alert .layerPopup_content .regist_file.myfeed_file_posted video {
     width: 295px;
     height: 295px;
     margin: 20px;
+    object-fit: cover;
 }
 .mo_wrap .layerPopup.alert .layerPopup_content .regist_file input[type='file'] {
     position: absolute;
@@ -3434,7 +3465,8 @@ input[type='number']::-webkit-inner-spin-button {
 
 .layerPopup_content .myfeed_detail img {
     width: 295px;
-    height: 295px;
+    height: auto;
+    /* height: 295px; */
 }
 .layerPopup_content .myfeed_detail video {
     width: 295px;

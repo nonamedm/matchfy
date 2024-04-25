@@ -219,7 +219,7 @@
             $('#plus').click(function() {
                 let currentValue = parseInt($('#quantity').val(), 10);
                 $('#quantity').val(currentValue + 1);
-                updateTotalAmount();
+                // updateTotalAmount();
             });
 
             function updateTotalAmount() {

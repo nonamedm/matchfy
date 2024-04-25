@@ -37,7 +37,7 @@
                 </div>
                 <form class="main_signin_form" enctype="multipart/form-data">
                     <legend></legend>
-                    <div class="">
+                    <div class="" style="width: 335px;margin: 0 auto;">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="appear_type" class="signin_label"><?=lang('Korean.gender')?></label>

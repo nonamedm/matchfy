@@ -280,7 +280,7 @@
                                 $(".AImatch_list").append(html);
                             });
                         } else {
-                            fn_alert('검색결과가 없습니다')
+                            // fn_alert('검색결과가 없습니다');
                             // $(".AImatch_list").css("text-align", "center");
                             // $(".AImatch_list").removeClass("login_main_list");
                         }
