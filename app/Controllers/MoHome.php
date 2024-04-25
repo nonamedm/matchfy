@@ -99,10 +99,10 @@ class MoHome extends BaseController
                 $isDiscounted = true;
             }
 
-                $MemberModel->set('recommender_code', $invite_code)
-                            ->where('ci', $ci)
-                            ->update();
-            }
+            $MemberModel->set('recommender_code', $invite_code)
+                ->where('ci', $ci)
+                ->update();
+        }
         $data['isDiscounted'] = $isDiscounted;
 
         // 현재 페이지에서는 이미 가입완료이므로 로그인 시키기
@@ -123,9 +123,9 @@ class MoHome extends BaseController
 
         $MemberModel = new MemberModel();
         $grade = $MemberModel->select('grade')
-                    ->where('ci', $ci)
-                    ->first();
-                    
+            ->where('ci', $ci)
+            ->first();
+
         return view('mo_grade_upgrade', $grade);
     }
     public function signinSuccess(): string
@@ -1447,6 +1447,7 @@ class MoHome extends BaseController
         $selectFeed = [
             'wh_member_feed.member_ci' => $user['ci'],
             'wh_member_feed.delete_yn' => 'n',
+            'wh_member_feed_files.delete_yn' => 'n',
         ];
         $feedList = $MemberFeedModel->where($selectFeed)->join('wh_member_feed_files', 'wh_member_feed_files.feed_idx = wh_member_feed.idx')->orderBy('wh_member_feed.created_at', 'DESC')->findAll();
         // $feedFile = $MemberFeedFileModel->where('member_ci', $ci)->findAll();
@@ -1497,14 +1498,18 @@ class MoHome extends BaseController
                 LEFT JOIN members mb on wmf.member_ci = mb.ci
                 LEFT JOIN member_files mf on mb.ci = mf.member_ci
                 LEFT JOIN wh_member_feed_files wmff on wmf.idx = wmff.feed_idx";
+        $query .= " WHERE 1=1 ";
+        $query .= " AND wmf.delete_yn='n' ";
+        $query .= " AND wmff.delete_yn='n' ";
         if (!empty($factorList['except1'])) //배제항목 있을 시 조건에서 배제하기
         {
-            $query .= " WHERE (mb." . $factorList['except1'] . " != '" . $factorList['except1_detail'] . "'  OR mb." . $factorList['except1'] . " IS NULL)";
+            $query .= " AND (mb." . $factorList['except1'] . " != '" . $factorList['except1_detail'] . "'  OR mb." . $factorList['except1'] . " IS NULL)";
         }
         if (!empty($factorList['except1']) && !empty($factorList['except2'])) //배제항목 있을 시 조건에서 배제하기
         {
             $query .= " AND (mb." . $factorList['except2'] . " != '" . $factorList['except2_detail'] . "'  OR mb." . $factorList['except2'] . " IS NULL)";
         }
+        $query .= " ORDER BY wmf.created_at DESC";
         $datas = $MemberFeedModel
             ->query($query)->getResultArray();
 
