@@ -196,15 +196,15 @@ class MoAjax extends BaseController
 
         $MemberModel = new MemberModel();
         $currentMember  = $MemberModel
-                            ->where('ci', $ci)
-                            ->first();
+            ->where('ci', $ci)
+            ->first();
 
         $MemberFileModel = new MemberFileModel();
         $currentMemberFile = $MemberFileModel
-                                ->where('member_ci', $ci)
-                                ->where('board_type', 'main_photo')
-                                ->where('delete_yn', 'n')
-                                ->first();
+            ->where('member_ci', $ci)
+            ->where('board_type', 'main_photo')
+            ->where('delete_yn', 'n')
+            ->first();
 
         $mobileNo = $currentMember['mobile_no'];
         $currentGrade = $currentMember['grade'];
@@ -216,9 +216,10 @@ class MoAjax extends BaseController
         }
 
         if ($selectedGrade !== $currentGrade) {
-            $updateStatus = $MemberModel->update($ci, 
-                    ['grade' => $selectedGrade]
-                );
+            $updateStatus = $MemberModel->update(
+                $ci,
+                ['grade' => $selectedGrade]
+            );
 
             $data = [
                 'grade' => $selectedGrade,
@@ -227,7 +228,7 @@ class MoAjax extends BaseController
                 'file_path' => $filePath,
                 'file_name' => $fileName
             ];
-    
+
             if ($updateStatus > 0) {
                 return $this->response->setJSON(['status' => 'success', 'message' => '등급 업데이트 성공', 'data' => $data]);
             } else {

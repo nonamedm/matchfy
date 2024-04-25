@@ -54,7 +54,16 @@
                                         <div class="receive_msg_area">
                                             <?php if ($row['last_msg']) {
                                             ?>
-                                                <p style="width: 220px;"><?= $row['last_msg']['msg_cont'] ?></p>
+                                                <p style="width: 220px;">
+                                                    <?php
+                                                    if (preg_match('/^<img src.*\/>$/', $row['last_msg']['msg_cont'])) {
+                                                        echo "사진을 보냈습니다.";
+                                                    } else {
+                                                        echo $row['last_msg']['msg_cont'];
+                                                    }
+
+                                                    ?>
+                                                </p>
                                             <?php
                                             } else {
                                             ?>
@@ -87,14 +96,23 @@
                                         <img src="/<?= $row['member_file']['file_path'] ?><?= $row['member_file']['file_name'] ?>" />
                                     </div>
                                     <div class="receive_text">
-                                        <p class="receive_profile_name"><?= $row['member_name'] ?><span class="match_percent"><?php
-                                                                                                                                if ($row['match_rate']) {
-                                                                                                                                    echo $row['match_rate']['match_rate'] . "%";
-                                                                                                                                } ?></span></p>
+                                        <p class="receive_profile_name"><?= $row['member_name'] ?><span class="match_percent">
+                                                <?php
+                                                if ($row['match_rate']) {
+                                                    echo $row['match_rate']['match_rate'] . "%";
+                                                } ?></span></p>
                                         <div class="receive_msg_area">
                                             <?php if ($row['last_msg']) {
                                             ?>
-                                                <p style="width: 220px;"><?= $row['last_msg']['msg_cont'] ?></p>
+                                                <p style="width: 220px;">
+                                                    <?php
+                                                    if (preg_match('/^<img src.*\/>$/', $row['last_msg']['msg_cont'])) {
+                                                        echo "사진을 보냈습니다.";
+                                                    } else {
+                                                        echo $row['last_msg']['msg_cont'];
+                                                    }
+                                                    ?>
+                                                </p>
                                             <?php
                                             } else {
                                             ?>
