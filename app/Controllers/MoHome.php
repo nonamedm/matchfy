@@ -99,10 +99,10 @@ class MoHome extends BaseController
                 $isDiscounted = true;
             }
 
-            $MemberModel->set('recommender_code', $invite_code)
-                ->where('ci', $ci)
-                ->update();
-        }
+                $MemberModel->set('recommender_code', $invite_code)
+                            ->where('ci', $ci)
+                            ->update();
+            }
         $data['isDiscounted'] = $isDiscounted;
 
         // 현재 페이지에서는 이미 가입완료이므로 로그인 시키기
@@ -116,6 +116,18 @@ class MoHome extends BaseController
         }
     }
     // echo "isDiscounted before sending to view: " . ($isDiscounted ? 'true' : 'false') . "<br>";
+    public function upgradeGrade(): string
+    {
+        $session = session();
+        $ci = $session->get('ci');
+
+        $MemberModel = new MemberModel();
+        $grade = $MemberModel->select('grade')
+                    ->where('ci', $ci)
+                    ->first();
+                    
+        return view('mo_grade_upgrade', $grade);
+    }
     public function signinSuccess(): string
     {
         return view('mo_signin_success');

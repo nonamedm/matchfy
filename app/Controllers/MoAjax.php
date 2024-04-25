@@ -183,6 +183,59 @@ class MoAjax extends BaseController
         return $this->response->setJSON(['status' => 'success', 'message' => "로그아웃 성공"]);
     }
 
+    public function upgradeGrade()
+    {
+        $selectedGrade = $this->request->getPost('grade');
+
+        if (empty($selectedGrade)) {
+            return $this->response->setJSON(['status' => 'error', 'message' => '선택된 등급이 유효하지 않습니다.']);
+        }
+
+        $session = session();
+        $ci = $session->get('ci');
+
+        $MemberModel = new MemberModel();
+        $currentMember  = $MemberModel
+                            ->where('ci', $ci)
+                            ->first();
+
+        $MemberFileModel = new MemberFileModel();
+        $currentMemberFile = $MemberFileModel
+                                ->where('member_ci', $ci)
+                                ->where('board_type', 'main_photo')
+                                ->where('delete_yn', 'n')
+                                ->first();
+
+        $mobileNo = $currentMember['mobile_no'];
+        $currentGrade = $currentMember['grade'];
+        $filePath = $currentMemberFile['file_path'];
+        $fileName = $currentMemberFile['file_name'];
+
+        if ($selectedGrade === $currentGrade) {
+            return $this->response->setJSON(['status' => 'error', 'message' => '선택된 등급과 현재 등급이 동일합니다.']);
+        }
+
+        if ($selectedGrade !== $currentGrade) {
+            $updateStatus = $MemberModel->update($ci, 
+                    ['grade' => $selectedGrade]
+                );
+
+            $data = [
+                'grade' => $selectedGrade,
+                'mobile_no' => $mobileNo,
+                'ci' => $ci,
+                'file_path' => $filePath,
+                'file_name' => $fileName
+            ];
+    
+            if ($updateStatus > 0) {
+                return $this->response->setJSON(['status' => 'success', 'message' => '등급 업데이트 성공', 'data' => $data]);
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'message' => '등급 업데이트 실패', 'data' => $currentGrade]);
+            }
+        }
+    }
+
     public function signUp()
     {
         // 준회원 validation
