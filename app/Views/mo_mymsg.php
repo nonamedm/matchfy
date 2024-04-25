@@ -37,7 +37,7 @@
                         </li>
                     </ul>
                 </div>
-                <div id="chat_wrap" class="chat_wrap">
+                <div id="chat_wrap" class="chat_wrap scroll_body">
                     <?php foreach ($allMsg as $row) {
                         if ($row['chk'] === 'me') {
                     ?>
@@ -164,7 +164,7 @@
                         $('.layerPopup.member').css('display', 'flex');
                     };
                     const crtMtng = (contents) => {
-                        alert('1:1 채팅에서만 사용 가능합니다');
+                        fn_alert('1:1 채팅에서만 사용 가능합니다');
                     };
                 </script>
             <?php } ?>
@@ -264,13 +264,13 @@
                     } else if (data.status === 'error') {
                         console.log('실패', data);
                     } else {
-                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                     }
                     return false;
                 },
                 error: function(data, status, err) {
                     console.log(err);
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
         }
@@ -297,13 +297,13 @@
                         } else if (data.status === 'error') {
                             console.log('실패', data);
                         } else {
-                            alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                            fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                         }
                         return false;
                     },
                     error: function(data, status, err) {
                         console.log(err);
-                        alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                     },
                 });
             }
@@ -327,13 +327,13 @@
                         } else if (data.status === 'error') {
                             console.log('실패', data);
                         } else {
-                            alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                            fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                         }
                         return false;
                     },
                     error: function(data, status, err) {
                         console.log(err);
-                        alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                     },
                 });
             }
@@ -351,7 +351,7 @@
                     for (let i = 0; i < mymsg_photo_input.files.length; i++) {
                         const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i;
                         if (!allowedExtensions.exec(mymsg_photo_input.files[i].name)) {
-                            alert('이미지 파일만 업로드할 수 있습니다.');
+                            fn_alert('이미지 파일만 업로드할 수 있습니다.');
                             // 입력한 파일을 초기화하여 업로드를 취소
                             this.value = '';
                         } else {
@@ -395,13 +395,13 @@
                                                 } else if (data.status === 'error') {
                                                     console.log('실패', data);
                                                 } else {
-                                                    alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                                                    fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                                                 }
                                                 return false;
                                             },
                                             error: function(data, status, err) {
                                                 console.log(err);
-                                                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                                                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                                             },
                                         });
 

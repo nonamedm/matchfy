@@ -1,7 +1,7 @@
 <div class="layerPopup alert middle report" style="display:none;"><!-- class: imgPop 추가 -->
     <div class="layerPopup_wrap">
         <div class="layerPopup_header">
-            <a onclick="closePopup()">X</a>
+            <a href="#" class="btn_popup_close" onclick="closePopup();" style="float: right;">닫기</a>
         </div>
         <div class="layerPopup_content medium">
             <p class="txt report_title"><?= lang('Korean.declaration') ?></p>
@@ -47,11 +47,11 @@
         const rpttxt = $("#report_text").val();
         const num = $("#report_target").val();
         if (rptctgr === "" || rptctgr === null) {
-            alert('카테고리를 선택해 주세요');
+            fn_alert('카테고리를 선택해 주세요');
             return false;
         }
         if (rpttxt === "" || rpttxt === null) {
-            alert('상세 내용을 입력해 주세요');
+            fn_alert('상세 내용을 입력해 주세요');
             return false;
         }
         if (confirm('후기를 전송하시겠습니까?')) {
@@ -70,7 +70,7 @@
                     if (data.status === 'success') {
                         // 성공
                         // moveToUrl('/');
-                        alert('후기가 전송되었습니다!');
+                        fn_alert('후기가 전송되었습니다!');
                         closePopup();
                         $("#report_category").val("");
                         $("#report_text").val("");
@@ -78,13 +78,13 @@
                     } else if (data.status === 'error') {
                         console.log('실패', data);
                     } else {
-                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                     }
                     return false;
                 },
                 error: function(data, status, err) {
                     console.log(err);
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
         }

@@ -55,7 +55,7 @@ class MoHome extends BaseController
         $mobile_no = $postData['mobile_no'];
         $selected = $MemberModel->where('mobile_no', $mobile_no)->first();
         if ($selected) {
-            echo '<script>alert("이미 가입된 휴대폰 번호입니다");</script>';
+            echo '<script>fn_alert("이미 가입된 휴대폰 번호입니다");</script>';
             return view('mo_pass', $postData);
         } else {
             return view('mo_agree', $postData);
@@ -365,7 +365,7 @@ class MoHome extends BaseController
             // echo print_r($allMsg);
             return view('mo_mymsg', $data);
         } else {
-            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
             return view('index');
         }
     }
@@ -452,8 +452,6 @@ class MoHome extends BaseController
         } else {
             $data['my_chat_room'] = $myChatRoom;
             return view('mo_mymsg_list', $data);
-            // echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
-            // return view('index');
         }
     }
     public function mymsgMenu(): string

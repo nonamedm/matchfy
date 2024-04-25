@@ -130,7 +130,7 @@
                                 <?= $address ?> <?= $detailed_address ?>
                             </div>
                             <div class="group_detail_map">
-                                <div id="map" style="width:335px;height:208px;margin-top: 20px;"></div>
+                                <div id="map" style="width:100%;height:208px;margin-top: 20px;"></div>
                             </div>
                         </div>
                         <div class="alliance_detail_cont">
@@ -219,7 +219,7 @@
             $('#plus').click(function() {
                 let currentValue = parseInt($('#quantity').val(), 10);
                 $('#quantity').val(currentValue + 1);
-                updateTotalAmount();
+                // updateTotalAmount();
             });
 
             function updateTotalAmount() {
@@ -242,19 +242,19 @@
                 var reserveTime = $('.alliance_reserv_time.on').text();
                 // 회차 선택 확인
                 if ($('.alliance_reserv_time.on').length === 0) {
-                    alert('회차를 선택해 주세요.');
+                    fn_alert('회차를 선택해 주세요.');
                     return false;
                 }
                 // 인원 선택 확인
                 var quantity = parseInt($('#quantity').val(), 10);
                 if (isNaN(quantity) || quantity < 1) {
-                    alert('인원을 선택해 주세요.');
+                    fn_alert('인원을 선택해 주세요.');
                     return false;
                 }
 
                 // 구매 조건 동의 확인
                 if (!$('#totAgree').is(':checked')) {
-                    alert('구매 조건 확인 및 결제 진행에 동의해 주세요.');
+                    fn_alert('구매 조건 확인 및 결제 진행에 동의해 주세요.');
                     return false;
                 }
 

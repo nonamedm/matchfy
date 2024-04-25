@@ -108,11 +108,11 @@ function totalPrice() {
 function chk_pointChargeSubmit() {
     var selectedOption = $('#paymethod').val();
     if (selectedOption === '') {
-        alert('충전수단을 선택해주세요.');
+        fn_alert('충전수단을 선택해주세요.');
         return false;
     }
     if (!$('#agree01').prop('checked')) {
-        alert('위 구매조건 확인 및 결제진행에 동의에 체크 하여주세요.');
+        fn_alert('위 구매조건 확인 및 결제진행에 동의에 체크 하여주세요.');
         return false;
     }
     return true;
@@ -214,22 +214,22 @@ function chk_exchangeCheck() {
     var account_number = $('#alliance_exchange_account').val();
 
     if (!amount) {
-        alert('환불금액을 입력해주세요.');
+        fn_alert('환불금액을 입력해주세요.');
         return false;
     }
 
     if (bank == '0') {
-        alert('은행을 선택 해주세요.');
+        fn_alert('은행을 선택 해주세요.');
         return false;
     }
 
     if (!isValidAccountNumber(account_number)) {
-        alert('올바른 계좌번호를 입력해주세요.');
+        fn_alert('올바른 계좌번호를 입력해주세요.');
         return false;
     }
 
     if (!$('#agree02').prop('checked')) {
-        alert('위 구매조건 확인 및 결제진행에 동의에 체크 하여주세요.');
+        fn_alert('위 구매조건 확인 및 결제진행에 동의에 체크 하여주세요.');
         return false;
     }
 
@@ -241,11 +241,11 @@ function pointsValueCheck() {
     var amount = parseInt($('#alliance_exchange_amount').val());
 
     if (amount < 10000) {
-        alert('환전 금액은 10,000원 이상이어야 합니다.');
+        fn_alert('환전 금액은 10,000원 이상이어야 합니다.');
         $('#alliance_exchange_amount').val('');
         $('#exchange_pay').text('');
     } else if (amount > totalMyPoint) {
-        alert('총 보유 포인트보다 크거나 같은 금액을 입력할 수 없습니다.');
+        fn_alert('총 보유 포인트보다 크거나 같은 금액을 입력할 수 없습니다.');
         $('#alliance_exchange_amount').val(totalMyPoint);
         $('#exchange_pay').text(totalMyPoint.toLocaleString() + '원');
     } else {

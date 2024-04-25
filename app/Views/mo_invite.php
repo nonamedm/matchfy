@@ -82,7 +82,7 @@
                 tempInput.val(code).select();
                 document.execCommand('copy');
                 tempInput.remove();
-                alert('초대코드가 클립보드에 복사되었습니다!');
+                fn_alert('초대코드가 클립보드에 복사되었습니다!');
             });
         });
 
@@ -99,7 +99,7 @@
                     console.log('공유 실패 : ', error);
                 });
             } else {
-                alert('지원되지 않는 기기입니다.');
+                fn_alert('지원되지 않는 기기입니다.');
             }
         });
     </script>

@@ -1,7 +1,7 @@
 <div class="layerPopup alert middle" style="display:none;"><!-- class: imgPop 추가 -->
     <div class="layerPopup_wrap">
         <div class="layerPopup_header">
-            <a onclick="closePopup()">X</a>
+            <a href="#" class="btn_popup_close" onclick="closePopup();" style="float: right;">닫기</a>
         </div>
         <div class="layerPopup_content">
             <p class="txt"><?=lang('Korean.authentication')?></p>
@@ -41,7 +41,7 @@
             if (profile_regist.files.length > 0) {
                 const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i;
                 if (!allowedExtensions.exec(profile_regist.files[0].name)) {
-                    alert('이미지 파일만 업로드할 수 있습니다.');
+                    fn_alert('이미지 파일만 업로드할 수 있습니다.');
                     // 입력한 파일을 초기화하여 업로드를 취소
                     this.value = '';
                 } else {
@@ -93,8 +93,8 @@
                                     data: { ci: $("#ci").val(), org_name: data.org_name, file_name: data.file_name, file_path: data.file_path, ext: data.ext, board_type: typeValue },
                                     success: function (data) {
                                         console.log(data);
-                                        if (data.data.board_type === 'school' || data.data.board_type === 'job')
-                                            $("#" + typeValue).val(data.data.org_name);
+                                        // if (data.data.board_type === 'school' || data.data.board_type === 'job')
+                                        //     $("#" + typeValue).val(data.data.org_name);
                                     },
                                     error: function (xhr, status, error) {
                                         console.log(error);
@@ -111,7 +111,7 @@
                                 }
                                 imgRegist.style.display = 'block';
 
-                                alert('사진 사이즈가 너무 큽니다. \n다른 사진을 첨부해 주세요.');
+                                fn_alert('사진 사이즈가 너무 큽니다. \n다른 사진을 첨부해 주세요.');
                             }
                         })
                         .catch((error) => {

@@ -236,9 +236,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="chk_box">
-                                <input type="checkbox" id="agree01" name="chkDefault00" checked="">
-                                <label class="agree_cont_label" for="agree01"><?= lang('Korean.allianceAgreeTrue') ?></label>
+                            <div style="width: 335px;margin: 0 auto;display: flex;">
+                                <div class="chk_box">
+                                    <input type="checkbox" id="agree01" name="chkDefault00" checked="">
+                                    <label class="agree_cont_label" for="agree01"><?= lang('Korean.allianceAgreeTrue') ?></label>
+                                </div>
                             </div>
                             <div class="btn_group multy">
                                 <button type="button" class="btn type02"><?= lang('Korean.cancel') ?></button>
@@ -388,7 +390,7 @@
                 var remainingSlots = maxFiles - currentFiles;
 
                 if (files.length > remainingSlots) {
-                    alert('최대 20장까지만 업로드할 수 있습니다.');
+                    fn_alert('최대 20장까지만 업로드할 수 있습니다.');
                     var excessFiles = Array.from(files).slice(0, remainingSlots);
                     $('#alliance_photo_detail').prop('files', excessFiles);
                     files = excessFiles;

@@ -37,7 +37,7 @@
                 </div>
                 <form class="main_signin_form" enctype="multipart/form-data">
                     <legend></legend>
-                    <div class="">
+                    <div class="" style="width: 335px;margin: 0 auto;">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="appear_type" class="signin_label"><?=lang('Korean.gender')?></label>
@@ -71,7 +71,7 @@
                                         }
                                         ?>
                                     </select>
-                                    <p style="margin-right: 7px;">~ </p>
+                                    <p style="margin-right: 7px;line-height: 0px;">~ </p>
                                     <select id="toyear" name="toyear" class="custom_select" value="">
                                         <option value=""><?=lang('Korean.selected')?></option>
                                         <?php
@@ -176,8 +176,8 @@
                                 <div class="signin_form_div">
                                     <label for="height" class="signin_label"><?=lang('Korean.height')?></label>
                                     <div style="display:flex;">
-                                        <input type="number" id="height" name="height" placeholder="<?=lang('Korean.parnerCon1')?>" style="width:260px;">
-                                        <p style="width:70px; margin-left: 20px;"><?=lang('Korean.cmmore')?></p>
+                                        <input type="number" id="height" name="number" placeholder="<?=lang('Korean.parnerCon1')?>" style="width:260px;">
+                                        <p class="height_cm"><?=lang('Korean.cmmore')?></p>
                                     </div>
                                 </div>
                             </div>
@@ -415,7 +415,7 @@
         }
         $(document).ready(function() {
             selectGender(0);
-
+            ageUpDawnChk();
             var partnerGender = <?php echo json_encode($partnerInfo['partner_gender']); ?>;
 
             var region = "<?php echo $partnerInfo['region']; ?>";
@@ -504,69 +504,88 @@
             }
 
         });
+        function ageUpDawnChk(){
+            $("#fromyear").on("change", function() {
+                var fromYear = parseInt($(this).val());
+                var toYear = parseInt($("#toyear").val());
+                if (fromYear >= toYear) {
+                    fn_alert("나이 연도 선택을 다시 해주세요.");
+                    $(this).val("");
+                }
+            });
 
+            // toyear에 대한 검사
+            $("#toyear").on("change", function() {
+                var toYear = parseInt($(this).val());
+                var fromYear = parseInt($("#fromyear").val());
+                if (toYear <= fromYear) {
+                    fn_alert("나이 연도 선택을 다시 해주세요.");
+                    $(this).val("");
+                }
+            });
+        }
         function savePartnerInfo() {
             let tempValidation = false;
             if ($('#fromyear').val().trim() === '') {
-                alert('연령정보를 선택해 주세요');
+                fn_alert('연령정보를 선택해 주세요');
                 tempValidation = false;
                 $('#fromyear').focus();
             } else if ($('#toyear').val().trim() === '') {
-                alert('연령정보를 선택해 주세요');
+                fn_alert('연령정보를 선택해 주세요');
                 tempValidation = false;
                 $('#toyear').focus();
             } else if ($('#region').val().trim() === '') {
-                alert('지역을 선택해 주세요');
+                fn_alert('지역을 선택해 주세요');
                 tempValidation = false;
                 $('#region').focus();
             }
             <?php if (isset($grade) && ($grade === 'grade02' || $grade === 'grade03')) : ?>
                 if ($('#marital').val().trim() === '') {
-                    alert('결혼경험유무를 선택해 주세요');
+                    fn_alert('결혼경험유무를 선택해 주세요');
                     tempValidation = false;
                     $('#marital').focus();
                 } else if ($('#smoking').val().trim() === '') {
-                    alert('흡연유무를 선택해 주세요');
+                    fn_alert('흡연유무를 선택해 주세요');
                     tempValidation = false;
                     $('#smoking').focus();
                 } else if ($('#drinking').val().trim() === '') {
-                    alert('음주횟수를 선택해 주세요');
+                    fn_alert('음주횟수를 선택해 주세요');
                     tempValidation = false;
                     $('#drinking').focus();
                 } else if ($('#religion').val().trim() === '') {
-                    alert('종교를 선택해 주세요');
+                    fn_alert('종교를 선택해 주세요');
                     tempValidation = false;
                     $('#religion').focus();
                 } else if ($('#mbti').val().trim() === '') {
-                    alert('MBTI를 선택해 주세요');
+                    fn_alert('MBTI를 선택해 주세요');
                     tempValidation = false;
                     $('#mbti').focus();
                 } else if ($('#height').val().trim() === '') {
-                    alert('최소 키를 입력해 주세요');
+                    fn_alert('최소 키를 입력해 주세요');
                     tempValidation = false;
                     $('#height').focus();
                 } else if ($('#bodyshape').val().trim() === '') {
-                    alert('체형을 선택해 주세요');
+                    fn_alert('체형을 선택해 주세요');
                     tempValidation = false;
                     $('#bodyshape').focus();
                 } else if ($('#personal_style').val().trim() === '') {
-                    alert('스타일을 선택해 주세요');
+                    fn_alert('스타일을 선택해 주세요');
                     tempValidation = false;
                     $('#personal_style').focus();
                 } else if ($('#education').val().trim() === '') {
-                    alert('최종학력을 선택해 주세요');
+                    fn_alert('최종학력을 선택해 주세요');
                     tempValidation = false;
                     $('#education').focus();
                 } else if ($('#job').val().trim() === '') {
-                    alert('직업군을 선택해 주세요');
+                    fn_alert('직업군을 선택해 주세요');
                     tempValidation = false;
                     $('#job').focus();
                 } else if ($('#asset_range').val().trim() === '') {
-                    alert('자산구간을 선택해 주세요');
+                    fn_alert('자산구간을 선택해 주세요');
                     tempValidation = false;
                     $('#asset_range').focus();
                 } else if ($('#income_range').val().trim() === '') {
-                    alert('소득구간을 선택해 주세요');
+                    fn_alert('소득구간을 선택해 주세요');
                     tempValidation = false;
                     $('#income_range').focus();
                 }
@@ -620,13 +639,13 @@
                         } else if (data.status === 'error') {
                             console.log('실패', data);
                         } else {
-                            alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                            fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                         }
                         return false;
                     },
                     error: function(data, status, err) {
                         console.log(err);
-                        alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                     },
                 });
             }
