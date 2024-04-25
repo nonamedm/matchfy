@@ -11,7 +11,7 @@ const myfeedPhotoListner = () => {
                 const allowedExtensionsImg = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i;
                 const allowedExtensionsMov = /(\.mp4|\.avi|\.mov|\.mkv|\.flv|\.wmv|\.webm)$/i;
                 if (!allowedExtensions.exec(feed_photo_input.files[i].name)) {
-                    alert('이미지 또는 영상만 업로드할 수 있습니다.');
+                    fn_alert('이미지 또는 영상만 업로드할 수 있습니다.');
                     // 입력한 파일을 초기화하여 업로드를 취소
                     this.value = '';
                 } else {
@@ -68,9 +68,9 @@ const myfeedPhotoListner = () => {
                                 uploadedFeeds.push(fileInfo);
 
                                 // 삭제 버튼 생성
-                                const deleteButton = document.createElement('button');
-                                deleteButton.textContent = 'X';
-                                deleteButton.classList.add('posted_delete_button');
+                                const deleteButton = document.createElement('span');
+                                // deleteButton.textContent = 'X';
+                                deleteButton.classList.add('feed_close_button');
                                 // 삭제 버튼에 클릭 이벤트 추가
                                 deleteButton.addEventListener('click', function () {
                                     // label 숨김해제
@@ -128,7 +128,7 @@ const myfeedPhotoListner = () => {
             .then((response) => response.json())
             .then((data) => {
                 console.log('Upload success', data);
-                alert('피드가 등록되었습니다.');
+                fn_alert('피드가 등록되었습니다.');
                 closePopup();
                 location.reload();
             })
@@ -150,17 +150,17 @@ const myFeedDelete = () => {
             success: function (data) {
                 console.log(data);
                 if (data.data) {
-                    alert('피드가 삭제되었습니다.');
+                    fn_alert('피드가 삭제되었습니다.');
                     closePopup();
                     location.reload();
                 } else {
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 }
                 return false;
             },
             error: function (data, status, err) {
                 console.log(err);
-                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
             },
         });
     }
@@ -227,13 +227,13 @@ const myFeedModify = () => {
                 imageElement.appendChild(deleteButton);
                 showFeedPopup('modMyFeed', feed_idx);
             } else {
-                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
             }
             return false;
         },
         error: function (data, status, err) {
             console.log(err);
-            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
         },
     });
 };
@@ -297,13 +297,13 @@ const showFeedDetail = (contents, feedIdx) => {
                     $('#feed_idx').val(data.data.feed_idx);
                 }
             } else {
-                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
             }
             return false;
         },
         error: function (data, status, err) {
             console.log(err);
-            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
         },
     });
 

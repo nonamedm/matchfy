@@ -35,87 +35,131 @@
                     </ul>
                 </div>
                 <?php
-                foreach ($my_chat_room as $row) {
+                if ($my_chat_room) {
                 ?>
-                    <?php if ($row['room_type'] === '1') {
-                        // 단톡방
+                    <?php
+                    foreach ($my_chat_room as $row) {
                     ?>
-                        <div class="chat_list_wrap" onclick="enterCtRm('<?= $row['room_ci'] ?>')">
-                            <div class="chat_room_title">
-                                <div class="receive_profile">
-                                    <img src="/static/images/group_chat_profile.png" />
-                                </div>
-                                <div class="receive_text">
-                                    <p class="receive_profile_name"><?= $row['member_name'] ?><span class="match_percent btw8090">89%</span>
-                                    </p>
-                                    <div class="receive_msg_area">
+                        <?php if ($row['room_type'] === '1') {
+                            // 단톡방
+                        ?>
+                            <div class="chat_list_wrap" onclick="enterCtRm('<?= $row['room_ci'] ?>')">
+                                <div class="chat_room_title">
+                                    <div class="receive_profile">
+                                        <img src="/static/images/group_chat_profile.png" />
+                                    </div>
+                                    <div class="receive_text">
+                                        <p class="receive_profile_name"><?= $row['member_name'] ?><span class="match_percent btw8090">89%</span>
+                                        </p>
+                                        <div class="receive_msg_area">
+                                            <?php if ($row['last_msg']) {
+                                            ?>
+                                                <p style="width: 220px;">
+                                                    <?php
+                                                    if (preg_match('/^<img src.*\/>$/', $row['last_msg']['msg_cont'])) {
+                                                        echo "사진을 보냈습니다.";
+                                                    } else {
+                                                        echo $row['last_msg']['msg_cont'];
+                                                    }
+
+                                                    ?>
+                                                </p>
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <p>대화에 초대되었습니다</p>
+                                            <?php
+                                            } ?>
+                                        </div>
+                                    </div>
+                                    <div class="receive_time">
                                         <?php if ($row['last_msg']) {
                                         ?>
-                                            <p style="width: 220px;"><?= $row['last_msg']['msg_cont'] ?></p>
+                                            <p style="width: 220px;"><?= $row['last_msg']['created_at'] ?></p>
                                         <?php
                                         } else {
                                         ?>
-                                            <p>대화에 초대되었습니다</p>
+                                            <p style="width: 220px;"></p>
                                         <?php
                                         } ?>
                                     </div>
                                 </div>
-                                <div class="receive_time">
-                                    <?php if ($row['last_msg']) {
-                                    ?>
-                                        <p style="width: 220px;"><?= $row['last_msg']['created_at'] ?></p>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <p style="width: 220px;"></p>
-                                    <?php
-                                    } ?>
-                                </div>
                             </div>
-                        </div>
-                        <hr class="hoz_part" />
-                    <?php
-                    } else {
-                        //1:1톡방
-                    ?>
-                        <div class="chat_list_wrap" onclick="sendMsg('<?= $row['member_nickname'] ?>')">
-                            <div class="chat_room_title">
-                                <div class="receive_profile">
-                                    <img src="/<?= $row['member_file']['file_path'] ?><?= $row['member_file']['file_name'] ?>" />
-                                </div>
-                                <div class="receive_text">
-                                    <p class="receive_profile_name"><?= $row['member_name'] ?><span class="match_percent"><?php
-                                                                                                                            if ($row['match_rate']) {
-                                                                                                                                echo $row['match_rate']['match_rate'] . "%";
-                                                                                                                            } ?></span></p>
-                                    <div class="receive_msg_area">
+                            <hr class="hoz_part" />
+                        <?php
+                        } else if ($row['room_type'] === '0') {
+                            //1:1톡방
+                        ?>
+                            <div class="chat_list_wrap" onclick="sendMsg('<?= $row['member_nickname'] ?>')">
+                                <div class="chat_room_title">
+                                    <div class="receive_profile">
+                                        <img src="/<?= $row['member_file']['file_path'] ?><?= $row['member_file']['file_name'] ?>" />
+                                    </div>
+                                    <div class="receive_text">
+                                        <p class="receive_profile_name"><?= $row['member_name'] ?><span class="match_percent">
+                                                <?php
+                                                if ($row['match_rate']) {
+                                                    echo $row['match_rate']['match_rate'] . "%";
+                                                } ?></span></p>
+                                        <div class="receive_msg_area">
+                                            <?php if ($row['last_msg']) {
+                                            ?>
+                                                <p style="width: 220px;">
+                                                    <?php
+                                                    if (preg_match('/^<img src.*\/>$/', $row['last_msg']['msg_cont'])) {
+                                                        echo "사진을 보냈습니다.";
+                                                    } else {
+                                                        echo $row['last_msg']['msg_cont'];
+                                                    }
+                                                    ?>
+                                                </p>
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <p style="width: 220px;">대화에 초대되었습니다</p>
+                                            <?php
+                                            } ?>
+                                        </div>
+                                    </div>
+                                    <div class="receive_time">
                                         <?php if ($row['last_msg']) {
                                         ?>
-                                            <p style="width: 220px;"><?= $row['last_msg']['msg_cont'] ?></p>
+                                            <p style="width: 220px; max-height: 15px;"><?= $row['last_msg']['created_at'] ?></p>
                                         <?php
                                         } else {
                                         ?>
-                                            <p style="width: 220px;">대화에 초대되었습니다</p>
+                                            <p></p>
                                         <?php
                                         } ?>
                                     </div>
                                 </div>
-                                <div class="receive_time">
-                                    <?php if ($row['last_msg']) {
-                                    ?>
-                                        <p style="width: 220px; max-height: 15px;"><?= $row['last_msg']['created_at'] ?></p>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <p></p>
-                                    <?php
-                                    } ?>
+                            </div>
+                            <hr class="hoz_part" />
+                        <?php
+                        } ?>
+                    <?php
+                    }
+                    ?>
+                <?php
+                } else {
+                ?>
+                    <div class="chat_list_wrap">
+                        <div class="chat_room_title">
+                            <div class="receive_profile" style="width:50px; height:50px;">
+                            </div>
+                            <div class="receive_text">
+                                <p class="receive_profile_name"><span class="match_percent"></span></p>
+                                <div class="receive_msg_area">
+                                    <p style="width: 220px;">진행중인 대화방이 없습니다</p>
                                 </div>
                             </div>
+                            <div class="receive_time">
+
+                                <p></p>
+                            </div>
                         </div>
-                        <hr class="hoz_part" />
-                    <?php
-                    } ?>
+                    </div>
+                    <hr class="hoz_part" />
                 <?php
                 }
                 ?>
@@ -159,13 +203,13 @@
                     } else if (data.status === 'error') {
                         console.log('메세지 전송 실패', data);
                     } else {
-                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                     }
                     return false;
                 },
                 error: function(data, status, err) {
                     console.log(err);
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
         }
@@ -187,13 +231,13 @@
                     } else if (data.status === 'error') {
                         console.log('메세지 전송 실패', data);
                     } else {
-                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                     }
                     return false;
                 },
                 error: function(data, status, err) {
                     console.log(err);
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
         }

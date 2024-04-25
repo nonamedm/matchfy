@@ -37,7 +37,7 @@
                         </li>
                     </ul>
                 </div>
-                <div id="chat_wrap" class="chat_wrap">
+                <div id="chat_wrap" class="chat_wrap scroll_body">
                     <?php foreach ($allMsg as $row) {
                         if ($row['chk'] === 'me') {
                     ?>
@@ -143,6 +143,7 @@
                 </div>
             </div>
             <input id="room_ci" type="hidden" value="<?= $room_ci ?>" />
+            <?php include 'mo_sch_deposit_popup.php'; ?>
             <?php if ($room_type[0]['room_type'] === '1') {
                 include 'mo_mymsg_member_popup.php';
                 include 'mo_report_popup.php';
@@ -163,7 +164,7 @@
                         $('.layerPopup.member').css('display', 'flex');
                     };
                     const crtMtng = (contents) => {
-                        alert('1:1 채팅에서만 사용 가능합니다');
+                        fn_alert('1:1 채팅에서만 사용 가능합니다');
                     };
                 </script>
             <?php } ?>
@@ -258,17 +259,18 @@
                             }
                         });
                         $("#chat_wrap").html(html);
+                        scrollToBottom();
                         // moveToUrl('/mo/factorInfo');
                     } else if (data.status === 'error') {
                         console.log('실패', data);
                     } else {
-                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                     }
                     return false;
                 },
                 error: function(data, status, err) {
                     console.log(err);
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
         }
@@ -295,13 +297,13 @@
                         } else if (data.status === 'error') {
                             console.log('실패', data);
                         } else {
-                            alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                            fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                         }
                         return false;
                     },
                     error: function(data, status, err) {
                         console.log(err);
-                        alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                     },
                 });
             }
@@ -325,13 +327,13 @@
                         } else if (data.status === 'error') {
                             console.log('실패', data);
                         } else {
-                            alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                            fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                         }
                         return false;
                     },
                     error: function(data, status, err) {
                         console.log(err);
-                        alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                     },
                 });
             }
@@ -349,7 +351,7 @@
                     for (let i = 0; i < mymsg_photo_input.files.length; i++) {
                         const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i;
                         if (!allowedExtensions.exec(mymsg_photo_input.files[i].name)) {
-                            alert('이미지 파일만 업로드할 수 있습니다.');
+                            fn_alert('이미지 파일만 업로드할 수 있습니다.');
                             // 입력한 파일을 초기화하여 업로드를 취소
                             this.value = '';
                         } else {
@@ -393,13 +395,13 @@
                                                 } else if (data.status === 'error') {
                                                     console.log('실패', data);
                                                 } else {
-                                                    alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                                                    fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                                                 }
                                                 return false;
                                             },
                                             error: function(data, status, err) {
                                                 console.log(err);
-                                                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                                                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                                             },
                                         });
 
@@ -413,6 +415,38 @@
                         }
                     }
                 } else {}
+            });
+        };
+
+        const sndPnt = () => {
+            $.ajax({
+                url: '/ajax/usablePoint',
+                type: 'POST',
+                data: {
+                    "room_ci": $("#room_ci").val(),
+                },
+                async: false,
+                success: function(data) {
+                    console.log(data);
+                    if (data.status === 'success') {
+                        // 성공
+                        // 보유포인트 만큼 차감 후 전송
+                        $("#snd_dpst").val("");
+                        $("#usable_point").html(data.data.reulst_value[0].usable_point);
+                        $('.layerPopup.deposit').css('display', 'flex');
+                        // moveToUrl('/');
+                    } else if (data.status === 'error') {
+                        // 사용가능한 예약금 없음 -> 또는 예약자 본인인 경우
+                        alert('사용 가능한 예약금이 없습니다. \n예약생성자가 아닌 경우 모임에 참여 후 시도해 주세요')
+                    } else {
+                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    }
+                    return false;
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
             });
         };
     </script>

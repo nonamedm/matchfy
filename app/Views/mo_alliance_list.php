@@ -23,7 +23,7 @@
 
         <div class="sub_wrap">
             <div class="content_wrap">
-                <div class="alliance_banner" style="margin-left:-20px;">
+                <div class="alliance_banner">
                     <img src="/static/images/alliance_banner.png" />
                 </div>
                 <div class="group_search">
@@ -81,7 +81,7 @@
     <div class="layerPopup alert middle alliance" style="display: none;"><!-- class: imgPop 추가 -->
         <div class="layerPopup_wrap">
             <div class="layerPopup_header">
-                <a onclick="closePopup()">X</a>
+                <a href="#" class="btn_popup_close" onclick="closePopup();" style="float: right;">닫기</a>
             </div>
             <div class="layerPopup_content">
                 <p class="txt"><?= lang('Korean.region') ?> <?= lang('Korean.selected') ?></p>

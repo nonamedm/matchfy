@@ -55,7 +55,7 @@ class MoHome extends BaseController
         $mobile_no = $postData['mobile_no'];
         $selected = $MemberModel->where('mobile_no', $mobile_no)->first();
         if ($selected) {
-            echo '<script>alert("이미 가입된 휴대폰 번호입니다");</script>';
+            echo '<script>fn_alert("이미 가입된 휴대폰 번호입니다");</script>';
             return view('mo_pass', $postData);
         } else {
             return view('mo_agree', $postData);
@@ -116,6 +116,18 @@ class MoHome extends BaseController
         }
     }
     // echo "isDiscounted before sending to view: " . ($isDiscounted ? 'true' : 'false') . "<br>";
+    public function upgradeGrade(): string
+    {
+        $session = session();
+        $ci = $session->get('ci');
+
+        $MemberModel = new MemberModel();
+        $grade = $MemberModel->select('grade')
+            ->where('ci', $ci)
+            ->first();
+
+        return view('mo_grade_upgrade', $grade);
+    }
     public function signinSuccess(): string
     {
         return view('mo_signin_success');
@@ -353,7 +365,7 @@ class MoHome extends BaseController
             // echo print_r($allMsg);
             return view('mo_mymsg', $data);
         } else {
-            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
             return view('index');
         }
     }
@@ -371,7 +383,7 @@ class MoHome extends BaseController
         $today_date = date('Y-m-d', $current_time);
 
         // 내가 참여중인 대화방 목록 표출
-        $query = "SELECT * FROM wh_chat_room_member WHERE member_ci='" . $ci . "' AND delete_yn='n'";
+        $query = "SELECT * FROM wh_chat_room_member wcrm WHERE member_ci='" . $ci . "' AND delete_yn='n'";
         $myChatRoom = $ChatRoomMemberModel
             ->query($query)->getResultArray();
         if ($myChatRoom) {
@@ -438,8 +450,8 @@ class MoHome extends BaseController
             // echo print_r($allMsg);
             return view('mo_mymsg_list', $data);
         } else {
-            echo "<script>alert('잘못된 접근입니다'); moveToUrl('/');</script>";
-            return view('index');
+            $data['my_chat_room'] = $myChatRoom;
+            return view('mo_mymsg_list', $data);
         }
     }
     public function mymsgMenu(): string
@@ -1433,6 +1445,7 @@ class MoHome extends BaseController
         $selectFeed = [
             'wh_member_feed.member_ci' => $user['ci'],
             'wh_member_feed.delete_yn' => 'n',
+            'wh_member_feed_files.delete_yn' => 'n',
         ];
         $feedList = $MemberFeedModel->where($selectFeed)->join('wh_member_feed_files', 'wh_member_feed_files.feed_idx = wh_member_feed.idx')->orderBy('wh_member_feed.created_at', 'DESC')->findAll();
         // $feedFile = $MemberFeedFileModel->where('member_ci', $ci)->findAll();
@@ -1483,14 +1496,18 @@ class MoHome extends BaseController
                 LEFT JOIN members mb on wmf.member_ci = mb.ci
                 LEFT JOIN member_files mf on mb.ci = mf.member_ci
                 LEFT JOIN wh_member_feed_files wmff on wmf.idx = wmff.feed_idx";
+        $query .= " WHERE 1=1 ";
+        $query .= " AND wmf.delete_yn='n' ";
+        $query .= " AND wmff.delete_yn='n' ";
         if (!empty($factorList['except1'])) //배제항목 있을 시 조건에서 배제하기
         {
-            $query .= " WHERE (mb." . $factorList['except1'] . " != '" . $factorList['except1_detail'] . "'  OR mb." . $factorList['except1'] . " IS NULL)";
+            $query .= " AND (mb." . $factorList['except1'] . " != '" . $factorList['except1_detail'] . "'  OR mb." . $factorList['except1'] . " IS NULL)";
         }
         if (!empty($factorList['except1']) && !empty($factorList['except2'])) //배제항목 있을 시 조건에서 배제하기
         {
             $query .= " AND (mb." . $factorList['except2'] . " != '" . $factorList['except2_detail'] . "'  OR mb." . $factorList['except2'] . " IS NULL)";
         }
+        $query .= " ORDER BY wmf.created_at DESC";
         $datas = $MemberFeedModel
             ->query($query)->getResultArray();
 

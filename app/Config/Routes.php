@@ -14,6 +14,7 @@ $routes->post('/mo/agree', 'MoHome::agree');
 $routes->post('/mo/signin', 'MoHome::signin');
 $routes->post('/mo/signinPhoto', 'MoHome::signinPhoto');
 $routes->post('/mo/signinType', 'MoHome::signinType');
+$routes->get('/mo/upgradeGrade', 'MoHome::upgradeGrade');
 $routes->get('/mo/signinSuccess', 'MoHome::signinSuccess');
 $routes->post('/mo/signinRegular', 'MoHome::signinRegular');
 $routes->post('/mo/signinPremium', 'MoHome::signinPremium');
@@ -132,6 +133,7 @@ $routes->post('/ajax/allianceFilter', 'MoAjax::allianceFiltering');
 $routes->get('/ajax/alliance/reservation', 'MoAjax::allianceReservation');
 $routes->post('/ajax/myAlliance', 'MoAjax::myAlliance');
 $routes->post('/ajax/myAllianceDetail', 'MoAjax::myAllianceDetail');
+$routes->post('/ajax/upgradeGrade', 'MoAjax::upgradeGrade');
 
 /* 채팅 */
 $routes->post('/ajax/createChat', 'MoAjax::createChat');
@@ -143,6 +145,8 @@ $routes->post('/ajax/banUsr', 'MoAjax::banUsr');
 $routes->post('/ajax/sndRpt', 'MoAjax::sndRpt');
 $routes->post('/ajax/submitScdl', 'MoAjax::submitScdl');
 $routes->post('/ajax/partScdl', 'MoAjax::partScdl');
+$routes->post('/ajax/usablePoint', 'MoAjax::usablePoint');
+$routes->post('/ajax/sndDeposit', 'MoAjax::sndDeposit');
 
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');

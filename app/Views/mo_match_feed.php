@@ -122,7 +122,7 @@
                 },
                 error: function(data, status, err) {
                     console.log(err);
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
         });
