@@ -830,7 +830,7 @@ td {
 }
 
 .ended_overlay {
-    position: absolute;
+    /* position: absolute;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -838,7 +838,22 @@ td {
     background-color: rgba(0, 0, 0, 0.6);
     padding: 10px;
     border-radius: 5px;
+    z-index: 2; */
+
+    position: absolute;
+    top: 36%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* padding: 10px; */
+    border-radius: 8px;
     z-index: 2;
+    width: 100px;
+    height: 100px;
+    font-size: 15px;
+    text-align: center;
+    line-height: 100px;
 }
 
 .mygroup_list a,
@@ -865,6 +880,7 @@ a.ended:hover .ended_overlay {
 .group_deatil_img img {
     width: 335px;
     height: 248px;
+    object-fit: cover;
 }
 .group_detail_header {
     display: flex;
@@ -1016,12 +1032,13 @@ a:active {
 .group_list_item .group_location {
     margin-top: 8px;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 18px;
 }
 .group_list_item .group_location img {
     width: 16px;
     height: 16px;
+    object-fit: cover;
 }
 .group_particpnt {
     margin-top: 6px;
