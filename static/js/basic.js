@@ -65,19 +65,19 @@ const certIdentify = () => {
     // form.submit();
     let tempValidation = false;
     if ($('#input_name').val().trim() === '') {
-        alert('이름을 입력해 주세요');
+        fn_alert('이름을 입력해 주세요');
         tempValidation = false;
         $('#input_name').focus();
     } else if ($('#input_mobile_no').val().trim() === '') {
-        alert('전화번호를 입력해 주세요');
+        fn_alert('전화번호를 입력해 주세요');
         tempValidation = false;
         $('#input_mobile_no').focus();
     } else if ($('#input_birthday').val().trim() === '') {
-        alert('생년월일을 입력해 주세요');
+        fn_alert('생년월일을 입력해 주세요');
         tempValidation = false;
         $('#input_birthday').focus();
     } else if ($('#input_gender').val().trim() === '') {
-        alert('성별을 선택해 주세요');
+        fn_alert('성별을 선택해 주세요');
         tempValidation = false;
         $('#input_gender').focus();
     }
@@ -116,7 +116,7 @@ const userLogin = () => {
 
     // 빈 값 validation
     if (phoneNumber.length === 0) {
-        alert('전화번호를 입력해 주세요.');
+        fn_alert('전화번호를 입력해 주세요.');
         return;
     }
 
@@ -124,7 +124,7 @@ const userLogin = () => {
     const phoneRegex = /^\d{11}$/;
 
     if (!phoneRegex.test(phoneNumber)) {
-        alert('휴대폰 번호는 11자리 숫자여야 합니다.');
+        fn_alert('휴대폰 번호는 11자리 숫자여야 합니다.');
         return;
     }
 
@@ -146,18 +146,18 @@ const userLogin = () => {
                     },
                     error: function (data, status, err) {
                         console.log(err);
-                        alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                     },
                 });
                 //location.href = '/index/login'
             } else {
-                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
             }
             return false;
         },
         error: function (data, status, err) {
             console.log(err);
-            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
         },
     });
 };
@@ -169,12 +169,12 @@ const userLogout = () => {
             async: false,
             success: function (data) {
                 console.log(data);
-                alert('로그아웃 되었습니다.');
+                fn_alert('로그아웃 되었습니다.');
                 moveToUrl('/');
             },
             error: function (data, status, err) {
                 console.log(err);
-                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
             },
         });
     }
@@ -195,7 +195,7 @@ const submitFormAgree = () => {
     if (isAllChecked) {
         submitForm();
     } else {
-        alert('항목에 동의해 주세요');
+        fn_alert('항목에 동의해 주세요');
         return false;
     }
 };
@@ -205,19 +205,19 @@ const signUp = () => {
 
     let tempValidation = false;
     if ($('#name').val().trim() === '') {
-        alert('이름을 입력해 주세요');
+        fn_alert('이름을 입력해 주세요');
         tempValidation = false;
         $('#name').focus();
     } else if ($('#birthday').val().trim() === '') {
-        alert('생년월일을 입력해 주세요');
+        fn_alert('생년월일을 입력해 주세요');
         tempValidation = false;
         $('#birthday').focus();
     } else if ($('#city').val().trim() === '') {
-        alert('지역을 선택해 주세요');
+        fn_alert('지역을 선택해 주세요');
         tempValidation = false;
         $('#city').focus();
     } else if ($('#gender').val().trim() === '') {
-        alert('성별을 선택해 주세요');
+        fn_alert('성별을 선택해 주세요');
         tempValidation = false;
         $('#gender').focus();
     }
@@ -287,13 +287,13 @@ const signUp = () => {
                         }
                     });
                 } else {
-                    alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                 }
                 return false;
             },
             error: function (data, status, err) {
                 console.log(err);
-                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
             },
         });
     } else {
@@ -310,13 +310,13 @@ const isValidRecommendCode = (inviteCode, callback) => {
             if (data.isValid) {
                 callback(true);
             } else {
-                alert('유효하지 않은 초대 코드입니다.');
+                fn_alert('유효하지 않은 초대 코드입니다.');
                 callback(false);
             }
         },
         error: function (data, status, err) {
             console.log(err);
-            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
             callback(false);
         },
     });
@@ -325,59 +325,59 @@ const isValidRecommendCode = (inviteCode, callback) => {
 const signUpdate = (postData) => {
     let tempValidation = false;
     if ($('#marital').val().trim() === '') {
-        alert('결혼유무를 선택해 주세요');
+        fn_alert('결혼유무를 선택해 주세요');
         tempValidation = false;
         $('#marital').focus();
     } else if ($('#smoking').val().trim() === '') {
-        alert('흡연유무를 선택해 주세요');
+        fn_alert('흡연유무를 선택해 주세요');
         tempValidation = false;
         $('#smoking').focus();
     } else if ($('#drinking').val().trim() === '') {
-        alert('음주횟수를 선택해 주세요');
+        fn_alert('음주횟수를 선택해 주세요');
         tempValidation = false;
         $('#drinking').focus();
     } else if ($('#religion').val().trim() === '') {
-        alert('종교를 선택해 주세요');
+        fn_alert('종교를 선택해 주세요');
         tempValidation = false;
         $('#religion').focus();
     } else if ($('#mbti').val().trim() === '') {
-        alert('MBTI를 선택해 주세요');
+        fn_alert('MBTI를 선택해 주세요');
         tempValidation = false;
         $('#mbti').focus();
     } else if ($('#height').val().trim() === '') {
-        alert('키를 입력해 주세요');
+        fn_alert('키를 입력해 주세요');
         tempValidation = false;
         $('#height').focus();
     } else if ($('#bodyshape').val().trim() === '') {
-        alert('체형을 선택해 주세요');
+        fn_alert('체형을 선택해 주세요');
         tempValidation = false;
         $('#bodyshape').focus();
     } else if ($('#personal_style').val().trim() === '') {
-        alert('스타일을 선택해 주세요');
+        fn_alert('스타일을 선택해 주세요');
         tempValidation = false;
         $('#personal_style').focus();
     } else if ($('#education').val().trim() === '') {
-        alert('최종학력을 선택해 주세요');
+        fn_alert('최종학력을 선택해 주세요');
         tempValidation = false;
         $('#education').focus();
     } else if ($('#major').val().trim() === '') {
-        alert('전공을 입력해 주세요');
+        fn_alert('전공을 입력해 주세요');
         tempValidation = false;
         $('#major').focus();
     } else if ($('#school').val().trim() === '') {
-        alert('학교명을 입력해 주세요');
+        fn_alert('학교명을 입력해 주세요');
         tempValidation = false;
         $('#school').focus();
     } else if ($('#job').val().trim() === '') {
-        alert('직업을 선택해 주세요');
+        fn_alert('직업을 선택해 주세요');
         tempValidation = false;
         $('#job').focus();
     } else if ($('#asset_range').val().trim() === '') {
-        alert('자산구간을 선택해 주세요');
+        fn_alert('자산구간을 선택해 주세요');
         tempValidation = false;
         $('#asset_range').focus();
     } else if ($('#income_range').val().trim() === '') {
-        alert('소득구간을 선택해 주세요');
+        fn_alert('소득구간을 선택해 주세요');
         tempValidation = false;
         $('#income_range').focus();
     }
@@ -437,13 +437,13 @@ const signUpdate = (postData) => {
                         }
                     });
                 } else {
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 }
                 return false;
             },
             error: function (data, status, err) {
                 console.log(err);
-                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
             },
         });
     }
@@ -592,7 +592,7 @@ const editPhotoListner = () => {
         if (main_photo_input.files.length > 0) {
             const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i;
             if (!allowedExtensions.exec(main_photo_input.files[0].name)) {
-                alert('이미지 파일만 업로드할 수 있습니다.');
+                fn_alert('이미지 파일만 업로드할 수 있습니다.');
                 // 입력한 파일을 초기화하여 업로드를 취소
                 this.value = '';
             } else {
@@ -644,7 +644,7 @@ const editPhotoListner = () => {
                             imageElement.style.height = '74px';
                             // 이미지를 이미지 컨테이너에 추가
                             imgRegist.appendChild(imageElement);
-                            alert('사진 사이즈가 너무 큽니다. \n다른 사진을 첨부해 주세요.');
+                            fn_alert('사진 사이즈가 너무 큽니다. \n다른 사진을 첨부해 주세요.');
                         }
                     })
                     .catch((error) => {
@@ -679,7 +679,7 @@ const editPhotoListListner = () => {
             for (let i = 0; i < profile_photo_input.files.length; i++) {
                 const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i;
                 if (!allowedExtensions.exec(profile_photo_input.files[i].name)) {
-                    alert('이미지 파일만 업로드할 수 있습니다.');
+                    fn_alert('이미지 파일만 업로드할 수 있습니다.');
                     // 입력한 파일을 초기화하여 업로드를 취소
                     this.value = '';
                 } else {
@@ -743,7 +743,7 @@ const editPhotoListListner = () => {
             for (let i = 0; i < profile_mov_input.files.length; i++) {
                 const allowedExtensions = /(\.mp4|\.avi|\.mov|\.mkv|\.flv|\.wmv|\.webm)$/i;
                 if (!allowedExtensions.exec(profile_mov_input.files[i].name)) {
-                    alert('이미지 파일만 업로드할 수 있습니다.');
+                    fn_alert('이미지 파일만 업로드할 수 있습니다.');
                     // 입력한 파일을 초기화하여 업로드를 취소
                     this.value = '';
                 } else {
@@ -870,13 +870,13 @@ const fileUpload = (file) => {
                         // console.log('result : ', res)
                         resolve(res.data);
                     } else {
-                        alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                         reject('오류가 발생하였습니다. \n다시 시도해 주세요.');
                     }
                 },
                 error: function (res, status, err) {
                     console.log(err);
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                     reject('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
@@ -930,34 +930,34 @@ const submitFile = () => {
     if (agree1.checked) {
         $('.layerPopup').css('display', 'none');
     } else {
-        alert('항목에 동의해 주세요');
+        fn_alert('항목에 동의해 주세요');
         return false;
     }
 };
 
 const meetingSave = (postData) => {
     if ($('#group_photo').val().trim() === '') {
-        alert('대표사진을 선택해 주세요.');
+        fn_alert('대표사진을 선택해 주세요.');
         $('#group_photo').focus();
         return;
     }
     if ($('#category').val().trim() === '') {
-        alert('카테고리를 선택해 주세요.');
+        fn_alert('카테고리를 선택해 주세요.');
         $('#category').focus();
         return;
     }
     if ($('#datepicker').val().trim() === '') {
-        alert('모집기간 시작일을 입력해 주세요.');
+        fn_alert('모집기간 시작일을 입력해 주세요.');
         $('#datepicker').focus();
         return;
     }
     if ($('#datepicker1').val().trim() === '') {
-        alert('모집기간 종료일을 입력해 주세요.');
+        fn_alert('모집기간 종료일을 입력해 주세요.');
         $('#datepicker1').focus();
         return;
     }
     if ($('#datepicker2').val().trim() === '') {
-        alert('모임일자를 입력해 주세요.');
+        fn_alert('모임일자를 입력해 주세요.');
         $('#datepicker2').focus();
         return;
     }
@@ -967,42 +967,42 @@ const meetingSave = (postData) => {
     //     return;
     // }
     if ($('#number_of_people').val().trim() === '') {
-        alert('모집 인원을 입력해 주세요.');
+        fn_alert('모집 인원을 입력해 주세요.');
         $('#number_of_people').focus();
         return;
     }
     if ($('#group_min_age').val().trim() === '') {
-        alert('최소 나이를 입력해 주세요.');
+        fn_alert('최소 나이를 입력해 주세요.');
         $('#group_min_age').focus();
         return;
     }
     if ($('#group_max_age').val().trim() === '') {
-        alert('최대 나이를 입력해 주세요.');
+        fn_alert('최대 나이를 입력해 주세요.');
         $('#group_max_age').focus();
         return;
     }
     if ($('#matching_rate').val().trim() === '') {
-        alert('매칭률을 입력해 주세요.');
+        fn_alert('매칭률을 입력해 주세요.');
         $('#matching_rate').focus();
         return;
     }
     if ($('#title').val().trim() === '') {
-        alert('제목을 입력해 주세요.');
+        fn_alert('제목을 입력해 주세요.');
         $('#title').focus();
         return;
     }
     if ($('#content').val().trim() === '') {
-        alert('내용을 입력해 주세요.');
+        fn_alert('내용을 입력해 주세요.');
         $('#content').focus();
         return;
     }
     if ($('#meeting_place').val().trim() === '') {
-        alert('모임장소를 입력해 주세요.');
+        fn_alert('모임장소를 입력해 주세요.');
         $('#meeting_place').focus();
         return;
     }
     if ($('#membership_fee').val().trim() === '') {
-        alert('회비를 입력해 주세요.');
+        fn_alert('회비를 입력해 주세요.');
         $('#membership_fee').focus();
         return;
     }
@@ -1039,13 +1039,13 @@ const meetingSave = (postData) => {
                     }
                 });
             } else {
-                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
             }
             return false;
         },
         error: function (data, status, err) {
             console.log(err);
-            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
         },
     });
 
@@ -1106,7 +1106,7 @@ const meetingFiltering = (category, searchText, filterOption) => {
         },
         error: function (xhr, status, err) {
             console.log(err);
-            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
         },
     });
 };
@@ -1168,7 +1168,7 @@ const MymeetingFiltering = (filterOption) => {
         },
         error: function (xhr, status, err) {
             console.log(err);
-            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
         },
     });
 };
@@ -1215,19 +1215,19 @@ const alianceCertIdentify = () => {
     // form.submit();
     let tempValidation = false;
     if ($('#input_ali_name').val().trim() === '') {
-        alert('이름을 입력해 주세요');
+        fn_alert('이름을 입력해 주세요');
         tempValidation = false;
         $('#input_ali_name').focus();
     } else if ($('#input_ali_mobile_no').val().trim() === '') {
-        alert('전화번호를 입력해 주세요');
+        fn_alert('전화번호를 입력해 주세요');
         tempValidation = false;
         $('#input_ali_mobile_no').focus();
     } else if ($('#input_ali_company_name').val().trim() === '') {
-        alert('업체명을 입력해 주세요.');
+        fn_alert('업체명을 입력해 주세요.');
         tempValidation = false;
         $('#input_ali_company_name').focus();
     } else if ($('#input_gender').val().trim() === '') {
-        alert('성별을 선택해 주세요');
+        fn_alert('성별을 선택해 주세요');
         tempValidation = false;
         $('#input_gender').focus();
     }
@@ -1253,7 +1253,7 @@ const alianceCertIdentify = () => {
     //     return false
     // },
     // error: function (data, status, err) {
-    //     alert('there was an error while fetching events!')
+    //     fn_alert('there was an error while fetching events!')
     //     console.log(err)
     // },
     // })
@@ -1273,108 +1273,108 @@ const allianceUp = () => {
 
     // let tempValidation = false;
     // if($('#alliance_ceo_num').val().trim().length ===0){
-    //     alert('사업자등록번호를 입력해 주세요.');
+    //     fn_alert('사업자등록번호를 입력해 주세요.');
     //     tempValidation = false;
     //     $('#alliance_ceo_num').focus();
     //     $('.loading').hide();
     //     $('.loading_bg').hide();
     // }else if($('#alliance_ceonum_file').val().length ===0){
-    //     alert('사업자등록증 첨부파일을 등록해주세요.');
+    //     fn_alert('사업자등록증 첨부파일을 등록해주세요.');
     //     tempValidation = false;
     //     $('#alliance_ceonum_file').focus();
     //     $('.loading').hide();
     //     $('.loading_bg').hide();
     // }else if($('#alliance_category').val().trim() ==='00'){
-    //     alert('제휴 유형을 선택해 주세요.');
+    //     fn_alert('제휴 유형을 선택해 주세요.');
     //     tempValidation = false;
     //     $('#alliance_category').focus();
     //     $('.loading').hide();
     //     $('.loading_bg').hide();
     // } else if ($('#alliance_number').val().trim() === '') {
-    //     alert('업체연락처를 입력해 주세요');
+    //     fn_alert('업체연락처를 입력해 주세요');
     //     tempValidation = false;
     //     $('#alliance_number').focus();
     //     $('.loading').hide();
     //     $('.loading_bg').hide();
     // } else if ($('#alliance_email').val().trim() === '') {
-    //     alert('이메일을 입력해 주세요');
+    //     fn_alert('이메일을 입력해 주세요');
     //     tempValidation = false;
     //     $('#alliance_email').focus();
     //     $('.loading').hide();
     //     $('.loading_bg').hide();
     // } else if ($('#alliance_name').val().trim() === '') {
-    //     alert('업체명을 입력해 주세요');
+    //     fn_alert('업체명을 입력해 주세요');
     //     tempValidation = false;
     //     $('#alliance_name').focus();
     //     $('.loading').hide();
     //     $('.loading_bg').hide();
     // } else if ($('#alliance_ceoname').val().trim() === '') {
-    //     alert('대표명을 입력해 주세요');
+    //     fn_alert('대표명을 입력해 주세요');
     //     tempValidation = false;
     //     $('#alliance_ceoname').focus();
     //     $('.loading').hide();
     //     $('.loading_bg').hide();
     // } else if ($('#alliance_address1').val().trim() === '') {
-    //     alert('주소를 입력해 주세요');
+    //     fn_alert('주소를 입력해 주세요');
     //     tempValidation = false;
     //     $('#alliance_address1').focus();
     //     $('.loading').hide();
     //     $('.loading_bg').hide();
     // } else if ($('#alliance_address2').val().trim() === '') {
-    //     alert('상세주소를 입력해 주세요');
+    //     fn_alert('상세주소를 입력해 주세요');
     //     tempValidation = false;
     //     $('#alliance_address2').focus();
     //     $('.loading').hide();
     // } else if ($('#alliance_bizday').val().trim() === '') {
-    //     alert('영업요일을 선택 해주세요.');
+    //     fn_alert('영업요일을 선택 해주세요.');
     //     tempValidation = false;
     //     $('#biz_day').focus();
     //     $('.loading').hide();
     //     $('.loading_bg').hide();
     // } else if ($('#alliance_ceonumber').val().trim() === '') {
-    //     alert('대표 연락처를 입력해 주세요');
+    //     fn_alert('대표 연락처를 입력해 주세요');
     //     tempValidation = false;
     //     $('#alliance_alliance_ceonumberaddress2').focus();
     //     $('.loading').hide();
     //     $('.loading_bg').hide();
     // } else if ($('#alliance_biztime1').val().trim() === '') {
-    //     alert('영업 시작 시간을 선택해 주세요');
+    //     fn_alert('영업 시작 시간을 선택해 주세요');
     //     tempValidation = false;
     //     $('#alliance_biztime1').focus();
     //     $('.loading').hide();
     //     $('.loading_bg').hide();
     // } else if ($('#alliance_biztime2').val().trim() === '') {
-    //     alert('영업 종료 시간을 선택해 주세요');
+    //     fn_alert('영업 종료 시간을 선택해 주세요');
     //     tempValidation = false;
     //     $('#alliance_biztime2').focus();
     //     $('.loading').hide();
     //     $('.loading_bg').hide();
     // } else if ($('#alliance_pay').val().trim() === '') {
-    //     alert('인당 예약 금액을 정해주세요');
+    //     fn_alert('인당 예약 금액을 정해주세요');
     //     tempValidation = false;
     //     $('#alliance_pay').focus();
     //     $('.loading').hide();
     //     $('.loading_bg').hide();
     // } else if($('#alliance_photo').val().trim() === ''){
-    //     alert('메인 사진을 등록 해주세요.');
+    //     fn_alert('메인 사진을 등록 해주세요.');
     //     tempValidation = false;
     //     $('#alliance_photo').focus();
     //     $('.loading').hide();
     //     $('.loading_bg').hide();
     // } else if(filesArray.length === 0){
-    //     alert('상세 사진을 등록 해주세요.');
+    //     fn_alert('상세 사진을 등록 해주세요.');
     //     tempValidation = false;
     //     $('#alliance_photo_detail').focus();
     //     $('.loading').hide();
     //     $('.loading_bg').hide();
     // } else if ($('#alliance_cont').val().trim() === '') {
-    //     alert('상세내용을 선택해 주세요');
+    //     fn_alert('상세내용을 선택해 주세요');
     //     tempValidation = false;
     //     $('#alliance_cont').focus();
     //     $('.loading').hide();
     //     $('.loading_bg').hide();
     // }else if($('#agree01').is(':checked') ==false){
-    //     alert('동의 체크 해주세요.');
+    //     fn_alert('동의 체크 해주세요.');
     //     tempValidation = false;
     //     $('#agree01').focus();
     //     $('.loading').hide();
@@ -1434,7 +1434,7 @@ const allianceUp = () => {
                     console.log(err);
                     $('.loading').hide();
                     $('.loading_bg').hide();
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
         }, 2000);
@@ -1493,18 +1493,18 @@ const allianceFiltering = (category, searchText, filterOption) => {
         },
         error: function (xhr, status, err) {
             console.log(err);
-            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
         },
     });
 };
 
 const allianceSave = () => {
     if ($('.alliance_reserv_time.on').length === 0) {
-        alert('회차를 선택해 주세요.');
+        fn_alert('회차를 선택해 주세요.');
         return;
     }
     if ($('#quantity').val().trim() === '0') {
-        alert('인원을 선택해 주세요..');
+        fn_alert('인원을 선택해 주세요..');
         $('#quantity').focus();
         return;
     }
@@ -1523,7 +1523,7 @@ const allianceSave = () => {
     //     },
     //     error: function (xhr, status, err) {
     //         console.log(err);
-    //         alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+    //         fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
     //     },
     // });
 };
@@ -1550,7 +1550,7 @@ const alliancePaymentChk = () => {
                 } else if (data.status === 'error') {
                     window.location.href = '/mo/alliance/alert/0';
                 } else {
-                    alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                 }
                 $('.loading').hide();
                 $('.loading_bg').hide();
@@ -1560,8 +1560,34 @@ const alliancePaymentChk = () => {
                 console.log(err);
                 $('.loading').hide();
                 $('.loading_bg').hide();
-                alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
             },
         });
     }, 2000);
 };
+/*공통알림창 */
+function fn_alert(msg){
+    var html = '';            
+
+    html += '<div class="layerPopup alert middle">';
+    html += '<div class="layerPopup_wrap">';
+    html += '<div class="layerPopup_content msmall">';
+    html += '<p class="txt">알림</p>';
+    html += '<div class="apply_group">';
+    html += '<p>' + msg + '</p>';
+    html += '</div>';
+    html += '<div class="layerPopup_bottom">';
+    html += '<div class="btn_group">';
+    html += '<button class="btn type01" onclick="alertClose();">확인</button>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+
+    $('body').append(html);
+}
+
+function alertClose() {
+    $('.alert').hide();
+}

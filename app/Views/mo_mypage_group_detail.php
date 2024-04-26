@@ -69,7 +69,7 @@
                     </div>
                     <div class="group_detail_map">
                         <h2><?= lang('Korean.meetingPlace') ?></h2>
-                        <div id="map" style="width:335px;height:175px;margin-top: 20px;"></div>
+                        <div id="map" style="width:100%;height:175px;margin-top: 20px;"></div>
                     </div>
                 </div>
             </div>

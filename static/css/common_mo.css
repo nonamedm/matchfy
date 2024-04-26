@@ -94,12 +94,12 @@ header .menu_right.edit {
 .mo_wrap {
     height: 100%;
 }
-
 .mo_wrap .wrap {
-    max-width: 375px;
+    max-width: 968px;
     margin: 0 auto;
     min-height: 100%;
 }
+
 .mo_wrap .main_wrap:after {
     content: '';
     position: absolute;
@@ -129,6 +129,8 @@ header .menu_right.edit {
 .mo_wrap .sub_wrap {
     position: relative;
     height: 784px;
+    width: 331px;
+    margin:0 auto;
 }
 
 .mo_wrap .sub_wrap .content_wrap {
@@ -137,6 +139,9 @@ header .menu_right.edit {
 
 .mo_wrap .sub_wrap .content_wrap {
     padding: 20px;
+    /*myfeed width 추가*/
+    width: 331px;
+    margin: 0 auto;
 }
 .mo_wrap .sub_wrap .content_wrap.center_wrap {
     position: relative;
@@ -186,6 +191,8 @@ header .menu_right.edit {
     text-align: center;
 }
 .mo_wrap .sub_wrap .content_wrap .content_partner {
+    width: 315px;
+    margin:0 auto;
     display: flex;
     justify-content: space-between;
 }
@@ -238,6 +245,7 @@ header .menu_right.edit {
     width: 50%;
     padding: 15px 0px;
     text-align: center;
+    font-size: 17px;
 }
 .tab_wrap ul li a {
     font-weight: 600;
@@ -265,7 +273,8 @@ header .menu_right.edit {
 }
 .content_feed_list .profile_btn {
     position: absolute;
-    right: 20px;
+    /* right: 20px; */
+    right: 0px;
 }
 .content_mypage_list li {
     cursor: pointer;
@@ -301,7 +310,11 @@ header .menu_right.edit {
 
 /* alliance*/
 .alliance_banner {
+    width: 100%;
     margin-bottom: 20px;
+}
+.alliance_banner img{
+    width: 100%;
 }
 .region_list {
     display: flex;
@@ -332,6 +345,7 @@ header .menu_right.edit {
 }
 .alliance_detail_cont {
     margin: 30px 0;
+    font-size: 15px;
 }
 
 .alliance_detail_cont h2 {
@@ -836,7 +850,7 @@ td {
 }
 
 .ended_overlay {
-    position: absolute;
+    /* position: absolute;
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -844,7 +858,22 @@ td {
     background-color: rgba(0, 0, 0, 0.6);
     padding: 10px;
     border-radius: 5px;
+    z-index: 2; */
+
+    position: absolute;
+    top: 36%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* padding: 10px; */
+    border-radius: 8px;
     z-index: 2;
+    width: 100px;
+    height: 100px;
+    font-size: 15px;
+    text-align: center;
+    line-height: 100px;
 }
 
 .mygroup_list a,
@@ -869,8 +898,10 @@ a.ended:hover .ended_overlay {
 
 /* group detail*/
 .group_deatil_img img {
-    width: 335px;
+    /* width: 335px; */
+    width: 100%;
     height: 248px;
+    object-fit: cover;
 }
 .group_detail_header {
     display: flex;
@@ -918,7 +949,8 @@ a.ended:hover .ended_overlay {
     line-height: 20px;
 }
 .group_detail_location {
-    width: 335px;
+    /* width: 335px; */
+    width: 100%;
     min-height: 90px;
     border: 1px solid #dddddd;
     border-radius: 5px;
@@ -1018,16 +1050,18 @@ a:active {
     width: 162px;
     height: 162px;
     border-radius: 10px;
+    object-fit: cover;
 }
 .group_list_item .group_location {
     margin-top: 8px;
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 18px;
 }
 .group_list_item .group_location img {
     width: 16px;
     height: 16px;
+    object-fit: cover;
 }
 .group_particpnt {
     margin-top: 6px;
@@ -1153,7 +1187,7 @@ a:active {
     color: #555555;
     text-indent: -10px;
     padding-left: 10px;
-    width: 250px;
+    width: 100%;
 }
 .amount_pay .amount_pay_left h2 {
     font-weight: 700;
@@ -1190,7 +1224,8 @@ a:active {
     margin: 5px 0;
 }
 .content_wrap .mypage_wallet.charge .charge_select1 {
-    width: 331px;
+    /* width: 331px; */
+    width: 100%;
     height: 60px;
     background: rgba(255, 2, 103, 0.05);
     border: 2px solid #ff0267;
@@ -1206,7 +1241,8 @@ a:active {
     margin: 20 0px;
 }
 .content_wrap .mypage_wallet.charge .charge_select2 {
-    width: 331px;
+    /* width: 331px; */
+    width: 100%;
     height: 60px;
     border: 2px solid #dddddd;
     background: '#ffffff';
@@ -1467,7 +1503,7 @@ a:active {
     background: #ffffff;
     border: 1px solid #dddddd;
     border-radius: 10px;
-    width: 315px;
+    /* width: 315px; */
     height: 92px;
     margin: 10px 0;
     padding: 15px 0 15px 20px;
@@ -1560,7 +1596,7 @@ a:active {
     display: flex;
 }
 .line_banner {
-    width: 307px;
+    width: 97%;
     height: 17px;
     background: #ff0267;
     border-radius: 10px;
@@ -1759,7 +1795,17 @@ a:active {
     display: flex;
     flex-direction: column;
     width: 335px;
-    margin: 0 auto;
+    /* width: 776px; */
+    /* margin: 0 auto; */
+}
+.form_row.signin_form .signin_form_div .height_cm {
+    width: 70px;
+    margin-left: 20px;
+    font-family: 'Pretendard-SemiBold';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 0;
 }
 .form_row.signin_form .signin_form_div.flex {
     justify-content: space-between;
@@ -1905,6 +1951,16 @@ a:active {
     border-radius: 10px;
     background: url('/static/images/input_img_plus.png') no-repeat center;
 }
+.feed_close_button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: url('/static/images/alliance_cancel.png');
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    margin: 24px;
+}
 .profile_photo_view {
     width: 235px;
     display: flex;
@@ -1951,6 +2007,7 @@ a:active {
     height: 100px;
     border-radius: 10px;
     border: 1px solid #dddddd;
+    object-fit: cover;
 }
 .layerPopup_content .form_row.signin_form .profile_photo_input {
     width: 90px;
@@ -2097,16 +2154,14 @@ form input[type='file'] {
     width: 120px;
 }
 .agree_cont .textarea {
-    width: 305px;
+    width: 96%;
     height: 110px;
     border: 1px solid #dddddd;
     border-radius: 10px;
     font-size: 12px;
     line-height: 14px;
-
     color: #777777;
     padding: 15px;
-
     overflow-y: scroll;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE, Edge */
@@ -2183,7 +2238,10 @@ form input[type='file'] {
     /* padding: 10px; */
 }
 .btn_group.multy {
-    display: contents;
+    /* display: contents; */
+    display: flex;
+    margin: 0 auto;
+    width: 315px;
 }
 .btn_group.multy .btn {
     width: 163px;
@@ -2527,7 +2585,8 @@ input[type='number']::-webkit-inner-spin-button {
 .commerce_banner {
     position: absolute;
     bottom: 0px;
-    width: 375px;
+    /* width: 375px; */
+    width: 100%;
     height: 80px;
     background-color: #d9d9d9;
     font-weight: 300;
@@ -2561,6 +2620,7 @@ input[type='number']::-webkit-inner-spin-button {
     margin-bottom: 10px;
     margin-right: 10px;
     cursor: pointer;
+    object-fit: cover;
 }
 .content_wrap .myfeed_list video {
     width: 98px;
@@ -2570,6 +2630,7 @@ input[type='number']::-webkit-inner-spin-button {
     margin-bottom: 10px;
     margin-right: 10px;
     cursor: pointer;
+    object-fit: cover;
 }
 .content_wrap .content_mypage .profile_img {
     width: 60px;
@@ -2577,6 +2638,7 @@ input[type='number']::-webkit-inner-spin-button {
     border-radius: 50%;
 }
 .content_wrap .content_mypage {
+    position: relative;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -2616,14 +2678,18 @@ input[type='number']::-webkit-inner-spin-button {
 
 /* feed list */
 .feed_img_box img {
-    width: 335px;
+    /* width: 335px; */
+    width: 100%;
     height: 335px;
     border-radius: 3px;
+    object-fit: cover;
 }
 .feed_img_box video {
-    width: 335px;
+    /* width: 335px; */
+    width: 100%;
     height: 335px;
     border-radius: 3px;
+    object-fit: cover;
 }
 .sns_img_filter {
     width: 335px;
@@ -2724,6 +2790,18 @@ input[type='number']::-webkit-inner-spin-button {
     background: url(/static/images/ico_close_20x20.png) no-repeat center / 20px;
     outline: none;
     z-index: 2;
+}
+.mo_wrap .layerPopup .btn_popup_close {
+    position: relative;
+    right: 0px;
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+    text-indent: -999rem;
+    background: url(/static/images/ico_close_20x20.png) no-repeat center / 20px;
+    outline: none;
+    z-index: 2;
+    cursor: pointer;
 }
 .mo_wrap .layerPopup.bottom .layerPopup_content {
     display: flex;
@@ -2862,11 +2940,13 @@ input[type='number']::-webkit-inner-spin-button {
     width: 295px;
     height: 295px;
     margin: 20px;
+    object-fit: cover;
 }
 .mo_wrap .layerPopup.alert .layerPopup_content .regist_file.myfeed_file_posted video {
     width: 295px;
     height: 295px;
     margin: 20px;
+    object-fit: cover;
 }
 .mo_wrap .layerPopup.alert .layerPopup_content .regist_file input[type='file'] {
     position: absolute;
@@ -2941,6 +3021,11 @@ input[type='number']::-webkit-inner-spin-button {
 .layerPopup_content .chat_member .chat_member_profile img {
     width: 40px;
     height: 40px;
+    border-radius: 50%;
+}
+.layerPopup_content .chat_member .chat_member_profile .group_master {
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
 }
 .layerPopup_content .chat_member .chat_member_profile p {
@@ -3418,7 +3503,8 @@ input[type='number']::-webkit-inner-spin-button {
 
 .layerPopup_content .myfeed_detail img {
     width: 295px;
-    height: 295px;
+    height: auto;
+    /* height: 295px; */
 }
 .layerPopup_content .myfeed_detail video {
     width: 295px;
@@ -3539,7 +3625,11 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 /*alliance apply*/
-.filebox {
+.input_ali_box{
+    width:95%;
+    margin:0 auto;
+}
+.filebox{
     display: flex;
 }
 .filebox .upload-name {
@@ -3554,8 +3644,103 @@ input[type='number']::-webkit-inner-spin-button {
 .alliance_detail_post div {
     margin: 4px;
 }
-
-.ui-menu.ui-widget.ui-widget-content.ui-autocomplete.ui-front {
-    max-height: 300px;
-    overflow-y: scroll;
+.temp_input_text {
+    border: 1px solid #dddddd;
+    width: 100%;
+    height: 50px;
+    background: #ffffff;
+    border-radius: 15px;
+    font-size: 15px;
+    color: #999999;
+    margin: 10px;
+    padding: 10px;
 }
+.invite_img{
+    width:335px;
+    margin:0 auto;
+}
+
+@media (max-width: 767px) {
+    .mo_wrap .wrap {
+      max-width: 375px;
+      margin: 0 auto;
+      min-height: 100%;
+    }
+    .form_row.signin_form .signin_form_div {
+        display: flex;
+        flex-direction: column;
+        width: 335px;
+        margin: 0 auto;
+    }
+    .line_banner {
+        width: 307px;
+        height: 17px;
+        background: #ff0267;
+        border-radius: 10px;
+        padding: 14px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .agree_cont .textarea {
+        width: 305px;
+        height: 110px;
+        border: 1px solid #dddddd;
+        border-radius: 10px;
+        font-size: 12px;
+        line-height: 14px;
+        color: #777777;
+        padding: 15px;
+        overflow-y: scroll;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE, Edge */
+        overflow: -moz-scrollbars-none; /* Firefox */
+    }
+    /* mygroup list*/
+    .mygroup_list {
+        margin-top: 20px;
+    }
+    .mygroup_list .apply_group_detail {
+        display: flex;
+    }
+    .mygroup_list .apply_group_detail .chk_box {
+        margin: 0;
+        top: 35px;
+    }
+    .mygroup_list .apply_group_detail img {
+        width: 100px;
+        height: 100px;
+        border-radius: 10px;
+    }
+    .mygroup_list .apply_group_detail .group_location img {
+        width: 16px;
+        height: 16px;
+    }
+    .mygroup_list .apply_group_point {
+        display: flex;
+        justify-content: space-between;
+    }
+    .btn_group.multy {
+        display: contents;
+    }
+    /*alliance apply*/
+    .temp_input_text {
+        border: 1px solid #dddddd;
+        width: 335px;
+        height: 50px;
+        background: #ffffff;
+        border-radius: 15px;
+        font-size: 15px;
+        color: #999999;
+        margin: 10px;
+        padding: 10px;
+    }
+    .pay_agree_desc p {
+        font-size: 12px;
+        line-height: 18px;
+        /* or 150% */
+        color: #555555;
+        text-indent: -10px;
+        padding-left: 10px;
+        width: 250px;
+    }
+  }

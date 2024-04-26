@@ -119,7 +119,7 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="height" class="signin_label"><?=lang('Korean.height')?></label>
-                                <input id="height" name="height" type="text" value="" placeholder="<?=lang('Korean.sinupHeightPlaceholder')?>">
+                                <input id="height" name="height" type="number" value="" placeholder="<?=lang('Korean.sinupHeightPlaceholder')?>">
                             </div>
                         </div>
 

@@ -39,7 +39,7 @@
                             </div>
                             <div class="relative-container <?= $meeting->isEnded ? 'grayscale' : '' ?>">
                                 <?php if ($meeting->isEnded) : ?>
-                                    <div class="ended_overlay"><?=lang('Korean.close')?></div>
+                                    <div class="ended_overlay"><?=lang('Korean.endclose')?></div>
                                 <?php endif; ?>
                                 <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
                                     <img src="/<?= $meeting->file_path ?><?= $meeting->file_name ?>" />

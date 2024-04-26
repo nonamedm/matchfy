@@ -86,23 +86,23 @@
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="number_of_people" class="signin_label"><?= lang('Korean.personnel') ?></label>
-                                    <input id="number_of_people" name="number_of_people" type="text" value="<?php echo $name ?>" placeholder="<?= lang('Korean.meetCon1') ?>">
+                                    <input id="number_of_people" name="number_of_people" type="number" value="<?php echo $name ?>" placeholder="<?= lang('Korean.meetCon1') ?>">
                                 </div>
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="group_age" class="signin_label"><?= lang('Korean.ageType') ?></label>
                                     <div class="multy_input">
-                                        <input id="group_min_age" type="text" name="group_min_age" value="" placeholder="<?= lang('Korean.meetCon2') ?>"><br />
+                                        <input id="group_min_age" type="number" name="group_min_age" value="" placeholder="<?= lang('Korean.meetCon2') ?>"><br />
                                         -
-                                        <input id="group_max_age" type="text" name="group_max_age" value="" placeholder="<?= lang('Korean.meetCon2') ?>"><br />
+                                        <input id="group_max_age" type="number" name="group_max_age" value="" placeholder="<?= lang('Korean.meetCon2') ?>"><br />
                                     </div>
                                 </div>
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="matching_rate" class="signin_label"><?= lang('Korean.matchingRate') ?></label>
-                                    <input id="matching_rate" type="text" name="matching_rate" value="" placeholder="매칭률을 입력하세요"><br />
+                                    <input id="matching_rate" type="number" name="matching_rate" value="" placeholder="매칭률을 입력하세요"><br />
                                     <!-- <select id="matching_rate" class="custom_select" name="matching_rate" value="">
                                     <option value=""><?= lang('Korean.selected') ?></option>
                                     <option value="01">~50%</option>
@@ -143,7 +143,7 @@
                                     <div class="input_ico_search search_meet_detail">
                                         <input id="meeting_place_detail" type="text" name="meeting_place_detail" placeholder="<?= lang('Korean.addressDetails') ?>">
                                     </div>
-                                    <div id="map" style="width:335px;height:175px;margin-top: 20px;"></div>
+                                    <div id="map" style="width:100%;height:175px;margin-top: 20px;"></div>
                                 </div>
                             </div>
                             <div class="form_row signin_form">
@@ -200,9 +200,19 @@
             setDatepicker();
             searchAddr();
             loadMyAlliance();
-
+            ageType();
         });
-
+        function ageType(){
+            $("#group_min_age, #group_max_age").on("input", function() {
+            var minAge = parseInt($("#group_min_age").val());
+            var maxAge = parseInt($("#group_max_age").val());
+            if (minAge !== "" && maxAge !== "" && minAge >= maxAge) {
+                fn_alert("최소 연령은 최대 연령보다 작아야 합니다.");
+                $(this).val("");
+                
+            }
+        });
+        }
         function loadMyAlliance() {
             $.ajax({
                 url: '/ajax/myAlliance',
@@ -338,7 +348,7 @@
             var keyword = document.getElementById('meeting_place').value;
 
             if (!keyword.replace(/^\s+|\s+$/g, '')) {
-                alert('키워드를 입력해주세요!');
+                fn_alert('키워드를 입력해주세요!');
                 return false;
             }
             const postData = {
@@ -359,7 +369,7 @@
                 },
                 error: function(data, status, err) {
                     console.log(err);
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
         }
@@ -390,11 +400,17 @@
                     ,
                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
                     ,
-                minDate: "-1Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                // minDate: "-1Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                minDate: 0 // 오늘 이전의 날짜는 선택 불가능하도록 설정
                     ,
                 maxDate: "+1y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
                     ,
                 zIndex: 9999
+                    ,
+                onSelect: function(selectedDate) {
+                    // datepicker에서 선택한 날짜를 가져와서 이를 최소 선택 가능 날짜로 설정
+                    $("#datepicker1").datepicker("option", "minDate", selectedDate);
+                }
             });
 
             //초기값을 오늘 날짜로 설정
@@ -423,11 +439,12 @@
                     ,
                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
                     ,
-                minDate: "-1Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                minDate: "+1D" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
                     ,
                 maxDate: "+1y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
                     ,
                 zIndex: 9999
+                
             });
 
             //초기값을 오늘 날짜로 설정
@@ -456,11 +473,13 @@
                     ,
                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
                     ,
-                minDate: "-1Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                // minDate: "-1Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+                minDate: 0 // 오늘 이전의 날짜는 선택 불가능하도록 설정
                     ,
                 maxDate: "+1y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
                     ,
                 zIndex: 9999
+                    
             });
 
             //초기값을 오늘 날짜로 설정

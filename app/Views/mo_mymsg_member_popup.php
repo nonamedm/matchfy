@@ -1,7 +1,7 @@
 <div class="layerPopup alert middle member" style="display:none;">
     <div class="layerPopup_wrap">
         <div class="layerPopup_header">
-            <a onclick="closePopup()">X</a>
+            <a href="#" class="btn_popup_close" onclick="closePopup();" style="float: right;">닫기</a>
         </div>
         <div class="layerPopup_content medium">
             <p class="member_title txt"><?= lang('Korean.groupTalkMember') ?></p>
@@ -57,13 +57,13 @@
                     } else if (data.status === 'error') {
                         console.log('실패', data);
                     } else {
-                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                     }
                     return false;
                 },
                 error: function(data, status, err) {
                     console.log(err);
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
         }

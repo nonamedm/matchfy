@@ -11,19 +11,6 @@
     <link rel="stylesheet" href="/static/css/common_mo.css">
     <script src="/static/js/basic.js"></script>
 </head>
-<style>
-    .temp_input_text {
-        border: 1px solid #dddddd;
-        width: 335px;
-        height: 50px;
-        background: #ffffff;
-        border-radius: 15px;
-        font-size: 15px;
-        color: #999999;
-        margin: 10px;
-        padding: 10px;
-    }
-</style>
 
 <body class="mo_wrap">
     <div class="wrap">

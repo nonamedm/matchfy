@@ -141,7 +141,7 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="height" class="signin_label"><?=lang('Korean.height')?></label>
-                                <input id="height" type="text" value="" placeholder="<?=lang('Korean.sinupHeightPlaceholder')?>">
+                                <input id="height" type="number" value="" placeholder="<?=lang('Korean.sinupHeightPlaceholder')?>">
                             </div>
                         </div>
 
@@ -205,7 +205,7 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div input_btn">
                                 <label for="religion" class="signin_label"><?=lang('Korean.assetGroup')?></label>
-                                <p class="profile_photo_desc"><?=lang('Korean.jobVal4')?></p>
+                                <p class="profile_photo_desc"><?=lang('Korean.premiumCon4')?></p>
                                 <div class="input_btn">
                                     <select id="religion" class="custom_select" value="">
                                         <option value=""><?=lang('Korean.selected')?></option>

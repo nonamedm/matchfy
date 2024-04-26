@@ -157,7 +157,7 @@
 
                 // 동의 확인
                 if (!$('#agree01').is(':checked')) {
-                    alert('구매 조건 확인 및 결제 진행에 동의해 주세요.');
+                    fn_alert('구매 조건 확인 및 결제 진행에 동의해 주세요.');
                     return false;
                 }
 
@@ -166,7 +166,7 @@
                 var alliancePay = <?=$alliancePay?>;
 
                 if (alliancePay > points) {
-                    alert('보유포인트가 부족합니다.');
+                    fn_alert('보유포인트가 부족합니다.');
                     return false;
                 }
 

@@ -149,6 +149,7 @@ input[type='checkbox'] + label:hover {
     height: 300px;
     border-radius: 20px;
     margin-right: 20px;
+    object-fit: cover;
 }
 .content_no_img.login_main .ai_group_card .group_particpnt {
     margin-top: 6px;
@@ -692,6 +693,7 @@ header .menu_item {
     .content_no_img.login_main .ai_group_card img {
         width: 210px;
         height: 158px;
+        object-fit: cover;
     }
     .content_no_img.login_main .ai_mat_card img {
         width: 150px;

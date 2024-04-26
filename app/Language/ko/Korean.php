@@ -5,7 +5,7 @@ return [
     // common
     'edit'               => '편집',
     'editclose'          => '편집종료',
-    'close'              => '종료',
+    'endclose'              => '종료',
     'delete'             => '삭제',
     'all'                => '전체',
     'woman'              => '여성',

@@ -305,13 +305,13 @@
                         } else if (data.status === 'error') {
                             console.log('실패', data);
                         } else {
-                            alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                            fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                         }
                         return false;
                     },
                     error: function(data, status, err) {
                         console.log(err);
-                        alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                     },
                 });
             } else {
@@ -322,27 +322,27 @@
         const saveFactorInfo = () => {
             let tempValidation = false;
             if ($('#first_factor').val().trim() === '') {
-                alert('1순위 항목을 선택해주세요');
+                fn_alert('1순위 항목을 선택해주세요');
                 tempValidation = false;
                 $('#first_factor').focus();
             } else if ($('#second_factor').val().trim() === '') {
-                alert('2순위 항목을 선택해주세요');
+                fn_alert('2순위 항목을 선택해주세요');
                 tempValidation = false;
                 $('#second_factor').focus();
             } else if ($('#except1').val().trim() === '') {
-                alert('배제1 항목을 선택해 주세요');
+                fn_alert('배제1 항목을 선택해 주세요');
                 tempValidation = false;
                 $('#except1').focus();
             } else if ($('#except1_detail').val().trim() === '') {
-                alert('배제1 상세항목을 선택해 주세요');
+                fn_alert('배제1 상세항목을 선택해 주세요');
                 tempValidation = false;
                 $('#except1_detail').focus();
             } else if ($('#except2').val().trim() === '') {
-                alert('배제2 항목을 선택해 주세요');
+                fn_alert('배제2 항목을 선택해 주세요');
                 tempValidation = false;
                 $('#except2').focus();
             } else if ($('#except2_detail').val().trim() === '') {
-                alert('배제2 상세항목을 선택해 주세요');
+                fn_alert('배제2 상세항목을 선택해 주세요');
                 tempValidation = false;
                 $('#except2_detail').focus();
             }
@@ -380,20 +380,20 @@
                                     },
                                     error: function(data, status, err) {
                                         console.log(err);
-                                        alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                                     },
                                 });
                             }
                         } else if (data.status === 'error') {
                             console.log('실패', data);
                         } else {
-                            alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                            fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                         }
                         return false;
                     },
                     error: function(data, status, err) {
                         console.log(err);
-                        alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                     },
                 });
             }
