@@ -81,8 +81,8 @@
                         <div id="profile_photo_uploaded" style="display:none;"></div>
                         <div id="profile_mov_uploaded" style="display:none;"></div>
                         <div class="btn_group multy">
-                            <button type="submit" class="btn type02" id="skipButton"><?= lang('Korean.skip') ?></button>
-                            <button type="submit" class="btn type01" id="saveButton"><?= lang('Korean.save') ?></button>
+                            <button type="button" class="btn type02" id="skipButton"><?= lang('Korean.skip') ?></button>
+                            <button type="button" class="btn type01" id="saveButton"><?= lang('Korean.save') ?></button>
                         </div>
                     </div>
                 </form>
@@ -102,26 +102,6 @@
     <script>
         $(document).ready(function() {
             editPhotoListListner();
-
-            // 버튼 클릭 이벤트 리스너 추가
-            $('#skipButton, #saveButton').click(function(e) {
-                e.preventDefault();
-                $('.layerPopup').show();
-            });
-
-            $('.layerPopup_bottom .btn').click(function() {
-                if ($(this).hasClass('type01')) {
-                    var inviteCode = $('#invite_code').val();
-                    isValidRecommendCode(inviteCode, function(isValid) {
-                        if (isValid) {
-                            $('.main_signin_form').submit();
-                        }
-                    });
-                } else {
-                    $('#invite_code').val(null);
-                    $('.main_signin_form').submit();
-                }
-            });
         });
     </script>
 

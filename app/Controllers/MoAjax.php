@@ -370,7 +370,7 @@ class MoAjax extends BaseController
                         'org_name' => 'profile_noimg.png',
                         'file_name' => 'profile_noimg.png',
                         'file_path' => 'static/images/',
-                        'ext' => $ext,
+                        'ext' => 'png',
                         'board_type' => 'main_photo',
                     ];
                     $data = array_merge($data, $data2);
