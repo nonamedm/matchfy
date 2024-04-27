@@ -611,6 +611,7 @@ class MoAjax extends BaseController
         $job = $this->request->getPost('job');
         $asset_range = $this->request->getPost('asset_range');
         $income_range = $this->request->getPost('income_range');
+        $nickname = $this->request->getPost('nickname');
 
         if (!$this->validate($rules)) {
             return $this->response->setJSON([
@@ -638,6 +639,11 @@ class MoAjax extends BaseController
                 'asset_range' => $asset_range,
                 'income_range' => $income_range
             ];
+
+            // nickname 필드가 있다면 $data 배열에 추가
+            if (!empty($nickname)) {
+                $data['nickname'] = $nickname;
+            }
 
             if ($grade === 'grade03') {
                 // 프리미엄 회원에만 해당하는 추가 정보

@@ -400,6 +400,13 @@ const signUpdate = (postData) => {
     ) {
         tempValidation = true;
     }
+
+    if ($('#nickname').length > 0 && $('#nickname').val().trim() === '') {
+        fn_alert('닉네임을 입력해 주세요');
+        $('#nickname').focus();
+        tempValidation = false;
+    }
+
     if (tempValidation) {
         var postData = new FormData(document.querySelector('form'));
         $.ajax({
@@ -413,10 +420,15 @@ const signUpdate = (postData) => {
                 console.log(data);
                 if (data.status === 'success') {
                     // 성공
-                    var gradeText = data.data.grade === 'grade02' ? '정회원' : '프리미엄회원';
-                    localStorage.setItem('gradeText', gradeText);
+                    const path = window.location.pathname;
 
-                    moveToUrl('/mo/signinSuccess');
+                    if (path.includes('/mo/updatePremium') || path.includes('/mo/updateRegular')) {
+                        moveToUrl('/mo/mypage');
+                    } else {
+                        var gradeText = data.data.grade === 'grade02' ? '정회원' : '프리미엄회원';
+                        localStorage.setItem('gradeText', gradeText);
+                        moveToUrl('/mo/signinSuccess');
+                    }
                     // submitForm();
                 } else if (data.status === 'error') {
                     // 한번만 출력되게 함

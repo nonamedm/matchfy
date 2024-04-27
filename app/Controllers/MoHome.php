@@ -160,8 +160,10 @@ class MoHome extends BaseController
 
         $MemberModel = new MemberModel();
         $user = $MemberModel
-                    ->where('ci', $ci)
-                    ->first();
+            ->select('members.*, member_files.*')
+            ->join('member_files', 'members.ci = member_files.member_ci AND member_files.board_type = \'main_photo\' AND member_files.delete_yn = \'n\'', 'left')
+            ->where('members.ci', $ci)
+            ->first();
 
         print_r($user);
         return view('mo_signin_regular_update', $user);
@@ -186,6 +188,21 @@ class MoHome extends BaseController
         }
 
         return view('mo_signin_premium', $postData);
+    }
+    public function updatePremium(): string
+    {
+        $session = session();
+        $ci = $session->get('ci');
+
+        $MemberModel = new MemberModel();
+        $user = $MemberModel
+            ->select('members.*, member_files.*')
+            ->join('member_files', 'members.ci = member_files.member_ci AND member_files.board_type = \'main_photo\' AND member_files.delete_yn = \'n\'', 'left')
+            ->where('members.ci', $ci)
+            ->first();
+
+        print_r($user);
+        return view('mo_signin_premium_update', $user);
     }
     public function signinPopup(): string
     {
@@ -311,6 +328,7 @@ class MoHome extends BaseController
             'birthday' => substr($user['birthday'], 0, 4),
             'city' => $user['city'],
             'mbti' => $user['mbti'],
+            'grade'=> $user['grade'],
             'image' => $imageInfo
         ];
 

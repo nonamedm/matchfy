@@ -46,6 +46,12 @@
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
+                                <label for="nickname" class="signin_label"><?=lang('Korean.nickname')?></label>
+                                <input id="nickname" name="nickname" type="text" value="<?= $nickname ?>" placeholder="<?=lang('Korean.sinupNickPlaceholder')?>">
+                            </div>
+                        </div>
+                        <div class="form_row signin_form">
+                            <div class="signin_form_div">
                                 <label for="marital" class="signin_label"><?=lang('Korean.marryTrueFalse')?></label>
                                 <select id="marital" name="marital" class="custom_select">
                                     <option value=""><?=lang('Korean.selected')?></option>
@@ -71,10 +77,10 @@
                                 <label for="drinking" class="signin_label"><?=lang('Korean.drinkingType')?></label>
                                 <select id="drinking" name="drinking" class="custom_select" value="">
                                     <option value=""><?=lang('Korean.selected')?></option>
-                                    <option value="1" <?= $drinking === '0' ? 'selected' : '' ?>><?=lang('Korean.notAtAll')?></option>
-                                    <option value="2" <?= $drinking === '1' ? 'selected' : '' ?>><?=lang('Korean.week12')?></option>
-                                    <option value="3" <?= $drinking === '2' ? 'selected' : '' ?>><?=lang('Korean.week35')?></option>
-                                    <option value="4" <?= $drinking === '3' ? 'selected' : '' ?>><?=lang('Korean.week5')?></option>
+                                    <option value="0" <?= $drinking === '0' ? 'selected' : '' ?>><?=lang('Korean.notAtAll')?></option>
+                                    <option value="1" <?= $drinking === '1' ? 'selected' : '' ?>><?=lang('Korean.week12')?></option>
+                                    <option value="2" <?= $drinking === '2' ? 'selected' : '' ?>><?=lang('Korean.week35')?></option>
+                                    <option value="3" <?= $drinking === '3' ? 'selected' : '' ?>><?=lang('Korean.week5')?></option>
                                 </select>
                             </div>
                         </div>
@@ -232,7 +238,7 @@
                         <input type="hidden" name="grade" value="<?php echo $grade ?>" />
                         <div id="main_photo_uploaded" style="display:none;"></div>
                         <div class="btn_group">
-                            <button type="button" class="btn type01" onclick="signUpdate()"><?=lang('Korean.join')?></button>
+                            <button type="button" class="btn type01" onclick="signUpdate()"><?=lang('Korean.updateprofile')?></button>
                         </div>
                     </div>
                 </form>
