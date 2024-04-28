@@ -124,7 +124,10 @@
 
     }
     const submitScdl = () => {
-        if (confirm('약속을 전송하시겠습니까?')) {
+        fn_confirm('약속을 전송하시겠습니까?','submitScdl')
+    }
+    function fn_submitScdl(value){
+        if (value) {
             var scdl_type = $('input[name="scdl_type"]:checked').val();
             var scdl_date = $('#scdl_date').val() + " " + $('#scdl_hour').val() + ":" + $('#scdl_min').val();
             console.log(scdl_date)
@@ -156,11 +159,15 @@
                     fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
-
+    
         }
+
     }
     const partScdl = () => {
-        if (confirm('모임에 참석하시겠습니까?')) {
+        fn_confirm('모임에 참석하시겠습니까?','partScdl')
+    }
+    function fn_partScdl(value){
+        if (value) {
             $.ajax({
                 url: '/ajax/partScdl',
                 type: 'POST',
@@ -192,7 +199,8 @@
                     fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
-
+    
         }
+
     }
 </script>

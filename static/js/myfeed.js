@@ -140,8 +140,11 @@ const myfeedPhotoListner = () => {
 };
 
 const myFeedDelete = () => {
+    fn_confirm('피드를 삭제하시겠습니까?','myfeeddel');
+};
+function fn_myFeedDelete(value){
     const feed_idx = $('#feed_idx').val();
-    if (confirm('피드를 삭제하시겠습니까?')) {
+    if (value) {
         $.ajax({
             url: '/ajax/myFeedDelete',
             type: 'POST',
@@ -164,7 +167,7 @@ const myFeedDelete = () => {
             },
         });
     }
-};
+}
 
 const myFeedModify = () => {
     const feed_idx = $('#feed_idx').val();

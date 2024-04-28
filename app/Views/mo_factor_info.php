@@ -376,26 +376,29 @@
                         console.log(data);
                         if (data.status === 'success') { // 성공                        
                             console.log('저장', data);
-                            if (confirm('파트너 정보저장 성공! \n홈으로 이동합니다.')) {
-                                $.ajax({
-                                    url: '/ajax/calcMatchRate', // todo : 추후 로그인완료로 이동
-                                    type: 'POST',
-                                    async: false,
-                                    success: function(data) {
-                                        moveToUrl('/');
-                                    },
-                                    error: function(data, status, err) {
-                                        console.log(err);
-                                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-                                    },
-                                });
-                            }
+                            fn_confirm('파트너 정보저장 성공! \n홈으로 이동합니다.','calcMatchRate')
                         } else if (data.status === 'error') {
                             console.log('실패', data);
                         } else {
                             fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                         }
                         return false;
+                    },
+                    error: function(data, status, err) {
+                        console.log(err);
+                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    },
+                });
+            }
+        }
+        function fn_calcMatchRate(value){
+            if (value) {
+                $.ajax({
+                    url: '/ajax/calcMatchRate', // todo : 추후 로그인완료로 이동
+                    type: 'POST',
+                    async: false,
+                    success: function(data) {
+                        moveToUrl('/');
                     },
                     error: function(data, status, err) {
                         console.log(err);

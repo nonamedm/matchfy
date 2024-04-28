@@ -311,7 +311,10 @@
         }
 
         const extRm = () => {
-            if (confirm('채팅방에서 나가시겠습니까? \n대화내용은 저장되지 않습니다.')) {
+            fn_confirm('채팅방에서 나가시겠습니까? \n대화내용은 저장되지 않습니다.','extRm');
+        }
+        function fn_extRm(value){
+            if (value) {
                 $.ajax({
                     url: '/ajax/extRm',
                     type: 'POST',
@@ -338,7 +341,6 @@
                 });
             }
         }
-
         const scrollToBottom = () => {
             $("#chat_wrap").scrollTop($("#chat_wrap")[0].scrollHeight);
         }

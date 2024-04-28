@@ -162,15 +162,18 @@ const userLogin = () => {
     });
 };
 const userLogout = () => {
-    if (confirm('로그아웃 하시겠습니까?')) {
+    fn_confirm('로그아웃 하시겠습니까?','logout')
+};
+function fn_userLogout(value){
+    if(value){
         $.ajax({
             url: '/ajax/logout',
             type: 'POST',
             async: false,
             success: function (data) {
                 console.log(data);
-                fn_alert('로그아웃 되었습니다.');
-                moveToUrl('/');
+                fn_alert('로그아웃 되었습니다.','/');
+                // moveToUrl('/');
             },
             error: function (data, status, err) {
                 console.log(err);
@@ -178,7 +181,25 @@ const userLogout = () => {
             },
         });
     }
-};
+}
+// const userLogout = () => {
+//     if (confirm('로그아웃 하시겠습니까?')) {
+//         $.ajax({
+//             url: '/ajax/logout',
+//             type: 'POST',
+//             async: false,
+//             success: function (data) {
+//                 console.log(data);
+//                 fn_alert('로그아웃 되었습니다.','/');
+//                 // moveToUrl('/');
+//             },
+//             error: function (data, status, err) {
+//                 console.log(err);
+//                 fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+//             },
+//         });
+//     }
+// };
 
 const submitForm = () => {
     document.querySelector('form').submit();
@@ -1624,7 +1645,7 @@ const alliancePaymentChk = () => {
     }, 2000);
 };
 /*공통알림창 */
-function fn_alert(msg) {
+function fn_alert(msg,loc) {
     var html = '';
 
     html += '<div class="layerPopup alert middle">';
@@ -1636,7 +1657,50 @@ function fn_alert(msg) {
     html += '</div>';
     html += '<div class="layerPopup_bottom">';
     html += '<div class="btn_group">';
-    html += '<button class="btn type01" onclick="alertClose();">확인</button>';
+    if (loc) {
+        html += '<button class="btn type01" onclick="moveToUrl(\'' + loc + '\')">확인</button>';
+    } else {
+        html += '<button class="btn type01" onclick="alertClose()">확인</button>';
+    }
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+
+    $('body').append(html);
+}
+
+function fn_confirm(msg,loc) {
+    var html = '';
+    var value;
+    html += '<div class="layerPopup alert middle">';
+    html += '<div class="layerPopup_wrap">';
+    html += '<div class="layerPopup_content msmall">';
+    html += '<p class="txt">알림</p>';
+    html += '<div class="apply_group">';
+    html += '<p>' + msg + '</p>';
+    html += '</div>';
+    html += '<div class="layerPopup_bottom">';
+    html += '<div class="btn_group multy">';
+    if(loc=='logout'){
+        html += '<button class="btn type01" onclick="fn_userLogout(\'true\')">확인</button>';
+    }else if(loc=='myfeeddel'){
+        html += '<button class="btn type01" onclick="fn_myFeedDelete(\'true\')">확인</button>';
+    }else if(loc=='banusr'){
+        html += '<button class="btn type01" onclick="fn_banUsr(\'true\')">확인</button>';
+    }else if(loc=='extRm'){
+        html += '<button class="btn type01" onclick="fn_extRm(\'true\')">확인</button>';
+    }else if(loc=='submitScdl'){
+        html += '<button class="btn type01" onclick="fn_submitScdl(\'true\')">확인</button>';
+    }else if(loc=='partScdl'){
+        html += '<button class="btn type01" onclick="fn_partScdl(\'true\')">확인</button>';
+    }else if(loc=='calcMatchRate'){
+        html += '<button class="btn type01" onclick="fn_calcMatchRate(\'true\')">확인</button>';
+    }else if(loc=='sndRpt'){
+        html += '<button class="btn type01" onclick="fn_sndRpt(\'true\')">확인</button>';
+    }
+    html += '<button class="btn type02" onclick="alertClose()">취소</button>';
     html += '</div>';
     html += '</div>';
     html += '</div>';

@@ -40,7 +40,10 @@
 
     });
     const banUsr = (num) => {
-        if (confirm('강퇴하시겠습니까?')) {
+        fn_confirm('강퇴하시겠습니까?','banusr')
+    }
+    function fn_banUsr(value){
+        if (value) {
             $.ajax({
                 url: '/ajax/banUsr',
                 type: 'POST',

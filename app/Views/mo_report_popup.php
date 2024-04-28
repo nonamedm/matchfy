@@ -54,7 +54,44 @@
             fn_alert('상세 내용을 입력해 주세요');
             return false;
         }
-        if (confirm('후기를 전송하시겠습니까?')) {
+        fn_confirm('후기를 전송하시겠습니까?','sndRpt')
+        // if (confirm('후기를 전송하시겠습니까?')) {
+        //     $.ajax({
+        //         url: '/ajax/sndRpt',
+        //         type: 'POST',
+        //         data: {
+        //             "room_ci": $("#room_ci").val(),
+        //             "num": num,
+        //             "rptctgr": rptctgr,
+        //             "rpttxt": rpttxt
+        //         },
+        //         async: false,
+        //         success: function(data) {
+        //             console.log(data);
+        //             if (data.status === 'success') {
+        //                 // 성공
+        //                 // moveToUrl('/');
+        //                 fn_alert('후기가 전송되었습니다!');
+        //                 closePopup();
+        //                 $("#report_category").val("");
+        //                 $("#report_text").val("");
+        //                 $("#report_target").val("");
+        //             } else if (data.status === 'error') {
+        //                 console.log('실패', data);
+        //             } else {
+        //                 fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+        //             }
+        //             return false;
+        //         },
+        //         error: function(data, status, err) {
+        //             console.log(err);
+        //             fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        //         },
+        //     });
+        // }
+    }
+    function fn_sndRpt(value){
+        if (value) {
             $.ajax({
                 url: '/ajax/sndRpt',
                 type: 'POST',
