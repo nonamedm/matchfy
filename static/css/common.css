@@ -113,7 +113,7 @@ input[type='checkbox'] + label:hover {
 .content_no_img.login_main {
     display: block;
     /* padding: 130px 320px; */
-    width: 968px;
+    /* width: 968px; */
     margin: 0 auto;
 }
 
@@ -635,6 +635,7 @@ header .menu_item {
         padding: 20px 100px;
     }
     .content_no_img.login_main {
+        width: 968px;
         height: 100%;
     }
     .content_chat_img {
@@ -740,6 +741,7 @@ header .menu_item {
     }
     .content_no_img.login_main {
         padding: 10px 20px;
+        width: auto;
     }
     .content_no_img {
         display: flex;
@@ -789,5 +791,6 @@ header .menu_item {
     }
     .footer {
         padding: 30px 15px;
+        width: auto;
     }
 }

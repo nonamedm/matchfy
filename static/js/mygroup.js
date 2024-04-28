@@ -17,7 +17,45 @@ function MyGoupCheckbox() {
         }
     });
 }
-
+var mbtiTypes = {
+    "0": "ENFP",
+    "1": "ENFJ",
+    "2": "ENTP",
+    "3": "ENTJ",
+    "4": "ESFP",
+    "5": "ESFJ",
+    "6": "ESTP",
+    "7": "ESTJ",
+    "8": "INFP",
+    "9": "INFJ",
+    "10": "INTP",
+    "11": "INTJ",
+    "12": "ISFP",
+    "13": "ISFJ",
+    "14": "ISTP",
+    "15": "ISTJ",
+    "null":"없음",
+    "NULL":"없음"
+};
+var cityTypes={
+    "11":"서울특별시",
+    "26":"부산광역시",
+    "27":"대구광역시",
+    "28":"인천광역시",
+    "29":"광주광역시",
+    "30":"대전광역시",
+    "31":"울산광역시",
+    "36":"세종특별자치시",
+    "41":"경기도",
+    "42":"강원도",
+    "43":"충청북도", 
+    "44":"충청남도", 
+    "45":"전라북도", 
+    "46":"전라남도", 
+    "47":"경상북도", 
+    "48":"경상남도", 
+    "50":"제주특별자치도"
+}
 /*참석멤버 리스트*/
 function meetingMemberList(idx) {
     $.ajax({
@@ -52,7 +90,7 @@ function meetingMemberList(idx) {
                     }
                     html += '</div>';
                     html += '<div class="group_member_detail">';
-                    html += data[0].birthday.slice(2, 4) + ' · ' + data[i].city + ' · ' + data[i].mbti;
+                    html += data[0].birthday.slice(2, 4) + ' · ' + cityTypes[data[i].city] + ' · ' + mbtiTypes[data[i].mbti];
                     html += '</div>';
                     html += '</div>';
                 }

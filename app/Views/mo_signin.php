@@ -29,7 +29,7 @@
             <div class="content_wrap">
                 <form class="main_signin_form" method="post" action="/mo/signinPhoto" enctype="multipart/form-data">
                     <div class="content_body">
-                        <a id="profileArea" onclick="editPhoto()">
+                        <a id="profileArea" class="profile_area" onclick="editPhoto()">
                             <img src="/static/images/profile_noimg.png" />
                         </a>
                     </div>

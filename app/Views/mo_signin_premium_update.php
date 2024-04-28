@@ -25,7 +25,7 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="content_body">
-                    <a id="profileArea" onclick="editPhoto()">
+                    <a id="profileArea" class="profile_area" onclick="editPhoto()">
                         <?php
                         if ($file_path)
                         {
