@@ -603,9 +603,11 @@ header .menu_item {
     right: 10px;
 }
 
-.content_no_img.login_main {
-    width: 968px;
-    height: 100%;
+@media (min-width: 1780px) {
+    .content_no_img.login_main {
+        width: 968px;
+        height: 100%;
+    }
 }
 @media (max-width: 1780px) {
     .circle_h {
@@ -637,6 +639,10 @@ header .menu_item {
     }
     .content_chat_img {
         padding: 20px 100px;
+    }
+    .content_no_img.login_main {
+        width: 968px;
+        height: 100%;
     }
     .content_chat_img {
         height: 100%;
