@@ -304,7 +304,7 @@ input[type='checkbox'] + label:hover {
     line-height: 60px;
     color: #000000;
 }
-.slide_btn img{
+.slide_btn img {
     width: 10px;
 }
 
@@ -590,9 +590,9 @@ input[type='checkbox'] + label:hover {
 .login_btn.mypage_icon {
     display: flex;
 }
-header{
+header {
     width: 968px;
-    margin:0 auto;
+    margin: 0 auto;
 }
 header ul {
     text-align: center !important;
@@ -603,6 +603,10 @@ header .menu_item {
     right: 10px;
 }
 
+.content_no_img.login_main {
+    width: 968px;
+    height: 100%;
+}
 @media (max-width: 1780px) {
     .circle_h {
         justify-content: center;
@@ -634,14 +638,10 @@ header .menu_item {
     .content_chat_img {
         padding: 20px 100px;
     }
-    .content_no_img.login_main {
-        width: 968px;
-        height: 100%;
-    }
     .content_chat_img {
         height: 100%;
     }
-    .footer{
+    .footer {
         /* width: 100%; */
         padding: 20px 100px;
     }
@@ -684,7 +684,7 @@ header .menu_item {
     .login_btn {
         display: none;
     }
-    header{
+    header {
         width: 100%;
     }
     /* .login_btn.mypage_icon {
