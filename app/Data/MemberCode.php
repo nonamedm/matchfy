@@ -158,6 +158,35 @@ $genderCode = array(
     array("id" => "1", "name" => "남성", "value" => "1"),
 );
 
+$sibling = array(
+    array("id" => "0", "name" => "외동", "value" => "0"),
+    array("id" => "1", "name" => "1남1녀", "value" => "1"),
+    array("id" => "2", "name" => "2남1녀", "value" => "2"),
+    array("id" => "3", "name" => "1남2녀", "value" => "3"),
+    array("id" => "4", "name" => "2남2녀", "value" => "4"),
+    array("id" => "5", "name" => "기타", "value" => "5"),
+);
+
+$residence_first = array(
+    array("id" => "0", "name" => "아파트", "value" => "0"),
+    array("id" => "1", "name" => "단독주택", "value" => "1"),
+    array("id" => "2", "name" => "주상복합", "value" => "2"),
+    array("id" => "3", "name" => "오피스텔", "value" => "3"),
+    array("id" => "4", "name" => "다가구주택", "value" => "4"),
+    array("id" => "5", "name" => "기타", "value" => "5"),
+);
+$regidence_second = array(
+    array("id" => "0", "name" => "자가", "value" => "0"),
+    array("id" => "1", "name" => "전세", "value" => "1"),
+    array("id" => "2", "name" => "월세", "value" => "2"),
+    array("id" => "3", "name" => "기타", "value" => "3"),
+);
+$regidence_third = array(
+    array("id" => "0", "name" => "소유주 부", "value" => "0"),
+    array("id" => "1", "name" => "소유주 모", "value" => "1"),
+    array("id" => "2", "name" => "소유주 본인", "value" => "2"),
+    array("id" => "3", "name" => "소유주 기타", "value" => "3"),
+);
 
 $json = json_encode($array);
 // echo $json;

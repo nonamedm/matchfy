@@ -204,31 +204,44 @@
                             <hr class="hoz_part" />
                             <li class="profile_body">
                                 <div class="profile_content">
-                                    <h2><?= lang('Korean.father') ?></h2>
+                                    <h2 style="width: 10%;"><?= lang('Korean.father') ?></h2>
                                     <p>
-                                        <?= $father_birth_year ?><?= lang('Korean.year') ?> /
-                                        <?= $father_job ?>
+                                        <?= $father_birth_year ?><?= lang('Korean.year') ?> <br />
+                                        <?php foreach ($jobCode as $item) {
+                                            if ($item['id'] === $father_job) echo $item['name'];
+                                        } ?>
+
                                     </p>
                                 </div>
                                 <div class="profile_content">
-                                    <h2><?= lang('Korean.mather') ?></h2>
+                                    <h2 style="width: 15%;"><?= lang('Korean.mather') ?></h2>
                                     <p>
-                                        <?= $mother_birth_year ?><?= lang('Korean.year') ?> /
-                                        <?= $mother_job ?>
+                                        <?= $mother_birth_year ?><?= lang('Korean.year') ?> <br />
+                                        <?php foreach ($jobCode as $item) {
+                                            if ($item['id'] === $mother_job) echo $item['name'];
+                                        } ?>
                                     </p>
                                 </div>
                                 <div class="profile_content">
                                     <h2><?= lang('Korean.sibling') ?></h2>
                                     <p>
-                                        <?= $siblings ?>
+                                        <?php foreach ($sibling as $item) {
+                                            if ($item['id'] === $siblings) echo $item['name'];
+                                        } ?>
                                     </p>
                                 </div>
                                 <div class="profile_content">
                                     <h2><?= lang('Korean.ResidenceType') ?></h2>
                                     <p>
-                                        <?= $residence1 ?>/
-                                        <?= $residence2 ?>(
-                                        <?= $residence3 ?>)
+                                        <?php foreach ($residence_first as $item) {
+                                            if ($item['id'] === $residence1) echo $item['name'];
+                                        } ?> /
+                                        <?php foreach ($regidence_second as $item) {
+                                            if ($item['id'] === $residence2) echo $item['name'];
+                                        } ?>(
+                                        <?php foreach ($regidence_third as $item) {
+                                            if ($item['id'] === $residence3) echo $item['name'];
+                                        } ?>)
                                     </p>
                                 </div>
                             </li>

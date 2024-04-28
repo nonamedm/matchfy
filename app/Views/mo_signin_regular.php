@@ -22,6 +22,10 @@
 
         <?php $title = "정회원 프로필";
         include 'header.php'; ?>
+        <?php
+        $word_file_path = APPPATH . 'Data/MemberCode.php';
+        require($word_file_path);
+        ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
@@ -142,11 +146,21 @@
                                 <label for="personal_style" class="signin_label"><?= lang('Korean.styleType') ?></label>
                                 <select id="personal_style" name="personal_style" class="custom_select" value="">
                                     <option value=""><?= lang('Korean.selected') ?></option>
-                                    <option value="0"><?= lang('Korean.strength') ?></option>
-                                    <option value="1"><?= lang('Korean.dandy') ?></option>
-                                    <option value="2"><?= lang('Korean.nerd') ?></option>
-                                    <option value="3"><?= lang('Korean.Free') ?></option>
-                                    <option value="4"><?= lang('Korean.AndSoExtra') ?></option>
+                                    <?php
+                                    if ($gender === "0") {
+                                        foreach ($femaleStyle as $item) {
+                                    ?>
+                                            <option value="<?= $item['value'] ?>"><?= $item['name'] ?></option>
+                                        <?php
+                                        }
+                                    } else {
+                                        foreach ($maleStyle as $item) {
+                                        ?>
+                                            <option value="<?= $item['value'] ?>"><?= $item['name'] ?></option>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>
