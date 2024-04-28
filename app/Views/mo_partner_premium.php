@@ -15,7 +15,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: block;"></mobileheader>
+        <mobileheader style="height:44px; display: none;"></mobileheader>
 
         <?php $title = "내 상대"; include 'header.php'; ?>
 
@@ -221,7 +221,9 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div input_btn">
                                 <label for="religion" class="signin_label"><?=lang('Korean.incomeGroup')?></label>
-                                <p class="profile_photo_desc"><?=lang('Korean.premiumCon4')?> <a href="#"> [<?=lang('Korean.government24')?> →]</a></p>
+                                <p class="profile_photo_desc"><?=lang('Korean.premiumCon4')?> 
+                                    <!-- <a href="#"> [<?=lang('Korean.government24')?> →]</a> -->
+                                </p>
 
                                 <div class="input_btn">
                                     <select id="religion" class="custom_select" value="">

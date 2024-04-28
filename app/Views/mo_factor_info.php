@@ -16,7 +16,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: block;"></mobileheader>
+        <mobileheader style="height:44px; display: none;"></mobileheader>
 
         <?php $title = "내 상대";
         include 'header.php'; ?>
@@ -318,6 +318,14 @@
                 $("#" + e.id + "_detail").html('');
                 $("#" + e.id + "_detail").append('<option><?=lang('Korean.noSelected')?></option>');
             }
+        }
+        const test = () => {
+            $('#except1_detail').change(function(){
+                var selectedOption = $(this).find('option:selected');
+                var originalText = selectedOption.text();
+                var trimmedText = originalText.length > 7 ? originalText.slice(0, 7) + '...' : originalText;
+                selectedOption.text(trimmedText); // 선택된 옵션의 텍스트만 변경
+            });
         }
         const saveFactorInfo = () => {
             let tempValidation = false;

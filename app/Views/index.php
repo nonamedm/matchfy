@@ -21,6 +21,8 @@
         }
 
         header {
+            position: relative;
+            margin: 0 auto;
             background-color: rgba(247, 248, 249, 1);
             padding: .4rem 0 0;
         }
@@ -50,6 +52,7 @@
         @media (max-width: 629px) {
             header ul {
                 padding: 0;
+                width: 100%;
             }
 
             header .menu-toggle {
@@ -484,9 +487,12 @@
                     </h2>
                     <div class="main_title_btn">
                         <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.all')?>보기</button>
-                        <button class="category01_left disabled" onclick="clickLeft('category01')">
-                            < </button>
-                                <button class="category01_right" onclick="clickRight('category01')">></button>
+                        <button class="category01_left slide_btn disabled" onclick="clickLeft('category01')">
+                            <img src="/static/images/slide_left.png"/>
+                        </button>
+                        <button class="category01_right slide_btn" onclick="clickRight('category01')">
+                            <img src="/static/images/slide_right.png"/>
+                        </button>
                     </div>
                 </div>
                 <div class="login_main_list category01">
@@ -510,9 +516,12 @@
                     </h2>
                     <div class="main_title_btn">
                         <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.all')?>보기</button>
-                        <button class="category02_left disabled" onclick="clickLeft('category02')">
-                            < </button>
-                                <button class="category02_right" onclick="clickRight('category02')">></button>
+                        <button class="category02_left slide_btn disabled" onclick="clickLeft('category02')">
+                            <img src="/static/images/slide_left.png"/>
+                        </button>
+                        <button class="category02_right slide_btn" onclick="clickRight('category02')">
+                            <img src="/static/images/slide_right.png"/>
+                        </button>
                     </div>
                 </div>
                 <div class="login_main_list category02">
@@ -541,9 +550,12 @@
                     </h2>
                     <div class="main_title_btn">
                         <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.all')?>보기</button>
-                        <button class="category03_left disabled" onclick="clickLeft('category03')">
-                            < </button>
-                                <button class="category03_right" onclick="clickRight('category03')">></button>
+                        <button class="category03_left slide_btn disabled" onclick="clickLeft('category03')">
+                            <img src="/static/images/slide_left.png"/>
+                        </button>
+                        <button class="category03_right slide_btn" onclick="clickRight('category03')">
+                            <img src="/static/images/slide_right.png"/>
+                        </button>
                     </div>
                 </div>
                 <div class="login_main_list category03">
@@ -567,9 +579,12 @@
                     </h2>
                     <div class="main_title_btn">
                         <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.all')?>보기</button>
-                        <button class="category04_left disabled" onclick="clickLeft('category04')">
-                            < </button>
-                                <button class="category04_right" onclick="clickRight('category04')">></button>
+                        <button class="category04_left slide_btn disabled" onclick="clickLeft('category04')">
+                            <img src="/static/images/slide_left.png"/>
+                        </button>
+                        <button class="category04_right slide_btn" onclick="clickRight('category04')">
+                            <img src="/static/images/slide_right.png"/>
+                        </button>
                     </div>
                 </div>
                 <div class="login_main_list category04">

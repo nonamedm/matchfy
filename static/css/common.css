@@ -96,12 +96,14 @@ input[type='checkbox'] + label:hover {
 }
 .content_banner_top {
     height: 540px;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .content_banner_top img {
-    width: 1280px;
+    /* width: 1280px; */
+    width: 968px;
 }
 
 .content_chat_img {
@@ -110,7 +112,9 @@ input[type='checkbox'] + label:hover {
 }
 .content_no_img.login_main {
     display: block;
-    padding: 130px 320px;
+    /* padding: 130px 320px; */
+    width: 968px;
+    margin: 0 auto;
 }
 
 .content_no_img.login_main .login_main_title {
@@ -299,6 +303,9 @@ input[type='checkbox'] + label:hover {
     font-size: 50px;
     line-height: 60px;
     color: #000000;
+}
+.slide_btn img{
+    width: 10px;
 }
 
 .chat_div {
@@ -507,6 +514,10 @@ input[type='checkbox'] + label:hover {
 
 .footer {
     padding: 60px 320px;
+    width: 943px;
+    margin: 0 auto;
+    padding: 25px 25px;
+    /* padding:20px 100px; */
     background-color: #111111;
 }
 .footer_logo {
@@ -579,6 +590,10 @@ input[type='checkbox'] + label:hover {
 .login_btn.mypage_icon {
     display: flex;
 }
+header{
+    width: 968px;
+    margin:0 auto;
+}
 header ul {
     text-align: center !important;
 }
@@ -625,6 +640,10 @@ header .menu_item {
     .content_chat_img {
         height: 100%;
     }
+    .footer{
+        /* width: 100%; */
+        padding: 20px 100px;
+    }
 }
 
 @media (min-width: 1281px) {
@@ -663,6 +682,9 @@ header .menu_item {
 @media (max-width: 968px) {
     .login_btn {
         display: none;
+    }
+    header{
+        width: 100%;
     }
     /* .login_btn.mypage_icon {
         display: flex;

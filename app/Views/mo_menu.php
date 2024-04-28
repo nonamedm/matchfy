@@ -16,7 +16,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: block;"></mobileheader>
+        <mobileheader style="height:44px; display: none;"></mobileheader>
 
         <?php $title = "<?=lang('Korean.all')?> 메뉴";
         include 'header.php'; ?>

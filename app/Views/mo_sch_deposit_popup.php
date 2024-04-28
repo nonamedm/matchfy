@@ -97,9 +97,9 @@
                                     uploadedFiles.push(fileInfo);
 
                                     // 삭제 버튼 생성
-                                    const deleteButton = document.createElement('button');
-                                    deleteButton.textContent = 'X';
-                                    deleteButton.classList.add('posted_delete_button');
+                                    const deleteButton = document.createElement('span');
+                                    // deleteButton.textContent = 'X';
+                                    deleteButton.classList.add('feed_close_button');
                                     // 삭제 버튼에 클릭 이벤트 추가
                                     deleteButton.addEventListener('click', function() {
                                         // 이미지 요소 제거

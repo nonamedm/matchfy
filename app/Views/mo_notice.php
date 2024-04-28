@@ -17,7 +17,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: block;"></mobileheader>
+        <mobileheader style="height:44px; display: none;"></mobileheader>
         
         <?php $title = "공지사항"; include 'header.php'; ?>
 

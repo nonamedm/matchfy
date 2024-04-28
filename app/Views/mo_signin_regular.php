@@ -18,7 +18,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: block;"></mobileheader>
+        <mobileheader style="height:44px; display: none;"></mobileheader>
 
         <?php $title = "정회원 프로필";
         include 'header.php'; ?>
@@ -30,9 +30,9 @@
                         <a id="profileArea" onclick="editPhoto()">
                             <?php
                             if ($file_path) {
-                                echo '<img src="/' . $file_path . $file_name . '" style="border-radius: 50%; width: 74px; height: 74px;" />';
+                                echo '<img src="/' . $file_path . $file_name . '" style="border-radius: 50%; width: 74px; height: 74px;object-fit: cover;" />';
                             } else {
-                                echo '<img src="/static/images/profile_noimg.png" style="border-radius: 50%; width: 74px; height: 74px;" />';
+                                echo '<img src="/static/images/profile_noimg.png" style="border-radius: 50%; width: 74px; height: 74px;object-fit: cover;" />';
                             }
                             ?>
 

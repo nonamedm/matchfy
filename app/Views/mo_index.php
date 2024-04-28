@@ -15,13 +15,13 @@
 
 <body class="mo_wrap">
     <div class="wrap main_wrap">
-        <mobileheader style="height:44px; display: block;"></mobileheader>
+        <mobileheader style="height:44px; display: none;"></mobileheader>
         <!-- HEADER: MENU + HEROE SECTION -->
         <header>
 
         </header>
 
-        <div class="sub_wrap">
+        <div class="">
             <div class="login_wrap">
                 <div class="main_logo">
                     matchfy

@@ -17,7 +17,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: block;"></mobileheader>
+        <mobileheader style="height:44px; display: none;"></mobileheader>
 
         <?php $title = "내지갑"; include 'header.php'; ?>
 
@@ -55,7 +55,7 @@
                                 <option value="lowest_amount"> <?=lang('Korean.smallOrder')?></option>
                             </select>
                             <div class="mypage_wallet_period">
-                                <div class="btn_group multy">
+                                <div class="btn_group">
                                     <button class="1week point_date btn type01 on" onclick="getPointSearch('1week')"><?=lang('Korean.1week')?></button>
                                     <button class="1month point_date btn type01" onclick="getPointSearch('1month')"><?=lang('Korean.1month')?></button>
                                     <button class="3month point_date btn type01" onclick="getPointSearch('3month')"><?=lang('Korean.3month')?></button>

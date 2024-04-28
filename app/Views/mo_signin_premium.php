@@ -17,7 +17,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: block;"></mobileheader>
+        <mobileheader style="height:44px; display: none;"></mobileheader>
 
         <?php $title = "프리미엄 프로필";
         include 'header.php'; ?>
@@ -29,10 +29,10 @@
                         <?php
                         if ($file_path)
                         {
-                            echo '<img src="/' . $file_path . $file_name . '" style="border-radius: 50%; width: 74px; height: 74px;" />';
+                            echo '<img src="/' . $file_path . $file_name . '" style="border-radius: 50%; width: 74px; height: 74px;object-fit: cover;" />';
                         } else
                         {
-                            echo '<img src="/static/images/profile_noimg.png" style="border-radius: 50%; width: 74px; height: 74px;" />';
+                            echo '<img src="/static/images/profile_noimg.png" style="border-radius: 50%; width: 74px; height: 74px;object-fit: cover;" />';
                         }
                         ?>
 
@@ -231,7 +231,9 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div input_btn">
                                 <label for="income_range" class="signin_label"><?=lang('Korean.incomeGroup')?></label>
-                                <p class="profile_photo_desc"><?=lang('Korean.premiumCon5')?> <a href="#"> [<?=lang('Korean.government24')?> →]</a></p>
+                                <p class="profile_photo_desc"><?=lang('Korean.premiumCon5')?> 
+                                    <!-- <a href="#"> [<?=lang('Korean.government24')?> →]</a> -->
+                                </p>
 
                                 <div class="input_btn">
                                     <select id="income_range" name="income_range" class="custom_select" value="">

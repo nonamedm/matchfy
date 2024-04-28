@@ -1,4 +1,4 @@
-<header>
+<header class="header">
     <div class="menu">
         <ul>
             <li class="left_arrow">

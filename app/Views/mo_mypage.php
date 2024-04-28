@@ -16,7 +16,7 @@
 <body class="mo_wrap">
     <div class="wrap" style="background-color:#f9f9f9;">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: block;"></mobileheader>
+        <mobileheader style="height:44px; display: none;"></mobileheader>
 
         <?php $title = "마이페이지";
         include 'header.php'; ?>
