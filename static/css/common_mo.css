@@ -961,6 +961,9 @@ a.ended:hover .ended_overlay {
     line-height: 130%;
     color: #ffffff;
 }
+.group_detail_cont {
+    font-size: 14px;
+}
 .group_detail_cont p {
     font-size: 14px;
     line-height: 20px;
@@ -2660,6 +2663,7 @@ input[type='number']::-webkit-inner-spin-button {
     width: 60px;
     height: 60px;
     border-radius: 50%;
+    object-fit: cover;
 }
 .content_wrap .content_mypage {
     position: relative;
