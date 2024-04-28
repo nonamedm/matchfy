@@ -39,7 +39,7 @@
             </div>
             <div class="input_ali_box">
                 <input id="input_ali_name" class="temp_input_text" type="text" name="name" placeholder="<?=lang('Korean.allianceCeoName')?>" value="<?= $name ?>" />
-                <input id="input_ali_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="<?=lang('Korean.allianceCeoPhonenum')?>" value="<?= $mobile_no ?>" />
+                <input id="input_ali_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="<?=lang('Korean.allianceCeoPhonenum')?>" value="<?= $mobile_no ?>" oninput="clearInput(this);"/>
                 <input id="input_ali_company_name" class="temp_input_text" type="text" name="company" placeholder="<?=lang('Korean.allianceComName')?>" value="<?= $company ?>" />
                 <select id="input_gender" class="temp_input_text" name="gender">
                     <option><?=lang('Korean.passGender')?></option>
