@@ -39,55 +39,55 @@
                         </a>
                     </div>
                     <div class="btn_group">
-                        <button type="button" class="btn type02" onclick="editPhoto()"><?=lang('Korean.profilePhoto')?></button>
+                        <button type="button" class="btn type02" onclick="editPhoto()"><?= lang('Korean.profilePhoto') ?></button>
                         <input type="file" id="main_photo" name="main_photo" style="display:none;" accept="image/*" />
                     </div>
                     <legend></legend>
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="marital" class="signin_label"><?=lang('Korean.marryTrueFalse')?></label>
+                                <label for="marital" class="signin_label"><?= lang('Korean.marryTrueFalse') ?></label>
                                 <select id="marital" name="marital" class="custom_select" value="">
-                                    <option value=""><?=lang('Korean.selected')?></option>
-                                    <option value="0"><?=lang('Korean.single')?></option>
-                                    <option value="1"><?=lang('Korean.married')?></option>
+                                    <option value=""><?= lang('Korean.selected') ?></option>
+                                    <option value="0"><?= lang('Korean.single') ?></option>
+                                    <option value="1"><?= lang('Korean.married') ?></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="smoking" class="signin_label"><?=lang('Korean.smokeType')?></label>
+                                <label for="smoking" class="signin_label"><?= lang('Korean.smokeType') ?></label>
                                 <select id="smoking" name="smoking" class="custom_select" value="">
-                                    <option value=""><?=lang('Korean.selected')?></option>
-                                    <option value="0"><?=lang('Korean.NotAtAll')?></option>
-                                    <option value="1"><?=lang('Korean.oneday12')?></option>
-                                    <option value="2"><?=lang('Korean.oneday35')?></option>
-                                    <option value="3"><?=lang('Korean.oneday5')?></option>
+                                    <option value=""><?= lang('Korean.selected') ?></option>
+                                    <option value="0"><?= lang('Korean.NotAtAll') ?></option>
+                                    <option value="1"><?= lang('Korean.oneday12') ?></option>
+                                    <option value="2"><?= lang('Korean.oneday35') ?></option>
+                                    <option value="3"><?= lang('Korean.oneday5') ?></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="drinking" class="signin_label"><?=lang('Korean.drinkingType')?></label>
+                                <label for="drinking" class="signin_label"><?= lang('Korean.drinkingType') ?></label>
                                 <select id="drinking" name="drinking" class="custom_select" value="">
-                                    <option value=""><?=lang('Korean.selected')?></option>
-                                    <option value="1"><?=lang('Korean.notAtAll')?></option>
-                                    <option value="2"><?=lang('Korean.week12')?></option>
-                                    <option value="3"><?=lang('Korean.week35')?></option>
-                                    <option value="4"><?=lang('Korean.week5')?></option>
+                                    <option value=""><?= lang('Korean.selected') ?></option>
+                                    <option value="1"><?= lang('Korean.notAtAll') ?></option>
+                                    <option value="2"><?= lang('Korean.week12') ?></option>
+                                    <option value="3"><?= lang('Korean.week35') ?></option>
+                                    <option value="4"><?= lang('Korean.week5') ?></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="religion" class="signin_label"><?=lang('Korean.religionType')?></label>
+                                <label for="religion" class="signin_label"><?= lang('Korean.religionType') ?></label>
                                 <select id="religion" name="religion" class="custom_select" value="">
-                                    <option value=""><?=lang('Korean.selected')?></option>
-                                    <option value="0"><?=lang('Korean.atheism')?></option>
-                                    <option value="1"><?=lang('Korean.christian')?></option>
-                                    <option value="2"><?=lang('Korean.catholicism')?></option>
-                                    <option value="3"><?=lang('Korean.buddhism')?></option>
-                                    <option value="4"><?=lang('Korean.extra')?></option>
+                                    <option value=""><?= lang('Korean.selected') ?></option>
+                                    <option value="0"><?= lang('Korean.atheism') ?></option>
+                                    <option value="1"><?= lang('Korean.christian') ?></option>
+                                    <option value="2"><?= lang('Korean.catholicism') ?></option>
+                                    <option value="3"><?= lang('Korean.buddhism') ?></option>
+                                    <option value="4"><?= lang('Korean.extra') ?></option>
                                 </select>
                             </div>
                         </div>
@@ -95,7 +95,7 @@
                             <div class="signin_form_div">
                                 <label for="mbti" class="signin_label">MBTI</label>
                                 <select id="mbti" name="mbti" class="custom_select" value="">
-                                    <option value=""><?=lang('Korean.selected')?></option>
+                                    <option value=""><?= lang('Korean.selected') ?></option>
                                     <option value="0">ENFP</option>
                                     <option value="1">ENFJ</option>
                                     <option value="2">ENTP</option>
@@ -118,113 +118,113 @@
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="height" class="signin_label"><?=lang('Korean.height')?></label>
-                                <input id="height" name="height" type="number" value="" placeholder="<?=lang('Korean.sinupHeightPlaceholder')?>">
+                                <label for="height" class="signin_label"><?= lang('Korean.height') ?></label>
+                                <input id="height" name="height" type="number" value="" placeholder="<?= lang('Korean.sinupHeightPlaceholder') ?>">
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="bodyshape" class="signin_label"><?=lang('Korean.formType')?></label>
+                                <label for="bodyshape" class="signin_label"><?= lang('Korean.formType') ?></label>
                                 <select id="bodyshape" name="bodyshape" class="custom_select" value="">
-                                    <option value=""><?=lang('Korean.selected')?></option>
-                                    <option value="0"><?=lang('Korean.normal')?></option>
-                                    <option value="1"><?=lang('Korean.dry')?></option>
-                                    <option value="2"><?=lang('Korean.littleThin')?></option>
-                                    <option value="3"><?=lang('Korean.littleChubby')?></option>
-                                    <option value="4"><?=lang('Korean.chubby')?></option>
+                                    <option value=""><?= lang('Korean.selected') ?></option>
+                                    <option value="0"><?= lang('Korean.normal') ?></option>
+                                    <option value="1"><?= lang('Korean.dry') ?></option>
+                                    <option value="2"><?= lang('Korean.littleThin') ?></option>
+                                    <option value="3"><?= lang('Korean.littleChubby') ?></option>
+                                    <option value="4"><?= lang('Korean.chubby') ?></option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="personal_style" class="signin_label"><?=lang('Korean.styleType')?></label>
+                                <label for="personal_style" class="signin_label"><?= lang('Korean.styleType') ?></label>
                                 <select id="personal_style" name="personal_style" class="custom_select" value="">
-                                    <option value=""><?=lang('Korean.selected')?></option>
-                                    <option value="0"><?=lang('Korean.strength')?></option>
-                                    <option value="1"><?=lang('Korean.dandy')?></option>
-                                    <option value="2"><?=lang('Korean.nerd')?></option>
-                                    <option value="3"><?=lang('Korean.Free')?></option>
-                                    <option value="4"><?=lang('Korean.AndSoExtra')?></option>
+                                    <option value=""><?= lang('Korean.selected') ?></option>
+                                    <option value="0"><?= lang('Korean.strength') ?></option>
+                                    <option value="1"><?= lang('Korean.dandy') ?></option>
+                                    <option value="2"><?= lang('Korean.nerd') ?></option>
+                                    <option value="3"><?= lang('Korean.Free') ?></option>
+                                    <option value="4"><?= lang('Korean.AndSoExtra') ?></option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="education" class="signin_label"><?=lang('Korean.education')?></label>
+                                <label for="education" class="signin_label"><?= lang('Korean.education') ?></label>
                                 <select id="education" name="education" class="custom_select" value="">
-                                    <option value=""><?=lang('Korean.selected')?></option>
-                                    <option value="0"><?=lang('Korean.highSchoolGradu')?></option>
-                                    <option value="1"><?=lang('Korean.attendingUniversity')?></option>
-                                    <option value="2"><?=lang('Korean.universityGrad')?></option>
-                                    <option value="3"><?=lang('Korean.attendingGraduate')?></option>
-                                    <option value="4"><?=lang('Korean.GradSchoolHig')?></option>
+                                    <option value=""><?= lang('Korean.selected') ?></option>
+                                    <option value="0"><?= lang('Korean.highSchoolGradu') ?></option>
+                                    <option value="1"><?= lang('Korean.attendingUniversity') ?></option>
+                                    <option value="2"><?= lang('Korean.universityGrad') ?></option>
+                                    <option value="3"><?= lang('Korean.attendingGraduate') ?></option>
+                                    <option value="4"><?= lang('Korean.GradSchoolHig') ?></option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="major" class="signin_label"><?=lang('Korean.major')?></label>
-                                <input id="major" name="major" type="text" value="" placeholder="<?=lang('Korean.sinupMajorPlaceholder')?>">
+                                <label for="major" class="signin_label"><?= lang('Korean.major') ?></label>
+                                <input id="major" name="major" type="text" value="" placeholder="<?= lang('Korean.sinupMajorPlaceholder') ?>">
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div input_btn">
-                                <h4 class="profile_photo_label"><?=lang('Korean.schoolNname')?></h4>
-                                <p class="profile_photo_desc"><?=lang('Korean.premiumCon2')?></p>
+                                <h4 class="profile_photo_label"><?= lang('Korean.schoolNname') ?></h4>
+                                <p class="profile_photo_desc"><?= lang('Korean.premiumCon2') ?></p>
                                 <div class="input_btn">
-                                    <input id="school" name="school" type="text" value="" placeholder="<?=lang('Korean.sinupSchoolPlaceholder')?>">
-                                    <button type="button" class="btn btn_input_form" onclick="showPopupRgt('school','<?php echo $ci ?>')"><?=lang('Korean.certification')?></button>
+                                    <input id="school" name="school" type="text" value="" placeholder="<?= lang('Korean.sinupSchoolPlaceholder') ?>">
+                                    <button type="button" class="btn btn_input_form" onclick="showPopupRgt('school','<?php echo $ci ?>')"><?= lang('Korean.certification') ?></button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div input_btn">
-                                <h4 class="profile_photo_label"><?=lang('Korean.occupational')?></h4>
-                                <p class="profile_photo_desc"><?=lang('Korean.premiumCon3')?></p>
+                                <h4 class="profile_photo_label"><?= lang('Korean.occupational') ?></h4>
+                                <p class="profile_photo_desc"><?= lang('Korean.premiumCon3') ?></p>
                                 <div class="input_btn">
                                     <select id="job" name="job" class="custom_select" value="">
-                                        <option value=""><?=lang('Korean.selected')?></option>
-                                        <option value="0"><?=lang('Korean.jobVal1')?></option>
-                                        <option value="1"><?=lang('Korean.jobVal2')?></option>
-                                        <option value="2"><?=lang('Korean.jobVal3')?></option>
+                                        <option value=""><?= lang('Korean.selected') ?></option>
+                                        <option value="0"><?= lang('Korean.jobVal1') ?></option>
+                                        <option value="1"><?= lang('Korean.jobVal2') ?></option>
+                                        <option value="2"><?= lang('Korean.jobVal3') ?></option>
                                     </select>
-                                    <button type="button" class="btn btn_input_form" onclick="showPopupRgt('job','<?php echo $ci ?>')"><?=lang('Korean.certification')?></button>
+                                    <button type="button" class="btn btn_input_form" onclick="showPopupRgt('job','<?php echo $ci ?>')"><?= lang('Korean.certification') ?></button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="asset_range" class="signin_label"><?=lang('Korean.assetGroup')?></label>
+                                <label for="asset_range" class="signin_label"><?= lang('Korean.assetGroup') ?></label>
                                 <select id="asset_range" name="asset_range" class="custom_select" value="">
-                                    <option value=""><?=lang('Korean.selected')?></option>
-                                    <option value="0"><?=lang('Korean.assetRange1000')?></option>
-                                    <option value="1"><?=lang('Korean.assetRange2000')?></option>
-                                    <option value="2"><?=lang('Korean.assetRange3000')?></option>
-                                    <option value="3"><?=lang('Korean.assetRange4000')?></option>
-                                    <option value="4"><?=lang('Korean.assetRange5000')?></option>
-                                    <option value="5"><?=lang('Korean.assetRange5000Up')?></option>
+                                    <option value=""><?= lang('Korean.selected') ?></option>
+                                    <option value="0"><?= lang('Korean.assetRange1000') ?></option>
+                                    <option value="1"><?= lang('Korean.assetRange2000') ?></option>
+                                    <option value="2"><?= lang('Korean.assetRange3000') ?></option>
+                                    <option value="3"><?= lang('Korean.assetRange4000') ?></option>
+                                    <option value="4"><?= lang('Korean.assetRange5000') ?></option>
+                                    <option value="5"><?= lang('Korean.assetRange5000Up') ?></option>
                                 </select>
                             </div>
                         </div>
 
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="income_range" class="signin_label"><?=lang('Korean.incomeGroup')?></label>
+                                <label for="income_range" class="signin_label"><?= lang('Korean.incomeGroup') ?></label>
                                 <select id="income_range" name="income_range" class="custom_select" value="">
-                                    <option value=""><?=lang('Korean.selected')?></option>
-                                    <option value="0"><?=lang('Korean.assetRange1000')?></option>
-                                    <option value="1"><?=lang('Korean.assetRange2000')?></option>
-                                    <option value="2"><?=lang('Korean.assetRange3000')?></option>
-                                    <option value="3"><?=lang('Korean.assetRange4000')?></option>
-                                    <option value="4"><?=lang('Korean.assetRange5000')?></option>
-                                    <option value="5"><?=lang('Korean.assetRange5000Up')?></option>
+                                    <option value=""><?= lang('Korean.selected') ?></option>
+                                    <option value="0"><?= lang('Korean.assetRange1000') ?></option>
+                                    <option value="1"><?= lang('Korean.assetRange2000') ?></option>
+                                    <option value="2"><?= lang('Korean.assetRange3000') ?></option>
+                                    <option value="3"><?= lang('Korean.assetRange4000') ?></option>
+                                    <option value="4"><?= lang('Korean.assetRange5000') ?></option>
+                                    <option value="5"><?= lang('Korean.assetRange5000Up') ?></option>
                                 </select>
                             </div>
                         </div>
@@ -232,7 +232,7 @@
                         <input type="hidden" name="grade" value="<?php echo $grade ?>" />
                         <div id="main_photo_uploaded" style="display:none;"></div>
                         <div class="btn_group">
-                            <button type="button" class="btn type01" onclick="signUpdate()"><?=lang('Korean.join')?></button>
+                            <button type="button" class="btn type01" onclick="signUpdate()"><?= lang('Korean.join') ?></button>
                         </div>
                     </div>
                 </form>
