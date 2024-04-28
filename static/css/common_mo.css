@@ -281,7 +281,7 @@ header .menu_right.edit {
     color: #777777;
     margin: 5px 0px !important;
 }
-.profile_area img{
+.profile_area img {
     object-fit: cover;
 }
 .content_feed_list {
@@ -1673,7 +1673,7 @@ a:active {
     /* background: 
         radial-gradient(circle, rgba(255, 255, 255, 0.3) 2%, transparent 12.5%) 0 0,
         rgba(0, 0, 0, 0.5); 진한 검은색 배경 */
-    background-size: 10px 10px; 
+    background-size: 10px 10px;
     border-radius: 10px;
     z-index: 1;
 }
@@ -2960,7 +2960,7 @@ input[type='number']::-webkit-inner-spin-button {
 .mo_wrap .layerPopup.alert .layerPopup_content .regist_file {
     display: flex;
 }
-.mo_wrap .layerPopup.alert .layerPopup_content .regist_file img{
+.mo_wrap .layerPopup.alert .layerPopup_content .regist_file img {
     object-fit: cover;
 }
 .mo_wrap .layerPopup.alert .layerPopup_content .regist_file label {
@@ -3688,7 +3688,7 @@ input[type='number']::-webkit-inner-spin-button {
 }
 .temp_input_text {
     border: 1px solid #dddddd;
-    width: 335px;
+    width: 320px;
     height: 50px;
     background: #ffffff;
     border-radius: 15px;
@@ -3785,5 +3785,5 @@ input[type='number']::-webkit-inner-spin-button {
         text-indent: -10px;
         padding-left: 10px;
         width: 250px;
-}
+    }
 }

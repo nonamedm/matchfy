@@ -43,7 +43,7 @@
                 </form>
                 <img src="/static/images/main_login_hr.png" style="margin: 40px 0px 30px 0px;" />
                 <div class="btn_group">
-                    <button type="button" style="width: 301px;" class="btn type00" onclick="moveToUrl('/mo/pass')"><?= lang('Korean.mobileSignup') ?></button>
+                    <button type="button" style="width: 301px;" class="btn type00" onclick="moveToUrl('/mo/pass')"><?= lang('Korean.signup') ?></button>
                 </div>
                 <div class="btn_group">
                     <img src="/static/images/oauth/kakao_login_medium_wide.png" class="oauth_login" onclick="location.href='/auth/kakao/login'" />
