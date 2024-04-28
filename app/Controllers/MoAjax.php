@@ -1022,6 +1022,7 @@ class MoAjax extends BaseController
     public function myFeedDelete()
     {
         $MemberFeedModel = new MemberFeedModel();
+        $MemberFeedFileModel = new MemberFeedFileModel();
         $feed_idx = $this->request->getPost('feed_idx');
         $session = session();
         $member_ci = $session->get('ci');
@@ -1034,6 +1035,9 @@ class MoAjax extends BaseController
         ];
         $result = $MemberFeedModel->update($condition, $update);
         if ($result) {
+            $query = "UPDATE wh_member_feed_files SET delete_yn='y' WHERE feed_idx='" . $feed_idx . "'";
+            $updateFeedFileYn = $MemberFeedFileModel
+                ->query($query);
             return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
         } else {
             return $this->response->setJSON(['status' => 'success', 'message' => 'feed detail read', 'data' => $result]);
@@ -2100,16 +2104,17 @@ class MoAjax extends BaseController
                 $MatchRateModel = new MatchRateModel();
                 $selectParam = [
                     'member_ci' => $mydata['ci'],
-                    'my_nickname' => $mydata['nickname'],
+                    // 'my_nickname' => $mydata['nickname'], 닉네임 수정할 수 있어서 조건 삭제
                     'your_nickname' => $item['nickname'],
                 ];
                 $selected = $MatchRateModel->where($selectParam)->first();
                 if ($selected) {
                     $query = "UPDATE wh_match_rate";
                     $query .= " SET match_score = '" . $calc . "'";
+                    $query .= " , my_nickname = '" . $mydata['nickname'] . "'";
                     $query .= " , match_score_max = '" . $calcMax . "'";
                     $query .= " , match_rate = '" . number_format(($calc === 0 ? 1 : $calc) / ($calcMax === 0 ? 100 : $calcMax) * 100, 2) . "'";
-                    $query .= " WHERE my_nickname = '" . $mydata['nickname'] . "'";
+                    $query .= " WHERE member_ci = '" . $mydata['ci'] . "'";
                     $query .= " AND your_nickname = '" . $item['nickname'] . "'";
 
                     $result = $MatchRateModel

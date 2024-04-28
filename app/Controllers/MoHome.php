@@ -1528,6 +1528,7 @@ class MoHome extends BaseController
                 LEFT JOIN member_files mf on mb.ci = mf.member_ci
                 LEFT JOIN wh_member_feed_files wmff on wmf.idx = wmff.feed_idx";
         $query .= " WHERE 1=1 ";
+        $query .= " AND mf.board_type='main_photo' ";
         $query .= " AND wmf.delete_yn='n' ";
         $query .= " AND wmff.delete_yn='n' ";
         if (!empty($factorList['except1'])) //배제항목 있을 시 조건에서 배제하기
