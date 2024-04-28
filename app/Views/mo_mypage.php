@@ -35,7 +35,7 @@
                             <h2 onclick="moveToUrl('/mo/viewProfile/<?= $nickname ?>')">
                                 <?= $nickname ?><span style="font-size:15px;"> <?=lang('Korean.sir')?></span>
                             </h2>
-                            <button class="myinfo_level">Lv.10</button>
+                            <button class="myinfo_level" data-grade="<?= $grade ?>">수정</button>
                         </div>
                         <p>
                             <?= $birthday ?>
@@ -154,6 +154,18 @@
                 menuItem.classList.toggle("hidden");
             }
         }
+
+        $(document).ready(function() {
+            $('.myinfo_level').on('click', function() {
+                var grade = $(this).data('grade');
+
+                if (grade === 'grade02') {
+                    window.location.href = '/mo/updateRegular'; 
+                } else if (grade === 'grade03') {
+                    window.location.href = '/mo/updatePremium';
+                }
+            });
+        });
     </script>
 
     <!-- -->

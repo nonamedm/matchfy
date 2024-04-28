@@ -323,7 +323,7 @@
                         console.log(data);
                         if (data.status === 'success') {
                             // 성공
-                            moveToUrl('/');
+                            moveToUrl('/mo/mymsg/list');
                         } else if (data.status === 'error') {
                             console.log('실패', data);
                         } else {

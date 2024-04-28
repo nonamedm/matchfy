@@ -48,6 +48,7 @@ return [
     'smokeType'          => '흡연유무',
     'religionType'       => '종교',
     'gender'             => '성별',
+    'nickname'           => '닉네임',
     'height'             => '키',
     'education'          => '학력',
     'occupational'       => '직업',
@@ -366,6 +367,7 @@ return [
     'ownerMe'            => '소유주 본인',
     'ownerExtra'         => '소유주 기타',
     'join'               => '가입',
+    'updateprofile'      => '수정',
     'premiumCon1'        => '혼인관계증명서를 업로드해주세요',
     'premiumCon2'        => '최종학교 졸업증명서를 업로드해주세요!',
     'premiumCon3'        => '명함 혹은 재직증명서를 업로드해주세요',
@@ -374,6 +376,7 @@ return [
 
 
     //placeholder
+    'sinupNickPlaceholder'  => '닉네임 입력',
     'sinupHeightPlaceholder'  => '키 입력',
     'sinupMajorPlaceholder'   => '전공을 입력해주세요',
     'sinupSchoolPlaceholder'  => '학교를 입력해 주세요',

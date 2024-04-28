@@ -54,9 +54,9 @@
                     <div class="group_detail_cont">
                         <?= $content ?>
                         <div class="group_detail_location">
-                            <div>
+                            <!-- <div>
                                 <img src="/static/images/group_location_detail.png" />
-                            </div>
+                            </div> -->
                             <div style="padding: 10px 0 0 20px;">
                                 <div class="group_location">
                                     <img src="/static/images/ico_location_16x16.png" />

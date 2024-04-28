@@ -400,6 +400,13 @@ const signUpdate = (postData) => {
     ) {
         tempValidation = true;
     }
+
+    if ($('#nickname').length > 0 && $('#nickname').val().trim() === '') {
+        fn_alert('닉네임을 입력해 주세요');
+        $('#nickname').focus();
+        tempValidation = false;
+    }
+
     if (tempValidation) {
         var postData = new FormData(document.querySelector('form'));
         $.ajax({
@@ -413,10 +420,15 @@ const signUpdate = (postData) => {
                 console.log(data);
                 if (data.status === 'success') {
                     // 성공
-                    var gradeText = data.data.grade === 'grade02' ? '정회원' : '프리미엄회원';
-                    localStorage.setItem('gradeText', gradeText);
+                    const path = window.location.pathname;
 
-                    moveToUrl('/mo/signinSuccess');
+                    if (path.includes('/mo/updatePremium') || path.includes('/mo/updateRegular')) {
+                        moveToUrl('/mo/mypage');
+                    } else {
+                        var gradeText = data.data.grade === 'grade02' ? '정회원' : '프리미엄회원';
+                        localStorage.setItem('gradeText', gradeText);
+                        moveToUrl('/mo/signinSuccess');
+                    }
                     // submitForm();
                 } else if (data.status === 'error') {
                     // 한번만 출력되게 함
@@ -503,7 +515,6 @@ const signInType = (postData) => {
 };
 
 const upgradeGrade = (selectedGrade) => {
-    
     var url = '';
 
     switch (selectedGrade) {
@@ -526,17 +537,17 @@ const upgradeGrade = (selectedGrade) => {
     //         if (data) {
 
     $.ajax({
-        url: '/ajax/upgradeGrade', 
+        url: '/ajax/upgradeGrade',
         type: 'POST',
         data: { grade: selectedGrade },
         async: false,
-        success: function(response) {
+        success: function (response) {
             console.log('Grade submitted successfully:', response.data);
             moveToUrl(url, response.data);
         },
         error: function (data, status, err) {
-            console.log(err)
-            alert('오류가 발생하였습니다. \n다시 시도해 주세요.')
+            console.log(err);
+            alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
         },
     });
 
@@ -808,47 +819,96 @@ const editPhotoListListner = () => {
         }
     });
 
-    document.querySelector('.main_signin_form').addEventListener('submit', function (event) {
+    $('#skipButton, #saveButton').click(function (e) {
+        $('.layerPopup').show();
+    });
+    $('.layerPopup_bottom .btn').click(function () {
         event.preventDefault();
+        if ($(this).hasClass('type01')) {
+            var inviteCode = $('#invite_code').val();
+            isValidRecommendCode(inviteCode, function (isValid) {
+                if (isValid) {
+                    const formData = new FormData();
 
-        const formData = new FormData();
+                    // 기존의 input 요소의 값을 FormData에 추가
+                    const inputElements = document.querySelectorAll('.main_signin_form input');
+                    inputElements.forEach((input) => {
+                        formData.append(input.name, input.value);
+                    });
+                    uploadedFiles.forEach((file, index) => {
+                        for (const key in file) {
+                            formData.append(`uploadedFiles[${index}][${key}]`, file[key]);
+                        }
+                    });
+                    uploadedMovs.forEach((file, index) => {
+                        for (const key in file) {
+                            formData.append(`uploadedMovs[${index}][${key}]`, file[key]);
+                        }
+                    });
 
-        // 기존의 input 요소의 값을 FormData에 추가
-        const inputElements = document.querySelectorAll('.main_signin_form input');
-        inputElements.forEach((input) => {
-            formData.append(input.name, input.value);
-        });
-        uploadedFiles.forEach((file, index) => {
-            for (const key in file) {
-                formData.append(`uploadedFiles[${index}][${key}]`, file[key]);
-            }
-        });
-        uploadedMovs.forEach((file, index) => {
-            for (const key in file) {
-                formData.append(`uploadedMovs[${index}][${key}]`, file[key]);
-            }
-        });
-
-        // 수정된 FormData를 서버로 전송
-        fetch('/ajax/updtUserData', {
-            method: 'POST',
-            body: formData,
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log('Upload success', data);
-                moveToUrl('/mo/signinType', {
-                    ci: data.data.ci,
-                    mobile_no: data.data.mobile_no,
-                    file_path: $('#file_path').val(),
-                    file_name: $('#file_name').val(),
-                });
-                // 성공한 경우, 필요에 따라 리다이렉션 또는 메시지 표시 등의 작업 수행
-            })
-            .catch((error) => {
-                console.error('Upload failed', error);
-                // 실패한 경우, 오류 메시지 표시 등의 작업 수행
+                    // 수정된 FormData를 서버로 전송
+                    fetch('/ajax/updtUserData', {
+                        method: 'POST',
+                        body: formData,
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            console.log('Upload success', data);
+                            moveToUrl('/mo/signinType', {
+                                ci: data.data.ci,
+                                mobile_no: data.data.mobile_no,
+                                file_path: $('#file_path').val(),
+                                file_name: $('#file_name').val(),
+                            });
+                            // 성공한 경우, 필요에 따라 리다이렉션 또는 메시지 표시 등의 작업 수행
+                        })
+                        .catch((error) => {
+                            console.error('Upload failed', error);
+                            // 실패한 경우, 오류 메시지 표시 등의 작업 수행
+                        });
+                }
             });
+        } else {
+            $('#invite_code').val(null);
+            const formData = new FormData();
+
+            // 기존의 input 요소의 값을 FormData에 추가
+            const inputElements = document.querySelectorAll('.main_signin_form input');
+            inputElements.forEach((input) => {
+                formData.append(input.name, input.value);
+            });
+            uploadedFiles.forEach((file, index) => {
+                for (const key in file) {
+                    formData.append(`uploadedFiles[${index}][${key}]`, file[key]);
+                }
+            });
+            uploadedMovs.forEach((file, index) => {
+                for (const key in file) {
+                    formData.append(`uploadedMovs[${index}][${key}]`, file[key]);
+                }
+            });
+
+            // 수정된 FormData를 서버로 전송
+            fetch('/ajax/updtUserData', {
+                method: 'POST',
+                body: formData,
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log('Upload success', data);
+                    moveToUrl('/mo/signinType', {
+                        ci: data.data.ci,
+                        mobile_no: data.data.mobile_no,
+                        file_path: $('#file_path').val(),
+                        file_name: $('#file_name').val(),
+                    });
+                    // 성공한 경우, 필요에 따라 리다이렉션 또는 메시지 표시 등의 작업 수행
+                })
+                .catch((error) => {
+                    console.error('Upload failed', error);
+                    // 실패한 경우, 오류 메시지 표시 등의 작업 수행
+                });
+        }
     });
 };
 
@@ -1564,8 +1624,8 @@ const alliancePaymentChk = () => {
     }, 2000);
 };
 /*공통알림창 */
-function fn_alert(msg){
-    var html = '';            
+function fn_alert(msg) {
+    var html = '';
 
     html += '<div class="layerPopup alert middle">';
     html += '<div class="layerPopup_wrap">';
