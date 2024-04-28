@@ -59,7 +59,7 @@
                 <div class="btn_group multy ai_qna">
                     <button type="button" class="btn on"><?=lang('Korean.veryGood')?></button>
                     <button type="button" class="btn"><?=lang('Korean.good')?></button>
-                    <button type="button" class="btn"><?=lang('Korean.normal')?></button>
+                    <button type="button" class="btn"><?=lang('Korean.qnanormal')?></button>
                     <button type="button" class="btn"><?=lang('Korean.dontLike')?></button>
                     <button type="button" class="btn"><?=lang('Korean.verryHate')?></button>
                     <hr class="hoz_part" />

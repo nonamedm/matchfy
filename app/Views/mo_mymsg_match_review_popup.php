@@ -32,7 +32,7 @@
                     <div class="review_button">
                         <button class="review_button_on"><?=lang('Korean.veryGood2')?></button>
                         <button class="review_button_off"><?=lang('Korean.good2')?></button>
-                        <button class="review_button_off"><?=lang('Korean.normal2')?></button>
+                        <button class="review_button_off"><?=lang('Korean.qnanormal2')?></button>
                         <button class="review_button_off"><?=lang('Korean.dontLike2')?></button>
                         <button class="review_button_off"><?=lang('Korean.verryHate2')?></button>
                     </div>
