@@ -86,23 +86,23 @@
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="number_of_people" class="signin_label"><?= lang('Korean.personnel') ?></label>
-                                    <input id="number_of_people" name="number_of_people" type="number" value="<?php echo $name ?>" placeholder="<?= lang('Korean.meetCon1') ?>">
+                                    <input id="number_of_people" name="number_of_people" type="number" value="<?php echo $name ?>" placeholder="<?= lang('Korean.meetCon1') ?>" oninput="clearInput(this)">
                                 </div>
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="group_age" class="signin_label"><?= lang('Korean.ageType') ?></label>
                                     <div class="multy_input">
-                                        <input id="group_min_age" type="number" name="group_min_age" value="" placeholder="<?= lang('Korean.meetCon2') ?>"><br />
+                                        <input id="group_min_age" type="number" name="group_min_age" value="" placeholder="<?= lang('Korean.meetCon2') ?>" oninput="clearInput(this)"><br />
                                         -
-                                        <input id="group_max_age" type="number" name="group_max_age" value="" placeholder="<?= lang('Korean.meetCon2') ?>"><br />
+                                        <input id="group_max_age" type="number" name="group_max_age" value="" placeholder="<?= lang('Korean.meetCon2') ?>" oninput="clearInput(this)"><br />
                                     </div>
                                 </div>
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="matching_rate" class="signin_label"><?= lang('Korean.matchingRate') ?></label>
-                                    <input id="matching_rate" type="number" name="matching_rate" value="" placeholder="매칭률을 입력하세요"><br />
+                                    <input id="matching_rate" type="number" name="matching_rate" value="" placeholder="매칭률을 입력하세요" oninput="clearInput(this)"><br />
                                     <!-- <select id="matching_rate" class="custom_select" name="matching_rate" value="">
                                     <option value=""><?= lang('Korean.selected') ?></option>
                                     <option value="01">~50%</option>
@@ -150,7 +150,7 @@
                                 <div class="signin_form_div">
                                     <label for="membership_fee" class="signin_label"><?= lang('Korean.dues') ?></label>
                                     <div class="input_ico_search">
-                                        <input id="membership_fee" type="text" name="membership_fee" value="" placeholder="">
+                                        <input id="membership_fee" type="number" name="membership_fee" value="" placeholder="" oninput="clearInput(this)">
                                     </div>
                                 </div>
                             </div>

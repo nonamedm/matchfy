@@ -1319,9 +1319,17 @@ const alianceCertIdentify = () => {
         $('#input_ali_company_name').val() !== '' &&
         $('#input_gender').val() !== ''
     ) {
-        tempValidation = true;
+        if(checkPhoneNumber($('#input_ali_mobile_no').val())){
+            tempValidation = true;
+        }else{
+            tempValidation = false;
+        }
     }
+
+    
+
     if (tempValidation) {
+        /* 전화번호 형식테크 */
         submitForm();
     } else {
     }
@@ -1461,8 +1469,9 @@ const allianceUp = () => {
         $('.loading').hide();
         $('.loading_bg').hide();
     }
-
+    
     if (
+        $('#alliance_ceo_num').val() !=='' &&
         $('.alliance_ceonum_upload').val() !=='' &&
         $('#alliance_category').val() !=='' &&
         $('#alliance_number').val() !== '' &&
@@ -1480,9 +1489,25 @@ const allianceUp = () => {
         filesArray.length !== 0 &&
         $('#alliance_cont').val() !== ''&&
         $('#agree01').is(':checked')
-
     ) {
-        tempValidation = true;
+        
+        if(checkCeoNumber($('#alliance_ceo_num').val())){
+            tempValidation = true;
+        }else{
+            tempValidation = false;
+            $('#alliance_ceo_num').focus();
+            $('.loading').hide();
+            $('.loading_bg').hide();
+        }
+
+        if(checkPhoneNumber($('#alliance_number').val())){
+            tempValidation = true;
+        }else{
+            tempValidation = false;
+            $('#alliance_number').focus();
+            $('.loading').hide();
+            $('.loading_bg').hide();
+        }
     }
 
     if (tempValidation) {
@@ -1520,6 +1545,27 @@ const allianceUp = () => {
     }
 };
 
+/*phonenum check */
+const checkPhoneNumber = (phoneNumber) => {
+    var regex = /^\d{3}\d{3,4}\d{4}$/;
+    if (regex.test(phoneNumber.replace(/\s/g, ''))) {
+        return true;
+    } else {
+        fn_alert('전화번호 형식에 맞지않습니다.');
+        return false;
+    }
+}
+
+/*ceonumber check */
+const checkCeoNumber = (businessNumber) =>{
+    var regex = /^[0-9]{10}$/;
+    if (regex.test(businessNumber.replace(/\s/g, ''))) {
+        return true;
+    } else {
+        fn_alert('사업자번호 형식에 맞지않습니다.');
+        return false;
+    }
+}
 const allianceFiltering = (category, searchText, filterOption) => {
     var postData = new FormData();
 
@@ -1644,7 +1690,7 @@ const alliancePaymentChk = () => {
         });
     }, 2000);
 };
-/*공통알림창 */
+/*common alert */
 function fn_alert(msg,loc) {
     var html = '';
 
@@ -1670,7 +1716,7 @@ function fn_alert(msg,loc) {
 
     $('body').append(html);
 }
-
+/*common confirm */
 function fn_confirm(msg,loc) {
     var html = '';
     var value;
@@ -1710,6 +1756,14 @@ function fn_confirm(msg,loc) {
     $('body').append(html);
 }
 
+/*common alert close */
 function alertClose() {
     $('.alert').hide();
+}
+
+/*number input text */
+function clearInput(input){
+    var value = input.value;
+    var newValue = value.replace(/[^0-9]/g, '');
+    input.value = newValue;
 }

@@ -36,7 +36,7 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
                                 <label for="alliance_ceo_num" class="signin_label"><?= lang('Korean.allianceCeonum') ?></label>
-                                <input id="alliance_ceo_num" type="number" name="alliance_ceo_num" value="" placeholder="<?= lang('Korean.alliancePlacehoder1') ?>">
+                                <input id="alliance_ceo_num" type="number" name="alliance_ceo_num" value="" placeholder="<?= lang('Korean.alliancePlacehoder1') ?>" oninput="clearInput(this)">
                             </div>
                         </div>
                         <div class="form_row signin_form">
@@ -66,7 +66,7 @@
                             <div class="signin_form_div">
                                 <label for="alliance_number" class="signin_label"><?= lang('Korean.allianceComNum') ?></label>
                                 <div>
-                                    <input id="alliance_number" type="number" name="alliance_number" value="" placeholder="<?= lang('Korean.alliancePlacehoder1') ?>">
+                                    <input id="alliance_number" type="number" name="alliance_number" value="" placeholder="<?= lang('Korean.alliancePlacehoder1') ?>" oninput="clearInput(this)">
                                 </div>
                             </div>
                         </div>
@@ -99,7 +99,7 @@
                                 <label for="alliance_address" class="signin_label"><?= lang('Korean.allianceAdress') ?></label>
                                 <div style="margin-bottom: 10px;display:flex;">
                                     <input id="alliance_address1" class="alliance_address1" name="alliance_address1" type="text" placeholder="주소를 입력해주세요">
-                                    <button class="btn search">검색</button>
+                                    <!-- <button class="btn search">검색</button> -->
                                 </div>
                                 <input id="alliance_address2" class="alliance_address2" name="alliance_address2" type="text" value="" placeholder="상세주소를 입력해주세요">
                             </div>
@@ -193,7 +193,7 @@
                             <div class="signin_form_div">
                                 <label for="alliance_pay" class="signin_label"><?= lang('Korean.allianceReservPayTitle') ?></label>
                                 <div>
-                                    <input id="alliance_pay" type="number" name="alliance_pay" value="" placeholder="ex)10,000">
+                                    <input id="alliance_pay" type="number" name="alliance_pay" value="" placeholder="ex)10,000" oninput="clearInput(this)">
                                 </div>
                             </div>
                         </div>
@@ -243,7 +243,7 @@
                                 </div>
                             </div>
                             <div class="btn_group multy">
-                                <button type="button" class="btn type02"><?= lang('Korean.cancel') ?></button>
+                                <button type="button" class="btn type02" onclick="moveToUrl('/mo/alliance/list')"><?= lang('Korean.cancel') ?></button>
                                 <button type="button" class="btn type01" onclick="allianceUp()"><?= lang('Korean.registration') ?></button>
                             </div>
                         </div>
