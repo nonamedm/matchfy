@@ -27,7 +27,7 @@
             <div class="content_wrap">
                 <form class="main_signin_form">
                     <div class="content_body">
-                        <a id="profileArea" onclick="editPhoto()">
+                        <a id="profileArea" class="profile_area" onclick="editPhoto()">
                             <?php
                             if ($file_path) {
                                 echo '<img src="/' . $file_path . $file_name . '" style="border-radius: 50%; width: 74px; height: 74px;" />';
