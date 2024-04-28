@@ -162,17 +162,17 @@ const userLogin = () => {
     });
 };
 const userLogout = () => {
-    fn_confirm('로그아웃 하시겠습니까?','logout')
+    fn_confirm('로그아웃 하시겠습니까?', 'logout');
 };
-function fn_userLogout(value){
-    if(value){
+function fn_userLogout(value) {
+    if (value) {
         $.ajax({
             url: '/ajax/logout',
             type: 'POST',
             async: false,
             success: function (data) {
                 console.log(data);
-                fn_alert('로그아웃 되었습니다.','/');
+                fn_alert('로그아웃 되었습니다.', '/');
                 // moveToUrl('/');
             },
             error: function (data, status, err) {
@@ -234,7 +234,11 @@ const signUp = () => {
         tempValidation = false;
         $('#birthday').focus();
     } else if ($('#city').val().trim() === '') {
-        fn_alert('지역을 선택해 주세요');
+        fn_alert('시/도를 선택해 주세요');
+        tempValidation = false;
+        $('#city').focus();
+    } else if ($('#town').val().trim() === '') {
+        fn_alert('시/군/구를 선택해 주세요');
         tempValidation = false;
         $('#city').focus();
     } else if ($('#gender').val().trim() === '') {
@@ -247,6 +251,7 @@ const signUp = () => {
         $('#name').val() !== '' &&
         $('#birthday').val() !== '' &&
         $('#city').val() !== '' &&
+        $('#town').val() !== '' &&
         $('#gender').val() !== ''
     ) {
         tempValidation = true;
@@ -1319,14 +1324,12 @@ const alianceCertIdentify = () => {
         $('#input_ali_company_name').val() !== '' &&
         $('#input_gender').val() !== ''
     ) {
-        if(checkPhoneNumber($('#input_ali_mobile_no').val())){
+        if (checkPhoneNumber($('#input_ali_mobile_no').val())) {
             tempValidation = true;
-        }else{
+        } else {
             tempValidation = false;
         }
     }
-
-    
 
     if (tempValidation) {
         /* 전화번호 형식테크 */
@@ -1361,19 +1364,19 @@ const allianceUp = () => {
     var filesArray = Array.from(filesInput.files);
 
     let tempValidation = false;
-    if($('#alliance_ceo_num').val().trim().length ===0){
+    if ($('#alliance_ceo_num').val().trim().length === 0) {
         fn_alert('사업자등록번호를 입력해 주세요.');
         tempValidation = false;
         $('#alliance_ceo_num').focus();
         $('.loading').hide();
         $('.loading_bg').hide();
-    }else if($('#alliance_ceonum_file').val().length ===0){
+    } else if ($('#alliance_ceonum_file').val().length === 0) {
         fn_alert('사업자등록증 첨부파일을 등록해주세요.');
         tempValidation = false;
         $('#alliance_ceonum_file').focus();
         $('.loading').hide();
         $('.loading_bg').hide();
-    }else if($('#alliance_category').val().trim() ==='00'){
+    } else if ($('#alliance_category').val().trim() === '00') {
         fn_alert('제휴 유형을 선택해 주세요.');
         tempValidation = false;
         $('#alliance_category').focus();
@@ -1444,13 +1447,13 @@ const allianceUp = () => {
         $('#alliance_pay').focus();
         $('.loading').hide();
         $('.loading_bg').hide();
-    } else if($('#alliance_photo').val().trim() === ''){
+    } else if ($('#alliance_photo').val().trim() === '') {
         fn_alert('메인 사진을 등록 해주세요.');
         tempValidation = false;
         $('#alliance_photo').focus();
         $('.loading').hide();
         $('.loading_bg').hide();
-    } else if(filesArray.length === 0){
+    } else if (filesArray.length === 0) {
         fn_alert('상세 사진을 등록 해주세요.');
         tempValidation = false;
         $('#alliance_photo_detail').focus();
@@ -1462,18 +1465,18 @@ const allianceUp = () => {
         $('#alliance_cont').focus();
         $('.loading').hide();
         $('.loading_bg').hide();
-    }else if($('#agree01').is(':checked') ==false){
+    } else if ($('#agree01').is(':checked') == false) {
         fn_alert('동의 체크 해주세요.');
         tempValidation = false;
         $('#agree01').focus();
         $('.loading').hide();
         $('.loading_bg').hide();
     }
-    
+
     if (
-        $('#alliance_ceo_num').val() !=='' &&
-        $('.alliance_ceonum_upload').val() !=='' &&
-        $('#alliance_category').val() !=='' &&
+        $('#alliance_ceo_num').val() !== '' &&
+        $('.alliance_ceonum_upload').val() !== '' &&
+        $('#alliance_category').val() !== '' &&
         $('#alliance_number').val() !== '' &&
         $('#alliance_email').val() !== '' &&
         $('#alliance_name').val() !== '' &&
@@ -1487,22 +1490,22 @@ const allianceUp = () => {
         $('#alliance_pay').val() !== '' &&
         $('#alliance_photo').val() !== '' &&
         filesArray.length !== 0 &&
-        $('#alliance_cont').val() !== ''&&
+        $('#alliance_cont').val() !== '' &&
         $('#agree01').is(':checked')
     ) {
 
         if(checkCeoNumber($('#alliance_ceo_num').val())){
             tempValidation = true;
-        }else{
+        } else {
             tempValidation = false;
             $('#alliance_ceo_num').focus();
             $('.loading').hide();
             $('.loading_bg').hide();
         }
 
-        if(checkPhoneNumber($('#alliance_number').val())){
+        if (checkPhoneNumber($('#alliance_number').val())) {
             tempValidation = true;
-        }else{
+        } else {
             tempValidation = false;
             $('#alliance_number').focus();
             $('.loading').hide();
@@ -1554,10 +1557,10 @@ const checkPhoneNumber = (phoneNumber) => {
         fn_alert('전화번호 형식에 맞지않습니다.');
         return false;
     }
-}
+};
 
 /*ceonumber check */
-const checkCeoNumber = (businessNumber) =>{
+const checkCeoNumber = (businessNumber) => {
     var regex = /^[0-9]{10}$/;
     if (regex.test(businessNumber.replace(/\s/g, ''))) {
         return true;
@@ -1565,7 +1568,7 @@ const checkCeoNumber = (businessNumber) =>{
         fn_alert('사업자번호 형식에 맞지않습니다.');
         return false;
     }
-}
+};
 const allianceFiltering = (category, searchText, filterOption) => {
     var postData = new FormData();
 
@@ -1701,7 +1704,7 @@ const alliancePaymentChk = () => {
     }, 2000);
 };
 /*common alert */
-function fn_alert(msg,loc) {
+function fn_alert(msg, loc) {
     var html = '';
 
     html += '<div class="layerPopup alert middle">';
@@ -1727,7 +1730,7 @@ function fn_alert(msg,loc) {
     $('body').append(html);
 }
 /*common confirm */
-function fn_confirm(msg,loc) {
+function fn_confirm(msg, loc) {
     var html = '';
     var value;
     html += '<div class="layerPopup alert middle">';
@@ -1739,21 +1742,21 @@ function fn_confirm(msg,loc) {
     html += '</div>';
     html += '<div class="layerPopup_bottom">';
     html += '<div class="btn_group multy">';
-    if(loc=='logout'){
+    if (loc == 'logout') {
         html += '<button class="btn type01" onclick="fn_userLogout(\'true\')">확인</button>';
-    }else if(loc=='myfeeddel'){
+    } else if (loc == 'myfeeddel') {
         html += '<button class="btn type01" onclick="fn_myFeedDelete(\'true\')">확인</button>';
-    }else if(loc=='banusr'){
+    } else if (loc == 'banusr') {
         html += '<button class="btn type01" onclick="fn_banUsr(\'true\')">확인</button>';
-    }else if(loc=='extRm'){
+    } else if (loc == 'extRm') {
         html += '<button class="btn type01" onclick="fn_extRm(\'true\')">확인</button>';
-    }else if(loc=='submitScdl'){
+    } else if (loc == 'submitScdl') {
         html += '<button class="btn type01" onclick="fn_submitScdl(\'true\')">확인</button>';
-    }else if(loc=='partScdl'){
+    } else if (loc == 'partScdl') {
         html += '<button class="btn type01" onclick="fn_partScdl(\'true\')">확인</button>';
-    }else if(loc=='calcMatchRate'){
+    } else if (loc == 'calcMatchRate') {
         html += '<button class="btn type01" onclick="fn_calcMatchRate(\'true\')">확인</button>';
-    }else if(loc=='sndRpt'){
+    } else if (loc == 'sndRpt') {
         html += '<button class="btn type01" onclick="fn_sndRpt(\'true\')">확인</button>';
     }
     html += '<button class="btn type02" onclick="alertClose()">취소</button>';
@@ -1772,7 +1775,7 @@ function alertClose() {
 }
 
 /*number input text */
-function clearInput(input){
+function clearInput(input) {
     var value = input.value;
     var newValue = value.replace(/[^0-9]/g, '');
     input.value = newValue;

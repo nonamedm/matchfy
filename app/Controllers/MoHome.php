@@ -165,7 +165,7 @@ class MoHome extends BaseController
             ->where('members.ci', $ci)
             ->first();
 
-        print_r($user);
+        // print_r($user);
         return view('mo_signin_regular_update', $user);
     }
     public function signinPremium(): string
@@ -201,7 +201,7 @@ class MoHome extends BaseController
             ->where('members.ci', $ci)
             ->first();
 
-        print_r($user);
+        // print_r($user);
         return view('mo_signin_premium_update', $user);
     }
     public function signinPopup(): string

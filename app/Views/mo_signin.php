@@ -34,26 +34,26 @@
                         </a>
                     </div>
                     <div class="btn_group">
-                        <button type="button" class="btn type02" onclick="editPhoto()"><?=lang('Korean.profilePhoto')?></button>
+                        <button type="button" class="btn type02" onclick="editPhoto()"><?= lang('Korean.profilePhoto') ?></button>
                         <input type="file" id="main_photo" name="main_photo" style="display:none;" accept="image/*" />
                     </div>
                     <legend></legend>
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="name" class="signin_label"><?=lang('Korean.name')?></label>
-                                <input id="name" name="name" type="text" value="<?php echo $name ?>" placeholder="<?=lang('Korean.signUpNamePlaceholder')?>" readonly>
+                                <label for="name" class="signin_label"><?= lang('Korean.name') ?></label>
+                                <input id="name" name="name" type="text" value="<?php echo $name ?>" placeholder="<?= lang('Korean.signUpNamePlaceholder') ?>" readonly>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="birthday" class="signin_label"><?=lang('Korean.birthTrueFalse')?></label>
-                                <input id="birthday" name="birthday" type="text" value="<?php echo $birthday ?>" placeholder="<?=lang('Korean.signUpBirthPlaceholder')?>" readonly>
+                                <label for="birthday" class="signin_label"><?= lang('Korean.birthTrueFalse') ?></label>
+                                <input id="birthday" name="birthday" type="text" value="<?php echo $birthday ?>" placeholder="<?= lang('Korean.signUpBirthPlaceholder') ?>" readonly>
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="gender" class="signin_label"><?=lang('Korean.gender')?></label>
+                                <label for="gender" class="signin_label"><?= lang('Korean.gender') ?></label>
                                 <select id="gender" name="gender">
                                     <?php
                                     foreach ($genderCode as $item) {
@@ -70,47 +70,61 @@
                             </div>
                         </div>
                         <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="city" class="signin_label"><?=lang('Korean.region')?></label>
-                                <select id="city" name="city">
-                                    <option value><?=lang('Korean.signUpCityPlaceholder')?></option>
-                                    <?php
-                                    foreach ($sidoCode as $item) {
-                                    ?>
-                                        <option value="<?= $item['id'] ?>">
-                                            <?= $item['name'] ?>
-                                        </option>
-                                    <?php
-                                    }
-                                    ?>
-                                </select>
+                            <div class="signin_form_div multy">
+                                <label for="city" class="signin_label"><?= lang('Korean.region') ?></label>
+                                <div class="multy_select">
+                                    <select id="city" name="city" onchange="chgCity(this)">
+                                        <option value><?= lang('Korean.signUpCityPlaceholder') ?></option>
+                                        <?php
+                                        foreach ($sidoCode as $item) {
+                                        ?>
+                                            <option value="<?= $item['id'] ?>">
+                                                <?= $item['name'] ?>
+                                            </option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                    <select id="town" name="town">
+                                        <option value><?= lang('Korean.signUpGunguPlaceholder') ?></option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <!-- <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <h4 class="profile_photo_label"><?=lang('Korean.signupCon2')?></h4>
-                                <div class="profile_photo_div">
-                                    <label for="profile_photo" class="signin_label profile_photo_input"></label>
-                                    <input id="profile_photo" name="profile_photo" type="file" value="" placeholder=""
-                                        multiple accept="image/*">
-                                    <div id="profile_photo_view" class="profile_photo_view">
-                                    </div>
+
+                        <div class="form_row signin_form">
+                            <div class="signin_form_div input_btn">
+                                <label for="email" class="signin_label"><?= lang('Korean.email') ?></label>
+                                <div class="input_btn">
+                                    <input id="email" name="email" type="text" placeholder="<?= lang('Korean.signUpEmailPlaceholder') ?>">
+                                    <button type="button" class="btn btn_input_form" onclick="regEmail()">인증</button>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="form_row signin_form">
+                            <div class="signin_form_div input_btn">
+                                <label for="emailReg" class="signin_label"><?= lang('Korean.emailReg') ?></label>
+                                <div class="input_btn">
+                                    <input id="emailReg" name="emailReg" type="text" placeholder="<?= lang('Korean.signUpEmailRegPlaceholder') ?>">
+                                    <button type="button" class="btn btn_input_form" onclick="regCode()">인증</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form_row signin_form">
+                            <div class="signin_form_div">
+                                <label for="pswd" class="signin_label"><?= lang('Korean.pswd') ?></label>
+                                <input id="pswd" name="pswd" type="password" placeholder="<?= lang('Korean.pswdPlaceholder') ?>">
                             </div>
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <h4 class="profile_photo_label"><?=lang('Korean.signupCon3')?></h4>
-                                <div class="profile_photo_div">
-                                    <label for="profile_mov" class="signin_label profile_photo_input"></label>
-                                    <input id="profile_mov" name="profile_mov" type="file" value="" placeholder=""
-                                        multiple>
-                                    <div id="profile_mov_view" class="profile_mov_view">
-                                    </div>
-                                </div>
+                                <label for="pswdChk" class="signin_label"><?= lang('Korean.pswdChk') ?></label>
+                                <input id="pswdChk" name="pswdChk" type="password" placeholder="<?= lang('Korean.pswdChkPlaceholder') ?>">
                             </div>
-                        </div> -->
-                        <input type="hidden" name="town" value="town value" />
+                        </div>
+
                         <input type="hidden" name="mobile_no" value="<?= $mobile_no ?>" />
                         <input type="hidden" name="nickname" value="<?= $nickname ?>" />
                         <input type="hidden" name="sns_type" value="<?= $sns_type ?>" />
@@ -119,7 +133,7 @@
                         <!-- <div id="profile_photo_uploaded" style="display:none;"></div>
                         <div id="profile_mov_uploaded" style="display:none;"></div> -->
                         <div class="btn_group multy">
-                            <button type="button" class="btn type02"><?=lang('Korean.cancel')?></button>
+                            <button type="button" class="btn type02"><?= lang('Korean.cancel') ?></button>
                             <button type="button" class="btn type01" onclick="signUp()">회원가입</button>
                         </div>
                     </div>
@@ -133,24 +147,6 @@
 
         <div style="height: 50px;"></div>
         <footer class="footer">
-
-            <!-- <div class="footer_logo mb40">
-                matchfy
-            </div>
-            <div class="footer_link mb40">
-                <a href="#"><?=lang('Korean.companyName')?></a>
-                <a href="#"><?=lang('Korean.pravacyName')?></a>
-                <a href="#"><?=lang('Korean.serviceName')?></a>
-            </div>
-            <div class="footer_info mb40">
-                <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
-                <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
-                        src="/static/images/part_line.png" /> gildong@naver.com</span>
-            </div>
-            <div class="footer_copy">
-                COPYRIGHT 2023. ALL RIGHTS RESERVED.
-            </div> -->
-
         </footer>
     </div>
 
@@ -161,6 +157,26 @@
         $(document).ready(function() {
             editPhotoListner();
         });
+        const chgCity = (e) => {
+            console.log(e.value, '야호');
+            $.ajax({
+                url: '/ajax/gunguSch',
+                type: 'POST',
+                data: {
+                    "value": e.value
+                },
+                async: false,
+                success: function(data) {
+                    console.log(data)
+                    $("#town").html("");
+                    var html = '<option value>시/군/구</option>';
+                    data.data.forEach(function(item) {
+                        html += '<option value="' + item.id + '">' + item.name + '</option>';
+                    });
+                    $("#town").append(html);
+                }
+            });
+        }
     </script>
 
     <!-- -->

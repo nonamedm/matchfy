@@ -3039,4 +3039,24 @@ class MoAjax extends BaseController
             return $this->response->setJSON(['status' => 'failed', 'message' => 'failed', 'query' => $query]);
         }
     }
+    public function gunguSch()
+    {
+        $word_file_path = APPPATH . 'Data/MemberCode.php';
+        require($word_file_path);
+        $value = $this->request->getPost('value');
+        $insertedData = [];
+        foreach ($gunguCode as $item) {
+            if ($item['p_id'] === $value) {
+                $insertedData[] = $item;
+            }
+        }
+
+        usort($insertedData, function ($a, $b) {
+            return strcmp($a['name'], $b['name']); // 'name' 항목을 기준으로 문자열 순으로 정렬
+        });
+
+        if ($insertedData) {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $insertedData]);
+        }
+    }
 }
