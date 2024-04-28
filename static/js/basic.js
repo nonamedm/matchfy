@@ -1490,7 +1490,7 @@ const allianceUp = () => {
         $('#alliance_cont').val() !== ''&&
         $('#agree01').is(':checked')
     ) {
-        
+
         if(checkCeoNumber($('#alliance_ceo_num').val())){
             tempValidation = true;
         }else{
@@ -1600,13 +1600,12 @@ const allianceFiltering = (category, searchText, filterOption) => {
                         <a href="/mo/alliance/detail/${alliance.idx}">
                             <div class="group_list_item">
                                 <img src="${imagePath}"/>
-
                                 <div class="group_location">
                                     <img src="/static/images/ico_location_16x16.png" />
                                     ${alliance.company_name}
                                 </div>
                                 <p class="group_price">${alliance.address}</p>
-                                <p class="group_schedule">${alliance.alliance_type}</p>
+                                <p class="group_schedule">${allianceType(+`${alliance.alliance_type}`)}</p>
                             </div>
                         </a>
                     `;
@@ -1622,6 +1621,17 @@ const allianceFiltering = (category, searchText, filterOption) => {
         },
     });
 };
+const allianceType=(type)=>{
+    if(type =='01'){
+        return "음식점";
+    }else if(type =='02'){
+        return "카페";
+    }else if(type =='03'){
+        return "숙박";
+    }else{
+        return "기타";
+    }
+}
 
 const allianceSave = () => {
     if ($('.alliance_reserv_time.on').length === 0) {

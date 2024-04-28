@@ -1641,7 +1641,7 @@ class MoHome extends BaseController
             LEFT JOIN wh_alliance_files b ON b.idx = bf.idx
             WHERE a.delete_yn = 'N'
             AND a.alliance_application = '2'
-            ORDER BY a.idx ASC";
+            ORDER BY a.idx DESC";
 
         $alliances = $AllianceModel
             ->query($query)->getResultArray();
