@@ -95,7 +95,7 @@
                     ?>
                         <!-- <button class="login_btn" onclick="userLogout()">
                             <p>
-                                <?=lang('Korean.logout')?>
+                                <?= lang('Korean.logout') ?>
                             </p>
                         </button>
                         <button class="login_btn" onclick="moveToUrl('/mo/mypage')">
@@ -111,7 +111,7 @@
                     } else { ?>
                         <button class="login_btn" onclick="moveToUrl('/mo')">
                             <img src="/static/images/login_ico.png" />
-                            <p><?=lang('Korean.login')?></p>
+                            <p><?= lang('Korean.login') ?></p>
                         </button>
                     <?php
                     }
@@ -126,17 +126,17 @@
     ?>
         <div class="content">
             <div class="main_bg_center_box">
-                <h2><?=lang('Korean.mainCon')?></h2>
-                <p><?=lang('Korean.mainCon2')?></p>
-                <button onclick="moveToUrl('/mo')"><?=lang('Korean.mainConBtn')?></button>
+                <h2><?= lang('Korean.mainCon') ?></h2>
+                <p><?= lang('Korean.mainCon2') ?></p>
+                <button onclick="moveToUrl('/mo')"><?= lang('Korean.mainConBtn') ?></button>
             </div>
         </div>
 
         <div class="content_no_img">
             <div class="main_cont_center_box main_cont_left_box">
-                <h3 class="circle_h"><img src="/static/images/circle_1.png" /><?=lang('Korean.profile')?></h3>
-                <h2><?=lang('Korean.indexCon1')?></h2>
-                <p><?=lang('Korean.indexCon2')?></p>
+                <h3 class="circle_h"><img src="/static/images/circle_1.png" /><?= lang('Korean.profile') ?></h3>
+                <h2><?= lang('Korean.indexCon1') ?></h2>
+                <p><?= lang('Korean.indexCon2') ?></p>
             </div>
             <div class="main_cont_right_img">
                 <img src="/static/images/main_profile_img.png" />
@@ -146,8 +146,8 @@
         <div class="content_no_img bg_color_theme">
             <div class="main_cont_center_box main_cont_right_box">
                 <h3 class="circle_h text_white"><img src="/static/images/circle_2.png" />매칭점수</h3>
-                <h2 class="text_white"><?=lang('Korean.indexCon3')?></h2>
-                <p class="text_white"><?=lang('Korean.indexCon4')?></p>
+                <h2 class="text_white"><?= lang('Korean.indexCon3') ?></h2>
+                <p class="text_white"><?= lang('Korean.indexCon4') ?></p>
             </div>
             <div class="main_cont_left_img">
                 <img src="/static/images/main_point_img.png" />
@@ -156,9 +156,9 @@
 
         <div class="content_no_img">
             <div class="main_cont_center_box main_cont_left_box">
-                <h3 class="circle_h"><img src="/static/images/circle_3.png" /><?=lang('Korean.alliance')?></h3>
-                <h2><?=lang('Korean.indexCon5')?></h2>
-                <p><?=lang('Korean.indexCon6')?></p>
+                <h3 class="circle_h"><img src="/static/images/circle_3.png" /><?= lang('Korean.alliance') ?></h3>
+                <h2><?= lang('Korean.indexCon5') ?></h2>
+                <p><?= lang('Korean.indexCon6') ?></p>
             </div>
             <div class="main_cont_right_img">
                 <img src="/static/images/main_allience_img.png" />
@@ -167,15 +167,15 @@
 
         <div class="content_no_img bg_color_theme2 content_chat_img">
             <div class="main_cont">
-                <h2><?=lang('Korean.indexCon7')?></h2>
+                <h2><?= lang('Korean.indexCon7') ?></h2>
             </div>
             <div class="main_cont chat_div chat_div_left">
                 <div class="chat_profile_div">
                     <img src="/static/images/chat_img_1.png" />
-                    <span>뽀로로<?=lang('Korean.sir')?></span>
+                    <span>뽀로로<?= lang('Korean.sir') ?></span>
                 </div>
                 <div class="chat_talk_div">
-                    <p><?=lang('Korean.indexCon8')?></p>
+                    <p><?= lang('Korean.indexCon8') ?></p>
                     <img src="/static/images/review_star.png" />
                     <img src="/static/images/review_star.png" />
                     <img src="/static/images/review_star.png" />
@@ -186,10 +186,10 @@
             <div class="main_cont chat_div chat_div_right">
                 <div class="chat_profile_div">
                     <img src="/static/images/chat_img_2.png" />
-                    <span>홍길동<?=lang('Korean.sir')?></span>
+                    <span>홍길동<?= lang('Korean.sir') ?></span>
                 </div>
                 <div class="chat_talk_div">
-                    <p><?=lang('Korean.indexCon8')?></p>
+                    <p><?= lang('Korean.indexCon8') ?></p>
                     <img src="/static/images/review_star.png" />
                     <img src="/static/images/review_star.png" />
                     <img src="/static/images/review_star.png" />
@@ -200,10 +200,10 @@
             <div class="main_cont chat_div chat_div_left">
                 <div class="chat_profile_div">
                     <img src="/static/images/chat_img_3.png" />
-                    <span>손흥민<?=lang('Korean.sir')?></span>
+                    <span>손흥민<?= lang('Korean.sir') ?></span>
                 </div>
                 <div class="chat_talk_div">
-                    <p><?=lang('Korean.indexCon8')?></p>
+                    <p><?= lang('Korean.indexCon8') ?></p>
                     <img src="/static/images/review_star.png" />
                     <img src="/static/images/review_star.png" />
                     <img src="/static/images/review_star.png" />
@@ -214,10 +214,10 @@
             <div class="main_cont chat_div chat_div_right no_margin">
                 <div class="chat_profile_div">
                     <img src="/static/images/chat_img_4.png" />
-                    <span>김철수<?=lang('Korean.sir')?></span>
+                    <span>김철수<?= lang('Korean.sir') ?></span>
                 </div>
                 <div class="chat_talk_div">
-                    <p><?=lang('Korean.indexCon8')?></p>
+                    <p><?= lang('Korean.indexCon8') ?></p>
                     <img src="/static/images/review_star.png" />
                     <img src="/static/images/review_star.png" />
                     <img src="/static/images/review_star.png" />
@@ -229,9 +229,9 @@
 
         <div class="content content_bottom">
             <div class="main_bg_center_box ">
-                <h2><?=lang('Korean.indexCon9')?></h2>
-                <p><?=lang('Korean.indexCon10')?></p>
-                <button onclick="moveToUrl('/mo')"><?=lang('Korean.login')?></button>
+                <h2><?= lang('Korean.indexCon9') ?></h2>
+                <p><?= lang('Korean.indexCon10') ?></p>
+                <button onclick="moveToUrl('/mo')"><?= lang('Korean.login') ?></button>
             </div>
         </div>
     <?php
@@ -457,18 +457,18 @@
         </div>
         <div class="content_no_img login_main">
             <div class="login_main_title">
-                <h2><?=lang('Korean.mainTitle')?></h2>
+                <h2><?= lang('Korean.mainTitle') ?></h2>
                 <div class="main_title_btn">
-                    <button onclick="clickOn(this)" class="on" value="9"><?=lang('Korean.all')?></button>
-                    <button onclick="clickOn(this)" value="0"><?=lang('Korean.woman')?></button>
-                    <button onclick="clickOn(this)" value="1"><?=lang('Korean.man')?></button>
+                    <!-- <button onclick="clickOn(this)" class="on" value="9"><?= lang('Korean.all') ?></button>
+                    <button onclick="clickOn(this)" value="0"><?= lang('Korean.woman') ?></button>
+                    <button onclick="clickOn(this)" value="1"><?= lang('Korean.man') ?></button> -->
                 </div>
             </div>
             <div class="login_main_list AImatch_list">
                 <div class="ai_mat_card" style="padding-top: 50px;">
-                    <h2><?=lang('Korean.indexCon')?></h2>
+                    <h2><?= lang('Korean.indexCon') ?></h2>
                     <a onclick="moveToUrl('/mo/partner')">
-                        <p class=""><?=lang('Korean.settingBtn')?></p>
+                        <p class=""><?= lang('Korean.settingBtn') ?></p>
                     </a>
                     <div class="profile_row">
                     </div>
@@ -477,61 +477,61 @@
         </div>
         <div class="content_no_img login_main">
             <div class="login_main_title">
-                <h2><?=lang('Korean.weekdayMeeting')?></h2>
+                <h2><?= lang('Korean.weekdayMeeting') ?></h2>
             </div>
             <div class="group_row">
-                <p class="group_week"><?=lang('Korean.weekTitle')?></p>
+                <p class="group_week"><?= lang('Korean.weekTitle') ?></p>
                 <div class="group_type">
                     <h2>
-                        <?=lang('Korean.indexCon11')?>
+                        <?= lang('Korean.indexCon11') ?>
                     </h2>
                     <div class="main_title_btn">
-                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.all')?>보기</button>
+                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?>보기</button>
                         <button class="category01_left slide_btn disabled" onclick="clickLeft('category01')">
-                            <img src="/static/images/slide_left.png"/>
+                            <img src="/static/images/slide_left.png" />
                         </button>
                         <button class="category01_right slide_btn" onclick="clickRight('category01')">
-                            <img src="/static/images/slide_right.png"/>
+                            <img src="/static/images/slide_right.png" />
                         </button>
                     </div>
                 </div>
                 <div class="login_main_list category01">
                     <div class="ai_group_card" style="text-align: center;">
                         <div class="group_location" style="margin: 0 auto; padding-top: 50px;">
-                            <?=lang('Korean.noMeetList')?>
+                            <?= lang('Korean.noMeetList') ?>
                         </div>
                         <div class="schedule_row" style="display: block;">
                             <a onclick="moveToUrl('/mo/mypage/group/list')">
-                                <p><?=lang('Korean.createBtn')?></p>
+                                <p><?= lang('Korean.createBtn') ?></p>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="group_row">
-                <p class="group_week"><?=lang('Korean.weekTitle')?></p>
+                <p class="group_week"><?= lang('Korean.weekTitle') ?></p>
                 <div class="group_type">
                     <h2>
-                        <?=lang('Korean.trip')?>
+                        <?= lang('Korean.trip') ?>
                     </h2>
                     <div class="main_title_btn">
-                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.all')?>보기</button>
+                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?>보기</button>
                         <button class="category02_left slide_btn disabled" onclick="clickLeft('category02')">
-                            <img src="/static/images/slide_left.png"/>
+                            <img src="/static/images/slide_left.png" />
                         </button>
                         <button class="category02_right slide_btn" onclick="clickRight('category02')">
-                            <img src="/static/images/slide_right.png"/>
+                            <img src="/static/images/slide_right.png" />
                         </button>
                     </div>
                 </div>
                 <div class="login_main_list category02">
                     <div class="ai_group_card" style="text-align: center;">
                         <div class="group_location" style="margin: 0 auto; padding-top: 50px;">
-                            <?=lang('Korean.noMeetList')?>
+                            <?= lang('Korean.noMeetList') ?>
                         </div>
                         <div class="schedule_row" style="display: block;">
                             <a onclick="moveToUrl('/mo/mypage/group/list')">
-                                <p><?=lang('Korean.createBtn')?></p>
+                                <p><?= lang('Korean.createBtn') ?></p>
                             </a>
                         </div>
                     </div>
@@ -540,61 +540,61 @@
         </div>
         <div class="content_no_img login_main">
             <div class="login_main_title">
-                <h2><?=lang('Korean.holiMeeting')?></h2>
+                <h2><?= lang('Korean.holiMeeting') ?></h2>
             </div>
             <div class="group_row">
-                <p class="group_week"><?=lang('Korean.holidayTitle')?></p>
+                <p class="group_week"><?= lang('Korean.holidayTitle') ?></p>
                 <div class="group_type">
                     <h2>
-                        <?=lang('Korean.indexCon11')?>
+                        <?= lang('Korean.indexCon11') ?>
                     </h2>
                     <div class="main_title_btn">
-                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.all')?>보기</button>
+                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?>보기</button>
                         <button class="category03_left slide_btn disabled" onclick="clickLeft('category03')">
-                            <img src="/static/images/slide_left.png"/>
+                            <img src="/static/images/slide_left.png" />
                         </button>
                         <button class="category03_right slide_btn" onclick="clickRight('category03')">
-                            <img src="/static/images/slide_right.png"/>
+                            <img src="/static/images/slide_right.png" />
                         </button>
                     </div>
                 </div>
                 <div class="login_main_list category03">
                     <div class="ai_group_card" style="text-align: center;">
                         <div class="group_location" style="margin: 0 auto; padding-top: 50px;">
-                            <?=lang('Korean.noMeetList')?>
+                            <?= lang('Korean.noMeetList') ?>
                         </div>
                         <div class="schedule_row" style="display: block;">
                             <a onclick="moveToUrl('/mo/mypage/group/list')">
-                                <p><?=lang('Korean.createBtn')?></p>
+                                <p><?= lang('Korean.createBtn') ?></p>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="group_row">
-                <p class="group_week"><?=lang('Korean.holidayTitle')?></p>
+                <p class="group_week"><?= lang('Korean.holidayTitle') ?></p>
                 <div class="group_type">
                     <h2>
-                        <?=lang('Korean.trip')?>
+                        <?= lang('Korean.trip') ?>
                     </h2>
                     <div class="main_title_btn">
-                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?=lang('Korean.all')?>보기</button>
+                        <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?>보기</button>
                         <button class="category04_left slide_btn disabled" onclick="clickLeft('category04')">
-                            <img src="/static/images/slide_left.png"/>
+                            <img src="/static/images/slide_left.png" />
                         </button>
                         <button class="category04_right slide_btn" onclick="clickRight('category04')">
-                            <img src="/static/images/slide_right.png"/>
+                            <img src="/static/images/slide_right.png" />
                         </button>
                     </div>
                 </div>
                 <div class="login_main_list category04">
                     <div class="ai_group_card" style="text-align: center;">
                         <div class="group_location" style="margin: 0 auto; padding-top: 50px;">
-                            <?=lang('Korean.noMeetList')?>
+                            <?= lang('Korean.noMeetList') ?>
                         </div>
                         <div class="schedule_row" style="display: block;">
                             <a onclick="moveToUrl('/mo/mypage/group/list')">
-                                <p><?=lang('Korean.createBtn')?></p>
+                                <p><?= lang('Korean.createBtn') ?></p>
                             </a>
                         </div>
                     </div>
@@ -614,13 +614,13 @@
             matchfy
         </div>
         <div class="footer_link mb40">
-            <a href="#"><?=lang('Korean.companyName')?></a>
-            <a href="/mo/privacy"><?=lang('Korean.pravacyName')?></a>
-            <a href="/mo/terms"><?=lang('Korean.serviceName')?></a>
+            <a href="#"><?= lang('Korean.companyName') ?></a>
+            <a href="/mo/privacy"><?= lang('Korean.pravacyName') ?></a>
+            <a href="/mo/terms"><?= lang('Korean.serviceName') ?></a>
         </div>
         <div class="footer_info mb40">
-            <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
-            <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img src="/static/images/part_line.png" /> gildong@naver.com</span>
+            <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>
+            <span><?= lang('Korean.footerInfo3') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo4') ?><img src="/static/images/part_line.png" /> gildong@naver.com</span>
         </div>
         <div class="footer_copy">
             COPYRIGHT 2023. ALL RIGHTS RESERVED.

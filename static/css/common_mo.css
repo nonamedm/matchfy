@@ -59,7 +59,7 @@ input[type='checkbox'] + label:hover {
 }
 
 /* HEADER */
-.header{
+.header {
     padding: 18px 0px;
     background: #ffffff;
 }
@@ -142,7 +142,7 @@ header .menu_right.edit {
     height: 784px;
     width: 371px;
     height: auto;
-    margin:0 auto;
+    margin: 0 auto;
     background: #ffffff;
 }
 
@@ -205,7 +205,7 @@ header .menu_right.edit {
 }
 .mo_wrap .sub_wrap .content_wrap .content_partner {
     width: 315px;
-    margin:0 auto;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
 }
@@ -329,7 +329,7 @@ header .menu_right.edit {
     width: 100%;
     margin-bottom: 20px;
 }
-.alliance_banner img{
+.alliance_banner img {
     width: 100%;
 }
 .region_list {
@@ -2401,7 +2401,7 @@ form input[type='file'] {
     text-indent: -9999em;
     overflow: hidden;
 }
-.footer{
+.footer {
     background-color: #ffffff;
 }
 .footer .btn_group {
@@ -2913,7 +2913,7 @@ input[type='number']::-webkit-inner-spin-button {
     margin: 0 20px 0 0;
 }
 /*모임등록시 subadress*/
-#ui-id-1{
+#ui-id-1 {
     width: auto;
     font-size: 14px;
     border-radius: 10px;
@@ -3665,11 +3665,11 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 /*alliance apply*/
-.input_ali_box{
-    width:95%;
-    margin:0 auto;
+.input_ali_box {
+    width: 95%;
+    margin: 0 auto;
 }
-.filebox{
+.filebox {
     display: flex;
 }
 .filebox .upload-name {
@@ -3686,7 +3686,7 @@ input[type='number']::-webkit-inner-spin-button {
 }
 .temp_input_text {
     border: 1px solid #dddddd;
-    width: 100%;
+    width: 335px;
     height: 50px;
     background: #ffffff;
     border-radius: 15px;
@@ -3695,16 +3695,16 @@ input[type='number']::-webkit-inner-spin-button {
     margin: 10px;
     padding: 10px;
 }
-.invite_img{
-    width:335px;
-    margin:0 auto;
+.invite_img {
+    width: 335px;
+    margin: 0 auto;
 }
 
 @media (max-width: 767px) {
     .mo_wrap .wrap {
-      max-width: 375px;
-      margin: 0 auto;
-      min-height: 100%;
+        max-width: 375px;
+        margin: 0 auto;
+        min-height: 100%;
     }
     .form_row.signin_form .signin_form_div {
         display: flex;
@@ -3783,5 +3783,4 @@ input[type='number']::-webkit-inner-spin-button {
         text-indent: -10px;
         padding-left: 10px;
         width: 250px;
-    }
-  }
+}
