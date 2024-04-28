@@ -328,7 +328,7 @@ class MoHome extends BaseController
             'birthday' => substr($user['birthday'], 0, 4),
             'city' => $user['city'],
             'mbti' => $user['mbti'],
-            'grade'=> $user['grade'],
+            'grade' => $user['grade'],
             'image' => $imageInfo
         ];
 
@@ -357,9 +357,9 @@ class MoHome extends BaseController
                                 WHEN member_ci = '" . $ci . "' THEN 'me'
                                 ELSE 'you' 
                             END) AS chk,
-                            (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname) as match_rate,
-                            (SELECT file_path FROM member_files WHERE member_ci = crm.member_ci) AS file_path,
-                            (SELECT file_name FROM member_files WHERE member_ci = crm.member_ci) AS file_name
+                            (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname ORDER BY created_at DESC LIMIT 1) as match_rate,
+                            (SELECT file_path FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo') AS file_path,
+                            (SELECT file_name FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo') AS file_name
                         FROM wh_chat_room_msg  crm WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at ASC";
             $allMsg = $ChatRoomMsgModel
                 ->query($query)->getResultArray();
