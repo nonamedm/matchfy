@@ -223,7 +223,7 @@ function chk_exchangeCheck() {
         return false;
     }
 
-    if (!isValidAccountNumber(account_number)) {
+    if (account_number.length === '') {
         fn_alert('올바른 계좌번호를 입력해주세요.');
         return false;
     }
@@ -280,6 +280,8 @@ function exchangePointSubmit() {
                 console.log(error);
             },
         });
+    }else{
+        $('.loading').hide();
     }
 }
 
@@ -348,9 +350,10 @@ function WalletPage(type) {
 //         WalletPage(walletType);
 //     }
 // });
-
-$(window).on('scroll', function () {
-    if ($(window).scrollTop() + $(window).height() >= $(document).height() && !loading) {
-        WalletPage(walletType);
-    }
-});
+const scroll = () =>{
+    $(window).on('scroll', function () {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height() && !loading) {
+            WalletPage(walletType);
+        }
+    });
+}

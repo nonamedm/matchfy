@@ -183,6 +183,9 @@ header .menu_right.edit {
     line-height: 28px !important;
 }
 
+.mo_wrap .sub_wrap .content_title{
+    padding:0 20px;
+}
 .mo_wrap .sub_wrap .content_wrap .content_title h2 {
     font-family: 'Pretendard-Bold';
     font-style: normal;
@@ -271,7 +274,8 @@ header .menu_right.edit {
 .profile_header h2 {
     font-family: 'Pretendard-Bold';
     font-weight: 600;
-    font-size: 20px;
+    /* font-size: 20px; */
+    font-size: 14px;
     line-height: 24px;
     margin: 0;
 }
@@ -361,7 +365,8 @@ header .menu_right.edit {
 }
 .alliance_detail_cont {
     margin: 30px 0;
-    font-size: 15px;
+    /* font-size: 15px; */
+    font-size: 12px;
 }
 
 .alliance_detail_cont h2 {
@@ -560,6 +565,7 @@ td {
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    object-fit: cover;
 }
 .chat_list_wrap .chat_room_title .receive_text {
     min-width: 270px;
@@ -1542,6 +1548,7 @@ a:active {
     line-height: 18px;
     letter-spacing: -0.28px;
     margin: 5px 0;
+    width: 300px;
 }
 .alliance_sch_list .alliance_sch_item p {
     font-weight: 600;
@@ -2172,7 +2179,7 @@ form input[type='file'] {
     font-family: 'Pretendard-Bold';
     font-style: normal;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 15px;
     line-height: 18px;
     color: #111111;
 }

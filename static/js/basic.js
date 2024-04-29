@@ -1494,23 +1494,23 @@ const allianceUp = () => {
         $('#agree01').is(':checked')
     ) {
 
-        if(checkCeoNumber($('#alliance_ceo_num').val())){
-            tempValidation = true;
-        } else {
+        if(!checkCeoNumber($('#alliance_ceo_num').val())){
             tempValidation = false;
             $('#alliance_ceo_num').focus();
             $('.loading').hide();
             $('.loading_bg').hide();
+            return false;
         }
 
-        if (checkPhoneNumber($('#alliance_number').val())) {
-            tempValidation = true;
-        } else {
+        if (!checkPhoneNumber($('#alliance_number').val())) {
             tempValidation = false;
             $('#alliance_number').focus();
             $('.loading').hide();
             $('.loading_bg').hide();
+            return false;   
         }
+
+        tempValidation = true;
     }
 
     if (tempValidation) {
