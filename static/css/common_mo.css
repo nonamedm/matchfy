@@ -3130,7 +3130,7 @@ input[type='number']::-webkit-inner-spin-button {
     display: flex;
 }
 .layerPopup_content .chat_member .group_member_detail {
-    font-size: 15px;
+    font-size: 13px;
     line-height: 18px;
     color: #555555;
     margin: 10px 5px;
@@ -3758,10 +3758,10 @@ input[type='number']::-webkit-inner-spin-button {
 .date {
     width: 22%;
 }
-.desc{
+.desc {
     width: 53%;
 }
-.price{
+.price {
     width: 25%;
 }
 
