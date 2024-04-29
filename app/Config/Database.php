@@ -26,7 +26,7 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'nonamedm18.mycafe24.com',
+        'hostname'     => 'localhost',
         'username'     => 'nonamedm18',
         'password'     => 'a8875142!!',
         'database'     => 'nonamedm18',
