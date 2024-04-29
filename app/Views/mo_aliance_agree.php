@@ -15,7 +15,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: none;"></mobileheader>
+
 
         <?php $title = "약관동의";
         include 'header.php'; ?>
@@ -23,20 +23,20 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="content_title">
-                    <h2><?=lang('Korean.agreeCon')?></h2>
+                    <h2><?= lang('Korean.agreeCon') ?></h2>
                 </div>
                 <form class="" method="post" action="/mo/alliance/apply">
                     <legend></legend>
                     <div class="login_box">
                         <div class="chk_box">
                             <input type="checkbox" id="totAgree" name="" onclick="totalAgree()" />
-                            <label class="totAgree_label" for="totAgree"><?=lang('Korean.agreeBtn')?></label>
+                            <label class="totAgree_label" for="totAgree"><?= lang('Korean.agreeBtn') ?></label>
                         </div>
                         <hr class="hoz_part" />
                         <div class="agree_cont">
                             <div class="chk_box">
                                 <input type="checkbox" id="agree1" name="agree1" value="1" onclick="chkAgree()">
-                                <label class="agree_cont_label" for="agree1"><?=lang('Korean.agreeChk')?></label>
+                                <label class="agree_cont_label" for="agree1"><?= lang('Korean.agreeChk') ?></label>
                             </div>
                             <div class="textarea">
                                 <b>
@@ -48,7 +48,7 @@
                             </div>
                             <div class="chk_box">
                                 <input type="checkbox" id="agree2" name="agree2" value="2" onclick="chkAgree()">
-                                <label class="agree_cont_label" for="agree2"><?=lang('Korean.agreePravacy')?></label>
+                                <label class="agree_cont_label" for="agree2"><?= lang('Korean.agreePravacy') ?></label>
                             </div>
                             <div class="textarea">
                                 <b>
@@ -60,7 +60,7 @@
                             </div>
                             <div class="chk_box">
                                 <input type="checkbox" id="agree3" name="agree3" value="3" onclick="chkAgree()">
-                                <label class="agree_cont_label" for="agree3"><?=lang('Korean.agreePravacy2')?></label>
+                                <label class="agree_cont_label" for="agree3"><?= lang('Korean.agreePravacy2') ?></label>
                             </div>
                             <div class="textarea">
                                 <b>
@@ -82,7 +82,7 @@
                 <footer class="footer">
 
                     <div class="btn_group">
-                        <button type="button" class="btn type01" onclick="submitFormAgree()"><?=lang('Korean.next')?></button>
+                        <button type="button" class="btn type01" onclick="submitFormAgree()"><?= lang('Korean.next') ?></button>
                     </div>
                 </footer>
             </div>

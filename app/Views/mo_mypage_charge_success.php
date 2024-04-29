@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -18,7 +17,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: none;"></mobileheader>
+
 
 
         <div class="sub_wrap">
@@ -26,8 +25,8 @@
                 <div class="content_body" style="margin-top:235px">
                     <img src="/static/images/point_success.png" />
                     <div class="success_text">
-                        <p><?=lang('Korean.chargeSuccCon')?></p>
-                        <em><?=$msg?></em>
+                        <p><?= lang('Korean.chargeSuccCon') ?></p>
+                        <em><?= $msg ?></em>
                     </div>
                 </div>
             </div>
@@ -35,19 +34,19 @@
             <footer class="footer">
 
                 <div class="btn_group">
-                    <button type="button" class="btn type01" onclick='loc_WalletLocation()'><?=lang('Korean.checkDepositDetails')?></button>
+                    <button type="button" class="btn type01" onclick='loc_WalletLocation()'><?= lang('Korean.checkDepositDetails') ?></button>
                 </div>
                 <!-- <div class="footer_logo mb40">
                     matchfy
                 </div>
                 <div class="footer_link mb40">
-                    <a href="#"><?=lang('Korean.companyName')?></a>
-                    <a href="#"><?=lang('Korean.pravacyName')?></a>
-                    <a href="#"><?=lang('Korean.serviceName')?></a>
+                    <a href="#"><?= lang('Korean.companyName') ?></a>
+                    <a href="#"><?= lang('Korean.pravacyName') ?></a>
+                    <a href="#"><?= lang('Korean.serviceName') ?></a>
                 </div>
                 <div class="footer_info mb40">
-                    <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
-                    <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
+                    <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>
+                    <span><?= lang('Korean.footerInfo3') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo4') ?><img
                             src="/static/images/part_line.png" /> gildong@naver.com</span>
                 </div>
                 <div class="footer_copy">
@@ -76,7 +75,7 @@
 
             if (gradeText) {
                 document.querySelector('.success_text em').textContent = `${gradeText} 가입을 축하합니다.`;
-                localStorage.removeItem('gradeText');//localstorage 비우기
+                localStorage.removeItem('gradeText'); //localstorage 비우기
             }
         });
     </script>
