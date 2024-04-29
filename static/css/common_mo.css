@@ -3503,6 +3503,7 @@ input[type='number']::-webkit-inner-spin-button {
 .layerPopup_content .apply_group .apply_group_detail img {
     width: 100px;
     height: 100px;
+    object-fit: over;
 }
 .layerPopup_content .apply_group .apply_group_detail .group_location img {
     width: 16px;
