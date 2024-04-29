@@ -26,6 +26,8 @@ class MemberModel extends Model
         'unique_code',
         'recommender_code',
         'mobile_no',
+        'email',
+        'password',
         'ci',
         'agree1',
         'agree2',
@@ -98,7 +100,7 @@ class MemberModel extends Model
         return $this->table;
     }
 
-    
+
     public function findByOauthId($oauthId, $providerName)
     {
         $existingUser = $this->where('sns_type', $providerName)
@@ -107,5 +109,4 @@ class MemberModel extends Model
 
         return $existingUser;
     }
-
 }
