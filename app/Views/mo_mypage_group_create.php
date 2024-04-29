@@ -93,9 +93,9 @@
                                 <div class="signin_form_div">
                                     <label for="group_age" class="signin_label"><?= lang('Korean.ageType') ?></label>
                                     <div class="multy_input">
-                                        <input id="group_min_age" type="number" name="group_min_age" value="" placeholder="<?= lang('Korean.meetCon2') ?>" oninput="clearInput(this)"><br />
+                                        <input id="group_min_age" type="number" name="group_min_age" value="" placeholder="<?= lang('Korean.meetCon2') ?>" onchange="clearInput(this)"><br />
                                         -
-                                        <input id="group_max_age" type="number" name="group_max_age" value="" placeholder="<?= lang('Korean.meetCon2') ?>" oninput="clearInput(this)"><br />
+                                        <input id="group_max_age" type="number" name="group_max_age" value="" placeholder="<?= lang('Korean.meetCon2') ?>" onchange="clearInput(this)"><br />
                                     </div>
                                 </div>
                             </div>
@@ -204,7 +204,7 @@
         });
 
         function ageType() {
-            $("#group_min_age, #group_max_age").on("input", function() {
+            $("#group_min_age, #group_max_age").on("change", function() {
                 var minAge = parseInt($("#group_min_age").val());
                 var maxAge = parseInt($("#group_max_age").val());
                 if (minAge !== "" && maxAge !== "" && minAge >= maxAge) {
@@ -446,8 +446,10 @@
                     ,
                 zIndex: 9999,
                 onSelect: function(selectedDate) {
-                    // datepicker에서 선택한 날짜를 가져와서 이를 최소 선택 가능 날짜로 설정
-                    $("#datepicker2").datepicker("option", "minDate", selectedDate);
+                    var nextDay = new Date(selectedDate); // 선택한 날짜를 JavaScript Date 객체로 변환
+                    nextDay.setDate(nextDay.getDate() + 1); // 하루를 더하여 다음 날짜로 설정
+                    var formattedNextDay = $.datepicker.formatDate('yy-mm-dd', nextDay); // 포맷 변경
+                    $("#datepicker2").datepicker("option", "minDate", formattedNextDay); // 변경된 날짜 설정
                 }
             });
 
@@ -478,12 +480,13 @@
                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'] //달력의 요일 Tooltip
                     ,
                 // minDate: "-1Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-                minDate: 0 // 오늘 이전의 날짜는 선택 불가능하도록 설정
+                minDate: "+1D" // 오늘 이전의 날짜는 선택 불가능하도록 설정
                     ,
                 maxDate: "+1y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
                     ,
                 zIndex: 9999
-
+                    ,
+                    
             });
 
             //초기값을 오늘 날짜로 설정
