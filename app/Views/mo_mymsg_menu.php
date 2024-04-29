@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -15,19 +14,20 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: none;"></mobileheader>
 
-        <?php $title = "메시지"; include 'header.php'; ?>
+
+        <?php $title = "메시지";
+        include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="tab_wrap">
                     <ul>
                         <li>
-                            <?=lang('Korean.AIMsg')?>
+                            <?= lang('Korean.AIMsg') ?>
                         </li>
                         <li class="on">
-                            <?=lang('Korean.messageBox')?>
+                            <?= lang('Korean.messageBox') ?>
                         </li>
                     </ul>
                 </div>
@@ -91,13 +91,13 @@
                 </div>
             </div>
             <div style="height: 50px;"></div>
-<footer class="footer">
-                
+            <footer class="footer">
+
                 <div class="message_input_box message_input_box_on">
                     <!-- <div class="btn_group multy ai_date_check">
-                        <button type="button" class="btn type01"><?=lang('Korean.accept')?></button>
-                        <button type="button" class="btn type04"><?=lang('Korean.refuse')?></button>
-                        <button type="button" class="btn type05"><?=lang('Korean.hold')?></button>
+                        <button type="button" class="btn type01"><?= lang('Korean.accept') ?></button>
+                        <button type="button" class="btn type04"><?= lang('Korean.refuse') ?></button>
+                        <button type="button" class="btn type05"><?= lang('Korean.hold') ?></button>
                     </div>  -->
                     <hr class="hoz_part" />
                     <div class="chat_input_box">
@@ -105,7 +105,7 @@
                             <img src="/static/images/hamberger_cancel.png" />
                         </div>
                         <div class="message_input_box_border">
-                            <textarea type="text" placeholder="<?=lang('Korean.aiMsgPlaceholder')?>"></textarea>
+                            <textarea type="text" placeholder="<?= lang('Korean.aiMsgPlaceholder') ?>"></textarea>
                             <img style="position:absolute; right: 30px" src="/static/images/message_send_btn.png" />
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                             <p>앨범</p>
                         </div>
                         <div class="chat_menu_func"><img src="/static/images/chat_location.png">
-                            <p><?=lang('Korean.promise')?></p>
+                            <p><?= lang('Korean.promise') ?></p>
                         </div>
                         <div class="chat_menu_func"><img src="/static/images/chat_banking.png">
                             <p>예약금<br />송금</p>
@@ -124,7 +124,7 @@
                             <p>방나가기</p>
                         </div>
                         <div class="chat_menu_func"><img src="/static/images/chat_report.png">
-                            <p><?=lang('Korean.declaration')?>/<?=lang('Korean.resign')?></p>
+                            <p><?= lang('Korean.declaration') ?>/<?= lang('Korean.resign') ?></p>
                         </div>
                         <div class="chat_menu_func"><img src="/static/images/chat_call.png">
                             <p>안심번호<br /> 통화하기</p>

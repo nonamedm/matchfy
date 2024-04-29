@@ -17,7 +17,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: none;"></mobileheader>
+
 
         <?php $title = "제휴";
         include 'header.php'; ?>
@@ -39,15 +39,15 @@
                     <div class="group_detail_header">
                         <div class="group_detail_type">
                             <?php
-                                if ($alliance_type === "01") {
-                                    echo "음식점";
-                                }else if($alliance_type === "02"){
-                                    echo "카페";
-                                }else if($alliance_type === "03"){
-                                    echo "숙박";
-                                }else{
-                                    echo"기타";
-                                }
+                            if ($alliance_type === "01") {
+                                echo "음식점";
+                            } else if ($alliance_type === "02") {
+                                echo "카페";
+                            } else if ($alliance_type === "03") {
+                                echo "숙박";
+                            } else {
+                                echo "기타";
+                            }
                             ?>
                         </div>
                         <p>　</p>
@@ -328,10 +328,10 @@
                     var number = document.createElement("a");
                     number.classList.add("fc-daygrid-day-number");
                     number.innerHTML = info.dayNumberText.replace("일", '');
-                     // 오늘 이전의 날짜인 경우 클래스 추가하여 스타일 적용
-                        if (info.date < today) {
-                            number.classList.add("past-date");
-                        }
+                    // 오늘 이전의 날짜인 경우 클래스 추가하여 스타일 적용
+                    if (info.date < today) {
+                        number.classList.add("past-date");
+                    }
                     return {
                         html: number.outerHTML
                     };

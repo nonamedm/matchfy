@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -17,52 +16,53 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: none;"></mobileheader>
 
-        <?php $title = "내지갑"; include 'header.php'; ?>
+
+        <?php $title = "내지갑";
+        include 'header.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="mypage_wallet">
                     <div class="mypage_wallet_point">
-                        <p><?=lang('Korean.mypoint')?></p>
+                        <p><?= lang('Korean.mypoint') ?></p>
                         <h2 class="current_points"></h2>
                     </div>
                     <div class="mypage_wallet_charge">
                         <div class="btn_group multy">
-                            <button class="btn type01" onclick="loc_pointCharge();"><?=lang('Korean.btnPointCharge')?></button>
-                            <button class="btn type03" onclick="loc_pointExchange();"><?=lang('Korean.exchange')?></button>
+                            <button class="btn type01" onclick="loc_pointCharge();"><?= lang('Korean.btnPointCharge') ?></button>
+                            <button class="btn type03" onclick="loc_pointExchange();"><?= lang('Korean.exchange') ?></button>
                         </div>
                     </div>
                     <div class="tab_wrap">
                         <ul>
                             <li>
-                                <a href="/mo/mypage/wallet"><?=lang('Korean.DepositDetails')?></a>
+                                <a href="/mo/mypage/wallet"><?= lang('Korean.DepositDetails') ?></a>
                             </li>
                             <li class="on">
-                                <a href="/mo/mypage/wallet2"><?=lang('Korean.useDetails')?></a>
+                                <a href="/mo/mypage/wallet2"><?= lang('Korean.useDetails') ?></a>
                             </li>
                         </ul>
                     </div>
                     <div class="mypage_wallet_list">
                         <div class="mypage_wallet_filter">
                             <select class="point_order small use">
-                                <option value="latest"> <?=lang('Korean.latestOrder')?></option>
-                                <option value="oldest"> <?=lang('Korean.oldOrder')?></option>
-                                <option value="highest_amount"> <?=lang('Korean.highestOrder')?></option>
-                                <option value="lowest_amount"> <?=lang('Korean.smallOrder')?></option>
+                                <option value="latest"> <?= lang('Korean.latestOrder') ?></option>
+                                <option value="oldest"> <?= lang('Korean.oldOrder') ?></option>
+                                <option value="highest_amount"> <?= lang('Korean.highestOrder') ?></option>
+                                <option value="lowest_amount"> <?= lang('Korean.smallOrder') ?></option>
                             </select>
                             <div class="mypage_wallet_period">
                                 <div class="btn_group multy">
-                                <button class="1week point_date btn type01 on" onclick="getPointSearch($('.point_order').val(),'1week','use')"><?=lang('Korean.1week')?>일</button>
-                                    <button class="1month point_date btn type01" onclick="getPointSearch($('.point_order').val(),'1month','use')"><?=lang('Korean.1month')?></button>
-                                    <button class="3month point_date btn type01" onclick="getPointSearch($('.point_order').val(),'3month','use')"><?=lang('Korean.3month')?></button>
+                                    <button class="1week point_date btn type01 on" onclick="getPointSearch($('.point_order').val(),'1week','use')"><?= lang('Korean.1week') ?>일</button>
+                                    <button class="1month point_date btn type01" onclick="getPointSearch($('.point_order').val(),'1month','use')"><?= lang('Korean.1month') ?></button>
+                                    <button class="3month point_date btn type01" onclick="getPointSearch($('.point_order').val(),'3month','use')"><?= lang('Korean.3month') ?></button>
                                 </div>
                             </div>
                         </div>
                         <hr class="hoz_part" />
                         <div id="point_content">
-                            <?php foreach ($points as $point): ?>
+                            <?php foreach ($points as $point) : ?>
                                 <div class="mypage_wallet_detail">
                                     <div class="date">
                                         <p><?= date('Y-m-d', strtotime($point['create_at'])) ?></p>
@@ -74,8 +74,8 @@
                                         <p>- <?= number_format($point['use_point']) ?></p>
                                     </div>
                                 </div>
-                            <hr class="hoz_part" />
-                            <?php endforeach?>
+                                <hr class="hoz_part" />
+                            <?php endforeach ?>
                         </div>
                         <!-- <div class="mypage_wallet_detail">
                             <div class="date">
@@ -159,19 +159,19 @@
 
 
         <div style="height: 50px;"></div>
-<footer class="footer">
-            
+        <footer class="footer">
+
             <!-- <div class="footer_logo mb40">
                 matchfy
             </div>
             <div class="footer_link mb40">
-                <a href="#"><?=lang('Korean.companyName')?></a>
-                <a href="#"><?=lang('Korean.pravacyName')?></a>
-                <a href="#"><?=lang('Korean.serviceName')?></a>
+                <a href="#"><?= lang('Korean.companyName') ?></a>
+                <a href="#"><?= lang('Korean.pravacyName') ?></a>
+                <a href="#"><?= lang('Korean.serviceName') ?></a>
             </div>
             <div class="footer_info mb40">
-                <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
-                <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
+                <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>
+                <span><?= lang('Korean.footerInfo3') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo4') ?><img
                         src="/static/images/part_line.png" /> gildong@naver.com</span>
             </div>
             <div class="footer_copy">

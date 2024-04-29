@@ -21,7 +21,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: none;"></mobileheader>
+
 
         <?php $title = "모임 등록";
         include 'header.php'; ?>
@@ -202,17 +202,19 @@
             loadMyAlliance();
             ageType();
         });
-        function ageType(){
+
+        function ageType() {
             $("#group_min_age, #group_max_age").on("input", function() {
-            var minAge = parseInt($("#group_min_age").val());
-            var maxAge = parseInt($("#group_max_age").val());
-            if (minAge !== "" && maxAge !== "" && minAge >= maxAge) {
-                fn_alert("최소 연령은 최대 연령보다 작아야 합니다.");
-                $(this).val("");
-                
-            }
-        });
+                var minAge = parseInt($("#group_min_age").val());
+                var maxAge = parseInt($("#group_max_age").val());
+                if (minAge !== "" && maxAge !== "" && minAge >= maxAge) {
+                    fn_alert("최소 연령은 최대 연령보다 작아야 합니다.");
+                    $(this).val("");
+
+                }
+            });
         }
+
         function loadMyAlliance() {
             $.ajax({
                 url: '/ajax/myAlliance',
@@ -405,8 +407,7 @@
                     ,
                 maxDate: "+1y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
                     ,
-                zIndex: 9999
-                    ,
+                zIndex: 9999,
                 onSelect: function(selectedDate) {
                     // datepicker에서 선택한 날짜를 가져와서 이를 최소 선택 가능 날짜로 설정
                     $("#datepicker1").datepicker("option", "minDate", selectedDate);
@@ -443,8 +444,7 @@
                     ,
                 maxDate: "+1y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
                     ,
-                zIndex: 9999
-                    ,
+                zIndex: 9999,
                 onSelect: function(selectedDate) {
                     // datepicker에서 선택한 날짜를 가져와서 이를 최소 선택 가능 날짜로 설정
                     $("#datepicker2").datepicker("option", "minDate", selectedDate);
@@ -483,7 +483,7 @@
                 maxDate: "+1y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
                     ,
                 zIndex: 9999
-                    
+
             });
 
             //초기값을 오늘 날짜로 설정

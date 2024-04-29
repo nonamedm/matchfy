@@ -16,7 +16,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: none;"></mobileheader>
+
 
         <?php $title = "제휴";
         include 'header.php'; ?>
@@ -73,14 +73,14 @@
                                     <?php
                                     if ($alliance['alliance_type'] === "01") {
                                         echo "음식점";
-                                    }else if($alliance['alliance_type'] === "02"){
+                                    } else if ($alliance['alliance_type'] === "02") {
                                         echo "카페";
-                                    }else if($alliance['alliance_type'] === "03"){
+                                    } else if ($alliance['alliance_type'] === "03") {
                                         echo "숙박";
-                                    }else{
-                                        echo"기타";
+                                    } else {
+                                        echo "기타";
                                     }
-                                ?>    
+                                    ?>
                                 </p>
                             </div>
                         </a>

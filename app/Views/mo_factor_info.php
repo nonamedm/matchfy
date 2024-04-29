@@ -16,7 +16,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: none;"></mobileheader>
+
 
         <?php $title = "내 상대";
         include 'header.php'; ?>
@@ -376,7 +376,7 @@
                         console.log(data);
                         if (data.status === 'success') { // 성공                        
                             console.log('저장', data);
-                            fn_confirm('파트너 정보저장 성공! \n홈으로 이동합니다.','calcMatchRate')
+                            fn_confirm('파트너 정보저장 성공! \n홈으로 이동합니다.', 'calcMatchRate')
                         } else if (data.status === 'error') {
                             console.log('실패', data);
                         } else {
@@ -391,7 +391,8 @@
                 });
             }
         }
-        function fn_calcMatchRate(value){
+
+        function fn_calcMatchRate(value) {
             if (value) {
                 $.ajax({
                     url: '/ajax/calcMatchRate', // todo : 추후 로그인완료로 이동

@@ -806,4 +806,7 @@ header .menu_item {
         padding: 30px 15px;
         width: auto;
     }
+    header.ci_header {
+        width: 100%;
+    }
 }

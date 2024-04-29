@@ -17,7 +17,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: none;"></mobileheader>
+
 
         <?php $title = "메시지";
         include 'header.php'; ?>
@@ -311,9 +311,10 @@
         }
 
         const extRm = () => {
-            fn_confirm('채팅방에서 나가시겠습니까? \n대화내용은 저장되지 않습니다.','extRm');
+            fn_confirm('채팅방에서 나가시겠습니까? \n대화내용은 저장되지 않습니다.', 'extRm');
         }
-        function fn_extRm(value){
+
+        function fn_extRm(value) {
             if (value) {
                 $.ajax({
                     url: '/ajax/extRm',

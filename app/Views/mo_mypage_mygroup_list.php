@@ -17,7 +17,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: none;"></mobileheader>
+
         <?php $title = "내 모임 관리";
         include 'header.php'; ?>
 
@@ -25,9 +25,9 @@
             <div class="content_wrap">
                 <div class="notice_filter">
                     <select class="small" id="notice_filter">
-                        <option value="create_at"><?=lang('Korean.registrationOrder')?></option>
-                        <option value="meeting_start_date"><?=lang('Korean.quickMeetingOrder')?></option>
-                        <option value="membership_fee"><?=lang('Korean.lowestReservationDeposit')?></option>
+                        <option value="create_at"><?= lang('Korean.registrationOrder') ?></option>
+                        <option value="meeting_start_date"><?= lang('Korean.quickMeetingOrder') ?></option>
+                        <option value="membership_fee"><?= lang('Korean.lowestReservationDeposit') ?></option>
                     </select>
                 </div>
                 <div class="mygroup_list" id="mygroup_list_body">
@@ -39,7 +39,7 @@
                             </div>
                             <div class="relative-container <?= $meeting->isEnded ? 'grayscale' : '' ?>">
                                 <?php if ($meeting->isEnded) : ?>
-                                    <div class="ended_overlay"><?=lang('Korean.endclose')?></div>
+                                    <div class="ended_overlay"><?= lang('Korean.endclose') ?></div>
                                 <?php endif; ?>
                                 <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
                                     <img src="/<?= $meeting->file_path ?><?= $meeting->file_name ?>" />
@@ -47,14 +47,14 @@
                             </div>
                             <div class="group_list_item group_apply_item">
                                 <div class="group_particpnt" onclick="javascript:meetingMemberList(<?= $meeting->meeting_idx ?>);">
-                                    <span><?=lang('Korean.application')?> <?= $meeting->meeting_idx_count ?></span>/<?= $meeting->number_of_people ?><?=lang('Korean.people')?>
+                                    <span><?= lang('Korean.application') ?> <?= $meeting->meeting_idx_count ?></span>/<?= $meeting->number_of_people ?><?= lang('Korean.people') ?>
                                 </div>
                                 <a href="/mo/mypage/group/detail/<?= $meeting->meeting_idx ?>">
                                     <div class="group_location">
                                         <img src="/static/images/ico_location_16x16.png" />
                                         <?= $meeting->meeting_place ?>
                                     </div>
-                                    <p class="group_price"><?= number_format($meeting->membership_fee) ?><?=lang('Korean.won')?></p>
+                                    <p class="group_price"><?= number_format($meeting->membership_fee) ?><?= lang('Korean.won') ?></p>
                                     <?php
                                     $date = $meeting->meeting_start_date;
                                     $dayOfWeek = date('w', strtotime($date)); // 요일을 숫자(0~6)로 가져옴
@@ -82,13 +82,13 @@
                 matchfy
             </div>
             <div class="footer_link mb40">
-                <a href="#"><?=lang('Korean.companyName')?></a>
-                <a href="#"><?=lang('Korean.pravacyName')?></a>
-                <a href="#"><?=lang('Korean.serviceName')?></a>
+                <a href="#"><?= lang('Korean.companyName') ?></a>
+                <a href="#"><?= lang('Korean.pravacyName') ?></a>
+                <a href="#"><?= lang('Korean.serviceName') ?></a>
             </div>
             <div class="footer_info mb40">
-                <span><?=lang('Korean.footerInfo1')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo2')?></span>
-                <span><?=lang('Korean.footerInfo3')?> <img src="/static/images/part_line.png" /> <?=lang('Korean.footerInfo4')?><img
+                <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>
+                <span><?= lang('Korean.footerInfo3') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo4') ?><img
                         src="/static/images/part_line.png" /> gildong@naver.com</span>
             </div>
             <div class="footer_copy">

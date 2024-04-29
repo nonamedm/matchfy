@@ -21,7 +21,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: none;"></mobileheader>
+
         <?php $title = "매칭피드";
         include 'header.php'; ?>
 
@@ -67,7 +67,7 @@
                                 </p>
                             </div>
                             <div class="profile_btn">
-                                <button class="popup_view_profile" onclick="moveToUrl('/mo/viewProfile/<?= $feed['nickname'] ?>')"><?=lang('Korean.profile')?></button>
+                                <button class="popup_view_profile" onclick="moveToUrl('/mo/viewProfile/<?= $feed['nickname'] ?>')"><?= lang('Korean.profile') ?></button>
                             </div>
                         </div>
                         <div class="feed_img_box" style="background-color: #e7e7e7;">

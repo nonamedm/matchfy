@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -15,9 +14,10 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: none;"></mobileheader>
-        
-        <?php $title = "피드보기"; include 'header.php'; ?>
+
+
+        <?php $title = "피드보기";
+        include 'header.php'; ?>
 
 
         <div class="sub_wrap">
@@ -27,16 +27,16 @@
                     <img class="profile_img" src="/static/images/mypage_pfofile.png" />
                     <div class="content_mypage_info">
                         <div class="profile">
-                            <h2>장원영<span style="font-size:15px;"> <?=lang('Korean.sir')?></span></h2>
+                            <h2>장원영<span style="font-size:15px;"> <?= lang('Korean.sir') ?></span></h2>
                         </div>
-                        <p>96 · <?=lang('Korean.seoul')?> 강남 · ESTJ</p>
+                        <p>96 · <?= lang('Korean.seoul') ?> 강남 · ESTJ</p>
                     </div>
                     <div>
-                        <button class="popup_view_profile"><?=lang('Korean.profile')?></button>
+                        <button class="popup_view_profile"><?= lang('Korean.profile') ?></button>
                     </div>
                 </div>
                 <div class="sns_img_filter">
-                    <p><?=lang('Korean.getSnsPhoto')?></p>
+                    <p><?= lang('Korean.getSnsPhoto') ?></p>
                 </div>
                 <div class="profile_img_box">
                     <form class="main_signin_form">
@@ -69,8 +69,8 @@
                 </div>
             </div>
             <div style="height: 50px;"></div>
-<footer class="footer">
-                
+            <footer class="footer">
+
 
                 <!-- <div class="message_input_box">
                 </div> -->

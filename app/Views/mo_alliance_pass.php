@@ -16,37 +16,38 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: none;"></mobileheader>
 
-        <?php $title = "휴대폰 본인인증";include 'header.php'; ?>
+
+        <?php $title = "휴대폰 본인인증";
+        include 'header.php'; ?>
 
         <div class="sub_wrap">
             <form class="temp_input" action="/mo/alliance/agree" method="post">
-            <div class="content_wrap">
+                <div class="content_wrap">
                     <div class="content_title">
-                        <h2><?=lang('Korean.passTitle')?></h2>
-                        <p><?=lang('Korean.passCon')?> </p>
+                        <h2><?= lang('Korean.passTitle') ?></h2>
+                        <p><?= lang('Korean.passCon') ?> </p>
                     </div>
                     <div class="content_body">
                         <img src="/static/images/pass_phone_img.png" />
                     </div>
                     <div class="btn_group">
-                        <button type="button" class="btn type01" onclick="alianceCertIdentify()"><?=lang('Korean.passTitle')?></button>
+                        <button type="button" class="btn type01" onclick="alianceCertIdentify()"><?= lang('Korean.passTitle') ?></button>
                     </div>
-            </div>
-            <div class="content_title">
-                <p>* <?=lang('Korean.passCon2')?></p>
-            </div>
-            <div class="input_ali_box">
-                <input id="input_ali_name" class="temp_input_text" type="text" name="name" placeholder="<?=lang('Korean.allianceCeoName')?>" value="<?= $name ?>" />
-                <input id="input_ali_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="<?=lang('Korean.allianceCeoPhonenum')?>" value="<?= $mobile_no ?>" oninput="clearInput(this);"/>
-                <input id="input_ali_company_name" class="temp_input_text" type="text" name="company" placeholder="<?=lang('Korean.allianceComName')?>" value="<?= $company ?>" />
-                <select id="input_gender" class="temp_input_text" name="gender">
-                    <option><?=lang('Korean.passGender')?></option>
-                    <option value="0" <?php if ($gender === '0') : ?>selected<?php endif ?>><?=lang('Korean.woman')?></option>
-                    <option value="1" <?php if ($gender === '1') : ?>selected<?php endif ?>><?=lang('Korean.man')?></option>
-                </select>
-            </div>
+                </div>
+                <div class="content_title">
+                    <p>* <?= lang('Korean.passCon2') ?></p>
+                </div>
+                <div class="input_ali_box">
+                    <input id="input_ali_name" class="temp_input_text" type="text" name="name" placeholder="<?= lang('Korean.allianceCeoName') ?>" value="<?= $name ?>" />
+                    <input id="input_ali_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="<?= lang('Korean.allianceCeoPhonenum') ?>" value="<?= $mobile_no ?>" oninput="clearInput(this);" />
+                    <input id="input_ali_company_name" class="temp_input_text" type="text" name="company" placeholder="<?= lang('Korean.allianceComName') ?>" value="<?= $company ?>" />
+                    <select id="input_gender" class="temp_input_text" name="gender">
+                        <option><?= lang('Korean.passGender') ?></option>
+                        <option value="0" <?php if ($gender === '0') : ?>selected<?php endif ?>><?= lang('Korean.woman') ?></option>
+                        <option value="1" <?php if ($gender === '1') : ?>selected<?php endif ?>><?= lang('Korean.man') ?></option>
+                    </select>
+                </div>
             </form>
         </div>
 

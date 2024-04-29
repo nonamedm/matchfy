@@ -28,7 +28,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: none;"></mobileheader>
+
 
         <?php $title = "내피드";
         include 'header.php'; ?>
@@ -42,7 +42,7 @@
                     <div class="content_mypage_info">
                         <div class="profile">
                             <h2>
-                                <?= $user['nickname'] ?><span style="font-size:15px;"> <?=lang('Korean.sir')?></span>
+                                <?= $user['nickname'] ?><span style="font-size:15px;"> <?= lang('Korean.sir') ?></span>
                             </h2>
                         </div>
                         <p>
@@ -56,7 +56,7 @@
                         </p>
                     </div>
                     <div>
-                        <button class="popup_view_profile" onclick="moveToUrl('/mo/viewProfile/<?= $user['nickname'] ?>')"><?=lang('Korean.profile')?></button>
+                        <button class="popup_view_profile" onclick="moveToUrl('/mo/viewProfile/<?= $user['nickname'] ?>')"><?= lang('Korean.profile') ?></button>
                     </div>
                 </div>
                 <div class="profile_img_box">
