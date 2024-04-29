@@ -427,6 +427,7 @@
                 type: 'POST',
                 data: {
                     "room_ci": $("#room_ci").val(),
+                    "room_type": $("#room_type").val(),
                 },
                 async: false,
                 success: function(data) {

@@ -184,8 +184,8 @@ header .menu_right.edit {
     line-height: 28px !important;
 }
 
-.mo_wrap .sub_wrap .content_title{
-    padding:0 20px;
+.mo_wrap .sub_wrap .content_title {
+    padding: 0 20px;
 }
 .mo_wrap .sub_wrap .content_wrap .content_title h2 {
     font-family: 'Pretendard-Bold';
@@ -1609,33 +1609,34 @@ a:active {
     height: 20px;
     margin: 4px;
 }
-.fc table{
+.fc table {
     border: 1px solid #f0f0f0;
     line-height: 30px;
 }
-.fc-theme-standard .fc-scrollgrid{
-    border:1px solid #f0f0f0;
+.fc-theme-standard .fc-scrollgrid {
+    border: 1px solid #f0f0f0;
     border-radius: 8px;
 }
-.fc-theme-standard td, .fc-theme-standard th{
-    border:1px solid #ffffff;
+.fc-theme-standard td,
+.fc-theme-standard th {
+    border: 1px solid #ffffff;
 }
 .fc-day-past {
     opacity: 0.5; /* 투명도 설정 */
     pointer-events: none; /* 클릭 이벤트 비활성화 */
 }
-.fc .fc-button-primary:disabled{
+.fc .fc-button-primary:disabled {
     background-color: #ffffff;
     border-color: #ffffff;
     color: #ff0267;
 }
-.fc .fc-button-primary{
+.fc .fc-button-primary {
     background-color: #ffffff;
     border-color: #ffffff;
     color: #ff0267;
 }
 
-.fc .fc-button-primary:active{
+.fc .fc-button-primary:active {
     background-color: #ffffff;
     border-color: #ffffff;
     color: #ff0267;
@@ -3250,7 +3251,7 @@ input[type='number']::-webkit-inner-spin-button {
     line-height: 18px;
 
     color: #999999;
-    padding: 15px 25px;
+    padding: 15px 35px;
     text-align: right;
 }
 .layerPopup_content .schedule_deposit p {
@@ -3736,7 +3737,7 @@ input[type='number']::-webkit-inner-spin-button {
 .alliance_detail_post div {
     margin: 4px;
 }
-.allance_content{
+.allance_content {
     font-size: 12px;
 }
 .temp_input_text {
@@ -3754,7 +3755,7 @@ input[type='number']::-webkit-inner-spin-button {
     width: 335px;
     margin: 0 auto;
 }
-.date{
+.date {
     width: 22%;
 }
 .desc{
