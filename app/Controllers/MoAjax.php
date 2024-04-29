@@ -2223,27 +2223,27 @@ class MoAjax extends BaseController
         ];
 
         $allianceId = $AllianceModel->insert($allianceData);
-        
-        if ($alliance_ceonum_file && $alliance_ceonum_file->isValid() && !$alliance_ceonum_file->hasMoved()){
-            
+
+        if ($alliance_ceonum_file && $alliance_ceonum_file->isValid() && !$alliance_ceonum_file->hasMoved()) {
+
             // return var_dump($alliance_ceonum_file->getClientName());
             $upload = new Upload();
             $fileData = $upload->allianceUpload($alliance_ceonum_file);
-            $fileMainData=[
-                'member_ci'=>$ci, 
-                'alliance_idx'=>$allianceId,
-                'file_path'=>$fileData['file_path'], 
-                'file_name'=>$fileData['file_name'], 
-                'org_name'=>$fileData['org_name'], 
-                'ext'=>$fileData['ext'],  
-                'delete_yn'=>'n', 
-                'board_type'=>'ceonum', 
-                'extra1', 
-                'extra2', 
+            $fileMainData = [
+                'member_ci' => $ci,
+                'alliance_idx' => $allianceId,
+                'file_path' => $fileData['file_path'],
+                'file_name' => $fileData['file_name'],
+                'org_name' => $fileData['org_name'],
+                'ext' => $fileData['ext'],
+                'delete_yn' => 'n',
+                'board_type' => 'ceonum',
+                'extra1',
+                'extra2',
                 'extra3'
             ];
             $AllianceFileModel->insert($fileMainData);
-        }else{
+        } else {
             $msg =  "사업자등록증 첨부파일이 등록되지 않았습니다.";
         }
 
@@ -2910,10 +2910,12 @@ class MoAjax extends BaseController
     {
         $ChatRoomMemberModel = new ChatRoomMemberModel();
         $MeetingPersonModel = new MeetingPersonModel();
+        $MeetingModel = new MeetingModel();
 
         $session = session();
         $ci = $session->get('ci');
         $room_ci = $this->request->getPost('room_ci');
+        $room_type = $this->request->getPost('room_type');
 
         // 내가 이 방의 참가자가 맞는지 다시 확인
         $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "'";
@@ -2921,14 +2923,26 @@ class MoAjax extends BaseController
             ->query($query)->getResultArray();
         if ($memberYn) {
             // 내가 방 참가자가 맞으면 
-            // 참가중인 약속이 있는지 확인 및 사용가능 포인트 확인
-            $query = "SELECT FORMAT(CAST(usable_point AS UNSIGNED),0) AS usable_point FROM wh_meeting_person WHERE chat_room_ci='" . $room_ci . "' AND member_ci='" . $ci . "' AND delete_yn='n'";
-            $usblPoint = $MeetingPersonModel
-                ->query($query)->getResultArray();
-            if ($usblPoint) {
-                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $usblPoint]]);
-            } else {
-                return $this->response->setJSON(['status' => 'error', 'message' => 'error']);
+
+            if ($room_type === '0') { // 1:1 채팅방일 때
+                // 참가중인 약속이 있는지 확인 및 사용가능 포인트 확인
+                $query = "SELECT FORMAT(CAST(usable_point AS UNSIGNED),0) AS usable_point FROM wh_meeting_person WHERE chat_room_ci='" . $room_ci . "' AND member_ci='" . $ci . "' AND delete_yn='n'";
+                $usblPoint = $MeetingPersonModel
+                    ->query($query)->getResultArray();
+                if ($usblPoint) {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $usblPoint]]);
+                } else {
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'error']);
+                }
+            } else { // 단톡방일 때
+                $query = "SELECT FORMAT(CAST(meeting_points AS UNSIGNED),0) AS usable_point FROM wh_meeting_points WHERE meeting_idx=(SELECT IDX FROM wh_meetings WHERE chat_room_ci='" . $room_ci . "')";
+                $usblPoint = $MeetingModel
+                    ->query($query)->getResultArray();
+                if ($usblPoint) {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $usblPoint]]);
+                } else {
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'error']);
+                }
             }
 
             // echo print_r($allMsg);
