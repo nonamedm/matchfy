@@ -32,11 +32,9 @@
             </div>
             
             <input type="hidden" id="privacy_id" name="privacy_id" value="<?= $privacy['id'] ?>"/>
-            <strong><label for="title">제목:</label></strong><br>
-            <p><?= $privacy['title'] ?></p><br>
-            <strong><label for="content">내용:</label></strong><br>
-            <p><?=nl2br($privacy['content']); ?></p>
-            
+            <strong><?= $privacy['title'] ?></strong><br>
+            <hr>
+            <div style="font-size:12px;"><p><?= nl2br($privacy['content']); ?></p></div>
             <div class="btn_up_del_box">
                 <input type="button" value="수정" Onclick="fn_clickUpdate('privacy','<?= $privacy['id']?>')"/>
                 <input type="button" value="<?=lang('Korean.delete')?>"  Onclick="fn_clickDelete('<?= $privacy['id']?>','privacy')"/>

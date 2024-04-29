@@ -2223,6 +2223,29 @@ class MoAjax extends BaseController
         ];
 
         $allianceId = $AllianceModel->insert($allianceData);
+        
+        if ($alliance_ceonum_file && $alliance_ceonum_file->isValid() && !$alliance_ceonum_file->hasMoved()){
+            
+            // return var_dump($alliance_ceonum_file->getClientName());
+            $upload = new Upload();
+            $fileData = $upload->allianceUpload($alliance_ceonum_file);
+            $fileMainData=[
+                'member_ci'=>$ci, 
+                'alliance_idx'=>$allianceId,
+                'file_path'=>$fileData['file_path'], 
+                'file_name'=>$fileData['file_name'], 
+                'org_name'=>$fileData['org_name'], 
+                'ext'=>$fileData['ext'],  
+                'delete_yn'=>'n', 
+                'board_type'=>'ceonum', 
+                'extra1', 
+                'extra2', 
+                'extra3'
+            ];
+            $AllianceFileModel->insert($fileMainData);
+        }else{
+            $msg =  "사업자등록증 첨부파일이 등록되지 않았습니다.";
+        }
 
         if ($alliance_photo && $alliance_photo->isValid() && !$alliance_photo->hasMoved()) {
             $upload = new Upload();

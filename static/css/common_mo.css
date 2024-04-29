@@ -47,6 +47,7 @@ button:hover {
 }
 a {
     text-decoration: none;
+    cursor: pointer;
 }
 a:hover {
     cursor: pointer;
@@ -152,7 +153,7 @@ header .menu_right.edit {
 
 .mo_wrap .sub_wrap .content_wrap {
     padding: 20px;
-    width: 331px;
+    /* width: 331px; */
     background: #ffffff;
     margin: 0 auto;
 }
@@ -2568,6 +2569,7 @@ input[type='number']::-webkit-inner-spin-button {
     padding: 20px;
     display: flex;
     justify-content: space-between;
+    color: #000000;
 }
 .notice_list .notice_list_label .faq_answer {
     display: flex;
@@ -3731,6 +3733,9 @@ input[type='number']::-webkit-inner-spin-button {
 .alliance_detail_post div {
     margin: 4px;
 }
+.allance_content{
+    font-size: 12px;
+}
 .temp_input_text {
     border: 1px solid #dddddd;
     width: 320px;
@@ -3745,6 +3750,15 @@ input[type='number']::-webkit-inner-spin-button {
 .invite_img {
     width: 335px;
     margin: 0 auto;
+}
+.date{
+    width: 22%;
+}
+.desc{
+    width: 58%;
+}
+.price{
+    width: 20%;
 }
 
 @media (max-width: 767px) {

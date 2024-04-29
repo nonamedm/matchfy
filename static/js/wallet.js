@@ -135,6 +135,7 @@ function serverAuth() {
     var quantityNum = $('#quantity').val();
     if (chk_pointChargeSubmit() == true) {
         $('.loading').hide();
+        $('.loading_bg').hide();
         AUTHNICE.requestPay({
             clientId: 'S2_41a14a007a4a44da9618ae765ad0338c',
             method: $('#paymethod').val(),
@@ -256,6 +257,7 @@ function pointsValueCheck() {
 /*환전 submit */
 function exchangePointSubmit() {
     $('.loading').show();
+    $('.loading_bg').show();
     var amount = $('#alliance_exchange_amount').val();
     var bank = $('#alliance_exchange_bank').val();
     var account_number = $('#alliance_exchange_account').val();
@@ -270,6 +272,7 @@ function exchangePointSubmit() {
             type: 'post',
             success: function (data) {
                 $('.loading').hide();
+                $('.loading_bg').hide();
                 if (data.success == true) {
                     window.location = '/mo_mypage_excharge_success';
                 } else {
