@@ -830,9 +830,10 @@ class MoHome extends BaseController
             ->from('wh_meeting_members a')
             ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
             ->join('members c', 'a.member_ci = c.ci', 'left')
-            ->join('member_files d', 'c.ci = d.member_ci and a.meeting_idx=d.member_ci', 'left')
+            ->join('member_files d', 'c.ci = d.member_ci', 'left')
             ->where('b.idx', $meeting_idx)
             ->where('a.delete_yn', 'N')
+            ->where('d.board_type','main_photo')
             ->orderBy('a.meeting_master')
             ->orderBy('a.create_at')
             ->get();
