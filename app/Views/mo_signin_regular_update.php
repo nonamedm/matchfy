@@ -18,7 +18,7 @@
 <body class="mo_wrap">
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
-        <mobileheader style="height:44px; display: block;"></mobileheader>
+
 
         <?php $title = "정회원 프로필";
         include 'header.php'; ?>
