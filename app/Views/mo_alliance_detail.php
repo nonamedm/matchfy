@@ -37,7 +37,19 @@
                 </div>
                 <div class="group_detail_info">
                     <div class="group_detail_header">
-                        <div class="group_detail_type"><?= $alliance_type ?></div>
+                        <div class="group_detail_type">
+                            <?php
+                                if ($alliance_type === "01") {
+                                    echo "음식점";
+                                }else if($alliance_type === "02"){
+                                    echo "카페";
+                                }else if($alliance_type === "03"){
+                                    echo "숙박";
+                                }else{
+                                    echo"기타";
+                                }
+                            ?>
+                        </div>
                         <p>　</p>
                     </div>
                     <div class="group_detail_title">
@@ -82,7 +94,7 @@
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <div style="display: flex; align-items: center;">
-                                        <input id="quantity" type="number" value="0" style="width:225px;" placeholder="<?= lang('Korean.peopleNum') ?>" />
+                                        <input id="quantity" type="number" value="1" style="width:225px;" placeholder="<?= lang('Korean.peopleNum') ?>" />
                                         <p style="margin-left:8px; font-size: 15px;"><?= lang('Korean.people') ?></p>
                                         <a style="margin-left:15px;" id="plus"><img src="/static/images/ico_plus_30x30.png" /></a>
                                         <a style="margin-left:12px;" id="minus"><img src="/static/images/ico_minus_30x30.png" /></a>
@@ -145,7 +157,7 @@
                             </div>
                             <div class="alliance_profile_content">
                                 <h2><?= lang('Korean.allianceCeonum') ?></h2>
-                                <p>추가필요</p>
+                                <p><?= $alliance_ceo_num ?></p>
                             </div>
                             <div class="alliance_profile_content">
                                 <h2><?= lang('Korean.allianceCompanyContact') ?></h2>
@@ -215,11 +227,10 @@
             var basePay = <?= $alliance_pay ?>;
             var totalAmount = basePay;
 
-            // 인원 수 증가
+            // // 인원 수 증가
             $('#plus').click(function() {
                 let currentValue = parseInt($('#quantity').val(), 10);
                 $('#quantity').val(currentValue + 1);
-                // updateTotalAmount();
             });
 
             function updateTotalAmount() {
@@ -233,7 +244,6 @@
                 let currentValue = parseInt($('#quantity').val(), 10);
                 if (currentValue > 1) {
                     $('#quantity').val(currentValue - 1);
-                    updateTotalAmount();
                 }
             });
 
@@ -265,6 +275,7 @@
 
         //달력
         document.addEventListener('DOMContentLoaded', function() {
+            var today = new Date();
             var calendarEl = document.getElementById('calendar');
             var lastSelectedDay;
             var allianceIdx = <?= $idx ?>;
@@ -278,6 +289,9 @@
                 },
                 locale: "ko",
                 contentHeight: "auto",
+                validRange: { // 오늘 이후의 날짜만 표시
+                    start: today
+                },
                 dateClick: function(info) {
                     // 이전 테두리를 제거
                     if (lastSelectedDay) {
@@ -314,6 +328,10 @@
                     var number = document.createElement("a");
                     number.classList.add("fc-daygrid-day-number");
                     number.innerHTML = info.dayNumberText.replace("일", '');
+                     // 오늘 이전의 날짜인 경우 클래스 추가하여 스타일 적용
+                        if (info.date < today) {
+                            number.classList.add("past-date");
+                        }
                     return {
                         html: number.outerHTML
                     };

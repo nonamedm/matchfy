@@ -32,10 +32,9 @@
             </div>
 
             <input type="hidden" id="terms_id" name="terms_id" value="<?= $terms['id'] ?>"/>
-            <strong><label for="title">제목:</label></strong><br>
-            <p><?= $terms['title'] ?></p><br>
-            <strong><label for="content">내용:</label></strong>
-            <p><?=nl2br($terms['content']); ?></p>
+            <strong><?= $terms['title'] ?></strong><br>
+            <hr>
+            <div style="font-size:12px;"><p><?= nl2br($terms['content']); ?></p></div>
             <div class="btn_up_del_box">
                 <input type="button" value="수정" Onclick="fn_clickUpdate('terms','<?= $terms['id']?>')"/>
                 <input type="button" value="<?=lang('Korean.delete')?>"  Onclick="fn_clickDelete('<?= $terms['id']?>','terms')"/>

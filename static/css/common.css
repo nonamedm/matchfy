@@ -695,6 +695,10 @@ header .menu_item {
     header {
         width: 100%;
     }
+    header.ci_header {
+        width: 100%;
+        margin: 0 auto;
+    }
     /* .login_btn.mypage_icon {
         display: flex;
     } */

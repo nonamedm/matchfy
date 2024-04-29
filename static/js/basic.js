@@ -1020,6 +1020,33 @@ const submitFile = () => {
         return false;
     }
 };
+const regEmail = () => {
+    const email = $('#email').val();
+    const ci = $('#mobile_no').val();
+    $.ajax({
+        url: '/ajax/getVerifyCode',
+        type: 'POST',
+        data: {
+            email: email,
+            ci: ci,
+        },
+        async: false,
+        success: function (data) {
+            console.log(data);
+            if (data.result === '0') {
+                // console.log('result : ', res)
+            } else if (data.result === '1') {
+                fn_alert('이메일 형식을 다시 확인해 주세요.');
+            } else {
+                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            }
+        },
+        error: function (res, status, err) {
+            console.log(err);
+            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
+};
 
 const meetingSave = (postData) => {
     if ($('#group_photo').val().trim() === '') {
@@ -1493,23 +1520,24 @@ const allianceUp = () => {
         $('#alliance_cont').val() !== '' &&
         $('#agree01').is(':checked')
     ) {
-        if (checkCeoNumber($('#alliance_ceo_num').val())) {
-            tempValidation = true;
-        } else {
+
+        if(!checkCeoNumber($('#alliance_ceo_num').val())){
             tempValidation = false;
             $('#alliance_ceo_num').focus();
             $('.loading').hide();
             $('.loading_bg').hide();
+            return false;
         }
 
-        if (checkPhoneNumber($('#alliance_number').val())) {
-            tempValidation = true;
-        } else {
+        if (!checkPhoneNumber($('#alliance_number').val())) {
             tempValidation = false;
             $('#alliance_number').focus();
             $('.loading').hide();
             $('.loading_bg').hide();
+            return false;   
         }
+
+        tempValidation = true;
     }
 
     if (tempValidation) {
@@ -1602,13 +1630,12 @@ const allianceFiltering = (category, searchText, filterOption) => {
                         <a href="/mo/alliance/detail/${alliance.idx}">
                             <div class="group_list_item">
                                 <img src="${imagePath}"/>
-
                                 <div class="group_location">
                                     <img src="/static/images/ico_location_16x16.png" />
                                     ${alliance.company_name}
                                 </div>
                                 <p class="group_price">${alliance.address}</p>
-                                <p class="group_schedule">${alliance.alliance_type}</p>
+                                <p class="group_schedule">${allianceType(+`${alliance.alliance_type}`)}</p>
                             </div>
                         </a>
                     `;
@@ -1623,6 +1650,17 @@ const allianceFiltering = (category, searchText, filterOption) => {
             fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
         },
     });
+};
+const allianceType = (type) => {
+    if (type == '01') {
+        return '음식점';
+    } else if (type == '02') {
+        return '카페';
+    } else if (type == '03') {
+        return '숙박';
+    } else {
+        return '기타';
+    }
 };
 
 const allianceSave = () => {

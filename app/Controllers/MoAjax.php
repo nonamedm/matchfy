@@ -23,6 +23,7 @@ use App\Models\ChatRoomModel;
 use App\Models\ChatRoomMsgModel;
 use App\Models\ChatRoomMemberModel;
 use App\Models\PointModel;
+use App\Models\EmailRegisterModel;
 
 
 class MoAjax extends BaseController
@@ -2222,6 +2223,29 @@ class MoAjax extends BaseController
         ];
 
         $allianceId = $AllianceModel->insert($allianceData);
+        
+        if ($alliance_ceonum_file && $alliance_ceonum_file->isValid() && !$alliance_ceonum_file->hasMoved()){
+            
+            // return var_dump($alliance_ceonum_file->getClientName());
+            $upload = new Upload();
+            $fileData = $upload->allianceUpload($alliance_ceonum_file);
+            $fileMainData=[
+                'member_ci'=>$ci, 
+                'alliance_idx'=>$allianceId,
+                'file_path'=>$fileData['file_path'], 
+                'file_name'=>$fileData['file_name'], 
+                'org_name'=>$fileData['org_name'], 
+                'ext'=>$fileData['ext'],  
+                'delete_yn'=>'n', 
+                'board_type'=>'ceonum', 
+                'extra1', 
+                'extra2', 
+                'extra3'
+            ];
+            $AllianceFileModel->insert($fileMainData);
+        }else{
+            $msg =  "사업자등록증 첨부파일이 등록되지 않았습니다.";
+        }
 
         if ($alliance_photo && $alliance_photo->isValid() && !$alliance_photo->hasMoved()) {
             $upload = new Upload();
@@ -3057,6 +3081,48 @@ class MoAjax extends BaseController
 
         if ($insertedData) {
             return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $insertedData]);
+        }
+    }
+    public function getVerifyCode()
+    {
+        $EmailRegisterModel = new EmailRegisterModel();
+
+        // 임시 테이블 만들 때 까지 전화번호가 임시 ci
+        $ci = $this->request->getPost('ci');
+        $emailAddr = "" . $this->request->getPost('email');
+        if (preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $emailAddr)) {
+            // echo "유효한 이메일 주소입니다.";
+        } else {
+            // echo "유효하지 않은 이메일 주소입니다.";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed', 'result' => '1']);
+        }
+        $random_numbers = "";
+        for ($i = 0; $i < 6; $i++) {
+            $random_numbers .= rand(0, 9); // 0부터 9까지의 랜덤한 숫자 생성하여 문자열에 추가
+        }
+        $query = "INSERT INTO wh_email_register 
+        (mobile_no, member_email, verify_code, created_at, updated_at)
+        VALUES('" . $ci . "', '" . $emailAddr . "', '" . $random_numbers . "', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+        $createRegist = $EmailRegisterModel
+            ->query($query);
+
+
+        if ($createRegist) {
+            $email = \Config\Services::email();
+
+            $email->setFrom('nonamedm@naver.com', 'Matchfy 관리자');
+            $email->setTo($emailAddr);
+            // $email->setCC('another@another-example.com');
+            // $email->setBCC('them@their-example.com');
+
+            $email->setSubject('Email Test');
+            $email->setMessage('Testing the email class.');
+
+            $email->send();
+
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '0', 'data' => $random_numbers]);
+        } else {
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed', 'result' => '2']);
         }
     }
 }

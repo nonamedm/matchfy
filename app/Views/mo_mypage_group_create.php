@@ -444,7 +444,11 @@
                 maxDate: "+1y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
                     ,
                 zIndex: 9999
-                
+                    ,
+                onSelect: function(selectedDate) {
+                    // datepicker에서 선택한 날짜를 가져와서 이를 최소 선택 가능 날짜로 설정
+                    $("#datepicker2").datepicker("option", "minDate", selectedDate);
+                }
             });
 
             //초기값을 오늘 날짜로 설정

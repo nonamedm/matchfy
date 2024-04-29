@@ -97,7 +97,7 @@
                                 <label for="email" class="signin_label"><?= lang('Korean.email') ?></label>
                                 <div class="input_btn">
                                     <input id="email" name="email" type="text" placeholder="<?= lang('Korean.signUpEmailPlaceholder') ?>">
-                                    <button type="button" class="btn btn_input_form" onclick="regEmail()">인증</button>
+                                    <button type="button" class="btn btn_input_form" onclick="regEmail()"><?= lang('Korean.certification') ?></button>
                                 </div>
                             </div>
                         </div>
@@ -107,7 +107,7 @@
                                 <label for="emailReg" class="signin_label"><?= lang('Korean.emailReg') ?></label>
                                 <div class="input_btn">
                                     <input id="emailReg" name="emailReg" type="text" placeholder="<?= lang('Korean.signUpEmailRegPlaceholder') ?>">
-                                    <button type="button" class="btn btn_input_form" onclick="regCode()">인증</button>
+                                    <button type="button" class="btn btn_input_form" onclick="regCode()"><?= lang('Korean.certification') ?></button>
                                 </div>
                             </div>
                         </div>
@@ -158,7 +158,6 @@
             editPhotoListner();
         });
         const chgCity = (e) => {
-            console.log(e.value, '야호');
             $.ajax({
                 url: '/ajax/gunguSch',
                 type: 'POST',

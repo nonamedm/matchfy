@@ -12,6 +12,11 @@
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/wallet.js"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <script>
+    $(document).ready(function(){
+        scroll();
+    });
+    </script>
 </head>
 
 <body class="mo_wrap">

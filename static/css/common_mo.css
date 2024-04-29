@@ -47,6 +47,7 @@ button:hover {
 }
 a {
     text-decoration: none;
+    cursor: pointer;
 }
 a:hover {
     cursor: pointer;
@@ -152,7 +153,7 @@ header .menu_right.edit {
 
 .mo_wrap .sub_wrap .content_wrap {
     padding: 20px;
-    width: 331px;
+    /* width: 331px; */
     background: #ffffff;
     margin: 0 auto;
 }
@@ -183,6 +184,9 @@ header .menu_right.edit {
     line-height: 28px !important;
 }
 
+.mo_wrap .sub_wrap .content_title{
+    padding:0 20px;
+}
 .mo_wrap .sub_wrap .content_wrap .content_title h2 {
     font-family: 'Pretendard-Bold';
     font-style: normal;
@@ -271,7 +275,8 @@ header .menu_right.edit {
 .profile_header h2 {
     font-family: 'Pretendard-Bold';
     font-weight: 600;
-    font-size: 20px;
+    /* font-size: 20px; */
+    font-size: 14px;
     line-height: 24px;
     margin: 0;
 }
@@ -361,12 +366,13 @@ header .menu_right.edit {
 }
 .alliance_detail_cont {
     margin: 30px 0;
-    font-size: 15px;
+    /* font-size: 15px; */
+    font-size: 12px;
 }
 
 .alliance_detail_cont h2 {
     font-weight: 700;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 19px;
 }
 .alliance_detail_cont .fc-toolbar-title {
@@ -465,12 +471,12 @@ header .menu_right.edit {
 }
 /* 일요일 날짜 빨간색 */
 .fc-day-sun a {
-    color: #ff7274;
+    color: #ff0267;
     text-decoration: none;
 }
 /* 토요일 날짜 파란색 */
 .fc-day-sat a {
-    color: #81a0ff;
+    color: #ff0267;
     text-decoration: none;
 }
 .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
@@ -478,7 +484,7 @@ header .menu_right.edit {
     position: relative;
 }
 .selected-day {
-    box-shadow: inset 0 0 0 2px red;
+    box-shadow: inset 0 0 0 1px #ff0267;
 }
 .amount_pay .amount_pay_left.alliance h2 {
     margin: 15px 0 0 0;
@@ -560,6 +566,7 @@ td {
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    object-fit: cover;
 }
 .chat_list_wrap .chat_room_title .receive_text {
     min-width: 270px;
@@ -953,7 +960,7 @@ a.ended:hover .ended_overlay {
 }
 .group_detail_type {
     padding: 2px 6px;
-    width: 44px;
+    width: auto;
     height: 16px;
     background: #ff0267;
     border-radius: 3px;
@@ -1036,6 +1043,7 @@ a.ended:hover .ended_overlay {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    font-size: 14px;
 }
 .group_search_list a,
 a:visited,
@@ -1154,7 +1162,7 @@ a:active {
     margin-top: 20px;
 }
 .group_category .highlighted {
-    border: 2px solid #ffa500; /* 오렌지색 테두리 */
+    border: 2px solid #ff0267; /* 오렌지색 테두리 */
     border-radius: 50%;
 }
 .group_category div {
@@ -1541,6 +1549,7 @@ a:active {
     line-height: 18px;
     letter-spacing: -0.28px;
     margin: 5px 0;
+    width: 300px;
 }
 .alliance_sch_list .alliance_sch_item p {
     font-weight: 600;
@@ -1598,6 +1607,43 @@ a:active {
     width: 20px;
     height: 20px;
     margin: 4px;
+}
+.fc table{
+    border: 1px solid #f0f0f0;
+    line-height: 30px;
+}
+.fc-theme-standard .fc-scrollgrid{
+    border:1px solid #f0f0f0;
+    border-radius: 8px;
+}
+.fc-theme-standard td, .fc-theme-standard th{
+    border:1px solid #ffffff;
+}
+.fc-day-past {
+    opacity: 0.5; /* 투명도 설정 */
+    pointer-events: none; /* 클릭 이벤트 비활성화 */
+}
+.fc .fc-button-primary:disabled{
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #ff0267;
+}
+.fc .fc-button-primary{
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #ff0267;
+}
+
+.fc .fc-button-primary:active{
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #ff0267;
+}
+
+.fc .fc-button-primary:hover {
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #ff0267;
 }
 .myinfo_level {
     padding: 3px 8px;
@@ -2134,7 +2180,7 @@ form input[type='file'] {
     font-family: 'Pretendard-Bold';
     font-style: normal;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 15px;
     line-height: 18px;
     color: #111111;
 }
@@ -2523,6 +2569,7 @@ input[type='number']::-webkit-inner-spin-button {
     padding: 20px;
     display: flex;
     justify-content: space-between;
+    color: #000000;
 }
 .notice_list .notice_list_label .faq_answer {
     display: flex;
@@ -3686,6 +3733,9 @@ input[type='number']::-webkit-inner-spin-button {
 .alliance_detail_post div {
     margin: 4px;
 }
+.allance_content{
+    font-size: 12px;
+}
 .temp_input_text {
     border: 1px solid #dddddd;
     width: 320px;
@@ -3700,6 +3750,15 @@ input[type='number']::-webkit-inner-spin-button {
 .invite_img {
     width: 335px;
     margin: 0 auto;
+}
+.date{
+    width: 22%;
+}
+.desc{
+    width: 58%;
+}
+.price{
+    width: 20%;
 }
 
 @media (max-width: 767px) {

@@ -11,6 +11,7 @@
     <meta name="format-detection" content="telephone=no">
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/wallet.js"></script>
+    <script src="/static/js/basic.js"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
 </head>
 
@@ -23,6 +24,7 @@
 
         <div class="sub_wrap">
             <div class="loading"><img src="/static/images/loading.gif"/></div>
+            <div class="loading_bg"></div>
             <div class="content_wrap">
                 <div class="alliance_payment">
                     <div class="alliance_payment_point">

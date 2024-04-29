@@ -31,10 +31,9 @@
                 </ul>
             </div>
             <input type="hidden" id="notice_id" name="notice_id" value="<?= $notice['id'] ?>"/>
-            <strong><label for="title">제목:</label></strong><br>
-            <p><?= $notice['title'] ?></p><br>
-            <strong><label for="content">내용:</label></strong><br>
-            <p><?= nl2br($notice['content']); ?></p>
+            <strong><?= $notice['title'] ?></strong><br>
+            <hr>
+            <div style="font-size:12px;"><p><?= nl2br($notice['content']); ?></p></div>
             <?php if ($file): ?>
                 <span class="attatch_file_div"><a class="attatch_file" href="/downloadFile/<?= $file['id'] ?>"><?= $file['org_name'] ?></a></span>
                 

@@ -27,6 +27,7 @@
 
         <div class="sub_wrap">
             <div class="loading"><img src="/static/images/loading.gif" /></div>
+            <div class="loading_bg"></div>
             <div class="content_wrap">
                 <div class="mypage_wallet charge">
                     <div class="mypage_wallet_point">

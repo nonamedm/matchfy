@@ -69,7 +69,19 @@
                                     <?= $alliance['company_name'] ?>
                                 </div>
                                 <p class="group_price"><?= $alliance['address'] ?></p>
-                                <p class="group_schedule"><?= $alliance['alliance_type'] ?></p>
+                                <p class="group_schedule">
+                                    <?php
+                                    if ($alliance['alliance_type'] === "01") {
+                                        echo "음식점";
+                                    }else if($alliance['alliance_type'] === "02"){
+                                        echo "카페";
+                                    }else if($alliance['alliance_type'] === "03"){
+                                        echo "숙박";
+                                    }else{
+                                        echo"기타";
+                                    }
+                                ?>    
+                                </p>
                             </div>
                         </a>
                     <?php endforeach; ?>
