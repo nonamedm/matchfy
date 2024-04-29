@@ -372,8 +372,8 @@ class MoHome extends BaseController
                 }
             }
             $query = "SELECT member_ci AS where_ci, (SELECT name FROM members WHERE ci = where_ci) AS name,
-                             (SELECT file_path FROM member_files WHERE member_ci = where_ci) AS file_path,
-                             (SELECT file_name FROM member_files WHERE member_ci = where_ci) AS file_name,
+                             (SELECT file_path FROM member_files WHERE member_ci = where_ci AND board_type='main_photo') AS file_path,
+                             (SELECT file_name FROM member_files WHERE member_ci = where_ci AND board_type='main_photo') AS file_name,
                              (CASE
                                 WHEN member_ci = '" . $ci . "' THEN 'me'
                                 ELSE 'you' 
