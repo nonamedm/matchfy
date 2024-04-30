@@ -33,6 +33,10 @@
                             <label for="id" class="blind"><?= lang('Korean.id') ?></label>
                             <input id="id" type="text" value="" style="width: 301px;" placeholder="<?= lang('Korean.loginPlacehoder') ?>" onkeypress="handleKeyPress(event)">
                         </div>
+                        <div class="form_row" style="text-align:center; margin-top: 20px;">
+                            <label for="id" class="blind"><?= lang('Korean.id') ?></label>
+                            <input id="pw" type="password" value="" style="width: 301px;" placeholder="<?= lang('Korean.loginPlacehoder2') ?>" onkeypress="handleKeyPress(event)">
+                        </div>
                         <div class="chk_box" style="margin-left: 7px;">
                             <input type="checkbox" id="keep" name="chkDefault00" checked="">
                             <label for="keep"><?= lang('Korean.autoId') ?></label>

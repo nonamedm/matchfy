@@ -110,34 +110,35 @@ const certIdentify = () => {
 };
 
 const userLogin = () => {
-    const phoneNumber = document.getElementById('id').value;
+    const emailAddr = document.getElementById('id').value;
+    const passwd = document.getElementById('pw').value;
     const autoLogin = document.getElementById('keep').checked;
     console.log(autoLogin);
 
     // 빈 값 validation
-    if (phoneNumber.length === 0) {
-        fn_alert('전화번호를 입력해 주세요.');
+    if (emailAddr.length === 0) {
+        fn_alert('이메일 주소를 입력해 주세요.');
         return;
     }
 
     //휴대폰 번호 11자리 숫자로 validation
-    const phoneRegex = /^\d{11}$/;
+    // const phoneRegex = /^\d{11}$/;
 
-    if (!phoneRegex.test(phoneNumber)) {
-        fn_alert('휴대폰 번호는 11자리 숫자여야 합니다.');
-        return;
-    }
+    // if (!phoneRegex.test(phoneNumber)) {
+    //     fn_alert('휴대폰 번호는 11자리 숫자여야 합니다.');
+    //     return;
+    // }
 
     $.ajax({
         url: '/ajax/login',
         type: 'POST',
-        data: { mobile_no: phoneNumber, auto_login: autoLogin },
+        data: { email: emailAddr, passwd: passwd, auto_login: autoLogin },
         async: false,
         success: function (data) {
             console.log(data);
-            if (data) {
+            if (data.status === 'success') {
                 $.ajax({
-                    url: '/ajax/calcMatchRate', // todo : 추후 로그인완료로 이동
+                    url: '/ajax/calcMatchRate',
                     type: 'POST',
                     async: false,
                     success: function (data) {
@@ -151,7 +152,7 @@ const userLogin = () => {
                 });
                 //location.href = '/index/login'
             } else {
-                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                fn_alert(data.message);
             }
             return false;
         },

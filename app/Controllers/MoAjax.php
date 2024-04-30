@@ -132,28 +132,39 @@ class MoAjax extends BaseController
 
     public function login()
     {
-        $mobile_no = $this->request->getPost('mobile_no');
+        // $mobile_no = $this->request->getPost('mobile_no');
+        $email = $this->request->getPost('email');
+        $pswd = "" . $this->request->getPost('passwd');
         $auto_login = $this->request->getPost('auto_login', FILTER_VALIDATE_BOOLEAN);
 
         $MemberModel = new MemberModel();
 
-        $user = $MemberModel->where('mobile_no', $mobile_no)->first();
+        $query = "SELECT * FROM members WHERE email = '" . $email . "' AND delete_yn='n';";
+        $userChk = $MemberModel->query($query)->getResultArray();
 
-        if ($user) {
-            $session = session();
-            $session->set([
-                'ci' => $user['ci'],
-                'name' => $user['name'],
-                'isLoggedIn' => true //로그인 상태
-            ]);
+        if ($userChk) { // email 이 존재하면 password 체크 시작
+            $pswdEncode = password_hash($pswd, PASSWORD_DEFAULT);
+            $pswdChk = password_verify($pswd, $userChk[0]['password']);
 
-            if ($auto_login) {
-                $session->setTempdata('ci', $user['ci'], 2592000);
+            if ($pswdChk) { // 패스워드 일치하면
+                $user = $userChk[0];
+                $session = session();
+                $session->set([
+                    'ci' => $user['ci'],
+                    'name' => $user['name'],
+                    'isLoggedIn' => true //로그인 상태
+                ]);
+
+                if ($auto_login) {
+                    $session->setTempdata('ci', $user['ci'], 2592000);
+                }
+
+                return $this->response->setJSON(['status' => 'success', 'message' => "로그인 성공"]);
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'message' => '패스워드가 일치하지 않습니다']);
             }
-
-            return $this->response->setJSON(['status' => 'success', 'message' => "로그인 성공"]);
         } else {
-            return $this->response->setJSON(['status' => 'error', 'message' => '일치하는 회원 정보가 없습니다.']);
+            return $this->response->setJSON(['status' => 'error', 'message' => '일치하는 회원 정보가 없습니다']);
         }
     }
     public function loginParam($param)
@@ -318,11 +329,11 @@ class MoAjax extends BaseController
             }
 
             // 패스워드 단방향 암호화 필요
-            $pswd = $this->request->getPost('pswd');
+            $pswd = "" . $this->request->getPost('pswd');
 
             $encrypter = \Config\Services::encrypter();
             $ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 32]));
-            $pswdEncode = base64_encode($encrypter->encrypt($pswd, ['key' => 'nonamedm', 'blockSize' => 32]));
+            $pswdEncode = password_hash($pswd, PASSWORD_DEFAULT);
 
             // $ci = $this->request->getPost('ci');
             $agree1 = $this->request->getPost('agree1');
@@ -1842,11 +1853,11 @@ class MoAjax extends BaseController
 
         $query = "SELECT * FROM members";
         $query .= " WHERE 1=1";
-        if (!empty($myFactor['except1']) || $myFactor['except1'] !== '') //배제항목 있을 시 조건에서 배제하기
+        if ($myFactor['except1'] && $myFactor['except1'] !== "" && $myFactor['except1'] !== null) //배제항목 있을 시 조건에서 배제하기
         {
             $query .= " AND (" . $myFactor['except1'] . " != '" . $myFactor['except1_detail'] . "'  OR " . $myFactor['except1'] . " IS NULL)";
         }
-        if (!empty($myFactor['except2']) || $myFactor['except2'] !== '') //배제항목 있을 시 조건에서 배제하기
+        if ($myFactor['except2'] && $myFactor['except2'] !== "" && $myFactor['except2'] !== null) //배제항목 있을 시 조건에서 배제하기
         {
             $query .= " AND (" . $myFactor['except2'] . " != '" . $myFactor['except2_detail'] . "'  OR " . $myFactor['except2'] . " IS NULL)";
         }
@@ -1854,308 +1865,311 @@ class MoAjax extends BaseController
         {
             $query .= " AND (gender = '" . $myPartner['partner_gender'] . "')";
         }
-        $datas = $MemberModel
-            ->query($query)->getResultArray();
+        if ($myPartner && $myFactor) { // 파트너정보 있을때만 계산
+            $datas = $MemberModel
+                ->query($query)->getResultArray();
+            // 세션(또는 파일로 로컬)에 저장한다. 이후 로그인 시 해당 ajax 작동시킨다.
+            foreach ($datas as &$item) {
+                // 기본배점 항목 계산
+                $calc = 0;
+                $calcMax = 0;
 
-        // 세션(또는 파일로 로컬)에 저장한다. 이후 로그인 시 해당 ajax 작동시킨다.
-        foreach ($datas as &$item) {
-            // 기본배점 항목 계산
-            $calc = 0;
-            $calcMax = 0;
-
-            $mydata = $MemberModel->where(['ci' => $ci])->first();
-            if ($mydata['nickname'] !== $item['nickname']) { // 본인이 아닌 경우만 계산
-                // group1 -- MBTI, 얼굴형, 스타일, 음주횟수
-                // MBTI
-                if ($item['mbti'] !== null) {
-                    $calcValue = 0;
-                    if ($myPartner['mbti'] === $item['mbti'])
-                    // 원하는 유형이 같을 때
-                    {
-                        $calcValue = $myFactor['group1'] * 1; // 점수
-                    } else if ($myPartner['mbti'] === '16') // 무관일 때
-                    {
-                        $calcValue = $myFactor['group1'] * 1; // 모두에게 점수
-                    } else {
+                $mydata = $MemberModel->where(['ci' => $ci])->first();
+                if ($mydata['nickname'] !== $item['nickname']) { // 본인이 아닌 경우만 계산
+                    // group1 -- MBTI, 얼굴형, 스타일, 음주횟수
+                    // MBTI
+                    if ($item['mbti'] !== null) {
                         $calcValue = 0;
+                        if ($myPartner['mbti'] === $item['mbti'])
+                        // 원하는 유형이 같을 때
+                        {
+                            $calcValue = $myFactor['group1'] * 1; // 점수
+                        } else if ($myPartner['mbti'] === '16') // 무관일 때
+                        {
+                            $calcValue = $myFactor['group1'] * 1; // 모두에게 점수
+                        } else {
+                            $calcValue = 0;
+                        }
+                        $calc += $calcValue;
                     }
-                    $calc += $calcValue;
-                }
-                // 얼굴형
-                // if (!$item['mbti'] !== null) // 회원가입시 얼굴형 아직 없음
-                // {
-                //     $calcValue = 0;
-                //     if ($myPartner['mbti'] === $item['mbti'])
-                //     // 원하는 유형이 같을 때
-                //     {
-                //         $calcValue = $myFactor['group2'] * 1; // 점수
-                //     } else
-                //     {
-                //         $calcValue = 0;
-                //     }
-                //     $calc += $calcValue;
-                // }
+                    // 얼굴형
+                    // if (!$item['mbti'] !== null) // 회원가입시 얼굴형 아직 없음
+                    // {
+                    //     $calcValue = 0;
+                    //     if ($myPartner['mbti'] === $item['mbti'])
+                    //     // 원하는 유형이 같을 때
+                    //     {
+                    //         $calcValue = $myFactor['group2'] * 1; // 점수
+                    //     } else
+                    //     {
+                    //         $calcValue = 0;
+                    //     }
+                    //     $calc += $calcValue;
+                    // }
 
-                // 스타일
-                if ($item['stylish'] !== null) {
-                    $calcValue = 0;
-                    if ($myPartner['stylish'] === $item['stylish'])
-                    // 원하는 유형이 같을 때
-                    {
-                        $calcValue = $myFactor['group1'] * 1; // 점수
-                    } else {
+                    // 스타일
+                    if ($item['stylish'] !== null) {
                         $calcValue = 0;
-                    }
-                    $calc += $calcValue;
-                }
-                // 음주횟수
-                if ($item['drinking'] !== null) {
-                    $calcValue = 0;
-                    if ($myPartner['drinking'] === '0') { // 음주횟수 - 무관
-                        $calcValue = $myFactor['group1'] * 1; // 모두에게 점수
-                    } else {
-                        if ($myPartner['drinking'] === $item['drinking']) {
-                            $calcValue = $myFactor['group1'] * 1; // 그외 일치할 경우 점수
+                        if ($myPartner['stylish'] === $item['stylish'])
+                        // 원하는 유형이 같을 때
+                        {
+                            $calcValue = $myFactor['group1'] * 1; // 점수
                         } else {
                             $calcValue = 0;
                         }
+                        $calc += $calcValue;
                     }
-                    $calc += $calcValue;
-                }
-                // group2 -- 나이, 체형, 지역, 결혼경험, 흡연유무, 종교
-                // 나이
-                if ($item['birthday'] !== null) {
-                    $calcValue = 0;
-                    if ($myPartner['fromyear'] !== null && $myPartner['toyear']) {
-                        $birthday = $item['birthday'];
-                        $birthYear = substr($birthday, 0, 4);
-                        if ($birthYear >= $myPartner['fromyear'] && $birthYear <= $myPartner['toyear']) {
-                            // 나이조건 적합
-                            $calcValue = $myFactor['group2'] * 1;
-                        } else {
-                            // 나이 부적합
-                            $calcValue = 0;
-                        }
-                    } else {
+                    // 음주횟수
+                    if ($item['drinking'] !== null) {
                         $calcValue = 0;
+                        if ($myPartner['drinking'] === '0') { // 음주횟수 - 무관
+                            $calcValue = $myFactor['group1'] * 1; // 모두에게 점수
+                        } else {
+                            if ($myPartner['drinking'] === $item['drinking']) {
+                                $calcValue = $myFactor['group1'] * 1; // 그외 일치할 경우 점수
+                            } else {
+                                $calcValue = 0;
+                            }
+                        }
+                        $calc += $calcValue;
                     }
-
-                    $calc += $calcValue;
-                }
-                // 체형
-                if ($item['bodyshape'] !== null) {
-                    $calcValue = 0;
-                    if ($myPartner['bodyshape'] === '5')
-                    //무관일 때
-                    {
-                        $calcValue = $myFactor['group2'] * 1; // 점수
-                    } else if ($myPartner['bodyshape'] === $item['bodyshape'])
-                    // 원하는 체형이 같을 때
-                    {
-                        $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
-                    } else if ((($myPartner['bodyshape'] - 1) === $item['bodyshape'] || ($myPartner['bodyshape'] + 1) === $item['bodyshape']))
-                    // 바로옆 체형일 때
-                    {
-                        $calcValue = $myFactor['group2'] * 0.5; // 0.5배점
-                    } else {
+                    // group2 -- 나이, 체형, 지역, 결혼경험, 흡연유무, 종교
+                    // 나이
+                    if ($item['birthday'] !== null) {
                         $calcValue = 0;
-                    }
-                    $calc += $calcValue;
-                }
-                // 지역
-                if ($item['city'] !== null) {
-                    $calcValue = 0;
-                    if ($myPartner['region'] === $item['city'])
-                    // 지역이 같을 때
-                    {
-                        $calcValue = $myFactor['group2'] * 1; // 점수
-                    }
-
-                    $calc += $calcValue;
-                }
-                // 결혼유무
-                if ($item['married'] !== null) {
-                    $calcValue = 0;
-                    if ($myPartner['married'] === '0') { // 결혼유무 - 무관
-                        $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
-                    } else {
-                        if ($item['married'] === '0') {
-                            $calcValue = $myFactor['group2'] * 1; // 미혼에게만 점수
-                        }
-                    }
-                    $calc += $calcValue;
-                }
-                // 흡연유무
-                if ($item['smoker'] !== null) {
-                    $calcValue = 0;
-                    if ($myPartner['smoker'] === '0') { // 흡연유무 - 무관
-                        $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
-                    } else {
-                        if ($item['smoker'] === '0') {
-                            $calcValue = $myFactor['group2'] * 1; // 금연자만 점수
-                        }
-                    }
-                    $calc += $calcValue;
-                }
-                // 종교
-                if ($item['religion'] !== null) {
-                    $calcValue = 0;
-                    if ($myPartner['religion'] === '5') { // 종교유무 - 무관
-                        $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
-                    } else {
-                        if ($myPartner['religion'] === $item['religion']) {
-                            $calcValue = $myFactor['group2'] * 1; // 원하는 종교만 점수
-                        }
-                    }
-                    $calc += $calcValue;
-                }
-                // group3 -- 성별, 키, 학력, 직업, 자산구간, 소득구간
-                // 성별은 애초에 거르기 때문에 배점 X
-                // 키
-                if ($item['height'] !== null) {
-                    $calcValue = 0;
-                    if ($myPartner['height'] !== null) {
-                        if ($item['height'] >= $myPartner['height']) {
-                            // 원하는 키보다 클 때
-                            $calcValue = $myFactor['group3'] * 1;
+                        if ($myPartner['fromyear'] !== null && $myPartner['toyear']) {
+                            $birthday = $item['birthday'];
+                            $birthYear = substr($birthday, 0, 4);
+                            if ($birthYear >= $myPartner['fromyear'] && $birthYear <= $myPartner['toyear']) {
+                                // 나이조건 적합
+                                $calcValue = $myFactor['group2'] * 1;
+                            } else {
+                                // 나이 부적합
+                                $calcValue = 0;
+                            }
                         } else {
-                            // 키 부적합
                             $calcValue = 0;
                         }
-                    } else {
+
+                        $calc += $calcValue;
+                    }
+                    // 체형
+                    if ($item['bodyshape'] !== null) {
                         $calcValue = 0;
-                    }
-
-                    $calc += $calcValue;
-                }
-                // 학력
-                if ($item['education'] !== null) {
-                    $calcValue = 0;
-                    if ($myPartner['education'] === '5') { // 학력 - 무관
-                        $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
-                    } else {
-                        if ($myPartner['education'] <= $item['education']) {
-                            $calcValue = $myFactor['group3'] * 1; // 원하는 학력 이상이면 점수
+                        if ($myPartner['bodyshape'] === '5')
+                        //무관일 때
+                        {
+                            $calcValue = $myFactor['group2'] * 1; // 점수
+                        } else if ($myPartner['bodyshape'] === $item['bodyshape'])
+                        // 원하는 체형이 같을 때
+                        {
+                            $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
+                        } else if ((($myPartner['bodyshape'] - 1) === $item['bodyshape'] || ($myPartner['bodyshape'] + 1) === $item['bodyshape']))
+                        // 바로옆 체형일 때
+                        {
+                            $calcValue = $myFactor['group2'] * 0.5; // 0.5배점
                         } else {
                             $calcValue = 0;
                         }
+                        $calc += $calcValue;
                     }
-                    $calc += $calcValue;
-                }
-                // 직업(군)
-                if ($item['job'] !== null) {
-                    $calcValue = 0;
-                    if ($myPartner['job'] === '3') { // 직업 - 무관
-                        $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
-                    } else {
-                        if ($myPartner['job'] <= $item['job']) {
-                            $calcValue = $myFactor['group3'] * 1; // 원하는 직업 이상이면 점수
+                    // 지역
+                    if ($item['city'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['region'] === $item['city'])
+                        // 지역이 같을 때
+                        {
+                            $calcValue = $myFactor['group2'] * 1; // 점수
+                        }
+
+                        $calc += $calcValue;
+                    }
+                    // 결혼유무
+                    if ($item['married'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['married'] === '0') { // 결혼유무 - 무관
+                            $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
+                        } else {
+                            if ($item['married'] === '0') {
+                                $calcValue = $myFactor['group2'] * 1; // 미혼에게만 점수
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 흡연유무
+                    if ($item['smoker'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['smoker'] === '0') { // 흡연유무 - 무관
+                            $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
+                        } else {
+                            if ($item['smoker'] === '0') {
+                                $calcValue = $myFactor['group2'] * 1; // 금연자만 점수
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 종교
+                    if ($item['religion'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['religion'] === '5') { // 종교유무 - 무관
+                            $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
+                        } else {
+                            if ($myPartner['religion'] === $item['religion']) {
+                                $calcValue = $myFactor['group2'] * 1; // 원하는 종교만 점수
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // group3 -- 성별, 키, 학력, 직업, 자산구간, 소득구간
+                    // 성별은 애초에 거르기 때문에 배점 X
+                    // 키
+                    if ($item['height'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['height'] !== null) {
+                            if ($item['height'] >= $myPartner['height']) {
+                                // 원하는 키보다 클 때
+                                $calcValue = $myFactor['group3'] * 1;
+                            } else {
+                                // 키 부적합
+                                $calcValue = 0;
+                            }
                         } else {
                             $calcValue = 0;
                         }
+
+                        $calc += $calcValue;
                     }
-                    $calc += $calcValue;
-                }
-                // 자산
-                if ($item['asset_range'] !== null) {
-                    $calcValue = 0;
-                    if ($myPartner['asset_range'] === '6') { // 자산 - 무관
-                        $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
-                    } else {
-                        if ($myPartner['asset_range'] <= $item['asset_range']) {
-                            $calcValue = $myFactor['group3'] * 1; // 원하는 자산 이상이면 점수
+                    // 학력
+                    if ($item['education'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['education'] === '5') { // 학력 - 무관
+                            $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
                         } else {
-                            $calcValue = 0;
+                            if ($myPartner['education'] <= $item['education']) {
+                                $calcValue = $myFactor['group3'] * 1; // 원하는 학력 이상이면 점수
+                            } else {
+                                $calcValue = 0;
+                            }
                         }
+                        $calc += $calcValue;
                     }
-                    $calc += $calcValue;
-                }
-                // 소득
-                if ($item['income_range'] !== null) {
-                    $calcValue = 0;
-                    if ($myPartner['income_range'] === '6') { // 소득 - 무관
-                        $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
-                    } else {
-                        if ($myPartner['income_range'] <= $item['income_range']) {
-                            $calcValue = $myFactor['group3'] * 1; // 원하는 소득 이상이면 점수
+                    // 직업(군)
+                    if ($item['job'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['job'] === '3') { // 직업 - 무관
+                            $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
                         } else {
-                            $calcValue = 0;
+                            if ($myPartner['job'] <= $item['job']) {
+                                $calcValue = $myFactor['group3'] * 1; // 원하는 직업 이상이면 점수
+                            } else {
+                                $calcValue = 0;
+                            }
                         }
+                        $calc += $calcValue;
                     }
-                    $calc += $calcValue;
-                }
-
-
-                // 가중치 항목 계산
-                if ($myFactor['first_factor'] !== null) {
-                    if ($item[$myFactor['first_factor']] === $myPartner[$myFactor['first_factor']]) {
-                        $calcValue = $myFactor['first_factor_point']; // 가중치1 항목 일치 시 추가점수
+                    // 자산
+                    if ($item['asset_range'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['asset_range'] === '6') { // 자산 - 무관
+                            $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
+                        } else {
+                            if ($myPartner['asset_range'] <= $item['asset_range']) {
+                                $calcValue = $myFactor['group3'] * 1; // 원하는 자산 이상이면 점수
+                            } else {
+                                $calcValue = 0;
+                            }
+                        }
+                        $calc += $calcValue;
                     }
-                    $calc += $calcValue;
-                    $calcMax += $calcValue;
-                }
-                if ($myFactor['second_factor'] !== null) {
-                    if ($item[$myFactor['second_factor']] === $myPartner[$myFactor['second_factor']]) {
-                        $calcValue = $myFactor['second_factor_point']; // 가중치2 항목 일치 시 추가점수
+                    // 소득
+                    if ($item['income_range'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['income_range'] === '6') { // 소득 - 무관
+                            $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
+                        } else {
+                            if ($myPartner['income_range'] <= $item['income_range']) {
+                                $calcValue = $myFactor['group3'] * 1; // 원하는 소득 이상이면 점수
+                            } else {
+                                $calcValue = 0;
+                            }
+                        }
+                        $calc += $calcValue;
                     }
-                    $calc += $calcValue;
-                    $calcMax += $calcValue;
-                }
-                if ($myFactor['third_factor'] !== null) {
-                    if ($item[$myFactor['third_factor']] === $myPartner[$myFactor['third_factor']]) {
-                        $calcValue = $myFactor['third_factor_point']; // 가중치3 항목 일치 시 추가점수
+
+
+                    // 가중치 항목 계산
+                    if ($myFactor['first_factor'] !== null) {
+                        if ($item[$myFactor['first_factor']] === $myPartner[$myFactor['first_factor']]) {
+                            $calcValue = $myFactor['first_factor_point']; // 가중치1 항목 일치 시 추가점수
+                        }
+                        $calc += $calcValue;
+                        $calcMax += $calcValue;
                     }
-                    $calc += $calcValue;
-                    $calcMax += $calcValue;
-                }
-                if ($myFactor['fourth_factor'] !== null) {
-                    if ($item[$myFactor['fourth_factor']] === $myPartner[$myFactor['fourth_factor']]) {
-                        $calcValue = $myFactor['fourth_factor_point']; // 가중치4 항목 일치 시 추가점수
+                    if ($myFactor['second_factor'] !== null) {
+                        if ($item[$myFactor['second_factor']] === $myPartner[$myFactor['second_factor']]) {
+                            $calcValue = $myFactor['second_factor_point']; // 가중치2 항목 일치 시 추가점수
+                        }
+                        $calc += $calcValue;
+                        $calcMax += $calcValue;
                     }
-                    $calc += $calcValue;
-                    $calcMax += $calcValue;
-                }
+                    if ($myFactor['third_factor'] !== null) {
+                        if ($item[$myFactor['third_factor']] === $myPartner[$myFactor['third_factor']]) {
+                            $calcValue = $myFactor['third_factor_point']; // 가중치3 항목 일치 시 추가점수
+                        }
+                        $calc += $calcValue;
+                        $calcMax += $calcValue;
+                    }
+                    if ($myFactor['fourth_factor'] !== null) {
+                        if ($item[$myFactor['fourth_factor']] === $myPartner[$myFactor['fourth_factor']]) {
+                            $calcValue = $myFactor['fourth_factor_point']; // 가중치4 항목 일치 시 추가점수
+                        }
+                        $calc += $calcValue;
+                        $calcMax += $calcValue;
+                    }
 
-                // group1 항목 총 4개 -- 얼굴형은 현재 제외이므로 3개만 계산
-                // group2 항목 총 6개
-                // group3 항목 총 6개 -- 성별은 애초에 거르기 때문에 5개만 계산
-                $calcMax += $myFactor['group1'] * 3 + $myFactor['group2'] * 6 + $myFactor['group3'] * 5;
-                $item['calc'] = $calc;
-                $item['calc_max'] = $calcMax;
+                    // group1 항목 총 4개 -- 얼굴형은 현재 제외이므로 3개만 계산
+                    // group2 항목 총 6개
+                    // group3 항목 총 6개 -- 성별은 애초에 거르기 때문에 5개만 계산
+                    $calcMax += $myFactor['group1'] * 3 + $myFactor['group2'] * 6 + $myFactor['group3'] * 5;
+                    $item['calc'] = $calc;
+                    $item['calc_max'] = $calcMax;
 
 
-                // 계산한 가중치 항목 DB insert -> 회원수 너무 많아지면 python 배치 저장 필요
-                $MatchRateModel = new MatchRateModel();
-                $selectParam = [
-                    'member_ci' => $mydata['ci'],
-                    // 'my_nickname' => $mydata['nickname'], 닉네임 수정할 수 있어서 조건 삭제
-                    'your_nickname' => $item['nickname'],
-                ];
-                $selected = $MatchRateModel->where($selectParam)->first();
-                if ($selected) {
-                    $query = "UPDATE wh_match_rate";
-                    $query .= " SET match_score = '" . $calc . "'";
-                    $query .= " , my_nickname = '" . $mydata['nickname'] . "'";
-                    $query .= " , match_score_max = '" . $calcMax . "'";
-                    $query .= " , match_rate = '" . number_format(($calc === 0 ? 1 : $calc) / ($calcMax === 0 ? 100 : $calcMax) * 100, 2) . "'";
-                    $query .= " WHERE member_ci = '" . $mydata['ci'] . "'";
-                    $query .= " AND your_nickname = '" . $item['nickname'] . "'";
-
-                    $result = $MatchRateModel
-                        ->query($query);
-                } else {
-                    $insertParam = [
+                    // 계산한 가중치 항목 DB insert -> 회원수 너무 많아지면 python 배치 저장 필요
+                    $MatchRateModel = new MatchRateModel();
+                    $selectParam = [
                         'member_ci' => $mydata['ci'],
-                        'my_nickname' => $mydata['nickname'],
+                        // 'my_nickname' => $mydata['nickname'], 닉네임 수정할 수 있어서 조건 삭제
                         'your_nickname' => $item['nickname'],
-                        'match_score' => $item['calc'],
-                        'match_score_max' => $item['calc_max'],
-                        'match_rate' => number_format(($calc === 0 ? 1 : $calc) / ($calcMax === 0 ? 100 : $calcMax) * 100, 2),
                     ];
-                    $result = $MatchRateModel->insert($insertParam);
+                    $selected = $MatchRateModel->where($selectParam)->first();
+                    if ($selected) {
+                        $query = "UPDATE wh_match_rate";
+                        $query .= " SET match_score = '" . $calc . "'";
+                        $query .= " , my_nickname = '" . $mydata['nickname'] . "'";
+                        $query .= " , match_score_max = '" . $calcMax . "'";
+                        $query .= " , match_rate = '" . number_format(($calc === 0 ? 1 : $calc) / ($calcMax === 0 ? 100 : $calcMax) * 100, 2) . "'";
+                        $query .= " WHERE member_ci = '" . $mydata['ci'] . "'";
+                        $query .= " AND your_nickname = '" . $item['nickname'] . "'";
+
+                        $result = $MatchRateModel
+                            ->query($query);
+                    } else {
+                        $insertParam = [
+                            'member_ci' => $mydata['ci'],
+                            'my_nickname' => $mydata['nickname'],
+                            'your_nickname' => $item['nickname'],
+                            'match_score' => $item['calc'],
+                            'match_score_max' => $item['calc_max'],
+                            'match_rate' => number_format(($calc === 0 ? 1 : $calc) / ($calcMax === 0 ? 100 : $calcMax) * 100, 2),
+                        ];
+                        $result = $MatchRateModel->insert($insertParam);
+                    }
                 }
             }
+        } else {
         }
+
 
         if ($result) {
             return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $datas]);

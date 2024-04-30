@@ -66,7 +66,8 @@ return [
     'signup'       => '회원가입',
     'mobileSignup'       => '휴대폰 번호로 회원가입',
     'naverLogin'         => '네이버로 계속하기',
-    'loginPlacehoder'    => '휴대폰 번호 입력',
+    'loginPlacehoder'    => '이메일 주소 입력',
+    'loginPlacehoder2'    => '비밀번호 입력',
     //index
     'indexCon'           => '파트너 정보를 설정해 주세요',
     'indexCon1'          => '프로필 등록으로<br /> 매칭 99% 멤버찾기',
