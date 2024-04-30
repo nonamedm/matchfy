@@ -618,7 +618,7 @@
             <!-- FOOTER: DEBUG INFO + COPYRIGHTS -->
 
             <!-- <div style="height: 50px;"></div> -->
-            <footer class="footer">
+            <footer class="footer" style="width:98%;">
                 <div class="footer_logo mb40">
                     matchfy
                 </div>
