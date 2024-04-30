@@ -1033,12 +1033,86 @@ const regEmail = () => {
         async: false,
         success: function (data) {
             console.log(data);
-            if (data.result === '0') {
-                // console.log('result : ', res)
+            if (data.result === '0' && data.email) {
+                var countP = $('#countdown');
+                var emailTxt = $('#email');
+                var regBtn = $('#emailBtn');
+                countP.css('display', 'block');
+                var minutes = 5;
+                var seconds = 0;
+
+                regBtn.prop('disabled', true);
+                emailTxt.prop('disabled', true);
+                var countdownInterval = setInterval(function () {
+                    if (seconds === 0) {
+                        if (minutes === 0) {
+                            clearInterval(countdownInterval);
+                            countP.css('display', 'none');
+                            regBtn.prop('disabled', false);
+                            emailTxt.prop('disabled', false);
+                            return;
+                        } else {
+                            minutes--;
+                            seconds = 59;
+                        }
+                    } else {
+                        seconds--;
+                    }
+
+                    var formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
+                    countP.text(minutes + ':' + formattedSeconds);
+                }, 1000);
             } else if (data.result === '1') {
                 fn_alert('이메일 형식을 다시 확인해 주세요.');
             } else {
                 fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            }
+        },
+        error: function (res, status, err) {
+            console.log(err);
+            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
+};
+
+const regCode = () => {
+    const email = $('#email').val();
+    const ci = $('#mobile_no').val();
+    const code = $('#emailReg').val();
+    $.ajax({
+        url: '/ajax/chkVerifyCode',
+        type: 'POST',
+        data: {
+            email: email,
+            ci: ci,
+            code: code,
+        },
+        async: false,
+        success: function (data) {
+            console.log(data);
+            // 코드 확인
+            var countP = $('#countdown');
+            var emailTxt = $('#email');
+            var regBtn = $('#emailBtn');
+            var emailCodeTxt = $('#emailReg');
+            var chkBtn = $('#emailRegBtn');
+
+            // 이메일입력, 코드입력, 인증코드 모두 비활성화
+            emailTxt.prop('disabled', true);
+            regBtn.prop('disabled', true);
+            emailCodeTxt.prop('disabled', true);
+            chkBtn.prop('disabled', true);
+            if (data.result === '0') {
+                // 성공
+                countP.css('display', 'none');
+            } else if (data.result === '1') {
+                fn_alert('잘못된 코드입니다. 다시 확인해 주세요');
+                emailCodeTxt.prop('disabled', false);
+                chkBtn.prop('disabled', false);
+            } else {
+                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                emailCodeTxt.prop('disabled', false);
+                chkBtn.prop('disabled', false);
             }
         },
         error: function (res, status, err) {
@@ -1520,8 +1594,7 @@ const allianceUp = () => {
         $('#alliance_cont').val() !== '' &&
         $('#agree01').is(':checked')
     ) {
-
-        if(!checkCeoNumber($('#alliance_ceo_num').val())){
+        if (!checkCeoNumber($('#alliance_ceo_num').val())) {
             tempValidation = false;
             $('#alliance_ceo_num').focus();
             $('.loading').hide();
@@ -1534,7 +1607,7 @@ const allianceUp = () => {
             $('#alliance_number').focus();
             $('.loading').hide();
             $('.loading_bg').hide();
-            return false;   
+            return false;
         }
 
         tempValidation = true;

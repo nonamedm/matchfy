@@ -24,6 +24,7 @@ use App\Models\ChatRoomMsgModel;
 use App\Models\ChatRoomMemberModel;
 use App\Models\PointModel;
 use App\Models\EmailRegisterModel;
+use App\Config\Email;
 
 
 class MoAjax extends BaseController
@@ -3102,7 +3103,7 @@ class MoAjax extends BaseController
         $EmailRegisterModel = new EmailRegisterModel();
 
         // 임시 테이블 만들 때 까지 전화번호가 임시 ci
-        $ci = $this->request->getPost('ci');
+        $ci = $this->request->getPost('mobile_no');
         $emailAddr = "" . $this->request->getPost('email');
         if (preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $emailAddr)) {
             // echo "유효한 이메일 주소입니다.";
@@ -3114,27 +3115,89 @@ class MoAjax extends BaseController
         for ($i = 0; $i < 6; $i++) {
             $random_numbers .= rand(0, 9); // 0부터 9까지의 랜덤한 숫자 생성하여 문자열에 추가
         }
-        $query = "INSERT INTO wh_email_register 
-        (mobile_no, member_email, verify_code, created_at, updated_at)
-        VALUES('" . $ci . "', '" . $emailAddr . "', '" . $random_numbers . "', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
-        $createRegist = $EmailRegisterModel
-            ->query($query);
+
+        $email = \Config\Services::email();
+        $config['protocol'] = 'smtp';
+        $config['SMTPHost'] = 'smtp.naver.com';
+        $config['SMTPUser'] = 'nonamedm@naver.com';
+        $config['SMTPPass'] = '6U829H5WJDZP';
+        $config['SMTPPort'] = '465';
+        $config['SMTPCrypto'] = 'ssl';
+        $config['SMTPTimeout'] = '10';
+        $config['wordWrap'] = true;
+        $config['mailType'] = 'html';
 
 
-        if ($createRegist) {
-            $email = \Config\Services::email();
+        $email->initialize($config);
+        $email->clear();
 
-            $email->setFrom('nonamedm@naver.com', 'Matchfy 관리자');
-            $email->setTo($emailAddr);
-            // $email->setCC('another@another-example.com');
-            // $email->setBCC('them@their-example.com');
+        $email->setFrom('nonamedm@naver.com', 'Matchfy 관리자');
+        $email->setTo($emailAddr);
+        // $email->setCC('another@another-example.com');
+        // $email->setBCC('them@their-example.com');
 
-            $email->setSubject('Email Test');
-            $email->setMessage('Testing the email class.');
+        $email->setSubject('Matchfy 인증코드 발송');
+        $msgCont = '
+            <img src="https://nonamedm18.mycafe24.com/static/images/matchfy.png">
+            <h2 style="color: #6f6f6f;">
+                이메일 인증코드를 입력하세요 
+            </h2>
+            <br />
+            <h1>[ <em  style="color: #ff0267;">' . $random_numbers . '</em> ]</h1>
+        ';
 
-            $email->send();
+        $email->setMessage($msgCont);
 
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '0', 'data' => $random_numbers]);
+        $emailSend = $email->send();
+
+        $emailSend = true;
+        if ($emailSend) {
+            $query = "UPDATE wh_email_register SET delete_yn='y', updated_at=CURRENT_TIMESTAMP
+                        WHERE mobile_no='" . $ci . "' AND member_email='" . $emailAddr . "' AND delete_yn='n' AND verify_yn='n'";
+            $updateRegist = $EmailRegisterModel
+                ->query($query);
+            if ($updateRegist) {
+                $query = "INSERT INTO wh_email_register 
+                        (mobile_no, member_email, verify_code, created_at, updated_at)
+                        VALUES('" . $ci . "', '" . $emailAddr . "', '" . $random_numbers . "', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+                $createRegist = $EmailRegisterModel
+                    ->query($query);
+
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '0', 'data' => $random_numbers, 'email' => $emailSend, 'code' => $createRegist]);
+            }
+        } else {
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed', 'result' => '2']);
+        }
+    }
+
+    public function chkVerifyCode()
+    {
+        $EmailRegisterModel = new EmailRegisterModel();
+
+        $ci = $this->request->getPost('mobile_no');
+        $code = $this->request->getPost('code');
+        $emailAddr = "" . $this->request->getPost('email');
+
+        $query = "SELECT * FROM wh_email_register 
+                    WHERE mobile_no='" . $ci . "' AND member_email='" . $emailAddr . "' AND delete_yn='n' ORDER BY created_at DESC LIMIT 1";
+        $chkRegist = $EmailRegisterModel
+            ->query($query)->getResultArray();
+        if ($chkRegist) {
+            // 코드가 맞는지 확인
+            if ($chkRegist[0]['verify_code'] === $code) {
+                $query = "UPDATE wh_email_register SET verify_yn='y' 
+                            WHERE mobile_no = '" . $chkRegist[0]['mobile_no'] . "' AND member_email = , '" . $chkRegist[0]['member_email'] . "' AND delete_yn = 'n' AND verify_yn='n'";
+                $confirmRegist = $EmailRegisterModel
+                    ->query($query);
+
+                if ($confirmRegist) {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '0']);
+                } else {
+                    return $this->response->setJSON(['status' => 'failed', 'message' => 'failed', 'result' => '2']);
+                }
+            } else {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '1']); // 잘못된 코드입니다.
+            }
         } else {
             return $this->response->setJSON(['status' => 'failed', 'message' => 'failed', 'result' => '2']);
         }

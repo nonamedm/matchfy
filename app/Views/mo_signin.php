@@ -97,9 +97,10 @@
                                 <label for="email" class="signin_label"><?= lang('Korean.email') ?></label>
                                 <div class="input_btn">
                                     <input id="email" name="email" type="text" placeholder="<?= lang('Korean.signUpEmailPlaceholder') ?>">
-                                    <button type="button" class="btn btn_input_form" onclick="regEmail()"><?= lang('Korean.certification') ?></button>
+                                    <button type="button" id="emailBtn" class="btn btn_input_form" onclick="regEmail()"><?= lang('Korean.certification') ?></button>
                                 </div>
                             </div>
+                            <p id="countdown" class="countdown">5:00</p>
                         </div>
 
                         <div class="form_row signin_form">
@@ -107,7 +108,7 @@
                                 <label for="emailReg" class="signin_label"><?= lang('Korean.emailReg') ?></label>
                                 <div class="input_btn">
                                     <input id="emailReg" name="emailReg" type="text" placeholder="<?= lang('Korean.signUpEmailRegPlaceholder') ?>">
-                                    <button type="button" class="btn btn_input_form" onclick="regCode()"><?= lang('Korean.certification') ?></button>
+                                    <button type="button" id="emailRegBtn" class="btn btn_input_form" onclick="regCode()"><?= lang('Korean.certification') ?></button>
                                 </div>
                             </div>
                         </div>

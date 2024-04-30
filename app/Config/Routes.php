@@ -138,6 +138,7 @@ $routes->post('/ajax/myAllianceDetail', 'MoAjax::myAllianceDetail');
 $routes->post('/ajax/upgradeGrade', 'MoAjax::upgradeGrade');
 $routes->post('/ajax/gunguSch', 'MoAjax::gunguSch');
 $routes->post('/ajax/getVerifyCode', 'MoAjax::getVerifyCode');
+$routes->post('/ajax/chkVerifyCode', 'MoAjax::chkVerifyCode');
 
 /* 채팅 */
 $routes->post('/ajax/createChat', 'MoAjax::createChat');
