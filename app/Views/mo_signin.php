@@ -126,7 +126,7 @@
                             </div>
                         </div>
 
-                        <input type="hidden" name="mobile_no" value="<?= $mobile_no ?>" />
+                        <input type="hidden" id="mobile_no" name="mobile_no" value="<?= $mobile_no ?>" />
                         <input type="hidden" name="nickname" value="<?= $nickname ?>" />
                         <input type="hidden" name="sns_type" value="<?= $sns_type ?>" />
                         <input type="hidden" name="oauth_id" value="<?= $oauth_id ?>" />

@@ -308,6 +308,10 @@ class MoAjax extends BaseController
             }
 
             $mobile_no = $this->request->getPost('mobile_no');
+            $email = $this->request->getPost('email');
+            // 패스워드 단방향 암호화 필요
+            $pswd = $this->request->getPost('pswd');
+
             $encrypter = \Config\Services::encrypter();
             $ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 32]));
 
@@ -327,6 +331,8 @@ class MoAjax extends BaseController
 
             $data = [
                 'mobile_no' => $mobile_no,
+                'email' => $email,
+                'password' => $pswd,
                 'ci' => $ci,
                 'agree1' => $agree1,
                 'agree2' => $agree2,
@@ -342,46 +348,53 @@ class MoAjax extends BaseController
                 'oauth_id' => $oauthId
             ];
 
-            // 데이터 저장
-            $inserted = $MemberModel->insert($data);
+            // 이메일과 전화번호로 verify_yn = y 인 항목을 한번 조회한다
+            $query = "SELECT * FROM wh_email_register WHERE mobile_no='" . $mobile_no . "' AND member_email='" . $email . "' AND verify_yn='y'";
+            $chkMailPhoneYn = $MemberModel->query($query)->getResultArray();
+            if ($chkMailPhoneYn) {
+                // 데이터 저장
+                $inserted = $MemberModel->insert($data);
 
-            // 회원가입 완료 되었을 떄
-            if ($inserted) {
-                // 프로필 사진 DB 업로드
-                $MemberFileModel = new MemberFileModel();
-                $org_name = $this->request->getPost('org_name');
-                $file_name = $this->request->getPost('file_name');
-                $file_path = $this->request->getPost('file_path');
-                $ext = $this->request->getPost('ext');
-                if ($org_name) {
-                    // 프로필 첨부 있을때만 file db 저장
-                    $data2 = [
-                        'member_ci' => $ci,
-                        'org_name' => $org_name,
-                        'file_name' => $file_name,
-                        'file_path' => $file_path,
-                        'ext' => $ext,
-                        'board_type' => 'main_photo',
-                    ];
-                    $data = array_merge($data, $data2);
-                    $MemberFileModel->insert($data2);
-                } else {
-                    // 프로필 첨부 없을때는 기본이미지로 저장
-                    $data2 = [
-                        'member_ci' => $ci,
-                        'org_name' => 'profile_noimg.png',
-                        'file_name' => 'profile_noimg.png',
-                        'file_path' => 'static/images/',
-                        'ext' => 'png',
-                        'board_type' => 'main_photo',
-                    ];
-                    $data = array_merge($data, $data2);
-                    $MemberFileModel->insert($data2);
-                }
+                // 회원가입 완료 되었을 떄
                 if ($inserted) {
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
+                    // 프로필 사진 DB 업로드
+                    $MemberFileModel = new MemberFileModel();
+                    $org_name = $this->request->getPost('org_name');
+                    $file_name = $this->request->getPost('file_name');
+                    $file_path = $this->request->getPost('file_path');
+                    $ext = $this->request->getPost('ext');
+                    if ($org_name) {
+                        // 프로필 첨부 있을때만 file db 저장
+                        $data2 = [
+                            'member_ci' => $ci,
+                            'org_name' => $org_name,
+                            'file_name' => $file_name,
+                            'file_path' => $file_path,
+                            'ext' => $ext,
+                            'board_type' => 'main_photo',
+                        ];
+                        $data = array_merge($data, $data2);
+                        $MemberFileModel->insert($data2);
+                    } else {
+                        // 프로필 첨부 없을때는 기본이미지로 저장
+                        $data2 = [
+                            'member_ci' => $ci,
+                            'org_name' => 'profile_noimg.png',
+                            'file_name' => 'profile_noimg.png',
+                            'file_path' => 'static/images/',
+                            'ext' => 'png',
+                            'board_type' => 'main_photo',
+                        ];
+                        $data = array_merge($data, $data2);
+                        $MemberFileModel->insert($data2);
+                    }
+                    if ($inserted) {
+                        return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
+                    } else {
+                        return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy fail', 'data' => $data]);
+                    }
                 } else {
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy fail', 'data' => $data]);
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy']);
                 }
             } else {
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy']);
@@ -3103,7 +3116,7 @@ class MoAjax extends BaseController
         $EmailRegisterModel = new EmailRegisterModel();
 
         // 임시 테이블 만들 때 까지 전화번호가 임시 ci
-        $ci = $this->request->getPost('mobile_no');
+        $ci = $this->request->getPost('ci');
         $emailAddr = "" . $this->request->getPost('email');
         if (preg_match("/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", $emailAddr)) {
             // echo "유효한 이메일 주소입니다.";
@@ -3174,7 +3187,7 @@ class MoAjax extends BaseController
     {
         $EmailRegisterModel = new EmailRegisterModel();
 
-        $ci = $this->request->getPost('mobile_no');
+        $ci = $this->request->getPost('ci');
         $code = $this->request->getPost('code');
         $emailAddr = "" . $this->request->getPost('email');
 
@@ -3186,7 +3199,7 @@ class MoAjax extends BaseController
             // 코드가 맞는지 확인
             if ($chkRegist[0]['verify_code'] === $code) {
                 $query = "UPDATE wh_email_register SET verify_yn='y' 
-                            WHERE mobile_no = '" . $chkRegist[0]['mobile_no'] . "' AND member_email = , '" . $chkRegist[0]['member_email'] . "' AND delete_yn = 'n' AND verify_yn='n'";
+                            WHERE mobile_no = '" . $chkRegist[0]['mobile_no'] . "' AND member_email =  '" . $chkRegist[0]['member_email'] . "' AND delete_yn = 'n' AND verify_yn='n'";
                 $confirmRegist = $EmailRegisterModel
                     ->query($query);
 
