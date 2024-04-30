@@ -444,13 +444,21 @@ class MoHome extends BaseController
                     $item['last_msg'] = $lastMsg[0];
                 }
                 if ($roomType[0]['room_type'] === '1') {
-
+                    // 단톡방인 경우
                     $mbrNames = "";
                     foreach ($allMbr as $mbr) {
                         $mbrNames .= $mbr['name'] . ", ";
                     }
                     $item['member_name'] = rtrim(trim($mbrNames), ',');
-                    // 단톡방인 경우
+
+                    $roomTitleQuery = "SELECT title as room_title FROM wh_meetings WHERE chat_room_ci = '" . $item['room_ci'] . "'";
+                    $roomTitle = $ChatRoomModel
+                        ->query($roomTitleQuery)->getResultArray();
+                    if ($roomTitle) {
+                        $item['room_title'] = $roomTitle[0]['room_title'];
+                    } else {
+                        $item['room_title'] = "모임 대화방 입니다";
+                    }
                 } else {
                     // 1:1 채팅인 경우
                     foreach ($allMbr as $mbr) {
@@ -478,7 +486,7 @@ class MoHome extends BaseController
                 }
             }
             $data['my_chat_room'] = $myChatRoom;
-            // echo print_r($allMsg);
+            // echo print_r($data['my_chat_room']);
             return view('mo_mymsg_list', $data);
         } else {
             $data['my_chat_room'] = $myChatRoom;
@@ -833,7 +841,7 @@ class MoHome extends BaseController
             ->join('member_files d', 'c.ci = d.member_ci', 'left')
             ->where('b.idx', $meeting_idx)
             ->where('a.delete_yn', 'N')
-            ->where('d.board_type','main_photo')
+            ->where('d.board_type', 'main_photo')
             ->orderBy('a.meeting_master')
             ->orderBy('a.create_at')
             ->get();

@@ -49,7 +49,10 @@
                                         <img src="/static/images/group_chat_profile.png" />
                                     </div>
                                     <div class="receive_text">
-                                        <p class="receive_profile_name"><?= $row['member_name'] ?><span class="match_percent btw8090">89%</span>
+                                        <p class="receive_profile_name">
+                                            <?= $row['room_title'] ?>
+                                            <!-- <?= $row['member_name'] ?> -->
+                                            <!-- <span class="match_percent btw8090">89%</span> -->
                                         </p>
                                         <div class="receive_msg_area">
                                             <?php if ($row['last_msg']) {
