@@ -245,6 +245,7 @@ header .menu_right.edit {
 /* tab area*/
 .tab_wrap {
     height: 50px;
+    margin-bottom: 20px;
 }
 .tab_wrap ul {
     list-style: none;
@@ -2977,7 +2978,7 @@ input[type='number']::-webkit-inner-spin-button {
 /* .mo_wrap .layerPopup.alert .layerPopup_content .scroll_body { */
 .mo_wrap .scroll_body {
     overflow-y: scroll;
-    height: 270px;
+    /* height: 270px; */
 }
 
 .scroll_body::-webkit-scrollbar {
