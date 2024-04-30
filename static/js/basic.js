@@ -295,23 +295,31 @@ const signUp = () => {
                     }
                     submitForm();
                 } else if (data.status === 'error') {
-                    // 한번만 출력되게 함
-                    $('.alert_validation').remove();
-                    // 오류 메시지 표시
-                    Object.keys(data.errors).forEach(function (key, index) {
-                        var field = $('[name="' + key + '"]');
-                        var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div 선택
+                    if (data.result === '2') {
+                        // 중복이메일
+                        fn_alert('이미 가입된 메일주소입니다. 다른 메일주소를 사용해 주세요.');
+                    } else if (data.result === '5') {
+                        // 중복이메일
+                        fn_alert('인증되지 않은 이메일 주소입니다. ');
+                    } else {
+                        // 한번만 출력되게 함
+                        $('.alert_validation').remove();
+                        // 오류 메시지 표시
+                        Object.keys(data.errors).forEach(function (key, index) {
+                            var field = $('[name="' + key + '"]');
+                            var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div 선택
 
-                        // 오류 메시지 추가
-                        if (!topMostDiv.next().hasClass('alert_validation')) {
-                            // 이미 오류 메시지가 있는지 확인
-                            topMostDiv.after('<div class="alert alert_validation">' + data.errors[key] + '</div>');
-                        }
-                        // 처음 validation 포커스
-                        if (index === 0) {
-                            field.focus();
-                        }
-                    });
+                            // 오류 메시지 추가
+                            if (!topMostDiv.next().hasClass('alert_validation')) {
+                                // 이미 오류 메시지가 있는지 확인
+                                topMostDiv.after('<div class="alert alert_validation">' + data.errors[key] + '</div>');
+                            }
+                            // 처음 validation 포커스
+                            if (index === 0) {
+                                field.focus();
+                            }
+                        });
+                    }
                 } else {
                     fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                 }
@@ -1041,15 +1049,15 @@ const regEmail = () => {
                 var minutes = 5;
                 var seconds = 0;
 
-                regBtn.prop('disabled', true);
-                emailTxt.prop('disabled', true);
+                // regBtn.prop('disabled', true);
+                // emailTxt.prop('disabled', true);
                 var countdownInterval = setInterval(function () {
                     if (seconds === 0) {
                         if (minutes === 0) {
                             clearInterval(countdownInterval);
                             countP.css('display', 'none');
-                            regBtn.prop('disabled', false);
-                            emailTxt.prop('disabled', false);
+                            // regBtn.prop('disabled', false);
+                            // emailTxt.prop('disabled', false);
                             return;
                         } else {
                             minutes--;
@@ -1098,7 +1106,7 @@ const regCode = () => {
             var chkBtn = $('#emailRegBtn');
 
             // 이메일입력, 코드입력, 인증코드 모두 비활성화
-            emailTxt.prop('disabled', true);
+            // emailTxt.prop('disabled', true);
             regBtn.prop('disabled', true);
             emailCodeTxt.prop('disabled', true);
             chkBtn.prop('disabled', true);

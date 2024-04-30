@@ -309,11 +309,20 @@ class MoAjax extends BaseController
 
             $mobile_no = $this->request->getPost('mobile_no');
             $email = $this->request->getPost('email');
+
+            // 이메일 가입 중복 로직 확인
+            $emailDupChkQuery = "SELECT email FROM members WHERE email='" . $email . "'";
+            $emailDupChk = $MemberModel->query($emailDupChkQuery)->getResultArray();
+            if ($emailDupChk) {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Email Duplication', 'result' => '2']);
+            }
+
             // 패스워드 단방향 암호화 필요
             $pswd = $this->request->getPost('pswd');
 
             $encrypter = \Config\Services::encrypter();
             $ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 32]));
+            $pswdEncode = base64_encode($encrypter->encrypt($pswd, ['key' => 'nonamedm', 'blockSize' => 32]));
 
             // $ci = $this->request->getPost('ci');
             $agree1 = $this->request->getPost('agree1');
@@ -332,7 +341,7 @@ class MoAjax extends BaseController
             $data = [
                 'mobile_no' => $mobile_no,
                 'email' => $email,
-                'password' => $pswd,
+                'password' => $pswdEncode,
                 'ci' => $ci,
                 'agree1' => $agree1,
                 'agree2' => $agree2,
@@ -349,7 +358,7 @@ class MoAjax extends BaseController
             ];
 
             // 이메일과 전화번호로 verify_yn = y 인 항목을 한번 조회한다
-            $query = "SELECT * FROM wh_email_register WHERE mobile_no='" . $mobile_no . "' AND member_email='" . $email . "' AND verify_yn='y'";
+            $query = "SELECT * FROM wh_email_register WHERE mobile_no='" . $mobile_no . "' AND member_email='" . $email . "' AND verify_yn='y' AND delete_yn='n'";
             $chkMailPhoneYn = $MemberModel->query($query)->getResultArray();
             if ($chkMailPhoneYn) {
                 // 데이터 저장
@@ -394,10 +403,10 @@ class MoAjax extends BaseController
                         return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy fail', 'data' => $data]);
                     }
                 } else {
-                    return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy']);
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy', 'result' => '4']);
                 }
             } else {
-                return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy']);
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy', 'result' => '5']);
             }
         }
     }
