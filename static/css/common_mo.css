@@ -1830,11 +1830,11 @@ a:active {
     text-align: left;
 }
 .main_logo {
-    position: absolute;
+    position: relative;
     width: 148px;
     height: 46px;
     left: calc(50% - 148px / 2 + 0.5px);
-    top: 241px;
+    top: 135px;
 
     font-family: 'Tium';
     font-weight: 700;
@@ -1846,9 +1846,8 @@ a:active {
 }
 
 .main_login_form {
-    position: absolute;
-    top: 365px;
-    left: calc(50% - 302px / 2 + 0.5px);
+    position: relative;
+    top: 225px;
 }
 .main_signin_form {
     /* position: absolute;

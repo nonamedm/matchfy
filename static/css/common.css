@@ -721,7 +721,7 @@ header .menu_item {
 }
 @media (max-width: 968px) {
     .login_btn {
-        display: none;
+        /* display: none; */
     }
     header {
         width: 100%;
