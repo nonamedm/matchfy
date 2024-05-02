@@ -75,7 +75,7 @@
                                 <select id="first_factor" name="first_factor">
                                     <option value><?= lang('Korean.noSelected') ?></option>
                                     <option value="mbti">MBTI</option>
-                                    <option value="animal_type1"><?= lang('Korean.faceType') ?></option>
+                                    <!-- <option value="animal_type1"><?= lang('Korean.faceType') ?></option> -->
                                     <option value="stylish"><?= lang('Korean.styleType') ?></option>
                                     <option value="drinking"><?= lang('Korean.drinkingType') ?></option>
                                     <option value="birthday"><?= lang('Korean.ageType') ?></option>
@@ -99,7 +99,7 @@
                                 <select id="second_factor" name="second_factor">
                                     <option value><?= lang('Korean.noSelected') ?></option>
                                     <option value="mbti">MBTI</option>
-                                    <option value="animal_type1"><?= lang('Korean.faceType') ?></option>
+                                    <!-- <option value="animal_type1"><?= lang('Korean.faceType') ?></option> -->
                                     <option value="stylish"><?= lang('Korean.styleType') ?></option>
                                     <option value="drinking"><?= lang('Korean.drinkingType') ?></option>
                                     <option value="birthday"><?= lang('Korean.ageType') ?></option>
@@ -123,7 +123,7 @@
                                 <select id="third_factor" name="third_factor">
                                     <option value><?= lang('Korean.noSelected') ?></option>
                                     <option value="mbti">MBTI</option>
-                                    <option value="animal_type1"><?= lang('Korean.faceType') ?></option>
+                                    <!-- <option value="animal_type1"><?= lang('Korean.faceType') ?></option> -->
                                     <option value="stylish"><?= lang('Korean.styleType') ?></option>
                                     <option value="drinking"><?= lang('Korean.drinkingType') ?></option>
                                     <option value="birthday"><?= lang('Korean.ageType') ?></option>
@@ -147,7 +147,7 @@
                                 <select id="fourth_factor" name="fourth_factor">
                                     <option value><?= lang('Korean.noSelected') ?></option>
                                     <option value="mbti">MBTI</option>
-                                    <option value="animal_type1"><?= lang('Korean.faceType') ?></option>
+                                    <!-- <option value="animal_type1"><?= lang('Korean.faceType') ?></option> -->
                                     <option value="stylish"><?= lang('Korean.styleType') ?></option>
                                     <option value="drinking"><?= lang('Korean.drinkingType') ?></option>
                                     <option value="birthday"><?= lang('Korean.ageType') ?></option>
@@ -179,7 +179,7 @@
                                     <select id="except1" name="except1" onchange="chgExcept(this);">
                                         <option value><?= lang('Korean.noSelected') ?></option>
                                         <option value="mbti">MBTI</option>
-                                        <option value="animal_type1"><?= lang('Korean.faceType') ?></option>
+                                        <!-- <option value="animal_type1"><?= lang('Korean.faceType') ?></option> -->
                                         <option value="stylish"><?= lang('Korean.styleType') ?></option>
                                         <option value="drinking"><?= lang('Korean.drinkingType') ?></option>
                                         <!-- <option value="birthday"><?= lang('Korean.ageType') ?></option> -->
@@ -208,7 +208,7 @@
                                     <select id="except2" name="except2" onchange="chgExcept(this);">
                                         <option value><?= lang('Korean.noSelected') ?></option>
                                         <option value="mbti">MBTI</option>
-                                        <option value="animal_type1"><?= lang('Korean.faceType') ?></option>
+                                        <!-- <option value="animal_type1"><?= lang('Korean.faceType') ?></option> -->
                                         <option value="stylish"><?= lang('Korean.styleType') ?></option>
                                         <option value="drinking"><?= lang('Korean.drinkingType') ?></option>
                                         <!-- <option value="birthday"><?= lang('Korean.ageType') ?></option> -->
