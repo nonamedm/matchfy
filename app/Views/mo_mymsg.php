@@ -71,7 +71,7 @@
                                 <div class="receive_text">
                                     <p class="receive_profile_name"><?= $row['nickname'] ?><span class="match_percent">
                                             <?php
-                                            if ($row['match_rate']) {
+                                            if ($row['match_rate'] && $row['match_rate'] !== null && $row['match_rate'] !== "") {
                                                 echo number_format($row['match_rate'], 0) . "%";
                                             }
                                             ?>
