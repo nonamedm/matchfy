@@ -22,7 +22,7 @@
         </header>
 
         <div class="">
-            <div class="login_wrap">
+            <div class="login_wrap" style="height:100%;">
                 <div class="main_logo">
                     matchfy
                 </div>
@@ -37,7 +37,7 @@
                             <label for="id" class="blind"><?= lang('Korean.id') ?></label>
                             <input id="pw" type="password" value="" style="width: 301px;" placeholder="<?= lang('Korean.loginPlacehoder2') ?>" onkeypress="handleKeyPress(event)">
                         </div>
-                        <div class="chk_box" style="margin-left: 7px;">
+                        <div class="chk_box" style="margin-left: 7px; left: calc(50% - 302px / 2 + 0.5px);">
                             <input type="checkbox" id="keep" name="chkDefault00" checked="">
                             <label for="keep"><?= lang('Korean.autoId') ?></label>
                         </div>
@@ -45,7 +45,7 @@
                             <button type="button" style="width: 301px;" class="btn type01" onclick="userLogin()"><?= lang('Korean.login') ?></button>
                         </div>
                 </form>
-                <img src="/static/images/main_login_hr.png" style="margin: 40px 0px 30px 0px;" />
+                <img src="/static/images/main_login_hr.png" style="position: relative; margin: 40px 0px 30px 0px;left: calc(50% - 302px / 2 + 0.5px);" />
                 <div class="btn_group">
                     <button type="button" style="width: 301px;" class="btn type00" onclick="moveToUrl('/mo/pass')"><?= lang('Korean.signup') ?></button>
                 </div>

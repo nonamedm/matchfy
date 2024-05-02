@@ -2725,24 +2725,24 @@ class MoAjax extends BaseController
                 // 환불 진행 성공시
                 if ($refundPoint) {
                     // 포인트가 충분히 있으면
-                    if ($myPoint + $usablePoint > $scdl_fee) {
-                        // 새로운 약속 정보 INSERT --> 약속 만드는 사람은 포인트 걷지 않음
-                        $query = "INSERT INTO wh_meeting_person
+                    // 새로운 약속 정보 INSERT --> 약속 만드는 사람은 포인트 걷지 않음
+                    $query = "INSERT INTO wh_meeting_person
                         (member_ci, scdl_type, scdl_date, number_of_people, membership_fee, chat_room_ci, usable_point)
                         VALUES('" . $ci . "', '" . $scdl_type . "', STR_TO_DATE('" . $scdl_date . "', '%Y-%m-%d %H:%i'), 2, '" . $scdl_fee . "', '" . $room_ci . "','0')";
-                        $makeSchedule = $MeetingPersonModel
-                            ->query($query);
+                    $makeSchedule = $MeetingPersonModel
+                        ->query($query);
 
-                        // 포인트 정보 업데이트 (환불 후 다시 모임에 포인트 입력)--> 약속 만드는 사람은 포인트 걷지 않음
-                        // $query = "INSERT INTO wh_points (member_ci, my_point, use_point, point_details, point_type)
-                        //         VALUES ('" . $ci . "', '" . ($myPoint + $usablePoint - $scdl_fee) . "','" . $scdl_fee . "','모임 예약금(-" . $scdl_fee . ")','U');";
-                        // $usePoint = $pointModel->query($query);
-                        // if (!$usePoint) {
-                        //     return $this->response->setJSON(['status' => 'failed', 'message' => '모임 생성 실패']);
-                        // }
-                    } else {
-                        return $this->response->setJSON(['status' => 'failed', 'message' => 'no_point', 'result' => '3']);
-                    }
+                    // if ($myPoint + $usablePoint > $scdl_fee) {
+                    //     // 포인트 정보 업데이트 (환불 후 다시 모임에 포인트 입력)--> 약속 만드는 사람은 포인트 걷지 않음
+                    //     // $query = "INSERT INTO wh_points (member_ci, my_point, use_point, point_details, point_type)
+                    //     //         VALUES ('" . $ci . "', '" . ($myPoint + $usablePoint - $scdl_fee) . "','" . $scdl_fee . "','모임 예약금(-" . $scdl_fee . ")','U');";
+                    //     // $usePoint = $pointModel->query($query);
+                    //     // if (!$usePoint) {
+                    //     //     return $this->response->setJSON(['status' => 'failed', 'message' => '모임 생성 실패']);
+                    //     // }
+                    // } else {
+                    //     return $this->response->setJSON(['status' => 'failed', 'message' => 'no_point', 'result' => '3']);
+                    // }
                 }
             } else {
                 // 내 포인트 먼저 조회
@@ -2756,25 +2756,25 @@ class MoAjax extends BaseController
                     ->query($query)->getResultArray();
                 $myPoint = $myPointQuery[0]['my_point'] ? intval($myPointQuery[0]['my_point']) : 0;
                 $usablePoint = $myPointQuery[0]['usable_point'] ? intval($myPointQuery[0]['usable_point']) : 0;
-                if ($myPoint > $scdl_fee) {
 
-                    // 신규면 INSERT --> 약속 만드는 사람은 포인트 걷지 않음
-                    $query = "INSERT INTO wh_meeting_person
+                // 신규면 INSERT --> 약속 만드는 사람은 포인트 걷지 않음
+                $query = "INSERT INTO wh_meeting_person
                         (member_ci, scdl_type, scdl_date, number_of_people, membership_fee, chat_room_ci, usable_point)
                         VALUES('" . $ci . "', '" . $scdl_type . "', STR_TO_DATE('" . $scdl_date . "', '%Y-%m-%d %H:%i'), 2, '" . $scdl_fee . "', '" . $room_ci . "','0')";
-                    $makeSchedule = $MeetingPersonModel
-                        ->query($query);
+                $makeSchedule = $MeetingPersonModel
+                    ->query($query);
+                // if ($myPoint > $scdl_fee) {
 
-                    // 포인트 정보 업데이트 --> 약속 만드는 사람은 포인트 걷지 않음
-                    // $query = "INSERT INTO wh_points (member_ci, my_point, use_point, point_details, point_type)
-                    //         VALUES ('" . $ci . "', '" . ($myPoint - $scdl_fee) . "','" . $scdl_fee . "','모임 예약금(-" . $scdl_fee . ")','U');";
-                    // $usePoint = $pointModel->query($query);
-                    // if (!$usePoint) {
-                    //     return $this->response->setJSON(['status' => 'failed', 'message' => '모임 생성 실패']);
-                    // }
-                } else {
-                    return $this->response->setJSON(['status' => 'failed', 'message' => 'no_point', 'result' => '3']);
-                }
+                //     // 포인트 정보 업데이트 --> 약속 만드는 사람은 포인트 걷지 않음
+                //     // $query = "INSERT INTO wh_points (member_ci, my_point, use_point, point_details, point_type)
+                //     //         VALUES ('" . $ci . "', '" . ($myPoint - $scdl_fee) . "','" . $scdl_fee . "','모임 예약금(-" . $scdl_fee . ")','U');";
+                //     // $usePoint = $pointModel->query($query);
+                //     // if (!$usePoint) {
+                //     //     return $this->response->setJSON(['status' => 'failed', 'message' => '모임 생성 실패']);
+                //     // }
+                // } else {
+                //     return $this->response->setJSON(['status' => 'failed', 'message' => 'no_point', 'result' => '3']);
+                // }
             }
             $msg_cont = '모임 생성 <br/>';
             $msg_cont .= '날짜 : ' . $scdl_date . '<br/>';
