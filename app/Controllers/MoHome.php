@@ -54,12 +54,12 @@ class MoHome extends BaseController
         $MemberModel = new MemberModel();
         $mobile_no = $postData['mobile_no'];
         $selected = $MemberModel->where('mobile_no', $mobile_no)->first();
-        if ($selected) {
-            echo '<script>fn_alert("이미 가입된 휴대폰 번호입니다");</script>';
-            return view('mo_pass', $postData);
-        } else {
-            return view('mo_agree', $postData);
-        }
+        return view('mo_agree', $postData);
+        // if ($selected) {
+        //     echo '<script>fn_alert("이미 가입된 휴대폰 번호입니다");</script>';
+        //     return view('mo_pass', $postData);
+        // } else {
+        // }
     }
     public function signin(): string
     {
