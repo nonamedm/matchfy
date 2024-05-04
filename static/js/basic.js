@@ -91,8 +91,30 @@ const certIdentify = () => {
         tempValidation = true;
     }
     if (tempValidation) {
-        submitForm();
+        if ($('#input_mobile_no').val() !== '') {
+            $.ajax({
+                url: '/ajax/mobileDupChk',
+                type: 'POST',
+                data: {
+                    mobile_no: $('#input_mobile_no').val(),
+                },
+                success: function (response) {
+                    console.log(response);
+                    if (response.result === '0') {
+                        submitForm();
+                    } else {
+                        fn_alert('이미 가입된 휴대폰 번호입니다');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching reservation data:', error);
+                },
+            });
+        } else {
+            fn_alert('휴대폰 번호를 확인해 주세요');
+        }
     } else {
+        // 입력창을 채워주세요
     }
 
     //     } else {

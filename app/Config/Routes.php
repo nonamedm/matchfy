@@ -111,6 +111,7 @@ $routes->post('/upload', 'Upload::upload');
 $routes->post('/ajax/signUp', 'MoAjax::signUp');
 $routes->post('/ajax/alianceUp', 'MoAjax::alianceUp');
 $routes->post('/ajax/signUpdate', 'MoAjax::signUpdate');
+$routes->post('/ajax/mobileDupChk', 'MoAjax::mobileDupChk');
 $routes->post('/ajax/isValidRecommendCode', 'MoAjax::isValidRecommendCode');
 $routes->post('/ajax/login', 'MoAjax::login');
 $routes->post('/ajax/logout', 'MoAjax::logout');

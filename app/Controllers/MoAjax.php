@@ -460,6 +460,20 @@ class MoAjax extends BaseController
         ]);
     }
 
+    public function mobileDupChk()
+    {
+        $mobile_no = $this->request->getPost('mobile_no');
+
+        $MemberModel = new MemberModel();
+        $selected = $MemberModel->where('mobile_no', $mobile_no)->first();
+
+        if ($selected) {
+            return $this->response->setJSON(['status' => 'failed', 'message' => '휴대폰 번호 중복', 'result' => '1']);
+        } else {
+            return $this->response->setJSON(['status' => 'success', 'message' => '중복체크 성공', 'result' => '0']);
+        }
+    }
+
     public function signUpdate()
     {
 

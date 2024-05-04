@@ -51,10 +51,10 @@ class MoHome extends BaseController
         $BoardModel2->setTableName('wh_board_privacy');
         $postData['privacy'] = $BoardModel2->orderBy('created_at', 'DESC')->first();
 
-        $MemberModel = new MemberModel();
-        $mobile_no = $postData['mobile_no'];
-        $selected = $MemberModel->where('mobile_no', $mobile_no)->first();
         return view('mo_agree', $postData);
+        // $MemberModel = new MemberModel();
+        // $mobile_no = $postData['mobile_no'];
+        // $selected = $MemberModel->where('mobile_no', $mobile_no)->first();
         // if ($selected) {
         //     echo '<script>fn_alert("이미 가입된 휴대폰 번호입니다");</script>';
         //     return view('mo_pass', $postData);
@@ -396,6 +396,7 @@ class MoHome extends BaseController
             // echo print_r($allMsg);
             return view('mo_mymsg', $data);
         } else {
+            echo '<script src="/static/js/basic.js"></script>';
             echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
             return view('index');
         }
