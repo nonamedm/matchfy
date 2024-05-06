@@ -1294,7 +1294,7 @@ const meetingFiltering = (category, searchText, filterOption) => {
         contentType: false,
         async: false,
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             var listHtml = '';
             if (data.length > 0) {
                 data.forEach(function (meeting) {

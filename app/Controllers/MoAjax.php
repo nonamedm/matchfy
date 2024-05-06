@@ -1496,6 +1496,7 @@ class MoAjax extends BaseController
         $filterOption = $this->request->getPost('filterOption'); // 필터링
 
         $MeetingModel = new MeetingModel();
+        $currentTime = date('Y-m-d H:i:s');
 
         // 카테고리 필터링
         if (!empty($category)) {
@@ -1522,12 +1523,26 @@ class MoAjax extends BaseController
                 $MeetingModel->orderBy('create_at', 'DESC');
         }
 
-        $currentTime = date('Y-m-d H:i:s');
+        $session = session();
+        $ci = $session->get('ci');
 
+        $MemberModel = new MemberModel();
+        $birthday = $MemberModel
+            ->select('birthday')
+            ->where('ci', $ci)
+            ->first();
+
+        $birthDate = \DateTime::createFromFormat('Ymd', $birthday['birthday']);
+        $currentDate = new \DateTime('now');
+        $age = $birthDate->diff($currentDate)->y;
+
+        
         $meetings = $MeetingModel
             ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
             ->where('wh_meetings.meeting_start_date >=', $currentTime)
             ->where('wh_meetings.delete_yn', 'N')
+            ->where('wh_meetings.group_min_age <=', $age)
+            ->where('wh_meetings.group_max_age >=', $age)
             ->findAll();
 
         $days = ['일', '월', '화', '수', '목', '금', '토'];

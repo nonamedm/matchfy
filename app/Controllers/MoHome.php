@@ -702,18 +702,30 @@ class MoHome extends BaseController
 
     public function mypageGroupList(): string
     {
+        $session = session();
+        $ci = $session->get('ci');
+
+        $MemberModel = new MemberModel();
+
+        $birthday = $MemberModel
+            ->select('birthday')
+            ->where('ci', $ci)
+            ->first();
+
+        $birthDate = \DateTime::createFromFormat('Ymd', $birthday['birthday']);
+        $currentDate = new \DateTime('now');
+        $age = $birthDate->diff($currentDate)->y;
+
         $MeetingModel = new MeetingModel();
-        //$MeetingFileModel = new MeetingFileModel();
-        // $data['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
-
-        $MeetingModel->orderBy('meeting_start_date', 'ASC');
-
         $currentTime = date('Y-m-d H:i:s');
 
         $meetings = $MeetingModel
             ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
             ->where('wh_meetings.meeting_start_date >=', $currentTime)
             ->where('wh_meetings.delete_yn', 'N')
+            ->where('wh_meetings.group_min_age <=', $age)
+            ->where('wh_meetings.group_max_age >=', $age)
+            ->orderBy('meeting_start_date', 'ASC')
             ->findAll();
 
         $days = ['일', '월', '화', '수', '목', '금', '토'];
