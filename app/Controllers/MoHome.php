@@ -706,7 +706,7 @@ class MoHome extends BaseController
         //$MeetingFileModel = new MeetingFileModel();
         // $data['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
 
-        $MeetingModel->orderBy('create_at', 'DESC');
+        $MeetingModel->orderBy('meeting_start_date', 'ASC');
 
         $currentTime = date('Y-m-d H:i:s');
 
@@ -1692,6 +1692,10 @@ class MoHome extends BaseController
             ->orderBy('idx', 'DESC')
             ->first();
 
+        if (isset($alliance['alliance_ceo_num'])) {
+            $alliance['alliance_ceo_num'] = $this->formatBusinessNumber($alliance['alliance_ceo_num']);
+        }
+
         if (isset($alliance['detailed_content'])) {
             $lines = explode("<br>", $alliance['detailed_content']);
             $lines = array_map(function ($line) {
@@ -1729,6 +1733,13 @@ class MoHome extends BaseController
         // echo '</pre>';
 
         return view('mo_alliance_detail', $alliance);
+    }
+    //사업자 번호
+    protected function formatBusinessNumber($number) {
+        if (!empty($number) && strlen($number) == 10) {
+            return substr($number, 0, 3) . '-' . substr($number, 3, 2) . '-' . substr($number, 5);
+        }
+        return $number;
     }
     //운영 시간 1시간 단위로 받음(마지막 타임 제외)
     protected function generateTimeSlots($start, $end)
