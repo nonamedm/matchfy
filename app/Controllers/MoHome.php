@@ -105,7 +105,7 @@ class MoHome extends BaseController
         }
         $data['isDiscounted'] = $isDiscounted;
 
-        // 현재 페이지에서는 이미 가입완료이므로 로그인 시키기
+        //현재 페이지에서는 이미 가입완료이므로 로그인 시키기
         $moAjax = new \App\Controllers\MoAjax();
 
         $result = $moAjax->loginParam($mobile_no);

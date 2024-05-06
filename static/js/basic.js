@@ -879,7 +879,7 @@ const editPhotoListListner = () => {
     $('#skipButton, #saveButton').click(function (e) {
         $('.layerPopup').show();
     });
-    $('.layerPopup_bottom .btn').click(function () {
+    $('.layerPopup_bottom .btn').click(function (event) {
         event.preventDefault();
         if ($(this).hasClass('type01')) {
             var inviteCode = $('#invite_code').val();
@@ -916,6 +916,7 @@ const editPhotoListListner = () => {
                                 mobile_no: data.data.mobile_no,
                                 file_path: $('#file_path').val(),
                                 file_name: $('#file_name').val(),
+                                invite_code: $('#invite_code').val(),
                             });
                             // 성공한 경우, 필요에 따라 리다이렉션 또는 메시지 표시 등의 작업 수행
                         })
