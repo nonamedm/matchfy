@@ -55,7 +55,7 @@ return [
     'assetGroup'         => '자산구간',
     'incomeGroup'        => '소득구간',
     'noSelected'         => '미선택',
-    'exclusionItems'     => '배제항목',
+    'exclusionItems'     => '제외항목',
     'sir'                => '님',
     'view'               => '보기',
 

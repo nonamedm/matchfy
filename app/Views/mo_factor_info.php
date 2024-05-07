@@ -166,9 +166,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="content_partner" style="margin: 50px 5px;">
+                    <div class="content_partner except_header" style="margin: 50px 5px;">
                         <div class="content_partner_header">
-                            <h2>배제 항목 설정 </h2>
+                            <h2>이런 분은 싫어요! </h2>
+                            <p>매칭 제외 항목 설정</p>
                         </div>
                     </div>
                     <div class="">
