@@ -725,6 +725,31 @@ class MoAjax extends BaseController
             if ($existingData) {
                 $inserted = $MemberModel->update($ci, $data);
 
+                // 프로필 사진 DB 업로드
+                $MemberFileModel = new MemberFileModel();
+                $org_name = $this->request->getPost('org_name');
+                $file_name = $this->request->getPost('file_name');
+                $file_path = $this->request->getPost('file_path');
+                $ext = $this->request->getPost('ext');
+                if ($org_name) {
+                    // 프로필 첨부 있을때만 file db 저장
+
+                    // 기존 정보 delete_yn=y 업데이트
+                    $MemberFileModel->query("UPDATE member_files SET delete_yn='y' where member_ci='" . $ci . "' AND board_type='main_photo'");
+
+                    $data2 = [
+                        'member_ci' => $ci,
+                        'org_name' => $org_name,
+                        'file_name' => $file_name,
+                        'file_path' => $file_path,
+                        'ext' => $ext,
+                        'board_type' => 'main_photo',
+                    ];
+                    $data = array_merge($data, $data2);
+                    $MemberFileModel->insert($data2);
+                } else {
+                    // 프로필 첨부 없을때는 업데이트 안함
+                }
                 if ($inserted) {
                     return $this->response->setJSON(['status' => 'success', 'message' => '데이터가 업데이트되었습니다', 'data' => $data]);
                 } else {
