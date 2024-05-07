@@ -71,7 +71,7 @@
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="first_factor" class="signin_label">1<?= lang('Korean.ranking') ?></label>
+                                <label for="first_factor" class="signin_label">1<?= lang('Korean.ranking') ?><span class="required">*</span></label>
                                 <select id="first_factor" name="first_factor">
                                     <option value><?= lang('Korean.noSelected') ?></option>
                                     <option value="mbti">MBTI</option>
@@ -95,7 +95,7 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="second_factor" class="signin_label">2<?= lang('Korean.ranking') ?></label>
+                                <label for="second_factor" class="signin_label">2<?= lang('Korean.ranking') ?><span class="required">*</span></label>
                                 <select id="second_factor" name="second_factor">
                                     <option value><?= lang('Korean.noSelected') ?></option>
                                     <option value="mbti">MBTI</option>
@@ -175,7 +175,7 @@
                     <div class="">
                         <div class="form_row signin_form">
                             <div class="signin_form_div flex">
-                                <label for="except1" class="signin_label"><?= lang('Korean.exclusionItems') ?>1</label>
+                                <label for="except1" class="signin_label"><?= lang('Korean.exclusionItems') ?>1<span class="required">*</span></label>
                                 <div class="multy_select">
                                     <select id="except1" name="except1" onchange="chgExcept(this);">
                                         <option value><?= lang('Korean.noSelected') ?></option>
@@ -204,7 +204,7 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div flex">
-                                <label for="except2" class="signin_label"><?= lang('Korean.exclusionItems') ?>2</label>
+                                <label for="except2" class="signin_label"><?= lang('Korean.exclusionItems') ?>2<span class="required">*</span></label>
                                 <div class="multy_select">
                                     <select id="except2" name="except2" onchange="chgExcept(this);">
                                         <option value><?= lang('Korean.noSelected') ?></option>

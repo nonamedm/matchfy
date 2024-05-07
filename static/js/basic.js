@@ -410,7 +410,7 @@ const isValidRecommendCode = (inviteCode, callback) => {
 const signUpdate = (postData) => {
     let tempValidation = false;
     if ($('#marital').val().trim() === '') {
-        fn_alert('결혼유무를 선택해 주세요');
+        fn_alert('결혼경험유무를 선택해 주세요');
         tempValidation = false;
         $('#marital').focus();
     } else if ($('#smoking').val().trim() === '') {

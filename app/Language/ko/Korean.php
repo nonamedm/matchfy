@@ -136,7 +136,7 @@ return [
     'email'            => '이메일',
     'emailReg'            => '인증번호',
     'birthTrueFalse'  => '생년월일',
-    'marryTrueFalse'  => '결혼유무',
+    'marryTrueFalse'  => '결혼경험유무',
     'smokeTrueFalse'  => '흡연 유무',
 
     // alliance

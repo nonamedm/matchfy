@@ -1868,6 +1868,11 @@ a:active {
 
     margin-bottom: 10px;
 }
+.signin_label .required {
+    margin: 0 10px;
+    color: #ff0267;
+    font-size: 13px;
+}
 
 .form_row.signin_form {
     padding: 20px 0px;
@@ -3830,7 +3835,7 @@ input[type='number']::-webkit-inner-spin-button {
 .price {
     width: 25%;
 }
-.share_btn{
+.share_btn {
     position: absolute;
     display: flex;
     width: 25px;
