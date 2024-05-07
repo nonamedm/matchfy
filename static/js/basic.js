@@ -1043,26 +1043,35 @@ const showPopupRgt = (contents, ci) => {
     $('#type').val(contents);
 
     var title = '';
+    var value = '';
+    
     switch (contents) {
         case 'school':
             title = '졸업증명서';
+            value = certificationCon3;
             break;
         case 'job':
             title = '명함/재직증명서';
+            value = certificationCon3;
             break;
         case 'marital':
             title = '혼인관계증명서';
+            value = certificationCon4;
             break;
         case 'asset_range':
             title = '잔고증명/등기부등본';
+            value = certificationCon3;
             break;
         case 'income_range':
             title = '소득금액증명';
+            value = certificationCon3;
             break;
         default:
             title = '졸업증명서';
+            value = certificationCon3;
     }
     $('#type').text(title);
+    $('#certifi_con').html(value);
     $('.layerPopup').css('display', 'flex');
 };
 
