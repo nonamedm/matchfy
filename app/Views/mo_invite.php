@@ -89,11 +89,12 @@
 
         document.getElementById('shareButton').addEventListener('click', function() {
             var code = this.getAttribute('data-code');
+            var inviteURL = 'https://matchfy.net';
             if (navigator.share) {
                 navigator.share({
                     title: 'Matchfy 초대',
                     text: 'Matchfy에 초대합니다! 여기 코드를 사용하세요: ' + code,
-                    url: window.location.href
+                    url: inviteURL
                 }).then(() => {
                     console.log('공유 완료');
                 }).catch((error) => {
