@@ -305,16 +305,16 @@
                         });
                     }
 
-                    const matchRateType=(rate)=>{
-                        if(80 <= rate){
+                    const matchRateType = (rate) => {
+                        if (80 <= rate) {
                             return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/blue_face_icon.png"></p>';
-                        }else if(rate => 65 ||rate<80){
+                        } else if (rate => 65 || rate < 80) {
                             return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/green_face_icon.png"></p>';
-                        }else if(rate=>50 ||rate <65){
+                        } else if (rate => 50 || rate < 65) {
                             return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/yellow_face_icon.png"></p>';
-                        }else if(rate=>35 || rate <50){
+                        } else if (rate => 35 || rate < 50) {
                             return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/orange_face_icon.png"></p>';
-                        }else{
+                        } else {
                             return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/red_face_icon.png"></p>';
                         }
                     }
@@ -632,7 +632,9 @@
             <!-- FOOTER: DEBUG INFO + COPYRIGHTS -->
 
             <!-- <div style="height: 50px;"></div> -->
-            <footer class="footer" style="width:98%;">
+            <footer class="footer <?php if (!$ci) {
+                                        echo "block";
+                                    } ?>">
                 <div class="footer_logo mb40">
                     matchfy
                 </div>
@@ -640,7 +642,7 @@
                     <a href="#"><?= lang('Korean.companyName') ?></a>
                     <a href="/mo/privacy"><?= lang('Korean.pravacyName') ?></a>
                     <a href="/mo/terms"><?= lang('Korean.serviceName') ?></a>
-                    <a href="#"><?=lang('Korean.supporterName')?></a>
+                    <a href="#"><?= lang('Korean.supporterName') ?></a>
                 </div>
                 <div class="footer_info mb40">
                     <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>

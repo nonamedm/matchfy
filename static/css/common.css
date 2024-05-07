@@ -281,7 +281,7 @@ input[type='checkbox'] + label:hover {
     line-height: 24px;
     color: #ff0267;
     /* margin: 10px 0; */
-    margin:0;
+    margin: 0;
 }
 
 .content_no_img.login_main .group_row {
@@ -546,6 +546,9 @@ input[type='checkbox'] + label:hover {
     padding: 25px 25px;
     /* padding:20px 100px; */
     background-color: #111111;
+}
+.footer.block {
+    width: 98%;
 }
 .footer_logo {
     font-family: 'Tium';
