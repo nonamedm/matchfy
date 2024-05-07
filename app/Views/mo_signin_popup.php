@@ -18,7 +18,7 @@
                 <label class="totAgree_label" for="totAgree"><?=lang('Korean.certificationCon2')?></label>
             </div>
             <div class="notice_box">
-                <p class="notice_text"><?=lang('Korean.certificationCon3')?></p>
+                <p id="certifi_con" class="notice_text"><?=lang('Korean.certificationCon3')?></p>
             </div>
             <div class="layerPopup_bottom">
                 <div class="btn_group">
@@ -31,6 +31,8 @@
     </div>
 </div>
 <script>
+    var certificationCon3 = '<?=lang('Korean.certificationCon3')?>';
+    var certificationCon4 ='<?=lang('Korean.certificationCon4')?>';
     $(document).ready(function () {
         // image input 초기화        
         const profile_regist = document.getElementById('profile_regist');

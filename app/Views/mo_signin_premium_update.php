@@ -85,10 +85,11 @@
                                 <label for="drinking" class="signin_label"><?= lang('Korean.drinkingType') ?></label>
                                 <select id="drinking" name="drinking" class="custom_select" value="">
                                     <option value=""><?= lang('Korean.selected') ?></option>
-                                    <option value="0" <?= $drinking === '0' ? 'selected' : '' ?>><?= lang('Korean.notAtAll') ?></option>
-                                    <option value="1" <?= $drinking === '1' ? 'selected' : '' ?>><?= lang('Korean.month2') ?></option>
-                                    <option value="2" <?= $drinking === '2' ? 'selected' : '' ?>><?= lang('Korean.week12') ?></option>
-                                    <option value="3" <?= $drinking === '3' ? 'selected' : '' ?>><?= lang('Korean.week3') ?></option>
+                                    <option value="0" <?= $drinking === '0' ? 'selected' : '' ?>><?= lang('Korean.irrelevant') ?></option>
+                                    <option value="1" <?= $drinking === '1' ? 'selected' : '' ?>><?= lang('Korean.notAtAll') ?></option>
+                                    <option value="2" <?= $drinking === '2' ? 'selected' : '' ?>><?= lang('Korean.month2') ?></option>
+                                    <option value="3" <?= $drinking === '3' ? 'selected' : '' ?>><?= lang('Korean.week12') ?></option>
+                                    <option value="4" <?= $drinking === '4' ? 'selected' : '' ?>><?= lang('Korean.week3') ?></option>
                                 </select>
                             </div>
                         </div>
