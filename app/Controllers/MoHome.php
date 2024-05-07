@@ -833,6 +833,7 @@ class MoHome extends BaseController
                                     d.file_name as file_name,
                                     c.name as name,
                                     c.city as city,
+                                    c.town as town,
                                     c.birthday as birthday,
                                     c.mbti as mbti'
             )
@@ -846,7 +847,7 @@ class MoHome extends BaseController
             ->orderBy('a.meeting_master')
             ->orderBy('a.create_at')
             ->get();
-
+            
         $result = $query->getResult();
 
         if ($result) {
