@@ -1747,7 +1747,8 @@ class MoHome extends BaseController
         return view('mo_alliance_detail', $alliance);
     }
     //사업자 번호
-    protected function formatBusinessNumber($number) {
+    protected function formatBusinessNumber($number)
+    {
         if (!empty($number) && strlen($number) == 10) {
             return substr($number, 0, 3) . '-' . substr($number, 3, 2) . '-' . substr($number, 5);
         }

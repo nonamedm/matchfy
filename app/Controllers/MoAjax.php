@@ -292,6 +292,13 @@ class MoAjax extends BaseController
                     'required' => '도시를 입력해 주세요.',
                 ]
             ],
+            // 'passwd' => [
+            //     'label' => 'passwd',
+            //     'rules' => 'required',
+            //     'errors' => [
+            //         'required' => '비밀번호를 입력해 주세요.',
+            //     ]
+            // ],
         ];
 
         if (!$this->validate($rules)) {
@@ -1536,7 +1543,7 @@ class MoAjax extends BaseController
         $currentDate = new \DateTime('now');
         $age = $birthDate->diff($currentDate)->y;
 
-        
+
         $meetings = $MeetingModel
             ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
             ->where('wh_meetings.meeting_start_date >=', $currentTime)
