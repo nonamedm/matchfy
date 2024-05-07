@@ -110,11 +110,14 @@ function formatDateTime($value)
                 </div>
                 <div class="mygroup_list" id="mygroup_list_body">
                     <?php foreach ($meetings as $meeting) : ?>
+                        <?php $today = date('Y-m-d'); ?>
                         <div class="alliance_sch_list" onclick="javascript:MygroupPopup(<?= $meeting->meeting_idx ?>,'cancel_rsv_<?= $meeting->meeting_idx ?>','<?= $meeting->meeting_master ?>')">
                             <div class="alliance_sch_item">
                                 <div class="alliance_sch_sts">
                                     <div class="<?= getClass($meeting->meeting_end_date, $meeting->delete_yn) ?>" id="cancel_rsv_<?= $meeting->meeting_idx ?>"><?= getDday($meeting->meeting_end_date, $meeting->meeting_start_date, $meeting->delete_yn) ?></div>
-                                    <img src="/static/images/right_arrow.png" />
+                                    <?php if ($meeting->meeting_end_date > $today) : ?>
+                                        <img src="/static/images/right_arrow.png" />
+                                    <?php endif; ?>
                                 </div>
                                 <h2><?= $meeting->meeting_place ?></h2>
                                 <p class=""><?= formatDateTime($meeting->meeting_start_date) ?></p>

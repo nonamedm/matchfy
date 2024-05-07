@@ -155,7 +155,7 @@
                                 </div>
                             </div>
                             <div class="btn_group multy">
-                                <button type="button" class="btn type02"><?= lang('Korean.cancel') ?></button>
+                                <button type="button" class="btn type02" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.cancel') ?></button>
                                 <button type="button" class="btn type01" onclick="meetingSave()"><?= lang('Korean.save') ?></button>
                             </div>
 

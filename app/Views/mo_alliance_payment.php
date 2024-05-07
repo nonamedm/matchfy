@@ -66,13 +66,6 @@
                         <div class="allance_content" style="display:none;">
                             <p class=""><?= nl2br($privacys['content']); ?></p>
                         </div>
-                        <div class="alliance_terms_agree allance_btn">
-                            <p><?= nl2br($privacys['title']); ?></p>
-                            <img src="/static/images/select_arrow.png" />
-                        </div>
-                        <div class="allance_content" style="display:none;">
-                            <p class=""><?= nl2br($privacys['content']); ?></p>
-                        </div>
                     </div>
                     <hr class="hoz_part" />
                     <div class="alliance_detail_cont">

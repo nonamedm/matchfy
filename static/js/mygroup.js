@@ -711,6 +711,11 @@ function GroupClass(endDate, deleteYn) {
 
 function MygroupPopup(idx, idValue, master) {
     var cancel_rsv = $('#' + idValue).text();
+
+    if (cancel_rsv === '종료' || cancel_rsv === '취소') {
+        return;
+    }
+
     $.ajax({
         url: '/mo/mypage/mygroup/cancelReservation',
         data: { meetingIdx: idx },

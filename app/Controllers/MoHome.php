@@ -105,7 +105,7 @@ class MoHome extends BaseController
         }
         $data['isDiscounted'] = $isDiscounted;
 
-        // 현재 페이지에서는 이미 가입완료이므로 로그인 시키기
+        //현재 페이지에서는 이미 가입완료이므로 로그인 시키기
         $moAjax = new \App\Controllers\MoAjax();
 
         $result = $moAjax->loginParam($mobile_no);
@@ -702,18 +702,30 @@ class MoHome extends BaseController
 
     public function mypageGroupList(): string
     {
+        $session = session();
+        $ci = $session->get('ci');
+
+        $MemberModel = new MemberModel();
+
+        $birthday = $MemberModel
+            ->select('birthday')
+            ->where('ci', $ci)
+            ->first();
+
+        $birthDate = \DateTime::createFromFormat('Ymd', $birthday['birthday']);
+        $currentDate = new \DateTime('now');
+        $age = $birthDate->diff($currentDate)->y;
+
         $MeetingModel = new MeetingModel();
-        //$MeetingFileModel = new MeetingFileModel();
-        // $data['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
-
-        $MeetingModel->orderBy('create_at', 'DESC');
-
         $currentTime = date('Y-m-d H:i:s');
 
         $meetings = $MeetingModel
             ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
             ->where('wh_meetings.meeting_start_date >=', $currentTime)
             ->where('wh_meetings.delete_yn', 'N')
+            ->where('wh_meetings.group_min_age <=', $age)
+            ->where('wh_meetings.group_max_age >=', $age)
+            ->orderBy('meeting_start_date', 'ASC')
             ->findAll();
 
         $days = ['일', '월', '화', '수', '목', '금', '토'];
@@ -1693,6 +1705,10 @@ class MoHome extends BaseController
             ->orderBy('idx', 'DESC')
             ->first();
 
+        if (isset($alliance['alliance_ceo_num'])) {
+            $alliance['alliance_ceo_num'] = $this->formatBusinessNumber($alliance['alliance_ceo_num']);
+        }
+
         if (isset($alliance['detailed_content'])) {
             $lines = explode("<br>", $alliance['detailed_content']);
             $lines = array_map(function ($line) {
@@ -1730,6 +1746,14 @@ class MoHome extends BaseController
         // echo '</pre>';
 
         return view('mo_alliance_detail', $alliance);
+    }
+    //사업자 번호
+    protected function formatBusinessNumber($number)
+    {
+        if (!empty($number) && strlen($number) == 10) {
+            return substr($number, 0, 3) . '-' . substr($number, 3, 2) . '-' . substr($number, 5);
+        }
+        return $number;
     }
     //운영 시간 1시간 단위로 받음(마지막 타임 제외)
     protected function generateTimeSlots($start, $end)

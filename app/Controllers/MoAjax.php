@@ -292,6 +292,13 @@ class MoAjax extends BaseController
                     'required' => '도시를 입력해 주세요.',
                 ]
             ],
+            // 'passwd' => [
+            //     'label' => 'passwd',
+            //     'rules' => 'required',
+            //     'errors' => [
+            //         'required' => '비밀번호를 입력해 주세요.',
+            //     ]
+            // ],
         ];
 
         if (!$this->validate($rules)) {
@@ -718,6 +725,31 @@ class MoAjax extends BaseController
             if ($existingData) {
                 $inserted = $MemberModel->update($ci, $data);
 
+                // 프로필 사진 DB 업로드
+                $MemberFileModel = new MemberFileModel();
+                $org_name = $this->request->getPost('org_name');
+                $file_name = $this->request->getPost('file_name');
+                $file_path = $this->request->getPost('file_path');
+                $ext = $this->request->getPost('ext');
+                if ($org_name) {
+                    // 프로필 첨부 있을때만 file db 저장
+
+                    // 기존 정보 delete_yn=y 업데이트
+                    $MemberFileModel->query("UPDATE member_files SET delete_yn='y' where member_ci='" . $ci . "' AND board_type='main_photo'");
+
+                    $data2 = [
+                        'member_ci' => $ci,
+                        'org_name' => $org_name,
+                        'file_name' => $file_name,
+                        'file_path' => $file_path,
+                        'ext' => $ext,
+                        'board_type' => 'main_photo',
+                    ];
+                    $data = array_merge($data, $data2);
+                    $MemberFileModel->insert($data2);
+                } else {
+                    // 프로필 첨부 없을때는 업데이트 안함
+                }
                 if ($inserted) {
                     return $this->response->setJSON(['status' => 'success', 'message' => '데이터가 업데이트되었습니다', 'data' => $data]);
                 } else {
@@ -1496,6 +1528,7 @@ class MoAjax extends BaseController
         $filterOption = $this->request->getPost('filterOption'); // 필터링
 
         $MeetingModel = new MeetingModel();
+        $currentTime = date('Y-m-d H:i:s');
 
         // 카테고리 필터링
         if (!empty($category)) {
@@ -1522,12 +1555,26 @@ class MoAjax extends BaseController
                 $MeetingModel->orderBy('create_at', 'DESC');
         }
 
-        $currentTime = date('Y-m-d H:i:s');
+        $session = session();
+        $ci = $session->get('ci');
+
+        $MemberModel = new MemberModel();
+        $birthday = $MemberModel
+            ->select('birthday')
+            ->where('ci', $ci)
+            ->first();
+
+        $birthDate = \DateTime::createFromFormat('Ymd', $birthday['birthday']);
+        $currentDate = new \DateTime('now');
+        $age = $birthDate->diff($currentDate)->y;
+
 
         $meetings = $MeetingModel
             ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
             ->where('wh_meetings.meeting_start_date >=', $currentTime)
             ->where('wh_meetings.delete_yn', 'N')
+            ->where('wh_meetings.group_min_age <=', $age)
+            ->where('wh_meetings.group_max_age >=', $age)
             ->findAll();
 
         $days = ['일', '월', '화', '수', '목', '금', '토'];
