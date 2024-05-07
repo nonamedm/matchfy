@@ -21,7 +21,7 @@ class OAuth2 extends BaseController
         $this->kakaoProvider = new GenericProvider([
             'clientId'                => $kakaoClientId,
             'clientSecret'            => $kakaoClientSecret,
-            'redirectUri'             => 'http://localhost:8080/auth/kakao/callback',
+            'redirectUri'             => 'https://matchfy.net/auth/kakao/callback',
             'urlAuthorize'            => 'https://kauth.kakao.com/oauth/authorize',
             'urlAccessToken'          => 'https://kauth.kakao.com/oauth/token',
             'urlResourceOwnerDetails' => null
@@ -30,7 +30,7 @@ class OAuth2 extends BaseController
         $this->naverProvider = new GenericProvider([
             'clientId'                => $naverClientId,
             'clientSecret'            => $naverClientSecret,
-            'redirectUri'             => 'http://localhost:8080/auth/naver/callback',
+            'redirectUri'             => 'https://matchfy.net/auth/naver/callback',
             'urlAuthorize'            => 'https://nid.naver.com/oauth2.0/authorize',
             'urlAccessToken'          => 'https://nid.naver.com/oauth2.0/token',
             'urlResourceOwnerDetails' => null
@@ -58,9 +58,9 @@ class OAuth2 extends BaseController
         $state = $this->request->getVar('state');
         $code = $this->request->getVar('code');
         $providerName = session()->get('provider');
-        print_r("Provider from request: " . $providerName . "\n");
+        //print_r("Provider from request: " . $providerName . "\n");
 
-        if (empty($state) || ($state !== session()->get('oauth2state'))) { 
+        if (empty($state) || ($state !== session()->get('oauth2state'))) {
             session()->remove('oauth2state');
             session()->remove('provider');
             return redirect()->to('/error')->with('message', 'Invalid state');
@@ -71,10 +71,10 @@ class OAuth2 extends BaseController
             $accessToken = $provider->getAccessToken('authorization_code', [
                 'code' => $code
             ]);
-            print_r("AccessToken : " . json_encode($accessToken) . "\n");  // 토큰 정보 출력
+            //print_r("AccessToken : " . json_encode($accessToken) . "\n");  // 토큰 정보 출력
 
             $userDetails = $this->getUserDetails($accessToken, $provider);
-            print_r("userDetails : " . $userDetails . "\n");
+            //print_r("userDetails : " . $userDetails . "\n");
 
             $memberModel = new MemberModel();
             $user = $memberModel->findByOauthId($userDetails['id'], $providerName);
@@ -87,7 +87,7 @@ class OAuth2 extends BaseController
                     'isLoggedIn' => true //로그인 상태
                 ]);
                 $session->setTempdata('ci', $user['ci'], 2592000);
-                return redirect()->to('/');
+                return redirect()->to('https://matchfy.net/');
             } else {
                 if ($providerName === 'naver') {
                     $postData = [
@@ -99,7 +99,7 @@ class OAuth2 extends BaseController
                     ];
                 } elseif ($providerName === 'kakao') {
                     $postData = [
-                        'nickname' => $userDetails['properties']['nickname'], 
+                        'nickname' => $userDetails['properties']['nickname'],
                         'sns_type' => $providerName,
                         'oauth_id' => $userDetails['id']
                         //profile_image_url

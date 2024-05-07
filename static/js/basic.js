@@ -103,7 +103,8 @@ const certIdentify = () => {
                     if (response.result === '0') {
                         submitForm();
                     } else {
-                        fn_alert('이미 가입된 휴대폰 번호입니다');
+                        submitForm();
+                        //fn_alert('이미 가입된 휴대폰 번호입니다');
                     }
                 },
                 error: function (xhr, status, error) {
