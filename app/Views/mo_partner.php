@@ -137,13 +137,13 @@
                                 <div class="signin_form_div">
                                     <label for="religion" class="signin_label"><?= lang('Korean.religionType') ?></label>
                                     <select id="religion" name="religion" class="custom_select" value="">
-                                        <option value=""><?= lang('Korean.selected') ?></option>
+                                        <option value="5"><?= lang('Korean.notRelevant') ?></option>
                                         <option value="0"><?= lang('Korean.atheism') ?></option>
                                         <option value="1"><?= lang('Korean.christian') ?></option>
                                         <option value="2"><?= lang('Korean.catholicism') ?></option>
                                         <option value="3"><?= lang('Korean.buddhism') ?></option>
                                         <option value="4"><?= lang('Korean.extra') ?></option>
-                                        <option value="5"><?= lang('Korean.notRelevant') ?></option>
+
                                     </select>
                                 </div>
                             </div>
@@ -151,7 +151,7 @@
                                 <div class="signin_form_div">
                                     <label for="mbti" class="signin_label">MBTI</label>
                                     <select id="mbti" name="mbti" class="custom_select" value="">
-                                        <option value=""><?= lang('Korean.selected') ?></option>
+                                        <option value="16"><?= lang('Korean.irrelevant') ?></option>
                                         <option value="0">ENFP</option>
                                         <option value="1">ENFJ</option>
                                         <option value="2">ENTP</option>
@@ -168,7 +168,7 @@
                                         <option value="13">ISFJ</option>
                                         <option value="14">ISTP</option>
                                         <option value="15">ISTJ</option>
-                                        <option value="16"><?= lang('Korean.irrelevant') ?></option>
+
                                     </select>
                                 </div>
                             </div>
@@ -199,7 +199,6 @@
                                 <div class="signin_form_div">
                                     <label for="personal_style" class="signin_label"><?= lang('Korean.styleType') ?></label>
                                     <select id="personal_style" name="personal_style" class="custom_select">
-                                        <option value=""><?= lang('Korean.selected') ?></option>
 
                                     </select>
                                 </div>
@@ -394,7 +393,6 @@
         const selectGender = (e) => {
             console.log(e.value);
             $('#personal_style').empty();
-            $('#personal_style').html('<option value=""><?= lang('Korean.selected') ?></option>');
             if (e.value === '0') {
                 <?php
                 if (!empty($femaleStyle)) {

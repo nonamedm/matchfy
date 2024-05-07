@@ -55,7 +55,7 @@ return [
     'assetGroup'         => '자산구간',
     'incomeGroup'        => '소득구간',
     'noSelected'         => '미선택',
-    'exclusionItems'     => '배제항목',
+    'exclusionItems'     => '제외항목',
     'sir'                => '님',
     'view'               => '보기',
 
@@ -136,7 +136,7 @@ return [
     'email'            => '이메일',
     'emailReg'            => '인증번호',
     'birthTrueFalse'  => '생년월일',
-    'marryTrueFalse'  => '결혼유무',
+    'marryTrueFalse'  => '결혼경험유무',
     'smokeTrueFalse'  => '흡연 유무',
 
     // alliance

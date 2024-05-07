@@ -18,6 +18,7 @@ $animalTypeMale = array(
 );
 
 $maleStyle = array(
+    array("id" => "style99", "name" => "무관", "value" => "99"),
     array("id" => "style01", "name" => "스포티 & 활동적 타입", "value" => "0"),
     array("id" => "style02", "name" => "지적 & 세련된 타입", "value" => "1"),
     array("id" => "style03", "name" => "아트 & 창의적 타입", "value" => "2"),
@@ -32,6 +33,7 @@ $maleStyle = array(
     array("id" => "style12", "name" => "비즈니스 & 전문적 타입", "value" => "11"),
 );
 $femaleStyle = array(
+    array("id" => "style99", "name" => "무관", "value" => "99"),
     array("id" => "style01", "name" => "우아한 & 고급스러운 타입", "value" => "0"),
     array("id" => "style02", "name" => "캐주얼 & 편안한 타입", "value" => "1"),
     array("id" => "style03", "name" => "트렌디 & 유행 타입", "value" => "2"),

@@ -211,6 +211,10 @@ header .menu_right.edit {
     margin: 35px 0px;
     text-align: center;
 }
+.mo_wrap .sub_wrap .content_wrap .content_partner.except_header {
+    display: block;
+    text-align: center;
+}
 .mo_wrap .sub_wrap .content_wrap .content_partner {
     width: 315px;
     margin: 0 auto;
@@ -1557,7 +1561,7 @@ a:active {
     margin: 5px 0;
     /* width: 300px; */
     padding: 0px 20px 0px 0px;
-    color:#000;
+    color: #000;
 }
 .alliance_sch_list .alliance_sch_item p {
     font-weight: 600;
@@ -1863,6 +1867,11 @@ a:active {
     line-height: 17px;
 
     margin-bottom: 10px;
+}
+.signin_label .required {
+    margin: 0 10px;
+    color: #ff0267;
+    font-size: 13px;
 }
 
 .form_row.signin_form {
@@ -3152,30 +3161,30 @@ input[type='number']::-webkit-inner-spin-button {
     height: 20px;
     border-radius: 50%;
 }
-.desc_box{
+.desc_box {
     position: relative;
     display: flex;
     flex-direction: row-reverse;
     padding-right: 33px;
     /* height: 10px; */
 }
-.desc_box > ul{
+.desc_box > ul {
     display: flex;
     list-style: none;
 }
-.desc_box>ul>li{
+.desc_box > ul > li {
     list-style: none;
     padding-left: 10px;
 }
-.desc_box>ul>li>a{
+.desc_box > ul > li > a {
     text-decoration: none;
 }
-.desc_box>ul>li>a:hover{
-    color:#ff0267;
+.desc_box > ul > li > a:hover {
+    color: #ff0267;
     font-weight: 500;
 }
-.desc_box>ul>li>a .on{
-    color:#ff0267;
+.desc_box > ul > li > a .on {
+    color: #ff0267;
     font-weight: 500;
 }
 .layerPopup_content .chat_member .chat_member_profile p {
@@ -3194,6 +3203,8 @@ input[type='number']::-webkit-inner-spin-button {
     line-height: 18px;
     color: #555555;
     margin: 10px 5px;
+    width: 115px;
+    text-align: left;
 }
 .layerPopup_content .chat_member .chat_member_report .type01 {
     padding: 10px 20px;
@@ -3824,12 +3835,13 @@ input[type='number']::-webkit-inner-spin-button {
 .price {
     width: 25%;
 }
-.share_btn{
+.share_btn {
     position: absolute;
     display: flex;
     width: 25px;
     height: 25px;
     right: 20px;
+    cursor: pointer;
 }
 @media (max-width: 767px) {
     .mo_wrap .wrap {

@@ -9,9 +9,11 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+    <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/meeting_member.js"></script>
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -50,7 +52,7 @@
                             <div class="group_particpnt" onclick="meetingMemberList('<?= $idx ?>')">
                                 <span><?= lang('Korean.application') ?> <?= $meeing_count ?></span>/<?= $number_of_people ?><?= lang('Korean.people') ?>
                             </div>
-                            <div class="share_btn"><img src="/static/images/share_icon.png"/></div>
+                            <div class="share_btn" id="copyButton"><img src="/static/images/share_icon.png"/></div>
                         </div>
                     </div>
                     <hr class="hoz_part" />
@@ -116,6 +118,19 @@
                 });
             });
         }
+
+        $(document).ready(function() {
+            $('#copyButton').click(function() {
+                var currentUrl = document.location.href;
+                var tempInput = $('<textarea>');
+
+                $('body').append(tempInput);
+                tempInput.val(currentUrl).select();
+                document.execCommand('copy');
+                tempInput.remove();
+                fn_alert('링크가 복사되었습니다.');
+            });
+        });
     </script>
 
     <!-- -->
