@@ -46,8 +46,11 @@
                         <h2><?= $meeting_title ?></h2>
                         <p class="group_detail_period"><?= $recruitment_start_date ?> ~ <?= $recruitment_end_date ?> <?= lang('Korean.dateCon') ?></p>
                         <p class="group_detail_schedule"><?= $meeting_start_date ?> <?= lang('Korean.meet') ?></p>
-                        <div class="group_particpnt" onclick="meetingMemberList('<?= $idx ?>')">
-                            <span><?= lang('Korean.application') ?> <?= $meeing_count ?></span>/<?= $number_of_people ?><?= lang('Korean.people') ?>
+                        <div style="display:flex;">
+                            <div class="group_particpnt" onclick="meetingMemberList('<?= $idx ?>')">
+                                <span><?= lang('Korean.application') ?> <?= $meeing_count ?></span>/<?= $number_of_people ?><?= lang('Korean.people') ?>
+                            </div>
+                            <div class="share_btn"><img src="/static/images/share_icon.png"/></div>
                         </div>
                     </div>
                     <hr class="hoz_part" />
