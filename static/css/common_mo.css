@@ -3830,7 +3830,13 @@ input[type='number']::-webkit-inner-spin-button {
 .price {
     width: 25%;
 }
-
+.share_btn{
+    position: absolute;
+    display: flex;
+    width: 25px;
+    height: 25px;
+    right: 20px;
+}
 @media (max-width: 767px) {
     .mo_wrap .wrap {
         max-width: 375px;
