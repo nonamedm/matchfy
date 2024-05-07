@@ -33,14 +33,14 @@
                     <?php endif; ?>
                 </div>
                 <div class="group_detail_info">
-                    <div class="group_detail_header">
+                    <div class="group_detail_header" style="margin-top: 10px;">
                         <div class="group_detail_type"><?php foreach ($categoryCode as $item) {
                                                             if ($item['value'] === $category) {
                                                                 echo $item['name'];
                                                             }
                                                         }
                                                         ?><?php $postData ?></div>
-                        <p><?= lang('Korean.matchingRate') ?> <span><?= $matching_rate ?>%</span></p>
+                        <!-- <p><?= lang('Korean.matchingRate') ?> <span><?= $matching_rate ?>%</span></p> -->
                     </div>
                     <div class="group_detail_title">
                         <h2><?= $meeting_title ?></h2>

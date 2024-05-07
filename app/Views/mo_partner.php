@@ -127,9 +127,9 @@
                                     <select id="drinking" name="drinking" class="custom_select" value="">
                                         <option value="0"><?= lang('Korean.irrelevant') ?></option>
                                         <option value="1"><?= lang('Korean.notAtAll') ?></option>
-                                        <option value="2"><?= lang('Korean.week12') ?></option>
-                                        <option value="3"><?= lang('Korean.week35') ?></option>
-                                        <option value="4"><?= lang('Korean.week5') ?></option>
+                                        <option value="2"><?= lang('Korean.month2') ?></option>
+                                        <option value="3"><?= lang('Korean.week12') ?></option>
+                                        <option value="4"><?= lang('Korean.week3') ?></option>
                                     </select>
                                 </div>
                             </div>

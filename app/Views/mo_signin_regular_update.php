@@ -69,10 +69,12 @@
                                 <label for="smoking" class="signin_label"><?= lang('Korean.smokeType') ?></label>
                                 <select id="smoking" name="smoking" class="custom_select" value="">
                                     <option value=""><?= lang('Korean.selected') ?></option>
-                                    <option value="0" <?= $smoker === '0' ? 'selected' : '' ?>><?= lang('Korean.NotAtAll') ?></option>
+                                    <!-- <option value="0" <?= $smoker === '0' ? 'selected' : '' ?>><?= lang('Korean.NotAtAll') ?></option>
                                     <option value="1" <?= $smoker === '1' ? 'selected' : '' ?>><?= lang('Korean.oneday12') ?></option>
                                     <option value="2" <?= $smoker === '2' ? 'selected' : '' ?>><?= lang('Korean.oneday35') ?></option>
-                                    <option value="3" <?= $smoker === '3' ? 'selected' : '' ?>><?= lang('Korean.oneday5') ?></option>
+                                    <option value="3" <?= $smoker === '3' ? 'selected' : '' ?>><?= lang('Korean.oneday5') ?></option> -->
+                                    <option value="0" <?= $smoker === '0' ? 'selected' : '' ?>><?= lang('Korean.smokeok') ?></option>
+                                    <option value="1" <?= $smoker === '1' ? 'selected' : '' ?>><?= lang('Korean.smokeno') ?></option>
                                 </select>
                             </div>
                         </div>
@@ -82,9 +84,9 @@
                                 <select id="drinking" name="drinking" class="custom_select" value="">
                                     <option value=""><?= lang('Korean.selected') ?></option>
                                     <option value="0" <?= $drinking === '0' ? 'selected' : '' ?>><?= lang('Korean.notAtAll') ?></option>
-                                    <option value="1" <?= $drinking === '1' ? 'selected' : '' ?>><?= lang('Korean.week12') ?></option>
-                                    <option value="2" <?= $drinking === '2' ? 'selected' : '' ?>><?= lang('Korean.week35') ?></option>
-                                    <option value="3" <?= $drinking === '3' ? 'selected' : '' ?>><?= lang('Korean.week5') ?></option>
+                                    <option value="1" <?= $drinking === '1' ? 'selected' : '' ?>><?= lang('Korean.month2') ?></option>
+                                    <option value="2" <?= $drinking === '2' ? 'selected' : '' ?>><?= lang('Korean.week12') ?></option>
+                                    <option value="3" <?= $drinking === '3' ? 'selected' : '' ?>><?= lang('Korean.week3') ?></option>
                                 </select>
                             </div>
                         </div>

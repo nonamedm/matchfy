@@ -63,10 +63,12 @@
                                 <label for="smoking" class="signin_label"><?= lang('Korean.smokeType') ?></label>
                                 <select id="smoking" name="smoking" class="custom_select" value="">
                                     <option value=""><?= lang('Korean.selected') ?></option>
-                                    <option value="0"><?= lang('Korean.NotAtAll') ?></option>
+                                    <!-- <option value="0"><?= lang('Korean.NotAtAll') ?></option>
                                     <option value="1"><?= lang('Korean.oneday12') ?></option>
                                     <option value="2"><?= lang('Korean.oneday35') ?></option>
-                                    <option value="3"><?= lang('Korean.oneday5') ?></option>
+                                    <option value="3"><?= lang('Korean.oneday5') ?></option> -->
+                                    <option value="0"><?= lang('Korean.smokeok') ?></option>
+                                    <option value="1"><?= lang('Korean.smokeno') ?></option>
                                 </select>
                             </div>
                         </div>
@@ -76,9 +78,9 @@
                                 <select id="drinking" name="drinking" class="custom_select" value="">
                                     <option value=""><?= lang('Korean.selected') ?></option>
                                     <option value="1"><?= lang('Korean.notAtAll') ?></option>
-                                    <option value="2"><?= lang('Korean.week12') ?></option>
-                                    <option value="3"><?= lang('Korean.week35') ?></option>
-                                    <option value="4"><?= lang('Korean.week5') ?></option>
+                                    <option value="2"><?= lang('Korean.month2') ?></option>
+                                    <option value="3"><?= lang('Korean.week12') ?></option>
+                                    <option value="4"><?= lang('Korean.week3') ?></option>
                                 </select>
                             </div>
                         </div>

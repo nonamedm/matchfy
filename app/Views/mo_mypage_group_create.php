@@ -99,11 +99,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form_row signin_form">
+                            <!-- <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="matching_rate" class="signin_label"><?= lang('Korean.matchingRate') ?></label>
                                     <input id="matching_rate" type="number" name="matching_rate" value="" placeholder="매칭률을 입력하세요" oninput="clearInput(this)"><br />
-                                    <!-- <select id="matching_rate" class="custom_select" name="matching_rate" value="">
+                                    <select id="matching_rate" class="custom_select" name="matching_rate" value="">
                                     <option value=""><?= lang('Korean.selected') ?></option>
                                     <option value="01">~50%</option>
                                     <option value="02">50~60%</option>
@@ -111,9 +111,9 @@
                                     <option value="04">70~80%</option>
                                     <option value="05">80~70%</option>
                                     <option value="06">90% 이상</option>
-                                </select> -->
+                                </select>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="group_detail" class="signin_label"><?= lang('Korean.meetingDetails') ?></label>
@@ -178,6 +178,7 @@
                 <a href="#"><?= lang('Korean.companyName') ?></a>
                 <a href="#"><?= lang('Korean.pravacyName') ?></a>
                 <a href="#"><?= lang('Korean.serviceName') ?></a>
+                <a href="#"><?=lang('Korean.supporterName')?></a>
             </div>
             <div class="footer_info mb40">
                 <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>
