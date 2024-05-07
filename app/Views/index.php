@@ -275,7 +275,7 @@
                                         if (item.file_path !== "" && item.file_path !== null) {
                                             html += '<img src="/' + item.file_path + item.file_name + '" />';
                                         } else {
-                                            html += '<img src="/static/images/profile_noimg.png" />';
+                                            html += '<img src="/static/images/profile_noimg_main.png" />';
                                         }
                                         html += '<h2>' + item.birthyear + ', ' + item.city + '</h2>';
                                         html += '<div class="profile_row">';

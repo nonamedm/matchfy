@@ -57,7 +57,7 @@
                             <!-- <div>
                                 <img src="/static/images/group_location_detail.png" />
                             </div> -->
-                            <div style="padding: 10px 0 0 20px;">
+                            <div style="padding: 10px;">
                                 <div class="group_location">
                                     <img src="/static/images/ico_location_16x16.png" />
                                     <?= $meeting_place ?>

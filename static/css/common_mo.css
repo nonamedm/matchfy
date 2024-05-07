@@ -293,6 +293,7 @@ header .menu_right.edit {
 }
 .profile_area img {
     object-fit: cover;
+    border-radius: 50%;
 }
 .content_feed_list {
     margin: 20px 0;
@@ -1120,7 +1121,7 @@ a:active {
 }
 .group_search_filter select {
     font-family: 'Pretendard-Regular';
-    width: 60px;
+    width: 95px;
     height: 16px;
     font-weight: 500;
     font-size: 13px;
@@ -1556,6 +1557,7 @@ a:active {
     margin: 5px 0;
     /* width: 300px; */
     padding: 0px 20px 0px 0px;
+    color:#000;
 }
 .alliance_sch_list .alliance_sch_item p {
     font-weight: 600;
@@ -2980,6 +2982,11 @@ input[type='number']::-webkit-inner-spin-button {
     /* height: 270px; */
 }
 
+.mo_wrap .scroll_member_body {
+    overflow-y: scroll;
+    height: 230px;
+}
+
 .scroll_body::-webkit-scrollbar {
     width: 10px;
 }
@@ -2991,6 +2998,19 @@ input[type='number']::-webkit-inner-spin-button {
     background-color: #fff;
 }
 .scroll_body::-webkit-scrollbar-button {
+    display: none;
+}
+.scroll_member_body::-webkit-scrollbar {
+    width: 10px;
+}
+.scroll_member_body::-webkit-scrollbar-track {
+    background-color: #fff;
+}
+.scroll_member_body::-webkit-scrollbar-thumb {
+    /* background-color: #ff0267; */
+    background-color: #fff;
+}
+.scroll_member_body::-webkit-scrollbar-button {
     display: none;
 }
 
@@ -3108,6 +3128,11 @@ input[type='number']::-webkit-inner-spin-button {
     height: 20px;
     margin: 10px;
 }
+.layerPopup_content .chat_member .group_fork {
+    width: 20px;
+    height: 20px;
+    margin: 10px;
+}
 .layerPopup_content .chat_member .chat_member_profile {
     display: flex;
 }
@@ -3121,6 +3146,37 @@ input[type='number']::-webkit-inner-spin-button {
     width: 20px;
     height: 20px;
     border-radius: 50%;
+}
+.layerPopup_content .chat_member .chat_member_profile .group_fork {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+.desc_box{
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    padding-right: 33px;
+    /* height: 10px; */
+}
+.desc_box > ul{
+    display: flex;
+    list-style: none;
+}
+.desc_box>ul>li{
+    list-style: none;
+    padding-left: 10px;
+}
+.desc_box>ul>li>a{
+    text-decoration: none;
+}
+.desc_box>ul>li>a:hover{
+    color:#ff0267;
+    font-weight: 500;
+}
+.desc_box>ul>li>a .on{
+    color:#ff0267;
+    font-weight: 500;
 }
 .layerPopup_content .chat_member .chat_member_profile p {
     font-weight: 500;
