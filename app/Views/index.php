@@ -284,7 +284,8 @@
                                         } else {
                                             html += '<p class="mbti nodata"></p>';
                                         }
-                                        html += '<p class="mat_percent">' + item.match_rate + '%</p>';
+                                        // html += '<p class="mat_percent">' + item.match_rate + '%</p>';
+                                        html += matchRateType(item.match_rate);
                                         html += '</div>';
                                         html += '</a>';
                                         html += '</div>';
@@ -304,6 +305,19 @@
                         });
                     }
 
+                    const matchRateType=(rate)=>{
+                        if(80 <= rate){
+                            return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/blue_face_icon.png"></p>';
+                        }else if(rate => 65 ||rate<80){
+                            return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/green_face_icon.png"></p>';
+                        }else if(rate=>50 ||rate <65){
+                            return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/yellow_face_icon.png"></p>';
+                        }else if(rate=>35 || rate <50){
+                            return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/orange_face_icon.png"></p>';
+                        }else{
+                            return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/red_face_icon.png"></p>';
+                        }
+                    }
                     const meetingList = () => {
                         $.ajax({
                             url: '/ajax/mainMeetingList',
