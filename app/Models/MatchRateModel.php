@@ -17,10 +17,12 @@ class MatchRateModel extends Model
         'idx',
         'member_ci',
         'my_nickname',
+        'your_ci',
         'your_nickname',
         'match_score',
         'match_score_max',
         'match_rate',
+        'ideal_rate',
         'delete_yn',
         'last_access_dt'
     ];

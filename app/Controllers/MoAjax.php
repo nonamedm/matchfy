@@ -1930,13 +1930,17 @@ class MoAjax extends BaseController
             $datas = $MemberModel
                 ->query($query)->getResultArray();
             // 세션(또는 파일로 로컬)에 저장한다. 이후 로그인 시 해당 ajax 작동시킨다.
+            $mydata = $MemberModel->where(['ci' => $ci])->first();
             foreach ($datas as &$item) {
+                // echo print_r($item[0]);
                 // 기본배점 항목 계산
                 $calc = 0;
                 $calcMax = 0;
-
-                $mydata = $MemberModel->where(['ci' => $ci])->first();
                 if ($mydata['nickname'] !== $item['nickname']) { // 본인이 아닌 경우만 계산
+                    $MatchRateModel = new MatchRateModel();
+
+                    $your_rate = $MatchRateModel->where(['member_ci' => $item['ci'], 'your_ci' => $mydata['ci']])->first();
+
                     // group1 -- MBTI, 얼굴형, 스타일, 음주횟수
                     // MBTI
                     if ($item['mbti'] !== null) {
@@ -2197,21 +2201,24 @@ class MoAjax extends BaseController
 
 
                     // 계산한 가중치 항목 DB insert -> 회원수 너무 많아지면 python 배치 저장 필요
-                    $MatchRateModel = new MatchRateModel();
+
                     $selectParam = [
                         'member_ci' => $mydata['ci'],
                         // 'my_nickname' => $mydata['nickname'], 닉네임 수정할 수 있어서 조건 삭제
-                        'your_nickname' => $item['nickname'],
+                        'your_ci' => $item['ci'],
                     ];
                     $selected = $MatchRateModel->where($selectParam)->first();
+                    $ideal_rate = number_format(($calc === 0 ? 1 : $calc) / ($calcMax === 0 ? 100 : $calcMax) * 100, 2);
+                    $match_rate = $your_rate ? number_format(($your_rate['ideal_rate'] + $ideal_rate) / 2, 2) : number_format(($ideal_rate) / 2, 2);
                     if ($selected) {
                         $query = "UPDATE wh_match_rate";
                         $query .= " SET match_score = '" . $calc . "'";
                         $query .= " , my_nickname = '" . $mydata['nickname'] . "'";
                         $query .= " , match_score_max = '" . $calcMax . "'";
-                        $query .= " , match_rate = '" . number_format(($calc === 0 ? 1 : $calc) / ($calcMax === 0 ? 100 : $calcMax) * 100, 2) . "'";
+                        $query .= " , match_rate = '" . $match_rate . "'";
+                        $query .= " , ideal_rate = '" . $ideal_rate . "'";
                         $query .= " WHERE member_ci = '" . $mydata['ci'] . "'";
-                        $query .= " AND your_nickname = '" . $item['nickname'] . "'";
+                        $query .= " AND your_ci = '" . $item['ci'] . "'";
 
                         $result = $MatchRateModel
                             ->query($query);
@@ -2219,10 +2226,12 @@ class MoAjax extends BaseController
                         $insertParam = [
                             'member_ci' => $mydata['ci'],
                             'my_nickname' => $mydata['nickname'],
+                            'your_ci' => $item['ci'],
                             'your_nickname' => $item['nickname'],
                             'match_score' => $item['calc'],
                             'match_score_max' => $item['calc_max'],
-                            'match_rate' => number_format(($calc === 0 ? 1 : $calc) / ($calcMax === 0 ? 100 : $calcMax) * 100, 2),
+                            'match_rate' => $match_rate,
+                            'ideal_rate' => $ideal_rate,
                         ];
                         $result = $MatchRateModel->insert($insertParam);
                     }
