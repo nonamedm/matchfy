@@ -16,4 +16,8 @@ class Home extends BaseController
     {
         return view('index_login');
     }
+    public function intro(): string
+    {
+        return view('/intro/main');
+    }
 }
