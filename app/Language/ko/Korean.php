@@ -574,9 +574,9 @@ return [
     'pravacyName'              => '개인정보 처리방침',
     'serviceName'              => '서비스 이용약관',
     'supporterName'            => '서포터즈',
-    'footerInfo1'              => '(주)회사명',
-    'footerInfo2'              => '서울특별시 강남구 논현로 9길 26 길동빌딩 502호',
-    'footerInfo3'              => '대표이사 : 홍길동',
-    'footerInfo4'              => '사업자등록번호 : 123-45-6789',
+    'footerInfo1'              => '(주)큐브베리',
+    'footerInfo2'              => '서울특별시 마포구 만리재로14, 16층 1612호(공덕동, 한국사회복지회관 르네상스타워)',
+    'footerInfo3'              => '대표이사 : 이진서',
+    'footerInfo4'              => '사업자등록번호 : 480-88-03079',
 
 ];
