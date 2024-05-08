@@ -20,4 +20,8 @@ class Home extends BaseController
     {
         return view('/intro/main');
     }
+    public function introCompany(): string
+    {
+        return view('/intro/company');
+    }
 }

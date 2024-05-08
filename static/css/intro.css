@@ -97,7 +97,11 @@ input[type='checkbox']+label:hover {
     width: 4px;
     height: 4px;
 }
-
+.link-a a{
+    text-decoration: none;
+    color: #FFFFFF;
+    cursor: pointer;
+}
 .item-link-service  {
     overflow-wrap: break-word;
     font-family: 'Roboto';
@@ -156,6 +160,42 @@ input[type='checkbox']+label:hover {
     margin: 0 auto;
     margin-top: 37px;
 }
+
+.submenu {
+    border-radius: 15px;
+    background: rgba(27, 15, 15, 0.49);
+    position: absolute;
+    left: 751px;
+    top: 83px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 17px 0;
+    width: 198px;
+    box-sizing: border-box;
+  }
+   .submenu-50 {
+    margin: 0 19.5px 16px 0;
+    display: inline-block;
+    overflow-wrap: break-word;
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.2px;
+    line-height: 1.5;
+    text-transform: capitalize;
+    color: #FFFFFF;
+  }
+   .ai-5 {
+    overflow-wrap: break-word;
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.2px;
+    line-height: 1.5;
+    text-transform: capitalize;
+    color: #A09E9E;
+  }
 
 /*content*/
 .matchfy-logo-img {
@@ -467,7 +507,8 @@ input[type='checkbox']+label:hover {
 }
 
 .container-38-sub24 {
-    font-family: 'Alatsi', 'Roboto Condensed';
+    font-family: 'Abhaya Libre';
+    /* font-family: 'Alatsi', 'Roboto Condensed'; */
     font-weight: 400;
     font-size: 50px;
     letter-spacing: -0.5px;
@@ -476,6 +517,7 @@ input[type='checkbox']+label:hover {
 }
 
 .container-38 {
+    width: 500px;
     margin-bottom: 11px;
     overflow-wrap: break-word;
     font-family: 'Abhaya Libre';
@@ -775,6 +817,7 @@ input[type='checkbox']+label:hover {
     font-size: 16px;
     letter-spacing: -0.2px;
     text-transform: capitalize;
+    line-height: 8px;
     color: #FFFFFF;
 }
 
@@ -801,6 +844,7 @@ input[type='checkbox']+label:hover {
 
 .container-43 {
     position: absolute;
+    width: 375px;
     left: 50%;
     bottom: 14px;
     translate: -50% 0;

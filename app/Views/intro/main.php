@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="/static/css/intro.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
@@ -22,19 +25,28 @@
         <div class="cubberry-logo">
         </div>
         <ul class="menu">
-            <li class="item-link-service">
-                Service
+            <li class="item-link-service link-a">
+                <a href="/intro/main">Service</a>
+                <ul class="submenu">
+                    <li class="submenu-50">
+                        매치파이
+                    </li>
+                    <li class="ai-5">
+                        애니메틱 AI
+                    </li>
+                </ul>
             </li>
-            <li class="item-link-company">
-                company
+            <li class="item-link-company link-a">
+                <a href="/intro/company">company</a>
             </li>
-            <li class="item-link-careers">
-                Media
+            <li class="item-link-careers link-a">
+                <a href="">Media</a>
             </li>
-            <li class="item-link-conference">
-                contact
+            <li class="item-link-conference link-a">
+                <a href="">contact</a>
             </li>
         </ul>
+        
     </header>
 
     <div class="contents">
@@ -47,8 +59,8 @@
                 </div>
             </div>
             <div class="link">
-                <span class="service_btn">
-                    서비스 바로가기
+                <span class="service_btn link-a">
+                    <a href="">서비스 바로가기</a>
                 </span>
             </div>
             <div class="link-list">
@@ -217,8 +229,8 @@
                 </div>
                 <div class="list-1">
                     <div class="link-2">
-                        <span class="container-34">
-                            서비스 바로가기
+                        <span class="container-34 link-a">
+                            <a href="">서비스 바로가기</a>
                         </span>
                     </div>
                     <div class="item-link-1">
@@ -310,8 +322,8 @@
                             Email. hi@cuberry.kr
                         </div>
                         <div class="input">
-                            <span class="container-14">
-                                메일 보내기
+                            <span class="container-14 link-a">
+                                <a href=""> 메일 보내기</a>
                             </span>
                         </div>
                     </div>
