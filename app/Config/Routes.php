@@ -131,6 +131,7 @@ $routes->post('/ajax/meetingSave', 'MoAjax::meetingSave');
 $routes->post('/ajax/meetingFilter', 'MoAjax::meetingFiltering');
 $routes->post('/ajax/myMeetingFilter', 'MoAjax::myMeetingFiltering');
 $routes->post('/ajax/AImatch', 'MoAjax::AImatch');
+$routes->post('/ajax/AImatch2', 'MoAjax::AImatch2');
 $routes->post('/ajax/mainMeetingList', 'MoAjax::mainMeetingList');
 $routes->post('/ajax/allianceFilter', 'MoAjax::allianceFiltering');
 $routes->get('/ajax/alliance/reservation', 'MoAjax::allianceReservation');

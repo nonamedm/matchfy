@@ -47,7 +47,48 @@ class MoAjax extends BaseController
         }
         $query .= " AND mr.match_score > '0'";
         $query .= " AND mf.board_type = 'main_photo'";
-        $query .= " ORDER BY CONVERT(mr.match_rate, SIGNED) DESC";
+        $query .= " ORDER BY CONVERT(mr.match_rate, SIGNED) DESC LIMIT 20;";
+
+        $MemberModel = new MemberModel();
+        $result = $MemberModel
+            ->query($query)->getResultArray();
+
+        if ($result) {
+            foreach ($result as &$row) {
+                // 각 행의 birthyear 값에 문자열 1을 추가합니다.
+                foreach ($sidoCode as $item) {
+                    if ($item['id'] === $row['city']) $row['city'] = $item['name'];
+                }
+                foreach ($mbtiCode as $item) {
+                    if ($item['id'] === $row['mbti']) $row['mbti'] = $item['name'];
+                }
+                $row['match_rate'] = number_format($row['match_rate'], 0);
+            }
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => $result]);
+        } else {
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed', 'query' => $query]);
+        }
+    }
+
+    public function AImatch2()
+    {
+        $word_file_path = APPPATH . 'Data/MemberCode.php';
+        require($word_file_path);
+
+        $session = session();
+        $member_ci = $session->get('ci');
+        $filter = $this->request->getPost('value');
+
+        $query = "SELECT mr.ideal_rate, mf.file_path, mf.file_name, mb.city, mb.mbti, mb.nickname, SUBSTRING(mb.birthday, 1, 4) as birthyear FROM wh_match_rate mr
+        LEFT JOIN members mb on mr.your_nickname = mb.nickname
+        LEFT JOIN member_files mf on mb.ci = mf.member_ci";
+        $query .= " WHERE mr.member_ci = '" . $member_ci . "'";
+        if ($filter !== "9") {
+            $query .= " AND mb.gender = '" . $filter . "'";
+        }
+        $query .= " AND mr.ideal_rate > '0'";
+        $query .= " AND mf.board_type = 'main_photo'";
+        $query .= " ORDER BY CONVERT(mr.ideal_rate, SIGNED) DESC LIMIT 20;";
 
         $MemberModel = new MemberModel();
         $result = $MemberModel

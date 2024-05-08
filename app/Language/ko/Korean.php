@@ -108,6 +108,7 @@ return [
     'mainCon2'        => '똑똑한 AI가 나와 딱 맞는 상대를 소개해드립니다.',
     'mainConBtn'      => '지금 매칭하기',
     'mainTitle'       => '나와 딱 맞는 AI 매칭',
+    'mainTitle2'       => '내가 바라는 이상적인 타입',
 
     // agree
     'agreeCon'        => '<span>매치파이</span>가 처음이시군요<br />약관 내용에 동의해주세요.',
