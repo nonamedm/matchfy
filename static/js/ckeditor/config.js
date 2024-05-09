@@ -58,5 +58,7 @@ CKEDITOR.on('dialogDefinition', function (ev) {
         // infoTab.remove('txtWidth');
         // infoTab.remove('txtHeight');
         infoTab.remove('ratioLock');
+        infoTab.remove('txtUrl');
+        infoTab.remove('txtAlt');
     }
 });
