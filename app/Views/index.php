@@ -247,15 +247,15 @@
             } else {
             ?>
                 <script>
-                    const clickOn = (button) => {
-                        var buttons = document.querySelectorAll('.main_title_btn button');
-                        buttons.forEach(function(btn) {
-                            btn.classList.remove('on');
-                        });
+                    // const clickOn = (button) => {
+                    //     var buttons = document.querySelectorAll('.main_title_btn button');
+                    //     buttons.forEach(function(btn) {
+                    //         btn.classList.remove('on');
+                    //     });
 
-                        button.classList.add('on');
-                        AImatch(button.value);
-                    }
+                    //     button.classList.add('on');
+                    //     AImatch(button.value);
+                    // }
                     const AImatch = (v) => {
                         $.ajax({
                             url: '/ajax/AImatch',
@@ -305,16 +305,65 @@
                         });
                     }
 
-                    const matchRateType=(rate)=>{
-                        if(80 <= rate){
+                    const AImatch2 = (v) => {
+                        $.ajax({
+                            url: '/ajax/AImatch2',
+                            type: 'POST',
+                            data: {
+                                "value": v
+                            },
+                            async: false,
+                            success: function(data) {
+                                console.log(data);
+                                if (data.message === 'success') {
+                                    $(".AImatch2_list").html("");
+                                    $(".AImatch2_list").css("display", "flex");
+                                    data.result.forEach(function(item) {
+                                        var html = '<div class="ai_mat_card">';
+                                        html += `<a onclick="moveToUrl('/mo/viewProfile/` + item.nickname + `')">`;
+                                        if (item.file_path !== "" && item.file_path !== null) {
+                                            html += '<img src="/' + item.file_path + item.file_name + '" />';
+                                        } else {
+                                            html += '<img src="/static/images/profile_noimg_main.png" />';
+                                        }
+                                        html += '<h2>' + item.birthyear + ', ' + item.city + '</h2>';
+                                        html += '<div class="profile_row">';
+                                        if (item.mbti !== "" && item.mbti !== null) {
+                                            html += '<p class="mbti">' + item.mbti + '</p>';
+                                        } else {
+                                            html += '<p class="mbti nodata"></p>';
+                                        }
+                                        // html += '<p class="mat_percent">' + item.match_rate + '%</p>';
+                                        html += matchRateType(item.match_rate);
+                                        html += '</div>';
+                                        html += '</a>';
+                                        html += '</div>';
+
+                                        $(".AImatch2_list").append(html);
+                                    });
+                                } else {
+                                    // fn_alert('검색결과가 없습니다');
+                                    // $(".AImatch_list").css("text-align", "center");
+                                    // $(".AImatch_list").removeClass("login_main_list");
+                                }
+                            },
+                            error: function(data, status, err) {
+                                console.log(err);
+                                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                            },
+                        });
+                    }
+
+                    const matchRateType = (rate) => {
+                        if (80 <= rate) {
                             return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/blue_face_icon.png"></p>';
-                        }else if(rate => 65 ||rate<80){
+                        } else if (rate => 65 || rate < 80) {
                             return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/green_face_icon.png"></p>';
-                        }else if(rate=>50 ||rate <65){
+                        } else if (rate => 50 || rate < 65) {
                             return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/yellow_face_icon.png"></p>';
-                        }else if(rate=>35 || rate <50){
+                        } else if (rate => 35 || rate < 50) {
                             return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/orange_face_icon.png"></p>';
-                        }else{
+                        } else {
                             return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/red_face_icon.png"></p>';
                         }
                     }
@@ -470,6 +519,7 @@
                     }
                     $(function() {
                         AImatch('9');
+                        AImatch2('9');
                         meetingList();
                         scrollAction();
 
@@ -488,6 +538,26 @@
                         </div>
                     </div>
                     <div class="login_main_list AImatch_list">
+                        <div class="ai_mat_card" style="padding-top: 50px;">
+                            <h2><?= lang('Korean.indexCon') ?></h2>
+                            <a onclick="moveToUrl('/mo/partner')">
+                                <p class=""><?= lang('Korean.settingBtn') ?></p>
+                            </a>
+                            <div class="profile_row">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content_no_img login_main">
+                    <div class="login_main_title">
+                        <h2><?= lang('Korean.mainTitle2') ?></h2>
+                        <div class="main_title_btn">
+                            <!-- <button onclick="clickOn(this)" class="on" value="9"><?= lang('Korean.all') ?></button>
+                    <button onclick="clickOn(this)" value="0"><?= lang('Korean.woman') ?></button>
+                    <button onclick="clickOn(this)" value="1"><?= lang('Korean.man') ?></button> -->
+                        </div>
+                    </div>
+                    <div class="login_main_list AImatch2_list">
                         <div class="ai_mat_card" style="padding-top: 50px;">
                             <h2><?= lang('Korean.indexCon') ?></h2>
                             <a onclick="moveToUrl('/mo/partner')">
@@ -632,7 +702,9 @@
             <!-- FOOTER: DEBUG INFO + COPYRIGHTS -->
 
             <!-- <div style="height: 50px;"></div> -->
-            <footer class="footer" style="width:98%;">
+            <footer class="footer <?php if (!$ci) {
+                                        echo "block";
+                                    } ?>">
                 <div class="footer_logo mb40">
                     matchfy
                 </div>
@@ -640,7 +712,7 @@
                     <a href="#"><?= lang('Korean.companyName') ?></a>
                     <a href="/mo/privacy"><?= lang('Korean.pravacyName') ?></a>
                     <a href="/mo/terms"><?= lang('Korean.serviceName') ?></a>
-                    <a href="#"><?=lang('Korean.supporterName')?></a>
+                    <a href="#"><?= lang('Korean.supporterName') ?></a>
                 </div>
                 <div class="footer_info mb40">
                     <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>

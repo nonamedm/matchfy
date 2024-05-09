@@ -15,7 +15,7 @@
     <script src="/static/js/basic.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfeedb645765a4f5e27cfb8dda43a2c8&libraries=services"></script> -->
+    <script type="text/javascript" src="/static/js/ckeditor/ckeditor.js"></script>
 </head>
 
 <body class="mo_wrap">
@@ -122,7 +122,12 @@
                             </div>
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
-                                    <textarea id="content" name="content" value="" placeholder="<?= lang('Korean.Placehoder1') ?>"></textarea></br />
+                                    <textarea id="content" name="" value="" placeholder="<?= lang('Korean.Placehoder1') ?>"></textarea></br />
+                                    <script type="text/javascript">
+                                        CKEDITOR.replace('content', {
+                                            filebrowserUploadUrl: '/ckeditorUpload'
+                                        });
+                                    </script>
                                 </div>
                             </div>
                             <div class="form_row signin_form">
@@ -178,7 +183,7 @@
                 <a href="#"><?= lang('Korean.companyName') ?></a>
                 <a href="#"><?= lang('Korean.pravacyName') ?></a>
                 <a href="#"><?= lang('Korean.serviceName') ?></a>
-                <a href="#"><?=lang('Korean.supporterName')?></a>
+                <a href="#"><?= lang('Korean.supporterName') ?></a>
             </div>
             <div class="footer_info mb40">
                 <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>
@@ -485,9 +490,8 @@
                     ,
                 maxDate: "+1y" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)  
                     ,
-                zIndex: 9999
-                    ,
-                    
+                zIndex: 9999,
+
             });
 
             //초기값을 오늘 날짜로 설정
