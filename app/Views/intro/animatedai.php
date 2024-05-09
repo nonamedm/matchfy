@@ -51,59 +51,25 @@
     </header>
 
     <div class="contents">
-        <div class="company-main">
-            <span class="company-main-text">
-                큐브베리는 AI 기술을 통해 비즈니스 변혁을 이끄는 기업입니다.<br />
-                맞춤형 AI 솔루션과 빅데이터 분석으로, 고객의 복잡한 도전과제를 단순화하고, 효율성을 증대시키며, 전략적 가치를 창출합니다.<br />
-                큐브베리와 함께, AI의 무한한 가능성을 경험하세요.
-            </span>
-        </div>
-
         <div class="contents-box">
-            <span class="contents-title">
-                Business
-            </span>
+            <div class="animated-box">
+                <span class="animated-title">
+                    생성형 AI기술을 활용한 스토리보드 애니메이션 메이커
+                </span>
+                <p>
+                    애니메틱 AI
+                </p>
+            </div>
 
-            <ul class="contents-ul">
-                <li class="contents-li">
-                    <div class="contents-text">
-                        생성형 AI 모델 기반 솔루션 구축
-                    </div>
-                    <span class="plus-btn">
-                        +
-                    </span>
-                </li>
-
-                <li class="contents-li">
-                    <div class="contents-text">
-                        AI 기반 앱서비스 구축 · 운영
-                    </div>
-                    <span class="plus-btn">
-                        +
-                    </span>
-                </li>
-
-                <li class="contents-li">
-                    <div class="contents-text">
-                        미디어 콘텐츠 마케팅
-                    </div>
-                    <span class="plus-btn">
-                        +
-                    </span>
-                </li>
-            </ul>
-
-            <div class="plus-contents">
-                <div class="plus-contents-box">
-                    <div class="text">
-                        Executives and organization
-                    </div>
-                    <span class="plus">
-                        +
-                    </span>
+            <div class="animated-img">
+                <div class="animated-img-box">
+                    <img src="/static/images/intro/animated_img.png"/>
+                </div>
+                <div class="animated-img-box">
+                    <img src="/static/images/intro/animated_img2.png"/>
                 </div>
             </div>
-        </div>
+        </div> 
     </div>
 
     <div class="footer">

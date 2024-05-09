@@ -18,6 +18,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/static/js/intro/intro.js"></script>
 </head>
 
 <body>
@@ -28,11 +30,11 @@
             <li class="item-link-service link-a">
                 <a href="/intro/main">Service</a>
                 <ul class="submenu">
-                    <li class="submenu-50">
-                        매치파이
+                    <li class="submenu-50 link-a">
+                        <a href="/intro/main">매치파이</a>
                     </li>
-                    <li class="ai-5">
-                        애니메틱 AI
+                    <li class="ai-5 link-a">
+                        <a href="/intro/animatedAi">애니메틱 AI</a>
                     </li>
                 </ul>
             </li>
@@ -40,13 +42,12 @@
                 <a href="/intro/company">company</a>
             </li>
             <li class="item-link-careers link-a">
-                <a href="">Media</a>
+                <a href="/intro/media">Media</a>
             </li>
             <li class="item-link-conference link-a">
-                <a href="">contact</a>
+                <a href="/intro/#">contact</a>
             </li>
         </ul>
-        
     </header>
 
     <div class="contents">

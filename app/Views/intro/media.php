@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<header class="header">
+    <header class="header">
         <div class="cubberry-logo">
         </div>
         <ul class="menu">
@@ -45,23 +45,16 @@
                 <a href="/intro/media">Media</a>
             </li>
             <li class="item-link-conference link-a">
-                <a href="/intro/#">contact</a>
+                <a href="#">contact</a>
             </li>
         </ul>
     </header>
 
     <div class="contents">
-        <div class="company-main">
-            <span class="company-main-text">
-                큐브베리는 AI 기술을 통해 비즈니스 변혁을 이끄는 기업입니다.<br />
-                맞춤형 AI 솔루션과 빅데이터 분석으로, 고객의 복잡한 도전과제를 단순화하고, 효율성을 증대시키며, 전략적 가치를 창출합니다.<br />
-                큐브베리와 함께, AI의 무한한 가능성을 경험하세요.
-            </span>
-        </div>
-
+       
         <div class="contents-box">
             <span class="contents-title">
-                Business
+                Media
             </span>
 
             <ul class="contents-ul">
@@ -93,10 +86,10 @@
                 </li>
             </ul>
 
-            <div class="plus-contents">
+            <div class="plus-contents" style="width:224px;">
                 <div class="plus-contents-box">
                     <div class="text">
-                        Executives and organization
+                        Image file
                     </div>
                     <span class="plus">
                         +
