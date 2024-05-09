@@ -106,6 +106,7 @@ $routes->get('/auth/naver/callback', 'OAuth2::callback');
 
 // file upload
 $routes->post('/upload', 'Upload::upload');
+$routes->post('/ckeditorUpload', 'Upload::ckeditorUpload');
 
 // ajax
 $routes->post('/ajax/signUp', 'MoAjax::signUp');

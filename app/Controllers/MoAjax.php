@@ -1423,15 +1423,15 @@ class MoAjax extends BaseController
                     'max_length' => '최대 나이는 최대 2자리 숫자여야 합니다.'
                 ]
             ],
-            'matching_rate' => [
-                'label' => 'matching_rate',
-                'rules' => 'required|numeric|less_than_equal_to[100]',
-                'errors' => [
-                    'required' => '매칭률을 선택해주세요.',
-                    'numeric' => '매칭률은 숫자만 입력 가능합니다.',
-                    'less_than_equal_to' => '매칭률은 100% 이하만 가능합니다.'
-                ]
-            ],
+            // 'matching_rate' => [
+            //     'label' => 'matching_rate',
+            //     'rules' => 'required|numeric|less_than_equal_to[100]',
+            //     'errors' => [
+            //         'required' => '매칭률을 선택해주세요.',
+            //         'numeric' => '매칭률은 숫자만 입력 가능합니다.',
+            //         'less_than_equal_to' => '매칭률은 100% 이하만 가능합니다.'
+            //     ]
+            // ],
             'title' => [
                 'label' => 'title',
                 'rules' => 'required',
@@ -1439,13 +1439,13 @@ class MoAjax extends BaseController
                     'required' => '제목을 입력해주세요.',
                 ]
             ],
-            'content' => [
-                'label' => 'content',
-                'rules' => 'required',
-                'errors' => [
-                    'required' => '내용을 입력해주세요.',
-                ]
-            ],
+            // 'content' => [
+            //     'label' => 'content',
+            //     'rules' => 'required',
+            //     'errors' => [
+            //         'required' => '내용을 입력해주세요.',
+            //     ]
+            // ],
             'meeting_place' => [
                 'label' => 'meeting_place',
                 'rules' => 'required',

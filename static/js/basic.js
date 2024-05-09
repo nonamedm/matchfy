@@ -1044,7 +1044,7 @@ const showPopupRgt = (contents, ci) => {
 
     var title = '';
     var value = '';
-    
+
     switch (contents) {
         case 'school':
             title = '졸업증명서';
@@ -1237,19 +1237,21 @@ const meetingSave = (postData) => {
         $('#group_max_age').focus();
         return;
     }
-    if ($('#matching_rate').val().trim() === '') {
-        fn_alert('매칭률을 입력해 주세요.');
-        $('#matching_rate').focus();
-        return;
-    }
+    // if ($('#matching_rate').val().trim() === '') {
+    //     fn_alert('매칭률을 입력해 주세요.');
+    //     $('#matching_rate').focus();
+    //     return;
+    // }
     if ($('#title').val().trim() === '') {
         fn_alert('제목을 입력해 주세요.');
         $('#title').focus();
         return;
     }
-    if ($('#content').val().trim() === '') {
+    var editor = CKEDITOR.instances['content'];
+    var content = editor.getData();
+    if (content.trim() === '') {
         fn_alert('내용을 입력해 주세요.');
-        $('#content').focus();
+        editor.focus();
         return;
     }
     if ($('#meeting_place').val().trim() === '') {
@@ -1264,6 +1266,7 @@ const meetingSave = (postData) => {
     }
 
     var postData = new FormData(document.querySelector('form'));
+    postData.append('content', content);
     $.ajax({
         url: '/ajax/meetingSave',
         type: 'POST',
