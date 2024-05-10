@@ -207,7 +207,7 @@ input[type='checkbox']+label:hover {
     color: #FFFFFF;
 }
 
-.session-02{
+.section-02{
     width: 1200px;
     margin: 0 auto;
 }
@@ -245,11 +245,11 @@ input[type='checkbox']+label:hover {
     color: #FFFFFF;
 
 }
-.session-03 {
+.section-03 {
     margin-top: 232px;
     margin-bottom: 427px;
 }
-.session-03 .session-content{
+.section-03 .section-content{
     font-family: 'Inter';
     font-weight: 200;
     font-size: 36px;
@@ -259,14 +259,14 @@ input[type='checkbox']+label:hover {
     margin: 0 auto;
     margin-top:164px;
 }
-.session-03 .con-bold{
+.section-03 .con-bold{
     overflow-wrap: break-word;
     font-family: 'Inter';
     font-weight: 700;
     font-size: 48px;
     color: #FFFFFF;
 }
-.session-03 .con-light{
+.section-03 .con-light{
     font-family: 'Inter';
     font-weight: 200;
     font-size: 36px;
@@ -277,7 +277,7 @@ input[type='checkbox']+label:hover {
 
 /*sestion04*/
 
-.session-04{
+.section-04{
     width: 1204px;
     height: 664px;
     margin: 0 auto;

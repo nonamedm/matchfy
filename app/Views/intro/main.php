@@ -4,21 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Matchfy</title>
+    <meta charset="UTF-8">
+    <title>Matchfy</title>
     <meta name="description" content="The small framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
     <link rel="stylesheet" href="/static/css/intro.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/intro/intro.js"></script>
 </head>
 
@@ -104,7 +97,7 @@
             </div>
         </div>
 
-        <div class="session-03 secion">
+        <div class="section-03 secion">
             <div class="sec-con">
                 <span class="sub_title">친구보다 나를 더 잘 아는</span></br>
                 <span class="title"><b>AI매니저</b>에게 받는</br><b>소개팅</b></span>
@@ -120,7 +113,7 @@
             </div>
         </div>
 
-        <div class="session-04">
+        <div class="section-04">
             <div class="sec04-con">
                 <div class="frame-617">
                     <div class="group-781">
@@ -143,8 +136,7 @@
                     멤버들을 찾을 수 있어요.
                 </span>
             </div>
-
-            <div class="frame-1000001243">
+            <!-- <div class="frame-1000001243">
                 <div class="group-77">
                     <div class="rectangle-419">
                     </div>
@@ -161,57 +153,36 @@
                 </div>
                 <div class="rectangle-81">
                 </div>
+            </div> -->
+            <div class="frame-1000001243">
+                <img src="/static/images/intro/section04_img.png" />
             </div>
         </div>
 
         <div class="section-05">
             <div class="sec05-con">
-                <div class="sec05-circle">
-                    <div class="sec05-circle-box">
-                        <span class="sec05-circle-text">
-                            72%
-                        </span>
-                    </div>
-                    <div class="sec05-img01">
-                        <div class="rectangle-4192">
-                        </div>
-                    </div>
-                </div>
-                <div class="group-80">
-                    <div class="rectangle-4193">
-                    </div>
-                </div>
-                <div class="group-1000001281">
-                    <span class="container-9">
-                        99%
-                    </span>
-                </div>
-                <div class="group-1000001282">
-                    <span class="container-10">
-                        86%
-                    </span>
-                </div>
+                <img src="/static/images/intro/section05_img.png" />
             </div>
             <div class="txt">
                 <div class="container-10">
-                    <div class="frame-6171">
-                        <div class="group-782">
-                            <div class="ellipse-681">
+                    <div class="frame-617">
+                        <div class="group-781">
+                            <div class="ellipse-68">
                             </div>
-                            <span class="container-40">
+                            <span class="container-36">
                                 2
                             </span>
                         </div>
-                        <span class="container-41">
+                        <span class="container-37">
                             매칭점수
                         </span>
                     </div>
-                    <span class="container-42">
-                        매칭점수 기반의<br />
-                        멤버들 모아보기
-                    </span>
                 </div>
-                <span class="container-43">
+                <p class="container-38">
+                    <span>매칭점수 기반의</br>
+                    멤버들 모아보기</span>
+                </p>
+                <span class="container-39">
                     매칭점수가 70% 이상 일치하는 멤버들과<br />
                     소통을 할 수 있어요
                 </span>
@@ -221,7 +192,7 @@
         <div class="section-06">
 
             <div class="container-2">
-                <div class="session-04-title">
+                <div class="section-04-title">
                     <span class="heading-2-your-first-ai-agent-1">
                         세상에 없던 AI 커플 매칭 서비스
                     </span>

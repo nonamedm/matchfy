@@ -366,7 +366,7 @@ input[type='checkbox']+label:hover {
     flex-direction: column;
     align-items: center;
     padding: 68px 0 648.3px 0;
-    width: 95%;
+    width: 90%;
     height: 1060px;
     box-sizing: border-box;
     margin: 0 auto;
@@ -419,14 +419,17 @@ input[type='checkbox']+label:hover {
     margin-top: 115px;
     text-align: left;
 }
-.section-02-img{
+
+.section-02-img {
     position: relative;
     width: 80%;
     margin: 0 auto;
 }
-.section-02-img img{
+
+.section-02-img img {
     width: 100%;
 }
+
 .sec03-content {
     font-family: 'Inter';
     font-weight: 200;
@@ -439,6 +442,8 @@ input[type='checkbox']+label:hover {
     margin-top: 164px;
     width: 90%;
     padding: 0 5%;
+    letter-spacing: -0.07em;
+    text-transform: capitalize;
 }
 
 .con-bold {
@@ -460,24 +465,25 @@ input[type='checkbox']+label:hover {
 
 /*sestion04*/
 
-.session-04 {
+.section-04 {
     position: relative;
     width: 1204px;
-    height: 664px;
+    height: 663px;
     margin: 0 auto;
     display: flex;
     margin-top: 427px;
 }
 
 .sec04-con {
-    margin: 176.8px 166.6px 238.2px 0;
+    /* margin: 176.8px 166.6px 238.2px 0; */
+    margin: 176.8px 0px 238.2px 0;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
 }
 
 .frame-617 {
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     display: flex;
     flex-direction: row;
     align-self: flex-start;
@@ -510,6 +516,7 @@ input[type='checkbox']+label:hover {
     font-family: 'Abhaya Libre';
     font-weight: 700;
     font-size: 16px;
+    line-height: 10px;
     letter-spacing: -0.2px;
     text-transform: capitalize;
     color: #FFFFFF;
@@ -530,8 +537,8 @@ input[type='checkbox']+label:hover {
     /* font-family: 'Alatsi', 'Roboto Condensed'; */
     font-weight: 400;
     font-size: 50px;
-    letter-spacing: -0.5px;
     line-height: 1.333;
+    letter-spacing: -0.07em;
     text-transform: capitalize;
 }
 
@@ -539,7 +546,7 @@ input[type='checkbox']+label:hover {
     width: 500px;
     margin-bottom: 11px;
     overflow-wrap: break-word;
-    font-family: 'Abhaya Libre';
+    /* font-family: 'Abhaya Libre'; */
     font-weight: 700;
     font-size: 50px;
     letter-spacing: -0.5px;
@@ -551,22 +558,30 @@ input[type='checkbox']+label:hover {
 .container-39 {
     align-self: flex-start;
     overflow-wrap: break-word;
-    font-family: 'Abhaya Libre';
+    /* font-family: 'Abhaya Libre'; */
     font-weight: 400;
     font-size: 20px;
-    letter-spacing: -0.2px;
     line-height: 1.5;
-    text-transform: capitalize;
     color: #B9B9B9;
+    letter-spacing: -0.07em;
+    text-transform: capitalize;
 }
 
 .frame-1000001243 {
+    /* position: relative;
+    display: flex; */
+    /* padding: 159px 0 104px 0; */
+    /* width: 640px; */
+    /* height: 1000px; */
+    /* box-sizing: border-box; */
+    /* justify-content: center; */
+    /* align-items: center;*/
     position: relative;
-    display: flex;
-    padding: 159px 0 104px 0;
-    width: 640px;
-    height: 663px;
-    box-sizing: border-box;
+    right: 0px;
+}
+
+.frame-1000001243 img {
+    width: 100%;
 }
 
 .rectangle-81 {
@@ -671,6 +686,10 @@ input[type='checkbox']+label:hover {
     padding-bottom: 40px;
     width: 653px;
     box-sizing: border-box;
+}
+
+.sec05-con img {
+    width: 100%;
 }
 
 .sec05-img01 {
@@ -785,11 +804,11 @@ input[type='checkbox']+label:hover {
     box-sizing: border-box;
 }
 
-.txt {
+.section-05 .txt {
     position: relative;
     margin: 208px 0 148px 0;
-    display: flex;
-    padding-right: 19.8px;
+    /* display: flex; */
+    /* padding-right: 19.8px; */
     box-sizing: border-box;
 }
 
@@ -801,7 +820,7 @@ input[type='checkbox']+label:hover {
 }
 
 .frame-6171 {
-    margin-bottom: 21px;
+    /* margin-bottom: 21px; */
     display: flex;
     flex-direction: row;
     align-self: flex-start;
@@ -897,7 +916,7 @@ input[type='checkbox']+label:hover {
 .heading-2-your-first-ai-agent-1 {
     position: relative;
     overflow-wrap: break-word;
-    font-family: 'Roboto';
+    /* font-family: 'Roboto'; */
     font-weight: 500;
     font-size: 50px;
     line-height: 1.3;
@@ -1002,7 +1021,7 @@ input[type='checkbox']+label:hover {
 .matchfy-bi-white-bg-102 {
     background: url('/static/images/intro/matchfy_bi_white_bg_103.png') 50% / cover no-repeat;
     position: absolute;
-    left: 105px;
+    /* left: 105px; */
     width: 354px;
     height: 92px;
 }
@@ -1024,14 +1043,14 @@ input[type='checkbox']+label:hover {
     color: #FFFFFF;
 }
 
-/* .session-04-title {
+/* .section-04-title {
     position: relative;
     margin: 0.5px 76.6px 0 0;
     display: flex;
     padding-bottom: 89px;
     box-sizing: border-box;
   }
-   .session-05 {
+   .section-05 {
     margin: 0 55.1px 232px 0;
     display: flex;
     flex-direction: column;
@@ -1071,6 +1090,7 @@ input[type='checkbox']+label:hover {
     background: rgba(0, 0, 0, 0.25);
     position: relative;
     display: flex;
+    width: 100%;
     padding: 32px 46.6px 59.9px 43.9px;
     box-sizing: border-box;
     margin: 0 auto;
@@ -1571,12 +1591,261 @@ input[type='checkbox']+label:hover {
 .animated-p {
     width: 451px;
     height: 39px;
-    margin:0 auto;
-    margin-top:432px;
-    margin-bottom:432px;
+    margin: 0 auto;
+    margin-top: 432px;
+    margin-bottom: 432px;
     overflow-wrap: break-word;
     font-family: 'Inter';
     font-weight: 400;
     font-size: 32px;
     color: #FFFFFF;
+}
+
+@media (max-width: 968px) {
+    .section-01{
+        height: 560px;
+    }
+    .sec-con-bg{
+        width: 90%;
+        height: auto;
+    }
+    .sec-con-bg img{
+        width: 100%;
+    }
+    .sub_title {
+        font-family: 'Inter';
+        font-weight: 200;
+        font-size: 20px;
+        line-height: 1.333;
+        color: #FF0267;
+    }
+
+    .secion .title {
+        text-align: center;
+        overflow-wrap: break-word;
+        color: #FFFFFF;
+        font-family: 'Inter';
+        font-weight: 700;
+        font-size: 30px;
+        line-height: 1.333;
+    }
+
+    .sec03-content {
+        font-family: 'Inter';
+        font-weight: 200;
+        font-size: 36px;
+        line-height: 1.333;
+        width: 90%;
+        /* width: 1256px; */
+        /* height: 420px; */
+        margin: 0 auto;
+        margin-top: 64px;
+        width: 90%;
+        padding: 0 5%;
+        letter-spacing: -0.07em;
+        text-transform: capitalize;
+    }
+
+    .con-bold {
+        overflow-wrap: break-word;
+        font-family: 'Inter';
+        font-weight: 700;
+        font-size: 24px;
+        color: #FFFFFF;
+    }
+
+    .con-light {
+        font-family: 'Inter';
+        font-weight: 200;
+        font-size: 24px;
+        line-height: 1.333;
+        color: #FFFFFF;
+        /* padding-left: 40px;*/
+    }
+
+    .section-04 {
+        display: flex;
+        flex-direction: column;
+        margin-top: 100px;
+        width: 100%;
+        height: 1000px;
+    }
+
+    .frame-617 {
+        font-family: 'Pretendard-Bold';
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 29px;
+        letter-spacing: -0.01em;
+        text-transform: capitalize;
+        color: #ff0267;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .container-39 {
+        margin: 0 auto;
+    }
+
+    .container-38 {
+        font-size: 30px;
+        line-height: 40px;
+        width: 100%;
+    }
+
+    .sec04-con {
+        text-align: center;
+        position: relative;
+        left: 0px;
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 100px;
+    }
+    .frame-1000001243 {
+        align-items: baseline;
+        padding: 0 20px;
+    }
+
+    .section-05 {
+        display: flex;
+        flex-direction: column-reverse;
+        text-align: center;
+        position: relative;
+        left: 0px;
+        width: 100%;
+        height: 1000px;
+        margin: 0 auto;
+        margin-bottom: 100px;
+        margin-top: 180px;
+    }
+
+    .sec05-con {
+        text-align: center;
+        position: relative;
+        left: 0px;
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 100px;
+    }
+
+    .section-05 .txt {
+        text-align: center;
+        position: relative;
+        left: 0px;
+        width: 100%;
+        margin: 0 auto;
+        margin-bottom: 100px;
+    }
+
+    .frame-6171 {
+        font-family: 'Pretendard-Bold';
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 29px;
+        letter-spacing: -0.01em;
+        text-transform: capitalize;
+        color: #ff0267;
+    }
+
+    .container-42 {
+        font-size: 30px;
+        line-height: 40px;
+    }
+
+    .container-43 {
+        font-size: 20px;
+        line-height: 30px;
+        letter-spacing: -0.07em;
+        text-transform: capitalize;
+        color: #555555;
+    }
+    .section-06 {
+        position: relative;
+        width: 100%;
+        height: 664px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        margin-top: 0px;
+    }
+
+    .container-2{
+        position: relative;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+    }
+    .list-1{
+        position: relative;
+        width: 270px;
+        text-align: left;
+        margin: 0 auto;
+    }
+    .section-04-title{
+        margin: 0 auto;
+        width: 100%;
+        text-align: center;
+        height: 150px;
+    }
+    .matchfy-bi-white-bg-102{
+        position: relative;
+        margin: 0 auto;
+    }
+    .link-2 {
+        width: 126px;
+        border-bottom: 1px solid #FFFFFF;
+        margin: 0 auto;
+        display: block;
+        padding: 0;
+        /* box-sizing: border-box; */
+    }
+    .heading-2-your-first-ai-agent-1{
+        font-size: 30px;
+    }
+    .item-link-1{
+        text-align: left;
+        margin-top: 40px;
+    }
+    .item-link-2{
+        text-align: left;
+    }
+    .item-link-3{
+        text-align: left;
+    }
+
+    /*company*/
+    .contents-box{
+
+    }
+    .contents-ul {
+        position: relative;
+        left: 0px;
+        width: 88%;
+        margin: 0;
+        margin-top: 77px;
+    }
+    .contents-li{
+        width: 100%;
+        height: 80px;
+        padding: 1px 26.2px 0.2px 26.2px;
+    }
+    .contents-text{
+        font-size: 20px;
+        line-height: 4.18px;
+    }
+    .plus-btn{
+        font-size: 35px;
+        line-height: 72px;
+    }
+    .plus-contents .plus-contents-box{
+        margin: 0 auto;
+    }
+    .plus-contents .plus-contents-box .text{
+        font-size: 20px;
+    }
+    .plus-contents .plus-contents-box .plus{
+        font-size: 35px;
+        line-height: 3.05;
+    }
 }
