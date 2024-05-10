@@ -99,7 +99,7 @@
                 <span class="title">세상에없던 </br><b>AI커플 매칭 서비스</b></span>
             </div>
 
-            <div>
+            <div class="section-02-img">
                 <img src="/static/images/intro/section02_con_img.png" />
             </div>
         </div>
