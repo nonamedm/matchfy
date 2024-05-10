@@ -9,6 +9,7 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
     <script src="/static/js/wallet.js"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
     <script>
@@ -24,6 +25,7 @@
 
 
         <?php $title = "내지갑";
+        $prevUrl = "/mo/mypage";
         include 'header.php'; ?>
 
         <div class="sub_wrap">
@@ -104,7 +106,7 @@
                 <a href="#"><?= lang('Korean.companyName') ?></a>
                 <a href="#"><?= lang('Korean.pravacyName') ?></a>
                 <a href="#"><?= lang('Korean.serviceName') ?></a>
-                <a href="#"><?=lang('Korean.supporterName')?></a>
+                <a href="#"><?= lang('Korean.supporterName') ?></a>
             </div>
             <div class="footer_info mb40">
                 <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>

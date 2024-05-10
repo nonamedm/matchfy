@@ -20,6 +20,7 @@
 
 
         <?php $title = "제휴";
+        $prevUrl = "/mo/alliance/list";
         include 'header.php'; ?>
 
         <div class="sub_wrap">

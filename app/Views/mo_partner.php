@@ -19,6 +19,7 @@
 
 
         <?php $title = "내 상대";
+        $prevUrl = "/";
         include 'header.php'; ?>
         <?php
         $word_file_path = APPPATH . 'Data/MemberCode.php';
