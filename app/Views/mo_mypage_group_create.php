@@ -24,6 +24,7 @@
 
 
         <?php $title = "모임 등록";
+        $prevUrl = "/mo/mypage/group/list";
         include 'header.php'; ?>
 
         <div class="sub_wrap">

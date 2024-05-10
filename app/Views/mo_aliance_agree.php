@@ -17,7 +17,8 @@
         <!-- HEADER: MENU + HEROE SECTION -->
 
 
-        <?php $title = "약관동의";
+        <?php $title = "제휴 약관동의";
+        $prevUrl = "/mo/alliance/pass";
         include 'header.php'; ?>
 
         <div class="sub_wrap">

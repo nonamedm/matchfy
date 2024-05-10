@@ -19,6 +19,7 @@
 
 
         <?php $title = "<?=lang('Korean.all')?> 메뉴";
+        $prevUrl = "/";
         include 'header.php'; ?>
 
         <div class="sub_wrap">

@@ -23,6 +23,7 @@
         <!-- HEADER: MENU + HEROE SECTION -->
 
         <?php $title = "매칭피드";
+        $prevUrl = "/mo/menu";
         include 'header.php'; ?>
 
         <div class="sub_wrap">

@@ -20,6 +20,7 @@
 
 
         <?php $title = "메시지";
+        $prevUrl = "/mo/mymsg/list";
         include 'header.php'; ?>
         <?php $session = session();
         $member_ci = $session->get('ci');
