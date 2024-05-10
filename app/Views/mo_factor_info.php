@@ -19,6 +19,7 @@
 
 
         <?php $title = "내 상대";
+        $prevUrl = '/mo/factorBasic';
         include 'header.php'; ?>
 
         <div class="sub_wrap">

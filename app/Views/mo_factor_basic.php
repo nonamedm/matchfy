@@ -19,6 +19,7 @@
 
 
         <?php $title = "내 상대";
+        $prevUrl = '/mo/partner';
         include 'header.php'; ?>
 
         <div class="sub_wrap">
@@ -102,7 +103,7 @@
                 <a href="#"><?= lang('Korean.companyName') ?></a>
                 <a href="#"><?= lang('Korean.pravacyName') ?></a>
                 <a href="#"><?= lang('Korean.serviceName') ?></a>
-                <a href="#"><?=lang('Korean.supporterName')?></a>
+                <a href="#"><?= lang('Korean.supporterName') ?></a>
             </div>
             <div class="footer_info mb40">
                 <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>

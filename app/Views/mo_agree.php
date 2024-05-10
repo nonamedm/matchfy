@@ -18,6 +18,7 @@
 
 
         <?php $title = "약관동의";
+        $prevUrl = "/mo/pass";
         include 'header.php'; ?>
 
         <div class="sub_wrap">

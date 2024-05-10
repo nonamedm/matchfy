@@ -22,7 +22,7 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="terms_cont">
-                    <div class="terms_cont_box">
+                    <div class="terms_cont_box scroll_body">
 
                         <b><?= $terms['title'] ?></b>
                         <p><?= nl2br($terms['content']); ?></p>

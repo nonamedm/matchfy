@@ -108,6 +108,7 @@ return [
     'mainCon2'        => '똑똑한 AI가 나와 딱 맞는 상대를 소개해드립니다.',
     'mainConBtn'      => '지금 매칭하기',
     'mainTitle'       => '나와 딱 맞는 AI 매칭',
+    'mainTitle2'       => '내가 바라는 이상적인 타입',
 
     // agree
     'agreeCon'        => '<span>매치파이</span>가 처음이시군요<br />약관 내용에 동의해주세요.',
@@ -554,8 +555,8 @@ return [
     'signupCon3'               => '동영상 프로필 (권장)',
     'certificationCon1'        => '인증을 위한 <b id="type">혼인관계증명서</b>를<br />등록해주세요',
     'certificationCon2'        => '동의합니다',
-    // 'certificationCon3'        => '본인은 업로드한 문서에 허위 사항이 없음을 확인하며,<br />허위 사실이 있을경우 그 손해에 대해<br />법정 최대 손해배상을 할 것을 동의합니다.',
-    'certificationCon3'        => '인증을 위한 혼인관계증명서(상세)를 등록해주세요.<br/>심사 후 인증이 완료됩니다.',
+    'certificationCon3'        => '본인은 업로드한 문서에 허위 사항이 없음을 확인하며,<br />허위 사실이 있을경우 그 손해에 대해<br />법정 최대 손해배상을 할 것을 동의합니다.',
+    'certificationCon4'        => '인증을 위한 혼인관계증명서(상세)를 등록해주세요.<br/>심사 후 인증이 완료됩니다.',
     'signUpNamePlaceholder'    => '이름을 입력하세요',
     'signUpEmailPlaceholder'    => '이메일을 입력하세요',
     'signUpEmailRegPlaceholder'    => '인증번호를 입력하세요',
@@ -574,9 +575,9 @@ return [
     'pravacyName'              => '개인정보 처리방침',
     'serviceName'              => '서비스 이용약관',
     'supporterName'            => '서포터즈',
-    'footerInfo1'              => '(주)회사명',
-    'footerInfo2'              => '서울특별시 강남구 논현로 9길 26 길동빌딩 502호',
-    'footerInfo3'              => '대표이사 : 홍길동',
-    'footerInfo4'              => '사업자등록번호 : 123-45-6789',
+    'footerInfo1'              => '(주)큐브베리',
+    'footerInfo2'              => '서울특별시 마포구 만리재로14, 16층 1612호(공덕동, 한국사회복지회관 르네상스타워)',
+    'footerInfo3'              => '대표이사 : 이진서',
+    'footerInfo4'              => '사업자등록번호 : 480-88-03079',
 
 ];

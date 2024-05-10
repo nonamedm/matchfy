@@ -1,0 +1,364 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('/static/font/Pretendard/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Pretendard-SemiBold';
+    src: url('/static/font/Pretendard/Pretendard-SemiBold.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Pretendard-Bold';
+    src: url('/static/font/Pretendard/Pretendard-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Tium';
+    src: url('/static/font/Tium/TMONTium.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+body{
+    overflow-x: hidden;
+    font-family: 'Pretendard-Regular';
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: #111111;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(180deg, rgba(3, 10, 23, 0.93), rgba(58, 74, 74, 0.93));
+}
+ul,
+li {
+    text-decoration: none;
+    list-style: none;
+}
+button:hover {
+    cursor: pointer;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+input[type='radio']+label:hover {
+    cursor: pointer;
+}
+
+input[type='checkbox']+label:hover {
+    cursor: pointer;
+}
+
+/*intro css*/
+.cubberry-logo {
+    position: absolute;
+    background: url('/static/images/intro/main/cubberry_logo.png') 50% / cover no-repeat;
+    width: 129px;
+    height: 105px;
+    float: left;
+}
+
+.menu {
+    position: relative;
+    border-radius: 100px;
+    background: rgba(0, 0, 0, 0.7);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 6.9px 0 9.1px 0;
+    width: 517px;
+    height: fit-content;
+    box-sizing: border-box;
+}
+
+.menu ul {
+    display: flex;
+}
+
+.menu ul li {
+    text-align: center;
+    width: 128px;
+    margin-right: 7.5px;
+    overflow-wrap: break-word;
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.2px;
+    line-height: 1.5;
+    text-transform: capitalize;
+    color: #FFFFFF;
+}
+
+.contents {
+    position: relative;
+    border-radius: 33px;
+    background: linear-gradient(rgba(138, 205, 148, 0.14), rgba(138, 205, 148, 0.14)), url('/static/images/intro/main/mysterious_swan_18257_aphoto_of_two_people_hiking_on_top_of_a_6_df_4_fd_67048_e_471_fb_5_c_82783_be_17_ea_311.png') 50% / cover no-repeat;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 68px 0 27px 0;
+    width: 1766px;
+    box-sizing: border-box;
+    margin-top: 80px;
+}
+
+.main-con-text h1 {
+    position: relative;
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 24px;
+    letter-spacing: -0.2px;
+    color: #FFFFFF;
+}
+
+.matchfy-logo-img {
+    background: url('/static/images/intro/main/matchfy_bi_white_bg_101.png') 50% / cover no-repeat;
+    position: relative;
+    top: 24px;
+    width: 226px;
+    height: 59px;
+    margin: 0 auto;
+}
+
+.link-list {
+    position: relative;
+    margin-top: 12.7px;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    box-sizing: border-box;
+}
+
+.link {
+    border-bottom: 1px solid #FFFFFF;
+    display: flex;
+    padding: 0 0.4px 0.5px 0.6px;
+    box-sizing: border-box;
+}
+
+.service_btn {
+    position: relative;
+    width: 123px;
+    height: 27px;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 500;
+    font-size: 16.9px;
+    line-height: 1.6;
+    color: #FFFFFF;
+    border-bottom: 1px solid #fff;
+    margin: 0 auto;
+    margin-top: 39px;
+}
+
+.main-icon-service img {
+    width: 35px;
+}
+
+.main-icon-android img {
+    width: 24px;
+}
+
+.main-icon-ios img {
+    width: 18px;
+}
+
+.link-list ul{
+    width: 221px;
+}
+
+.link-list ul li{
+    width: 221px;
+    height: 41.6px;
+    line-height: 41.6px;
+    float: left;
+}
+
+.link-list ul li div:nth-child(1) {
+    position: relative;
+    width: 35px;
+    height: 42px;
+    line-height: 55px;
+    text-align: center;
+    float: left;
+    margin-right: 15px;
+}
+
+.link-list ul li div:nth-child(2) {
+    position: relative;
+    width: 186px;
+    height: 42px;
+    overflow-wrap: break-word;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.733;
+    color: #FFFFFF;
+}
+
+.section-02{
+    width: 1200px;
+    margin: 0 auto;
+}
+.sec-title{
+    width: 762px;
+    height: 302px;
+    margin: 0 auto;
+}
+.sec-title p{
+    font-family: 'Inter';
+    font-weight: 200;
+    font-size: 48px;
+    line-height: 1.333;
+    color: #FF0267;
+    text-align: center;
+    letter-spacing: -5px;
+}
+.sec-title h1{
+    text-align: center;
+    overflow-wrap: break-word;
+    font-family: 'Inter';
+    font-weight: 200;
+    line-height: 1.333;
+    font-size: 96px;
+    color: #FFFFFF;
+    letter-spacing: -5px;
+}
+.sec-title h1 b{
+    text-align: center;
+    overflow-wrap: break-word;
+    font-family: 'Inter';
+    font-weight: 700;
+    line-height: 1.333;
+    font-size: 96px;
+    color: #FFFFFF;
+
+}
+.section-03 {
+    margin-top: 232px;
+    margin-bottom: 427px;
+}
+.section-03 .section-content{
+    font-family: 'Inter';
+    font-weight: 200;
+    font-size: 36px;
+    line-height: 1.333;
+    width: 1200px;
+    height: 420px;
+    margin: 0 auto;
+    margin-top:164px;
+}
+.section-03 .con-bold{
+    overflow-wrap: break-word;
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 48px;
+    color: #FFFFFF;
+}
+.section-03 .con-light{
+    font-family: 'Inter';
+    font-weight: 200;
+    font-size: 36px;
+    line-height: 1.333;
+    color: #FFFFFF;
+    padding-left: 40px;
+}
+
+/*sestion04*/
+
+.section-04{
+    width: 1204px;
+    height: 664px;
+    margin: 0 auto;
+}
+.sec04-con {
+    margin: 176.8px 166.6px 238.2px 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+   .frame-617 {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-self: flex-start;
+    width: fit-content;
+    box-sizing: border-box;
+  }
+   .group-781 {
+    position: relative;
+    margin: 1.3px 8px 1.3px 0;
+    display: flex;
+    padding: 6.5px 9.1px 0 8.1px;
+    box-sizing: border-box;
+  }
+   .ellipse-68 {
+    border-radius: 12px;
+    background: #FF0267;
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    translate: -50% 0;
+    width: 24px;
+    height: 24px;
+  }
+   .container-36 {
+    position: relative;
+    overflow-wrap: break-word;
+    font-family: 'Abhaya Libre';
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.2px;
+    text-transform: capitalize;
+    color: #FFFFFF;
+  }
+   .container-37 {
+    overflow-wrap: break-word;
+    font-family: 'Abhaya Libre';
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: -0.2px;
+    text-transform: capitalize;
+    color: #FF0267;
+  }
+  .container-38-sub24 {
+    font-family: 'Alatsi', 'Roboto Condensed';
+    font-weight: 400;
+    font-size: 50px;
+    letter-spacing: -0.5px;
+    line-height: 1.333;
+    text-transform: capitalize;
+  }
+   .container-38 {
+    margin-bottom: 11px;
+    overflow-wrap: break-word;
+    font-family: 'Abhaya Libre';
+    font-weight: 700;
+    font-size: 50px;
+    letter-spacing: -0.5px;
+    line-height: 1.24;
+    text-transform: capitalize;
+    color: #FFFFFF;
+  }
+   .container-39 {
+    align-self: flex-start;
+    overflow-wrap: break-word;
+    font-family: 'Abhaya Libre';
+    font-weight: 400;
+    font-size: 20px;
+    letter-spacing: -0.2px;
+    line-height: 1.5;
+    text-transform: capitalize;
+    color: #B9B9B9;
+  }

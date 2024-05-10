@@ -23,6 +23,7 @@
         <!-- HEADER: MENU + HEROE SECTION -->
 
         <?php $title = "매칭피드";
+        $prevUrl = "/mo/menu";
         include 'header.php'; ?>
 
         <div class="sub_wrap">
@@ -50,7 +51,7 @@
                                     if ($feed['ci'] !== $ci) {
                                     ?>
                                         <span class="match_percent">
-                                            <?= number_format($feed['matchScore']['match_rate'], 0) ?>%
+                                            <?php if (number_format($feed['matchScore']['match_rate'], 0) !== '0') echo number_format($feed['matchScore']['match_rate'], 0) . '%' ?>
                                         </span>
                                     <?php
                                     }
@@ -113,18 +114,18 @@
 
     <script>
         $(document).ready(function() {
-            $.ajax({
-                url: '/ajax/calcMatchRate', // todo : 추후 로그인완료로 이동
-                type: 'POST',
-                async: false,
-                success: function(data) {
-                    console.log(data);
-                },
-                error: function(data, status, err) {
-                    console.log(err);
-                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-                },
-            });
+            // $.ajax({
+            //     url: '/ajax/calcMatchRate', // todo : 추후 로그인완료로 이동
+            //     type: 'POST',
+            //     async: false,
+            //     success: function(data) {
+            //         console.log(data);
+            //     },
+            //     error: function(data, status, err) {
+            //         console.log(err);
+            //         fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            //     },
+            // });
         });
     </script>
 

@@ -859,7 +859,7 @@ class MoHome extends BaseController
             ->orderBy('a.meeting_master')
             ->orderBy('a.create_at')
             ->get();
-            
+
         $result = $query->getResult();
 
         if ($result) {
@@ -1554,6 +1554,7 @@ class MoHome extends BaseController
         $query .= " AND mf.board_type='main_photo' ";
         $query .= " AND wmf.delete_yn='n' ";
         $query .= " AND wmff.delete_yn='n' ";
+        $query .= " AND mb.gender!=(SELECT gender FROM members WHERE ci='" . $ci . "') "; // 상대성별 피드만 보기
         if (!empty($factorList['except1'])) //배제항목 있을 시 조건에서 배제하기
         {
             $query .= " AND (mb." . $factorList['except1'] . " != '" . $factorList['except1_detail'] . "'  OR mb." . $factorList['except1'] . " IS NULL)";

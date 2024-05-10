@@ -327,17 +327,19 @@ $smoking = array(
     array("id" => "1", "name" => "절대 안됨", "value" => "1"),
 );
 $smokingCode = array(
-    array("id" => "0", "name" => "전혀안함", "value" => "0"),
-    array("id" => "1", "name" => "하루 1~2회", "value" => "1"),
-    array("id" => "2", "name" => "하루 3~5회", "value" => "2"),
-    array("id" => "3", "name" => "하루 5회 이상", "value" => "3"),
+    array("id" => "0", "name" => "흡연", "value" => "0"),
+    array("id" => "1", "name" => "비흡연", "value" => "1"),
+    // array("id" => "0", "name" => "전혀안함", "value" => "0"),
+    // array("id" => "1", "name" => "하루 1~2회", "value" => "1"),
+    // array("id" => "2", "name" => "하루 3~5회", "value" => "2"),
+    // array("id" => "3", "name" => "하루 5회 이상", "value" => "3"),
 );
 $drinkingCode = array(
     array("id" => "0", "name" => "무관", "value" => "0"),
     array("id" => "1", "name" => "전혀 안함", "value" => "1"),
-    array("id" => "2", "name" => "주 1~2병", "value" => "2"),
-    array("id" => "3", "name" => "주 3~5병", "value" => "3"),
-    array("id" => "4", "name" => "주 5병 이상", "value" => "4"),
+    array("id" => "2", "name" => "월 2회 미만", "value" => "2"),
+    array("id" => "3", "name" => "주 1~2회", "value" => "3"),
+    array("id" => "4", "name" => "주 3회이상", "value" => "4"),
 );
 $religionCode = array(
     array("id" => "0", "name" => "무교", "value" => "0"),

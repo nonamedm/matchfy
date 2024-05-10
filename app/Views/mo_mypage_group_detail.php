@@ -22,6 +22,7 @@
 
 
         <?php $title = "매칭모임";
+        $prevUrl = "/mo/mypage/group/list";
         include 'header.php'; ?>
         <?php $word_file_path = APPPATH . 'Data/MeetingCode.php';
         require($word_file_path); ?>
@@ -52,7 +53,7 @@
                             <div class="group_particpnt" onclick="meetingMemberList('<?= $idx ?>')">
                                 <span><?= lang('Korean.application') ?> <?= $meeing_count ?></span>/<?= $number_of_people ?><?= lang('Korean.people') ?>
                             </div>
-                            <div class="share_btn" id="copyButton"><img src="/static/images/share_icon.png"/></div>
+                            <div class="share_btn" id="copyButton"><img src="/static/images/share_icon.png" /></div>
                         </div>
                     </div>
                     <hr class="hoz_part" />

@@ -19,6 +19,7 @@
 
 
         <?php $title = "휴대폰 본인인증";
+        $prevUrl = "/";
         include 'header.php'; ?>
 
         <div class="sub_wrap">
