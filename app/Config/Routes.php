@@ -200,3 +200,6 @@ $routes->get('/ad/exchange/exchangeList', 'AdminHome::exchangeList');
 $routes->post('/ad/exchangeCheck', 'AdminHome::exchangeCheck');
 $routes->get('/ad/alliance/allianceList', 'AdminHome::allianceList');
 $routes->post('/ad/allianceCheck', 'AdminHome::allianceCheck');
+
+$routes->get('/ad/member/memberApproveList', 'AdminHome::memberApproveList');
+$routes->post('/ad/memberCertificateCheck', 'AdminHome::memberCertificateCheck');

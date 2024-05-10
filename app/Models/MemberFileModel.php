@@ -12,7 +12,7 @@ class MemberFileModel extends Model
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $protectFields = true;
-    protected $allowedFields = ['member_ci', 'file_path', 'file_name', 'org_name', 'ext', 'board_type', 'extra1', 'extra2', 'extra3', 'delete_yn'];
+    protected $allowedFields = ['member_ci', 'file_path', 'file_name', 'org_name', 'ext', 'board_type', 'extra1', 'extra2', 'extra3', 'delete_yn', 'create_datetime', 'update_datetime'];
 
     protected bool $allowEmptyInserts = false;
 

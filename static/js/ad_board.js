@@ -15,6 +15,14 @@ $(document).ready(function(){
         allianceSubmit(level,idx);
     });
 
+    $('.member_approve_btn').click(function() {
+        var value = $(this).text();
+        var level = $(this).data('approve-level');
+        var id =$(this).data('id');
+
+        memberCertificateApprove(level,id);
+    });
+
     CKEDITOR.replace('content');
  
     $('form').submit(function(){
@@ -167,6 +175,26 @@ function allianceSubmit(level,idx){
         data:{
             level:level,
             idx:idx,
+        },
+        type: 'post',
+        success: function(data) {
+            alert(data.msg);
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+function memberCertificateApprove(level,id){
+    console.log(level);
+    console.log(id);
+    $.ajax({
+        url: '/ad/memberCertificateCheck',
+        data:{
+            level:level,
+            id:id,
         },
         type: 'post',
         success: function(data) {
