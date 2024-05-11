@@ -115,28 +115,28 @@
 
         <div class="section-04">
             <div class="sec04-con">
-                <div class="frame-617">
-                    <div class="group-781">
-                        <div class="ellipse-68">
+                <div class="section-num-title-box">
+                    <div class="section-num-box">
+                        <div class="section-num-circle">
                         </div>
-                        <span class="container-36">
+                        <span class="section-num-text">
                             1
                         </span>
                     </div>
-                    <span class="container-37">
+                    <span class="section-num-title">
                         프로필
                     </span>
                 </div>
-                <p class="container-38">
-                    <span class="container-38-sub-0">프로필 등록으로</span></br>
-                    <span class="container-38-sub-24">매칭 99% 멤버찾기</span>
+                <p class="section-title">
+                    <span>프로필 등록으로</span></br>
+                    <span>매칭 99% 멤버찾기</span>
                 </p>
-                <span class="container-39">
+                <span class="section-subtitle">
                     등록한 프로필로 매칭점수가 일치하는<br />
                     멤버들을 찾을 수 있어요.
                 </span>
             </div>
-            <!-- <div class="frame-1000001243">
+            <!-- <div class="section-box-img">
                 <div class="group-77">
                     <div class="rectangle-419">
                     </div>
@@ -154,7 +154,7 @@
                 <div class="rectangle-81">
                 </div>
             </div> -->
-            <div class="frame-1000001243">
+            <div class="section-box-img">
                 <img src="/static/images/intro/section04_img.png" />
             </div>
         </div>
@@ -164,25 +164,23 @@
                 <img src="/static/images/intro/section05_img.png" />
             </div>
             <div class="txt">
-                <div class="container-10">
-                    <div class="frame-617">
-                        <div class="group-781">
-                            <div class="ellipse-68">
-                            </div>
-                            <span class="container-36">
-                                2
-                            </span>
+                <div class="section-num-title-box">
+                    <div class="section-num-box">
+                        <div class="section-num-circle">
                         </div>
-                        <span class="container-37">
-                            매칭점수
+                        <span class="section-num-text">
+                            2
                         </span>
                     </div>
+                    <span class="section-num-title">
+                        매칭점수
+                    </span>
                 </div>
-                <p class="container-38">
+                <p class="section-title">
                     <span>매칭점수 기반의</br>
                     멤버들 모아보기</span>
                 </p>
-                <span class="container-39">
+                <span class="section-subtitle">
                     매칭점수가 70% 이상 일치하는 멤버들과<br />
                     소통을 할 수 있어요
                 </span>
@@ -239,41 +237,8 @@
                 <div class="heading-2-your-first-ai-agent">
                     Business Partners
                 </div>
-                <div class="group-1000001310">
-                    <div class="container-8">
-                        <div class="container-19">
-                        </div>
-                        <div class="image-14">
-                        </div>
-                        <div class="image-15">
-                        </div>
-                        <div class="image-22">
-                        </div>
-                        <div class="container-18">
-                        </div>
-                        <div class="b-116-ba-66-ca-63-b-1">
-                        </div>
-                    </div>
-                    <div class="container-7">
-                        <div class="container-3">
-                            <div class="d-1">
-                            </div>
-                            <div class="group-10000013101">
-                                <div class="image-18">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="container-16">
-                        </div>
-                        <div class="container-13">
-                            <div class="image-20">
-                            </div>
-                            <div class="image-21">
-                            </div>
-                            <div class="ym_logo">
-                            </div>
-                        </div>
-                    </div>
+                <div class="footer-logogr-img">
+                    <img src="/static/images/intro/footer_logo_gb.png"/>
                 </div>
                 <div class="border">
                     <div class="footer-container">
@@ -306,8 +271,7 @@
                     </div>
                 </div>
             </div>
-            <div class="kbs-1">
-            </div>
+            <!--  -->
         </div>
     </div>
 

@@ -105,41 +105,8 @@
                 <div class="heading-2-your-first-ai-agent">
                     Business Partners
                 </div>
-                <div class="group-1000001310">
-                    <div class="container-8">
-                        <div class="container-19">
-                        </div>
-                        <div class="image-14">
-                        </div>
-                        <div class="image-15">
-                        </div>
-                        <div class="image-22">
-                        </div>
-                        <div class="container-18">
-                        </div>
-                        <div class="b-116-ba-66-ca-63-b-1">
-                        </div>
-                    </div>
-                    <div class="container-7">
-                        <div class="container-3">
-                            <div class="d-1">
-                            </div>
-                            <div class="group-10000013101">
-                                <div class="image-18">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="container-16">
-                        </div>
-                        <div class="container-13">
-                            <div class="image-20">
-                            </div>
-                            <div class="image-21">
-                            </div>
-                            <div class="ym_logo">
-                            </div>
-                        </div>
-                    </div>
+                <div class="footer-logogr-img">
+                    <img src="/static/images/intro/footer_logo_gb.png"/>
                 </div>
                 <div class="border">
                     <div class="footer-container">
@@ -172,8 +139,7 @@
                     </div>
                 </div>
             </div>
-            <div class="kbs-1">
-            </div>
+            
         </div>
     </div>
 
