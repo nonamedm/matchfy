@@ -209,3 +209,5 @@ $routes->post('/ad/allianceCheck', 'AdminHome::allianceCheck');
 
 $routes->get('/ad/member/memberApproveList', 'AdminHome::memberApproveList');
 $routes->post('/ad/memberCertificateCheck', 'AdminHome::memberCertificateCheck');
+
+$routes->get('/ad/report/reportList', 'AdminHome::reportList');

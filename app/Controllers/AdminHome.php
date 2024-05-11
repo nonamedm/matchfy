@@ -10,6 +10,7 @@ use App\Models\PointExchangeModel;
 use App\Models\AllianceModel;
 use App\Models\MemberModel;
 use App\Models\MemberFileModel;
+use App\Models\ReportMemberModel;
 
 
 class AdminHome extends BaseController
@@ -634,6 +635,7 @@ class AdminHome extends BaseController
     
     }
 
+    /*회원 인증 정보 승인*/
     public function memberApproveList($page = null){
 
         // 페이지가 없으면 기본값으로 1을 사용
@@ -703,6 +705,20 @@ class AdminHome extends BaseController
             return $this->response->setJSON(['error' => true, 'msg' => '승인 실패.']);
         }
     
+    }
+
+    /*회원 신고*/
+    public function reportEidt(): string
+    {
+        return view('admin/ad_privacy_edit');
+    }
+
+    public function reportList(){
+        $ReportMemberModel = new ReportMemberModel();
+
+        $data['reports'] = $ReportMemberModel->orderBy('created_at', 'DESC')->findAll();
+
+        return view('admin/ad_report_member_list',$data);
     }
 
 }

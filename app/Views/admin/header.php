@@ -25,4 +25,7 @@
     <li class="menu_item">
         <a href="/ad/member/memberApproveList">회원 승인목록</a>
     </li>
+    <li class="menu_item">
+        <a href="/ad/report/reportList">신고 목록</a>
+    </li>
 </ul>
