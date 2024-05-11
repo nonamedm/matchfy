@@ -50,6 +50,8 @@ function fn_clickList(board){
         window.location.href = "/ad/terms/termsList";
     }else if(board=='privacy'){
         window.location.href = "/ad/privacy/privacyList";
+    }else if(board=='report'){
+        window.location.href = "/ad/report/reportList";
     }
 }
 
@@ -71,6 +73,8 @@ function fn_clickDelete(id,boardName) {
                     window.location.href = '/ad/terms/termsList';
                 }else if(boardName=='privacy'){
                     window.location.href = '/ad/privacy/privacyList';
+                }else if(boardName=='report') {
+                    window.location.href = '/ad/report/reportList';
                 }else{
                     window.location.href = '/ad/faq/faqList';
                 }
@@ -116,6 +120,28 @@ function fn_clickBoFileDelete(BoardId,fileId) {
             success: function(response) {
                 alert('삭제 되었습니다.');
                 window.location.href = '/ad/notice/noticeList';
+            },
+            error: function(xhr, status, error) {
+                alert('삭제 중 오류가 발생 하였습니다.');
+                console.log(error);
+            }
+        });
+    }
+}
+
+function fn_clickReportDelete(reportId) {
+    var confirmed = confirm('삭제하시겠습니까?');
+    console.log(reportId);
+    if (confirmed) {
+        $.ajax({
+            type: "post",
+            url: "/ad/report/reportDelete",
+            data: { 
+                reportId: reportId
+            },
+            success: function(response) {
+                alert('삭제 되었습니다.');
+                window.location.href = '/ad/report/reportList';
             },
             error: function(xhr, status, error) {
                 alert('삭제 중 오류가 발생 하였습니다.');

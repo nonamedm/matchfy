@@ -721,4 +721,24 @@ class AdminHome extends BaseController
         return view('admin/ad_report_member_list',$data);
     }
 
+    public function reportView($idx){
+        $ReportMemberModel = new ReportMemberModel();
+        $data['report'] = $ReportMemberModel->find($idx);
+
+        return view('admin/ad_report_view', $data);
+    }
+
+    public function reportDelete(){
+        $reportId = $this->request->getPost('reportId');
+
+        $ReportMemberModel = new ReportMemberModel();
+        $deleted = $ReportMemberModel->delete($reportId);   
+
+        if ($deleted) {
+            return $this->response->setJSON(['success' => true]);
+        } else {
+            return $this->response->setJSON(['success' => false]);
+        }
+    }
+
 }

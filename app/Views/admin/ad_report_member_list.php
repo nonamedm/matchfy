@@ -77,11 +77,11 @@
                                 }
                             ?>
                             <td class="td text_left">
-                                <a href="/ad/privacy/privacyView/<?= $report['idx'] ?>"><?= $content ?></a>
+                                <a href="/ad/report/reportView/<?= $report['idx'] ?>"><?= $content ?></a>
                             </td>         
                             <td class="td"><?= $report['created_at']?></td>
                             <td class="td">
-                                <input type="button" class="btn type01" value="<?=lang('Korean.delete')?>"  Onclick="fn_clickDelete('<?= $report['idx']?>','privacy')"/>
+                                <input type="button" class="btn type01" value="<?=lang('Korean.delete')?>"  Onclick="fn_clickReportDelete('<?= $report['idx']?>')"/>
                             </td>
                         </tr>
                     <?php endforeach; ?>
