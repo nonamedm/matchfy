@@ -41,23 +41,6 @@
                 <div class="btn_group invite">
                     <button type="button" class="btn type01" id="shareButton" data-code="<?= $unique_code ?>"><?= lang('Korean.friendsShare') ?></button>
                 </div>
-                <!-- <div class="footer_logo mb40">
-                    matchfy
-                </div>
-                <div class="footer_link mb40">
-                    <a href="#"><?= lang('Korean.companyName') ?></a>
-                    <a href="#"><?= lang('Korean.pravacyName') ?></a>
-                    <a href="#"><?= lang('Korean.serviceName') ?></a>
-                    <a href="#"><?= lang('Korean.supporterName') ?></a>
-                </div>
-                <div class="footer_info mb40">
-                    <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>
-                    <span><?= lang('Korean.footerInfo3') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo4') ?><img
-                            src="/static/images/part_line.png" /> gildong@naver.com</span>
-                </div>
-                <div class="footer_copy">
-                    COPYRIGHT 2023. ALL RIGHTS RESERVED.
-                </div> -->
 
             </footer>
         </div>
