@@ -1879,7 +1879,7 @@ const alliancePaymentChk = () => {
 function fn_alert(msg, loc) {
     var html = '';
 
-    html += '<div class="layerPopup alert middle">';
+    html += '<div class="layerPopup alert middle callAlert">';
     html += '<div class="layerPopup_wrap">';
     html += '<div class="layerPopup_content msmall">';
     html += '<p class="txt">알림</p>';
@@ -1905,7 +1905,7 @@ function fn_alert(msg, loc) {
 function fn_confirm(msg, loc) {
     var html = '';
     var value;
-    html += '<div class="layerPopup alert middle">';
+    html += '<div class="layerPopup alert middle callAlert">';
     html += '<div class="layerPopup_wrap">';
     html += '<div class="layerPopup_content msmall">';
     html += '<p class="txt">알림</p>';
@@ -1943,7 +1943,8 @@ function fn_confirm(msg, loc) {
 
 /*common alert close */
 function alertClose() {
-    $('.alert').hide();
+    $('.callAlert').hide();
+    $('.callAlert').remove();
 }
 
 /*number input text */
