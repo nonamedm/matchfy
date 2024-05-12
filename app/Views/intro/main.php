@@ -178,7 +178,7 @@
                 </div>
                 <p class="section-title">
                     <span>매칭점수 기반의</br>
-                    멤버들 모아보기</span>
+                        멤버들 모아보기</span>
                 </p>
                 <span class="section-subtitle">
                     매칭점수가 70% 이상 일치하는 멤버들과<br />
@@ -238,7 +238,7 @@
                     Business Partners
                 </div>
                 <div class="footer-logogr-img">
-                    <img src="/static/images/intro/footer_logo_gb.png"/>
+                    <img src="/static/images/intro/footer_logo_gb.png" />
                 </div>
                 <div class="border">
                     <div class="footer-container">
@@ -260,11 +260,11 @@
                         </div>
                         <div class="input">
                             <span class="container-14 link-a">
-                                <a href=""> 메일 보내기</a>
+                                <a href="mailto:hi@cuberry.kr"> 메일 보내기</a>
                             </span>
                         </div>
                     </div>
-                    <div class="link-1">
+                    <div class="link-1" onclick="scrollToTop()">
                         <span class="container-15">
                             ^
                         </span>

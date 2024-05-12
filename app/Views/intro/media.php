@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
     <link rel="stylesheet" href="/static/css/intro.css">
-  
+
     <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/static/js/intro/intro.js"></script>
@@ -46,7 +46,7 @@
     </header>
 
     <div class="contents">
-       
+
         <div class="contents-box">
             <span class="contents-title">
                 Media
@@ -121,7 +121,7 @@
                     </span>
                 </div>
                 <div class="media_img">
-                    <img src="/static/images/intro/media_img.png"/>
+                    <img src="/static/images/intro/media_img.png" />
                 </div>
             </div>
         </div>
@@ -134,7 +134,7 @@
                     Business Partners
                 </div>
                 <div class="footer-logogr-img">
-                    <img src="/static/images/intro/footer_logo_gb.png"/>
+                    <img src="/static/images/intro/footer_logo_gb.png" />
                 </div>
                 <div class="border">
                     <div class="footer-container">
@@ -156,18 +156,18 @@
                         </div>
                         <div class="input">
                             <span class="container-14 link-a">
-                                <a href=""> 메일 보내기</a>
+                                <a href="mailto:hi@cuberry.kr"> 메일 보내기</a>
                             </span>
                         </div>
                     </div>
-                    <div class="link-1">
+                    <div class="link-1" onclick="scrollToTop()">
                         <span class="container-15">
                             ^
                         </span>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 

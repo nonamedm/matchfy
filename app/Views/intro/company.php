@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<header class="header">
+    <header class="header">
         <div class="cubberry-logo">
         </div>
         <ul class="menu">
@@ -107,7 +107,7 @@
                     </span>
                 </div>
                 <div class="organ_img">
-                    <img src="/static/images/intro/organization_img.png"/>
+                    <img src="/static/images/intro/organization_img.png" />
                 </div>
             </div>
         </div>
@@ -120,7 +120,7 @@
                     Business Partners
                 </div>
                 <div class="footer-logogr-img">
-                    <img src="/static/images/intro/footer_logo_gb.png"/>
+                    <img src="/static/images/intro/footer_logo_gb.png" />
                 </div>
                 <div class="border">
                     <div class="footer-container">
@@ -142,18 +142,18 @@
                         </div>
                         <div class="input">
                             <span class="container-14 link-a">
-                                <a href=""> 메일 보내기</a>
+                                <a href="mailto:hi@cuberry.kr"> 메일 보내기</a>
                             </span>
                         </div>
                     </div>
-                    <div class="link-1">
+                    <div class="link-1" onclick="scrollToTop()">
                         <span class="container-15">
                             ^
                         </span>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 
