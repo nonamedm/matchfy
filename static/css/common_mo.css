@@ -145,7 +145,7 @@ header .menu_right.edit {
 /* SUB */
 .mo_wrap .sub_wrap {
     position: relative;
-    height: 784px !important;
+    min-height: 784px !important;
     width: 371px;
     height: auto;
     margin: 0 auto;
