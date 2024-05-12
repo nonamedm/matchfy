@@ -46,14 +46,14 @@ $routes->get('/mo/schDepositPopup', 'MoHome::schDepositPopup');
 $routes->get('/mo/invite', 'MoHome::invite');
 $routes->get('/mo/invitePopup', 'MoHome::invitePopup');
 
-$routes->get('/mo/mypage/wallet', 'MoHome::mypageWallet');
-$routes->get('/mo/mypage/wallet2', 'MoHome::mypageWallet2');
-$routes->get('/mo/mypage/wallet/charge', 'MoHome::mypageWalletCharge');
-$routes->get('/mo/mypage/wallet/success', 'MoHome::mypageSeccess');
+// $routes->get('/mo/mypage/wallet', 'MoHome::mypageWallet');
+// $routes->get('/mo/mypage/wallet2', 'MoHome::mypageWallet2');
+// $routes->get('/mo/mypage/wallet/charge', 'MoHome::mypageWalletCharge');
+// $routes->get('/mo/mypage/wallet/success', 'MoHome::mypageSeccess');
 $routes->post('/mo/mypage/mypageAddPoint/(:num)/(:num)', 'MoHome::mypageAddPoint/$1/$2');
 $routes->get('/mo/mypage/getPoint', 'MoHome::mypageGetPoint');
 $routes->post('/mo/mypage/selectPoint', 'MoHome::mypageSelectPoint');
-$routes->post('/mo/mypage/walletTypeList', 'MoHome::walletTypeList');
+// $routes->post('/mo/mypage/walletTypeList', 'MoHome::walletTypeList');
 //포인트사용시
 $routes->post('/mo/usePoint', 'MoHome::usePoint');
 $routes->get('/mo/mypage/group/list', 'MoHome::mypageGroupList');
