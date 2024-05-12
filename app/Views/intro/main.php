@@ -54,7 +54,7 @@
             </div>
             <div class="link">
                 <span class="service_btn link-a">
-                    <a href="">서비스 바로가기</a>
+                    <a href="/">서비스 바로가기</a>
                 </span>
             </div>
             <div class="link-list">
@@ -200,7 +200,7 @@
                 <div class="list-1">
                     <div class="link-2">
                         <span class="container-34 link-a">
-                            <a href="">서비스 바로가기</a>
+                            <a href="/">서비스 바로가기</a>
                         </span>
                     </div>
                     <div class="item-link-1">
