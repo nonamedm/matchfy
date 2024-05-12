@@ -379,10 +379,10 @@ function meetingMemberList(idx) {
                 html += '<a href="#" class="btn_close"  onclick="btnClose();" style="float: right;">닫기</a>';
                 html += '</div>';
                 html += '<div class="desc_box">';
-                html += '<ul>';
-                html += '<li><a href="#" class="on">매칭률순</a></li>';
-                html += '<li><a href="#">이상형확률순</a></li>';
-                html += '</ul>';
+                // html += '<ul>';
+                // html += '<li><a href="#" class="on">매칭률순</a></li>';
+                // html += '<li><a href="#">이상형확률순</a></li>';
+                // html += '</ul>';
                 html += '</div>';
                 html += '<div class="scroll_member_body">';
                 for (var i = 0; i < data.length; i++) {
