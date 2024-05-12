@@ -21,7 +21,7 @@ class OAuth2 extends BaseController
         $this->kakaoProvider = new GenericProvider([
             'clientId'                => $kakaoClientId,
             'clientSecret'            => $kakaoClientSecret,
-            'redirectUri'             => 'https://nonamedm18.mycafe24.com/auth/kakao/callback',
+            'redirectUri'             => 'https://matchfy.net/auth/kakao/callback',
             'urlAuthorize'            => 'https://kauth.kakao.com/oauth/authorize',
             'urlAccessToken'          => 'https://kauth.kakao.com/oauth/token',
             'urlResourceOwnerDetails' => null
@@ -30,7 +30,7 @@ class OAuth2 extends BaseController
         $this->naverProvider = new GenericProvider([
             'clientId'                => $naverClientId,
             'clientSecret'            => $naverClientSecret,
-            'redirectUri'             => 'https://nonamedm18.mycafe24.com/auth/naver/callback',
+            'redirectUri'             => 'https://matchfy.net/auth/naver/callback',
             'urlAuthorize'            => 'https://nid.naver.com/oauth2.0/authorize',
             'urlAccessToken'          => 'https://nid.naver.com/oauth2.0/token',
             'urlResourceOwnerDetails' => null
@@ -87,7 +87,7 @@ class OAuth2 extends BaseController
                     'isLoggedIn' => true //로그인 상태
                 ]);
                 $session->setTempdata('ci', $user['ci'], 2592000);
-                return redirect()->to('https://nonamedm18.mycafe24.com/');
+                return redirect()->to('https://matchfy.net/');
             } else {
                 if ($providerName === 'naver') {
                     $postData = [
