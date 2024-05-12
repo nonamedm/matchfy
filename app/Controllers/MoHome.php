@@ -358,8 +358,8 @@ class MoHome extends BaseController
                                 ELSE 'you' 
                             END) AS chk,
                             (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname ORDER BY created_at DESC LIMIT 1) as match_rate,
-                            (SELECT file_path FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo') AS file_path,
-                            (SELECT file_name FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo') AS file_name
+                            (SELECT file_path FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo' AND delete_yn='n') AS file_path,
+                            (SELECT file_name FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo' AND delete_yn='n') AS file_name
                         FROM wh_chat_room_msg  crm WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at ASC";
             $allMsg = $ChatRoomMsgModel
                 ->query($query)->getResultArray();
@@ -372,8 +372,8 @@ class MoHome extends BaseController
                 }
             }
             $query = "SELECT member_ci AS where_ci, (SELECT name FROM members WHERE ci = where_ci) AS name,
-                             (SELECT file_path FROM member_files WHERE member_ci = where_ci AND board_type='main_photo') AS file_path,
-                             (SELECT file_name FROM member_files WHERE member_ci = where_ci AND board_type='main_photo') AS file_name,
+                             (SELECT file_path FROM member_files WHERE member_ci = where_ci AND board_type='main_photo' AND delete_yn='n') AS file_path,
+                             (SELECT file_name FROM member_files WHERE member_ci = where_ci AND board_type='main_photo' AND delete_yn='n') AS file_name,
                              (CASE
                                 WHEN member_ci = '" . $ci . "' THEN 'me'
                                 ELSE 'you' 
