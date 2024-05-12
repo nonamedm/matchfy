@@ -1946,6 +1946,10 @@ function alertClose() {
     $('.callAlert').hide();
     $('.callAlert').remove();
 }
+/*common alert close */
+function btnClose() {
+    $('.alert').hide();
+}
 
 /*number input text */
 function clearInput(input) {

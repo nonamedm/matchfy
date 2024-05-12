@@ -361,7 +361,7 @@ function meetingMemberList(idx) {
                 html += '<div class="layerPopup_content medium">';
                 html += '<div style="position: relative;display: flex;">';
                 html += '<p class="txt" style="width: 90%;padding-left: 5%;">참석멤버</p>';
-                html += '<a href="#" class="btn_close"  onclick="alertClose();" style="float: right;">닫기</a>';
+                html += '<a href="#" class="btn_close"  onclick="btnClose();" style="float: right;">닫기</a>';
                 html += '</div>';
                 html += '<div class="scroll_member_body">';
                 for (var i = 0; i < data.length; i++) {
@@ -502,7 +502,7 @@ function MyGoupDelconfrim() {
         html += '<div class="layerPopup_bottom">';
         html += '<div class="btn_group multy">';
         html += '<button class="btn type01" onclick="MyGoupDelcheck();">확인</button>';
-        html += '<button class="btn type02" onclick="alertClose();">취소</button>';
+        html += '<button class="btn type02" onclick="btnClose();">취소</button>';
         html += '</div>';
         html += '</div>';
         html += '</div>';
@@ -519,7 +519,7 @@ function MyGoupDelconfrim() {
         html += '</div>';
         html += '<div class="layerPopup_bottom">';
         html += '<div class="btn_group">';
-        html += '<button class="btn type01" onclick="alertClose();">확인</button>';
+        html += '<button class="btn type01" onclick="btnClose();">확인</button>';
         html += '</div>';
         html += '</div>';
         html += '</div>';
@@ -570,7 +570,7 @@ function MyGoupDelcheck() {
                 }
             }
             $('#mygroup_list_body').html(html);
-            alertClose();
+            btnClose();
         },
         error: function (xhr, status, error) {
             console.log(error);
@@ -731,7 +731,7 @@ function MygroupPopup(idx, idValue, master) {
                     html += '<div class="layerPopup_content small">';
                     html += '<div style="position: relative;display: flex;">';
                     html += '<p class="txt" style="width: 90%;padding-left: 5%;">예약확인</p>';
-                    html += '<a href="#" class="btn_close" onclick="alertClose();" style="float: right;">닫기</a>';
+                    html += '<a href="#" class="btn_close" onclick="btnClose();" style="float: right;">닫기</a>';
                     html += '</div>';
                     html += '<div class="alliance_sch_list popup">';
                     html += '<a href="/mo/mypage/group/detail/' + data[i].meeting_idx + '">';
@@ -865,7 +865,7 @@ function CancelReservation(idx) {
 }
 
 function mygoupRefresh() {
-    alertClose();
+    btnClose();
     $.ajax({
         url: '/mo/mypage/mygroup/mygroupReservationRefresh',
         type: 'get',
