@@ -1601,7 +1601,8 @@ class MoHome extends BaseController
             ->where('board_type', 'main_photo')
             ->where('delete_yn', 'n')
             ->first();
-
+        $mygradequery = "SELECT grade FROM members WHERE ci='" . $ci . "'";
+        $mygrade = $MemberModel->query($mygradequery)->getResultArray();
         $data = [
             'ci' => $user['ci'],
             'nickname' => $user['nickname'],
@@ -1645,6 +1646,7 @@ class MoHome extends BaseController
                 'residence3' => $user['residence3']
             ]);
         };
+        $data['mygrade'] = $mygrade[0]['grade'];
         return view('mo_myfeed_view_profile', $data);
     }
     public function alertPopup(): string
