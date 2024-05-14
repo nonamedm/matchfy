@@ -28,4 +28,7 @@
     <li class="menu_item">
         <a href="/ad/report/reportList">회원 신고 목록</a>
     </li>
+    <li class="menu_item">
+        <a href="/ad/intro/newsList">회사 소개 MEDIA 목록</a>
+    </li>
 </ul>

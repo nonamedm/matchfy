@@ -213,3 +213,10 @@ $routes->post('/ad/memberCertificateCheck', 'AdminHome::memberCertificateCheck')
 $routes->get('/ad/report/reportList', 'AdminHome::reportList');
 $routes->get('/ad/report/reportView/(:num)', 'AdminHome::reportView/$1');
 $routes->post('/ad/report/reportDelete', 'AdminHome::reportDelete');
+
+$routes->get('/ad/intro/newsEdit', 'AdminHome::newsEdit');
+$routes->post('/ad/intro/newsUpload', 'AdminHome::newsUpload');
+$routes->get('/ad/intro/newsList', 'AdminHome::newsList');
+$routes->get('/ad/intro/newsView/(:num)', 'AdminHome::newsView/$1');
+$routes->get('/ad/intro/newsModify/(:num)', 'AdminHome::newsModify/$1');
+$routes->post('/ad/intro/newsUpdate', 'AdminHome::newsUpdate');

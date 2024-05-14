@@ -52,6 +52,8 @@ function fn_clickList(board){
         window.location.href = "/ad/privacy/privacyList";
     }else if(board=='report'){
         window.location.href = "/ad/report/reportList";
+    }else if(board=='news'){
+        window.location.href = "/ad/intro/newsList";
     }
 }
 
@@ -75,8 +77,10 @@ function fn_clickDelete(id,boardName) {
                     window.location.href = '/ad/privacy/privacyList';
                 }else if(boardName=='report') {
                     window.location.href = '/ad/report/reportList';
-                }else{
+                }else if(boardName=='faq'){
                     window.location.href = '/ad/faq/faqList';
+                }else{
+                    window.location.href = '/ad/intro/newsList';
                 }
                 
             },
@@ -160,6 +164,8 @@ function fn_clickUpdate(board,id) {
         window.location.href = "/ad/terms/termsModify/" + id;
     }else if(board=='privacy'){
         window.location.href = "/ad/privacy/privacyModify/" + id;
+    }else if(board=='news'){
+        window.location.href = "/ad/intro/newsModify/" + id;
     }
 }
 
@@ -172,6 +178,8 @@ function fn_EditClick(board) {
         window.location.href = "/ad/terms/termsEdit";
     }else if(board=='privacy'){
         window.location.href = "/ad/privacy/privacyEdit";
+    }else if(board=='news'){
+        window.location.href = "/ad/intro/newsEdit";
     }
 }
 

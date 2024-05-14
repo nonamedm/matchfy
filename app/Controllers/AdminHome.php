@@ -740,5 +740,97 @@ class AdminHome extends BaseController
             return $this->response->setJSON(['success' => false]);
         }
     }
+/*회사소개 - media */
+    public function newsEdit(): string
+    {
+        return view('admin/ad_news_edit');
+    }
 
+    public function newsList(){
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_news');
+
+        $data['newss'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
+
+        return view('admin/ad_news_list',$data);
+    }
+
+    public function newsUpload(){
+        $title = $this->request->getPost('title');
+        // $link = $this->request->getPost('content');
+        $type = $this->request->getPost('bigo1');
+        $link = $this->request->getPost('bigo2');
+
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_news');
+        $data = [
+            'title' => $title,
+            // 'content' => $link,
+            'bigo1' => $type,
+            'bigo2' => $link,
+            'author' => 'admin',
+            'board_type' => 'news',
+            'used' => 1
+        ];
+
+        $inserted = $BoardModel->insert($data);
+
+        if ($inserted) {
+            $insertedId = $BoardModel->insertID();
+            return redirect()->to("/ad/intro/newsView/{$insertedId}")->with('msg', '등록이 완료되었습니다.');
+        } else {
+            return redirect()->to('/ad/intro/newsEdit')->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
+        }
+    }
+
+    public function newsView($id){
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_news');
+        $data['news'] = $BoardModel->find($id); 
+
+        return view('admin/ad_news_view', $data);
+    }
+
+    public function newsModify($id){
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_news');
+        $data['news'] = $BoardModel->find($id); 
+
+        
+        if ($data['news'] === null) {
+            return redirect()->to('/ad/intro/newsList')->with('msg', '해당 데이터를 찾을 수 없습니다.');
+        }
+
+        return view('admin/ad_news_modify', $data);
+    }
+
+    public function newsUpdate(){
+        $id = $this->request->getPost('news_id');
+        $title = $this->request->getPost('title');
+        // $content = $this->request->getPost('content');
+        $type = $this->request->getPost('bigo1');
+        $link = $this->request->getPost('bigo2');
+
+        if (!$id || !is_numeric($id)) {
+            return redirect()->to('/ad/intro/newsList')->with('msg', '잘못된 요청입니다.');
+        }
+
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_news');
+
+        $updated = $BoardModel->update($id, [
+            'title' => $title,
+            // 'content' => $content,
+            'bigo1'=>$type,
+            'bigo2'=>$link,
+            'updated_at'=>'admin'
+        ]);
+
+        if ($updated) {
+            
+            return redirect()->to("/ad/intro/newsView/{$id}")->with('msg', '수정이 완료되었습니다.');
+        } else {
+            return redirect()->to("/ad/intro/newsEdit/{$id}")->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
+        }
+    }
 }
