@@ -55,8 +55,8 @@ CKEDITOR.on('dialogDefinition', function (ev) {
         infoTab.remove('txtHSpace'); //info 탭 내에 불필요한 엘레멘트들 제거
         infoTab.remove('txtVSpace');
         infoTab.remove('txtBorder');
-        // infoTab.remove('txtWidth');
-        // infoTab.remove('txtHeight');
+        infoTab.remove('txtWidth');
+        infoTab.remove('txtHeight');
         infoTab.remove('ratioLock');
         infoTab.remove('txtUrl');
         infoTab.remove('txtAlt');

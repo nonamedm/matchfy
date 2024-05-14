@@ -125,9 +125,9 @@
                     <div class="chat_menu_func" onclick="crtMtng()"><img src="/static/images/chat_location.png">
                         <p>약속</p>
                     </div>
-                    <div class="chat_menu_func" onclick="sndPnt()"><img src="/static/images/chat_banking.png">
+                    <!-- <div class="chat_menu_func" onclick="sndPnt()"><img src="/static/images/chat_banking.png">
                         <p>예약금<br />송금</p>
-                    </div>
+                    </div> -->
                     <div class="chat_menu_func" onclick="extRm()"><img src="/static/images/chat_quit.png">
                         <p>방나가기</p>
                     </div>
@@ -144,7 +144,7 @@
                 </div>
             </div>
             <input id="room_ci" type="hidden" value="<?= $room_ci ?>" />
-            <?php include 'mo_sch_deposit_popup.php'; ?>
+
             <?php if ($room_type[0]['room_type'] === '1') {
                 include 'mo_mymsg_member_popup.php';
                 include 'mo_report_popup.php';
@@ -422,38 +422,38 @@
             });
         };
 
-        const sndPnt = () => {
-            $.ajax({
-                url: '/ajax/usablePoint',
-                type: 'POST',
-                data: {
-                    "room_ci": $("#room_ci").val(),
-                    "room_type": $("#room_type").val(),
-                },
-                async: false,
-                success: function(data) {
-                    console.log(data);
-                    if (data.status === 'success') {
-                        // 성공
-                        // 보유포인트 만큼 차감 후 전송
-                        $("#snd_dpst").val("");
-                        $("#usable_point").html(data.data.reulst_value[0].usable_point);
-                        $('.layerPopup.deposit').css('display', 'flex');
-                        // moveToUrl('/');
-                    } else if (data.status === 'error') {
-                        // 사용가능한 예약금 없음 -> 또는 예약자 본인인 경우
-                        alert('사용 가능한 예약금이 없습니다. \n예약생성자가 아닌 경우 모임에 참여 후 시도해 주세요')
-                    } else {
-                        alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
-                    }
-                    return false;
-                },
-                error: function(data, status, err) {
-                    console.log(err);
-                    alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-                },
-            });
-        };
+        // const sndPnt = () => {
+        //     $.ajax({
+        //         url: '/ajax/usablePoint',
+        //         type: 'POST',
+        //         data: {
+        //             "room_ci": $("#room_ci").val(),
+        //             "room_type": $("#room_type").val(),
+        //         },
+        //         async: false,
+        //         success: function(data) {
+        //             console.log(data);
+        //             if (data.status === 'success') {
+        //                 // 성공
+        //                 // 보유포인트 만큼 차감 후 전송
+        //                 $("#snd_dpst").val("");
+        //                 $("#usable_point").html(data.data.reulst_value[0].usable_point);
+        //                 $('.layerPopup.deposit').css('display', 'flex');
+        //                 // moveToUrl('/');
+        //             } else if (data.status === 'error') {
+        //                 // 사용가능한 예약금 없음 -> 또는 예약자 본인인 경우
+        //                 alert('사용 가능한 예약금이 없습니다. \n예약생성자가 아닌 경우 모임에 참여 후 시도해 주세요')
+        //             } else {
+        //                 alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+        //             }
+        //             return false;
+        //         },
+        //         error: function(data, status, err) {
+        //             console.log(err);
+        //             alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        //         },
+        //     });
+        // };
     </script>
 
     <!-- -->

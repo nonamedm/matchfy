@@ -15,6 +15,14 @@ $(document).ready(function(){
         allianceSubmit(level,idx);
     });
 
+    $('.member_approve_btn').click(function() {
+        var value = $(this).text();
+        var level = $(this).data('approve-level');
+        var id =$(this).data('id');
+
+        memberCertificateApprove(level,id);
+    });
+
     CKEDITOR.replace('content');
  
     $('form').submit(function(){
@@ -42,6 +50,8 @@ function fn_clickList(board){
         window.location.href = "/ad/terms/termsList";
     }else if(board=='privacy'){
         window.location.href = "/ad/privacy/privacyList";
+    }else if(board=='report'){
+        window.location.href = "/ad/report/reportList";
     }
 }
 
@@ -63,6 +73,8 @@ function fn_clickDelete(id,boardName) {
                     window.location.href = '/ad/terms/termsList';
                 }else if(boardName=='privacy'){
                     window.location.href = '/ad/privacy/privacyList';
+                }else if(boardName=='report') {
+                    window.location.href = '/ad/report/reportList';
                 }else{
                     window.location.href = '/ad/faq/faqList';
                 }
@@ -108,6 +120,28 @@ function fn_clickBoFileDelete(BoardId,fileId) {
             success: function(response) {
                 alert('삭제 되었습니다.');
                 window.location.href = '/ad/notice/noticeList';
+            },
+            error: function(xhr, status, error) {
+                alert('삭제 중 오류가 발생 하였습니다.');
+                console.log(error);
+            }
+        });
+    }
+}
+
+function fn_clickReportDelete(reportId) {
+    var confirmed = confirm('삭제하시겠습니까?');
+    console.log(reportId);
+    if (confirmed) {
+        $.ajax({
+            type: "post",
+            url: "/ad/report/reportDelete",
+            data: { 
+                reportId: reportId
+            },
+            success: function(response) {
+                alert('삭제 되었습니다.');
+                window.location.href = '/ad/report/reportList';
             },
             error: function(xhr, status, error) {
                 alert('삭제 중 오류가 발생 하였습니다.');
@@ -167,6 +201,26 @@ function allianceSubmit(level,idx){
         data:{
             level:level,
             idx:idx,
+        },
+        type: 'post',
+        success: function(data) {
+            alert(data.msg);
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+function memberCertificateApprove(level,id){
+    console.log(level);
+    console.log(id);
+    $.ajax({
+        url: '/ad/memberCertificateCheck',
+        data:{
+            level:level,
+            id:id,
         },
         type: 'post',
         success: function(data) {

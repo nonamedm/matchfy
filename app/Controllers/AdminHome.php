@@ -8,6 +8,10 @@ use App\Models\BoardFileModel;
 use App\Models\PointModel;
 use App\Models\PointExchangeModel;
 use App\Models\AllianceModel;
+use App\Models\MemberModel;
+use App\Models\MemberFileModel;
+use App\Models\ReportMemberModel;
+
 
 class AdminHome extends BaseController
 {
@@ -615,7 +619,7 @@ class AdminHome extends BaseController
         $idx = $this->request->getPost('idx');
     
         $AllianceModel = new AllianceModel();
-    
+
         $updated = $AllianceModel->update($idx, [
             'alliance_application' => $level,
             'updated_at'=>date('Y-m-d H:i:s')
@@ -630,4 +634,111 @@ class AdminHome extends BaseController
         }
     
     }
+
+    /*회원 인증 정보 승인*/
+    public function memberApproveList($page = null){
+
+        // 페이지가 없으면 기본값으로 1을 사용
+        if ($page === null || !is_numeric($page)) {
+            $page = 1;
+        } else {
+            $page = 2;
+        }
+
+        $perPage = 20;
+        $MemberModel = new MemberModel();
+
+        $total = $MemberModel->query("SELECT COUNT(*) as total FROM members m LEFT JOIN member_files mf ON m.ci = mf.member_ci")->getRow()->total;
+
+        $offset = ($page - 1) * $perPage; // 현재 페이지의 첫 번째 데이터 인덱스
+        $query = "SELECT mf.id, 
+                m.name, 
+                CASE 
+                     WHEN m.gender = 1 THEN '남' 
+                     WHEN m.gender = 0 THEN '여' 
+                END AS gender,
+                m.nickname, 
+                m.email, 
+                m.grade, 
+                mf.file_path, 
+                mf.file_name, 
+                mf.org_name,
+                CASE 
+                     WHEN mf.board_type = 'marital' THEN '혼인관계증명' 
+                     WHEN mf.board_type = 'school' THEN '졸업증명' 
+                     WHEN mf.board_type = 'job' THEN '직업증명' 
+                     WHEN mf.board_type = 'asset_range' THEN '자산구간증명' 
+                     WHEN mf.board_type = 'income_range' THEN '소득금액증명' 
+                 END AS board_type, 
+                mf.extra1
+             FROM members as m 
+             LEFT JOIN member_files mf on m.ci = mf.member_ci
+             WHERE mf.board_type != 'main_photo'
+             AND mf.delete_yn = 'n'
+             ORDER BY m.email, mf.extra1 DESC
+             LIMIT $perPage OFFSET $offset";
+
+        $data['datas'] = $MemberModel->query($query)->getResultArray();
+        $data['query'] = $MemberModel->getLastQuery()->getQuery();
+
+        $pager = service('pager');
+        $data['pager'] = $pager->makeLinks($page, $perPage, $total);
+
+        return view('admin/ad_member_list', $data);
+    }
+
+    public function memberCertificateCheck(){
+        $level = $this->request->getPost('level');
+        $id = $this->request->getPost('id');
+    
+        $MemberFileModel = new MemberFileModel();
+
+        $updated = $MemberFileModel
+            ->where('id', $id)
+            ->update(null, ['extra1' => $level]);
+    
+        if ($updated) {
+            if($level =='y'){
+                return $this->response->setJSON(['success' => true, 'msg' => '승인 되었습니다.']);
+            }
+        } else {
+            return $this->response->setJSON(['error' => true, 'msg' => '승인 실패.']);
+        }
+    
+    }
+
+    /*회원 신고*/
+    public function reportEidt(): string
+    {
+        return view('admin/ad_privacy_edit');
+    }
+
+    public function reportList(){
+        $ReportMemberModel = new ReportMemberModel();
+
+        $data['reports'] = $ReportMemberModel->orderBy('created_at', 'DESC')->findAll();
+
+        return view('admin/ad_report_member_list',$data);
+    }
+
+    public function reportView($idx){
+        $ReportMemberModel = new ReportMemberModel();
+        $data['report'] = $ReportMemberModel->find($idx);
+
+        return view('admin/ad_report_view', $data);
+    }
+
+    public function reportDelete(){
+        $reportId = $this->request->getPost('reportId');
+
+        $ReportMemberModel = new ReportMemberModel();
+        $deleted = $ReportMemberModel->delete($reportId);   
+
+        if ($deleted) {
+            return $this->response->setJSON(['success' => true]);
+        } else {
+            return $this->response->setJSON(['success' => false]);
+        }
+    }
+
 }

@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<header class="header">
+    <header class="header">
         <div class="cubberry-logo">
         </div>
         <ul class="menu">
@@ -63,10 +63,10 @@
 
             <div class="animated-img">
                 <div class="animated-img-box">
-                    <img src="/static/images/intro/animated_img.png"/>
+                    <img src="/static/images/intro/animated_img.png" />
                 </div>
                 <div class="animated-img-box">
-                    <img src="/static/images/intro/animated_img2.png"/>
+                    <img src="/static/images/intro/animated_img2.png" />
                 </div>
             </div>
 
@@ -96,7 +96,7 @@
                     *개발 진행 및 특허 출원 준비 중
                 </div>
             </div>
-        </div> 
+        </div>
     </div>
 
     <div class="footer">
@@ -105,41 +105,8 @@
                 <div class="heading-2-your-first-ai-agent">
                     Business Partners
                 </div>
-                <div class="group-1000001310">
-                    <div class="container-8">
-                        <div class="container-19">
-                        </div>
-                        <div class="image-14">
-                        </div>
-                        <div class="image-15">
-                        </div>
-                        <div class="image-22">
-                        </div>
-                        <div class="container-18">
-                        </div>
-                        <div class="b-116-ba-66-ca-63-b-1">
-                        </div>
-                    </div>
-                    <div class="container-7">
-                        <div class="container-3">
-                            <div class="d-1">
-                            </div>
-                            <div class="group-10000013101">
-                                <div class="image-18">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="container-16">
-                        </div>
-                        <div class="container-13">
-                            <div class="image-20">
-                            </div>
-                            <div class="image-21">
-                            </div>
-                            <div class="ym_logo">
-                            </div>
-                        </div>
-                    </div>
+                <div class="footer-logogr-img">
+                    <img src="/static/images/intro/footer_logo_gb.png" />
                 </div>
                 <div class="border">
                     <div class="footer-container">
@@ -161,19 +128,18 @@
                         </div>
                         <div class="input">
                             <span class="container-14 link-a">
-                                <a href=""> 메일 보내기</a>
+                                <a href="mailto:hi@cuberry.kr"> 메일 보내기</a>
                             </span>
                         </div>
                     </div>
-                    <div class="link-1">
+                    <div class="link-1" onclick="scrollToTop()">
                         <span class="container-15">
                             ^
                         </span>
                     </div>
                 </div>
             </div>
-            <div class="kbs-1">
-            </div>
+
         </div>
     </div>
 

@@ -207,7 +207,7 @@ input[type='checkbox']+label:hover {
     color: #FFFFFF;
 }
 
-.session-02{
+.section-02{
     width: 1200px;
     margin: 0 auto;
 }
@@ -245,11 +245,11 @@ input[type='checkbox']+label:hover {
     color: #FFFFFF;
 
 }
-.session-03 {
+.section-03 {
     margin-top: 232px;
     margin-bottom: 427px;
 }
-.session-03 .session-content{
+.section-03 .section-content{
     font-family: 'Inter';
     font-weight: 200;
     font-size: 36px;
@@ -259,14 +259,14 @@ input[type='checkbox']+label:hover {
     margin: 0 auto;
     margin-top:164px;
 }
-.session-03 .con-bold{
+.section-03 .con-bold{
     overflow-wrap: break-word;
     font-family: 'Inter';
     font-weight: 700;
     font-size: 48px;
     color: #FFFFFF;
 }
-.session-03 .con-light{
+.section-03 .con-light{
     font-family: 'Inter';
     font-weight: 200;
     font-size: 36px;
@@ -277,7 +277,7 @@ input[type='checkbox']+label:hover {
 
 /*sestion04*/
 
-.session-04{
+.section-04{
     width: 1204px;
     height: 664px;
     margin: 0 auto;
@@ -288,7 +288,7 @@ input[type='checkbox']+label:hover {
     flex-direction: column;
     box-sizing: border-box;
   }
-   .frame-617 {
+   .section-num-title-box {
     margin-bottom: 20px;
     display: flex;
     flex-direction: row;
@@ -296,14 +296,14 @@ input[type='checkbox']+label:hover {
     width: fit-content;
     box-sizing: border-box;
   }
-   .group-781 {
+   .section-num-box {
     position: relative;
     margin: 1.3px 8px 1.3px 0;
     display: flex;
     padding: 6.5px 9.1px 0 8.1px;
     box-sizing: border-box;
   }
-   .ellipse-68 {
+   .section-num-circle {
     border-radius: 12px;
     background: #FF0267;
     position: absolute;
@@ -313,7 +313,7 @@ input[type='checkbox']+label:hover {
     width: 24px;
     height: 24px;
   }
-   .container-36 {
+   .section-num-text {
     position: relative;
     overflow-wrap: break-word;
     font-family: 'Abhaya Libre';
@@ -323,7 +323,7 @@ input[type='checkbox']+label:hover {
     text-transform: capitalize;
     color: #FFFFFF;
   }
-   .container-37 {
+   .section-num-title {
     overflow-wrap: break-word;
     font-family: 'Abhaya Libre';
     font-weight: 700;
@@ -332,7 +332,7 @@ input[type='checkbox']+label:hover {
     text-transform: capitalize;
     color: #FF0267;
   }
-  .container-38-sub24 {
+  .section-title-sub24 {
     font-family: 'Alatsi', 'Roboto Condensed';
     font-weight: 400;
     font-size: 50px;
@@ -340,7 +340,7 @@ input[type='checkbox']+label:hover {
     line-height: 1.333;
     text-transform: capitalize;
   }
-   .container-38 {
+   .section-title {
     margin-bottom: 11px;
     overflow-wrap: break-word;
     font-family: 'Abhaya Libre';
@@ -351,7 +351,7 @@ input[type='checkbox']+label:hover {
     text-transform: capitalize;
     color: #FFFFFF;
   }
-   .container-39 {
+   .section-subtitle {
     align-self: flex-start;
     overflow-wrap: break-word;
     font-family: 'Abhaya Libre';

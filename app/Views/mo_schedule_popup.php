@@ -55,14 +55,14 @@
                         </div>
                     </div>
                 </div>
-                <div style="display: flex; height: 110px;">
+                <!-- <div style="display: flex; height: 110px;">
                     <div class="schedule_title">
                         <h2><?= lang('Korean.reservationAmount') ?></h2>
                     </div>
                     <div class="schedule_fee">
                         <p id="scdl_point">5,000 P</p>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <div class="layerPopup_bottom">
@@ -124,9 +124,10 @@
 
     }
     const submitScdl = () => {
-        fn_confirm('약속을 전송하시겠습니까?','submitScdl')
+        fn_confirm('약속을 전송하시겠습니까?', 'submitScdl')
     }
-    function fn_submitScdl(value){
+
+    function fn_submitScdl(value) {
         if (value) {
             var scdl_type = $('input[name="scdl_type"]:checked').val();
             var scdl_date = $('#scdl_date').val() + " " + $('#scdl_hour').val() + ":" + $('#scdl_min').val();
@@ -159,14 +160,15 @@
                     fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
-    
+
         }
 
     }
     const partScdl = () => {
-        fn_confirm('모임에 참석하시겠습니까?','partScdl')
+        fn_confirm('모임에 참석하시겠습니까?', 'partScdl')
     }
-    function fn_partScdl(value){
+
+    function fn_partScdl(value) {
         if (value) {
             $.ajax({
                 url: '/ajax/partScdl',
@@ -199,7 +201,7 @@
                     fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
-    
+
         }
 
     }

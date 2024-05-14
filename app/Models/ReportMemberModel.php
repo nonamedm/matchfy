@@ -4,24 +4,40 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class MemberFileModel extends Model
+class ReportMemberModel extends Model
 {
-    protected $table = 'member_files';
-    protected $primaryKey = 'member_ci';
+    // protected $tableName;
+    protected $table = 'wh_report_member';
+    protected $primaryKey = 'idx';
     protected $useAutoIncrement = true;
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $protectFields = true;
-    protected $allowedFields = ['member_ci', 'file_path', 'file_name', 'org_name', 'ext', 'board_type', 'extra1', 'extra2', 'extra3', 'delete_yn', 'create_datetime', 'update_datetime'];
+    protected $allowedFields = [
+        'idx',
+        'member_ci',
+        'member_name',
+        'target_ci',
+        'target_name',
+        'report_text',
+        'report_category',
+        'extra1',
+        'extra2',
+        'extra3',
+        'extra4',
+        'extra5',
+        'delete_yn',
+        'created_at',
+        'updated_at'
+    ];
 
     protected bool $allowEmptyInserts = false;
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat = 'datetime';
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
-    protected $deletedField = 'deleted_at';
 
     // Validation
     protected $validationRules = [];
@@ -39,4 +55,14 @@ class MemberFileModel extends Model
     protected $afterFind = [];
     protected $beforeDelete = [];
     protected $afterDelete = [];
+
+    public function setTableName($table)
+    {
+        $this->table = $table;
+    }
+
+    public function getTableName()
+    {
+        return $this->table;
+    }
 }

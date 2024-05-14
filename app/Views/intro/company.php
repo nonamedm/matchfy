@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<header class="header">
+    <header class="header">
         <div class="cubberry-logo">
         </div>
         <ul class="menu">
@@ -67,28 +67,32 @@
             <ul class="contents-ul">
                 <li class="contents-li">
                     <div class="contents-text">
-                        생성형 AI 모델 기반 솔루션 구축
+                        <span>생성형 AI 모델 기반 솔루션 구축</span>
+                        <p>고도화된 AI솔루션을 맞춤 설계하여 비즈니스 문제를 해결하고 프로세스를 최적화합니다. 데이터 분석에서부터 의사결정 시스템까지, 각 기업의 니즈를 충족시키기 위한 맞춤형 AI 알고리즘을 개발합니다. 이를 통해 고객사의 운영 효율성을 향상시키고, 시장 내 경쟁력을 강화합니다.</p>
                     </div>
                     <span class="plus-btn">
-                        +
+                        <a href="#">+</a>
                     </span>
                 </li>
 
                 <li class="contents-li">
                     <div class="contents-text">
-                        AI 기반 앱서비스 구축 · 운영
+                        <span>AI 기반 앱서비스 구축 · 운영</span>
+                        <p>큐브베리의 AI기반 앱과 웹 서비스는 사용자 경험을 향상시키는 알고리즘을 추구합니다. 사용자 데이터를 분석하고 학습하여, 각 사용자 맞춤 컨텐츠를 제공하고, 사용자의 상호작용을 촉진하는 서비스를 구축합니다. 사용자가 필요로 하는 정보와 서비스를 빠르게 제공함으로써, 고객 참여를 극대화하고 비즈니스 성장을 가속화 합니다.</p>
+
                     </div>
                     <span class="plus-btn">
-                        +
+                        <a href="#">+</a>
                     </span>
                 </li>
 
                 <li class="contents-li">
                     <div class="contents-text">
-                        미디어 콘텐츠 마케팅
+                        <span>미디어 콘텐츠 마케팅</span>
+                        <p>큐브베리의 미디어 콘텐츠 마케팅은 전문적인 콘텐츠 기획과 제작으로 핵심 메시지를 소비자에게 정확하게 전달하고 소비자의 공감을 이끌어 내 지속적인 확산 및 콘텐츠 재생산을 유도합니다. AI를 적용해 목표 시장에서 가장 효과적인 콘텐츠 전략을 개발하며, 데이터를 기반으로 캠페인의 성과를 최적화하고  마케팅 비용 대비 효과를 극대화하는 데 집중합니다.</p>
                     </div>
                     <span class="plus-btn">
-                        +
+                        <a href="#">+</a>
                     </span>
                 </li>
             </ul>
@@ -98,9 +102,12 @@
                     <div class="text">
                         Executives and organization
                     </div>
-                    <span class="plus">
-                        +
+                    <span class="plus plus_organ_btn">
+                        <a href="#">+</a>
                     </span>
+                </div>
+                <div class="organ_img">
+                    <img src="/static/images/intro/organization_img.png" />
                 </div>
             </div>
         </div>
@@ -112,41 +119,8 @@
                 <div class="heading-2-your-first-ai-agent">
                     Business Partners
                 </div>
-                <div class="group-1000001310">
-                    <div class="container-8">
-                        <div class="container-19">
-                        </div>
-                        <div class="image-14">
-                        </div>
-                        <div class="image-15">
-                        </div>
-                        <div class="image-22">
-                        </div>
-                        <div class="container-18">
-                        </div>
-                        <div class="b-116-ba-66-ca-63-b-1">
-                        </div>
-                    </div>
-                    <div class="container-7">
-                        <div class="container-3">
-                            <div class="d-1">
-                            </div>
-                            <div class="group-10000013101">
-                                <div class="image-18">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="container-16">
-                        </div>
-                        <div class="container-13">
-                            <div class="image-20">
-                            </div>
-                            <div class="image-21">
-                            </div>
-                            <div class="ym_logo">
-                            </div>
-                        </div>
-                    </div>
+                <div class="footer-logogr-img">
+                    <img src="/static/images/intro/footer_logo_gb.png" />
                 </div>
                 <div class="border">
                     <div class="footer-container">
@@ -168,19 +142,18 @@
                         </div>
                         <div class="input">
                             <span class="container-14 link-a">
-                                <a href=""> 메일 보내기</a>
+                                <a href="mailto:hi@cuberry.kr"> 메일 보내기</a>
                             </span>
                         </div>
                     </div>
-                    <div class="link-1">
+                    <div class="link-1" onclick="scrollToTop()">
                         <span class="container-15">
                             ^
                         </span>
                     </div>
                 </div>
             </div>
-            <div class="kbs-1">
-            </div>
+
         </div>
     </div>
 

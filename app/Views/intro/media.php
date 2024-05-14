@@ -11,13 +11,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
     <link rel="stylesheet" href="/static/css/intro.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/static/js/intro/intro.js"></script>
 </head>
@@ -51,49 +46,82 @@
     </header>
 
     <div class="contents">
-       
+
         <div class="contents-box">
             <span class="contents-title">
                 Media
             </span>
 
-            <ul class="contents-ul">
-                <li class="contents-li">
-                    <div class="contents-text">
-                        생성형 AI 모델 기반 솔루션 구축
+            <ul class="contents-media-ul">
+                <li class="contents-media-li">
+                    <div class="media-type">
+                        언론보도
                     </div>
-                    <span class="plus-btn">
-                        +
-                    </span>
+                    <div class="media-box">
+                        <span class="media-title"> 뤼튼, 제1회 유저 컨퍼런스 성황리 개최..."AI 대중화 주도"</span>
+                        <span class="media-date"><i class="fa-solid fa-calendar-days"></i>2024년 04월 09일</span>
+                    </div>
+                </li>
+                <li class="contents-media-li">
+                    <div class="media-type">
+                        언론보도
+                    </div>
+                    <div class="media-box">
+                        <span class="media-title"> 뤼튼, 제1회 유저 컨퍼런스 성황리 개최..."AI 대중화 주도"</span>
+                        <span class="media-date"><i class="fa-solid fa-calendar-days"></i>2024년 04월 09일</span>
+                    </div>
+                </li>
+                <li class="contents-media-li">
+                    <div class="media-type2">
+                        보도자료
+                    </div>
+                    <div class="media-box">
+                        <span class="media-title"> 뤼튼, 제1회 유저 컨퍼런스 성황리 개최..."AI 대중화 주도"</span>
+                        <span class="media-date"><i class="fa-solid fa-calendar-days"></i>2024년 04월 09일</span>
+                    </div>
+                </li>
+                <li class="contents-media-li">
+                    <div class="media-type">
+                        언론보도
+                    </div>
+                    <div class="media-box">
+                        <span class="media-title"> 뤼튼, 제1회 유저 컨퍼런스 성황리 개최..."AI 대중화 주도"</span>
+                        <span class="media-date"><i class="fa-solid fa-calendar-days"></i>2024년 04월 09일</span>
+                    </div>
+                </li>
+                <li class="contents-media-li">
+                    <div class="media-type">
+                        언론보도
+                    </div>
+                    <div class="media-box">
+                        <span class="media-title"> 뤼튼, 제1회 유저 컨퍼런스 성황리 개최..."AI 대중화 주도"</span>
+                        <span class="media-date">
+                            <i class="fa-solid fa-calendar-days"></i>
+                            2024년 04월 09일</span>
+                    </div>
                 </li>
 
-                <li class="contents-li">
-                    <div class="contents-text">
-                        AI 기반 앱서비스 구축 · 운영
-                    </div>
-                    <span class="plus-btn">
-                        +
-                    </span>
-                </li>
-
-                <li class="contents-li">
-                    <div class="contents-text">
-                        미디어 콘텐츠 마케팅
-                    </div>
-                    <span class="plus-btn">
-                        +
-                    </span>
-                </li>
+                <div class="page-box">
+                    <ul>
+                        <li class="on">1</li>
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                    </ul>
+                </div>
             </ul>
 
-            <div class="plus-contents" style="width:224px;">
+            <div class="plus-contents">
                 <div class="plus-contents-box">
                     <div class="text">
                         Image file
                     </div>
-                    <span class="plus">
-                        +
+                    <span class="plus plus_media_btn">
+                        <a href="#">+</a>
                     </span>
+                </div>
+                <div class="media_img">
+                    <img src="/static/images/intro/media_img.png" />
                 </div>
             </div>
         </div>
@@ -105,41 +133,8 @@
                 <div class="heading-2-your-first-ai-agent">
                     Business Partners
                 </div>
-                <div class="group-1000001310">
-                    <div class="container-8">
-                        <div class="container-19">
-                        </div>
-                        <div class="image-14">
-                        </div>
-                        <div class="image-15">
-                        </div>
-                        <div class="image-22">
-                        </div>
-                        <div class="container-18">
-                        </div>
-                        <div class="b-116-ba-66-ca-63-b-1">
-                        </div>
-                    </div>
-                    <div class="container-7">
-                        <div class="container-3">
-                            <div class="d-1">
-                            </div>
-                            <div class="group-10000013101">
-                                <div class="image-18">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="container-16">
-                        </div>
-                        <div class="container-13">
-                            <div class="image-20">
-                            </div>
-                            <div class="image-21">
-                            </div>
-                            <div class="ym_logo">
-                            </div>
-                        </div>
-                    </div>
+                <div class="footer-logogr-img">
+                    <img src="/static/images/intro/footer_logo_gb.png" />
                 </div>
                 <div class="border">
                     <div class="footer-container">
@@ -161,19 +156,18 @@
                         </div>
                         <div class="input">
                             <span class="container-14 link-a">
-                                <a href=""> 메일 보내기</a>
+                                <a href="mailto:hi@cuberry.kr"> 메일 보내기</a>
                             </span>
                         </div>
                     </div>
-                    <div class="link-1">
+                    <div class="link-1" onclick="scrollToTop()">
                         <span class="container-15">
                             ^
                         </span>
                     </div>
                 </div>
             </div>
-            <div class="kbs-1">
-            </div>
+
         </div>
     </div>
 

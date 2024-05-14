@@ -361,28 +361,9 @@
         </div>
 
 
-
-
-
         <div style="height: 50px;"></div>
         <footer class="footer">
 
-            <!-- <div class="footer_logo mb40">
-                matchfy
-            </div>
-            <div class="footer_link mb40">
-                <a href="#"><?= lang('Korean.companyName') ?></a>
-                <a href="#"><?= lang('Korean.pravacyName') ?></a>
-                <a href="#"><?= lang('Korean.serviceName') ?></a>
-            </div>
-            <div class="footer_info mb40">
-                <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>
-                <span><?= lang('Korean.footerInfo3') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo4') ?><img
-                        src="/static/images/part_line.png" /> gildong@naver.com</span>
-            </div>
-            <div class="footer_copy">
-                COPYRIGHT 2023. ALL RIGHTS RESERVED.
-            </div> -->
 
         </footer>
     </div>
@@ -630,7 +611,12 @@
                         if (data.status === 'success') {
                             // 성공                        
                             console.log('저장', data);
-                            moveToUrl('/mo/factorBasic');
+                            <?php if (isset($grade) && ($grade === 'grade01')) : ?>
+                                fn_confirm('파트너 정보저장 성공! \n홈으로 이동합니다.', 'calcMatchRate')
+                            <?php endif; ?>
+                            <?php if (isset($grade) && ($grade === 'grade02' || $grade === 'grade03')) : ?>
+                                moveToUrl('/mo/factorBasic');
+                            <?php endif; ?>
                         } else if (data.status === 'error') {
                             console.log('실패', data);
                         } else {
@@ -645,6 +631,23 @@
                 });
             }
 
+        }
+
+        function fn_calcMatchRate(value) {
+            if (value) {
+                $.ajax({
+                    url: '/ajax/calcMatchRate', // todo : 추후 로그인완료로 이동
+                    type: 'POST',
+                    async: false,
+                    success: function(data) {
+                        moveToUrl('/');
+                    },
+                    error: function(data, status, err) {
+                        console.log(err);
+                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    },
+                });
+            }
         }
     </script>
 
