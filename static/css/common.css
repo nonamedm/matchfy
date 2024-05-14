@@ -110,6 +110,7 @@ input[type='checkbox'] + label:hover {
     /* width: 1280px; */
     width: 95%;
     height: 400px;
+    border-radius: 10px;
 }
 
 .content_chat_img {
@@ -705,7 +706,7 @@ header .menu_item {
     }
     .content_banner_top img {
         width: 95%;
-        height: 180px;
+        height: 250px;
     }
     /* .content_no_img.login_main .ai_mat_card img {
         width: 240px;
@@ -743,7 +744,7 @@ header .menu_item {
     }
     .content_banner_top img {
         width: 95%;
-        height: 180px;
+        height: 250px;
     }
 
     .content_no_img.login_main .group_row {
@@ -853,4 +854,10 @@ header .menu_item {
     header.ci_header {
         width: 100%;
     }
+}
+@media (max-width: 490px) {
+    .content_banner_top img {
+        height: 180px;
+    }
+    
 }
