@@ -9,6 +9,7 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
     <script src="/static/js/board.js"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
 </head>
