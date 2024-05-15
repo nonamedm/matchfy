@@ -56,7 +56,7 @@
             <a href="/intro/animatedAi"><li>애니메틱 AI</li></a>
             <a href="/intro/company"><li>company</li></a>
             <a href="/intro/media"><li>Media</li></a>
-            <a href="#"><li>Contact</li></a>
+            <a href="#" onclick="concatBtn();"><li>Contact</li></a>
             </ul>
         </div>
     </nav>
