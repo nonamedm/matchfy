@@ -27,17 +27,42 @@
             <div class="page_header">
                 <ul>
                     <li><a href="#" Onclick="fn_clickList('news')"><img src="/static/images/left_arrow.png"></a></li>
-                    <li><h2>이용약관</h2></li>
+                    <li><h2>회사소개 - Media </h2></li>
                 </ul>
             </div>
 
             <input type="hidden" id="news_id" name="news_id" value="<?= $news['id'] ?>"/>
-            <strong><?= $news['title'] ?></strong><br>
+                <p>
+                        <?php
+                            if($news['bigo1']){
+                                $typename;
+                                $typeclass;
+                                if($news['bigo1']=='01') {
+                                    $typename ='언론보도';
+                                    $typeclass = 'news_type';
+                                }else{
+                                    $typename ='보도자료';
+                                    $typeclass = 'news_type2';
+                                }
+                                echo "<b class='news_type ".$typeclass."'>".$typename."</b>";
+                            }
+                        ?>
+                    <strong><?= $news['title'] ?></strong>
+                </p>
             <hr>
-            <div style="font-size:12px;"><p><?= nl2br($news['content']); ?></p></div>
+            <?php
+                if($news['bigo2']){
+            ?>
+                <p class="link_btn">
+                    <a class ="link_btn" href="<?= $news['bigo2']?>">해당링크 바로가기</a>
+                </p>
+            <?php
+            }
+            ?>
+            <div style="font-size:12px;"><p><?= $news['content']; ?></p></div>
             <div class="btn_up_del_box">
-                <input type="button" value="수정" Onclick="fn_clickUpdate('news','<?= $news['id']?>')"/>
-                <input type="button" value="<?=lang('Korean.delete')?>"  Onclick="fn_clickDelete('<?= $news['id']?>','news')"/>
+                <input type="button" class="btn type01" value="수정" Onclick="fn_clickUpdate('news','<?= $news['id']?>')"/>
+                <input type="button" class="btn type02" value="<?=lang('Korean.delete')?>"  Onclick="fn_clickDelete('<?= $news['id']?>','news')"/>
             </div>
 
         </div>

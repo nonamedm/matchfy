@@ -44,3 +44,8 @@ const plusMediaBtn = () => {
 const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
+
+const concatBtn = () => {
+    $("html, body").animate({ scrollTop: $(document).height() }, "slow");    
+    $("#company_concat").focus();
+}

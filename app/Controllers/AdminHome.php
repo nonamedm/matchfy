@@ -496,6 +496,8 @@ class AdminHome extends BaseController
             $BoardModel->setTableName('wh_board_privacy');
         }else if($board_name=='terms'){
             $BoardModel->setTableName('wh_board_terms');
+        }else if($board_name=='news'){
+            $BoardModel->setTableName('wh_board_news');
         }
 
         $deleted = $BoardModel->delete($id);
@@ -507,6 +509,8 @@ class AdminHome extends BaseController
                 return redirect()->to('/ad/privacy/privacyList')->with('msg', '삭제되었습니다.');
             }else if($board_name=='terms'){
                 return redirect()->to('/ad/terms/termsList')->with('msg', '삭제되었습니다.');
+            }else if($board_name=='news'){
+                return redirect()->to('/ad/intro/newsList')->with('msg', '삭제되었습니다.');
             }
         } else {
             return redirect()->back()->with('msg', '삭제에 실패하였습니다.');
@@ -757,15 +761,22 @@ class AdminHome extends BaseController
 
     public function newsUpload(){
         $title = $this->request->getPost('title');
-        // $link = $this->request->getPost('content');
+        $content = $this->request->getPost('content');
         $type = $this->request->getPost('bigo1');
         $link = $this->request->getPost('bigo2');
 
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_news');
+        
+        if($type =='01'){
+            $content = '';
+        }else{
+            $link ='';
+        }
+        
         $data = [
             'title' => $title,
-            // 'content' => $link,
+            'content' => $content,
             'bigo1' => $type,
             'bigo2' => $link,
             'author' => 'admin',
@@ -807,7 +818,7 @@ class AdminHome extends BaseController
     public function newsUpdate(){
         $id = $this->request->getPost('news_id');
         $title = $this->request->getPost('title');
-        // $content = $this->request->getPost('content');
+        $content = $this->request->getPost('content');
         $type = $this->request->getPost('bigo1');
         $link = $this->request->getPost('bigo2');
 
@@ -817,17 +828,22 @@ class AdminHome extends BaseController
 
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_news');
+        
+        if($type =='01'){
+            $content = '';
+        }else{
+            $link ='';
+        }
 
         $updated = $BoardModel->update($id, [
             'title' => $title,
-            // 'content' => $content,
+            'content' => $content,
             'bigo1'=>$type,
             'bigo2'=>$link,
             'updated_at'=>'admin'
         ]);
 
         if ($updated) {
-            
             return redirect()->to("/ad/intro/newsView/{$id}")->with('msg', '수정이 완료되었습니다.');
         } else {
             return redirect()->to("/ad/intro/newsEdit/{$id}")->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\BoardModel;
 
 class Home extends BaseController
 {
@@ -25,8 +26,13 @@ class Home extends BaseController
         return view('/intro/company');
     }
     public function media(): string
-    {
-        return view('/intro/media');
+    {   
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_news');
+
+        $data['newss'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
+
+        return view('/intro/media',$data);
     }
     public function animatedAi(): string
     {

@@ -6,20 +6,12 @@
     <title>Matchfy</title>
     <meta name="description" content="The small framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
     <link rel="stylesheet" href="/static/css/intro.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="/static/css/scroll.css">
+    <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/intro/intro.js"></script>
+    <script src="/static/js/intro/scroll.js"></script>
 </head>
 
 <body>
@@ -44,46 +36,65 @@
             <li class="item-link-careers link-a">
                 <a href="/intro/media">Media</a>
             </li>
-            <li class="item-link-conference link-a">
-                <a href="/intro/#">contact</a>
+            <li class="item-link-conference link-a" onclick="concatBtn();">
+                <a href="#">contact</a>
             </li>
         </ul>
     </header>
 
+    <nav role="navigation" class="mobileHedaer">
+        <div id="menuToggle">
+            
+            <input type="checkbox" />
+            
+            <span></span>
+            <span></span>
+            <span></span>
+            
+            <ul id="menu">
+            <a href="/intro/main"><li>Home</li></a>
+            <a href="/intro/animatedAi"><li>애니메틱 AI</li></a>
+            <a href="/intro/company"><li>company</li></a>
+            <a href="/intro/media"><li>Media</li></a>
+            <a href="#"><li>Contact</li></a>
+            </ul>
+        </div>
+    </nav>
+
     <div class="contents">
         <div class="contents-box">
             <div class="animated-box">
-                <span class="animated-title">
+                <span class="animated-title fade-in">
                     생성형 AI기술을 활용한 스토리보드 애니메이션 메이커
                 </span>
-                <p>
+                <p class="fade-in">
                     애니메틱 AI
                 </p>
             </div>
 
             <div class="animated-img">
-                <div class="animated-img-box">
+                <div class="animated-img-box hidden">
                     <img src="/static/images/intro/animated_img.png" />
                 </div>
-                <div class="animated-img-box">
+                <div class="animated-img-box hidden">
                     <img src="/static/images/intro/animated_img2.png" />
                 </div>
             </div>
 
             <div class="animated-box-02">
-                <p class="animated-title">
+                <p class="animated-title hidden">
                     <span class="text">애니메틱 AI란?</span>
                 </p>
 
-                <div class="animated-contents">
+                <div class="animated-contents hidden">
                     생성형 AI 기술을 활용하여 스토리보드 또는 웹툰 등의 시작 프레임과 최종프레임의 중간 프레임을 자동으로 생성하고 하나의 애니메이션으로 완성해 주는 보간기술(frame interpolation)솔루션<br />
                 </div>
 
-                <p class="animated-title">
+                <p class="animated-title hidden">
                     <span class="text">애니메틱 AI의 Vision</span>
                 </p>
 
-                <div class="animated-contents">
+                <div class="animated-contents hidden">
                     <ul>
                         <li>드라마, 영화, 광고 등 영상물 제작 시 원활한 소통을 위한 프리비주얼 애니메이션 제작 용이 (컨셉 검증 및 시각적 스토리텔링 구체화)</li>
                         <li>아키텍쳐 및 건축 프로젝트의 시각적 프리비주얼로 활영하여 디자인 아이디어를 고객 및 투자자에게 효과적으로 전달</li>
@@ -92,7 +103,7 @@
                     </ul>
                 </div>
 
-                <div class="animated-p">
+                <div class="animated-p hidden">
                     *개발 진행 및 특허 출원 준비 중
                 </div>
             </div>
@@ -122,9 +133,9 @@
                         </span>
                     </div>
                     <div class="container">
-                        <div class="item-1">
-                            Tel. 02-6941-0941<br />
-                            Email. hi@cuberry.kr
+                        <div class="item-1" id="company_concat" tabindex="0">
+                            <p>Tel. 02-6941-0941</p>
+                            <p>Email. hi@cuberry.kr</p>
                         </div>
                         <div class="input">
                             <span class="container-14 link-a">
@@ -132,8 +143,8 @@
                             </span>
                         </div>
                     </div>
-                    <div class="link-1" onclick="scrollToTop()">
-                        <span class="container-15">
+                    <div class="scroll-top" onclick="scrollToTop()">
+                        <span class="scroll-top-text">
                             ^
                         </span>
                     </div>

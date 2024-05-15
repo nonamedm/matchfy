@@ -6,15 +6,12 @@
     <title>Matchfy</title>
     <meta name="description" content="The small framework with powerful features">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;700&display=swap" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
     <link rel="stylesheet" href="/static/css/intro.css">
-
-    <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="/static/css/scroll.css">
+    <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/intro/intro.js"></script>
+    <script src="/static/js/intro/scroll.js"></script>
 </head>
 
 <body>
@@ -39,80 +36,86 @@
             <li class="item-link-careers link-a">
                 <a href="/intro/media">Media</a>
             </li>
-            <li class="item-link-conference link-a">
-                <a href="#">contact</a>
+            <li class="item-link-conference link-a" id="concat_btn">
+                <a href="#">Contact</a>
             </li>
         </ul>
     </header>
 
+    <nav role="navigation" class="mobileHedaer">
+        <div id="menuToggle">
+            
+            <input type="checkbox" />
+            
+            <span></span>
+            <span></span>
+            <span></span>
+            
+            <ul id="menu">
+            <a href="/intro/main"><li>Home</li></a>
+            <a href="/intro/animatedAi"><li>애니메틱 AI</li></a>
+            <a href="/intro/company"><li>company</li></a>
+            <a href="/intro/media"><li>Media</li></a>
+            <a href="#"><li>Contact</li></a>
+            </ul>
+        </div>
+    </nav>
+
     <div class="contents">
 
         <div class="contents-box">
-            <span class="contents-title">
+            <span class="contents-title fade-in">
                 Media
             </span>
 
             <ul class="contents-media-ul">
-                <li class="contents-media-li">
-                    <div class="media-type">
-                        언론보도
-                    </div>
-                    <div class="media-box">
-                        <span class="media-title"> 뤼튼, 제1회 유저 컨퍼런스 성황리 개최..."AI 대중화 주도"</span>
-                        <span class="media-date"><i class="fa-solid fa-calendar-days"></i>2024년 04월 09일</span>
-                    </div>
-                </li>
-                <li class="contents-media-li">
-                    <div class="media-type">
-                        언론보도
-                    </div>
-                    <div class="media-box">
-                        <span class="media-title"> 뤼튼, 제1회 유저 컨퍼런스 성황리 개최..."AI 대중화 주도"</span>
-                        <span class="media-date"><i class="fa-solid fa-calendar-days"></i>2024년 04월 09일</span>
-                    </div>
-                </li>
-                <li class="contents-media-li">
-                    <div class="media-type2">
-                        보도자료
-                    </div>
-                    <div class="media-box">
-                        <span class="media-title"> 뤼튼, 제1회 유저 컨퍼런스 성황리 개최..."AI 대중화 주도"</span>
-                        <span class="media-date"><i class="fa-solid fa-calendar-days"></i>2024년 04월 09일</span>
-                    </div>
-                </li>
-                <li class="contents-media-li">
-                    <div class="media-type">
-                        언론보도
-                    </div>
-                    <div class="media-box">
-                        <span class="media-title"> 뤼튼, 제1회 유저 컨퍼런스 성황리 개최..."AI 대중화 주도"</span>
-                        <span class="media-date"><i class="fa-solid fa-calendar-days"></i>2024년 04월 09일</span>
-                    </div>
-                </li>
-                <li class="contents-media-li">
-                    <div class="media-type">
-                        언론보도
-                    </div>
-                    <div class="media-box">
-                        <span class="media-title"> 뤼튼, 제1회 유저 컨퍼런스 성황리 개최..."AI 대중화 주도"</span>
-                        <span class="media-date">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            2024년 04월 09일</span>
-                    </div>
-                </li>
+            <?php foreach ($newss as $news): ?>
+                <li class="contents-media-li hidden">
+                    <a href="<?=$news['bigo2']?>"  target="_blank">
+                    <?php
+                            if($news['bigo1']){
+                                $typename;
+                                $typeclass;
+                                if($news['bigo1']=='01') {
+                                    $typename ='언론보도';
+                                    $typeclass = 'media-type';
+                                }else{
+                                    $typename ='보도자료';
+                                    $typeclass = 'media-type2';
+                                }
+                                echo "<div class='".$typeclass."'>". $typename."</div>";
+                            }
+                        ?>
+                        <div class="media-box">
+                            <?php
+                                $title = $news['title'];
+                                $max_length = 20; 
 
-                <div class="page-box">
+                                if (mb_strlen($title) > $max_length) {
+                                    $title = mb_substr($title, 0, $max_length);
+                                    $title = preg_replace('/\s+[^ ]*$/', '', $title);
+                                    $title = preg_replace('/\r?\n|\r/', '', $title);
+                                    $title .= '...';
+                                }
+                            ?>
+                            <span class="media-title"> <strong><?= $title ?></strong></span>
+                            <span class="media-date"><i class="fa-solid fa-calendar-days"></i><?= date('Y년 m월 d일', strtotime($news['created_at'])) ?></span>
+                        </div>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+                <!-- <div class="page-box">
                     <ul>
                         <li class="on">1</li>
                         <li>2</li>
                         <li>3</li>
                         <li>4</li>
                     </ul>
-                </div>
+                </div> -->
             </ul>
 
             <div class="plus-contents">
-                <div class="plus-contents-box">
+                <div class="plus-contents-box hidden">
                     <div class="text">
                         Image file
                     </div>
@@ -120,7 +123,7 @@
                         <a href="#">+</a>
                     </span>
                 </div>
-                <div class="media_img">
+                <div class="media_img hidden">
                     <img src="/static/images/intro/media_img.png" />
                 </div>
             </div>
@@ -150,9 +153,9 @@
                         </span>
                     </div>
                     <div class="container">
-                        <div class="item-1">
-                            Tel. 02-6941-0941<br />
-                            Email. hi@cuberry.kr
+                        <div class="item-1" id="company_concat" tabindex="0">
+                            <p>Tel. 02-6941-0941</p>
+                            <p>Email. hi@cuberry.kr</p>
                         </div>
                         <div class="input">
                             <span class="container-14 link-a">
@@ -160,8 +163,8 @@
                             </span>
                         </div>
                     </div>
-                    <div class="link-1" onclick="scrollToTop()">
-                        <span class="container-15">
+                    <div class="scroll-top" onclick="scrollToTop()">
+                        <span class="scroll-top-text">
                             ^
                         </span>
                     </div>

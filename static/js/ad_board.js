@@ -22,9 +22,10 @@ $(document).ready(function(){
 
         memberCertificateApprove(level,id);
     });
-
     CKEDITOR.replace('content');
- 
+});
+
+function formSubmitChk(){
     $('form').submit(function(){
         var title = $('#title').val();
         var content = CKEDITOR.instances.content.getData().trim();
@@ -39,8 +40,8 @@ $(document).ready(function(){
             return false; 
         }
     });
+}
 
-});
 function fn_clickList(board){
     if(board=='notice'){
         window.location.href = "/ad/notice/noticeList";
@@ -237,6 +238,48 @@ function memberCertificateApprove(level,id){
         },
         error: function(xhr, status, error) {
             console.log(error);
+        }
+    });
+}
+
+function mediaRadio(){
+    $('input[name="bigo1"]').change(function() {
+        var selectedValue = $(this).val();
+        if (selectedValue === "01") {
+            $('#media_link').show();
+            $('#media_content').hide();
+        } else if (selectedValue === "02") {
+            $('#media_link').hide();
+            $('#media_content').show();
+        }
+    });
+}
+
+function introChk(){
+    $('form').submit(function(){
+        var title = $('#title').val();
+        var content = CKEDITOR.instances.content.getData().trim();
+        var radiochk = $('input[name="bigo1"]:checked').val();
+        var link = $('#link').val();
+
+        if(title.trim() == '') {
+            alert('제목을 입력해주세요.');
+            return false;
+        }
+        if(radiochk == '01'){ //언론보도
+            if(link == '') {
+                alert('링크 주소를 입력해주세요.');
+                return false; 
+            }else{
+                CKEDITOR.instances.content.setData('');
+            }
+        }else{ //보도자료
+            if(content == '') {
+                alert('내용을 입력해주세요.');
+                return false; 
+            }else{
+                $('#link').val('');
+            }
         }
     });
 }
