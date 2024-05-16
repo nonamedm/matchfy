@@ -62,6 +62,11 @@
                     <label for="content">내용</label>
                     <div class="content_text">
                     <textarea id="content" name="content" rows="4" cols="50"><?=htmlspecialchars($news['content']); ?></textarea><br><br>
+                    <script type="text/javascript">
+                            CKEDITOR.replace('content', {
+                                filebrowserUploadUrl: '/ckeditorUpload'
+                            });
+                        </script>
                     </div>
                 </div>
             

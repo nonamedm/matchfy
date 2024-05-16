@@ -11,8 +11,10 @@
                 ?>
                     <div class="chat_member">
                         <div class="chat_member_profile">
-                            <img class="profile_img" src="/<?= $row['file_path'] ?><?= $row['file_name'] ?>" />
-                            <p><?= $row['name'] ?></p>
+                            <a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/<?=$row['nickname']?>')">
+                                <img class="profile_img" src="/<?= $row['file_path'] ?><?= $row['file_name'] ?>" />
+                                <p><?= $row['name'] ?></p>
+                            </a>
                         </div>
                         <div class="chat_member_report">
                             <?php if ($row['chk'] !== 'me') {
