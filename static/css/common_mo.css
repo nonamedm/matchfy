@@ -722,6 +722,7 @@ td {
 
 .message_input_box .chat_input_box .message_input_box_border {
     width: 275px;
+    cursor: pointer;
 }
 .message_input_box .message_input_box_border {
     background: #f9f9f9;
@@ -2995,7 +2996,7 @@ input[type='number']::-webkit-inner-spin-button {
 
 .mo_wrap .scroll_member_body {
     overflow-y: scroll;
-    height: 230px;
+    height: 270px;
 }
 
 .scroll_body::-webkit-scrollbar {
@@ -3197,6 +3198,10 @@ input[type='number']::-webkit-inner-spin-button {
     margin: 10px 0 0 10px;
     color: #000000;
 }
+.nicknameBtnBox{
+    display: flex;
+    flex-direction: row;
+}
 .layerPopup_content .chat_member .chat_member_report {
     display: flex;
 }
@@ -3216,6 +3221,7 @@ input[type='number']::-webkit-inner-spin-button {
     height: 35px;
     color: #ffffff;
     border: none;
+    font-size: 13px;
 }
 .layerPopup_content .chat_member .chat_member_report .type02 {
     padding: 10px 20px;
@@ -3226,6 +3232,7 @@ input[type='number']::-webkit-inner-spin-button {
     color: #ffffff;
     border: none;
     margin-right: 8px;
+    font-size: 13px;
 }
 .layerPopup_content .content_mypage .popup_view_profile {
     padding: 3px 8px;

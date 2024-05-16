@@ -59,6 +59,7 @@
                         ?>
                             <div class="receive_msg">
                                 <div class="receive_profile">
+                                    <a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/<?=$row['nickname']?>')">
                                     <?php if ($row['file_name']) {
                                     ?>
                                         <img src="/<?= $row['file_path'] ?><?= $row['file_name'] ?>" />
@@ -68,6 +69,7 @@
                                         <img src="/static/images/profile_noimg.png" />
                                     <?php
                                     } ?>
+                                    </a>
                                 </div>
                                 <div class="receive_text">
                                     <p class="receive_profile_name"><?= $row['nickname'] ?><span class="match_percent">

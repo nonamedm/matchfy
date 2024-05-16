@@ -367,12 +367,14 @@ function meetingMemberList(idx) {
                 for (var i = 0; i < data.length; i++) {
                     html += '<div class="chat_member">';
                     html += '<div class="chat_member_profile">';
+                    html += '<a class="nicknameBtnBox" onclick="moveToUrl(\'/mo/viewProfile/' + data[i].nickname + '\')">';
                     if (data[i].file_path) {
                         html += '<img class="profile_img" src="/' + data[i].file_path + data[i].file_name + '" />';
                     } else {
                         html += '<img class="profile_img" src="/static/images/mypage_no_pfofile.png" />';
                     }
                     html += '<p>' + data[i].name + '</p>';
+                    html += '</a>';
                     if (data[i].meeting_master == 'K') {
                         html += '<img class="group_master" src="/static/images/group_master.png" />';
                     }
