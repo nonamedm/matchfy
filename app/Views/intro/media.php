@@ -36,7 +36,7 @@
             <li class="item-link-careers link-a">
                 <a href="/intro/media">Media</a>
             </li>
-            <li class="item-link-conference link-a" id="concat_btn">
+            <li class="item-link-conference link-a" onclick="concatBtn();">
                 <a href="#">Contact</a>
             </li>
         </ul>
@@ -56,7 +56,7 @@
             <a href="/intro/animatedAi"><li>애니메틱 AI</li></a>
             <a href="/intro/company"><li>company</li></a>
             <a href="/intro/media"><li>Media</li></a>
-            <a href="#"><li>Contact</li></a>
+            <a href="#" onclick="concatBtn();"><li>Contact</li></a>
             </ul>
         </div>
     </nav>
