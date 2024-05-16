@@ -630,7 +630,7 @@ class MoAjax extends BaseController
         ];
 
         // 프리미엄 회원
-        if ($this->request->getPost('grade') === 'grade03') {
+        if ($this->request->getPost('temp_grade') === 'grade03') {
             $rules['father_birth_year'] = [
                 'label' => 'father_birth_year',
                 'rules' => 'required',
@@ -694,6 +694,7 @@ class MoAjax extends BaseController
 
         $ci = $this->request->getPost('ci');
         $grade = $this->request->getPost('grade');
+        $temp_grade = $this->request->getPost('temp_grade');
         $married = $this->request->getPost('marital');
         $smoker = $this->request->getPost('smoking');
         $drinking = $this->request->getPost('drinking');
@@ -720,7 +721,8 @@ class MoAjax extends BaseController
             $MemberModel = new MemberModel();
 
             $data = [
-                'grade' => $grade,
+                //'grade' => $grade,
+                'temp_grade' => $temp_grade,
                 'married' => $married,
                 'smoker' => $smoker,
                 'drinking' => $drinking,
@@ -742,7 +744,7 @@ class MoAjax extends BaseController
                 $data['nickname'] = $nickname;
             }
 
-            if ($grade === 'grade03') {
+            if ($temp_grade === 'grade03') {
                 // 프리미엄 회원에만 해당하는 추가 정보
                 $premiumData = [
                     'father_birth_year' => $this->request->getPost('father_birth_year'),
@@ -840,19 +842,20 @@ class MoAjax extends BaseController
         }
     }
 
-
     /* 회원 등급 업데이트 */
-    public function gradeUpdate($ci, $grade)
+    public function gradeUpdate($ci, $grade, $type)
     {
         $MemberModel = new MemberModel();
 
         $data = [
-            'grade' => $grade,
+            ($type == 'temp') ? 'temp_grade' : 'grade' => $grade,
         ];
 
         // CI조회
         $existingData = $MemberModel->where('ci', $ci)->first();
-        // 데이터 존재 시
+        //print_r($data);
+
+        //데이터 존재 시
         if ($existingData) {
             $inserted = $MemberModel->update($ci, $data);
 

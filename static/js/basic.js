@@ -494,6 +494,7 @@ const signUpdate = (postData) => {
 
     if (tempValidation) {
         var postData = new FormData(document.querySelector('form'));
+        
         $.ajax({
             url: '/ajax/signUpdate',
             type: 'POST',
@@ -506,14 +507,15 @@ const signUpdate = (postData) => {
                 if (data.status === 'success') {
                     // 성공
                     const path = window.location.pathname;
+                    console.log(data.data);
 
-                    if (path.includes('/mo/updatePremium') || path.includes('/mo/updateRegular')) {
-                        moveToUrl('/mo/mypage');
-                    } else {
-                        var gradeText = data.data.grade === 'grade02' ? '정회원' : '프리미엄회원';
-                        localStorage.setItem('gradeText', gradeText);
-                        moveToUrl('/mo/signinSuccess');
-                    }
+                    // if (path.includes('/mo/updatePremium') || path.includes('/mo/updateRegular')) {
+                    //     moveToUrl('/mo/mypage');
+                    // } else {
+                    //     var gradeText = data.data.temp_grade === 'grade02' ? '정회원' : '프리미엄회원';
+                    //     localStorage.setItem('gradeText', gradeText);
+                    //     moveToUrl('/mo/signinSuccess');
+                    // }
                     // submitForm();
                 } else if (data.status === 'error') {
                     // 한번만 출력되게 함

@@ -142,9 +142,11 @@ class MoHome extends BaseController
         $postData['ci'] = $ci;
 
         $grade = 'grade02';
+        $type = 'temp';
 
-        // 등급부터 업그레이드 후 페이지 뷰
-        $result = $moAjax->gradeUpdate($ci, $grade);
+        // 임시 등급부터 업그레이드 후 페이지 뷰
+        //$result = $moAjax->gradeUpdate($ci, $grade, 'permanent');
+        $result = $moAjax->gradeUpdate($ci, $grade, $type);
         if ($result === '0') {
             $postData['result'] = $result;
         } else {
@@ -178,15 +180,19 @@ class MoHome extends BaseController
         $postData['ci'] = $ci;
 
         $grade = 'grade03';
+        $type = 'temp';
 
         // 등급부터 업그레이드 후 페이지 뷰
-        $result = $moAjax->gradeUpdate($ci, $grade);
+        //$result = $moAjax->gradeUpdate($ci, $grade, 'permanent');
+        $result = $moAjax->gradeUpdate($ci, $grade, $type);
         if ($result === '0') {
             $postData['result'] = $result;
+            $postData['temp_grade'] = $grade; 
         } else {
             // 오류일 때 이전 페이지로 리디렉션.
         }
-
+        print_r($postData);
+        
         return view('mo_signin_premium', $postData);
     }
     public function updatePremium(): string

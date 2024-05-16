@@ -33,6 +33,7 @@ class MemberModel extends Model
         'agree2',
         'agree3',
         'grade',
+        'temp_grade',
         'status',
         'sns_type',
         'oauth_id',

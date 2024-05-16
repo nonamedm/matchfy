@@ -26,6 +26,18 @@
                         <p><?= lang('Korean.siginSuccessTitle') ?></p>
                         <em><?= lang('Korean.siginSuccessCon1') ?></em>
                     </div>
+                    <div class="success_sub_text">
+                        <span>가입 신청이 완료되었습니다.</span>
+                        <br/>
+                        <br/>
+                        <span>아래 계좌로 입금하시면</span>
+                        <br/>
+                        <span>관리자 승인 후 등급이 업그레이드 됩니다.</span>
+                    </div>
+                    <div class="success_sub_text">
+                        <p>금액 : 3,400,000 원</p>
+                        <p>계좌번호 : 1002-992-001231 </p>
+                    </div>
                 </div>
             </div>
             <div style="height: 50px;"></div>
