@@ -224,4 +224,5 @@ $routes->post('/ad/intro/newsUpdate', 'AdminHome::newsUpdate');
 
 
 $routes->post('/proxy/createToken', 'ProxyController::createToken');
-$routes->post('/proxy/createPrivToken', 'ProxyController::createPrivToken');
+$routes->post('/proxy/createPassWeb', 'ProxyController::createPassWeb');
+$routes->get('/proxy/getResultValue', 'ProxyController::getResultValue');

@@ -52,7 +52,7 @@
             </form>
         </div>
 
-        <form name="form" id="form" type="POST" action="https://nice.checkplus.co.kr/CheckPlusSafeModel/service.cb">
+        <form name="form" id="form" action="https://nice.checkplus.co.kr/CheckPlusSafeModel/service.cb">
             <input type="hidden" id="m" name="m" value="service" />
             <input type="hidden" id="token_version_id" name="token_version_id" value="" />
             <input type="hidden" id="enc_data" name="enc_data" />
@@ -71,18 +71,15 @@
     <script src="/static/js/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            var currentDate = new Date();
-            var current_timestamp = parseInt(currentDate.getTime() / 1000);
-            var postData = {
-                'grant_type': 'client_credentials',
-                'scope': 'default'
-            };
-            var token1 = btoa('53d724a7-876d-4e22-9d75-e4824f197f10 : 1d256ed04a35b29b3828c09b9e37cf0c')
             $.ajax({
-                url: '/proxy/createPrivToken',
+                url: '/proxy/createPassWeb',
                 type: 'POST',
+                data: {
+                    "nickname": "<?= $nickname ?>",
+                    "sns_type": "<?= $sns_type ?>",
+                    "oauth_id": "<?= $oauth_id ?>"
+                },
                 success: function(response) {
-
                     console.log('Success: ' + JSON.stringify(response));
                     $("#token_version_id").val(response.token_version_id);
                     $("#enc_data").val(response.enc_data);

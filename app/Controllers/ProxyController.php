@@ -52,7 +52,7 @@ class ProxyController extends BaseController
         return $this->response->setJSON(['status' => 'success', 'data' => $responseData], ResponseInterface::HTTP_OK);
     }
 
-    public function createPrivToken()
+    public function createPassWeb()
     {
         // API URL
         $url = 'https://svc.niceapi.co.kr:22001/digital/niceid/api/v1.0/common/crypto/token';
@@ -109,15 +109,15 @@ class ProxyController extends BaseController
         $iv = substr($resultVal, -16);
         $hmac_key = substr($resultVal, 0, 32);
 
-        $reqData = ["returnurl" => "https://matchfy.net/mo/agree", "sitecode" => $siteCode, "popupyn" => "Y", "receivedata" => "xxxxdddeee"];
+        $nickname = $this->request->getPost('nickname');
+        $sns_type = $this->request->getPost('sns_type');
+        $oauth_id = $this->request->getPost('oauth_id');
+        $reqData = ["returnurl" => "https://matchfy.net/proxy/getResultValue?add_data=" . $nickname . "&sns_type=" . $sns_type . "&oauth_id=" . $oauth_id . "&ci1=" . $resultVal, "sitecode" => $siteCode, "popupyn" => "Y", "mobilceco" => "S"];
 
-        // AES 암호화
-        $secureKey = $key;
-        $cipher = "AES-128-CBC";
 
-        $trimmedData = array_map('trim', $reqData);
-        $jsonData = json_encode($trimmedData);
-        $encrypted = openssl_encrypt($jsonData, $cipher, $secureKey, OPENSSL_RAW_DATA, $iv);
+        // $trimmedData = array_map('trim', $reqData);
+        $jsonData = json_encode($reqData, JSON_UNESCAPED_SLASHES);
+        $encrypted = openssl_encrypt($jsonData, "AES-128-CBC", $key, OPENSSL_RAW_DATA, $iv);
         $enc_data = base64_encode($encrypted);
 
 
@@ -125,6 +125,50 @@ class ProxyController extends BaseController
         $integrityValue = base64_encode($hmacSha256);
 
         return $this->response->setJSON(['status' => 'success', 'enc_data' => $enc_data, 'intergrity_val' => $integrityValue, 'token_version_id' => $tokenVerId], ResponseInterface::HTTP_OK);
+    }
+    public function getResultValue()
+    {
+        $resultVal = $this->request->getGet('ci1') . "";
+
+        $key = substr($resultVal, 0, 16);
+        $key = substr($key, 0, 16);
+
+        $nickname = $this->request->getGet('nickname');
+        $sns_type = $this->request->getGet('sns_type');
+        $oauth_id = $this->request->getGet('oauth_id');
+
+        $token_version_id = $this->request->getGet('token_version_id');
+        $enc_data = $this->request->getGet('enc_data');
+        $enc_data = base64_decode($enc_data);
+        $resData = openssl_decrypt($enc_data, 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $iv);
+        $resData = iconv("euc-kr", "utf-8", $enc_data);
+        $resData = json_decode($resData, true);
+
+
+        // echo $enc_data . "<br/>";
+        $integrity_value = $this->request->getGet('integrity_value');
+
+
+        $hmacKey = substr($resultVal, 0, 32);
+
+
+        $hmacSha256 = $this->hmac256($hmacKey, $enc_data);
+        $integrityValue = base64_encode($hmacSha256);
+
+        // if ($integrity_value != base64_encode($hmacSha256)) {
+        //     echo "no" . "<br/>";
+        // }
+
+
+        $data['nickname'] = $nickname;
+        $data['sns_type'] = $sns_type;
+        $data['oauth_id'] = $oauth_id;
+        $data['decrypted'] = $resData;
+        echo $resData['birthdate'] . "호<br/>";
+        echo $resData . "랑<br/>";
+        echo print_r($resData) . "이";
+
+        return $resData['birthdate'];
     }
 
     private function hmac256($secretKey, $message)
