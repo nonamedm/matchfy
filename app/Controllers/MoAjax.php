@@ -843,21 +843,27 @@ class MoAjax extends BaseController
     }
 
     /* 회원 등급 업데이트 */
-    public function gradeUpdate($ci, $grade, $type)
+    public function gradeUpdate($ci, $grade, $type = 'permanent')
     {
         $MemberModel = new MemberModel();
 
-        $data = [
-            ($type == 'temp') ? 'temp_grade' : 'grade' => $grade,
-        ];
+        if ($type == 'temp') {
+            $data = ['temp_grade' => $grade];
+        } else {
+            $data = ['grade' => $grade];
+        }
+
+        // $data = [
+        //     'grade' => $grade,
+        // ];
 
         // CI조회
         $existingData = $MemberModel->where('ci', $ci)->first();
-        //print_r($data);
+        print_r($data);
 
         //데이터 존재 시
         if ($existingData) {
-            $inserted = $MemberModel->update($ci, $data);
+            $inserted = $MemberModel->update($existingData['ci'], $data);
 
             if ($inserted) {
                 // return $this->response->setJSON(['status' => 'success', 'message' => '데이터가 업데이트되었습니다', 'data' => $data]);

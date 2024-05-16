@@ -185,13 +185,14 @@ class MoHome extends BaseController
         // 등급부터 업그레이드 후 페이지 뷰
         //$result = $moAjax->gradeUpdate($ci, $grade, 'permanent');
         $result = $moAjax->gradeUpdate($ci, $grade, $type);
+        print_r($result);
         if ($result === '0') {
             $postData['result'] = $result;
             $postData['temp_grade'] = $grade; 
         } else {
             // 오류일 때 이전 페이지로 리디렉션.
         }
-        print_r($postData);
+        //print_r($postData);
         
         return view('mo_signin_premium', $postData);
     }
