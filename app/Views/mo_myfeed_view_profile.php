@@ -90,7 +90,7 @@
                                     <div class="profile_content">
                                         <h2><?= lang('Korean.marryTrueFalse') ?></h2>
                                         <p>
-                                            <?= $married === 0 ? '미혼' : '기혼' ?>
+                                            <?= $married === 0 ? '싱글' : '돌싱' ?>
                                         </p>
                                     </div>
                                     <div class="profile_content">

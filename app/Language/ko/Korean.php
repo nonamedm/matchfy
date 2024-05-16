@@ -312,8 +312,8 @@ return [
     //premium
     'certification'      => '인증',
     'profilePhoto'       => '프로필 사진수정',
-    'single'             => '(무)미혼',
-    'married'            => '(유)기혼',
+    'single'             => '싱글',
+    'married'            => '돌싱',
     'authentication'     => '인증',
     'NotAtAll'           => '전혀안함',
     'oneday12'           => '하루 1~2회',

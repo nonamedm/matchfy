@@ -52,6 +52,13 @@
             </form>
         </div>
 
+        <form name="form" id="form" type="POST" action="https://nice.checkplus.co.kr/CheckPlusSafeModel/service.cb">
+            <input type="hidden" id="m" name="m" value="service" />
+            <input type="hidden" id="token_version_id" name="token_version_id" value="" />
+            <input type="hidden" id="enc_data" name="enc_data" />
+            <input type="hidden" id="integrity_value" name="integrity_value" />
+            <input type="submit" value="test" />
+        </form>
 
         <div style="height: 50px;"></div>
         <footer class="footer">
@@ -63,32 +70,57 @@
     <!-- SCRIPTS -->
     <script src="/static/js/jquery.min.js"></script>
     <script>
-        // $(document).ready(function () {
-        //     $.ajax({
-        //         url: "/ajax/delCmt",
-        //         type: "post",
-        //         data: { cmt_idx: '_cmt_idx', trgt_id: '_trgt_id', trgt_idx: '_trgt_idx' }, //
-        //         dataType: "json",
-        //         async: false,
-        //         success: function (data) {
-        //             console.log(data);
-        //             if (data) {
-        //                 // 성공
-        //                 //console.log('111');
+        $(document).ready(function() {
+            var currentDate = new Date();
+            var current_timestamp = parseInt(currentDate.getTime() / 1000);
+            var postData = {
+                'grant_type': 'client_credentials',
+                'scope': 'default'
+            };
+            var token1 = btoa('53d724a7-876d-4e22-9d75-e4824f197f10 : 1d256ed04a35b29b3828c09b9e37cf0c')
+            $.ajax({
+                url: '/proxy/createPrivToken',
+                type: 'POST',
+                success: function(response) {
 
-        //             } else {
-        //                 // 삭제 성공
-        //                 //console.log('222');
-        //                 alert("오류가 발생하였습니다. \n다시 시도해 주세요.");
-        //             }
-        //             return false;
-        //         },
-        //         error: function (data, status, err) {
-        //             alert("there was an error while fetching events!");
-        //             console.log(err);
-        //         },
-        //     });
-        // });
+                    console.log('Success: ' + JSON.stringify(response));
+                    $("#token_version_id").val(response.token_version_id);
+                    $("#enc_data").val(response.enc_data);
+                    $("#token_version_id").val(response.token_version_id);
+                    $("#integrity_value").val(response.intergrity_val);
+                },
+                error: function(xhr, status, error) {
+                    console.log('Error: ' + xhr.responseText);
+                }
+            });
+            // console.log('확인', current_timestamp)
+
+
+            //     $.ajax({
+            //         url: "/ajax/delCmt",
+            //         type: "post",
+            //         data: { cmt_idx: '_cmt_idx', trgt_id: '_trgt_id', trgt_idx: '_trgt_idx' }, //
+            //         dataType: "json",
+            //         async: false,
+            //         success: function (data) {
+            //             console.log(data);
+            //             if (data) {
+            //                 // 성공
+            //                 //console.log('111');
+
+            //             } else {
+            //                 // 삭제 성공
+            //                 //console.log('222');
+            //                 alert("오류가 발생하였습니다. \n다시 시도해 주세요.");
+            //             }
+            //             return false;
+            //         },
+            //         error: function (data, status, err) {
+            //             alert("there was an error while fetching events!");
+            //             console.log(err);
+            //         },
+            //     });
+        });
     </script>
 
     <!-- -->
