@@ -1693,7 +1693,16 @@ input[type='checkbox']+label:hover {
     color: #ffffff;
     text-align: left;
 }
-
+.media-type2 {
+    font-size: 21px;
+    width: 87px;
+    height: 18px;
+    padding: 6px 0px 10px 13px;
+    border-radius: 10px;
+    background: #79463d;
+    color: #ffffff;
+    text-align: left;
+}
 .contents-media-li .media-box {
     display: flex;
     flex-direction: column;
@@ -1870,7 +1879,38 @@ input[type='checkbox']+label:hover {
     font-size: 32px;
     color: #FFFFFF;
 }
+/*media*/
+.media-view{
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 100px;
+}
 
+.media-view .media-title h3:nth-child(2){
+    width: 100%;
+    height: auto;
+    font-size: 3rem;
+    line-height: 1.2;
+    letter-spacing: -0.05rem;
+    padding: 0;
+    margin: 0;
+}
+.media-view .media-title{
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-bottom: 2px solid #ddd;
+}
+.media-view .media-title .date{
+    color:#999999;
+}
+.media-view .media-content{
+    width: 100%;
+}
+.media-view .media-content p img{
+    width: 100%;
+}
 @media (max-width: 968px) {
     .section-box-img img {
         width: 90%;
@@ -2249,7 +2289,7 @@ input[type='checkbox']+label:hover {
     .contents-media-li .media-box .media-date {
         font-size: 12px;
     }
-v
+
     .group-1000001310 {
         display: none;
     }
@@ -2407,5 +2447,23 @@ v
 
     #menuToggle input:checked~ul {
         transform: none;
+    }
+    .media-view{
+        width: 90%;
+    }
+    .media-view .media-title h3:nth-child(2){
+        font-size: 1.1rem;
+    }
+    .media-type2{
+        font-size: 15px;
+        width: 65px;
+        height: 13px;
+    }
+    .media-view .media-title .date{
+        font-size: 15px;
+    }
+    .media-content p {
+        font-size: 17px;
+        line-height: 1.6;
     }
 }

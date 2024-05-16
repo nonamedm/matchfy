@@ -14,7 +14,7 @@
     <script src="/static/js/intro/scroll.js"></script>
 </head>
 
-<body>
+<body style="background:#ffffff;">
     <header class="header">
         <div class="cubberry-logo">
         </div>
@@ -62,73 +62,51 @@
     </nav>
 
     <div class="contents">
+        <div class="media-view">
+            <div class="media-title">
+                <?php
+                    if($news['bigo1']){
+                        $typename;
+                        $typeclass;
+                        if($news['bigo1']=='01') {
+                            $typename ='언론보도';
+                            $typeclass = 'media-type';
+                        }else{
+                            $typename ='보도자료';
+                            $typeclass = 'media-type2';
+                        }
+                        echo "<h3 class='".$typeclass."'>". $typename."</h3>";
+                    }
+                ?>
+                <h3><?= $news['title'] ?></h3>
+                <p class="date"><?= date('Y년 m월 d일', strtotime($news['created_at'])) ?></p>
+            </div>
+            <div class="media-content">
+            <?php
+                $img = $news['content'];
+                if(!empty($img)){
+                    // 정규 표현식을 사용하여 width 값 추출
+                    preg_match('/width:(\d+)px/', $img, $width_matches);
+                    preg_match('/height:(\d+)px/', $img, $height_matches);
 
-        <div class="contents-box">
-            <span class="contents-title fade-in">
-                Media
-            </span>
-
-            <ul class="contents-media-ul">
-            <?php foreach ($newss as $news): ?>
-                <li class="contents-media-li hidden">
-                    <a href="<?php if($news['bigo2']){echo $news['bigo2']; }else{ echo "/intro/mediaView/".$news['id']; }?>"  target="_blank">
-                        <?php
-                            if($news['bigo1']){
-                                $typename;
-                                $typeclass;
-                                if($news['bigo1']=='01') {
-                                    $typename ='언론보도';
-                                    $typeclass = 'media-type';
-                                }else{
-                                    $typename ='보도자료';
-                                    $typeclass = 'media-type2';
-                                }
-                                echo "<div class='".$typeclass."'>". $typename."</div>";
+                    if(isset($width_matches[1])) {
+                        $width = intval($width_matches[1]);
+                        if ($width >= 900) {
+                            // width가 900 이상일 경우 width를 100%로 변경
+                            $img = preg_replace('/width:(\d+)px/', 'width:100%', $img);
+                            // height가 있으면 값을 auto로 변경
+                            if(isset($height_matches[1])){
+                                $img = preg_replace('/height:(\d+)px/', 'height:auto', $img);
                             }
-                        ?>
-                        <div class="media-box">
-                            <?php
-                                $title = $news['title'];
-                                $max_length = 20; 
-
-                                if (mb_strlen($title) > $max_length) {
-                                    $title = mb_substr($title, 0, $max_length);
-                                    $title = preg_replace('/\s+[^ ]*$/', '', $title);
-                                    $title = preg_replace('/\r?\n|\r/', '', $title);
-                                    $title .= '...';
-                                }
-                            ?>
-                            <span class="media-title"> <strong><?= $title ?></strong></span>
-                            <span class="media-date"><i class="fa-solid fa-calendar-days"></i><?= date('Y년 m월 d일', strtotime($news['created_at'])) ?></span>
-                        </div>
-                    </a>
-                </li>
-            <?php endforeach; ?>
-                <!-- <div class="page-box">
-                    <ul>
-                        <li class="on">1</li>
-                        <li>2</li>
-                        <li>3</li>
-                        <li>4</li>
-                    </ul>
-                </div> -->
-            </ul>
-
-            <div class="plus-contents">
-                <div class="plus-contents-box hidden">
-                    <div class="text">
-                        Image file
-                    </div>
-                    <span class="plus plus_media_btn">
-                        <a href="#">+</a>
-                    </span>
-                </div>
-                <div class="media_img hidden">
-                    <img src="/static/images/intro/media_img.png" />
-                </div>
+                        }
+                    }
+                }
+                ?>
+                <p><?= $img ?></p>
             </div>
         </div>
-    </div>
+    </div>            
+        
 
     <div class="footer">
         <div class="section">

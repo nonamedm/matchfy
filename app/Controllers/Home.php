@@ -34,6 +34,14 @@ class Home extends BaseController
 
         return view('/intro/media',$data);
     }
+    public function mediaView($id)
+    {   
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_news');
+        $data['news'] = $BoardModel->find($id); 
+
+        return view('/intro/media_view', $data);
+    }
     public function animatedAi(): string
     {
         return view('/intro/animatedai');
