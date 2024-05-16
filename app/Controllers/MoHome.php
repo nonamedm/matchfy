@@ -378,6 +378,7 @@ class MoHome extends BaseController
                 }
             }
             $query = "SELECT member_ci AS where_ci, (SELECT name FROM members WHERE ci = where_ci) AS name,
+                             (SELECT nickname FROM members WHERE ci = where_ci) AS nickname,
                              (SELECT file_path FROM member_files WHERE member_ci = where_ci AND board_type='main_photo' AND delete_yn='n') AS file_path,
                              (SELECT file_name FROM member_files WHERE member_ci = where_ci AND board_type='main_photo' AND delete_yn='n') AS file_name,
                              (CASE
@@ -850,6 +851,7 @@ class MoHome extends BaseController
                                     d.file_path as file_path,
                                     d.file_name as file_name,
                                     c.name as name,
+                                    c.nickname as nickname,
                                     c.city as city,
                                     c.town as town,
                                     c.birthday as birthday,

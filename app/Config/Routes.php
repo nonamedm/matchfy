@@ -9,6 +9,7 @@ $routes->get('/', 'Home::index');
 $routes->get('/intro/main', 'Home::intro');
 $routes->get('/intro/company', 'Home::company');
 $routes->get('/intro/media', 'Home::media');
+$routes->get('/intro/mediaView/(:num)', 'Home::mediaView/$1');
 $routes->get('/intro/animatedAi', 'Home::animatedAi');
 $routes->get('/publish', 'Home::list');
 $routes->get('/index/login', 'Home::indexLogin');
@@ -224,4 +225,5 @@ $routes->post('/ad/intro/newsUpdate', 'AdminHome::newsUpdate');
 
 
 $routes->post('/proxy/createToken', 'ProxyController::createToken');
-$routes->post('/proxy/createPrivToken', 'ProxyController::createPrivToken');
+$routes->post('/proxy/createPassWeb', 'ProxyController::createPassWeb');
+$routes->get('/proxy/getResultValue', 'ProxyController::getResultValue');

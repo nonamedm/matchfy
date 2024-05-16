@@ -19,6 +19,7 @@
 
 
         <?php $title = "준회원 프로필";
+        $prevUrl = "/mo/pass";
         include 'header.php'; ?>
 
         <?php
