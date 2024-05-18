@@ -28,21 +28,27 @@ class Upload extends BaseController
         // 난수생성
         $newName = $file->getRandomName();
 
-        // 데이터 저장
-        $postData['org_name'] = $orgName;
-        $postData['ext'] = $ext;
-        $postData['file_name'] = $newName;
-        $uploadDir = 'static/files/uploads/';
-        $postData['file_path'] = $uploadDir;
-
-        // 파일이 올바르게 업로드되었는지 확인
-        if ($file && $file->isValid() && !$file->hasMoved()) {
-            $file->move(ROOTPATH . $uploadDir, $newName);
-            // $file->move(WRITEPATH . $uploadDir, $newName);
+        $fileSize = $file->getSize();
+        if ($fileSize > 209715200) {
+            return $this->response->setJSON(['status' => 'fail', 'message' => '파일 용량이 너무 큽니다. ', 'data' => '사진 사이즈가 너무 큽니다. 다른 사진을 첨부해 주세요']);
         } else {
-            $postData['fail'] = '파일전송 실패';
+            // 데이터 저장
+            $postData['file_size'] = $fileSize;
+            $postData['org_name'] = $orgName;
+            $postData['ext'] = $ext;
+            $postData['file_name'] = $newName;
+            $uploadDir = 'static/files/uploads/';
+            $postData['file_path'] = $uploadDir;
+
+            // 파일이 올바르게 업로드되었는지 확인
+            if ($file && $file->isValid() && !$file->hasMoved()) {
+                $file->move(ROOTPATH . $uploadDir, $newName);
+                // $file->move(WRITEPATH . $uploadDir, $newName);
+                return $this->response->setJSON(['status' => 'success', 'message' => 'upload success', 'data' => $postData]);
+            } else {
+                return $this->response->setJSON(['status' => 'fail', 'message' => '파일업로드에 실패했습니다. 다시 시도해 주세요']);
+            }
         }
-        return $this->response->setJSON(['status' => 'success', 'message' => 'upload success', 'data' => $postData]);
     }
 
     public function Boardupload($file, $boardTable, $boardType, $title, $content)

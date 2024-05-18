@@ -7,7 +7,8 @@ const myfeedPhotoListner = () => {
     feed_photo_input.addEventListener('change', function (e) {
         if (feed_photo_input.files.length > 0) {
             for (let i = 0; i < feed_photo_input.files.length; i++) {
-                const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg|\.mp4|\.avi|\.mov|\.mkv|\.flv|\.wmv|\.webm)$/i;
+                const allowedExtensions =
+                    /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg|\.mp4|\.avi|\.mov|\.mkv|\.flv|\.wmv|\.webm)$/i;
                 const allowedExtensionsImg = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i;
                 const allowedExtensionsMov = /(\.mp4|\.avi|\.mov|\.mkv|\.flv|\.wmv|\.webm)$/i;
                 if (!allowedExtensions.exec(feed_photo_input.files[i].name)) {
@@ -32,19 +33,19 @@ const myfeedPhotoListner = () => {
                         var fileName = feed_photo_input.files[i].name;
                         const temp_ext = fileName.split('.').pop();
 
-                        if(allowedExtensionsImg.exec(feed_photo_input.files[i].name)) {
+                        if (allowedExtensionsImg.exec(feed_photo_input.files[i].name)) {
                             // 이미지 요소에 이미지 추가
                             const img = document.createElement('img');
                             img.src = e.target.result;
                             img.classList.add('profile_photo_posted');
                             imageElement.appendChild(img);
-                        } else if(allowedExtensionsMov.exec(feed_photo_input.files[i].name)) {
+                        } else if (allowedExtensionsMov.exec(feed_photo_input.files[i].name)) {
                             // 이미지 요소에 이미지 추가
                             const img = document.createElement('video');
                             img.src = e.target.result;
                             img.setAttribute('width', '100%');
                             img.setAttribute('height', '100%');
-                            img.addEventListener('click',function() {
+                            img.addEventListener('click', function () {
                                 if (img.paused) {
                                     img.play();
                                 } else {
@@ -58,31 +59,35 @@ const myfeedPhotoListner = () => {
                         // javascript에서 fileUpload 호출
                         fileUpload(feed_photo_input.files[i])
                             .then((data) => {
-                                console.log('result', data);
-                                const fileInfo = {
-                                    org_name: data.org_name,
-                                    file_name: data.file_name,
-                                    file_path: data.file_path,
-                                    ext: data.ext,
-                                };
-                                uploadedFeeds.push(fileInfo);
+                                if (data.org_name) {
+                                    console.log('result', data);
+                                    const fileInfo = {
+                                        org_name: data.org_name,
+                                        file_name: data.file_name,
+                                        file_path: data.file_path,
+                                        ext: data.ext,
+                                    };
+                                    uploadedFeeds.push(fileInfo);
 
-                                // 삭제 버튼 생성
-                                const deleteButton = document.createElement('span');
-                                // deleteButton.textContent = 'X';
-                                deleteButton.classList.add('feed_close_button');
-                                // 삭제 버튼에 클릭 이벤트 추가
-                                deleteButton.addEventListener('click', function () {
-                                    // label 숨김해제
-                                    input_label.style.display = 'block';
-                                    // 이미지 요소 제거
-                                    imageElement.remove();
-                                    uploadedFeeds = uploadedFeeds.filter(
-                                        (file) => file.file_name !== fileInfo.file_name,
-                                    );
-                                });
-                                // 이미지 요소에 삭제 버튼 추가
-                                imageElement.appendChild(deleteButton);
+                                    // 삭제 버튼 생성
+                                    const deleteButton = document.createElement('span');
+                                    // deleteButton.textContent = 'X';
+                                    deleteButton.classList.add('feed_close_button');
+                                    // 삭제 버튼에 클릭 이벤트 추가
+                                    deleteButton.addEventListener('click', function () {
+                                        // label 숨김해제
+                                        input_label.style.display = 'block';
+                                        // 이미지 요소 제거
+                                        imageElement.remove();
+                                        uploadedFeeds = uploadedFeeds.filter(
+                                            (file) => file.file_name !== fileInfo.file_name,
+                                        );
+                                    });
+                                    // 이미지 요소에 삭제 버튼 추가
+                                    imageElement.appendChild(deleteButton);
+                                } else {
+                                    fn_alert(data);
+                                }
                             })
                             .catch((error) => {
                                 console.error('error : ', error);
@@ -140,9 +145,9 @@ const myfeedPhotoListner = () => {
 };
 
 const myFeedDelete = () => {
-    fn_confirm('피드를 삭제하시겠습니까?','myfeeddel');
+    fn_confirm('피드를 삭제하시겠습니까?', 'myfeeddel');
 };
-function fn_myFeedDelete(value){
+function fn_myFeedDelete(value) {
     const feed_idx = $('#feed_idx').val();
     if (value) {
         $.ajax({
@@ -193,25 +198,25 @@ const myFeedModify = () => {
                 // 이미지/영상 분기
                 const allowedExtensionsImg = /(jpg|jpeg|png|gif|bmp|tiff|tif|webp|svg)$/i;
                 const allowedExtensionsMov = /(mp4|avi|mov|mkv|flv|wmv|webm)$/i;
-                if(allowedExtensionsImg.exec(data.data.ext)) {
+                if (allowedExtensionsImg.exec(data.data.ext)) {
                     // 이미지 요소에 이미지 추가
                     const img = document.createElement('img');
                     img.src = '/' + data.data.thumb_filepath + '/' + data.data.thumb_filename;
                     img.classList.add('profile_photo_posted');
                     imageElement.appendChild(img);
-                } else if(allowedExtensionsMov.exec(data.data.ext)) {
+                } else if (allowedExtensionsMov.exec(data.data.ext)) {
                     const img = document.createElement('video');
                     img.src = '/' + data.data.thumb_filepath + '/' + data.data.thumb_filename;
                     img.setAttribute('width', '100%');
                     img.setAttribute('height', '100%');
                     img.classList.add('profile_photo_posted');
-                    img.addEventListener('click',function() {
+                    img.addEventListener('click', function () {
                         if (img.paused) {
                             img.play();
                         } else {
                             img.pause();
                         }
-                    })
+                    });
                     imageElement.appendChild(img);
                 }
 
@@ -266,9 +271,9 @@ const showFeedPopup = (contents, feedIdx) => {
 };
 
 const showFeedDetail = (contents, feedIdx) => {
-    var myfeedDetailImg = $("#myfeed_detail_img");
-    var myfeedDetailMov = document.getElementById("myfeed_detail_mov");
-    myfeedDetailImg.attr('style','display:none');
+    var myfeedDetailImg = $('#myfeed_detail_img');
+    var myfeedDetailMov = document.getElementById('myfeed_detail_mov');
+    myfeedDetailImg.attr('style', 'display:none');
     myfeedDetailMov.style.display = 'none';
     console.log(contents, feedIdx);
     $.ajax({
@@ -281,21 +286,24 @@ const showFeedDetail = (contents, feedIdx) => {
             if (data.data) {
                 const allowedExtensionsImg = /(jpg|jpeg|png|gif|bmp|tiff|tif|webp|svg)$/i;
                 const allowedExtensionsMov = /(mp4|avi|mov|mkv|flv|wmv|webm)$/i;
-                if(allowedExtensionsImg.exec(data.data.ext)) {
-                    myfeedDetailImg.attr('style','display:inline-block');
+                if (allowedExtensionsImg.exec(data.data.ext)) {
+                    myfeedDetailImg.attr('style', 'display:inline-block');
                     myfeedDetailImg.attr('src', '/' + data.data.thumb_filepath + '/' + data.data.thumb_filename);
                     $('#myfeed_cont').text(data.data.feed_cont);
                     $('#feed_idx').val(data.data.feed_idx);
-                } else if(allowedExtensionsMov.exec(data.data.ext)) {
+                } else if (allowedExtensionsMov.exec(data.data.ext)) {
                     myfeedDetailMov.style.display = 'inline-block';
-                    myfeedDetailMov.addEventListener('click',function() {
+                    myfeedDetailMov.addEventListener('click', function () {
                         if (myfeedDetailMov.paused) {
                             myfeedDetailMov.play();
                         } else {
                             myfeedDetailMov.pause();
                         }
-                    })
-                    myfeedDetailMov.setAttribute('src', '/' + data.data.thumb_filepath + '/' + data.data.thumb_filename);
+                    });
+                    myfeedDetailMov.setAttribute(
+                        'src',
+                        '/' + data.data.thumb_filepath + '/' + data.data.thumb_filename,
+                    );
                     $('#myfeed_cont').text(data.data.feed_cont);
                     $('#feed_idx').val(data.data.feed_idx);
                 }

@@ -4,25 +4,24 @@
             <a href="#" class="btn_popup_close" onclick="closePopup();" style="float: right;">닫기</a>
         </div>
         <div class="layerPopup_content">
-            <p class="txt"><?=lang('Korean.authentication')?></p>
-            <em class="desc"><?=lang('Korean.certificationCon1')?></em>
+            <p class="txt"><?= lang('Korean.authentication') ?></p>
+            <em class="desc"><?= lang('Korean.certificationCon1') ?></em>
             <div class="">
                 <div class="regist_file">
-                    <label id="profile_regist_label" for="profile_regist"
-                        class="signin_label profile_photo_input"></label>
+                    <label id="profile_regist_label" for="profile_regist" class="signin_label profile_photo_input"></label>
                     <input id="profile_regist" type="file" accept="image/*">
                 </div>
             </div>
             <div class="chk_box">
                 <input type="checkbox" id="totAgree" name="chkDefault00">
-                <label class="totAgree_label" for="totAgree"><?=lang('Korean.certificationCon2')?></label>
+                <label class="totAgree_label" for="totAgree"><?= lang('Korean.certificationCon2') ?></label>
             </div>
             <div class="notice_box">
-                <p id="certifi_con" class="notice_text"><?=lang('Korean.certificationCon3')?></p>
+                <p id="certifi_con" class="notice_text"><?= lang('Korean.certificationCon3') ?></p>
             </div>
             <div class="layerPopup_bottom">
                 <div class="btn_group">
-                    <button type="button" class="btn type01" onclick="submitFile()"><?=lang('Korean.check')?></button>
+                    <button type="button" class="btn type01" onclick="submitFile()"><?= lang('Korean.check') ?></button>
                 </div>
             </div>
             <input id="ci" type="hidden" value="" />
@@ -31,15 +30,15 @@
     </div>
 </div>
 <script>
-    var certificationCon3 = '<?=lang('Korean.certificationCon3')?>';
-    var certificationCon4 ='<?=lang('Korean.certificationCon4')?>';
-    $(document).ready(function () {
+    var certificationCon3 = '<?= lang('Korean.certificationCon3') ?>';
+    var certificationCon4 = '<?= lang('Korean.certificationCon4') ?>';
+    $(document).ready(function() {
         // image input 초기화        
         const profile_regist = document.getElementById('profile_regist');
         const imgRegist = document.getElementById('profile_regist_label');
         imgRegist.style.display = 'block';
 
-        profile_regist.addEventListener('change', function (e) {
+        profile_regist.addEventListener('change', function(e) {
             if (profile_regist.files.length > 0) {
                 const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i;
                 if (!allowedExtensions.exec(profile_regist.files[0].name)) {
@@ -59,7 +58,7 @@
                         .then((data) => {
                             console.log('result : ', data);
                             if (data.org_name) {
-                                reader.onload = function (e) {
+                                reader.onload = function(e) {
                                     // 기존에 추가된 이미지
                                     var previousImage = document.getElementById('newImage');
                                     // 이전에 추가된 이미지가 있으면 제거
@@ -77,7 +76,7 @@
                                     newImage.style.margin = '20px';
                                     newImage.style.width = '295px';
                                     newImage.style.height = '200px';
-                                    newImage.onclick = function () {
+                                    newImage.onclick = function() {
                                         profile_regist.click();
                                     };
 
@@ -92,13 +91,20 @@
                                 $.ajax({
                                     type: "post",
                                     url: "/ajax/mbrFileRegUp",
-                                    data: { ci: $("#ci").val(), org_name: data.org_name, file_name: data.file_name, file_path: data.file_path, ext: data.ext, board_type: typeValue },
-                                    success: function (data) {
+                                    data: {
+                                        ci: $("#ci").val(),
+                                        org_name: data.org_name,
+                                        file_name: data.file_name,
+                                        file_path: data.file_path,
+                                        ext: data.ext,
+                                        board_type: typeValue
+                                    },
+                                    success: function(data) {
                                         console.log(data);
                                         // if (data.data.board_type === 'school' || data.data.board_type === 'job')
                                         //     $("#" + typeValue).val(data.data.org_name);
                                     },
-                                    error: function (xhr, status, error) {
+                                    error: function(xhr, status, error) {
                                         console.log(error);
                                     }
                                 });
@@ -113,7 +119,7 @@
                                 }
                                 imgRegist.style.display = 'block';
 
-                                fn_alert('사진 사이즈가 너무 큽니다. \n다른 사진을 첨부해 주세요.');
+                                fn_alert(data);
                             }
                         })
                         .catch((error) => {
@@ -129,8 +135,7 @@
 
                     // javascript에서 fileUpload 호출
                 }
-            } else {
-            }
+            } else {}
         });
     });
 </script>

@@ -785,7 +785,7 @@ const editPhotoListner = () => {
                             imageElement.style.height = '74px';
                             // 이미지를 이미지 컨테이너에 추가
                             imgRegist.appendChild(imageElement);
-                            fn_alert('사진 사이즈가 너무 큽니다. \n다른 사진을 첨부해 주세요.');
+                            fn_alert(data);
                         }
                     })
                     .catch((error) => {
@@ -843,29 +843,33 @@ const editPhotoListListner = () => {
                         // javascript에서 fileUpload 호출
                         fileUpload(profile_photo_input.files[i])
                             .then((data) => {
-                                console.log('result', data);
-                                const fileInfo = {
-                                    org_name: data.org_name,
-                                    file_name: data.file_name,
-                                    file_path: data.file_path,
-                                    ext: data.ext,
-                                };
-                                uploadedFiles.push(fileInfo);
+                                if (data.org_name) {
+                                    console.log('result', data);
+                                    const fileInfo = {
+                                        org_name: data.org_name,
+                                        file_name: data.file_name,
+                                        file_path: data.file_path,
+                                        ext: data.ext,
+                                    };
+                                    uploadedFiles.push(fileInfo);
 
-                                // 삭제 버튼 생성
-                                const deleteButton = document.createElement('span');
-                                // deleteButton.textContent = 'X';
-                                deleteButton.classList.add('feed_close_button');
-                                // 삭제 버튼에 클릭 이벤트 추가
-                                deleteButton.addEventListener('click', function () {
-                                    // 이미지 요소 제거
-                                    imageElement.remove();
-                                    uploadedFiles = uploadedFiles.filter(
-                                        (file) => file.file_name !== fileInfo.file_name,
-                                    );
-                                });
-                                // 이미지 요소에 삭제 버튼 추가
-                                imageElement.appendChild(deleteButton);
+                                    // 삭제 버튼 생성
+                                    const deleteButton = document.createElement('span');
+                                    // deleteButton.textContent = 'X';
+                                    deleteButton.classList.add('feed_close_button');
+                                    // 삭제 버튼에 클릭 이벤트 추가
+                                    deleteButton.addEventListener('click', function () {
+                                        // 이미지 요소 제거
+                                        imageElement.remove();
+                                        uploadedFiles = uploadedFiles.filter(
+                                            (file) => file.file_name !== fileInfo.file_name,
+                                        );
+                                    });
+                                    // 이미지 요소에 삭제 버튼 추가
+                                    imageElement.appendChild(deleteButton);
+                                } else {
+                                    fn_alert(data);
+                                }
                             })
                             .catch((error) => {
                                 console.error('error : ', error);
@@ -916,26 +920,32 @@ const editPhotoListListner = () => {
                         // javascript에서 fileUpload 호출
                         fileUpload(profile_mov_input.files[i])
                             .then((data) => {
-                                const fileInfo = {
-                                    org_name: data.org_name,
-                                    file_name: data.file_name,
-                                    file_path: data.file_path,
-                                    ext: data.ext,
-                                };
-                                uploadedMovs.push(fileInfo);
+                                if (data.org_name) {
+                                    const fileInfo = {
+                                        org_name: data.org_name,
+                                        file_name: data.file_name,
+                                        file_path: data.file_path,
+                                        ext: data.ext,
+                                    };
+                                    uploadedMovs.push(fileInfo);
 
-                                // 삭제 버튼 생성
-                                const deleteButton = document.createElement('span');
-                                // deleteButton.textContent = 'X';
-                                deleteButton.classList.add('feed_close_button');
-                                // 삭제 버튼에 클릭 이벤트 추가
-                                deleteButton.addEventListener('click', function () {
-                                    // 이미지 요소 제거
-                                    imageElement.remove();
-                                    uploadedMovs = uploadedMovs.filter((file) => file.file_name !== fileInfo.file_name);
-                                });
-                                // 이미지 요소에 삭제 버튼 추가
-                                imageElement.appendChild(deleteButton);
+                                    // 삭제 버튼 생성
+                                    const deleteButton = document.createElement('span');
+                                    // deleteButton.textContent = 'X';
+                                    deleteButton.classList.add('feed_close_button');
+                                    // 삭제 버튼에 클릭 이벤트 추가
+                                    deleteButton.addEventListener('click', function () {
+                                        // 이미지 요소 제거
+                                        imageElement.remove();
+                                        uploadedMovs = uploadedMovs.filter(
+                                            (file) => file.file_name !== fileInfo.file_name,
+                                        );
+                                    });
+                                    // 이미지 요소에 삭제 버튼 추가
+                                    imageElement.appendChild(deleteButton);
+                                } else {
+                                    fn_alert(data);
+                                }
                             })
                             .catch((error) => {
                                 console.error('error : ', error);

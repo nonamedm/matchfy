@@ -59,16 +59,16 @@
                         ?>
                             <div class="receive_msg">
                                 <div class="receive_profile">
-                                    <a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/<?=$row['nickname']?>')">
-                                    <?php if ($row['file_name']) {
-                                    ?>
-                                        <img src="/<?= $row['file_path'] ?><?= $row['file_name'] ?>" />
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <img src="/static/images/profile_noimg.png" />
-                                    <?php
-                                    } ?>
+                                    <a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/<?= $row['nickname'] ?>')">
+                                        <?php if ($row['file_name']) {
+                                        ?>
+                                            <img src="/<?= $row['file_path'] ?><?= $row['file_name'] ?>" />
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <img src="/static/images/profile_noimg.png" />
+                                        <?php
+                                        } ?>
                                     </a>
                                 </div>
                                 <div class="receive_text">
@@ -369,47 +369,52 @@
                                 // javascript에서 fileUpload 호출
                                 fileUpload(mymsg_photo_input.files[i])
                                     .then((data) => {
-                                        console.log('result', data);
-                                        const fileInfo = {
-                                            org_name: data.org_name,
-                                            file_name: data.file_name,
-                                            file_path: data.file_path,
-                                            ext: data.ext,
-                                        };
-                                        uploadedFiles.push(fileInfo);
+                                        if (data.org_name) {
+                                            console.log('result', data);
+                                            const fileInfo = {
+                                                org_name: data.org_name,
+                                                file_name: data.file_name,
+                                                file_path: data.file_path,
+                                                ext: data.ext,
+                                            };
+                                            uploadedFiles.push(fileInfo);
 
-                                        // DB저장하기
-                                        $.ajax({
-                                            url: '/ajax/sendMsg',
-                                            type: 'POST',
-                                            data: {
-                                                "room_ci": $("#room_ci").val(),
-                                                "msg_cont": '<img src="/' + fileInfo.file_path + fileInfo.file_name + '" style="width: 150px; height: 150px;" />',
-                                                "msg_type": "1"
-                                            },
-                                            async: false,
-                                            success: function(data) {
-                                                console.log(data);
-                                                if (data.status === 'success') {
-                                                    // 성공
-                                                    $('#msgbox').css('height', '26px'); // height 초기화
-                                                    $(".message_input_box").removeClass("on");
-                                                    $(".chat_wrap").removeClass("on");
-                                                    reloadMsg();
-                                                    scrollToBottom();
-                                                    // moveToUrl('/mo/factorInfo');
-                                                } else if (data.status === 'error') {
-                                                    console.log('실패', data);
-                                                } else {
-                                                    fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
-                                                }
-                                                return false;
-                                            },
-                                            error: function(data, status, err) {
-                                                console.log(err);
-                                                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-                                            },
-                                        });
+                                            // DB저장하기
+                                            $.ajax({
+                                                url: '/ajax/sendMsg',
+                                                type: 'POST',
+                                                data: {
+                                                    "room_ci": $("#room_ci").val(),
+                                                    "msg_cont": '<img src="/' + fileInfo.file_path + fileInfo.file_name + '" style="width: 150px; height: 150px;" />',
+                                                    "msg_type": "1"
+                                                },
+                                                async: false,
+                                                success: function(data) {
+                                                    console.log(data);
+                                                    if (data.status === 'success') {
+                                                        // 성공
+                                                        $('#msgbox').css('height', '26px'); // height 초기화
+                                                        $(".message_input_box").removeClass("on");
+                                                        $(".chat_wrap").removeClass("on");
+                                                        reloadMsg();
+                                                        scrollToBottom();
+                                                        // moveToUrl('/mo/factorInfo');
+                                                    } else if (data.status === 'error') {
+                                                        console.log('실패', data);
+                                                    } else {
+                                                        fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                                                    }
+                                                    return false;
+                                                },
+                                                error: function(data, status, err) {
+                                                    console.log(err);
+                                                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                                                },
+                                            });
+                                        } else {
+                                            fn_alert(data)
+
+                                        }
 
                                     })
                                     .catch((error) => {
