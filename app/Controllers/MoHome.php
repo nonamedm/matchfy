@@ -52,14 +52,6 @@ class MoHome extends BaseController
         $postData['privacy'] = $BoardModel2->orderBy('created_at', 'DESC')->first();
 
         return view('mo_agree', $postData);
-        // $MemberModel = new MemberModel();
-        // $mobile_no = $postData['mobile_no'];
-        // $selected = $MemberModel->where('mobile_no', $mobile_no)->first();
-        // if ($selected) {
-        //     echo '<script>fn_alert("이미 가입된 휴대폰 번호입니다");</script>';
-        //     return view('mo_pass', $postData);
-        // } else {
-        // }
     }
     public function signin(): string
     {
@@ -204,7 +196,7 @@ class MoHome extends BaseController
         $moAjax = new \App\Controllers\MoAjax();
 
         $session = session();
-        $ci = $session->get('ci');//계좌 3. session 다른사람이 나와서 업데으트됨
+        $ci = $session->get('ci'); //계좌 3. session 다른사람이 나와서 업데으트됨
 
         $postData['ci'] = $ci;
 
@@ -221,7 +213,7 @@ class MoHome extends BaseController
             // 오류일 때 이전 페이지로 리디렉션.
         }
         //print_r($postData);
-        
+
         return view('mo_signin_premium', $postData);
     }
     public function updatePremium(): string

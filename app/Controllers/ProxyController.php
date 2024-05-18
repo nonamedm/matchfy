@@ -6,6 +6,8 @@ namespace App\Controllers;
 use CodeIgniter\HTTP\CURLRequest;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\RESTful\ResourceController;
+use App\Models\BoardModel;
+use App\Models\MemberModel;
 
 class ProxyController extends BaseController
 {
@@ -109,10 +111,12 @@ class ProxyController extends BaseController
         $iv = substr($resultVal, -16);
         $hmac_key = substr($resultVal, 0, 32);
 
-        $nickname = $this->request->getPost('nickname');
+        $nickname = base64_encode($this->request->getPost('nickname') . "");
         $sns_type = $this->request->getPost('sns_type');
         $oauth_id = $this->request->getPost('oauth_id');
-        $reqData = ["returnurl" => "https://matchfy.net/proxy/getResultValue?add_data=" . $nickname . "&sns_type=" . $sns_type . "&oauth_id=" . $oauth_id . "&ci1=" . $resultVal, "sitecode" => $siteCode, "popupyn" => "Y", "mobilceco" => "S"];
+
+        $enc_result_val = base64_encode($resultVal);
+        $reqData = ["returnurl" => "https://matchfy.net/proxy/getResultValue?nickname=" . $nickname . "&sns_type=" . $sns_type . "&oauth_id=" . $oauth_id . "&ci1=" . $enc_result_val, "sitecode" => $siteCode, "popupyn" => "Y", "mobilceco" => "S"];
 
 
         // $trimmedData = array_map('trim', $reqData);
@@ -128,21 +132,35 @@ class ProxyController extends BaseController
     }
     public function getResultValue()
     {
-        $resultVal = $this->request->getGet('ci1') . "";
+        $resultVal = base64_decode($this->request->getGet('ci1') . "");
 
         $key = substr($resultVal, 0, 16);
-        $key = substr($key, 0, 16);
+        $iv = substr($resultVal, -16);
 
-        $nickname = $this->request->getGet('nickname');
+        $nickname = base64_decode($this->request->getGet('nickname') . "");
         $sns_type = $this->request->getGet('sns_type');
         $oauth_id = $this->request->getGet('oauth_id');
 
         $token_version_id = $this->request->getGet('token_version_id');
-        $enc_data = $this->request->getGet('enc_data');
-        $enc_data = base64_decode($enc_data);
+        $enc_data = base64_decode($this->request->getGet('enc_data') . "");
+        // echo "소실단계 확인1" . $enc_data . "<br/>";
         $resData = openssl_decrypt($enc_data, 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $iv);
-        $resData = iconv("euc-kr", "utf-8", $enc_data);
-        $resData = json_decode($resData, true);
+        // echo "소실단계 확인2" . $resData . "<br/>";
+        // $resData = iconv("euc-kr", "utf-8", $enc_data);
+        // echo "소실단계 확인3" . $resData . "<br/>";
+        $jsonData = $resData . "";
+        $jsonString = stripslashes($jsonData);
+        $encoding = mb_detect_encoding($jsonString, mb_detect_order(), true);
+        if ($encoding !== 'UTF-8') {
+            // UTF-8로 변환
+            if ($encoding) {
+                $jsonString = mb_convert_encoding($jsonString, 'UTF-8', $encoding);
+            } else {
+                $jsonString = mb_convert_encoding($jsonString, 'UTF-8', 'ISO-8859-1');
+            }
+        }
+
+        $resData = json_decode($jsonString, true);
 
 
         // echo $enc_data . "<br/>";
@@ -160,15 +178,33 @@ class ProxyController extends BaseController
         // }
 
 
-        $data['nickname'] = $nickname;
-        $data['sns_type'] = $sns_type;
-        $data['oauth_id'] = $oauth_id;
-        $data['decrypted'] = $resData;
-        echo $resData['birthdate'] . "호<br/>";
-        echo $resData . "랑<br/>";
-        echo print_r($resData) . "이";
+        $postData['nickname'] = $nickname;
+        $postData['sns_type'] = $sns_type;
+        $postData['oauth_id'] = $oauth_id;
+        $postData['decrypted'] = $resData;
 
-        return $resData['birthdate'];
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_board_terms');
+        $postData['terms'] = $BoardModel->orderBy('created_at', 'DESC')->first();
+
+        $BoardModel2 = new BoardModel();
+        $BoardModel2->setTableName('wh_board_privacy');
+        $postData['privacy'] = $BoardModel2->orderBy('created_at', 'DESC')->first();
+
+        //휴대폰 중복체크
+        $mobile_no = $resData['mobileno'];
+
+        $MemberModel = new MemberModel();
+        $selected = $MemberModel->where('mobile_no', $mobile_no)->first();
+
+        if ($selected) {
+            // 중복 시 알림 후 메인 이동
+            $postData['mobile_dup_chk'] = '0';
+            return view('mo_pass', $postData);
+        } else {
+            // 중복 번호 없을 때 이동
+            return view('mo_agree', $postData);
+        }
     }
 
     private function hmac256($secretKey, $message)

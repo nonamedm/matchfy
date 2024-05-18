@@ -23,7 +23,7 @@
 
         <div class="sub_wrap">
             <div class="content_wrap">
-                <form class="temp_input" action="/mo/agree" method="post">
+                <form name="form" id="form" action="https://nice.checkplus.co.kr/CheckPlusSafeModel/service.cb">
                     <div class="content_title">
                         <h2><?= lang('Korean.passTitle') ?></h2>
                         <p><?= lang('Korean.passCon') ?> </p>
@@ -34,31 +34,16 @@
                     <div class="btn_group">
                         <button type="button" class="btn type01" onclick="certIdentify()"><?= lang('Korean.passTitle') ?></button>
                     </div>
-                    <div class="content_title">
-                        <p>* <?= lang('Korean.passCon2') ?></p>
-                    </div>
                     <input type="hidden" name="nickname" value="<?= $nickname ?>" />
                     <input type="hidden" name="sns_type" value="<?= $sns_type ?>" />
                     <input type="hidden" name="oauth_id" value="<?= $oauth_id ?>" />
-                    <input id="input_name" class="temp_input_text" type="text" name="name" placeholder="<?= lang('Korean.passCon1') ?>" value="<?= $name ?>" />
-                    <input id="input_mobile_no" class="temp_input_text" type="text" name="mobile_no" placeholder="<?= lang('Korean.passCon2') ?>" value="<?= $mobile_no ?>" />
-                    <input id="input_birthday" class="temp_input_text" type="text" name="birthday" placeholder="<?= lang('Korean.passCon3') ?>" value="<?= $birthday ?>" />
-                    <select id="input_gender" class="temp_input_text" name="gender">
-                        <option><?= lang('Korean.passGender') ?></option>
-                        <option value="0" <?php if ($gender === '0') : ?>selected<?php endif ?>><?= lang('Korean.woman') ?></option>
-                        <option value="1" <?php if ($gender === '1') : ?>selected<?php endif ?>><?= lang('Korean.man') ?></option>
-                    </select>
             </div>
-            </form>
-        </div>
-
-        <form name="form" id="form" action="https://nice.checkplus.co.kr/CheckPlusSafeModel/service.cb">
             <input type="hidden" id="m" name="m" value="service" />
             <input type="hidden" id="token_version_id" name="token_version_id" value="" />
             <input type="hidden" id="enc_data" name="enc_data" />
             <input type="hidden" id="integrity_value" name="integrity_value" />
-            <input type="submit" value="test" />
-        </form>
+            </form>
+        </div>
 
         <div style="height: 50px;"></div>
         <footer class="footer">
@@ -80,7 +65,7 @@
                     "oauth_id": "<?= $oauth_id ?>"
                 },
                 success: function(response) {
-                    console.log('Success: ' + JSON.stringify(response));
+                    // console.log('Success: ' + JSON.stringify(response));
                     $("#token_version_id").val(response.token_version_id);
                     $("#enc_data").val(response.enc_data);
                     $("#token_version_id").val(response.token_version_id);
@@ -90,33 +75,11 @@
                     console.log('Error: ' + xhr.responseText);
                 }
             });
-            // console.log('확인', current_timestamp)
-
-
-            //     $.ajax({
-            //         url: "/ajax/delCmt",
-            //         type: "post",
-            //         data: { cmt_idx: '_cmt_idx', trgt_id: '_trgt_id', trgt_idx: '_trgt_idx' }, //
-            //         dataType: "json",
-            //         async: false,
-            //         success: function (data) {
-            //             console.log(data);
-            //             if (data) {
-            //                 // 성공
-            //                 //console.log('111');
-
-            //             } else {
-            //                 // 삭제 성공
-            //                 //console.log('222');
-            //                 alert("오류가 발생하였습니다. \n다시 시도해 주세요.");
-            //             }
-            //             return false;
-            //         },
-            //         error: function (data, status, err) {
-            //             alert("there was an error while fetching events!");
-            //             console.log(err);
-            //         },
-            //     });
+            <?php if ($mobile_dup_chk === '0') {
+            ?>
+                fn_alert('이미 가입된 휴대폰 번호입니다')
+            <?php
+            } ?>
         });
     </script>
 
