@@ -493,7 +493,7 @@ class MoHome extends BaseController
                     foreach ($allMbr as $mbr) {
                         if ($ci !== $mbr['mbr_ci']) {
                             // 상대방 정보 조회
-                            $query = "SELECT file_path, file_name FROM member_files WHERE member_ci = '" . $mbr['mbr_ci'] . "' AND board_type='main_photo'";
+                            $query = "SELECT file_path, file_name FROM member_files WHERE member_ci = '" . $mbr['mbr_ci'] . "' AND board_type='main_photo' AND delete_yn='n'";
                             $memberFile = $ChatRoomMemberModel
                                 ->query($query)->getResultArray();
                             if ($memberFile) {

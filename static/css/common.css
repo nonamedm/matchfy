@@ -107,9 +107,7 @@ input[type='checkbox'] + label:hover {
     align-items: center;
 }
 .content_banner_top img {
-    /* width: 1280px; */
     width: 95%;
-    height: 400px;
     border-radius: 10px;
 }
 
@@ -702,11 +700,9 @@ header .menu_item {
     } */
     .content_banner_top {
         width: 968px;
-        height: 300px;
     }
     .content_banner_top img {
         width: 95%;
-        height: 250px;
     }
     /* .content_no_img.login_main .ai_mat_card img {
         width: 240px;
@@ -744,7 +740,6 @@ header .menu_item {
     }
     .content_banner_top img {
         width: 95%;
-        height: 250px;
     }
 
     .content_no_img.login_main .group_row {
@@ -859,5 +854,4 @@ header .menu_item {
     .content_banner_top img {
         height: 180px;
     }
-    
 }
