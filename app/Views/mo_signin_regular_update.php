@@ -260,7 +260,7 @@
                         <!-- <input type="hidden" name="temp_grade" value="<?php echo $tem_grade ?>" /> -->
                         <div id="main_photo_uploaded" style="display:none;"></div>
                         <div class="btn_group">
-                            <button type="button" class="btn type01" onclick="signUpdate()"><?= lang('Korean.updateprofile') ?></button>
+                            <button type="button" class="btn type01" onclick="myinfoUpdate()"><?= lang('Korean.updateprofile') ?></button>
                         </div>
                     </div>
                 </form>

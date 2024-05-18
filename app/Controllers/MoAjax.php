@@ -805,6 +805,294 @@ class MoAjax extends BaseController
             }
         }
     }
+    public function myinfoUpdate()
+    {
+        $session = session();
+        $ci = $session->get('ci');
+        $grade = $this->request->getPost('grade');
+        $married = $this->request->getPost('marital');
+        $smoker = $this->request->getPost('smoking');
+        $drinking = $this->request->getPost('drinking');
+        $religion = $this->request->getPost('religion');
+        $mbti = $this->request->getPost('mbti');
+        $height = $this->request->getPost('height');
+        $bodyshape = $this->request->getPost('bodyshape');
+        $stylish = $this->request->getPost('personal_style');
+        $education = $this->request->getPost('education');
+        $major = $this->request->getPost('major');
+        $school = $this->request->getPost('school');
+        $job = $this->request->getPost('job');
+        $asset_range = $this->request->getPost('asset_range');
+        $income_range = $this->request->getPost('income_range');
+        $nickname = $this->request->getPost('nickname');
+
+
+        if ($grade !== 'grade01') {
+            // 정회원 validation
+            $rules = [
+                'marital' => [
+                    'label' => 'marital',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '결혼 유무를 선택해주세요.',
+                    ]
+                ],
+                'smoking' => [
+                    'label' => 'smoking',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '흡연 유무를 선택해주세요.',
+                    ]
+                ],
+                'drinking' => [
+                    'label' => 'drinking',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '음주 횟수를 선택해주세요.',
+                    ]
+                ],
+                'religion' => [
+                    'label' => 'religion',
+                    'rules' => 'required|',
+                    'errors' => [
+                        'required' => '종교를 선택해주세요.',
+                    ]
+                ],
+                'mbti' => [
+                    'label' => 'mbti',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'mbti를 선택해주세요.',
+                    ]
+                ],
+                'height' => [
+                    'label' => 'height',
+                    'rules' => 'required|numeric|exact_length[3]',
+                    'errors' => [
+                        'required' => '키를 입력해주세요.',
+                        'numeric' => '키는 숫자만 입력 가능합니다.',
+                        'exact_length' => '키는 3자리 숫자여야 합니다.'
+                    ]
+                ],
+                'bodyshape' => [
+                    'label' => 'bodyshape',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '체형을 선택해 주세요.',
+                    ]
+                ],
+                'personal_style' => [
+                    'label' => 'personal_style',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '스타일을 입력해주세요.',
+                    ]
+                ],
+                'education' => [
+                    'label' => 'education',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '학력을 선택해주세요.',
+                    ]
+                ],
+                'school' => [
+                    'label' => 'school',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '학교명을 입력해주세요.',
+                    ]
+                ],
+                'major' => [
+                    'label' => 'major',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '전공을 입력해주세요.',
+                    ]
+                ],
+                'job' => [
+                    'label' => 'job',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '직업을 선택해주세요.',
+                    ]
+                ],
+                'asset_range' => [
+                    'label' => 'asset_range',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '자산구간을 선택해주세요.',
+                    ]
+                ],
+                'income_range' => [
+                    'label' => 'income_range',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '소득구간을 선택해주세요.',
+                    ]
+                ],
+            ];
+
+            // 프리미엄 회원
+            if ($this->request->getPost('grade') === 'grade03') {
+                $rules['father_birth_year'] = [
+                    'label' => 'father_birth_year',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '(부) 출생년도를 선택해주세요.',
+                    ]
+                ];
+                $rules['father_job'] = [
+                    'label' => 'father_job',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '(부) 직업을 선택해주세요.',
+                    ]
+                ];
+                $rules['mother_birth_year'] = [
+                    'label' => 'mother_birth_year',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '(모) 출생년도를 선택해주세요.',
+                    ]
+                ];
+                $rules['mother_job'] = [
+                    'label' => 'mother_job',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '(모) 직업을 선택해주세요.',
+                    ]
+                ];
+                $rules['siblings'] = [
+                    'label' => 'siblings',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '형제관계를 선택해주세요.',
+                    ]
+                ];
+                $rules['residence1'] = [
+                    'label' => 'residence1',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '거주형태1을 선택해주세요.',
+                    ]
+                ];
+                $rules['residence2'] = [
+                    'label' => 'residence2',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '거주형태2를 선택해주세요.',
+                    ]
+                ];
+                $rules['residence3'] = [
+                    'label' => 'residence3',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '거주형태3을 선택해주세요.',
+                    ]
+                ];
+            }
+        } else {
+            $rules['nickname'] = [
+                'label' => 'nickname',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '닉네임을 입력해주세요.',
+                ]
+            ];
+        }
+
+
+        if (!$this->validate($rules)) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'errors' => $this->validator->getErrors(),
+            ]);
+        } else {
+
+            $MemberModel = new MemberModel();
+
+            $data = [
+                'grade' => $grade,
+                'married' => $married,
+                'smoker' => $smoker,
+                'drinking' => $drinking,
+                'religion' => $religion,
+                'mbti' => $mbti,
+                'height' => $height,
+                'bodyshape' => $bodyshape,
+                'stylish' => $stylish,
+                'education' => $education,
+                'major' => $major,
+                'school' => $school,
+                'job' => $job,
+                'asset_range' => $asset_range,
+                'income_range' => $income_range
+            ];
+
+            // nickname 필드가 있다면 $data 배열에 추가
+            if (!empty($nickname)) {
+                $data['nickname'] = $nickname;
+            }
+
+            if ($grade === 'grade03') {
+                // 프리미엄 회원에만 해당하는 추가 정보
+                $premiumData = [
+                    'father_birth_year' => $this->request->getPost('father_birth_year'),
+                    'father_job' => $this->request->getPost('father_job'),
+                    'mother_birth_year' => $this->request->getPost('mother_birth_year'),
+                    'mother_job' => $this->request->getPost('mother_job'),
+                    'siblings' => $this->request->getPost('siblings'),
+                    'residence1' => $this->request->getPost('residence1'),
+                    'residence2' => $this->request->getPost('residence2'),
+                    'residence3' => $this->request->getPost('residence3'),
+                ];
+
+                // 배열 병합
+                $data = array_merge($data, $premiumData);
+            }
+
+            // CI조회
+            $existingData = $MemberModel->where('ci', $ci)->first();
+
+            // 데이터 존재 시
+            if ($existingData) {
+                $inserted = $MemberModel->update($ci, $data);
+
+                // 프로필 사진 DB 업로드
+                $MemberFileModel = new MemberFileModel();
+                $org_name = $this->request->getPost('org_name');
+                $file_name = $this->request->getPost('file_name');
+                $file_path = $this->request->getPost('file_path');
+                $ext = $this->request->getPost('ext');
+                if ($org_name) {
+                    // 프로필 첨부 있을때만 file db 저장
+
+                    // 기존 정보 delete_yn=y 업데이트
+                    $MemberFileModel->query("UPDATE member_files SET delete_yn='y' where member_ci='" . $ci . "' AND board_type='main_photo'");
+
+                    $data2 = [
+                        'member_ci' => $ci,
+                        'org_name' => $org_name,
+                        'file_name' => $file_name,
+                        'file_path' => $file_path,
+                        'ext' => $ext,
+                        'board_type' => 'main_photo',
+                    ];
+                    $data = array_merge($data, $data2);
+                    $MemberFileModel->insert($data2);
+                } else {
+                    // 프로필 첨부 없을때는 업데이트 안함
+                }
+                if ($inserted) {
+                    return $this->response->setJSON(['status' => 'success', 'message' => '데이터가 업데이트되었습니다', 'data' => $data]);
+                } else {
+                    return $this->response->setJSON(['status' => 'error', 'message' => '데이터를 업데이트하는 중 오류가 발생했습니다']);
+                }
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'message' => '업데이트할 데이터가 존재하지 않습니다']);
+            }
+        }
+    }
 
     /* 사용자 파일 저장 */
     public function mbrFileRegUp()

@@ -164,6 +164,8 @@
                     window.location.href = '/mo/updateRegular';
                 } else if (grade === 'grade03') {
                     window.location.href = '/mo/updatePremium';
+                } else if (grade === 'grade01') {
+                    window.location.href = '/mo/updateMyinfo';
                 }
             });
         });

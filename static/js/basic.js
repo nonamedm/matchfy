@@ -304,83 +304,86 @@ const isValidRecommendCode = (inviteCode, callback) => {
 
 const signUpdate = (postData) => {
     let tempValidation = false;
-    if ($('#marital').val().trim() === '') {
-        fn_alert('결혼경험유무를 선택해 주세요');
-        tempValidation = false;
-        $('#marital').focus();
-    } else if ($('#smoking').val().trim() === '') {
-        fn_alert('흡연유무를 선택해 주세요');
-        tempValidation = false;
-        $('#smoking').focus();
-    } else if ($('#drinking').val().trim() === '') {
-        fn_alert('음주횟수를 선택해 주세요');
-        tempValidation = false;
-        $('#drinking').focus();
-    } else if ($('#religion').val().trim() === '') {
-        fn_alert('종교를 선택해 주세요');
-        tempValidation = false;
-        $('#religion').focus();
-    } else if ($('#mbti').val().trim() === '') {
-        fn_alert('MBTI를 선택해 주세요');
-        tempValidation = false;
-        $('#mbti').focus();
-    } else if ($('#height').val().trim() === '') {
-        fn_alert('키를 입력해 주세요');
-        tempValidation = false;
-        $('#height').focus();
-    } else if ($('#bodyshape').val().trim() === '') {
-        fn_alert('체형을 선택해 주세요');
-        tempValidation = false;
-        $('#bodyshape').focus();
-    } else if ($('#personal_style').val().trim() === '') {
-        fn_alert('스타일을 선택해 주세요');
-        tempValidation = false;
-        $('#personal_style').focus();
-    } else if ($('#education').val().trim() === '') {
-        fn_alert('최종학력을 선택해 주세요');
-        tempValidation = false;
-        $('#education').focus();
-    } else if ($('#major').val().trim() === '') {
-        fn_alert('전공을 입력해 주세요');
-        tempValidation = false;
-        $('#major').focus();
-    } else if ($('#school').val().trim() === '') {
-        fn_alert('학교명을 입력해 주세요');
-        tempValidation = false;
-        $('#school').focus();
-    } else if ($('#job').val().trim() === '') {
-        fn_alert('직업을 선택해 주세요');
-        tempValidation = false;
-        $('#job').focus();
-    } else if ($('#asset_range').val().trim() === '') {
-        fn_alert('자산구간을 선택해 주세요');
-        tempValidation = false;
-        $('#asset_range').focus();
-    } else if ($('#income_range').val().trim() === '') {
-        fn_alert('소득구간을 선택해 주세요');
-        tempValidation = false;
-        $('#income_range').focus();
-    }
+    if (!postData) {
+        if ($('#marital').val().trim() === '') {
+            fn_alert('결혼경험유무를 선택해 주세요');
+            tempValidation = false;
+            $('#marital').focus();
+        } else if ($('#smoking').val().trim() === '') {
+            fn_alert('흡연유무를 선택해 주세요');
+            tempValidation = false;
+            $('#smoking').focus();
+        } else if ($('#drinking').val().trim() === '') {
+            fn_alert('음주횟수를 선택해 주세요');
+            tempValidation = false;
+            $('#drinking').focus();
+        } else if ($('#religion').val().trim() === '') {
+            fn_alert('종교를 선택해 주세요');
+            tempValidation = false;
+            $('#religion').focus();
+        } else if ($('#mbti').val().trim() === '') {
+            fn_alert('MBTI를 선택해 주세요');
+            tempValidation = false;
+            $('#mbti').focus();
+        } else if ($('#height').val().trim() === '') {
+            fn_alert('키를 입력해 주세요');
+            tempValidation = false;
+            $('#height').focus();
+        } else if ($('#bodyshape').val().trim() === '') {
+            fn_alert('체형을 선택해 주세요');
+            tempValidation = false;
+            $('#bodyshape').focus();
+        } else if ($('#personal_style').val().trim() === '') {
+            fn_alert('스타일을 선택해 주세요');
+            tempValidation = false;
+            $('#personal_style').focus();
+        } else if ($('#education').val().trim() === '') {
+            fn_alert('최종학력을 선택해 주세요');
+            tempValidation = false;
+            $('#education').focus();
+        } else if ($('#major').val().trim() === '') {
+            fn_alert('전공을 입력해 주세요');
+            tempValidation = false;
+            $('#major').focus();
+        } else if ($('#school').val().trim() === '') {
+            fn_alert('학교명을 입력해 주세요');
+            tempValidation = false;
+            $('#school').focus();
+        } else if ($('#job').val().trim() === '') {
+            fn_alert('직업을 선택해 주세요');
+            tempValidation = false;
+            $('#job').focus();
+        } else if ($('#asset_range').val().trim() === '') {
+            fn_alert('자산구간을 선택해 주세요');
+            tempValidation = false;
+            $('#asset_range').focus();
+        } else if ($('#income_range').val().trim() === '') {
+            fn_alert('소득구간을 선택해 주세요');
+            tempValidation = false;
+            $('#income_range').focus();
+        }
 
-    if (
-        $('#marital').val() !== '' &&
-        $('#smoking').val() !== '' &&
-        $('#drinking').val() !== '' &&
-        $('#religion').val() !== '' &&
-        $('#mbti').val() !== '' &&
-        $('#height').val() !== '' &&
-        $('#bodyshape').val() !== '' &&
-        $('#personal_style').val() !== '' &&
-        $('#education').val() !== '' &&
-        $('#major').val() !== '' &&
-        $('#school').val() !== '' &&
-        $('#job').val() !== '' &&
-        $('#asset_range').val() !== '' &&
-        $('#income_range').val() !== ''
-    ) {
+        if (
+            $('#marital').val() !== '' &&
+            $('#smoking').val() !== '' &&
+            $('#drinking').val() !== '' &&
+            $('#religion').val() !== '' &&
+            $('#mbti').val() !== '' &&
+            $('#height').val() !== '' &&
+            $('#bodyshape').val() !== '' &&
+            $('#personal_style').val() !== '' &&
+            $('#education').val() !== '' &&
+            $('#major').val() !== '' &&
+            $('#school').val() !== '' &&
+            $('#job').val() !== '' &&
+            $('#asset_range').val() !== '' &&
+            $('#income_range').val() !== ''
+        ) {
+            tempValidation = true;
+        }
+    } else {
         tempValidation = true;
     }
-
     if ($('#nickname').length > 0 && $('#nickname').val().trim() === '') {
         fn_alert('닉네임을 입력해 주세요');
         $('#nickname').focus();
@@ -403,7 +406,155 @@ const signUpdate = (postData) => {
                     // 성공
                     const path = window.location.pathname;
 
-                    if (path.includes('/mo/updatePremium') || path.includes('/mo/updateRegular')) {
+                    if (
+                        path.includes('/mo/updateMyinfo') ||
+                        path.includes('/mo/updatePremium') ||
+                        path.includes('/mo/updateRegular')
+                    ) {
+                        moveToUrl('/mo/mypage');
+                    } else {
+                        moveToUrl('/mo/signinSuccess');
+                    }
+                    // submitForm();
+                } else if (data.status === 'error') {
+                    // 한번만 출력되게 함
+                    $('.alert_validation').remove();
+                    // 오류 메시지 표시
+                    Object.keys(data.errors).forEach(function (key, index) {
+                        var field = $('[name="' + key + '"]');
+                        var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div
+
+                        // 오류 메시지 추가
+                        if (!topMostDiv.next().hasClass('alert_validation')) {
+                            // 이미 오류 메시지가 있는지 확인
+                            topMostDiv.after('<div class="alert alert_validation">' + data.errors[key] + '</div>');
+                        }
+                        // 처음 validation 포커스
+                        if (index === 0) {
+                            field.focus();
+                        }
+                    });
+                } else {
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                }
+                return false;
+            },
+            error: function (data, status, err) {
+                console.log(err);
+                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            },
+        });
+    }
+};
+const myinfoUpdate = (grade) => {
+    let tempValidation = false;
+    if (!grade) {
+        if ($('#marital').val().trim() === '') {
+            fn_alert('결혼경험유무를 선택해 주세요');
+            tempValidation = false;
+            $('#marital').focus();
+        } else if ($('#smoking').val().trim() === '') {
+            fn_alert('흡연유무를 선택해 주세요');
+            tempValidation = false;
+            $('#smoking').focus();
+        } else if ($('#drinking').val().trim() === '') {
+            fn_alert('음주횟수를 선택해 주세요');
+            tempValidation = false;
+            $('#drinking').focus();
+        } else if ($('#religion').val().trim() === '') {
+            fn_alert('종교를 선택해 주세요');
+            tempValidation = false;
+            $('#religion').focus();
+        } else if ($('#mbti').val().trim() === '') {
+            fn_alert('MBTI를 선택해 주세요');
+            tempValidation = false;
+            $('#mbti').focus();
+        } else if ($('#height').val().trim() === '') {
+            fn_alert('키를 입력해 주세요');
+            tempValidation = false;
+            $('#height').focus();
+        } else if ($('#bodyshape').val().trim() === '') {
+            fn_alert('체형을 선택해 주세요');
+            tempValidation = false;
+            $('#bodyshape').focus();
+        } else if ($('#personal_style').val().trim() === '') {
+            fn_alert('스타일을 선택해 주세요');
+            tempValidation = false;
+            $('#personal_style').focus();
+        } else if ($('#education').val().trim() === '') {
+            fn_alert('최종학력을 선택해 주세요');
+            tempValidation = false;
+            $('#education').focus();
+        } else if ($('#major').val().trim() === '') {
+            fn_alert('전공을 입력해 주세요');
+            tempValidation = false;
+            $('#major').focus();
+        } else if ($('#school').val().trim() === '') {
+            fn_alert('학교명을 입력해 주세요');
+            tempValidation = false;
+            $('#school').focus();
+        } else if ($('#job').val().trim() === '') {
+            fn_alert('직업을 선택해 주세요');
+            tempValidation = false;
+            $('#job').focus();
+        } else if ($('#asset_range').val().trim() === '') {
+            fn_alert('자산구간을 선택해 주세요');
+            tempValidation = false;
+            $('#asset_range').focus();
+        } else if ($('#income_range').val().trim() === '') {
+            fn_alert('소득구간을 선택해 주세요');
+            tempValidation = false;
+            $('#income_range').focus();
+        }
+
+        if (
+            $('#marital').val() !== '' &&
+            $('#smoking').val() !== '' &&
+            $('#drinking').val() !== '' &&
+            $('#religion').val() !== '' &&
+            $('#mbti').val() !== '' &&
+            $('#height').val() !== '' &&
+            $('#bodyshape').val() !== '' &&
+            $('#personal_style').val() !== '' &&
+            $('#education').val() !== '' &&
+            $('#major').val() !== '' &&
+            $('#school').val() !== '' &&
+            $('#job').val() !== '' &&
+            $('#asset_range').val() !== '' &&
+            $('#income_range').val() !== ''
+        ) {
+            tempValidation = true;
+        }
+    } else {
+        tempValidation = true;
+    }
+    if ($('#nickname').length > 0 && $('#nickname').val().trim() === '') {
+        fn_alert('닉네임을 입력해 주세요');
+        $('#nickname').focus();
+        tempValidation = false;
+    }
+
+    if (tempValidation) {
+        var postData = new FormData(document.querySelector('form'));
+
+        $.ajax({
+            url: '/ajax/myinfoUpdate',
+            type: 'POST',
+            data: postData,
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function (data) {
+                console.log(data);
+                if (data.status === 'success') {
+                    // 성공
+                    const path = window.location.pathname;
+
+                    if (
+                        path.includes('/mo/updateMyinfo') ||
+                        path.includes('/mo/updatePremium') ||
+                        path.includes('/mo/updateRegular')
+                    ) {
                         moveToUrl('/mo/mypage');
                     } else {
                         moveToUrl('/mo/signinSuccess');
