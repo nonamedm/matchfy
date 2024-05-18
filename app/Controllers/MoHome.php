@@ -103,6 +103,7 @@ class MoHome extends BaseController
                 ->where('ci', $ci)
                 ->update();
         }
+        //계좌 : member에서 조회해오는건?
         $data['isDiscounted'] = $isDiscounted;
 
         //현재 페이지에서는 이미 가입완료이므로 로그인 시키기
@@ -130,7 +131,34 @@ class MoHome extends BaseController
     }
     public function signinSuccess(): string
     {
-        return view('mo_signin_success');
+        //걔좌 최종 . 가격 표기
+        $session = session();
+        $ci = $session->get('ci');
+
+        $MemberModel = new MemberModel();
+        $user = $MemberModel
+            ->select('temp_grade', 'recommender_code')
+            ->where('ci', $ci)->first();
+
+        if ($user->temp_grade == 'grade02') {
+            $price = 99000;
+            if (!empty($user->recommender_code)) {
+                $price /= 2;
+            }
+        } elseif ($user->temp_grade == 'grade03') {
+            $price = 999000;
+            if (!empty($user->recommender_code)) {
+                $price /= 2;
+            }
+        } else {
+            $price = 0; // 기본 가격
+        }
+
+        return view('mo_signin_success', [
+            'temp_grade' => $user->temp_grade,
+            'recommender_code' => $user->recommender_code,
+            'price' => number_format($price)
+        ]);
     }
     public function signinRegular()
     {
@@ -176,7 +204,8 @@ class MoHome extends BaseController
         $moAjax = new \App\Controllers\MoAjax();
 
         $session = session();
-        $ci = $session->get('ci');
+        $ci = $session->get('ci');//계좌 3. session 다른사람이 나와서 업데으트됨
+
         $postData['ci'] = $ci;
 
         $grade = 'grade03';
@@ -188,7 +217,6 @@ class MoHome extends BaseController
         print_r($result);
         if ($result === '0') {
             $postData['result'] = $result;
-            $postData['temp_grade'] = $grade; 
         } else {
             // 오류일 때 이전 페이지로 리디렉션.
         }

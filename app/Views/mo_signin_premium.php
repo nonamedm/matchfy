@@ -351,7 +351,7 @@
                         </div>
                         <input type="hidden" name="ci" value="<?php echo $ci ?>" />
                         <input type="hidden" name="grade" value="<?php echo $grade ?>" />
-                        <input type="hidden" name="temp_grade" value="<?php echo $temp_grade ?>" />
+                        <!-- <input type="hidden" name="temp_grade" value="<?php echo $temp_grade ?>" /> -->
                         <div id="main_photo_uploaded" style="display:none;"></div>
                         <div class="btn_group">
                             <button type="button" class="btn type01" onclick="signUpdate()"><?= lang('Korean.join') ?></button>

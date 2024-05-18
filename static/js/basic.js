@@ -507,16 +507,15 @@ const signUpdate = (postData) => {
                 if (data.status === 'success') {
                     // 성공
                     const path = window.location.pathname;
-                    console.log(data.data);
 
-                    // if (path.includes('/mo/updatePremium') || path.includes('/mo/updateRegular')) {
-                    //     moveToUrl('/mo/mypage');
-                    // } else {
-                    //     var gradeText = data.data.temp_grade === 'grade02' ? '정회원' : '프리미엄회원';
-                    //     localStorage.setItem('gradeText', gradeText);
-                    //     moveToUrl('/mo/signinSuccess');
-                    // }
-                    // submitForm();
+                    if (path.includes('/mo/updatePremium') || path.includes('/mo/updateRegular')) {
+                        moveToUrl('/mo/mypage');
+                    } else {
+                        // var gradeText = data.data.temp_grade === 'grade02' ? '정회원' : '프리미엄회원';
+                        // localStorage.setItem('gradeText', gradeText);
+                        moveToUrl('/mo/signinSuccess');
+                    }
+                    submitForm();
                 } else if (data.status === 'error') {
                     // 한번만 출력되게 함
                     $('.alert_validation').remove();
@@ -586,7 +585,7 @@ const signInType = (postData) => {
     if (postData.grade === 'grade01') {
         moveToUrl(url);
     } else {
-        moveToUrl(url, postData);
+        moveToUrl(url, postData);//계좌 2. grade03 있음
     }
 
     //         } else {

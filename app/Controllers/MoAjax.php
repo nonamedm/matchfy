@@ -260,6 +260,7 @@ class MoAjax extends BaseController
             ->where('delete_yn', 'n')
             ->first();
 
+        $grade = $currentMember['grade'];
         $mobileNo = $currentMember['mobile_no'];
         $currentGrade = $currentMember['grade'];
         $filePath = $currentMemberFile['file_path'];
@@ -272,11 +273,12 @@ class MoAjax extends BaseController
         if ($selectedGrade !== $currentGrade) {
             $updateStatus = $MemberModel->update(
                 $ci,
-                ['grade' => $selectedGrade]
+                ['temp_grade' => $selectedGrade]
             );
 
             $data = [
-                'grade' => $selectedGrade,
+                'grade' => $grade,
+                'temp_grade' => $selectedGrade,
                 'mobile_no' => $mobileNo,
                 'ci' => $ci,
                 'file_path' => $filePath,
@@ -843,8 +845,11 @@ class MoAjax extends BaseController
     }
 
     /* 회원 등급 업데이트 */
-    public function gradeUpdate($ci, $grade, $type = 'permanent')
+    public function gradeUpdate($grade, $type = 'permanent')
     {
+        $session = session();
+        $ci = $session->get('ci');
+
         $MemberModel = new MemberModel();
 
         if ($type == 'temp') {
@@ -853,17 +858,16 @@ class MoAjax extends BaseController
             $data = ['grade' => $grade];
         }
 
-        // $data = [
-        //     'grade' => $grade,
-        // ];
-
         // CI조회
-        $existingData = $MemberModel->where('ci', $ci)->first();
+        $existingData = $MemberModel
+            ->where('ci', $ci)
+            ->first();
+
         print_r($data);
 
         //데이터 존재 시
         if ($existingData) {
-            $inserted = $MemberModel->update($existingData['ci'], $data);
+            $inserted = $MemberModel->update($ci, $data);
 
             if ($inserted) {
                 // return $this->response->setJSON(['status' => 'success', 'message' => '데이터가 업데이트되었습니다', 'data' => $data]);
