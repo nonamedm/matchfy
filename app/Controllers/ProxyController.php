@@ -116,7 +116,7 @@ class ProxyController extends BaseController
         $oauth_id = $this->request->getPost('oauth_id');
 
         $enc_result_val = base64_encode($resultVal);
-        $reqData = ["returnurl" => "https://matchfy.net/proxy/getResultValue?nickname=" . $nickname . "&sns_type=" . $sns_type . "&oauth_id=" . $oauth_id . "&ci1=" . $enc_result_val, "sitecode" => $siteCode, "popupyn" => "Y", "mobilceco" => "S"];
+        $reqData = ["returnurl" => "https://matchfy.net/proxy/getResultValue?nickname=" . $nickname . "&sns_type=" . $sns_type . "&oauth_id=" . $oauth_id . "&ci1=" . $enc_result_val, "sitecode" => $siteCode, "popupyn" => "Y", "mobilceco" => "S", 'methodtype' => 'get'];
 
 
         // $trimmedData = array_map('trim', $reqData);
