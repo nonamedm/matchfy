@@ -158,15 +158,19 @@
                                     <?php
                                     if ($gender === "0") {
                                         foreach ($femaleStyle as $item) {
+                                            if ($item['value'] !== '99') {
                                     ?>
-                                            <option value="<?= $item['value'] ?>"><?= $item['name'] ?></option>
-                                        <?php
+                                                <option value="<?= $item['value'] ?>"><?= $item['name'] ?></option>
+                                            <?php
+                                            }
                                         }
                                     } else {
                                         foreach ($maleStyle as $item) {
-                                        ?>
-                                            <option value="<?= $item['value'] ?>"><?= $item['name'] ?></option>
+                                            if ($item['value'] !== '99') {
+                                            ?>
+                                                <option value="<?= $item['value'] ?>"><?= $item['name'] ?></option>
                                     <?php
+                                            }
                                         }
                                     }
                                     ?>

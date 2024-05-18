@@ -389,7 +389,7 @@ const signUpdate = (postData) => {
 
     if (tempValidation) {
         var postData = new FormData(document.querySelector('form'));
-        
+
         $.ajax({
             url: '/ajax/signUpdate',
             type: 'POST',
@@ -406,11 +406,9 @@ const signUpdate = (postData) => {
                     if (path.includes('/mo/updatePremium') || path.includes('/mo/updateRegular')) {
                         moveToUrl('/mo/mypage');
                     } else {
-                        // var gradeText = data.data.temp_grade === 'grade02' ? '정회원' : '프리미엄회원';
-                        // localStorage.setItem('gradeText', gradeText);
                         moveToUrl('/mo/signinSuccess');
                     }
-                    submitForm();
+                    // submitForm();
                 } else if (data.status === 'error') {
                     // 한번만 출력되게 함
                     $('.alert_validation').remove();
@@ -480,7 +478,7 @@ const signInType = (postData) => {
     if (postData.grade === 'grade01') {
         moveToUrl(url);
     } else {
-        moveToUrl(url, postData);//계좌 2. grade03 있음
+        moveToUrl(url, postData); //계좌 2. grade03 있음
     }
 
     //         } else {

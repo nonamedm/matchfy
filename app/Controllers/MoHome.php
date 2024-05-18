@@ -132,12 +132,12 @@ class MoHome extends BaseController
             ->select('temp_grade', 'recommender_code')
             ->where('ci', $ci)->first();
 
-        if ($user->temp_grade == 'grade02') {
+        if ($user['temp_grade'] == 'grade02') {
             $price = 99000;
             if (!empty($user->recommender_code)) {
                 $price /= 2;
             }
-        } elseif ($user->temp_grade == 'grade03') {
+        } elseif ($user['temp_grade'] == 'grade03') {
             $price = 999000;
             if (!empty($user->recommender_code)) {
                 $price /= 2;
@@ -145,12 +145,11 @@ class MoHome extends BaseController
         } else {
             $price = 0; // 기본 가격
         }
+        $data['price'] = $price;
+        $data['temp_grade'] = $user['temp_grade'];
+        $data['recommender_code'] = $user['recommender_code'];
 
-        return view('mo_signin_success', [
-            'temp_grade' => $user->temp_grade,
-            'recommender_code' => $user->recommender_code,
-            'price' => number_format($price)
-        ]);
+        return view('mo_signin_success', $data);
     }
     public function signinRegular()
     {
@@ -166,7 +165,7 @@ class MoHome extends BaseController
 
         // 임시 등급부터 업그레이드 후 페이지 뷰
         //$result = $moAjax->gradeUpdate($ci, $grade, 'permanent');
-        $result = $moAjax->gradeUpdate($ci, $grade, $type);
+        $result = $moAjax->gradeUpdate($grade, $type);
         if ($result === '0') {
             $postData['result'] = $result;
         } else {
@@ -205,7 +204,7 @@ class MoHome extends BaseController
 
         // 등급부터 업그레이드 후 페이지 뷰
         //$result = $moAjax->gradeUpdate($ci, $grade, 'permanent');
-        $result = $moAjax->gradeUpdate($ci, $grade, $type);
+        $result = $moAjax->gradeUpdate($grade, $type);
         print_r($result);
         if ($result === '0') {
             $postData['result'] = $result;

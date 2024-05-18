@@ -863,7 +863,7 @@ class MoAjax extends BaseController
             ->where('ci', $ci)
             ->first();
 
-        print_r($data);
+        // print_r($data);
 
         //데이터 존재 시
         if ($existingData) {

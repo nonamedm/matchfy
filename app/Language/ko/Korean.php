@@ -248,7 +248,7 @@ return [
 
     //success
     'siginSuccessTitle'   => '가입 완료!',
-    'siginSuccessCon1'    => '준회원 가입을 축하합니다.',
+    'siginSuccessCon1'    => ' 가입을 축하합니다.',
 
     //signin type
     'signinType1'         => '멤버십 등급에 따라<br />혜택을 제공 받으세요',

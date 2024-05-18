@@ -154,15 +154,19 @@
                                     <?php
                                     if ($gender === "0") {
                                         foreach ($femaleStyle as $item) {
+                                            if ($item['value'] !== '99') {
                                     ?>
-                                            <option value="<?= $item['value'] ?>"><?= $item['name'] ?></option>
-                                        <?php
+                                                <option value="<?= $item['value'] ?>"><?= $item['name'] ?></option>
+                                            <?php
+                                            }
                                         }
                                     } else {
                                         foreach ($maleStyle as $item) {
-                                        ?>
-                                            <option value="<?= $item['value'] ?>"><?= $item['name'] ?></option>
+                                            if ($item['value'] !== '99') {
+                                            ?>
+                                                <option value="<?= $item['value'] ?>"><?= $item['name'] ?></option>
                                     <?php
+                                            }
                                         }
                                     }
                                     ?>
@@ -350,8 +354,7 @@
                             </div>
                         </div>
                         <input type="hidden" name="ci" value="<?php echo $ci ?>" />
-                        <input type="hidden" name="grade" value="<?php echo $grade ?>" />
-                        <!-- <input type="hidden" name="temp_grade" value="<?php echo $temp_grade ?>" /> -->
+                        <input type="hidden" name="temp_grade" value="<?php echo $grade ?>" />
                         <div id="main_photo_uploaded" style="display:none;"></div>
                         <div class="btn_group">
                             <button type="button" class="btn type01" onclick="signUpdate()"><?= lang('Korean.join') ?></button>

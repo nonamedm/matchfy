@@ -24,20 +24,31 @@
                     <img src="/static/images/signup_success.png" />
                     <div class="success_text">
                         <p><?= lang('Korean.siginSuccessTitle') ?></p>
-                        <em><?= lang('Korean.siginSuccessCon1') ?></em>
+                        <em>
+                            <?php
+                            if ($temp_grade === 'grade01') {
+                                echo '준회원';
+                            } else if ($temp_grade === 'grade02') {
+                                echo '정회원';
+                            } else {
+                                echo '프리미엄회원';
+                            }
+                            ?>
+                            <?= lang('Korean.siginSuccessCon1') ?>
+                        </em>
                     </div>
                     <!-- 계좌 -->
-                    <?php if ($temp_grade != 'grade01'): ?>
+                    <?php if ($temp_grade != 'grade01') : ?>
                         <div class="success_sub_text">
                             <span>가입 신청이 완료되었습니다.</span>
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
                             <span>아래 계좌로 입금하시면</span>
-                            <br/>
+                            <br />
                             <span>관리자 승인 후 등급이 업그레이드 됩니다.</span>
                         </div>
                         <div class="success_sub_text">
-                            <p>금액 : <?php $price ?> 원</p>
+                            <p>금액 : <?= $price ?> 원</p>
                             <p>계좌번호 : 1002-992-001231 </p>
                         </div>
                     <?php endif; ?>
@@ -60,12 +71,6 @@
     <!-- SCRIPTS -->
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var gradeText = '<?= $temp_grade ?>';
-            if (gradeText) {
-                document.querySelector('.success_text em').textContent = `${gradeText} 가입을 축하합니다.`;
-            }
-        });
     </script>
 
     <!-- -->
