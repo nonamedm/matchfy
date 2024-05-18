@@ -192,19 +192,20 @@ class ProxyController extends BaseController
         $postData['privacy'] = $BoardModel2->orderBy('created_at', 'DESC')->first();
 
         //휴대폰 중복체크
-        $mobile_no = $resData['mobileno'];
+        // $mobile_no = $resData['mobileno'];
 
-        $MemberModel = new MemberModel();
-        $selected = $MemberModel->where('mobile_no', $mobile_no)->first();
+        // $MemberModel = new MemberModel();
+        // $selected = $MemberModel->where('mobile_no', $mobile_no)->first();
 
-        if ($selected) {
-            // 중복 시 알림 후 메인 이동
-            $postData['mobile_dup_chk'] = '0';
-            return view('mo_pass', $postData);
-        } else {
-            // 중복 번호 없을 때 이동
-            return view('mo_agree', $postData);
-        }
+        // if ($selected) {
+        //     // 중복 시 알림 후 메인 이동
+        //     $postData['mobile_dup_chk'] = '0';
+        //     return view('mo_pass', $postData);
+        // } else {
+        //     // 중복 번호 없을 때 이동
+        //     return view('mo_agree', $postData);
+        // }
+        return view('mo_agree', $postData);
     }
 
     private function hmac256($secretKey, $message)
