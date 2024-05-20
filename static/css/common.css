@@ -72,7 +72,7 @@ input[type='checkbox'] + label:hover {
 }
 
 .content {
-    height: 1000px;
+    height: 600px;
     background-image: url('/static/images/main_bg.png');
     display: flex;
     justify-content: center;

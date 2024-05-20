@@ -82,7 +82,7 @@
             </div>
             <div class="link">
                 <span class="service_btn link-a">
-                    <a href="/">서비스 바로가기</a>
+                    <a href="https://matchfy.net">서비스 바로가기</a>
                 </span>
             </div>
             <div class="link-list">
