@@ -16,6 +16,7 @@ use App\Models\PointExchangeModel;
 use App\Models\MeetingModel;
 use App\Models\MeetingFileModel;
 use App\Models\MeetingMembersModel;
+use App\Models\MeetingMembersTempModel;
 use App\Helpers\MoHelper;
 use App\Models\MeetModel;
 use App\Models\MeetPointModel;
@@ -957,6 +958,22 @@ class MoHome extends BaseController
 
     /*결제 시 모임에 이미 등록되어있는지 판단 */
     /*모임 결재 시 확인 사항2 - 결재 시 모임에 이미 등록되어있는지 판단 */
+    public function getMemberConfirmTemp($ci, $meeting_idx)
+    {
+        $MeetingMembersModel = new MeetingMembersTempModel();
+        // $MeetingMembersModel = new MeetingMembersModel();
+        $total = $MeetingMembersModel
+            ->where('member_ci', $ci)
+            ->where('meeting_idx', $meeting_idx)
+            ->where('delete_yn', 'N')
+            ->countAllResults();
+        // echo $total;
+        if ($total > 0) {
+            return 'false'; // 이미 등록되어 있음
+        } else {
+            return 'true'; // 등록되어 있지 않음
+        }
+    }
     public function getMemberConfirm($ci, $meeting_idx)
     {
         $MeetingMembersModel = new MeetingMembersModel();
@@ -974,7 +991,180 @@ class MoHome extends BaseController
     }
 
     /* 모임 결제 */
-    public function usePoint()
+    public function applyMember()
+    {
+        $session = session();
+        $check_ci = $session->get('ci');
+
+        $meeting_members = new MeetingMembersModel();
+
+        $ci = $this->request->getPost('ci');
+        $meeting_idx = intval($this->request->getPost('meetingIdx'));
+        $checkQuery = "SELECT meeting_master FROM wh_meeting_members WHERE member_ci='" . $check_ci . "' AND delete_yn='N' AND meeting_idx='" . $meeting_idx . "' AND meeting_master='K'";
+        $in_member = $meeting_members->query($checkQuery)->getResultArray();
+        if ($in_member) {
+
+            $getMemberCount = $this->getMemberCount($meeting_idx);
+            $getMemberConfirm = $this->getMemberConfirm($ci, $meeting_idx);
+
+            if ($getMemberCount == 'true') {
+                // if ($mypoint < $point) { //보유포인트가 모자랄 경우
+                //     return $this->response->setJSON(['success' => true, 'msg' => '충전후 사용해주세요.']);
+                // } else {
+                if ($getMemberConfirm == 'true') { //통과!
+                    //마스터 유저                  
+                    $masterMember = new MemberModel();
+                    $meetingMaster = $masterMember
+                        ->distinct()
+                        ->select('m.name as name, m.ci as ci, wp.my_point as k_point')
+                        ->from('members m')
+                        ->join('wh_points wp', 'wp.member_ci = m.ci', 'left')
+                        ->join('wh_meeting_members wmm', 'm.ci = wmm.member_ci', 'left')
+                        ->where('wmm.meeting_idx', $meeting_idx)
+                        ->where('wmm.meeting_master', 'K')
+                        ->orderBy('wp.create_at', 'desc')
+                        ->get()
+                        ->getRow();
+
+                    //참석한 멤버 포인트 사용
+                    // $mydata = [
+                    //     'member_ci' => $ci,
+                    //     'my_point' => $mypoint - $point,
+                    //     'use_point' => $point,
+                    //     'point_details' => $meetingMaster->name . "(모임회비)",
+                    //     'create_at' => date('Y-m-d H:i:s'),
+                    //     'point_type' => 'U',
+                    // ];
+                    // $result = $pointModel->insert($mydata);
+
+                    //참석 멤버 추가
+                    $meetMemdata = [
+                        'meeting_idx' => $meeting_idx,
+                        'member_ci' => $ci,
+                        'meeting_master' => 'M',
+                        'create_at' => date('Y-m-d H:i:s'),
+                    ];
+                    $in_member = $meeting_members->where('meeting_idx', $meeting_idx)
+                        ->where('member_ci', $ci)
+                        ->where('delete_yn', 'Y')
+                        ->first();
+
+                    if ($in_member) {
+                        // 기존 참석했던 방이면 업데이트
+                        $query = "UPDATE wh_meeting_members";
+                        $query .= " SET create_at = '" . date('Y-m-d H:i:s') . "'";
+                        $query .= " , delete_yn = 'N'";
+                        $query .= " WHERE meeting_idx = '" . $meeting_idx . "'";
+                        $query .= " AND member_ci = '" . $ci . "'";
+
+                        $result = $meeting_members
+                            ->query($query);
+                    } else {
+                        $meeting_members->insert($meetMemdata);
+                    }
+
+                    //나의 유저
+                    $memberName = new MemberModel();
+                    $meetingUser = $memberName
+                        ->distinct()
+                        ->select('m.name as name,m.ci as ci')
+                        ->from('members m')
+                        ->where('m.ci', $ci)
+                        ->get()
+                        ->getRow();
+
+                    //모임방에 포인트 올리기
+                    // $meetPointModel = new MeetPointModel();
+                    // $masterdata = [
+                    //     'meeting_idx' => $meeting_idx,
+                    //     'member_ci' => $meetingUser->ci,
+                    //     'meeting_points' => $point,
+                    //     'meeting_type' => 'M',
+                    //     'point_check_type' => '1',
+                    //     'create_at' => date('Y-m-d H:i:s'),
+                    //     'update_at' => date('Y-m-d H:i:s'),
+                    // ];
+
+                    // $meetPointModel->insert($masterdata);
+
+                    // if ($result) {
+                    $ChatRoomModel = new ChatRoomModel();
+                    $ChatRoomMemberModel = new ChatRoomMemberModel();
+
+                    $query = "SELECT * FROM wh_chat_room WHERE room_ci = (SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "') AND delete_yn='n'";
+                    $chatroom = $ChatRoomModel
+                        ->query($query)->getResultArray();
+
+                    if ($chatroom) {
+                        // 기존에 채팅이 존재할 경우
+                        $query = "SELECT * FROM wh_chat_room_member WHERE delete_yn = 'n' AND room_ci='" . $chatroom[0]['room_ci'] . "' AND member_ci='" . $ci . "'";
+                        $checkYn = $ChatRoomMemberModel
+                            ->query($query)->getResultArray();
+
+                        if ($checkYn) {
+                            // 내가 이 채팅에 참여중인 상태이면 바로 이동한다
+                            return $this->response->setJSON(['success' => true, 'msg' => '포인트 결제 완료 되었습니다.']);
+                        } else {
+                            $query = "SELECT * FROM wh_chat_room_member WHERE delete_yn = 'y' AND room_ci='" . $chatroom[0]['room_ci'] . "' AND member_ci='" . $ci . "'";
+                            $deleteYn = $ChatRoomMemberModel
+                                ->query($query)->getResultArray();
+                            if ($deleteYn) {
+                                // 내가 나간 상태이면
+                                $query = "UPDATE wh_chat_room_member
+                                            SET delete_yn='n', updated_at=CURRENT_TIMESTAMP
+                                            WHERE room_ci='" . $chatroom[0]['room_ci'] . "' AND member_ci='" . $ci . "'";
+                                $updateChatRoom1 = $ChatRoomMemberModel
+                                    ->query($query);
+                            } else {
+                                // 신규입장
+                                $query = "SELECT MAX(entry_num)+1 AS entry_num FROM wh_chat_room_member WHERE room_ci='" . $chatroom[0]['room_ci'] . "';";
+                                $entryNum = $ChatRoomMemberModel
+                                    ->query($query)->getResultArray();
+                                $entryVal = $entryNum[0]['entry_num'];
+                                $query = "INSERT INTO wh_chat_room_member
+                                        (room_ci, member_ci, entry_num, member_type, entered_at, updated_at)
+                                        VALUES('" . $chatroom[0]['room_ci']  . "','" . $ci . "','" . $entryVal . "','0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                                $enterChatRoom1 = $ChatRoomMemberModel
+                                    ->query($query);
+                            }
+
+                            // $query = "UPDATE wh_chat_room_member
+                            // SET delete_yn='n', entered_at=CURRENT_TIMESTAMP, updated_at=CURRENT_TIMESTAMP
+                            // WHERE room_ci='" . $room_ci . "' AND member_ci='" . $sendto[0]['ci'] . "'";
+                            // $updateChatRoom2 = $ChatRoomMemberModel
+                            // ->query($query);
+                            $query = "UPDATE wh_chat_room SET room_count = (CAST(room_count AS UNSIGNED) + 1)
+                                               WHERE room_ci='" . $chatroom[0]['room_ci'] . "'";
+                            $updateChatRoomCount = $ChatRoomModel
+                                ->query($query);
+                            if ($updateChatRoomCount) {
+                                return $this->response->setJSON(['success' => true, 'msg' => '모임 참석이 완료 되었습니다.']);
+                            } else {
+                                return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
+                            }
+                        }
+                    } else {
+                        return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
+                    }
+                    // } else {
+                    //     return $this->response->setJSON(['success' => false, 'msg' => '포인트 결제가 실패 하였습니다.']);
+                    // }
+                } else { //이미 참석된 멤버 일 경우
+                    return $this->response->setJSON(['success' => true, 'msg' => '이미 참석된 멤버 입니다.']);
+                }
+                // }
+            } else if ($getMemberCount == 'nodata') {
+                return $this->response->setJSON(['success' => true, 'msg' => '존재하지 않는 모임입니다. 다시 시도해 주세요.']);
+            } else { //참석멤버수가 다 찼을 경우
+                return $this->response->setJSON(['success' => true, 'msg' => '참석멤버수가 다 찼습니다.']);
+            }
+        } else {
+            return $this->response->setJSON(['success' => true, 'msg' => '모임장만 승인할 수 있습니다.']);
+        }
+    }
+
+    /* 모임 결제 */
+    public function usePointTemp()
     {
         $session = session();
         $ci = $session->get('ci');
@@ -984,7 +1174,7 @@ class MoHome extends BaseController
         $pointModel = new PointModel();
 
         $getMemberCount = $this->getMemberCount($meeting_idx);
-        $getMemberConfirm = $this->getMemberConfirm($ci, $meeting_idx);
+        $getMemberConfirm = $this->getMemberConfirmTemp($ci, $meeting_idx);
 
         if ($getMemberCount == 'true') {
             // if ($mypoint < $point) { //보유포인트가 모자랄 경우
@@ -1024,6 +1214,7 @@ class MoHome extends BaseController
                     'create_at' => date('Y-m-d H:i:s'),
                 ];
                 $meeting_members = new MeetingMembersModel();
+                $meeting_members_temp = new MeetingMembersTempModel();
                 $in_member = $meeting_members->where('meeting_idx', $meeting_idx)
                     ->where('member_ci', $ci)
                     ->where('delete_yn', 'Y')
@@ -1037,21 +1228,37 @@ class MoHome extends BaseController
                     $query .= " WHERE meeting_idx = '" . $meeting_idx . "'";
                     $query .= " AND member_ci = '" . $ci . "'";
 
-                    $result = $meeting_members
+                    $meeting_members
                         ->query($query);
                 } else {
-                    $meeting_members->insert($meetMemdata);
+                    // 참석 승인 요청 처리
+                    $meeting_members_temp->insert($meetMemdata);
+
+                    $query = "SELECT * FROM wh_meeting_members WHERE meeting_idx='" . $meeting_idx . "' AND meeting_master='K' AND delete_yn='N'";
+                    $meeting_members
+                        ->query($query);
+                    if ($meeting_members) {
+                        $msg_cont = '모임 참가 신청 <br/>승인하시려면 확인 버튼을 눌러주세요<br/><br/></span><button class="scdl_confirm" onclick="applyMember(`' . $ci . '`,`' . $meeting_idx . '`)">확인</button>';
+
+                        $query = "INSERT INTO wh_chat_room_msg
+                        (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
+                        VALUES((SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "'),'" . $ci . "','9','6','" . $msg_cont . "','9','9');";
+                        $meeting_members->query($query);
+                        return $this->response->setJSON(['success' => true, 'msg' => '참석 신청이 완료 되었습니다.']);
+                    } else {
+                        return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
+                    }
                 }
 
                 //나의 유저
-                $memberName = new MemberModel();
-                $meetingUser = $memberName
-                    ->distinct()
-                    ->select('m.name as name,m.ci as ci')
-                    ->from('members m')
-                    ->where('m.ci', $ci)
-                    ->get()
-                    ->getRow();
+                // $memberName = new MemberModel();
+                // $meetingUser = $memberName
+                //     ->distinct()
+                //     ->select('m.name as name,m.ci as ci')
+                //     ->from('members m')
+                //     ->where('m.ci', $ci)
+                //     ->get()
+                //     ->getRow();
 
                 //모임방에 포인트 올리기
                 // $meetPointModel = new MeetPointModel();
@@ -1068,69 +1275,12 @@ class MoHome extends BaseController
                 // $meetPointModel->insert($masterdata);
 
                 // if ($result) {
-                $ChatRoomModel = new ChatRoomModel();
-                $ChatRoomMemberModel = new ChatRoomMemberModel();
 
-                $query = "SELECT * FROM wh_chat_room WHERE room_ci = (SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "') AND delete_yn='n'";
-                $chatroom = $ChatRoomModel
-                    ->query($query)->getResultArray();
-
-                if ($chatroom) {
-                    // 기존에 채팅이 존재할 경우
-                    $query = "SELECT * FROM wh_chat_room_member WHERE delete_yn = 'n' AND room_ci='" . $chatroom[0]['room_ci'] . "' AND member_ci='" . $ci . "'";
-                    $checkYn = $ChatRoomMemberModel
-                        ->query($query)->getResultArray();
-
-                    if ($checkYn) {
-                        // 내가 이 채팅에 참여중인 상태이면 바로 이동한다
-                        return $this->response->setJSON(['success' => true, 'msg' => '포인트 결제 완료 되었습니다.']);
-                    } else {
-                        $query = "SELECT * FROM wh_chat_room_member WHERE delete_yn = 'y' AND room_ci='" . $chatroom[0]['room_ci'] . "' AND member_ci='" . $ci . "'";
-                        $deleteYn = $ChatRoomMemberModel
-                            ->query($query)->getResultArray();
-                        if ($deleteYn) {
-                            // 내가 나간 상태이면
-                            $query = "UPDATE wh_chat_room_member
-                                        SET delete_yn='n', updated_at=CURRENT_TIMESTAMP
-                                        WHERE room_ci='" . $chatroom[0]['room_ci'] . "' AND member_ci='" . $ci . "'";
-                            $updateChatRoom1 = $ChatRoomMemberModel
-                                ->query($query);
-                        } else {
-                            // 신규입장
-                            $query = "SELECT MAX(entry_num)+1 AS entry_num FROM wh_chat_room_member WHERE room_ci='" . $chatroom[0]['room_ci'] . "';";
-                            $entryNum = $ChatRoomMemberModel
-                                ->query($query)->getResultArray();
-                            $entryVal = $entryNum[0]['entry_num'];
-                            $query = "INSERT INTO wh_chat_room_member
-                                    (room_ci, member_ci, entry_num, member_type, entered_at, updated_at)
-                                    VALUES('" . $chatroom[0]['room_ci']  . "','" . $ci . "','" . $entryVal . "','0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
-                            $enterChatRoom1 = $ChatRoomMemberModel
-                                ->query($query);
-                        }
-
-                        // $query = "UPDATE wh_chat_room_member
-                        // SET delete_yn='n', entered_at=CURRENT_TIMESTAMP, updated_at=CURRENT_TIMESTAMP
-                        // WHERE room_ci='" . $room_ci . "' AND member_ci='" . $sendto[0]['ci'] . "'";
-                        // $updateChatRoom2 = $ChatRoomMemberModel
-                        // ->query($query);
-                        $query = "UPDATE wh_chat_room SET room_count = (CAST(room_count AS UNSIGNED) + 1)
-                                           WHERE room_ci='" . $chatroom[0]['room_ci'] . "'";
-                        $updateChatRoomCount = $ChatRoomModel
-                            ->query($query);
-                        if ($updateChatRoomCount) {
-                            return $this->response->setJSON(['success' => true, 'msg' => '모임 참석이 완료 되었습니다.']);
-                        } else {
-                            return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
-                        }
-                    }
-                } else {
-                    return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
-                }
                 // } else {
                 //     return $this->response->setJSON(['success' => false, 'msg' => '포인트 결제가 실패 하였습니다.']);
                 // }
             } else { //이미 참석된 멤버 일 경우
-                return $this->response->setJSON(['success' => true, 'msg' => '이미 참석된 멤버 입니다.']);
+                return $this->response->setJSON(['success' => true, 'msg' => '이미 참석 신청된 멤버 입니다.']);
             }
             // }
         } else if ($getMemberCount == 'nodata') {

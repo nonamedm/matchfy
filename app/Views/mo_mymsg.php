@@ -210,9 +210,9 @@
             });
             scrollToBottom();
             mymsgPhotoListener();
-            // setInterval(function() {
-            //     reloadMsg();
-            // }, 5000);
+            setInterval(function() {
+                reloadMsg();
+            }, 5000);
             $("#mymsg_menu").on("click", function() {
                 if (!($(".message_input_box").hasClass("on")) && !($(".chat_wrap").hasClass("on"))) {
                     $(".message_input_box").addClass("on");
@@ -426,6 +426,38 @@
                         }
                     }
                 } else {}
+            });
+        };
+
+        const applyMember = (ci, room_idx) => {
+
+
+            // DB저장하기
+            $.ajax({
+                url: '/mo/applyMember',
+                type: 'POST',
+                data: {
+                    "ci": ci,
+                    "meetingIdx": room_idx,
+                },
+                async: false,
+                success: function(data) {
+                    console.log(data);
+                    var html = '';
+                    if (data.success == true) {
+                        msg = data.msg;
+                        fn_alert(msg);
+                    } else if (data.status === 'error') {
+                        console.log('실패', data.data);
+                    } else {
+                        fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    }
+                    return false;
+                },
+                error: function(data, status, err) {
+                    console.log(err);
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
             });
         };
 
