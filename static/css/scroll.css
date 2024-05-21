@@ -5,6 +5,7 @@
 .fade-in {
     -webkit-animation: fade-in 1.4s;
     animation: fade-in 1.4s;
+    text-align: center;
 }
 
 @-webkit-keyframes fade-in {
