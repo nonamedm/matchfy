@@ -99,8 +99,8 @@ input[type='checkbox'] + label:hover {
     line-height: 46px;
 }
 .content_banner_top {
-    width: 968px;
-    height: 540px;
+    width: 400px;
+    height: 300px;
     margin: 0 auto;
     display: flex;
     justify-content: center;
@@ -620,7 +620,7 @@ input[type='checkbox'] + label:hover {
     display: flex;
 }
 header.ci_header {
-    width: 968px;
+    width: 400px;
     margin: 0 auto;
 }
 header ul {
@@ -635,7 +635,7 @@ header .menu_item {
 @media (min-width: 1780px) {
     .content_no_img.login_main {
         /* width: 968px; */
-        width: 948px;
+        width: 400px;
         height: 100%;
     }
 }
@@ -672,7 +672,7 @@ header .menu_item {
         padding: 20px 100px;
     }
     .content_no_img.login_main {
-        width: 968px;
+        width: 400px;
         height: 100%;
     }
     .content_chat_img {
@@ -699,7 +699,7 @@ header .menu_item {
         right: 10px;
     } */
     .content_banner_top {
-        width: 968px;
+        width: 400px;
     }
     .content_banner_top img {
         width: 95%;
