@@ -83,7 +83,7 @@ header .header_title {
     font-family: 'Pretendard-Bold';
     font-weight: 700;
     font-size: 16px;
-    line-height: 19px;
+    line-height: 22px;
 
     margin-left: 20px;
 }
@@ -3206,7 +3206,7 @@ input[type='number']::-webkit-inner-spin-button {
     margin: 10px 0 0 10px;
     color: #000000;
 }
-.nicknameBtnBox{
+.nicknameBtnBox {
     display: flex;
     flex-direction: row;
 }

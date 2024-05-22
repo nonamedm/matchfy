@@ -19,7 +19,7 @@
 
 
         <?php $title = "제휴";
-        $prevUrl = "/";
+        $prevUrl = "/mo/menu";
         include 'header.php'; ?>
 
         <div class="sub_wrap">

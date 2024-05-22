@@ -295,7 +295,7 @@ return [
     'skip'                => '건너뛰기',
     'invitePlaceholder'   => '초대코드를 입력해주세요',
     'friendsInvite'       => '친구 초대',
-    'friendsLinkCopy'     => '초대링크 복사하기',
+    'friendsLinkCopy'     => '초대코드 복사하기',
     'friendsShare'        => '친구에게 공유하기',
 
     //regular
@@ -397,7 +397,7 @@ return [
     'qnanormal'                  => '보통이야',
     'dontLike'                => '싫어',
     'verryHate'               => '아주 싫어',
-    'AIMsg'                   => 'AI 메시지',
+    'AIMsg'                   => 'AI 메시지함',
     'messageBox'              => '메시지함',
     'AIMsgCon'                => '띵동 AI 소개팅이 도착했어요<br /> 정보를 확인하실래요?',
     'AIMsgCon2'               => 'AI 소개팅방에 초대되었습니다.',

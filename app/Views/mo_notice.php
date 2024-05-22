@@ -20,7 +20,7 @@
 
 
         <?php $title = "공지사항";
-        $prevUrl = "/";
+        $prevUrl = "/mo/menu";
         include 'header.php'; ?>
 
         <div class="sub_wrap">

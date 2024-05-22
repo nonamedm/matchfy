@@ -50,9 +50,21 @@
                                     $ci = $session->get('ci');
                                     if ($feed['ci'] !== $ci) {
                                     ?>
-                                        <span class="match_percent">
-                                            <?php if (number_format($feed['matchScore']['match_rate'], 0) !== '0') echo number_format($feed['matchScore']['match_rate'], 0) . '%' ?>
-                                        </span>
+                                        <p class="mat_percent" style="margin-left:5px">
+                                            <?php
+                                            if (number_format($feed['matchScore']['match_rate'], 0) >= 80) {
+                                                echo '<img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/blue_face_icon.png">';
+                                            } else if (number_format($feed['matchScore']['match_rate'], 0) < 80 && number_format($feed['matchScore']['match_rate'], 0) >= 65) {
+                                                echo '<img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/green_face_icon.png">';
+                                            } else if (number_format($feed['matchScore']['match_rate'], 0) < 65 && number_format($feed['matchScore']['match_rate'], 0) >= 50) {
+                                                echo '<img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/yellow_face_icon.png">';
+                                            } else if (number_format($feed['matchScore']['match_rate'], 0) < 50 && number_format($feed['matchScore']['match_rate'], 0) >= 35) {
+                                                echo '<img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/orange_face_icon.png">';
+                                            } else {
+                                                echo '<img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/red_face_icon.png">';
+                                            }
+                                            ?>
+                                        </p>
                                     <?php
                                     }
                                     ?>
@@ -127,6 +139,19 @@
             //     },
             // });
         });
+        const matchRateType = (rate) => {
+            if (80 <= rate) {
+                return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/blue_face_icon.png"></p>';
+            } else if (rate => 65 || rate < 80) {
+                return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/green_face_icon.png"></p>';
+            } else if (rate => 50 || rate < 65) {
+                return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/yellow_face_icon.png"></p>';
+            } else if (rate => 35 || rate < 50) {
+                return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/orange_face_icon.png"></p>';
+            } else {
+                return '<p class="mat_percent"><img class="faceIcon" style="width:20px;height: 20px;" src="/static/images/red_face_icon.png"></p>';
+            }
+        }
     </script>
 
     <!-- -->
