@@ -26,6 +26,9 @@
         <a href="/ad/member/memberApproveList">회원 승인목록</a>
     </li>
     <li class="menu_item">
+        <a href="/ad/member/memberPaymentList">회원 계좌이체 승인 목록</a>
+    </li>
+    <li class="menu_item"> 
         <a href="/ad/report/reportList">회원 신고 목록</a>
     </li>
     <li class="menu_item">
