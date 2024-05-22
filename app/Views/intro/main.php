@@ -158,12 +158,12 @@
                     </span>
                 </div>
                 <p class="section-title hidden">
-                    <span>프로필 등록으로</span></br>
-                    <span>매칭 99% 멤버찾기</span>
+                    <span>AI추천 매칭상대 찾기</span></br>
+                    <!-- <span>매칭 99% 멤버찾기</span> -->
                 </p>
                 <span class="section-subtitle hidden">
-                    등록한 프로필로 매칭점수가 일치하는<br />
-                    멤버들을 찾을 수 있어요.
+                    등록한 프로필로<br />
+                    매칭점수가 높은 상대를 찾을 수 있어요.
                 </span>
             </div>
             <div class="section-box-img hidden">
@@ -189,12 +189,12 @@
                     </span>
                 </div>
                 <p class="section-title hidden">
-                    <span>매칭점수 기반의</br>
-                        멤버들 모아보기</span>
+                    <span>AI추천 상대와의 대화,</br>
+                        오프라인 모임 참여</span>
                 </p>
                 <span class="section-subtitle hidden">
-                    매칭점수가 70% 이상 일치하는 멤버들과<br />
-                    소통을 할 수 있어요
+                    대화중에도 모임에서도<br />
+                    매칭 점수가 높은 상대를 찾을 수 있어요
                 </span>
             </div>
         </div>

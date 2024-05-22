@@ -143,7 +143,7 @@
 
                 <div class="content_no_img">
                     <div class="main_cont_center_box main_cont_left_box">
-                        <h3 class="circle_h"><img src="/static/images/circle_1.png" /><?= lang('Korean.profile') ?></h3>
+                        <h3 class="circle_h"><img src="/static/images/circle_1.png" />Profile</h3>
                         <h2><?= lang('Korean.indexCon1') ?></h2>
                         <p><?= lang('Korean.indexCon2') ?></p>
                     </div>
@@ -154,7 +154,7 @@
 
                 <div class="content_no_img bg_color_theme">
                     <div class="main_cont_center_box main_cont_right_box">
-                        <h3 class="circle_h text_white"><img src="/static/images/circle_2.png" />매칭점수</h3>
+                        <h3 class="circle_h text_white"><img src="/static/images/circle_2.png" />Contact</h3>
                         <h2 class="text_white"><?= lang('Korean.indexCon3') ?></h2>
                         <p class="text_white"><?= lang('Korean.indexCon4') ?></p>
                     </div>
@@ -165,7 +165,7 @@
 
                 <div class="content_no_img">
                     <div class="main_cont_center_box main_cont_left_box">
-                        <h3 class="circle_h"><img src="/static/images/circle_3.png" /><?= lang('Korean.alliance') ?></h3>
+                        <h3 class="circle_h"><img src="/static/images/circle_3.png" />Place</h3>
                         <h2><?= lang('Korean.indexCon5') ?></h2>
                         <p><?= lang('Korean.indexCon6') ?></p>
                     </div>
@@ -712,7 +712,7 @@
                     <a href="/intro/main"><?= lang('Korean.companyName') ?></a>
                     <a href="/mo/privacy"><?= lang('Korean.pravacyName') ?></a>
                     <a href="/mo/terms"><?= lang('Korean.serviceName') ?></a>
-                    <a href="#"><?= lang('Korean.supporterName') ?></a>
+                    <!-- <a href="#"><?= lang('Korean.supporterName') ?></a> -->
                 </div>
                 <div class="footer_info mb40">
                     <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>

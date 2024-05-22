@@ -57,7 +57,8 @@ $routes->get('/mo/mypage/getPoint', 'MoHome::mypageGetPoint');
 $routes->post('/mo/mypage/selectPoint', 'MoHome::mypageSelectPoint');
 // $routes->post('/mo/mypage/walletTypeList', 'MoHome::walletTypeList');
 //포인트사용시
-$routes->post('/mo/usePoint', 'MoHome::usePoint');
+$routes->post('/mo/applyMember', 'MoHome::applyMember');
+$routes->post('/mo/usePointTemp', 'MoHome::usePointTemp');
 $routes->get('/mo/mypage/group/list', 'MoHome::mypageGroupList');
 $routes->get('/mo/mypage/group/searchList', 'MoHome::mypageGroupSearchList');
 $routes->get('/mo/mypage/group/detail/(:num)', 'MoHome::mypageGroupDetail/$1');
