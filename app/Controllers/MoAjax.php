@@ -113,19 +113,47 @@ class MoAjax extends BaseController
 
     public function mainMeetingList()
     {
-        $MeetingModel = new MeetingModel();
         //$MeetingFileModel = new MeetingFileModel();
         // $data['meetings'] = $MeetingModel->orderBy('create_at', 'DESC')->findAll();
 
-        $MeetingModel->orderBy('create_at', 'DESC');
+        $session = session();
+        $ci = $session->get('ci');
 
+        $MemberModel = new MemberModel();
+
+        $birthday = $MemberModel
+            ->select('birthday')
+            ->where('ci', $ci)
+            ->first();
+
+        $birthDate = \DateTime::createFromFormat('Ymd', $birthday['birthday']);
+        $currentDate = new \DateTime('now');
+        $age = $birthDate->diff($currentDate)->y;
+
+        $MeetingModel = new MeetingModel();
         $currentTime = date('Y-m-d H:i:s');
 
-        $meetings = $MeetingModel
-            ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
-            ->where('wh_meetings.meeting_start_date >=', $currentTime)
-            ->where('wh_meetings.delete_yn', 'N')
-            ->findAll();
+        // $meetings = $MeetingModel
+        //     ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
+        //     ->where('wh_meetings.meeting_start_date >=', $currentTime)
+        //     ->where('wh_meetings.delete_yn', 'N')
+        //     ->where('wh_meetings.group_min_age <=', $age)
+        //     ->where('wh_meetings.group_max_age >=', $age)
+        //     ->orderBy('meeting_start_date', 'ASC')
+        //     ->findAll();
+
+        $sql = "
+            SELECT *
+            FROM wh_meetings
+            LEFT JOIN wh_meetings_files ON wh_meetings_files.meeting_idx = wh_meetings.idx
+            WHERE wh_meetings.meeting_start_date >= ?
+            AND wh_meetings.delete_yn = 'N'
+            AND wh_meetings.group_min_age <= ?
+            AND wh_meetings.group_max_age >= ?
+            ORDER BY wh_meetings.meeting_start_date ASC
+        ";
+        
+        $meetings = $MeetingModel->query($sql, [$currentTime, $age, $age])->getResultArray();
 
         $days = ['일', '월', '화', '수', '목', '금', '토'];
 
