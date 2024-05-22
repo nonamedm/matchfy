@@ -197,7 +197,7 @@
             $("#group_min_age, #group_max_age").on("change", function() {
                 var minAge = parseInt($("#group_min_age").val());
                 var maxAge = parseInt($("#group_max_age").val());
-                if (minAge !== "" && maxAge !== "" && minAge >= maxAge) {
+                if (minAge !== "" && maxAge !== "" && minAge > maxAge) {
                     fn_alert("최소 연령은 최대 연령보다 작아야 합니다.");
                     $(this).val("");
 
