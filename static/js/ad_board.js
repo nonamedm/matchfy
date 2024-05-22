@@ -22,6 +22,14 @@ $(document).ready(function(){
 
         memberCertificateApprove(level,id);
     });
+
+    $('.member_payment_btn').click(function() {
+        var tempGrade = $(this).data('approve-level');
+        var idx =$(this).data('idx');
+
+        memberPaymentApprove(tempGrade,idx);
+    });
+
     CKEDITOR.replace('content');
 });
 
@@ -230,6 +238,24 @@ function memberCertificateApprove(level,id){
         data:{
             level:level,
             id:id,
+        },
+        type: 'post',
+        success: function(data) {
+            alert(data.msg);
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+
+function memberPaymentApprove(tempGrade,idx){
+    $.ajax({
+        url: '/ad/memberPaymentCheck',
+        data:{
+            tempGrade:tempGrade,
+            idx:idx,
         },
         type: 'post',
         success: function(data) {

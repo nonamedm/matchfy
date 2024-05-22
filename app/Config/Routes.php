@@ -214,6 +214,9 @@ $routes->post('/ad/allianceCheck', 'AdminHome::allianceCheck');
 $routes->get('/ad/member/memberApproveList', 'AdminHome::memberApproveList');
 $routes->post('/ad/memberCertificateCheck', 'AdminHome::memberCertificateCheck');
 
+$routes->get('/ad/member/memberPaymentList', 'AdminHome::memberPaymentList');
+$routes->post('/ad/memberPaymentCheck', 'AdminHome::memberPaymentCheck');
+
 $routes->get('/ad/report/reportList', 'AdminHome::reportList');
 $routes->get('/ad/report/reportView/(:num)', 'AdminHome::reportView/$1');
 $routes->post('/ad/report/reportDelete', 'AdminHome::reportDelete');

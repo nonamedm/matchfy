@@ -711,6 +711,71 @@ class AdminHome extends BaseController
     
     }
 
+    /*회원 계좌이체 승인 목록*/
+    public function memberPaymentList($page = null){
+
+        // 페이지가 없으면 기본값으로 1을 사용
+        // if ($page === null || !is_numeric($page)) {
+        //     $page = 1;
+        // } else {
+        //     $page = 2;
+        // }
+
+        // $perPage = 20;
+        $MemberModel = new MemberModel();
+
+        // $total = $MemberModel->query("SELECT COUNT(*) as total FROM members m LEFT JOIN member_files mf ON m.ci = mf.member_ci")->getRow()->total;
+
+        // $offset = ($page - 1) * $perPage; // 현재 페이지의 첫 번째 데이터 인덱스
+        $query = "SELECT m.idx, 
+                m.name, 
+                CASE 
+                     WHEN m.gender = 1 THEN '남' 
+                     WHEN m.gender = 0 THEN '여' 
+                END AS gender,
+                m.nickname, 
+                m.email, 
+                CASE 
+                     WHEN m.recommender_code IS NULL THEN '미사용' 
+                     ELSE m.recommender_code
+                END AS recommender_code,
+                m.grade, 
+                m.temp_grade,
+                CASE 
+                    WHEN m.grade = m.temp_grade THEN 'y'
+                    ELSE 'n'
+                END AS grade_match
+             FROM members as m 
+             WHERE m.temp_grade != 'grade01'
+             AND m.delete_yn = 'N'
+             ORDER BY grade_match, m.updated_at DESC, m.idx DESC";
+
+        $data['datas'] = $MemberModel->query($query)->getResultArray();
+        $data['query'] = $MemberModel->getLastQuery()->getQuery();
+
+        // $pager = service('pager');
+        // $data['pager'] = $pager->makeLinks($page, $perPage, $total);
+
+        return view('admin/ad_payment_list', $data);
+    }
+
+    public function memberPaymentCheck(){
+        $tempGrade = $this->request->getPost('tempGrade');
+        $idx = $this->request->getPost('idx');
+    
+        $MemberModel = new MemberModel();
+
+        $query = "UPDATE members SET grade='" . $tempGrade . "' WHERE idx='" . $idx . "'";
+        $updated = $MemberModel->query($query);
+
+        if ($updated) {
+            return $this->response->setJSON(['success' => true, 'msg' => '승인 되었습니다.']);
+        } else {
+            return $this->response->setJSON(['error' => true, 'msg' => '승인 실패.']);
+        }
+    
+    }
+
     /*회원 신고*/
     public function reportEidt(): string
     {
