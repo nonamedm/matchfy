@@ -271,10 +271,8 @@ class MoAjax extends BaseController
         }
 
         if ($selectedGrade !== $currentGrade) {
-            $updateStatus = $MemberModel->update(
-                $ci,
-                ['temp_grade' => $selectedGrade]
-            );
+            $query = "UPDATE members SET temp_grade='" . $selectedGrade . "' WHERE ci='" . $ci . "'";
+            $updateStatus = $MemberModel->query($query);
 
             $data = [
                 'grade' => $grade,
@@ -1142,8 +1140,10 @@ class MoAjax extends BaseController
 
         if ($type == 'temp') {
             $data = ['temp_grade' => $grade];
+            $query = "UPDATE members SET temp_grade='" . $grade . "' WHERE ci='" . $ci . "'";
         } else {
             $data = ['grade' => $grade];
+            $query = "UPDATE members SET grade='" . $grade . "' WHERE ci='" . $ci . "'";
         }
 
         // CI조회
@@ -1155,7 +1155,7 @@ class MoAjax extends BaseController
 
         //데이터 존재 시
         if ($existingData) {
-            $inserted = $MemberModel->update($ci, $data);
+            $inserted = $MemberModel->query($query);
 
             if ($inserted) {
                 // return $this->response->setJSON(['status' => 'success', 'message' => '데이터가 업데이트되었습니다', 'data' => $data]);
