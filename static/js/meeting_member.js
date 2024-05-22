@@ -389,7 +389,8 @@ function meetingMemberList(idx) {
                     html += '<div class="chat_member">';
                     html += '<div class="chat_member_profile">';
                     // html += '<img class="group_fork" src="/static/images/group_master.png">';
-                    html += '<a class="nicknameBtnBox" onclick="moveToUrl(\'/mo/viewProfile/' + data[i].nickname + '\')">';
+                    html +=
+                        '<a class="nicknameBtnBox" onclick="moveToUrl(\'/mo/viewProfile/' + data[i].nickname + '\')">';
                     if (data[i].file_path) {
                         html += '<img class="profile_img" src="/' + data[i].file_path + data[i].file_name + '" />';
                     } else {
@@ -540,7 +541,7 @@ function meetingApplication(idx) {
 /*포인트사용 */
 function usePoint(point, mypoint, idx) {
     $.ajax({
-        url: '/mo/usePoint',
+        url: '/mo/usePointTemp',
         data: { point: point, mypoint: mypoint, meetingIdx: idx },
         type: 'post',
         success: function (data) {
