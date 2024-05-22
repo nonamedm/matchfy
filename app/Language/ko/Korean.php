@@ -256,7 +256,7 @@ return [
     'signinType3'         => '기본정보',
     'signinType4'         => '정회원 등급 업그레이드',
     'signinType5'         => '기본정보 + 추가정보',
-    'signinType6'         => '프리미엄 등급 업그레이드',
+    'signinType6'         => '프리미엄 등급 업그레이드 (오픈예정)',
     'signinType7'         => '기본정보 + 추가정보 인증',
     'signinType8'         => '추가 정보 중',
     'signinType9'         => '확인 가능한 정보 인증',

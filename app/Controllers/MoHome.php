@@ -877,10 +877,10 @@ class MoHome extends BaseController
         $meeting_idx = $this->request->getPost('meetingIdx');
 
         // 내가 이 방 참석했는지 여부 확인
-        $chkQuery = "SELECT * FROM wh_meeting_members WHERE member_ci='" . $ci . "'";
-
+        $chkQuery = "SELECT * FROM wh_meeting_members WHERE meeting_idx='" . $meeting_idx . "' AND member_ci='" . $ci . "'";
 
         $meeting_members = new MeetingMembersModel();
+        $chkInmember = $meeting_members->query($chkQuery)->getResultArray();
         $query = $meeting_members->distinct()
             ->select(
                 '
@@ -904,16 +904,16 @@ class MoHome extends BaseController
             ->where('b.idx', $meeting_idx)
             ->where('a.delete_yn', 'N')
             ->where('d.board_type', 'main_photo')
+            ->where('d.delete_yn', 'n')
             ->orderBy('a.meeting_master')
             ->orderBy('a.create_at')
             ->get();
 
         $result = $query->getResult();
 
-
         if ($result) {
             foreach ($result as &$item) {
-                if ($chkQuery && isset($item->name)) {
+                if (!$chkInmember && isset($item->name)) {
                     $name = $item->name;
                     $firstChar = mb_substr($name, 0, 1, "UTF-8"); // 첫 글자 추출
                     $maskedPart = str_repeat('*', mb_strlen($name, "UTF-8") - 1); // 나머지 글자 수 만큼 * 생성

@@ -55,6 +55,7 @@
                 <div class="btn_group">
                     <img src="/static/images/oauth/naver_login_medium_wide.png" class="oauth_login" onclick="location.href='/auth/naver/login'" />
                 </div>
+                <div class="btn_group" style="height: 150px;"></div>
             </div>
         </div>
     </div>

@@ -55,7 +55,8 @@
                                     <img src="/static/images/now_signin.png" />
                                     <div class="price_box">
                                         <p class="org_price">109,900</p>
-                                        <p class="tot_price"><?= $isDiscounted ? number_format(99000 / 2) : '99,000' ?></p>
+                                        <!-- <p class="tot_price"><?= $isDiscounted ? number_format(99000 / 2) : '99,000' ?></p> -->
+                                        <p class="tot_price">0</p>
                                     </div>
                                 </div>
                             </div>
@@ -66,10 +67,10 @@
                                 <span><?= lang('Korean.occupational') ?>/ <?= lang('Korean.assetGroup') ?> / <?= lang('Korean.incomeGroup') ?></span>
                             </div>
                         </div>
-                        <div class="grade_box">
+                        <div class="grade_box disabled-grade">
                             <div class="grade_box_title">
                                 <div class="chk_box radio_box">
-                                    <input type="radio" id="grade03" name="grade" value="grade03">
+                                    <input type="radio" id="grade03" name="grade" value="grade03" disabled>
                                     <label for="grade03">
                                         <h2><?= lang('Korean.signinType6') ?></h2>
                                     </label>
@@ -77,8 +78,8 @@
                                 <div class="grade_box_price">
                                     <img src="/static/images/now_signin.png" />
                                     <div class="price_box">
-                                        <p class="org_price">1,399,900</p>
-                                        <p class="tot_price"><?= $isDiscounted ? number_format(990000 / 2) : '990,000' ?></p>
+                                        <!-- <p class="org_price">1,399,900</p>
+                                        <p class="tot_price"><?= $isDiscounted ? number_format(990000 / 2) : '990,000' ?></p> -->
                                     </div>
                                 </div>
                             </div>

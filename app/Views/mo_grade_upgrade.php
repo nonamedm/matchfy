@@ -56,7 +56,8 @@
                                     <img src="/static/images/now_signin.png" />
                                     <div class="price_box">
                                         <p class="org_price">109,900</p>
-                                        <p class="tot_price"><?= $isDiscounted ? number_format(99000 / 2) : '99,000' ?></p>
+                                        <!-- <p class="tot_price"><?= $isDiscounted ? number_format(99000 / 2) : '99,000' ?></p> -->
+                                        <p class="tot_price">0</p>
                                     </div>
                                 </div>
                             </div>
@@ -78,8 +79,8 @@
                                 <div class="grade_box_price">
                                     <img src="/static/images/now_signin.png" />
                                     <div class="price_box">
-                                        <p class="org_price">1,399,900</p>
-                                        <p class="tot_price"><?= $isDiscounted ? number_format(990000 / 2) : '990,000' ?></p>
+                                        <!-- <p class="org_price">1,399,900</p>
+                                        <p class="tot_price"><?= $isDiscounted ? number_format(990000 / 2) : '990,000' ?></p> -->
                                     </div>
                                 </div>
                             </div>
@@ -125,6 +126,10 @@
 
             grades.forEach(function(grade, index) {
                 if (index <= currentGradeIndex) {
+                    var selector = '.' + grade;
+                    $(selector).addClass('disabled-grade'); // 낮은 등급 비활성화
+                    $(selector).find('input[type="radio"]').prop('disabled', true); // 라디오 버튼 비활성화
+                } else if (grade === 'grade03') {
                     var selector = '.' + grade;
                     $(selector).addClass('disabled-grade'); // 낮은 등급 비활성화
                     $(selector).find('input[type="radio"]').prop('disabled', true); // 라디오 버튼 비활성화
