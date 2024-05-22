@@ -1728,10 +1728,11 @@ class MoAjax extends BaseController
             // ],
             'number_of_people' => [
                 'label' => 'number_of_people',
-                'rules' => 'required|numeric',
+                'rules' => 'required|numeric|greater_than_equal_to[2]',
                 'errors' => [
                     'required' => '모집 인원을 입력해주세요.',
-                    'numeric' => '모집 인원은 숫자만 입력 가능합니다.'
+                    'numeric' => '모집 인원은 숫자만 입력 가능합니다.',
+                    'greater_than_equal_to' => '모집 인원은 최소 2명입니다.'
                 ]
             ],
             'group_min_age' => [

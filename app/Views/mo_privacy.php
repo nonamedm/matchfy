@@ -18,7 +18,7 @@
 
 
         <?php $title = "개인정보처리방침";
-        $prevUrl = "/";
+        $prevUrl = "/mo/menu";
         include 'header.php'; ?>
 
         <div class="sub_wrap">

@@ -889,6 +889,10 @@ class MoHome extends BaseController
         $ci = $session->get('ci');
         $meeting_idx = $this->request->getPost('meetingIdx');
 
+        // 내가 이 방 참석했는지 여부 확인
+        $chkQuery = "SELECT * FROM wh_meeting_members WHERE member_ci='" . $ci . "'";
+
+
         $meeting_members = new MeetingMembersModel();
         $query = $meeting_members->distinct()
             ->select(
@@ -919,7 +923,16 @@ class MoHome extends BaseController
 
         $result = $query->getResult();
 
+
         if ($result) {
+            foreach ($result as &$item) {
+                if ($chkQuery && isset($item->name)) {
+                    $name = $item->name;
+                    $firstChar = mb_substr($name, 0, 1, "UTF-8"); // 첫 글자 추출
+                    $maskedPart = str_repeat('*', mb_strlen($name, "UTF-8") - 1); // 나머지 글자 수 만큼 * 생성
+                    $item->name = $firstChar . $maskedPart; // 첫 글자와 * 결합
+                }
+            }
             return $this->response->setJSON(['success' => true, 'data' => $result]);
         } else {
             return $this->response->setJSON(['success' => false,]);
