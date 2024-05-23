@@ -761,7 +761,7 @@ class MoAjax extends BaseController
 
             $data = [
                 //'grade' => $grade,
-                'temp_grade' => $temp_grade,
+                'grade' => $temp_grade,
                 'married' => $married,
                 'smoker' => $smoker,
                 'drinking' => $drinking,

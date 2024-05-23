@@ -43,37 +43,37 @@
                             <span>가입 신청이 완료되었습니다.</span>
                             <br />
                             <br />
-                            <span>아래 계좌로 입금하시면</span>
+                            <!-- <span>아래 계좌로 입금하시면</span>
                             <br />
                             <span>관리자 승인 후 등급이 업그레이드 됩니다.</span>
                         </div>
                         <div class="success_sub_text">
                             <p>금액 : <?= $price ?> 원</p>
                             <p>계좌번호 : 1002-992-001231 </p>
+                        </div> -->
+                        <?php endif; ?>
                         </div>
-                    <?php endif; ?>
                 </div>
+                <div style="height: 50px;"></div>
+                <footer class="footer" style="text-align: center;">
+                    <div class="btn_group multy">
+                        <button type="button" class="btn type02" onclick='moveToUrl("/")'><?= lang('Korean.rootBtn2') ?></button>
+                        <button type="button" class="btn type01" onclick='moveToUrl("/mo/partner")'><?= lang('Korean.matchInfoBtn') ?></button>
+                    </div>
+
+
+                </footer>
             </div>
-            <div style="height: 50px;"></div>
-            <footer class="footer" style="text-align: center;">
-                <div class="btn_group multy">
-                    <button type="button" class="btn type02" onclick='moveToUrl("/")'><?= lang('Korean.rootBtn2') ?></button>
-                    <button type="button" class="btn type01" onclick='moveToUrl("/mo/partner")'><?= lang('Korean.matchInfoBtn') ?></button>
-                </div>
 
-
-            </footer>
         </div>
 
-    </div>
 
+        <!-- SCRIPTS -->
 
-    <!-- SCRIPTS -->
+        <script>
+        </script>
 
-    <script>
-    </script>
-
-    <!-- -->
+        <!-- -->
 
 
 </body>
