@@ -1822,6 +1822,15 @@ class MoHome extends BaseController
             ->first();
         $mygradequery = "SELECT grade FROM members WHERE ci='" . $ci . "'";
         $mygrade = $MemberModel->query($mygradequery)->getResultArray();
+
+        $jobRegistQuery = "SELECT board_type, extra1 FROM member_files WHERE extra1='y' AND member_ci='" . $user['ci'] . "' AND board_type='job'";
+        $jobRegistData = $MemberFileModel->query($jobRegistQuery)->getResultArray();
+        $schoolRegistQuery = "SELECT board_type, extra1 FROM member_files WHERE extra1='y' AND member_ci='" . $user['ci'] . "' AND board_type='school'";
+        $schoolRegistData = $MemberFileModel->query($schoolRegistQuery)->getResultArray();
+        $assetRegistQuery = "SELECT board_type, extra1 FROM member_files WHERE extra1='y' AND member_ci='" . $user['ci'] . "' AND board_type='asset_range'";
+        $assetRegistData = $MemberFileModel->query($assetRegistQuery)->getResultArray();
+        $incomeRegistQuery = "SELECT board_type, extra1 FROM member_files WHERE extra1='y' AND member_ci='" . $user['ci'] . "' AND board_type='income_range'";
+        $incomeRegistData = $MemberFileModel->query($incomeRegistQuery)->getResultArray();
         $data = [
             'ci' => $user['ci'],
             'nickname' => $user['nickname'],
@@ -1832,7 +1841,11 @@ class MoHome extends BaseController
             'town' => $user['town'],
             'mobile_no' => $user['mobile_no'],
             'grade' => $user['grade'],
-            'image' => $imageInfo
+            'image' => $imageInfo,
+            'job_regist' => $jobRegistData,
+            'school_regist' => $schoolRegistData,
+            'asset_regist' => $assetRegistData,
+            'income_regist' => $incomeRegistData,
         ];
 
         if ($user['grade'] == 'grade02' || $user['grade'] == 'grade03') {
@@ -1849,7 +1862,7 @@ class MoHome extends BaseController
                 'major' => $user['major'],
                 'job' => $user['job'],
                 'asset_range' => $user['asset_range'],
-                'income_range' => $user['income_range']
+                'income_range' => $user['income_range'],
             ]);
         };
 

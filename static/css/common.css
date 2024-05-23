@@ -836,6 +836,9 @@ header .menu_item {
     .content_chat_img h2 br {
         display: block !important;
     }
+    .chat_talk_div {
+        padding: 10px 10px 10px 10px;
+    }
     .chat_talk_div p {
         font-size: 14px;
     }

@@ -20,6 +20,7 @@
 
         <?php $title = "프로필";
         include 'header.php'; ?>
+
         <?php $word_file_path = APPPATH . 'Data/MemberCode.php';
         require($word_file_path); ?>
         <div class="sub_wrap">
@@ -158,6 +159,11 @@
                                                 if ($item['id'] === $education) echo $item['name'];
                                             } ?>
                                         </p>
+                                        <p>
+                                            <?php if ($school_regist[0]['extra1'] === 'y') {
+                                                echo '<img src="/static/images/review_star.png" />';
+                                            } ?>
+                                        </p>
                                     </div>
                                     <div class="profile_content">
                                         <h2><?= lang('Korean.school') ?><?= lang('Korean.people') ?></h2>
@@ -178,12 +184,22 @@
                                                 if ($item['id'] === $asset_range) echo $item['name'];
                                             } ?>
                                         </p>
+                                        <p>
+                                            <?php if ($asset_regist[0]['extra1'] === 'y') {
+                                                echo '<img src="/static/images/review_star.png" />';
+                                            } ?>
+                                        </p>
                                     </div>
                                     <div class="profile_content">
                                         <h2><?= lang('Korean.incomeGroup') ?></h2>
                                         <p>
                                             <?php foreach ($income as $item) {
                                                 if ($item['id'] === $income_range) echo $item['name'];
+                                            } ?>
+                                        </p>
+                                        <p>
+                                            <?php if ($income_regist[0]['extra1'] === 'y') {
+                                                echo '<img src="/static/images/review_star.png" />';
                                             } ?>
                                         </p>
                                     </div>
