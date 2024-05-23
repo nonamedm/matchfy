@@ -398,7 +398,7 @@ class MoAjax extends BaseController
             $email = $this->request->getPost('email');
 
             // 이메일 가입 중복 로직 확인
-            $emailDupChkQuery = "SELECT email FROM members WHERE email='" . $email . "'";
+            $emailDupChkQuery = "SELECT email FROM members WHERE email='" . $email . "' AND delete_yn='n'";
             $emailDupChk = $MemberModel->query($emailDupChkQuery)->getResultArray();
             if ($emailDupChk) {
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Email Duplication', 'result' => '2']);

@@ -589,7 +589,7 @@
                             </div>
                         </div>
                         <div class="login_main_list category01">
-                            <!-- <div class="ai_group_card" style="text-align: center;">
+                            <div class="ai_group_card" style="text-align: center;">
                                 <div class="group_location" style="margin: 0 auto; padding-top: 50px;">
                                     <?= lang('Korean.noMeetList') ?>
                                 </div>
@@ -598,7 +598,7 @@
                                         <p><?= lang('Korean.createBtn') ?></p>
                                     </a>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                     <div class="group_row">
@@ -618,7 +618,7 @@
                             </div>
                         </div>
                         <div class="login_main_list category02">
-                            <!-- <div class="ai_group_card" style="text-align: center;">
+                            <div class="ai_group_card" style="text-align: center;">
                                 <div class="group_location" style="margin: 0 auto; padding-top: 50px;">
                                     <?= lang('Korean.noMeetList') ?>
                                 </div>
@@ -627,7 +627,7 @@
                                         <p><?= lang('Korean.createBtn') ?></p>
                                     </a>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -652,7 +652,7 @@
                             </div>
                         </div>
                         <div class="login_main_list category03">
-                            <!-- <div class="ai_group_card" style="text-align: center;">
+                            <div class="ai_group_card" style="text-align: center;">
                                 <div class="group_location" style="margin: 0 auto; padding-top: 50px;">
                                     <?= lang('Korean.noMeetList') ?>
                                 </div>
@@ -661,7 +661,7 @@
                                         <p><?= lang('Korean.createBtn') ?></p>
                                     </a>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                     <div class="group_row">
@@ -681,7 +681,7 @@
                             </div>
                         </div>
                         <div class="login_main_list category04">
-                            <!-- <div class="ai_group_card" style="text-align: center;">
+                            <div class="ai_group_card" style="text-align: center;">
                                 <div class="group_location" style="margin: 0 auto; padding-top: 50px;">
                                     <?= lang('Korean.noMeetList') ?>
                                 </div>
@@ -690,7 +690,7 @@
                                         <p><?= lang('Korean.createBtn') ?></p>
                                     </a>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </div>
