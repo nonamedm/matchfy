@@ -162,7 +162,7 @@
                                         foreach ($femaleStyle as $item) {
                                             if ($item['value'] !== '99') {
                                     ?>
-                                                <option value="<?= $item['value'] ?>"><?= $item['name'] ?></option>
+                                                <option value="<?= $item['value'] ?>" <?php if ($item['value'] === $stylish) echo 'selected'; ?>><?= $item['name'] ?></option>
                                             <?php
                                             }
                                         }
@@ -170,7 +170,7 @@
                                         foreach ($maleStyle as $item) {
                                             if ($item['value'] !== '99') {
                                             ?>
-                                                <option value="<?= $item['value'] ?>"><?= $item['name'] ?></option>
+                                                <option value="<?= $item['value'] ?>" <?php if ($item['value'] === $stylish) echo 'selected'; ?>><?= $item['name'] ?></option>
                                     <?php
                                             }
                                         }

@@ -53,7 +53,7 @@ return [
     'education'          => '학력',
     'occupational'       => '직업',
     'assetGroup'         => '자산구간',
-    'incomeGroup'        => '소득구간',
+    'incomeGroup'        => '연소득',
     'noSelected'         => '미선택',
     'exclusionItems'     => '제외항목',
     'sir'                => '님',

@@ -358,7 +358,7 @@ const signUpdate = (postData) => {
             tempValidation = false;
             $('#asset_range').focus();
         } else if ($('#income_range').val().trim() === '') {
-            fn_alert('소득구간을 선택해 주세요');
+            fn_alert('연소득을 선택해 주세요');
             tempValidation = false;
             $('#income_range').focus();
         }
@@ -502,7 +502,7 @@ const myinfoUpdate = (grade) => {
             tempValidation = false;
             $('#asset_range').focus();
         } else if ($('#income_range').val().trim() === '') {
-            fn_alert('소득구간을 선택해 주세요');
+            fn_alert('연소득을 선택해 주세요');
             tempValidation = false;
             $('#income_range').focus();
         }

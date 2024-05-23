@@ -72,13 +72,25 @@
                                     </a>
                                 </div>
                                 <div class="receive_text">
-                                    <p class="receive_profile_name"><?= $row['nickname'] ?><span class="match_percent">
-                                            <?php
-                                            if ($row['match_rate'] && $row['match_rate'] !== null && $row['match_rate'] !== "") {
-                                                echo number_format($row['match_rate'], 0) . "%";
+                                    <p class="receive_profile_name">
+                                        <?php
+                                        echo $row['nickname'];
+                                        if ($row['match_rate'] && $row['match_rate'] !== null && $row['match_rate'] !== "") {
+                                            if (80 <= $row['match_rate']) {
+                                                echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/blue_face_icon.png" /></span>';
+                                            } else if ($row['match_rate'] >= 65 || $row['match_rate'] < 80) {
+                                                echo  '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/green_face_icon.png" /></span>';
+                                            } else if ($row['match_rate'] >= 50 || $row['match_rate'] < 65) {
+                                                echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/yellow_face_icon.png" /></span>';
+                                            } else if ($row['match_rate'] >= 35 || $row['match_rate'] < 50) {
+                                                echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/orange_face_icon.png" /></span>';
                                             }
-                                            ?>
-                                        </span></p>
+                                            echo number_format($row['match_rate'], 0) . "%";
+                                        } else {
+                                            echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/red_face_icon.png" /></span>';
+                                        }
+                                        ?>
+                                    </p>
                                     <div style="display: flex;">
                                         <div class=" receive_msg_area">
                                             <p><?= $row['msg_cont'] ?></p>
@@ -210,8 +222,13 @@
             });
             scrollToBottom();
             mymsgPhotoListener();
+            var count = 0;
             setInterval(function() {
-                reloadMsg();
+                if (count === 0) {
+                    reloadMsg();
+                }
+                count += 1;
+
             }, 5000);
             $("#mymsg_menu").on("click", function() {
                 if (!($(".message_input_box").hasClass("on")) && !($(".chat_wrap").hasClass("on"))) {
@@ -256,7 +273,22 @@
                                 }
                                 html += '</div>';
                                 html += '<div class="receive_text">';
-                                html += '<p class="receive_profile_name">' + item.nickname + '<span class="match_percent">' + item.match_rate + '%</span></p>';
+                                html += '<p class="receive_profile_name">' + item.nickname;
+                                if (item.match_rate) {
+                                    if (80 <= item.match_rate) {
+                                        html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/blue_face_icon.png" /></span>';
+                                    } else if (item.match_rate >= 65 || item.match_rate < 80) {
+                                        html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/green_face_icon.png" /></span>';
+                                    } else if (item.match_rate >= 50 || item.match_rate < 65) {
+                                        html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/yellow_face_icon.png" /></span>';
+                                    } else if (item.match_rate >= 35 || item.match_rate < 50) {
+                                        html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/orange_face_icon.png" /></span>';
+                                    }
+                                    // html += '<span class="match_percent">' + item.match_rate + '%</span>';
+                                } else {
+                                    html += '<span class="mat_percent"><img class="faceIcon" style="width:12px;margin-left:5px" src="/static/images/red_face_icon.png"></span>';
+                                }
+                                html += '</p>';
                                 html += '<div class="receive_msg_area"><p>' + item.msg_cont + '</p></div></div>';
                                 html += '<div class="receive_time"><p>' + item.created_at + '</p></div></div>';
                             }

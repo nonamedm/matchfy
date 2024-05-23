@@ -663,7 +663,7 @@ class MoAjax extends BaseController
                 'label' => 'income_range',
                 'rules' => 'required',
                 'errors' => [
-                    'required' => '소득구간을 선택해주세요.',
+                    'required' => '연소득을 선택해주세요.',
                 ]
             ],
         ];
@@ -979,7 +979,7 @@ class MoAjax extends BaseController
                     'label' => 'income_range',
                     'rules' => 'required',
                     'errors' => [
-                        'required' => '소득구간을 선택해주세요.',
+                        'required' => '연소득을 선택해주세요.',
                     ]
                 ],
             ];
@@ -2497,7 +2497,7 @@ class MoAjax extends BaseController
                         }
                         $calc += $calcValue;
                     }
-                    // group3 -- 성별, 키, 학력, 직업, 자산구간, 소득구간
+                    // group3 -- 성별, 키, 학력, 직업, 자산구간, 연소득
                     // 성별은 애초에 거르기 때문에 배점 X
                     // 키
                     if ($item['height'] !== null) {

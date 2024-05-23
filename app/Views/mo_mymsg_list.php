@@ -100,11 +100,22 @@
                                         <img src="/<?= $row['member_file']['file_path'] ?><?= $row['member_file']['file_name'] ?>" />
                                     </div>
                                     <div class="receive_text">
-                                        <p class="receive_profile_name"><?= $row['member_name'] ?><span class="match_percent">
+                                        <p class="receive_profile_name"><?= $row['member_name'] ?>
+                                            <span class="match_percent">
                                                 <?php
-                                                if ($row['match_rate']) {
-                                                    echo $row['match_rate']['match_rate'] . "%";
-                                                } ?></span></p>
+                                                if (80 <= $row['match_rate']['match_rate']) {
+                                                    echo '<img class="faceIcon" style="width:13px;" src="/static/images/blue_face_icon.png">';
+                                                } else if ($row['match_rate']['match_rate'] >= 65 && $row['match_rate']['match_rate'] < 80) {
+                                                    echo '<img class="faceIcon" style="width:13px;" src="/static/images/green_face_icon.png">';
+                                                } else if ($row['match_rate']['match_rate'] >= 50 && $row['match_rate']['match_rate'] < 65) {
+                                                    echo '<img class="faceIcon" style="width:13px;" src="/static/images/yellow_face_icon.png">';
+                                                } else if ($row['match_rate']['match_rate'] >= 35 && $row['match_rate']['match_rate'] < 50) {
+                                                    echo '<img class="faceIcon" style="width:13px;" src="/static/images/orange_face_icon.png">';
+                                                } else {
+                                                    echo '<img class="faceIcon" style="width:13px;" src="/static/images/red_face_icon.png">';
+                                                } ?>
+                                            </span>
+                                        </p>
                                         <div class="receive_msg_area">
                                             <?php if ($row['last_msg']) {
                                             ?>
