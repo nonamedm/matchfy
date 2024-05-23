@@ -202,7 +202,7 @@
                         <div class="form_row signin_form">
                             <div class="signin_form_div input_btn">
                                 <h4 class="profile_photo_label"><?= lang('Korean.schoolNname') ?></h4>
-                                <p class="profile_photo_desc"><?= lang('Korean.premiumCon2') ?></p>
+                                <!-- <p class="profile_photo_desc"><?= lang('Korean.premiumCon2') ?></p> -->
                                 <div class="input_btn">
                                     <input id="school" name="school" type="text" value="<?= $school ?>" placeholder="<?= lang('Korean.sinupSchoolPlaceholder') ?>">
                                     <button type="button" class="btn btn_input_form" onclick="showPopupRgt('school','<?php echo $ci ?>')"><?= lang('Korean.certification') ?></button>
