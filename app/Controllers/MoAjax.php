@@ -1085,7 +1085,7 @@ class MoAjax extends BaseController
             if (empty($nickname)) {
             } else {
                 $is_duplicate = true;
-                $is_duplicate = $MemberModel->where(['nickname' => $nickname])->first();
+                $is_duplicate = $MemberModel->where(['nickname' => $nickname])->whereNotIn('ci', [$ci])->first();
                 // 닉네임 중복확인
                 if ($is_duplicate) {
                     while ($is_duplicate) {
