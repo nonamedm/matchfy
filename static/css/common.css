@@ -547,7 +547,7 @@ input[type='checkbox'] + label:hover {
     background-color: #111111;
 }
 .footer.block {
-    width: 98%;
+    width: auto;
 }
 .footer_logo {
     font-family: 'Tium';
