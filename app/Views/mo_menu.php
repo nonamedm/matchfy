@@ -29,15 +29,15 @@
                         <span><?= lang('Korean.matchfy') ?></span>
                     </div>
                     <div class="menu_cont">
-                        <p>
-                            <a onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.matchMeet') ?></a>
+                        <p onclick="moveToUrl('/mo/mypage/group/list')">
+                            <a><?= lang('Korean.matchMeet') ?></a>
                         </p>
                         <!-- <p><a onclick="moveToUrl('/mo/partner')"><?= lang('Korean.matchInfoBtn') ?></a></p> -->
-                        <p><a onclick="moveToUrl('/mo/matchFeed')"><?= lang('Korean.matchFeed') ?></a></p>
-                        <p><a onclick="moveToUrl('/mo/alliance/list')"><?= lang('Korean.matchAliiance') ?></a></p>
-                        <p><a onclick="moveToUrl('/mo/upgradeGrade')"><?= lang('Korean.matchUpgrade') ?></a></p>
-                        <p><a onclick="moveToUrl('/mo/alliance/pass')"><?= lang('Korean.matchAllianceAppli') ?></a></p>
-                        <p><a onclick="moveToUrl('/mo/invite')">친구 초대</a></p>
+                        <p onclick="moveToUrl('/mo/matchFeed')"><a><?= lang('Korean.matchFeed') ?></a></p>
+                        <p onclick="moveToUrl('/mo/alliance/list')"><a><?= lang('Korean.matchAliiance') ?></a></p>
+                        <p onclick="moveToUrl('/mo/upgradeGrade')"><a><?= lang('Korean.matchUpgrade') ?></a></p>
+                        <p onclick="moveToUrl('/mo/alliance/pass')"><a><?= lang('Korean.matchAllianceAppli') ?></a></p>
+                        <p onclick="moveToUrl('/mo/invite')"><a>친구 초대</a></p>
 
                     </div>
                 </div>
@@ -47,10 +47,10 @@
                         <span><?= lang('Korean.matchserviceCenter') ?></span>
                     </div>
                     <div class="menu_cont">
-                        <p><a onclick="moveToUrl('/mo/notice')"><?= lang('Korean.matchNotice') ?></a></p>
-                        <p><a onclick="moveToUrl('/mo/faq')">FAQ</a></p>
-                        <p><a onclick="moveToUrl('/mo/terms')"><?= lang('Korean.matchTerms') ?></a></p>
-                        <p><a onclick="moveToUrl('/mo/privacy')"><?= lang('Korean.matchPravacy') ?></a></p>
+                        <p onclick="moveToUrl('/mo/notice')"><a><?= lang('Korean.matchNotice') ?></a></p>
+                        <p onclick="moveToUrl('/mo/faq')"><a>FAQ</a></p>
+                        <p onclick="moveToUrl('/mo/terms')"><a><?= lang('Korean.matchTerms') ?></a></p>
+                        <p onclick="moveToUrl('/mo/privacy')"><a><?= lang('Korean.matchPravacy') ?></a></p>
                     </div>
                 </div>
             </div>
