@@ -152,7 +152,7 @@ class MoAjax extends BaseController
             AND wh_meetings.group_max_age >= ?
             ORDER BY wh_meetings.meeting_start_date ASC
         ";
-        
+
         $meetings = $MeetingModel->query($sql, [$currentTime, $age, $age])->getResultArray();
 
         $days = ['일', '월', '화', '수', '목', '금', '토'];
@@ -390,6 +390,17 @@ class MoAjax extends BaseController
                     $word_file_path = APPPATH . 'Data/RandomWord.php';
                     require($word_file_path);
                     $random_word = $randomadj[array_rand($randomadj)] . $randomword[array_rand($randomword)] . '@' . mt_rand(100000, 999999);
+                    $is_duplicate = $MemberModel->where(['nickname' => $random_word])->first();
+                }
+            } else {
+                $is_duplicate = true;
+                $is_duplicate = $MemberModel->where(['nickname' => $random_word])->first();
+                // 닉네임 중복확인
+                while ($is_duplicate) {
+                    // 닉네임 랜덤 생성
+                    $word_file_path = APPPATH . 'Data/RandomWord.php';
+                    require($word_file_path);
+                    $random_word = $random_word . '@' . mt_rand(100000, 999999);
                     $is_duplicate = $MemberModel->where(['nickname' => $random_word])->first();
                 }
             }
@@ -768,8 +779,23 @@ class MoAjax extends BaseController
             ];
 
             // nickname 필드가 있다면 $data 배열에 추가
-            if (!empty($nickname)) {
-                $data['nickname'] = $nickname;
+            if (empty($nickname)) {
+            } else {
+                $is_duplicate = true;
+                $is_duplicate = $MemberModel->where(['nickname' => $nickname])->first();
+                // 닉네임 중복확인
+                if ($is_duplicate) {
+                    while ($is_duplicate) {
+                        // 닉네임 랜덤 생성
+                        $word_file_path = APPPATH . 'Data/RandomWord.php';
+                        require($word_file_path);
+                        $random_word = $nickname . '@' . mt_rand(100000, 999999);
+                        $is_duplicate = $MemberModel->where(['nickname' => $random_word])->first();
+                    }
+                    $data['nickname'] = $random_word;
+                } else {
+                    $data['nickname'] = $nickname;
+                }
             }
 
             if ($temp_grade === 'grade03') {
@@ -1056,8 +1082,23 @@ class MoAjax extends BaseController
             ];
 
             // nickname 필드가 있다면 $data 배열에 추가
-            if (!empty($nickname)) {
-                $data['nickname'] = $nickname;
+            if (empty($nickname)) {
+            } else {
+                $is_duplicate = true;
+                $is_duplicate = $MemberModel->where(['nickname' => $nickname])->first();
+                // 닉네임 중복확인
+                if ($is_duplicate) {
+                    while ($is_duplicate) {
+                        // 닉네임 랜덤 생성
+                        $word_file_path = APPPATH . 'Data/RandomWord.php';
+                        require($word_file_path);
+                        $random_word = $nickname . '@' . mt_rand(100000, 999999);
+                        $is_duplicate = $MemberModel->where(['nickname' => $random_word])->first();
+                    }
+                    $data['nickname'] = $random_word;
+                } else {
+                    $data['nickname'] = $nickname;
+                }
             }
 
             if ($grade === 'grade03') {
