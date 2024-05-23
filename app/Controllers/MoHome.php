@@ -1200,115 +1200,120 @@ class MoHome extends BaseController
         $pointModel = new PointModel();
 
         $getMemberCount = $this->getMemberCount($meeting_idx);
+        $getMemberDup = $this->getMemberConfirm($ci, $meeting_idx);
         $getMemberConfirm = $this->getMemberConfirmTemp($ci, $meeting_idx);
 
         if ($getMemberCount == 'true') {
             // if ($mypoint < $point) { //보유포인트가 모자랄 경우
             //     return $this->response->setJSON(['success' => true, 'msg' => '충전후 사용해주세요.']);
             // } else {
-            if ($getMemberConfirm == 'true') { //통과!
-                //마스터 유저                  
-                $masterMember = new MemberModel();
-                $meetingMaster = $masterMember
-                    ->distinct()
-                    ->select('m.name as name, m.ci as ci, wp.my_point as k_point')
-                    ->from('members m')
-                    ->join('wh_points wp', 'wp.member_ci = m.ci', 'left')
-                    ->join('wh_meeting_members wmm', 'm.ci = wmm.member_ci', 'left')
-                    ->where('wmm.meeting_idx', $meeting_idx)
-                    ->where('wmm.meeting_master', 'K')
-                    ->orderBy('wp.create_at', 'desc')
-                    ->get()
-                    ->getRow();
+            if ($getMemberDup == 'true') { // 방에 참석하지 않은 경우
+                if ($getMemberConfirm == 'true') { // 참석 신청도 안한 경우
+                    //마스터 유저                  
+                    $masterMember = new MemberModel();
+                    $meetingMaster = $masterMember
+                        ->distinct()
+                        ->select('m.name as name, m.ci as ci, wp.my_point as k_point')
+                        ->from('members m')
+                        ->join('wh_points wp', 'wp.member_ci = m.ci', 'left')
+                        ->join('wh_meeting_members wmm', 'm.ci = wmm.member_ci', 'left')
+                        ->where('wmm.meeting_idx', $meeting_idx)
+                        ->where('wmm.meeting_master', 'K')
+                        ->orderBy('wp.create_at', 'desc')
+                        ->get()
+                        ->getRow();
 
-                //참석한 멤버 포인트 사용
-                // $mydata = [
-                //     'member_ci' => $ci,
-                //     'my_point' => $mypoint - $point,
-                //     'use_point' => $point,
-                //     'point_details' => $meetingMaster->name . "(모임회비)",
-                //     'create_at' => date('Y-m-d H:i:s'),
-                //     'point_type' => 'U',
-                // ];
-                // $result = $pointModel->insert($mydata);
+                    //참석한 멤버 포인트 사용
+                    // $mydata = [
+                    //     'member_ci' => $ci,
+                    //     'my_point' => $mypoint - $point,
+                    //     'use_point' => $point,
+                    //     'point_details' => $meetingMaster->name . "(모임회비)",
+                    //     'create_at' => date('Y-m-d H:i:s'),
+                    //     'point_type' => 'U',
+                    // ];
+                    // $result = $pointModel->insert($mydata);
 
-                //참석 멤버 추가
-                $meetMemdata = [
-                    'meeting_idx' => $meeting_idx,
-                    'member_ci' => $ci,
-                    'meeting_master' => 'M',
-                    'create_at' => date('Y-m-d H:i:s'),
-                ];
-                $meeting_members = new MeetingMembersModel();
-                $meeting_members_temp = new MeetingMembersTempModel();
-                $in_member = $meeting_members->where('meeting_idx', $meeting_idx)
-                    ->where('member_ci', $ci)
-                    ->where('delete_yn', 'Y')
-                    ->first();
+                    //참석 멤버 추가
+                    $meetMemdata = [
+                        'meeting_idx' => $meeting_idx,
+                        'member_ci' => $ci,
+                        'meeting_master' => 'M',
+                        'create_at' => date('Y-m-d H:i:s'),
+                    ];
+                    $meeting_members = new MeetingMembersModel();
+                    $meeting_members_temp = new MeetingMembersTempModel();
+                    $in_member = $meeting_members->where('meeting_idx', $meeting_idx)
+                        ->where('member_ci', $ci)
+                        ->where('delete_yn', 'Y')
+                        ->first();
 
-                if ($in_member) {
-                    // 기존 참석했던 방이면 업데이트
-                    $query = "UPDATE wh_meeting_members";
-                    $query .= " SET create_at = '" . date('Y-m-d H:i:s') . "'";
-                    $query .= " , delete_yn = 'N'";
-                    $query .= " WHERE meeting_idx = '" . $meeting_idx . "'";
-                    $query .= " AND member_ci = '" . $ci . "'";
+                    if ($in_member) {
+                        // 기존 참석했던 방이면 업데이트
+                        $query = "UPDATE wh_meeting_members";
+                        $query .= " SET create_at = '" . date('Y-m-d H:i:s') . "'";
+                        $query .= " , delete_yn = 'N'";
+                        $query .= " WHERE meeting_idx = '" . $meeting_idx . "'";
+                        $query .= " AND member_ci = '" . $ci . "'";
 
-                    $meeting_members
-                        ->query($query);
-                } else {
-                    // 참석 승인 요청 처리
-                    $meeting_members_temp->insert($meetMemdata);
-
-                    $query = "SELECT * FROM wh_meeting_members WHERE meeting_idx='" . $meeting_idx . "' AND meeting_master='K' AND delete_yn='N'";
-                    $meeting_members
-                        ->query($query);
-                    if ($meeting_members) {
-                        $msg_cont = '모임 참가 신청 <br/>승인하시려면 확인 버튼을 눌러주세요<br/><br/></span><button class="scdl_confirm" onclick="applyMember(`' . $ci . '`,`' . $meeting_idx . '`)">확인</button>';
-
-                        $query = "INSERT INTO wh_chat_room_msg
-                        (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
-                        VALUES((SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "'),'" . $ci . "','9','6','" . $msg_cont . "','9','9');";
-                        $meeting_members->query($query);
-                        return $this->response->setJSON(['success' => true, 'msg' => '참석 신청이 완료 되었습니다.']);
+                        $meeting_members
+                            ->query($query);
                     } else {
-                        return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
+                        // 참석 승인 요청 처리
+                        $meeting_members_temp->insert($meetMemdata);
+
+                        $query = "SELECT * FROM wh_meeting_members WHERE meeting_idx='" . $meeting_idx . "' AND meeting_master='K' AND delete_yn='N'";
+                        $meeting_members
+                            ->query($query);
+                        if ($meeting_members) {
+                            $msg_cont = '모임 참가 신청 <br/>승인하시려면 확인 버튼을 눌러주세요<br/><br/></span><button class="scdl_confirm" onclick="applyMember(`' . $ci . '`,`' . $meeting_idx . '`)">확인</button>';
+
+                            $query = "INSERT INTO wh_chat_room_msg
+                            (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
+                            VALUES((SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "'),'" . $ci . "','9','6','" . $msg_cont . "','9','9');";
+                            $meeting_members->query($query);
+                            return $this->response->setJSON(['success' => true, 'msg' => '참석 신청이 완료 되었습니다.']);
+                        } else {
+                            return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
+                        }
                     }
+
+                    //나의 유저
+                    // $memberName = new MemberModel();
+                    // $meetingUser = $memberName
+                    //     ->distinct()
+                    //     ->select('m.name as name,m.ci as ci')
+                    //     ->from('members m')
+                    //     ->where('m.ci', $ci)
+                    //     ->get()
+                    //     ->getRow();
+
+                    //모임방에 포인트 올리기
+                    // $meetPointModel = new MeetPointModel();
+                    // $masterdata = [
+                    //     'meeting_idx' => $meeting_idx,
+                    //     'member_ci' => $meetingUser->ci,
+                    //     'meeting_points' => $point,
+                    //     'meeting_type' => 'M',
+                    //     'point_check_type' => '1',
+                    //     'create_at' => date('Y-m-d H:i:s'),
+                    //     'update_at' => date('Y-m-d H:i:s'),
+                    // ];
+
+                    // $meetPointModel->insert($masterdata);
+
+                    // if ($result) {
+
+                    // } else {
+                    //     return $this->response->setJSON(['success' => false, 'msg' => '포인트 결제가 실패 하였습니다.']);
+                    // }
+                } else { //이미 참석된 멤버 일 경우
+                    return $this->response->setJSON(['success' => true, 'msg' => '이미 참석 신청된 멤버 입니다.']);
                 }
-
-                //나의 유저
-                // $memberName = new MemberModel();
-                // $meetingUser = $memberName
-                //     ->distinct()
-                //     ->select('m.name as name,m.ci as ci')
-                //     ->from('members m')
-                //     ->where('m.ci', $ci)
-                //     ->get()
-                //     ->getRow();
-
-                //모임방에 포인트 올리기
-                // $meetPointModel = new MeetPointModel();
-                // $masterdata = [
-                //     'meeting_idx' => $meeting_idx,
-                //     'member_ci' => $meetingUser->ci,
-                //     'meeting_points' => $point,
-                //     'meeting_type' => 'M',
-                //     'point_check_type' => '1',
-                //     'create_at' => date('Y-m-d H:i:s'),
-                //     'update_at' => date('Y-m-d H:i:s'),
-                // ];
-
-                // $meetPointModel->insert($masterdata);
-
-                // if ($result) {
-
-                // } else {
-                //     return $this->response->setJSON(['success' => false, 'msg' => '포인트 결제가 실패 하였습니다.']);
                 // }
-            } else { //이미 참석된 멤버 일 경우
-                return $this->response->setJSON(['success' => true, 'msg' => '이미 참석 신청된 멤버 입니다.']);
+            } else {
+                return $this->response->setJSON(['success' => true, 'msg' => '이미 참석중인 멤버 입니다.']);
             }
-            // }
         } else if ($getMemberCount == 'nodata') {
             return $this->response->setJSON(['success' => true, 'msg' => '존재하지 않는 모임입니다. 다시 시도해 주세요.']);
         } else { //참석멤버수가 다 찼을 경우
