@@ -178,6 +178,19 @@
                                         </p>
                                     </div>
                                     <div class="profile_content">
+                                        <h2><?= lang('Korean.occupational') ?></h2>
+                                        <p>
+                                            <?php foreach ($jobCode as $item) {
+                                                if ($item['id'] === $job) echo  strstr($item['name'], ': ', true);
+                                            } ?>
+                                        </p>
+                                        <p>
+                                            <?php if ($job_regist[0]['extra1'] === 'y') {
+                                                echo '<img src="/static/images/review_star.png" />';
+                                            } ?>
+                                        </p>
+                                    </div>
+                                    <div class="profile_content">
                                         <h2><?= lang('Korean.assetGroup') ?></h2>
                                         <p>
                                             <?php foreach ($asset as $item) {
