@@ -700,6 +700,7 @@ header .menu_item {
     } */
     .content_banner_top {
         width: 360px;
+        padding: 10px 20px;
     }
     .content_banner_top img {
         width: 95%;
@@ -799,6 +800,9 @@ header .menu_item {
     .content_no_img {
         display: flex;
         flex-direction: column;
+    }
+    .main_cont_center_box {
+        width: auto;
     }
     .main_bg_center_box h2 {
         font-size: 36px;
