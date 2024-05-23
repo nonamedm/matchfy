@@ -2,9 +2,26 @@
     <div class="menu">
         <ul>
             <li class="left_arrow">
-                <a onclick="<?php echo isset($prevUrl) ? "moveToUrl('" . $prevUrl . "')" : "javascript:history.back()"; ?>">
-                    <img src="/static/images/left_arrow.png" />
-                </a>
+                <?php if (isset($title) && $title == "프로필") { ?>
+                    <?php $previousUrl = $_SERVER['HTTP_REFERER'] ?? null; ?>
+                    <?php if (substr($previousUrl, -strlen('/mo/mymsg')) === '/mo/mymsg') {
+                    ?>
+                        <a onclick="<?php echo "moveToUrl('" . $previousUrl . "','post')"; ?>">
+                            <img src="/static/images/left_arrow.png" />
+                        </a>
+                    <?php
+                    } else {
+                    ?>
+                        <a onclick="<?php echo isset($prevUrl) ? "moveToUrl('" . $prevUrl . "')" : "javascript:history.back()"; ?>">
+                            <img src="/static/images/left_arrow.png" />
+                        </a>
+                    <?php
+                    } ?>
+                <?php } else { ?>
+                    <a onclick="<?php echo isset($prevUrl) ? "moveToUrl('" . $prevUrl . "')" : "javascript:history.back()"; ?>">
+                        <img src="/static/images/left_arrow.png" />
+                    </a>
+                <?php } ?>
             </li>
             <li class="header_title">
                 <?php echo isset($title) ? $title : 'Matchfy'; ?>

@@ -386,6 +386,11 @@ class MoHome extends BaseController
         $session = session();
         $ci = $session->get('ci');
         $room_ci = $this->request->getPost('room_ci');
+        if ($room_ci) {
+            $session->set('prev_room_ci', $room_ci);
+        } else {
+            $room_ci = $session->get('prev_room_ci');
+        }
 
         // 내가 이 방의 참가자가 맞는지 다시 확인
         $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "'";
