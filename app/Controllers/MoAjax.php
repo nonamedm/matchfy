@@ -3680,7 +3680,7 @@ class MoAjax extends BaseController
                 $createRegist = $EmailRegisterModel
                     ->query($query);
 
-                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '0', 'data' => $random_numbers, 'email' => $emailSend, 'code' => $createRegist]);
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '0']);
             }
         } else {
             return $this->response->setJSON(['status' => 'failed', 'message' => 'failed', 'result' => '2']);

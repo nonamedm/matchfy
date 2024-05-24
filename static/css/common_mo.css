@@ -2338,8 +2338,7 @@ form input[type='file'] {
     /* padding: 10px; */
 }
 .btn_group.multy {
-    /* display: contents; */
-    display: flex;
+    display: contents;
     margin: 0 auto;
     width: 315px;
 }
@@ -3120,7 +3119,7 @@ input[type='number']::-webkit-inner-spin-button {
     width: 85%;
 }
 .mo_wrap .layerPopup.alert .layerPopup_content .layerPopup_bottom .btn_group.multy .btn {
-    width: 143px;
+    width: 45%;
 }
 
 .layerPopup_content .chat_member {

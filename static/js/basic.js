@@ -960,7 +960,45 @@ const editPhotoListListner = () => {
     });
 
     $('#skipButton, #saveButton').click(function (e) {
-        $('.layerPopup').show();
+        // $('.layerPopup').show();
+        const formData = new FormData();
+
+        // 기존의 input 요소의 값을 FormData에 추가
+        const inputElements = document.querySelectorAll('.main_signin_form input');
+        inputElements.forEach((input) => {
+            formData.append(input.name, input.value);
+        });
+        uploadedFiles.forEach((file, index) => {
+            for (const key in file) {
+                formData.append(`uploadedFiles[${index}][${key}]`, file[key]);
+            }
+        });
+        uploadedMovs.forEach((file, index) => {
+            for (const key in file) {
+                formData.append(`uploadedMovs[${index}][${key}]`, file[key]);
+            }
+        });
+
+        // 수정된 FormData를 서버로 전송
+        fetch('/ajax/updtUserData', {
+            method: 'POST',
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Upload success', data);
+                moveToUrl('/mo/signinType', {
+                    ci: data.data.ci,
+                    mobile_no: data.data.mobile_no,
+                    file_path: $('#file_path').val(),
+                    file_name: $('#file_name').val(),
+                });
+                // 성공한 경우, 필요에 따라 리다이렉션 또는 메시지 표시 등의 작업 수행
+            })
+            .catch((error) => {
+                console.error('Upload failed', error);
+                // 실패한 경우, 오류 메시지 표시 등의 작업 수행
+            });
     });
     $('.layerPopup_bottom .btn').click(function (event) {
         event.preventDefault();
