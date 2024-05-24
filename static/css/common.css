@@ -865,10 +865,7 @@ header .menu_item {
         position: absolute;
         right: 10px;
     } */
-    header.ci_header {
-    width: 360px;
-    margin: 0 auto;
-}
+    
     .content_no_img.login_main {
         /* width: 968px; */
         width: 320px;

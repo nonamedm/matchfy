@@ -580,7 +580,7 @@ header .menu_right.edit {
     margin: 15px 0 0 0;
 }
 .basic_table {
-    width: 335px;
+    width: 325px;
     font-weight: 500;
     font-size: 13px;
     line-height: 16px;
@@ -1014,7 +1014,7 @@ a.ended:hover .ended_overlay {
 
 /* group detail*/
 .group_deatil_img img {
-    /* width: 335px; */
+    /* width: 325px; */
     width: 100%;
     height: 248px;
     object-fit: cover;
@@ -1068,7 +1068,7 @@ a.ended:hover .ended_overlay {
     line-height: 20px;
 }
 .group_detail_location {
-    /* width: 335px; */
+    /* width: 325px; */
     width: 100%;
     min-height: 90px;
     border: 1px solid #dddddd;
@@ -1115,7 +1115,7 @@ a.ended:hover .ended_overlay {
     line-height: 20px;
 }
 .group_detail_map img {
-    width: 335px;
+    width: 325px;
     height: 208px;
 }
 
@@ -1229,7 +1229,7 @@ a:active {
     left: 25px;
 }
 .group_search input {
-    width: 335px;
+    width: 325px;
     height: 40px;
     border: 1px solid #dddddd;
     border-radius: 10px;
@@ -1286,10 +1286,10 @@ a:active {
     right: 30px;
 }
 .group_create .schedule_calendar .hasDatepicker {
-    width: 151px;
+    width: 146px;
 }
 .group_create .schedule_calendar .hasDatepicker.datepicker2 {
-    width: 335px;
+    width: 325px;
 }
 /* wallet*/
 .amount_pay {
@@ -1758,7 +1758,7 @@ a:active {
     display: flex;
 }
 .line_banner {
-    width: 97%;
+    width: 95%;
     height: 17px;
     background: #ff0267;
     border-radius: 10px;
@@ -1818,7 +1818,7 @@ a:active {
     z-index: 1;
 }
 .mo_wrap .sub_wrap .content_wrap .content_body .grade_box {
-    width: 335px;
+    width: 325px;
     border: 2px solid #eeeeee;
     border-radius: 15px;
     margin-bottom: 10px;
@@ -1961,7 +1961,7 @@ a:active {
 .form_row.signin_form .signin_form_div {
     display: flex;
     flex-direction: column;
-    width: 335px;
+    width: 325px;
     /* width: 776px; */
     /* margin: 0 auto; */
 }
@@ -1995,7 +1995,7 @@ a:active {
 }
 
 .form_row input {
-    width: 335px;
+    width: 325px;
     height: 50px;
     background: #ffffff;
     border-radius: 15px;
@@ -2016,7 +2016,7 @@ a:active {
     color: #999999;
 }
 .form_row textarea {
-    width: 335px;
+    width: 325px;
     height: 160px;
     background: #ffffff;
     border-radius: 15px;
@@ -2033,7 +2033,7 @@ a:active {
 }
 .group_create_map {
     border-radius: 5px;
-    width: 335px;
+    width: 325px;
     height: 174px;
     margin-top: 10px;
 }
@@ -2159,7 +2159,7 @@ a:active {
     font-weight: 700;
 }
 .form_row.signin_form .profile_photo_input.group_photo_input {
-    width: 335px;
+    width: 325px;
     height: 220px;
 }
 .form_row.signin_form .profile_photo_posted {
@@ -2311,7 +2311,7 @@ form input[type='file'] {
     margin-bottom: 50px;
 }
 .form_row select {
-    width: 335px;
+    width: 325px;
     height: 50px;
     border-radius: 15px;
     border: none;
@@ -2455,7 +2455,7 @@ form input[type='file'] {
 }
 .btn.type00 {
     color: #fff;
-    width: 335px;
+    width: 325px;
     height: 50px;
     border: 1px solid #ffffff;
     border-radius: 15px;
@@ -2467,7 +2467,7 @@ form input[type='file'] {
 }
 .btn.type01 {
     color: #fff;
-    width: 335px;
+    width: 325px;
     height: 50px;
     border: none;
     background: #ff0267;
@@ -2479,7 +2479,7 @@ form input[type='file'] {
 }
 
 .btn.type02 {
-    width: 335px;
+    width: 325px;
     height: 50px;
     border: none;
     background: #f2f2f2;
@@ -2491,7 +2491,7 @@ form input[type='file'] {
     color: #333333;
 }
 .btn.type03 {
-    width: 335px;
+    width: 325px;
     height: 50px;
     border: none;
     background: #fae0ea;
@@ -2854,21 +2854,21 @@ input[type='number']::-webkit-inner-spin-button {
 
 /* feed list */
 .feed_img_box img {
-    /* width: 335px; */
+    /* width: 325px; */
     width: 100%;
     height: 335px;
     border-radius: 3px;
     object-fit: cover;
 }
 .feed_img_box video {
-    /* width: 335px; */
+    /* width: 325px; */
     width: 100%;
     height: 335px;
     border-radius: 3px;
     object-fit: cover;
 }
 .sns_img_filter {
-    width: 335px;
+    width: 325px;
     height: 16px;
     background: #ffecf0;
     border-radius: 5px;
@@ -3781,7 +3781,7 @@ input[type='number']::-webkit-inner-spin-button {
     position: absolute; */
 }
 .invite_code_popup input {
-    width: 335px;
+    width: 325px;
     height: 48px;
     box-sizing: border-box;
     border: 1px solid #dddddd;
@@ -3793,7 +3793,7 @@ input[type='number']::-webkit-inner-spin-button {
     color: #999999;
 }
 .invite_code {
-    width: 335px;
+    width: 325px;
     height: 73px;
     background: #f1f1f1;
     border-radius: 10px;
@@ -3874,7 +3874,7 @@ input[type='number']::-webkit-inner-spin-button {
 }
 
 .form_row.signin_form .signin_form_div .multy_input input {
-    width: 160px !important;
+    width: 155px !important;
     margin: 3px;
 }
 
@@ -3913,7 +3913,7 @@ input[type='number']::-webkit-inner-spin-button {
     padding: 10px;
 }
 .invite_img {
-    width: 335px;
+    width: 325px;
     margin: 0 auto;
 }
 .date {
@@ -3949,17 +3949,8 @@ input[type='number']::-webkit-inner-spin-button {
     .form_row.signin_form .signin_form_div {
         display: flex;
         flex-direction: column;
-        width: 335px;
+        width: 325px;
         margin: 0 auto;
-    }
-    .line_banner {
-        width: 307px;
-        height: 17px;
-        background: #ff0267;
-        border-radius: 10px;
-        padding: 14px;
-        display: flex;
-        justify-content: space-between;
     }
     .agree_cont .textarea {
         width: 305px;
@@ -4000,13 +3991,16 @@ input[type='number']::-webkit-inner-spin-button {
         display: flex;
         justify-content: space-between;
     }
-    .btn_group.multy {
+    .layerPopup_wrap .btn_group.multy {
         display: contents;
+    }
+    .btn_group.multy {
+        display: flex;
     }
     /*alliance apply*/
     .temp_input_text {
         border: 1px solid #dddddd;
-        width: 335px;
+        width: 325px;
         height: 50px;
         background: #ffffff;
         border-radius: 15px;
