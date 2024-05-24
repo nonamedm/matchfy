@@ -27,7 +27,7 @@
             <div class="content_wrap">
                 <div class="tab_wrap">
                     <ul>
-                        <li>
+                        <li onclick="AImsg()">
                             <?= lang('Korean.AIMsg') ?>
                         </li>
                         <li class="on">
@@ -200,6 +200,9 @@
         $(document).ready(function() {
 
         });
+        const AImsg = () => {
+            fn_alert('준비중인 기능입니다!')
+        }
         const sendMsg = (nickname) => {
             $.ajax({
                 url: '/ajax/createChat',
