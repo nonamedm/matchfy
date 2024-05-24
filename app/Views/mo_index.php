@@ -14,7 +14,7 @@
 </head>
 
 <body class="mo_wrap">
-    <div class="wrap main_wrap">
+    <div class="wrap main_wrap" style="overflow-y: scroll;">
 
         <!-- HEADER: MENU + HEROE SECTION -->
         <header>
@@ -22,7 +22,7 @@
         </header>
 
         <div class="">
-            <div class="login_wrap" style="height:100%;">
+            <div class=" login_wrap" style="height:100%;">
                 <div class="main_logo">
                     matchfy
                 </div>

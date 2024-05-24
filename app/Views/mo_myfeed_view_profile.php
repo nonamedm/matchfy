@@ -54,7 +54,7 @@
                             <div class="profile_content">
                                 <h2><?= lang('Korean.name') ?></h2>
                                 <p>
-                                    <?= $name ?>
+                                    <?= $profile_name ?>
                                 </p>
                             </div>
                             <div class="profile_content">
