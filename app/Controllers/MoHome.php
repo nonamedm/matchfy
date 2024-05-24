@@ -1844,7 +1844,7 @@ class MoHome extends BaseController
         $data = [
             'ci' => $user['ci'],
             'nickname' => $user['nickname'],
-            'name' => $user['name'],
+            'profile_name' => $user['name'],
             'birthday' => $user['birthday'],
             'gender' => $user['gender'],
             'city' => $user['city'],
