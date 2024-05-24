@@ -63,14 +63,86 @@ input[type='checkbox'] + label:hover {
 .header {
     padding: 18px 0px;
     background: #ffffff;
+    position: relative;
+    margin: 0 auto;
+    padding: .4rem 0 0;
 }
+header.ci_header {
+    width: 400px;
+    margin: 0 auto;
+}
+header.ci_header .logo_menu {
+    padding: .4rem 2rem;
+    background-color: rgba(247, 248, 249, 1);
+}
+header.ci_header .logo_menu ul {
+    border-bottom: 1px solid rgba(242, 242, 242, 1);
+    list-style-type: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    text-align: center !important;
+    display: block;
+}
+header.ci_header .logo_menu ul .logo {
+    height: 44px;
+    padding: .4rem .5rem;
+}
+header.ci_header .logo_menu ul li {
+    cursor: pointer;
+}
+header.ci_header .logo_menu ul .menu_left {
+    display: inline-flex;
+    position: absolute;
+    left: 10px;
+    top: 20px;
+}
+header.ci_header .logo_menu ul .menu_left button {
+    border: none;
+    background-color: transparent;
+}
+header.ci_header .logo_menu ul .menu_item {
+    position: absolute;
+    right: 10px;
+    top: 13px;
+}
+header.ci_header .logo_menu ul .item {
+    display: inline-flex;
+    position: absolute;
+    right: 10px;
+}
+.login_btn.mypage_icon {
+    display: flex;
+}
+.login_btn.mypage_icon {
+    width: 45px;
+    background: transparent;
+}
+.login_btn {
+    align-items: center;
+    width: 98px;
+    display: flex;
+    height: 38px;
+    background: #ff0267;
+    border-radius: 10px;
+    margin-left: 10px;
+    color: white;
+    border: none;
+    font-family: 'Pretendard-Bold';
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: -0.01em;
+    text-transform: capitalize;
+    justify-content: center;
+}
+
+
 header .menu {
     display: flex;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 10px 20px 0px 20px;
 }
 header ul {
-    height: 22px;
     list-style-type: none;
     margin: 0;
     overflow: hidden;
@@ -146,7 +218,6 @@ header .menu_right.edit {
 .mo_wrap .sub_wrap {
     position: relative;
     min-height: 784px !important;
-    width: 371px;
     height: auto;
     margin: 0 auto;
     background: #ffffff;
@@ -3752,6 +3823,7 @@ input[type='number']::-webkit-inner-spin-button {
     height: 80px;
     border-radius: 50%;
     object-fit: cover;
+    cursor: pointer;
 }
 
 /* validation */
@@ -3861,12 +3933,18 @@ input[type='number']::-webkit-inner-spin-button {
     right: 20px;
     cursor: pointer;
 }
+@media (max-width: 968px) {
+    header.ci_header {
+        width: 100%;
+        margin: 0 auto;
+    }
+}
 @media (max-width: 767px) {
     .mo_wrap .wrap {
-        max-width: 375px;
         margin: 0 auto;
         min-height: 500px;
-        overflow: hidden;
+        overflow-y: hidden;
+        overflow-x: scroll;
     }
     .form_row.signin_form .signin_form_div {
         display: flex;
@@ -3945,6 +4023,22 @@ input[type='number']::-webkit-inner-spin-button {
         text-indent: -10px;
         padding-left: 10px;
         width: 250px;
+    }
+}
+@media (max-width: 400px) {
+    .mo_wrap .wrap {
+        max-width: 400px;
+    }
+    .mo_wrap .sub_wrap {
+        max-width: 400px;
+    }
+}
+@media (max-width: 360px) {
+    .mo_wrap .wrap {
+        max-width: 360px;
+    }
+    .mo_wrap .sub_wrap {
+        max-width: 360px;
     }
 }
 

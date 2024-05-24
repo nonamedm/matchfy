@@ -25,7 +25,7 @@
         require($word_file_path); ?>
         <div class="sub_wrap">
             <div class="content_wrap">
-                <div class="content_body content_profile">
+                <div class="content_body content_profile" onclick="zoomImg()">
                     <?php if ($image) : ?>
                         <img class="profile_img" src="/<?= $image['file_path'] ?>/<?= $image['file_name'] ?>" />
                     <?php else : ?>
@@ -305,6 +305,27 @@
 
 
 
+        <div class="layerPopup alert middle alliance" style="display: none;"><!-- class: imgPop 추가 -->
+            <div class="layerPopup_wrap">
+                <div class="layerPopup_header">
+                    <a href="#" class="btn_popup_close" onclick="closePopup();" style="float: right;">닫기</a>
+                </div>
+                <div class="layerPopup_content">
+                    <div class="">
+                        <?php if ($image) : ?>
+                            <img class="profile_img" src="/<?= $image['file_path'] ?>/<?= $image['file_name'] ?>" style="width: 85%;" />
+                        <?php else : ?>
+                            <img class="profile_img" src="/static/images/profile_noimg.png" style="width: 85%;" />
+                        <?php endif; ?>
+                    </div>
+                    <div class="layerPopup_bottom">
+                        <div class="btn_group">
+                            <button class="btn type01" onclick="closePopup();"><?= lang('Korean.check') ?></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
@@ -339,6 +360,9 @@
                     fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
+        }
+        const zoomImg = () => {
+            $(".layerPopup").css('display', 'flex')
         }
     </script>
 
