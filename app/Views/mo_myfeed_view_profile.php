@@ -91,7 +91,9 @@
                                     <div class="profile_content">
                                         <h2><?= lang('Korean.marryTrueFalse') ?></h2>
                                         <p>
-                                            <?= $married === 0 ? '싱글' : '돌싱' ?>
+                                            <?php if (isset($married)) : ?>
+                                                <?= $married === '1' ? '돌싱' : '싱글' ?>
+                                            <?php endif; ?>
                                         </p>
                                     </div>
                                     <div class="profile_content">
