@@ -542,6 +542,9 @@ function meetingApplication(idx) {
         },
         error: function (xhr, status, error) {
             console.log(error);
+            if (xhr.status === 403) {
+                moveToUrl('/mo');
+            }
         },
     });
 }
