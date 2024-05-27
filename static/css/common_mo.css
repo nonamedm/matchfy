@@ -65,14 +65,14 @@ input[type='checkbox'] + label:hover {
     background: #ffffff;
     position: relative;
     margin: 0 auto;
-    padding: .4rem 0 0;
+    padding: 0.4rem 0 0;
 }
 header.ci_header {
     width: 400px;
     margin: 0 auto;
 }
 header.ci_header .logo_menu {
-    padding: .4rem 2rem;
+    padding: 0.4rem 2rem;
     background-color: rgba(247, 248, 249, 1);
 }
 header.ci_header .logo_menu ul {
@@ -86,7 +86,7 @@ header.ci_header .logo_menu ul {
 }
 header.ci_header .logo_menu ul .logo {
     height: 44px;
-    padding: .4rem .5rem;
+    padding: 0.4rem 0.5rem;
 }
 header.ci_header .logo_menu ul li {
     cursor: pointer;
@@ -135,7 +135,6 @@ header.ci_header .logo_menu ul .item {
     text-transform: capitalize;
     justify-content: center;
 }
-
 
 header .menu {
     display: flex;
@@ -768,6 +767,7 @@ td {
 }
 .message_input_box.on .chat_menu_open {
     display: flex;
+    width: 335px;
 }
 .message_input_box .chat_menu_open .chat_menu_func {
     width: 54px;

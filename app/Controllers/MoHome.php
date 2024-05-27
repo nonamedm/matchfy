@@ -534,6 +534,11 @@ class MoHome extends BaseController
                     }
                 }
             }
+            usort($myChatRoom, function ($a, $b) {
+                $timeA = isset($a['last_msg']) ? strtotime($a['last_msg']['created_at']) : strtotime($a['created_at']);
+                $timeB = isset($b['last_msg']) ? strtotime($b['last_msg']['created_at']) : strtotime($b['created_at']);
+                return $timeB - $timeA;
+            });
             $data['my_chat_room'] = $myChatRoom;
             // echo print_r($data['my_chat_room']);
             return view('mo_mymsg_list', $data);
