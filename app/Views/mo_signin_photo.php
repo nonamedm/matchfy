@@ -58,8 +58,7 @@
                                     <!-- <a href="javascript:avoid(0)" class="btn_close">닫기</a> -->
                                 </div>
                                 <div class="layerPopup_content bg_white">
-                                    <h2 class="title">초대코드 입력 시<br />
-                                        정회원 / 프리미엄 회원 <span>50% 할인!</span></h2>
+                                    <h2 class="title">초대코드를 입력해 주세요<br /></h2>
 
                                     <div class="invite_code_popup">
                                         <input type="text" id="invite_code" name="invite_code" placeholder="초대코드를 입력해주세요" />

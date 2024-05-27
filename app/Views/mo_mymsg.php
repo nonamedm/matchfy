@@ -30,7 +30,7 @@
             <div class="content_wrap">
                 <div class="tab_wrap">
                     <ul>
-                        <li>
+                        <li onclick="AImsg()">
                             <?= lang('Korean.AIMsg') ?>
                         </li>
                         <li class="on">
@@ -85,7 +85,6 @@
                                             } else if ($row['match_rate'] >= 35 || $row['match_rate'] < 50) {
                                                 echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/orange_face_icon.png" /></span>';
                                             }
-                                            echo number_format($row['match_rate'], 0) . "%";
                                         } else {
                                             echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/red_face_icon.png" /></span>';
                                         }
@@ -148,7 +147,7 @@
                     <?php if ($room_type[0]['room_type'] === '1') {
                     ?>
                         <div class="chat_menu_func" onclick="rptMbr()"><img src="/static/images/chat_report.png">
-                            <p>신고/강퇴</p>
+                            <p>참여자<br />목록</p>
                         </div>
                     <?php
                     } ?>
@@ -525,6 +524,9 @@
         //         },
         //     });
         // };
+        const AImsg = () => {
+            fn_alert('준비중인 기능입니다!')
+        }
     </script>
 
     <!-- -->
