@@ -221,12 +221,8 @@
             });
             scrollToBottom();
             mymsgPhotoListener();
-            var count = 0;
             setInterval(function() {
-                if (count === 0) {
-                    reloadMsg();
-                }
-                count += 1;
+                reloadMsg();
 
             }, 5000);
             $("#mymsg_menu").on("click", function() {
@@ -249,7 +245,6 @@
                 },
                 async: false,
                 success: function(data) {
-                    console.log(data);
                     if (data.status === 'success') {
                         // 성공
                         $("#chat_wrap").html("");
@@ -265,11 +260,13 @@
                             } else {
                                 html += '<div class="receive_msg">';
                                 html += '<div class="receive_profile">';
+                                html += `<a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/` + item.nickname + `')">`;
                                 if (item.file_name) {
                                     html += '<img src="/' + item.file_path + item.file_name + '" />';
                                 } else {
                                     html += '<img src="/static/images/profile_noimg.png" />';
                                 }
+                                html += '</a>';
                                 html += '</div>';
                                 html += '<div class="receive_text">';
                                 html += '<p class="receive_profile_name">' + item.nickname;
@@ -288,8 +285,12 @@
                                     html += '<span class="mat_percent"><img class="faceIcon" style="width:12px;margin-left:5px" src="/static/images/red_face_icon.png"></span>';
                                 }
                                 html += '</p>';
-                                html += '<div class="receive_msg_area"><p>' + item.msg_cont + '</p></div></div>';
-                                html += '<div class="receive_time"><p>' + item.created_at + '</p></div></div>';
+                                html += '<div style="display: flex;">';
+                                html += '<div class="receive_msg_area"><p>' + item.msg_cont + '</p></div>';
+                                html += '<div class="receive_time"><p>' + item.created_at + '</p></div>';
+                                html += '</div>';
+                                html += '</div>';
+                                html += '</div>';
                             }
                         });
                         $("#chat_wrap").html(html);
