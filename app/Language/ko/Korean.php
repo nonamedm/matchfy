@@ -310,6 +310,7 @@ return [
     'year'                => '년',
 
     //premium
+    'sendcertcode'      => '인증번호발송',
     'certification'      => '인증',
     'profilePhoto'       => '프로필 사진수정',
     'single'             => '싱글',
@@ -343,9 +344,9 @@ return [
     'universityGrad'     => '대학교졸업',
     'attendingGraduate'  => '대학원재학',
     'GradSchoolHig'      => '대학원졸업이상',
-    'jobVal1'            => '1군 : 중소기업 회사원/자영업/프리랜서 등 기타',
-    'jobVal2'            => '2군 : 상장사, 대기업 회사원/기업대표/공무원/공기업',
-    'jobVal3'            => '3군 : 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)',
+    'jobVal1'            => '1군 : 법인대표, 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)',
+    'jobVal2'            => '2군 : 상장사, 대기업, 공기업 회사원/공무원/개인사업자',
+    'jobVal3'            => '3군 : 중소기업 회사원/프리랜서 등 기타',
     'assetRange1000'     => '5000만원 미만',
     'assetRange2000'     => '5000만원 이상',
     'assetRange3000'     => '1억 이상',
