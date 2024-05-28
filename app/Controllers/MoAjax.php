@@ -541,9 +541,43 @@ class MoAjax extends BaseController
             ->first();
 
         $isValid = $result !== null;
+        // $isValid = false;
+        $code_array = [
+            'm_UABE', 'm_6PSW42',
+            'm_Z1VG27',
+            'm_5E6Y8B',
+            'm_XRVEXD',
+            'm_RCNR3B',
+            'm_ZI35IV',
+            'm_8Q638S',
+            'm_SAW6JI',
+            'm_9KRST9',
+            'm_A0P74X',
+            'm_TF55B3',
+            'm_BEBF8Q',
+            'm_ULV9UC',
+            'm_BGXW8P',
+            'm_7VK7ZP',
+            'm_OEP5N8',
+            'm_PSKKNX',
+            'm_9ECTTZ',
+            'm_ZEA8WF',
+            'm_UPY7EB',
+            'm_H2DSZ1',
+            'm_KM1WD8',
+            'm_E2I0U3',
+            'm_OBOUOX',
+            'm_H8EODZ'
+        ];
+
+
+
+        if (!$isValid) {
+            in_array($inviteCode, $code_array) ? $isValid = true : $isValid = false;
+        }
 
         return $this->response->setJSON([
-            'isValid' => $isValid
+            'isValid' => $isValid, 'data1' => ($result !== null), 'data2' => in_array($inviteCode, $code_array)
         ]);
     }
 
