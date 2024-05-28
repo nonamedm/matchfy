@@ -714,7 +714,7 @@ if ($ci) {
                         matchfy
                     </div>
                     <div class="footer_link mb40">
-                        <a href="/intro/main"><?= lang('Korean.companyName') ?></a>
+                        <a href="/intro/main" target="_blank"><?= lang('Korean.companyName') ?></a>
                         <a href="/mo/privacy"><?= lang('Korean.pravacyName') ?></a>
                         <a href="/mo/terms"><?= lang('Korean.serviceName') ?></a>
                         <!-- <a href="#"><?= lang('Korean.supporterName') ?></a> -->
