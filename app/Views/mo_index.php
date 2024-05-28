@@ -52,9 +52,9 @@
                 <div class="btn_group">
                     <img src="/static/images/oauth/kakao_login_medium_wide.png" class="oauth_login" onclick="location.href='/auth/kakao/login'" />
                 </div>
-                <div class="btn_group">
+                <!-- <div class="btn_group">
                     <img src="/static/images/oauth/naver_login_medium_wide.png" class="oauth_login" onclick="location.href='/auth/naver/login'" />
-                </div>
+                </div> -->
                 <div class="btn_group" style="height: 150px;"></div>
             </div>
         </div>
