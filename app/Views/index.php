@@ -531,7 +531,7 @@ if ($ci) {
                         })
                     </script>
                     <div class="content_banner_top">
-                        <img src="/static/images/content_banner_top.png" />
+                        <img src="/static/images/content_banner_top1.png" />
                     </div>
                     <div class="content_no_img login_main">
                         <div class="login_main_title">
