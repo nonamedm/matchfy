@@ -530,7 +530,7 @@ if ($ci) {
 
                         })
                     </script>
-                    <div class="content_banner_top">
+                    <div class="content_banner_top" onclick="moveToUrl('/mo/mypage/group/detail/169')">
                         <img src="/static/images/content_banner_top1.png" />
                     </div>
                     <div class="content_no_img login_main">

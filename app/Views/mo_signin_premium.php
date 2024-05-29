@@ -279,9 +279,9 @@
                                     </select>
                                     <select id="father_job" name="father_job" class="custom_select" value="">
                                         <option value=""><?= lang('Korean.selected') ?></option>
-                                        <option value="0">1군 : 중소기업 회사원/자영업/프리랜서 등 기타</option>
-                                        <option value="1">2군 : 상장사, 대기업 회사원/기업대표/공무원/공기업</option>
-                                        <option value="2">3군 : 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)</option>
+                                        <option value="0">1군 : 법인대표, 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)</option>
+                                        <option value="1">2군 : 상장사, 대기업, 공기업 회사원/공무원/개인사업자</option>
+                                        <option value="2">3군 : 중소기업 회사원/프리랜서 등 기타</option>
                                     </select>
                                 </div>
                             </div>

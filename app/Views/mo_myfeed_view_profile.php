@@ -161,17 +161,17 @@
                                                 if ($item['id'] === $education) echo $item['name'];
                                             } ?>
                                         </p>
-                                        <p>
-                                            <?php if ($school_regist[0]['extra1'] === 'y') {
-                                                echo '<img src="/static/images/review_star.png" />';
-                                            } ?>
-                                        </p>
                                     </div>
                                     <div class="profile_content">
                                         <h2><?= lang('Korean.school') ?><?= lang('Korean.people') ?></h2>
                                         <p>
                                             <?= $school ?>
                                         </p>
+                                        <p>
+                                            <?php if ($school_regist[0]['extra1'] === 'y') {
+                                                echo '<img src="/static/images/review_star.png" />';
+                                            } ?>
+                                        </p>dhksfy
                                     </div>
                                     <div class="profile_content">
                                         <h2><?= lang('Korean.major') ?></h2>
