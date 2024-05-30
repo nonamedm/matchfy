@@ -32,9 +32,16 @@ use Kint\Zval\Value;
 
 class MoHome extends BaseController
 {
-    public function index(): string
+    public function index()
     {
-        return view('mo_index');
+        $session = session();
+        $ci = $session->get('ci');
+
+        if ($ci) {
+            return redirect()->to("/");
+        } else {
+            return view('mo_index');
+        }
     }
     public function pass(): string
     {
