@@ -56,6 +56,13 @@
                             <div class="share_btn" id="copyButton"><img src="/static/images/share_icon.png" /></div>
                         </div>
                     </div>
+                    <div class="btn_group" style="margin: 30px 0px">
+                        <?php if ($is_recruitment_full) : ?>
+                            <button type="button" class="btn type01 disabled"><?= lang('Korean.recruitmentDeadline') ?></button>
+                        <?php else : ?>
+                            <button type="button" class="btn type01" onclick="meetingApplication('<?= $idx ?>')"><?= lang('Korean.withBtn') ?></button>
+                        <?php endif; ?>
+                    </div>
                     <hr class="hoz_part" />
                     <div class="group_detail_cont">
                         <?= $content ?>
