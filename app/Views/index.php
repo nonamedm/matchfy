@@ -73,7 +73,7 @@ $name = $session->get('name');
 if ($ci) {
 ?>
 
-    <body style="max-width: 400px; margin: 0 auto;">
+    <body style="max-width: 400px; margin: 0 auto;position: relative;">
         <header class="ci_header">
         <?php
     } else {
@@ -251,6 +251,9 @@ if ($ci) {
                 <?php
                 } else {
                 ?>
+                    <div class="kakao_chat_btn">
+                        <a href="http://pf.kakao.com/_PgyUG/chat"><img src="/static/images/kakao_chat_icon.png"></a>
+                    </div>
                     <script>
                         // const clickOn = (button) => {
                         //     var buttons = document.querySelectorAll('.main_title_btn button');
