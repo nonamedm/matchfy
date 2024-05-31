@@ -106,6 +106,12 @@ $routes->get('/mo/factorInfo', 'MoHome::factorInfo');
 $routes->get('/mo/partner/regular', 'MoHome::partnerRegular');
 $routes->get('/mo/partner/premium', 'MoHome::partnerPremium');
 
+//id and password lose
+$routes->get('/mo/idpwfind/pass', 'MoHome::idpwFindPass');
+$routes->post('/mo/idpwfind/passwordReset', 'MoHome::passworldReset');
+//$routes->get('/mo/idpwfind/passwordReset', 'MoHome::passworldReset');
+$routes->post('/ajax/passwordUpdate', 'MoAjax::passwordUpdate');
+
 //Aouth2.0
 $routes->get('/auth/kakao/login', 'OAuth2::loginKakao');
 $routes->get('/auth/kakao/callback', 'OAuth2::callback');
@@ -236,3 +242,5 @@ $routes->post('/ad/intro/newsUpdate', 'AdminHome::newsUpdate');
 $routes->post('/proxy/createToken', 'ProxyController::createToken');
 $routes->post('/proxy/createPassWeb', 'ProxyController::createPassWeb');
 $routes->get('/proxy/getResultValue', 'ProxyController::getResultValue');
+
+$routes->post('/proxy/idpwFind', 'ProxyController::idpwFind');

@@ -2012,3 +2012,66 @@ function clearInput(input) {
     var newValue = value.replace(/[^0-9]/g, '');
     input.value = newValue;
 }
+
+/* idpw find*/
+const passwdUpdate = () => {
+    var postData = new FormData(document.querySelector('form'));
+
+    let tempValidation = false;
+    if ($('#email').val().trim() === '') {
+        fn_alert('해당 이메일을 입력해주세요');
+        tempValidation = false;
+        $('#name').focus();
+     } else if ($('#pswd').val().trim() === '') {
+        fn_alert('비밀번호를 입력해 주세요');
+        tempValidation = false;
+        $('#pswd').focus();
+    } else if ($('#pswdChk').val().trim() === '') {
+        fn_alert('비밀번호를 다시 입력해 주세요');
+        tempValidation = false;
+        $('#pswdChk').focus();
+    }
+
+    if (
+        $('#email').val() !== '' &&
+        $('#pswd').val() !== '' &&
+        $('#pswdChk').val() !== ''
+    ) {
+        tempValidation = true;
+    }
+    if (tempValidation) {
+        if ($('#pswd').val() !== $('#pswdChk').val()) {
+            fn_alert('비밀번호를 확인해 주세요');
+            $('#pswd').focus();
+        } else {
+            $.ajax({
+                url: '/ajax/passwordUpdate', // todo : 추후 본인인증 연결
+                type: 'POST',
+                data: postData,
+                processData: false,
+                contentType: false,
+                async: false,
+                success: function (data) {
+                    console.log(data);
+                    if (data.status === 'success') {
+                            fn_alert('비밀번호가 변경되었습니다. </br> 로그인창으로 이동 해주세요.', '/mo');
+                    } else if (data.status === 'error') {
+                        if(data.result == '0'){
+                            fn_alert('이메일을 다시 확인해주세요.');
+                        }else{
+                            fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        }
+                    } else {
+                        fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    }
+                    return false;
+                },
+                error: function (data, status, err) {
+                    console.log(err);
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
+            });
+        }
+    } else {
+    }
+};
