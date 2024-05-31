@@ -3753,4 +3753,33 @@ class MoAjax extends BaseController
             return $this->response->setJSON(['status' => 'failed', 'message' => 'failed', 'result' => '2']);
         }
     }
+
+    public function passwordUpdate()
+    {
+
+        $MemberModel = new MemberModel();
+        $email = $this->request->getPost('email');
+
+        //이메일 가입되어있는지 확인
+        $emailDupChkQuery = "SELECT email FROM members WHERE email='" . $email . "' AND delete_yn='n'";
+        $emailDupChk = $MemberModel->query($emailDupChkQuery)->getResultArray();
+
+        if ($emailDupChk) {
+            // 패스워드 단방향 암호화 필요
+            $pswd = "" . $this->request->getPost('pswd');
+            $pswdEncode = password_hash($pswd, PASSWORD_DEFAULT);
+            $data = [
+                'email' => $email,
+                'password' => $pswdEncode,
+            ];
+            // 비밀번호 업데이트 쿼리
+            $updateQuery = "UPDATE members SET password='" . $pswdEncode . "' WHERE email='" . $email . "' AND delete_yn='n'";
+            $MemberModel->query($updateQuery);
+
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '1']);
+        }else{
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Email Duplication', 'result' => '0']);
+        }
+        
+    }    
 }

@@ -43,6 +43,9 @@
                         </div>
                         <div class="btn_group">
                             <button type="button" style="width: 301px;" class="btn type01" onclick="userLogin()"><?= lang('Korean.login') ?></button>
+                            <div class="login_idpw_find">
+                                <span><a href="/mo/idpwfind/pass">아이디 | 비밀번호 찾기</a></span>
+                            </div>
                         </div>
                 </form>
                 <img src="/static/images/main_login_hr.png" style="position: relative; margin: 40px 0px 30px 0px;left: calc(50% - 302px / 2 + 0.5px);" />

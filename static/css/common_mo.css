@@ -135,7 +135,20 @@ header.ci_header .logo_menu ul .item {
     text-transform: capitalize;
     justify-content: center;
 }
-
+.login_idpw_find{
+    margin-top: 22px;
+    font-size: 14px;
+}
+.login_idpw_find span{
+    color: #ffffff;
+}
+.login_idpw_find span a{
+    color: #ffffff;
+}
+.login_idpw_find span a:hover{
+    font-weight: 900;
+    color: #ffffff;
+}
 header .menu {
     display: flex;
     justify-content: space-between;

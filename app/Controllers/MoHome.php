@@ -2393,4 +2393,17 @@ class MoHome extends BaseController
     {
         return view('mo_partner_premium');
     }
+
+    public function idpwFindPass(): string
+    {
+        $data['params'] = '';
+        return view('mo_idpw_find_pass', $data);
+    }
+
+    public function passworldReset(): string
+    {
+        // $postData['email']='inbv4311@naver.com';
+        $postData = $this->request->getPost();
+        return view('password_reset', $postData);
+    }
 }
