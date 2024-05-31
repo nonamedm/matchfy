@@ -25,8 +25,11 @@ use App\Models\AllianceFileModel;
 use App\Models\AllianceMemberModel;
 use App\Models\AllianceReservationModel;
 use App\Models\ChatRoomModel;
+use App\Models\ChatRoomAiModel;
 use App\Models\ChatRoomMsgModel;
+use App\Models\ChatRoomMsgAiModel;
 use App\Models\ChatRoomMemberModel;
+use App\Models\ChatRoomMemberAiModel;
 use CodeIgniter\Session\Session;
 use Kint\Zval\Value;
 
@@ -560,7 +563,112 @@ class MoHome extends BaseController
     }
     public function mymsgAi(): string
     {
+        // 퍼블용임. 아래 mymsgAimsg 완성되면 필요없음
         return view('mo_mymsg_ai');
+    }
+    public function mymsgAimsg(): string
+    {
+        $ChatRoomAiModel = new ChatRoomAiModel();
+        $ChatRoomMsgAiModel = new ChatRoomMsgAiModel();
+        $ChatRoomMemberAiModel = new ChatRoomMemberAiModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+
+        $chat_room_ci = $ci; //member_ci와 동일
+
+        // 내가 이 방의 참가자가 맞는지 다시 확인
+        $query = "SELECT * FROM wh_chat_room_member_ai WHERE room_ci='" . $chat_room_ci . "' AND member_ci='" . $ci . "'";
+        $memberYn = $ChatRoomMemberAiModel
+            ->query($query)->getResultArray();
+        if ($memberYn) {
+            // 이미 방이 존재하면
+            $query = "INSERT INTO wh_chat_room_msg_ai
+            (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num,delete_yn, created_at, updated_at)
+            VALUES('" . $chat_room_ci . "', 'AImanager', 2, '0', 'AI 매니저에게 질문해주세요', '', '', 'n', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+            $ChatRoomMsgAiModel->query($query);
+        } else {
+            // 생성된 AI채팅방이 없으면 생성하기
+            $chatquery = "INSERT INTO wh_chat_room_ai
+                (room_ci, room_type, room_count, delete_yn, created_at, updated_at)
+                VALUES('" . $chat_room_ci . "', '2', '1', 'n', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+            $createMultyChat = $ChatRoomAiModel->query($chatquery);
+
+            if ($createMultyChat) {
+                // 나를 참가시킴
+                $chatquery = "INSERT INTO wh_chat_room_member_ai
+                (room_ci, member_ci, entry_num, member_type, delete_yn, entered_at, created_at, updated_at)
+                VALUES('" . $chat_room_ci . "', '" . $ci . "', '1','0', 'n', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                $enterMultyChat = $ChatRoomMemberAiModel->query($chatquery);
+
+                // AI매니저를 참가시킴
+                $chatquery = "INSERT INTO wh_chat_room_member_ai
+                (room_ci, member_ci, entry_num, member_type, delete_yn, entered_at, created_at, updated_at)
+                VALUES('" . $chat_room_ci . "', 'AImanager', '2','8', 'n', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                $enterMultyChat = $ChatRoomMemberAiModel->query($chatquery);
+            }
+        }
+
+
+        $query = "SELECT crm.chk_entry_num, crm.chk_num, crm.created_at, crm.entry_num, crm.msg_cont, crm.msg_type, crm.updated_at,
+                            (CASE
+                                WHEN member_ci = '" . $ci . "' THEN (SELECT nickname FROM members WHERE ci = crm.member_ci)
+                                ELSE 'AI 매니저' 
+                            END) AS nickname,
+                            (CASE
+                                WHEN member_ci = '" . $ci . "' THEN 'me'
+                                ELSE 'you' 
+                            END) AS chk,
+                            (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname ORDER BY created_at DESC LIMIT 1) as match_rate,
+                            'static/images/' AS file_path,
+                            'ai_send.png' AS file_name
+                        FROM wh_chat_room_msg_ai  crm WHERE crm.room_ci = '" . $chat_room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at ASC";
+        $allMsg = $ChatRoomMsgAiModel
+            ->query($query)->getResultArray();
+        if ($allMsg) {
+            date_default_timezone_set('Asia/Seoul');
+            $current_time = time();
+            $today_date = date('Y-m-d', $current_time);
+            foreach ($allMsg as &$row) {
+                $today_date === date('Y-m-d', strtotime($row['created_at'])) ?  $row['created_at'] = date('H:i', strtotime($row['created_at'])) : $row['created_at'] = date('m-d', strtotime($row['created_at']));
+            }
+        }
+        $query = "SELECT member_ci AS where_ci, (SELECT name FROM members WHERE ci = where_ci) AS name,
+                             (CASE
+                                WHEN member_ci = '" . $ci . "' THEN (SELECT nickname FROM members WHERE ci = where_ci)
+                                ELSE 'AI 매니저' 
+                            END) AS nickname,
+                            'static/images/' AS file_path,
+                            'ai_send.png' AS file_name,
+                             (CASE
+                                WHEN member_ci = '" . $ci . "' THEN 'me'
+                                ELSE 'you' 
+                            END) AS chk,
+                            entry_num
+                            FROM wh_chat_room_member_ai WHERE room_ci = '" . $chat_room_ci . "' AND delete_yn='n'";
+        $memberInfo = $ChatRoomMemberAiModel
+            ->query($query)->getResultArray();
+        $query = "SELECT room_type FROM wh_chat_room_ai WHERE room_ci = '" . $chat_room_ci . "' AND delete_yn='n'";
+        $roomType = $ChatRoomMemberAiModel
+            ->query($query)->getResultArray();
+        $query = "SELECT member_type FROM wh_chat_room_member_ai WHERE room_ci = '" . $chat_room_ci . "' AND member_ci='" . $ci . "';";
+        $memberType = $ChatRoomMemberAiModel
+            ->query($query)->getResultArray();
+
+        $data['room_ci'] = $chat_room_ci;
+        $data['allMsg'] = $allMsg;
+        $data['member_info'] = $memberInfo;
+        $data['room_type'] = $roomType;
+        $data['member_type'] = $memberType;
+
+
+        return view('mo_mymsg_AImsg', $data);
+
+        if ($enterMultyChat && $createMultyChat) {
+        } else {
+            // 오류알림 띄우고 이전페이지로 돌아가기
+        }
     }
     public function mymsgAiProfilePopup(): string
     {

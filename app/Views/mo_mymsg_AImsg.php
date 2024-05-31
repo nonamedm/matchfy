@@ -30,10 +30,10 @@
             <div class="content_wrap">
                 <div class="tab_wrap">
                     <ul>
-                        <li onclick="AImsg()">
+                        <li class="on">
                             <?= lang('Korean.AIMsg') ?>
                         </li>
-                        <li class="on">
+                        <li onclick="moveToUrl('/mo/mymsg/list')">
                             <?= lang('Korean.messageBox') ?>
                         </li>
                     </ul>
@@ -75,19 +75,6 @@
                                     <p class="receive_profile_name">
                                         <?php
                                         echo $row['nickname'];
-                                        if ($row['match_rate'] && $row['match_rate'] !== null && $row['match_rate'] !== "") {
-                                            if (80 <= $row['match_rate']) {
-                                                echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/blue_face_icon.png" /></span>';
-                                            } else if ($row['match_rate'] >= 65 || $row['match_rate'] < 80) {
-                                                echo  '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/green_face_icon.png" /></span>';
-                                            } else if ($row['match_rate'] >= 50 || $row['match_rate'] < 65) {
-                                                echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/yellow_face_icon.png" /></span>';
-                                            } else if ($row['match_rate'] >= 35 || $row['match_rate'] < 50) {
-                                                echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/orange_face_icon.png" /></span>';
-                                            }
-                                        } else {
-                                            echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/red_face_icon.png" /></span>';
-                                        }
                                         ?>
                                     </p>
                                     <div style="display: flex;">
@@ -144,13 +131,7 @@
                     <div class="chat_menu_func" onclick="extRm()"><img src="/static/images/chat_quit.png">
                         <p>방나가기</p>
                     </div>
-                    <?php if ($room_type[0]['room_type'] === '1') {
-                    ?>
-                        <div class="chat_menu_func" onclick="rptMbr()"><img src="/static/images/chat_report.png">
-                            <p>참여자<br />목록</p>
-                        </div>
-                    <?php
-                    } ?>
+
                     <!-- <div class="chat_menu_func"><img src="/static/images/chat_call.png">
                         <p>안심번호<br /> 통화하기</p>
                     </div> -->
@@ -158,51 +139,7 @@
             </div>
             <input id="room_ci" type="hidden" value="<?= $room_ci ?>" />
 
-            <?php if ($room_type[0]['room_type'] === '1') {
-                include 'mo_mymsg_member_popup.php';
-                include 'mo_report_popup.php';
-            ?>
-                <script>
-                    const rptMbr = (contents) => {
-                        console.log(contents);
-                        var title = '';
-                        switch (contents) {
-                            case '':
-                                title = '단톡방 멤버';
-                                break;
-                            default:
-                                title = '단톡방 멤버';
-                        }
-                        $('#member_title').text(title);
 
-                        $('.layerPopup.member').css('display', 'flex');
-                    };
-                    const crtMtng = (contents) => {
-                        fn_alert('1:1 채팅에서만 사용 가능합니다');
-                    };
-                </script>
-            <?php } ?>
-
-            <?php if ($room_type[0]['room_type'] === '0') {
-                include 'mo_schedule_popup.php';
-            ?>
-                <script>
-                    const crtMtng = (contents) => {
-                        console.log(contents);
-                        var title = '';
-                        switch (contents) {
-                            case '':
-                                title = '단톡방 멤버';
-                                break;
-                            default:
-                                title = '단톡방 멤버';
-                        }
-                        $('#member_title').text(title);
-
-                        $('.layerPopup.mtng').css('display', 'flex');
-                    };
-                </script>
-            <?php } ?>
             <footer class="footer">
             </footer>
         </div>
@@ -221,10 +158,10 @@
             });
             scrollToBottom();
             mymsgPhotoListener();
-            setInterval(function() {
-                reloadMsg();
+            // setInterval(function() {
+            //     reloadMsg();
 
-            }, 5000);
+            // }, 5000);
             $("#mymsg_menu").on("click", function() {
                 if (!($(".message_input_box").hasClass("on")) && !($(".chat_wrap").hasClass("on"))) {
                     $(".message_input_box").addClass("on");
@@ -238,7 +175,7 @@
         });
         const reloadMsg = () => {
             $.ajax({
-                url: '/ajax/reloadMsg',
+                url: '/ajax/reloadMsgAi',
                 type: 'POST',
                 data: {
                     "room_ci": $("#room_ci").val()
@@ -270,20 +207,7 @@
                                 html += '</div>';
                                 html += '<div class="receive_text">';
                                 html += '<p class="receive_profile_name">' + item.nickname;
-                                if (item.match_rate) {
-                                    if (80 <= item.match_rate) {
-                                        html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/blue_face_icon.png" /></span>';
-                                    } else if (item.match_rate >= 65 || item.match_rate < 80) {
-                                        html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/green_face_icon.png" /></span>';
-                                    } else if (item.match_rate >= 50 || item.match_rate < 65) {
-                                        html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/yellow_face_icon.png" /></span>';
-                                    } else if (item.match_rate >= 35 || item.match_rate < 50) {
-                                        html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/orange_face_icon.png" /></span>';
-                                    }
-                                    // html += '<span class="match_percent">' + item.match_rate + '%</span>';
-                                } else {
-                                    html += '<span class="mat_percent"><img class="faceIcon" style="width:12px;margin-left:5px" src="/static/images/red_face_icon.png"></span>';
-                                }
+
                                 html += '</p>';
                                 html += '<div style="display: flex;">';
                                 html += '<div class="receive_msg_area"><p>' + item.msg_cont + '</p></div>';
@@ -313,7 +237,7 @@
             var sendMsg = $("#msgbox").val();
             if (sendMsg !== "") {
                 $.ajax({
-                    url: '/ajax/sendMsg',
+                    url: '/ajax/sendMsgAi',
                     type: 'POST',
                     data: {
                         "room_ci": $("#room_ci").val(),
@@ -461,37 +385,6 @@
             });
         };
 
-        const applyMember = (ci, room_idx) => {
-
-
-            // DB저장하기
-            $.ajax({
-                url: '/mo/applyMember',
-                type: 'POST',
-                data: {
-                    "ci": ci,
-                    "meetingIdx": room_idx,
-                },
-                async: false,
-                success: function(data) {
-                    console.log(data);
-                    var html = '';
-                    if (data.success == true) {
-                        msg = data.msg;
-                        fn_alert(msg);
-                    } else if (data.status === 'error') {
-                        console.log('실패', data.data);
-                    } else {
-                        fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
-                    }
-                    return false;
-                },
-                error: function(data, status, err) {
-                    console.log(err);
-                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-                },
-            });
-        };
 
         // const sndPnt = () => {
         //     $.ajax({
@@ -526,7 +419,7 @@
         //     });
         // };
         const AImsg = () => {
-            moveToUrl('/mo/mymsgAimsg')
+            fn_alert('준비중인 기능입니다!')
         }
     </script>
 
