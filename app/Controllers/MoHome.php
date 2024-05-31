@@ -1014,6 +1014,12 @@ class MoHome extends BaseController
         $ci = $session->get('ci');
         $meeting_idx = $this->request->getPost('meetingIdx');
 
+        // 같은 성별 프로필 조회 막음
+        $member = new MemberModel();
+        $userQuery = "SELECT * FROM members WHERE ci= '" . $ci . "'";
+        $user = $member->query($userQuery)->getResultArray();
+        $user_gender = $user['gender'];
+
         // 내가 이 방 참석했는지 여부 확인
         $chkQuery = "SELECT * FROM wh_meeting_members WHERE meeting_idx='" . $meeting_idx . "' AND member_ci='" . $ci . "'";
 
@@ -1033,7 +1039,8 @@ class MoHome extends BaseController
                                     c.city as city,
                                     c.town as town,
                                     c.birthday as birthday,
-                                    c.mbti as mbti'
+                                    c.mbti as mbti,
+                                    c.gender as gender'
             )
             ->from('wh_meeting_members a')
             ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
@@ -1051,6 +1058,8 @@ class MoHome extends BaseController
 
         if ($result) {
             foreach ($result as &$item) {
+                $item->same_gender = ($item->gender === $user_gender);//같은 성별 상세조회 막음
+
                 if (!$chkInmember && isset($item->name)) {
                     $name = $item->name;
                     $firstChar = mb_substr($name, 0, 1, "UTF-8"); // 첫 글자 추출
