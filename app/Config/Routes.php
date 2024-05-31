@@ -236,11 +236,10 @@ $routes->get('/ad/intro/newsList', 'AdminHome::newsList');
 $routes->get('/ad/intro/newsView/(:num)', 'AdminHome::newsView/$1');
 $routes->get('/ad/intro/newsModify/(:num)', 'AdminHome::newsModify/$1');
 $routes->post('/ad/intro/newsUpdate', 'AdminHome::newsUpdate');
-
-
-
 $routes->post('/proxy/createToken', 'ProxyController::createToken');
 $routes->post('/proxy/createPassWeb', 'ProxyController::createPassWeb');
 $routes->get('/proxy/getResultValue', 'ProxyController::getResultValue');
-
 $routes->post('/proxy/idpwFind', 'ProxyController::idpwFind');
+
+/*support*/
+$routes->get('/support/notice', 'SupportHome::noticeList');
