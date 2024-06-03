@@ -584,10 +584,10 @@ class MoHome extends BaseController
             ->query($query)->getResultArray();
         if ($memberYn) {
             // 이미 방이 존재하면
-            $query = "INSERT INTO wh_chat_room_msg_ai
-            (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num,delete_yn, created_at, updated_at)
-            VALUES('" . $chat_room_ci . "', 'AImanager', 2, '0', 'AI 매니저에게 질문해주세요', '', '', 'n', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
-            $ChatRoomMsgAiModel->query($query);
+            // $query = "INSERT INTO wh_chat_room_msg_ai
+            // (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num,delete_yn, created_at, updated_at)
+            // VALUES('" . $chat_room_ci . "', 'AImanager', 2, '0', 'AI 매니저에게 질문해주세요', '', '', 'n', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+            // $ChatRoomMsgAiModel->query($query);
         } else {
             // 생성된 AI채팅방이 없으면 생성하기
             $chatquery = "INSERT INTO wh_chat_room_ai
@@ -1058,7 +1058,7 @@ class MoHome extends BaseController
 
         if ($result) {
             foreach ($result as &$item) {
-                $item->same_gender = ($item->gender === $user_gender);//같은 성별 상세조회 막음
+                $item->same_gender = ($item->gender === $user_gender); //같은 성별 상세조회 막음
 
                 if (!$chkInmember && isset($item->name)) {
                     $name = $item->name;

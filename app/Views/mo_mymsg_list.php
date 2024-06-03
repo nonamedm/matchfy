@@ -201,7 +201,7 @@
 
         });
         const AImsg = () => {
-            fn_alert('준비중인 기능입니다!')
+            moveToUrl('/mo/mymsgAimsg')
         }
         const sendMsg = (nickname) => {
             $.ajax({
