@@ -171,7 +171,7 @@
                                             <?php if ($school_regist[0]['extra1'] === 'y') {
                                                 echo '<img src="/static/images/review_star.png" />';
                                             } ?>
-                                        </p>dhksfy
+                                        </p>
                                     </div>
                                     <div class="profile_content">
                                         <h2><?= lang('Korean.major') ?></h2>
