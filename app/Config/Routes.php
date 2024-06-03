@@ -244,3 +244,8 @@ $routes->get('/proxy/getResultIdpwValue', 'ProxyController::getResultIdpwValue')
 
 /*support*/
 $routes->get('/support/notice', 'SupportHome::noticeList');
+
+$routes->get('/support/mo', 'SupportHome::index');
+$routes->get('/support/mo/pass', 'SupportHome::pass');
+$routes->post('/support/mo/agree', 'SupportHome::agree');
+$routes->post('/support/mo/signin', 'SupportHome::signin');

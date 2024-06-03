@@ -1953,6 +1953,19 @@ a:active {
     position: relative;
     top: 225px;
 }
+#pw {
+    width: 301px;
+    padding-right: 40px; /* 아이콘 공간 확보 */
+}
+.toggle-password {
+    position: absolute;
+    right: 42px;
+    top: 15%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 19px;
+}
+
 .main_signin_form {
     /* position: absolute;
   top: 256px; */
