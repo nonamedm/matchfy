@@ -29,49 +29,43 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <form class="main_signin_form" method="post" action="/mo/signinPhoto" enctype="multipart/form-data">
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="email" class="signin_label"><?= lang('Korean.email') ?></label>
-                                <input id="email" name="email" type="text" value="<?=$email?>">
-                            </div>
-                        </div>
-
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="pswd" class="signin_label"><?= lang('Korean.pswd') ?></label>
-                                <input id="pswd" name="pswd" type="password" placeholder="<?= lang('Korean.pswdPlaceholder') ?>">
-                            </div>
-                        </div>
-                        <div class="form_row signin_form">
-                            <div class="signin_form_div">
-                                <label for="pswdChk" class="signin_label"><?= lang('Korean.pswdChk') ?></label>
-                                <input id="pswdChk" name="pswdChk" type="password" placeholder="<?= lang('Korean.pswdChkPlaceholder') ?>">
-                            </div>
-                        </div>
-
-                        <input type="hidden" id="mobile_no" name="mobile_no" value="<?= $mobile_no ?>" />
-                        <input type="hidden" name="nickname" value="<?= $nickname ?>" />
-                        <input type="hidden" name="sns_type" value="<?= $sns_type ?>" />
-                        <input type="hidden" name="oauth_id" value="<?= $oauth_id ?>" />
-                        <div id="main_photo_uploaded" style="display:none;"></div>
-                        <!-- <div id="profile_photo_uploaded" style="display:none;"></div>
-                        <div id="profile_mov_uploaded" style="display:none;"></div> -->
-                        <div class="btn_group multy">
-                            <button type="button" class="btn type02"><?= lang('Korean.cancel') ?></button>
-                            <button type="button" class="btn type01" onclick="passwdUpdate()">비밀번호 재설정</button>
+                    <div class="form_row signin_form">
+                        <div class="signin_form_div">
+                            <label for="email" class="signin_label">로그인 <?= lang('Korean.email') ?></label>
+                            <input id="email" name="email" type="text" value="<?= $email ?>" readonly>
                         </div>
                     </div>
-                </form>
+
+                    <div class="form_row signin_form">
+                        <div class="signin_form_div">
+                            <label for="pswd" class="signin_label"><?= lang('Korean.pswd') ?> 재설정</label>
+                            <input id="pswd" name="pswd" type="password" placeholder="<?= lang('Korean.pswdPlaceholder') ?>">
+                        </div>
+                    </div>
+                    <div class="form_row signin_form">
+                        <div class="signin_form_div">
+                            <label for="pswdChk" class="signin_label"><?= lang('Korean.pswdChk') ?></label>
+                            <input id="pswdChk" name="pswdChk" type="password" placeholder="<?= lang('Korean.pswdChkPlaceholder') ?>">
+                        </div>
+                    </div>
+
+
+                    <div class="btn_group multy">
+                        <button type="button" class="btn type02"><?= lang('Korean.cancel') ?></button>
+                        <button type="button" class="btn type01" onclick="passwdUpdate()">비밀번호 재설정</button>
+                    </div>
             </div>
+            </form>
         </div>
+    </div>
 
 
 
 
 
-        <div style="height: 50px;"></div>
-        <footer class="footer">
-        </footer>
+    <div style="height: 50px;"></div>
+    <footer class="footer">
+    </footer>
     </div>
 </body>
 

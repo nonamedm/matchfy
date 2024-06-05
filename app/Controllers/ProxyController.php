@@ -340,16 +340,14 @@ class ProxyController extends BaseController
         $postData['sns_type'] = $sns_type;
         $postData['oauth_id'] = $oauth_id;
         $postData['decrypted'] = $resData;
-
         //회원 등록이 되어있는지 확인
         $mobile_no = $resData['mobileno'];
 
         $MemberModel = new MemberModel();
         $selected = $MemberModel->where('mobile_no', $mobile_no)->first();
-        
-        if ($selected) {    
-            $email = $selected->email;
-            $postData['email']=$email;
+        if ($selected) {
+            $email = $selected['email'];
+            $postData['email'] = $email;
             return view('password_reset', $postData);
         } else {
             // 회원이 아닐때

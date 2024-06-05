@@ -240,6 +240,12 @@ $routes->post('/proxy/createToken', 'ProxyController::createToken');
 $routes->post('/proxy/createPassWeb', 'ProxyController::createPassWeb');
 $routes->get('/proxy/getResultValue', 'ProxyController::getResultValue');
 $routes->post('/proxy/idpwFind', 'ProxyController::idpwFind');
+$routes->get('/proxy/getResultIdpwValue', 'ProxyController::getResultIdpwValue');
 
 /*support*/
 $routes->get('/support/notice', 'SupportHome::noticeList');
+
+$routes->get('/support/mo', 'SupportHome::index');
+$routes->get('/support/mo/pass', 'SupportHome::pass');
+$routes->post('/support/mo/agree', 'SupportHome::agree');
+$routes->post('/support/mo/signin', 'SupportHome::signin');

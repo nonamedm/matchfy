@@ -51,10 +51,10 @@ if ($get_ci) {
                     </button>
                 <?php
                 } else { ?>
-                    <button class="login_btn" onclick="moveToUrl('/mo')">
+                    <!-- <button class="login_btn" onclick="moveToUrl('/mo')">
                         <img src="/static/images/login_ico.png" />
                         <p><?= lang('Korean.login') ?></p>
-                    </button>
+                    </button> -->
                 <?php
                 }
                 ?>

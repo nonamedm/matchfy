@@ -389,13 +389,9 @@ function meetingMemberList(idx) {
                     html += '<div class="chat_member">';
                     html += '<div class="chat_member_profile">';
                     // html += '<img class="group_fork" src="/static/images/group_master.png">';
-                    if (data[i].same_gender) {
-                        html += '<a class="nicknameBtnBox" onclick="moveToUrl(\'/mo/viewProfile/' + data[i].nickname + '\')">';
-                    } else {
-                        html += '<a class="nicknameBtnBox">';
-                    }
-                        //html += '<a class="nicknameBtnBox" onclick="moveToUrl(\'/mo/viewProfile/' + data[i].nickname + '\')">';
-                        // '<a class="nicknameBtnBox">';
+                    html +=
+                        // '<a class="nicknameBtnBox" onclick="moveToUrl(\'/mo/viewProfile/' + data[i].nickname + '\')">';
+                        '<a class="nicknameBtnBox">';
                     if (data[i].file_path) {
                         html += '<img class="profile_img" src="/' + data[i].file_path + data[i].file_name + '" />';
                     } else {

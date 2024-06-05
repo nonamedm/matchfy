@@ -3064,13 +3064,53 @@ class MoAjax extends BaseController
             }
             $query = "INSERT INTO wh_chat_room_msg_ai
             (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
-            VALUES('" . $room_ci . "','" . $member_ci . "','9','0','" . $msg_cont . "','9','9');";
+            VALUES('" . $room_ci . "','" . $member_ci . "','1','0','" . $msg_cont . "','9','9');";
 
             $sendMsg = $ChatRoomMsgAiModel
                 ->query($query);
 
+            if ($sendMsg) {
+                // 메세지 날리고 답변 확인하기
+                $url = 'http://3.34.3.18:5000/api/chat';
+                // POST Data
+                $postData = [
+                    'data' => ['user_message' => $msg_cont, 'user_id' => $member_ci]
+                ];
 
-            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $sendMsg]]);
+                $ch = curl_init($url);
+
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Content-Type: application/json',
+                ]);
+
+                // Execute cURL
+                $response = curl_exec($ch);
+
+                if (curl_errno($ch)) {
+                    $error_msg = curl_error($ch);
+                    curl_close($ch);
+                    return $this->response->setJSON(['status' => 'failed', 'message' => 'failed', 'data' => ["reulst_value" => "error"]]);
+                }
+
+                curl_close($ch);
+
+                // Decode the response
+                $responseData = json_decode($response, true);
+                if ($responseData) {
+                    $query = "INSERT INTO wh_chat_room_msg_ai
+                        (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
+                        VALUES('" . $room_ci . "','AImanager','2','0','" . $responseData['result'] . "','9','9');";
+                    $sendMsg = $ChatRoomMsgAiModel
+                        ->query($query);
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $responseData]]);
+                } else {
+                    echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+                    return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+                }
+            }
         } else {
             echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
             return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
@@ -3870,9 +3910,8 @@ class MoAjax extends BaseController
             $MemberModel->query($updateQuery);
 
             return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '1']);
-        }else{
+        } else {
             return $this->response->setJSON(['status' => 'error', 'message' => 'Email Duplication', 'result' => '0']);
         }
-        
-    }    
+    }
 }
