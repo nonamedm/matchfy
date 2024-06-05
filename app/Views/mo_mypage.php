@@ -49,8 +49,8 @@
                         </p>
                     </div>
                 </div>
-                <div class="line_banner">
-                    <a href="#">
+                <div class="line_banner" onclick="moveToUrl('/mo/mymsgAimsg')">
+                    <a>
                         <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M0 6C0 2.68629 2.68629 0 6 0H14C17.3137 0 20 2.68629 20 6V10C20 13.3137 17.3137 16 14 16H0V6Z" fill="white" />
                             <circle cx="6" cy="8" r="1" fill="#FF0267" />
@@ -77,6 +77,14 @@
                                 <?= lang('Korean.mywallet') ?>
                             </p>
                         </li> -->
+                        <li onclick="moveToUrl('/mo/mymsg/list')">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.00083 16L15.7473 9.23865L16.2639 8.64554C17.4092 6.96552 17.2002 4.71487 15.7611 3.27291C14.1158 1.6244 11.4392 1.6244 9.79357 3.27328L9.01664 4.0523L8.20275 3.23625C6.55714 1.58792 3.88088 1.58792 2.23619 3.23625C1.43884 4.03609 1 5.09775 1 6.2263C1 6.81223 1.12373 7.40073 1.35869 7.93506L1.42818 8.03788C1.63298 8.4694 1.90949 8.86112 2.24997 9.20272L3.06184 10.0483L9.00083 16Z" stroke="#111111" stroke-width="1.5" stroke-linejoin="round" />
+                            </svg>
+                            <p>
+                                내 대화
+                            </p>
+                        </li>
                         <hr class="hoz_part" />
                         <li onclick="moveToUrl('/mo/myfeed/<?= $nickname ?>')">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -117,14 +125,7 @@
                             </p>
                         </li>
                         <hr class="hoz_part" />
-                        <li onclick="moveToUrl('/mo/mymsg/list')">
-                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9.00083 16L15.7473 9.23865L16.2639 8.64554C17.4092 6.96552 17.2002 4.71487 15.7611 3.27291C14.1158 1.6244 11.4392 1.6244 9.79357 3.27328L9.01664 4.0523L8.20275 3.23625C6.55714 1.58792 3.88088 1.58792 2.23619 3.23625C1.43884 4.03609 1 5.09775 1 6.2263C1 6.81223 1.12373 7.40073 1.35869 7.93506L1.42818 8.03788C1.63298 8.4694 1.90949 8.86112 2.24997 9.20272L3.06184 10.0483L9.00083 16Z" stroke="#111111" stroke-width="1.5" stroke-linejoin="round" />
-                            </svg>
-                            <p>
-                                내 대화
-                            </p>
-                        </li>
+
 
                     </ul>
                 </div>

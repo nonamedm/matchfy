@@ -490,7 +490,7 @@ return [
     'meetplaceholder'         => '모임을 검색해보세요!',
 
     //mypage
-    'mypageCon'               => 'AI 문답하면 매칭 확률 UP!',
+    'mypageCon'               => 'AI메시지함',
     'mywallet'                => '내지갑',
     'myfeed'                  => '내피드',
     'myMeetSetting'           => '내모임 관리',

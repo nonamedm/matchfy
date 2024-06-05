@@ -1782,6 +1782,7 @@ a:active {
     padding: 14px;
     display: flex;
     justify-content: space-between;
+    cursor: pointer;
 }
 .line_banner a {
     display: flex;
