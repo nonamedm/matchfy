@@ -400,12 +400,12 @@ $asset = array(
     array("id" => "6", "name" => "무관", "value" => "6"),
 );
 $income = array(
-    array("id" => "0", "name" => "1000만원 이하", "value" => "0"),
-    array("id" => "1", "name" => "1000~2000만원", "value" => "1"),
-    array("id" => "2", "name" => "2000~3000만원", "value" => "2"),
-    array("id" => "3", "name" => "3000~4000만원", "value" => "3"),
-    array("id" => "4", "name" => "4000~5000만원", "value" => "4"),
-    array("id" => "5", "name" => "5000만원 이상", "value" => "5"),
+    array("id" => "0", "name" => "5000만원 미만", "value" => "0"),
+    array("id" => "1", "name" => "5000만원 이상", "value" => "1"),
+    array("id" => "2", "name" => "1억 이상", "value" => "2"),
+    array("id" => "3", "name" => "3억 이상", "value" => "3"),
+    array("id" => "4", "name" => "5억 이상", "value" => "4"),
+    array("id" => "5", "name" => "10억 이상", "value" => "5"),
     array("id" => "6", "name" => "무관", "value" => "6"),
 );
 
