@@ -20,7 +20,7 @@
 
 
         <?php $title = "서포터즈 공지사항";
-        $prevUrl = "/mo/menu";
+        $prevUrl = "/support/menu";
         include 'header.php'; ?>
 
         <div class="sub_wrap">

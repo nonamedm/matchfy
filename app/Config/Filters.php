@@ -39,7 +39,7 @@ class Filters extends BaseConfig
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
-            'checkLogin' => ['except' => ['/', '/mo', '/publish', '/ajax/*', '/upload', '/auth/*', '/intro/*', '/proxy/*', '/mo/mypage/group/detail/*', '/mo/pass', '/mo/agree', '/mo/agree', '/mo/signin', '/mo/signinPhoto', '/mo/signinType', '/mo/signinRegular', '/mo/signinPremium', '/mo/signinSuccess', '/mo/signinPopup','/mo/idpwfind/*','/support','/support/*']],
+            'checkLogin' => ['except' => ['/', '/mo', '/publish', '/ajax/*', '/upload', '/auth/*', '/intro/*', '/proxy/*', '/mo/mypage/group/detail/*', '/mo/pass', '/mo/agree', '/mo/agree', '/mo/signin', '/mo/signinPhoto', '/mo/signinType', '/mo/signinRegular', '/mo/signinPremium', '/mo/signinSuccess', '/mo/signinPopup','/mo/idpwfind/*','/support','/support/*','/ad/*','/ad/support/*']],
         ],
         'after' => [
             'toolbar',

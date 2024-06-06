@@ -41,5 +41,7 @@ $(document).ready(function() {
 function fn_clickList(board){
     if(board=='notice'){
         window.location.href = "/mo/notice";
+    }else if(board=='spnotice'){
+        window.location.href = "/support/notice";
     }
 }

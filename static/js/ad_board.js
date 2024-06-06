@@ -63,6 +63,8 @@ function fn_clickList(board){
         window.location.href = "/ad/report/reportList";
     }else if(board=='news'){
         window.location.href = "/ad/intro/newsList";
+    }else if(board=='spnotice'){
+        window.location.href = "/ad/support/noticeList";
     }
 }
 
@@ -86,9 +88,9 @@ function fn_clickDelete(id,boardName) {
                     window.location.href = '/ad/privacy/privacyList';
                 }else if(boardName=='report') {
                     window.location.href = '/ad/report/reportList';
-                }else if(boardName=='faq'){
-                    window.location.href = '/ad/faq/faqList';
-                }else{
+                }else if(boardName=='spfaq'){
+                    window.location.href = '/ad/support/faqList';
+                }else {
                     window.location.href = '/ad/intro/newsList';
                 }
                 
@@ -175,6 +177,10 @@ function fn_clickUpdate(board,id) {
         window.location.href = "/ad/privacy/privacyModify/" + id;
     }else if(board=='news'){
         window.location.href = "/ad/intro/newsModify/" + id;
+    }else if(board=='spnotice'){
+        window.location.href = "/ad/support/noticeModify/" + id;
+    }else if(board=='spfaq'){
+        window.location.href = "/ad/support/faqModify/" + id;
     }
 }
 
@@ -189,6 +195,10 @@ function fn_EditClick(board) {
         window.location.href = "/ad/privacy/privacyEdit";
     }else if(board=='news'){
         window.location.href = "/ad/intro/newsEdit";
+    }else if(board=='spnotice'){
+        window.location.href = "/ad/support/noticeEdit";
+    }else if(board=='spfaq'){
+        window.location.href = "/ad/support/faqEdit";
     }
 }
 
