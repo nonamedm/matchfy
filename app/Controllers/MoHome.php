@@ -1909,7 +1909,7 @@ class MoHome extends BaseController
                 LEFT JOIN member_files mf on mb.ci = mf.member_ci
                 LEFT JOIN wh_member_feed_files wmff on wmf.idx = wmff.feed_idx";
         $query .= " WHERE 1=1 ";
-        $query .= " AND mf.board_type='main_photo' ";
+        $query .= " AND mf.board_type='main_photo' AND mf.delete_yn='n'";
         $query .= " AND wmf.delete_yn='n' ";
         $query .= " AND wmff.delete_yn='n' ";
         $query .= " AND mb.gender!=(SELECT gender FROM members WHERE ci='" . $ci . "') "; // 상대성별 피드만 보기

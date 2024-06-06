@@ -52,7 +52,7 @@ class MoAjax extends BaseController
             $query .= " AND mb.gender = '" . $filter . "'";
         }
         $query .= " AND mr.match_score > '0'";
-        $query .= " AND mf.board_type = 'main_photo'";
+        $query .= " AND mf.board_type = 'main_photo' AND mf.delete_yn='n'";
         $query .= " ORDER BY CONVERT(mr.match_rate, SIGNED) DESC LIMIT 20;";
 
         $MemberModel = new MemberModel();
@@ -93,7 +93,7 @@ class MoAjax extends BaseController
             $query .= " AND mb.gender = '" . $filter . "'";
         }
         $query .= " AND mr.ideal_rate > '0'";
-        $query .= " AND mf.board_type = 'main_photo'";
+        $query .= " AND mf.board_type = 'main_photo' AND mf.delete_yn='n'";
         $query .= " ORDER BY CONVERT(mr.ideal_rate, SIGNED) DESC LIMIT 20;";
 
         $MemberModel = new MemberModel();

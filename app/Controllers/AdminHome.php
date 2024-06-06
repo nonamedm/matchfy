@@ -498,6 +498,8 @@ class AdminHome extends BaseController
             $BoardModel->setTableName('wh_board_terms');
         }else if($board_name=='news'){
             $BoardModel->setTableName('wh_board_news');
+        }else if($board_name == 'spfaq'){
+            $BoardModel->setTableName('wh_support_board_faq');
         }
 
         $deleted = $BoardModel->delete($id);
@@ -511,6 +513,8 @@ class AdminHome extends BaseController
                 return redirect()->to('/ad/terms/termsList')->with('msg', '삭제되었습니다.');
             }else if($board_name=='news'){
                 return redirect()->to('/ad/intro/newsList')->with('msg', '삭제되었습니다.');
+            }else if($board_name == 'spfaq'){
+                return redirect()->to('/ad/support/faqList')->with('msg', '삭제되었습니다.');
             }
         } else {
             return redirect()->back()->with('msg', '삭제에 실패하였습니다.');
@@ -913,5 +917,269 @@ class AdminHome extends BaseController
         } else {
             return redirect()->to("/ad/intro/newsEdit/{$id}")->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
         }
+    }
+
+    /*서포터즈 공지사항*/
+    public function spNoticeEdit(): string
+    {
+        return view('admin/ad_sp_notice_edit');
+    }
+
+    public function spNoticeList() :string{
+        $fileData = new BoardFileModel();
+        $query = $fileData->
+            select('bo.id AS notice_id,
+                    bo.title AS title,
+                    bo.content AS content,
+                    bo.author AS author,
+                    bo.update_author AS update_author,
+                    bo.created_at AS created_at,
+                    bo.updated_at AS updated_at,
+                    bo.hit AS hit,
+                    bo.board_type AS board_type,
+                    bf.id AS file_id,
+                    bf.board_idx AS board_idx,
+                    bf.board_type AS board_type,
+                    bf.file_name AS file_name,
+                    bf.file_path AS file_path,
+                    bf.org_name AS org_name'
+                    )
+            ->from('wh_support_board_notice bo')  
+            ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
+            ->groupBy('bo.id')
+            ->orderBy('bo.id', 'DESC')
+            ->get();
+
+        $data['datas'] = $query->getResultArray(); 
+        
+        return view('admin/ad_sp_notice_list', $data);
+    }
+
+    public function spNoticeUpload()
+    {
+        $title = $this->request->getPost('title');
+        $content = $this->request->getPost('content');
+        $file = $this->request->getFile('userfile');
+    
+        if ($file->isValid()) {
+            $upload= new Upload();
+            $fileData = $upload->Boardupload($file,'wh_support_board_notice','notice',$title,$content);
+            
+            if ($fileData) {
+                return redirect()->to("/ad/support/noticeList")->with('msg', '등록이 완료되었습니다.');    
+            } else {
+                return redirect()->to("/ad/support/noticeList")->with('msg', '등록이 실패 되었습니다.');
+            }
+        } else {
+
+            $BoardModel = new BoardModel();
+            $BoardModel->setTableName('wh_support_board_notice');
+            $data = [
+                'title' => $title,
+                'content' => $content,
+                'author' => 'admin',
+                'board_type' => 'spnotice',
+                'used' => 1
+            ];
+
+            $inserted = $BoardModel->insert($data);
+
+            if ($inserted) {
+                $insertedId = $BoardModel->insertID();
+                return redirect()->to("/ad/support/noticeView/{$insertedId}")->with('msg', '등록이 완료되었습니다.');
+            } else {
+                return redirect()->to('/ad/support/noticeEdit')->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
+            }
+
+        
+        }
+    }
+
+    public function spNoticeView($id){
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_support_board_notice');
+        $data['notice'] = $BoardModel->find($id);
+
+        $fileData = new BoardFileModel();
+        $data['file'] = $fileData->where('board_idx', $id)->first();
+        // echo $fileData->getLastQuery();
+        return view('admin/ad_sp_notice_view', $data);
+    }
+
+    public function spNoticeModify($id){
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_support_board_notice');
+        $data['notice'] = $BoardModel->find($id);
+
+        $fileData = new BoardFileModel();
+        $data['file'] = $fileData->where('board_idx', $id)->first();
+
+        if ($data['notice'] === null) {
+            return redirect()->to('/ad/notice/noticeList')->with('msg', '해당 데이터를 찾을 수 없습니다.');
+        }
+        return view('admin/ad_sp_notice_modify', $data);
+    }
+
+    public function spNoticeUpdate(){
+        $boardId = $this->request->getPost('notice_id');
+        $fileId = $this->request->getPost('file_id');
+        $boardType = $this->request->getPost('board_type');
+        $title = $this->request->getPost('title');
+        $content = $this->request->getPost('content');
+        $newFile = $this->request->getFile('userfile');
+        
+        if ($newFile->isValid()) {
+            $upload= new Upload();
+            if($fileId){//있던 파일 수정
+                $fileType = 'udtFile';
+            }else if(!$fileId){//없던 파일 등록
+                $fileType = 'newFile';
+            }
+            
+            $fileData = $upload->BoardUpdate($newFile,'wh_support_board_notice',$boardType,$title,$content,$boardId,$fileId,$fileType);
+            
+            if ($fileData) {
+                return redirect()->to("/ad/support/noticeList")->with('msg', '등록이 완료되었습니다.');    
+            } else {
+                return redirect()->to("/ad/support/noticeList")->with('msg', '등록이 실패 되었습니다.');
+            }
+        }else{
+            $BoardModel = new BoardModel();
+            $BoardModel->setTableName('wh_support_board_notice');
+
+            $updated = $BoardModel->update($boardId, [
+                'title' => $title,
+                'content' => $content,
+                'updated_at'=>'admin'
+            ]);
+
+            if ($updated) {
+                return redirect()->to("/ad/support/noticeView/{$boardId}")->with('msg', '수정이 완료되었습니다.');
+            } else {
+                return redirect()->to("/ad/support/noticeEdit/{$boardId}")->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
+            }
+            
+        }
+    }
+
+    public function spNoticeDelete(){
+        $BoardId = $this->request->getPost('BoardId');
+        $fileId = $this->request->getPost('fileId');
+
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_support_board_notice');
+        $deleted = $BoardModel->delete($BoardId);   
+
+        if($fileId){
+            $BoardFileModel = new BoardFileModel();
+            $BoardFileModel->delete($fileId);
+        }
+
+        if ($deleted) {
+            return $this->response->setJSON(['success' => true]);
+        } else {
+            return $this->response->setJSON(['success' => false]);
+        }
+    }
+
+    public function spfileDelete(){
+        $fileId = $this->request->getPost('fileId');
+
+        $BoardFileModel = new BoardFileModel();
+        
+        $deleted = $BoardFileModel->delete($fileId);
+
+        if ($deleted) {
+            return $this->response->setJSON(['success' => true]);
+        } else {
+            return $this->response->setJSON(['success' => false]);
+        }
+    }
+
+    /*서포터즈 faq */
+    public function spFaqEdit(): string
+    {
+        return view('admin/ad_sp_faq_edit');
+    }
+
+    public function spFaqUpload()
+    {
+        $title = $this->request->getPost('title');
+        $content = $this->request->getPost('content');
+
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_support_board_faq');
+        $data = [
+            'title' => $title,
+            'content' => $content,
+            'board_type' => 'spfaq',
+            'author' => 'admin',
+
+        ];
+
+        $inserted = $BoardModel->insert($data);
+
+        if ($inserted) {
+            return redirect()->to('/ad/support/faqList')->with('msg', '등록이 완료 되었습니다.');
+
+        }else{
+            return redirect()->to('/ad/support/faqEdit')->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
+        }
+    }
+
+    public function spFaqList(){
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_support_board_faq');
+
+        $data['faqs'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
+
+        return view('admin/ad_sp_faq_list',$data);
+    }
+
+    public function spFaqModify($id){
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_support_board_faq');
+        $data['faq'] = $BoardModel->find($id); 
+
+        
+        if ($data['faq'] === null) {
+            return redirect()->to('/ad/spport/faqList')->with('msg', '해당 데이터를 찾을 수 없습니다.');
+        }
+
+        return view('admin/ad_sp_faq_modify', $data);
+    }
+
+    public function spFaqUpdate(){
+        $id = $this->request->getPost('faq_id');
+        $title = $this->request->getPost('title');
+        $content = $this->request->getPost('content');
+    
+        if (!$id || !is_numeric($id)) {
+            return redirect()->to('/ad/support/faqList')->with('msg', '잘못된 요청입니다.');
+        }
+    
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_support_board_faq');
+
+        $updated = $BoardModel->update($id, [
+            'title' => $title,
+            'content' => $content,
+            'updated_at'=>date('Y-m-d H:i:s'),
+            'updated_at'=>'admin'
+        ]);
+    
+        if ($updated) {
+            return redirect()->to('/ad/support/faqList')->with('msg', 'FAQ가 업데이트 되었습니다.');
+        } else {
+            return redirect()->back()->withInput()->with('msg', 'FAQ 업데이트에 실패했습니다.');
+        }
+    }
+
+    public function spFaqView($id){
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_support_board_faq');
+        $data['faq'] = $BoardModel->find($id); 
+
+        return view('admin/ad_sp_faq_view', $data);
     }
 }

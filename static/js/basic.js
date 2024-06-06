@@ -137,6 +137,9 @@ const supportUserLogin = () => {
 const userLogout = () => {
     fn_confirm('로그아웃 하시겠습니까?', 'logout');
 };
+const spLogout = () => {
+    fn_confirm('나가시겠습니까?', 'splogout');
+};
 function fn_userLogout(value) {
     if (value) {
         $.ajax({
@@ -154,6 +157,9 @@ function fn_userLogout(value) {
             },
         });
     }
+}
+function fn_spLogout(value) {
+    moveToUrl('/');
 }
 // const userLogout = () => {
 //     if (confirm('로그아웃 하시겠습니까?')) {
@@ -2316,6 +2322,8 @@ function fn_confirm(msg, loc) {
         html += '<button class="btn type01" onclick="fn_calcMatchRate(\'true\')">확인</button>';
     } else if (loc == 'sndRpt') {
         html += '<button class="btn type01" onclick="fn_sndRpt(\'true\')">확인</button>';
+    } else if (loc == 'splogout') {
+        html += '<button class="btn type01" onclick="fn_spLogout(\'true\')">확인</button>';
     }
     html += '<button class="btn type02" onclick="alertClose()">취소</button>';
     html += '</div>';

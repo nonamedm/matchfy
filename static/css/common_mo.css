@@ -1550,7 +1550,17 @@ a:active {
     background: transparent;
     border: none;
 }
-
+.content_spmypage_logout {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 18px;
+    text-align: center;
+    text-decoration-line: underline;
+    color: #777777;
+    background: transparent;
+    border: none;
+    width: 50%;
+}
 .mo_wrap .sub_wrap .content_wrap .content_body.content_mypage {
     margin: 35px 0px;
     text-align: left;
@@ -1782,6 +1792,7 @@ a:active {
     padding: 14px;
     display: flex;
     justify-content: space-between;
+    cursor: pointer;
 }
 .line_banner a {
     display: flex;
@@ -2578,6 +2589,13 @@ form input[type='file'] {
 }
 .footer {
     background-color: #ffffff;
+}
+.footer_display {
+    width: 100%;
+    height: 80px;
+    position: absolute;
+    bottom: 0;
+    display: flex;
 }
 .footer .btn_group {
     position: relative;
