@@ -58,6 +58,8 @@ return [
     'exclusionItems'     => '제외항목',
     'sir'                => '님',
     'view'               => '보기',
+    'moblieNo'           => '휴대폰번호',
+    'recommendCode'      => '추천인코드',
 
     // login
     'id'                 => '아이디',
@@ -250,6 +252,8 @@ return [
     //success
     'siginSuccessTitle'   => '가입 완료!',
     'siginSuccessCon1'    => ' 가입을 축하합니다.',
+    'referralSuccessTitle' => '내부 서포터 추천 완료!',
+    'referralSuccessCon1' => ' 내부 서포터 추천이 완료되었습니다.',
 
     //signin type
     'signinType1'         => '멤버십 등급에 따라<br />혜택을 제공 받으세요',
@@ -391,6 +395,7 @@ return [
     'sinupHeightPlaceholder'  => '키 입력',
     'sinupMajorPlaceholder'   => '전공을 입력해주세요',
     'sinupSchoolPlaceholder'  => '학교를 입력해 주세요',
+    'recommendCodePlaceholder'=> '추천인코드를 입력해주세요',
 
     //qna
     'AIManager'               => 'AI 매니저',
@@ -567,6 +572,36 @@ return [
     'signUpBirthPlaceholder'   => '생년월일을 입력하세요',
     'signUpCityPlaceholder'    => '시/도',
     'signUpGunguPlaceholder'    => '시/군/구',
+    'mobileNoPlaceholder'       => '휴대폰번호를 입력하세요.',
+
+    //referral
+    'reasonReferral'     => '추천이유',
+    'referralBtn'        => '추천완료',
+    'Management'        => '사업관리',
+    'Administration'    => '경영/회계/사무',
+    'Finance'           => '금융보험',
+    'Education'         => '교육직',
+    'Legal'             => '법률직',
+    'Healthcare'        => '보건의료직',
+    'Social'            => '사회복지/종교',
+    'Culture'           => '문화/예술',
+    'Transportation'    => '운전/운송',
+    'Sales'             => '영업/판매',
+    'Security'          => '경비/청소',
+    'Hospitality'       => '숙박/여행',
+    'Foodservice'       => '음식/서비스',
+    'Construction'      => '건설',
+    'Mechanical'        => '기계',
+    'Materials'         => '재료',
+    'Biochemical'       => '화학/바이오',
+    'Textiles'          => '섬유/의복',
+    'Electrical'        => '전기/전자',
+    'IT'                => '정보통신',
+    'Foodprocessing'    => '식품가공',
+    'Printing'          => '인쇄/목재',
+    'Environmental'     => '환경/에너지',
+    'Agriculture'       => '농업',
+
 
     //alert
     'alertText'                => '상대방에게 메시지를 보내기 위해서는<br />등업이 필요합니다',

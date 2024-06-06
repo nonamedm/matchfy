@@ -28,7 +28,7 @@
         ?>
         <div class="sub_wrap">
             <div class="content_wrap">
-                <form class="main_signin_form" method="post" action="/mo/signinPhoto" enctype="multipart/form-data">
+                <form class="main_signin_form" method="post" action="" enctype="multipart/form-data">
                     <!-- <div class="content_body">
                         <a id="profileArea" class="profile_area" onclick="editPhoto()">
                             <img src="/static/images/profile_noimg.png" />
@@ -128,8 +128,11 @@
                         </div>
                         <div class="form_row signin_form">
                             <div class="signin_form_div">
-                                <label for="recommendCode" class="signin_label">추천인 코드</label>
-                                <input id="recommendCode" name="recommendCode" type="text" placeholder="<?= lang('Korean.pswdChkPlaceholder') ?>">
+                                <label for="invite_code" class="signin_label"><?= lang('Korean.recommendCode') ?></label>
+                                <div class="input_btn">
+                                    <input id="invite_code" name="invite_code" type="text" placeholder="<?= lang('Korean.recommendCodePlaceholder') ?>">
+                                    <button type="button" id="inviteCodeBtn" class="btn btn_input_form" onclick="supportRecommendCodeCheck()"><?= lang('Korean.certification') ?></button>
+                                </div>
                             </div>
                         </div>
 
@@ -137,12 +140,15 @@
                         <input type="hidden" name="nickname" value="<?= $nickname ?>" />
                         <input type="hidden" name="sns_type" value="<?= $sns_type ?>" />
                         <input type="hidden" name="oauth_id" value="<?= $oauth_id ?>" />
+                        <input type="hidden" name="agree1" value="<?= $agree1 ?>">
+                        <input type="hidden" name="agree2" value="<?= $agree2 ?>">
+                        <input type="hidden" name="agree3" value="<?= $agree3 ?>">
                         <div id="main_photo_uploaded" style="display:none;"></div>
                         <!-- <div id="profile_photo_uploaded" style="display:none;"></div>
                         <div id="profile_mov_uploaded" style="display:none;"></div> -->
                         <div class="btn_group multy">
                             <button type="button" class="btn type02"><?= lang('Korean.cancel') ?></button>
-                            <button type="button" class="btn type01" onclick="signUp()">회원가입</button>
+                            <button type="button" class="btn type01" onclick="signUpSupporters()"><?= lang('Korean.signup') ?></button>
                         </div>
                     </div>
                 </form>
