@@ -63,7 +63,8 @@ return [
     'id'                 => '아이디',
     'autoId'             => '자동 로그인',
     'login'              => '로그인',
-    'signup'       => '회원가입',
+    'signup'             => '회원가입',
+    'supportSignup'      => '이메일로 외부 서포터 가입',
     'mobileSignup'       => '휴대폰 번호로 회원가입',
     'naverLogin'         => '네이버로 계속하기',
     'loginPlacehoder'    => '이메일 주소 입력',
@@ -490,7 +491,7 @@ return [
     'meetplaceholder'         => '모임을 검색해보세요!',
 
     //mypage
-    'mypageCon'               => 'AI 문답하면 매칭 확률 UP!',
+    'mypageCon'               => 'AI메시지함',
     'mywallet'                => '내지갑',
     'myfeed'                  => '내피드',
     'myMeetSetting'           => '내모임 관리',

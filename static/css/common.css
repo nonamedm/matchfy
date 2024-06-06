@@ -575,7 +575,7 @@ input[type='checkbox'] + label:hover {
     color: #ffffff;
 }
 .footer_link a {
-    margin-right: 31px;
+    margin-right: 15px;
     text-decoration: none;
     color: #fff;
 }
@@ -637,7 +637,7 @@ header .menu_item {
 }
 
 /*kakao chat btn*/
-.kakao_chat_btn{
+.kakao_chat_btn {
     position: sticky;
     top: 90%;
     width: 50px;
@@ -645,10 +645,9 @@ header .menu_item {
     left: 100%;
     background: #fee500;
     border-radius: 100px;
-    margin-right:7px;
-
+    margin-right: 7px;
 }
-.kakao_chat_btn img{
+.kakao_chat_btn img {
     width: 60%;
     padding: 21% 21%;
 }

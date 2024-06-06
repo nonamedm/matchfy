@@ -2030,7 +2030,7 @@ const passwdUpdate = () => {
         fn_alert('해당 이메일을 입력해주세요');
         tempValidation = false;
         $('#name').focus();
-     } else if ($('#pswd').val().trim() === '') {
+    } else if ($('#pswd').val().trim() === '') {
         fn_alert('비밀번호를 입력해 주세요');
         tempValidation = false;
         $('#pswd').focus();
@@ -2040,11 +2040,7 @@ const passwdUpdate = () => {
         $('#pswdChk').focus();
     }
 
-    if (
-        $('#email').val() !== '' &&
-        $('#pswd').val() !== '' &&
-        $('#pswdChk').val() !== ''
-    ) {
+    if ($('#email').val() !== '' && $('#pswd').val() !== '' && $('#pswdChk').val() !== '') {
         tempValidation = true;
     }
     if (tempValidation) {
@@ -2062,11 +2058,11 @@ const passwdUpdate = () => {
                 success: function (data) {
                     console.log(data);
                     if (data.status === 'success') {
-                            fn_alert('비밀번호가 변경되었습니다. </br> 로그인창으로 이동 해주세요.', '/mo');
+                        fn_alert('비밀번호가 변경되었습니다. </br> 로그인 화면으로 이동합니다.', '/mo');
                     } else if (data.status === 'error') {
-                        if(data.result == '0'){
+                        if (data.result == '0') {
                             fn_alert('이메일을 다시 확인해주세요.');
-                        }else{
+                        } else {
                             fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
                         }
                     } else {

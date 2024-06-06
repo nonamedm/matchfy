@@ -20,7 +20,7 @@
 
 
         <?php $title = "메시지";
-        $prevUrl = "/mo/mymsg/list";
+        $prevUrl = "/mo/mypage";
         include 'header.php'; ?>
         <?php $session = session();
         $member_ci = $session->get('ci');
@@ -115,27 +115,6 @@
                         <img style="position:absolute; right: 30px" src="/static/images/message_send_btn.png" onclick="sendMsg()" />
                     </div>
                 </div>
-                <div class="chat_menu_open">
-                    <div id="mymsg_photo_div" class="chat_menu_func">
-                        <!-- <img src="/static/images/chat_picture.png"> -->
-                        <label for="mymsg_photo" class=""></label>
-                        <p>앨범</p>
-                        <input id="mymsg_photo" name="mymsg_photo" type="file" value="" placeholder="" multiple accept="image/*">
-                    </div>
-                    <div class="chat_menu_func" onclick="crtMtng()"><img src="/static/images/chat_location.png">
-                        <p>약속</p>
-                    </div>
-                    <!-- <div class="chat_menu_func" onclick="sndPnt()"><img src="/static/images/chat_banking.png">
-                        <p>예약금<br />송금</p>
-                    </div> -->
-                    <div class="chat_menu_func" onclick="extRm()"><img src="/static/images/chat_quit.png">
-                        <p>방나가기</p>
-                    </div>
-
-                    <!-- <div class="chat_menu_func"><img src="/static/images/chat_call.png">
-                        <p>안심번호<br /> 통화하기</p>
-                    </div> -->
-                </div>
             </div>
             <input id="room_ci" type="hidden" value="<?= $room_ci ?>" />
 
@@ -157,20 +136,20 @@
                 }
             });
             scrollToBottom();
-            mymsgPhotoListener();
-            // setInterval(function() {
-            //     reloadMsg();
+            // mymsgPhotoListener();
+            setInterval(function() {
+                reloadMsg();
 
-            // }, 5000);
-            $("#mymsg_menu").on("click", function() {
-                if (!($(".message_input_box").hasClass("on")) && !($(".chat_wrap").hasClass("on"))) {
-                    $(".message_input_box").addClass("on");
-                    $(".chat_wrap").addClass("on");
-                } else {
-                    $(".message_input_box").removeClass("on");
-                    $(".chat_wrap").removeClass("on");
-                }
-            });
+            }, 5000);
+            // $("#mymsg_menu").on("click", function() {
+            //     if (!($(".message_input_box").hasClass("on")) && !($(".chat_wrap").hasClass("on"))) {
+            //         $(".message_input_box").addClass("on");
+            //         $(".chat_wrap").addClass("on");
+            //     } else {
+            //         $(".message_input_box").removeClass("on");
+            //         $(".chat_wrap").removeClass("on");
+            //     }
+            // });
 
         });
         const reloadMsg = () => {
@@ -269,121 +248,10 @@
             $("#msgbox").val("");
         }
 
-        const extRm = () => {
-            fn_confirm('채팅방에서 나가시겠습니까? \n대화내용은 저장되지 않습니다.', 'extRm');
-        }
-
-        function fn_extRm(value) {
-            if (value) {
-                $.ajax({
-                    url: '/ajax/extRm',
-                    type: 'POST',
-                    data: {
-                        "room_ci": $("#room_ci").val(),
-                    },
-                    async: false,
-                    success: function(data) {
-                        console.log(data);
-                        if (data.status === 'success') {
-                            // 성공
-                            moveToUrl('/mo/mymsg/list');
-                        } else if (data.status === 'error') {
-                            console.log('실패', data);
-                        } else {
-                            fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
-                        }
-                        return false;
-                    },
-                    error: function(data, status, err) {
-                        console.log(err);
-                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-                    },
-                });
-            }
-        }
         const scrollToBottom = () => {
             $("#chat_wrap").scrollTop($("#chat_wrap")[0].scrollHeight);
         }
 
-        const mymsgPhotoListener = () => {
-            const mymsg_photo_input = document.getElementById('mymsg_photo');
-            let uploadedFiles = [];
-            mymsg_photo_input.addEventListener('change', function() {
-                if (mymsg_photo_input.files.length > 0) {
-                    for (let i = 0; i < mymsg_photo_input.files.length; i++) {
-                        const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.tiff|\.tif|\.webp|\.svg)$/i;
-                        if (!allowedExtensions.exec(mymsg_photo_input.files[i].name)) {
-                            fn_alert('이미지 파일만 업로드할 수 있습니다.');
-                            // 입력한 파일을 초기화하여 업로드를 취소
-                            this.value = '';
-                        } else {
-                            // FileReader 객체 생성
-                            const reader = new FileReader();
-
-                            // 파일 읽기가 완료되었을 때 실행되는 콜백 함수 정의
-                            reader.onload = function(e) {
-                                // javascript에서 fileUpload 호출
-                                fileUpload(mymsg_photo_input.files[i])
-                                    .then((data) => {
-                                        if (data.org_name) {
-                                            console.log('result', data);
-                                            const fileInfo = {
-                                                org_name: data.org_name,
-                                                file_name: data.file_name,
-                                                file_path: data.file_path,
-                                                ext: data.ext,
-                                            };
-                                            uploadedFiles.push(fileInfo);
-
-                                            // DB저장하기
-                                            $.ajax({
-                                                url: '/ajax/sendMsg',
-                                                type: 'POST',
-                                                data: {
-                                                    "room_ci": $("#room_ci").val(),
-                                                    "msg_cont": '<img src="/' + fileInfo.file_path + fileInfo.file_name + '" style="width: 150px; height: 150px;" />',
-                                                    "msg_type": "1"
-                                                },
-                                                async: false,
-                                                success: function(data) {
-                                                    console.log(data);
-                                                    if (data.status === 'success') {
-                                                        // 성공
-                                                        $('#msgbox').css('height', '26px'); // height 초기화
-                                                        $(".message_input_box").removeClass("on");
-                                                        $(".chat_wrap").removeClass("on");
-                                                        reloadMsg();
-                                                        scrollToBottom();
-                                                        // moveToUrl('/mo/factorInfo');
-                                                    } else if (data.status === 'error') {
-                                                        console.log('실패', data);
-                                                    } else {
-                                                        fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
-                                                    }
-                                                    return false;
-                                                },
-                                                error: function(data, status, err) {
-                                                    console.log(err);
-                                                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-                                                },
-                                            });
-                                        } else {
-                                            fn_alert(data)
-
-                                        }
-
-                                    })
-                                    .catch((error) => {
-                                        console.error('error : ', error);
-                                    });
-                            };
-                            // 파일 읽기 시작
-                            reader.readAsDataURL(mymsg_photo_input.files[i]);
-                        }
-                    }
-                } else {}
-            });
-        };
 
 
         // const sndPnt = () => {
@@ -418,9 +286,6 @@
         //         },
         //     });
         // };
-        const AImsg = () => {
-            fn_alert('준비중인 기능입니다!')
-        }
     </script>
 
     <!-- -->
