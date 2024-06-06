@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\BoardModel;
 use App\Models\BoardFileModel;
+use App\Models\SupportBoardModel;
 
 
 class SupportHome extends BaseController
@@ -42,19 +43,19 @@ class SupportHome extends BaseController
 
 
 
-    public function index()
-    {
-        // $session = session();
-        // $ci = $session->get('ci');
+    // public function index()
+    // {
+    //     // $session = session();
+    //     // $ci = $session->get('ci');
 
-        // if ($ci) {
-        //     return redirect()->to("/support");
-        // } else {
-        //     return view('sp_index');
-        // }
+    //     // if ($ci) {
+    //     //     return redirect()->to("/support");
+    //     // } else {
+    //     //     return view('sp_index');
+    //     // }
 
-        return view('sp_index');
-    }
+    //     return view('sp_index');
+    // }
     public function menu(): string
     {
         return view('sp_menu');
