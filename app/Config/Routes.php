@@ -173,6 +173,7 @@ $routes->post('/ajax/partScdl', 'MoAjax::partScdl');
 $routes->post('/ajax/usablePoint', 'MoAjax::usablePoint');
 $routes->post('/ajax/sndDeposit', 'MoAjax::sndDeposit');
 
+
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');
 $routes->get('/downloadCeonumFile/(:num)', 'download::downloadCeonumFile/$1');
@@ -267,3 +268,17 @@ $routes->get('/support/notice/view/(:num)', 'SupportHome::noticeView/$1');
 $routes->get('/support/faq', 'SupportHome::faq');
 $routes->get('/support/terms', 'SupportHome::terms');
 $routes->get('/support/privacy', 'SupportHome::privacy');
+
+$routes->get('/support/mo/signinSuccess', 'SupportHome::signinSuccess');
+$routes->get('/support/mo/invite', 'SupportHome::invite');
+$routes->get('/support/mo/referral', 'SupportHome::referral');
+$routes->get('/support/mo/referralSuccess', 'SupportHome::referralSuccess');
+
+$routes->post('/ajax/support/login', 'MoAjax::supportLogin');
+$routes->post('/ajax/support/signUp', 'MoAjax::signUpSupporters');
+$routes->post('/ajax/support/isValidRecommendCode', 'MoAjax::isValidSupportRecommendCode');
+$routes->post('/ajax/support/referral', 'MoAjax::referralRegistration');
+
+$routes->post('/support/proxy/createPassWeb', 'ProxyController::createSupportPassWeb');
+$routes->get('/support/proxy/getResultValue', 'ProxyController::getSupportResultValue');
+

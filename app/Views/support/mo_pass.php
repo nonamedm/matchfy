@@ -18,7 +18,7 @@
 
 
         <?php $title = "휴대폰 본인인증";
-        $prevUrl = "/mo";
+        $prevUrl = "/support/mo";
         include 'header.php'; ?>
 
         <div class="sub_wrap">
@@ -57,7 +57,7 @@
     <script>
         $(document).ready(function() {
             $.ajax({
-                url: '/proxy/createPassWeb',
+                url: '/support/proxy/createPassWeb',
                 type: 'POST',
                 data: {
                     "nickname": "<?= $nickname ?>",

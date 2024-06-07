@@ -80,6 +80,60 @@ const userLogin = () => {
         },
     });
 };
+const supportUserLogin = () => {
+    const emailAddr = document.getElementById('id').value;
+    const passwd = document.getElementById('pw').value;
+    const autoLogin = document.getElementById('keep').checked;
+
+    // 빈 값 validation
+    if (emailAddr.length === 0) {
+        fn_alert('이메일 주소를 입력해 주세요.');
+        return;
+    }
+
+    //휴대폰 번호 11자리 숫자로 validation
+    // const phoneRegex = /^\d{11}$/;
+
+    // if (!phoneRegex.test(phoneNumber)) {
+    //     fn_alert('휴대폰 번호는 11자리 숫자여야 합니다.');
+    //     return;
+    // }
+
+    $.ajax({
+        url: '/ajax/support/login',
+        type: 'POST',
+        data: { email: emailAddr, passwd: passwd, auto_login: autoLogin },
+        async: false,
+        success: function (data) {
+            console.log(data);
+            if (data.status === 'success') {
+                moveToUrl('/');//변경 필요
+                console.log(data);
+                // $.ajax({
+                //     url: '/ajax/calcMatchRate',
+                //     type: 'POST',
+                //     async: false,
+                //     success: function (data) {
+                //         moveToUrl('/');
+                //         console.log(data);
+                //     },
+                //     error: function (data, status, err) {
+                //         console.log(err);
+                //         fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                //     },
+                // });
+                //location.href = '/index/login'
+            } else {
+                fn_alert(data.message);
+            }
+            return false;
+        },
+        error: function (data, status, err) {
+            console.log(err);
+            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
+};
 const userLogout = () => {
     fn_confirm('로그아웃 하시겠습니까?', 'logout');
 };
@@ -139,6 +193,27 @@ const submitFormAgree = () => {
 
     // 모든 체크박스의 상태를 변경
     if (isAllChecked) {
+        submitForm();
+    } else {
+        fn_alert('항목에 동의해 주세요');
+        return false;
+    }
+};
+
+const SupportSubmitFormAgree = () => {
+    const agree1 = document.getElementById('agree1');
+    const agree2 = document.getElementById('agree2');
+    const agree3 = document.getElementById('agree3');
+
+    // agree1, agree2, agree3의 체크 여부 확인
+    const isAllChecked = agree1.checked && agree2.checked && agree3.checked;
+
+    // 모든 체크박스의 상태를 변경
+    if (isAllChecked) {
+        document.getElementById('hiddenAgree1').value = agree1.checked ? 'Y' : 'N';
+        document.getElementById('hiddenAgree2').value = agree2.checked ? 'Y' : 'N';
+        document.getElementById('hiddenAgree3').value = agree3.checked ? 'Y' : 'N';
+
         submitForm();
     } else {
         fn_alert('항목에 동의해 주세요');
@@ -233,6 +308,121 @@ const signUp = () => {
                             }
                         }
                         submitForm();
+                    } else if (data.status === 'error') {
+                        if (data.result === '2') {
+                            // 중복이메일
+                            fn_alert('이미 가입된 메일주소입니다. 다른 메일주소를 사용해 주세요.');
+                            // 코드 확인
+                            var regBtn = $('#emailBtn');
+                            var emailCodeTxt = $('#emailReg');
+                            var chkBtn = $('#emailRegBtn');
+
+                            // 이메일입력, 코드입력, 인증코드 모두 비활성화
+                            // emailTxt.prop('disabled', true);
+                            regBtn.prop('disabled', false);
+                            emailCodeTxt.prop('disabled', false);
+                            chkBtn.prop('disabled', false);
+                        } else if (data.result === '5') {
+                            // 중복이메일
+                            fn_alert('인증되지 않은 이메일 주소입니다. ');
+                        } else {
+                            // 한번만 출력되게 함
+                            $('.alert_validation').remove();
+                            // 오류 메시지 표시
+                            Object.keys(data.errors).forEach(function (key, index) {
+                                var field = $('[name="' + key + '"]');
+                                var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div 선택
+
+                                // 오류 메시지 추가
+                                if (!topMostDiv.next().hasClass('alert_validation')) {
+                                    // 이미 오류 메시지가 있는지 확인
+                                    topMostDiv.after(
+                                        '<div class="alert alert_validation">' + data.errors[key] + '</div>',
+                                    );
+                                }
+                                // 처음 validation 포커스
+                                if (index === 0) {
+                                    field.focus();
+                                }
+                            });
+                        }
+                    } else {
+                        fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    }
+                    return false;
+                },
+                error: function (data, status, err) {
+                    console.log(err);
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                },
+            });
+        }
+    } else {
+    }
+};
+
+const signUpSupporters = () => {
+    var postData = new FormData(document.querySelector('form'));
+
+    let tempValidation = false;
+    if ($('#name').val().trim() === '') {
+        fn_alert('이름을 입력해 주세요');
+        tempValidation = false;
+        $('#name').focus();
+    } else if ($('#birthday').val().trim() === '') {
+        fn_alert('생년월일을 입력해 주세요');
+        tempValidation = false;
+        $('#birthday').focus();
+    } else if ($('#city').val().trim() === '') {
+        fn_alert('시/도를 선택해 주세요');
+        tempValidation = false;
+        $('#city').focus();
+    } else if ($('#town').val().trim() === '') {
+        fn_alert('시/군/구를 선택해 주세요');
+        tempValidation = false;
+        $('#city').focus();
+    } else if ($('#gender').val().trim() === '') {
+        fn_alert('성별을 선택해 주세요');
+        tempValidation = false;
+        $('#gender').focus();
+    } else if ($('#pswd').val().trim() === '') {
+        fn_alert('비밀번호를 입력해 주세요');
+        tempValidation = false;
+        $('#pswd').focus();
+    } else if ($('#pswdChk').val().trim() === '') {
+        fn_alert('비밀번호를 다시 입력해 주세요');
+        tempValidation = false;
+        $('#pswdChk').focus();
+    }
+
+    if (
+        $('#name').val() !== '' &&
+        $('#birthday').val() !== '' &&
+        $('#city').val() !== '' &&
+        $('#town').val() !== '' &&
+        $('#pswd').val() !== '' &&
+        $('#pswdChk').val() !== '' &&
+        $('#gender').val() !== ''
+    ) {
+        tempValidation = true;
+    }
+    if (tempValidation) {
+        if ($('#pswd').val() !== $('#pswdChk').val()) {
+            fn_alert('비밀번호를 확인해 주세요');
+            $('#pswd').focus();
+        } else {
+            $.ajax({
+                url: '/ajax/support/signUp', // todo : 추후 본인인증 연결
+                type: 'POST',
+                data: postData,
+                processData: false,
+                contentType: false,
+                async: false,
+                success: function (data) {
+                    console.log(data);
+                    if (data.status === 'success') {
+                        // 성공
+                        moveToUrl('/support/mo/signinSuccess');
                     } else if (data.status === 'error') {
                         if (data.result === '2') {
                             // 중복이메일
@@ -1252,6 +1442,29 @@ const regCode = () => {
     });
 };
 
+const supportRecommendCodeCheck = () => {
+    var inviteCode = $('#invite_code').val();
+    console.log(inviteCode);
+    $.ajax({
+        url: '/ajax/support/isValidRecommendCode',
+        type: 'POST',
+        data: { inviteCode: inviteCode },
+        success: function (data) {
+            console.log(data);
+            if (data.isValid) {
+                fn_alert('확인 되었습니다.');
+            } else {
+                fn_alert('유효하지 않은 초대 코드입니다.');
+                $('#invite_code').val('');
+            }
+        },
+        error: function (data, status, err) {
+            console.log(err);
+            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
+}
+
 const meetingSave = (postData) => {
     if ($('#group_photo').val().trim() === '') {
         fn_alert('대표사진을 선택해 주세요.');
@@ -1936,6 +2149,124 @@ const alliancePaymentChk = () => {
         });
     }, 2000);
 };
+
+/* referral */
+const referralRegistration = () => {
+    var postData = new FormData(document.querySelector('form'));
+
+    let tempValidation = false;
+    if ($('#name').val().trim() === '') {
+        fn_alert('이름을 입력해 주세요');
+        tempValidation = false;
+        $('#name').focus();
+    } else if ($('#birthday').val().trim() === '') {
+        fn_alert('생년월일을 입력해 주세요');
+        tempValidation = false;
+        $('#birthday').focus();
+    } else if ($('#gender').val().trim() === '') {
+        fn_alert('성별을 선택해 주세요');
+        tempValidation = false;
+        $('#gender').focus();
+    } else if ($('#mobile_no').val().trim() === '') {
+        fn_alert('휴대폰 번호를 입력해 주세요');
+        tempValidation = false;
+        $('#mobile_no').focus();
+    } else if ($('#marital').val().trim() === '') {
+        fn_alert('결혼경험유무를 선택해 주세요');
+        tempValidation = false;
+        $('#marital').focus();
+    } else if ($('#city').val().trim() === '') {
+        fn_alert('시/도를 선택해 주세요');
+        tempValidation = false;
+        $('#city').focus();
+    } else if ($('#town').val().trim() === '') {
+        fn_alert('시/군/구를 선택해 주세요');
+        tempValidation = false;
+        $('#city').focus();
+    } else if ($('#height').val().trim() === '') {
+        fn_alert('키를 입력해 주세요');
+        tempValidation = false;
+        $('#height').focus();
+    } else if ($('#education').val().trim() === '') {
+        fn_alert('학력을 선택해 주세요');
+        tempValidation = false;
+        $('#education').focus();
+    } else if ($('#job').val().trim() === '') {
+        fn_alert('직업 선택해 주세요');
+        tempValidation = false;
+        $('#job').focus();
+    } else if ($('#detailed_content').val().trim() === '') {
+        fn_alert('추천이유를 입력해 주세요');
+        tempValidation = false;
+        $('#detailed_content').focus();
+    } 
+
+    if (
+        $('#name').val() !== '' &&
+        $('#birthday').val() !== '' &&
+        $('#gender').val() !== '' &&
+        $('#mobile_no').val() !== '' &&
+        $('#marital').val() !== '' &&
+        $('#city').val() !== '' &&
+        $('#town').val() !== '' &&
+        $('#height').val() !== '' &&
+        $('#education').val() !== '' &&
+        $('#job').val() !== '' &&
+        $('#detailed_content').val() !== ''
+    ) {
+        tempValidation = true;
+    }
+    if (tempValidation) {
+        
+        $.ajax({
+            url: '/ajax/support/referral', 
+            type: 'POST',
+            data: postData,
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function (data) {
+                console.log(data);
+                if (data.status === 'success') {
+                    // 성공
+                    moveToUrl('/support/mo/signinSuccess');
+                } else if (data.status === 'error') {
+                    
+                    // 한번만 출력되게 함
+                    $('.alert_validation').remove();
+                    // 오류 메시지 표시
+                    Object.keys(data.errors).forEach(function (key, index) {
+                        var field = $('[name="' + key + '"]');
+                        var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div 선택
+
+                        // 오류 메시지 추가
+                        if (!topMostDiv.next().hasClass('alert_validation')) {
+                            // 이미 오류 메시지가 있는지 확인
+                            topMostDiv.after(
+                                '<div class="alert alert_validation">' + data.errors[key] + '</div>',
+                            );
+                        }
+                        // 처음 validation 포커스
+                        if (index === 0) {
+                            field.focus();
+                        }
+                    });
+                } else {
+                    fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                }
+                return false;
+            },
+            error: function (data, status, err) {
+                console.log(err);
+                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            },
+        });
+        
+    } else {
+    }
+};
+
+
 /*common alert */
 function fn_alert(msg, loc) {
     var html = '';

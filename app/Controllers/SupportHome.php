@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\BoardModel;
 use App\Models\BoardFileModel;
 use App\Models\SupportBoardModel;
+use App\Models\SupportMemberModel;
 use App\Models\PointModel;
 use App\Models\PointExchangeModel;
 
@@ -329,4 +330,35 @@ class SupportHome extends BaseController
         $postData = $this->request->getPost();
         return view('/support/mo_signin', $postData);
     }
+
+    public function signinSuccess(): string
+    {
+        return view('/support/mo_signin_success');
+    }
+
+    public function invite(): string
+    {
+        $session = session();
+        $ci = $session->get('ci');
+
+        $SupportMemberModel = new SupportMemberModel();
+
+        $uniqueCode = $SupportMemberModel
+            ->select('unique_code')
+            ->where('ci', $ci)
+            ->first();
+
+        return view('/support/mo_invite', $uniqueCode);
+    }
+
+    public function referral()
+    {
+        return view('/support/mo_referral');
+    }
+
+    public function referralSuccess(): string
+    {
+        return view('/support/mo_referral_success');
+    }
+
 }
