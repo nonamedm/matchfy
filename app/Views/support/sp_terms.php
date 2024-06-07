@@ -8,6 +8,8 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
 </head>
 
@@ -15,11 +17,10 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
 
-
-        <?php $title = "이용약관";
+        <?php $title = "서포터즈 전체 메뉴";
         $prevUrl = "/support/menu";
         include 'spheader.php'; ?>
-
+        
         <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="terms_cont">
@@ -27,50 +28,17 @@
 
                         <b><?= $terms['title'] ?></b>
                         <p><?= nl2br($terms['content']); ?></p>
-                        <!-- <p>제1조(목적)</p>
-                        <p></p>
-                        <p>본 약관은 등록한 약관을 보여주는 영역입니다. 약관은 회사마다, 서비스마다 다르기 때문에 사용하시는 약관으로 등록하여 보여주시면 됩니다. </p>
-                        <p></p>
-                        <p>제2조(용어정의)</p>
-                        <p></p>
-                        <p>본 약관에서 사용하는 용어의 정의는 다음과 같습니다. </p>
-                        <p>본 약관은 등록한 약관을 보여주는 영역입니다. 약관은 회사마다, 서비스마다 다르기 때문에 사용하시는 약관으로 등록하여 보여주시면 됩니다. </p>
-                        <p>본 약관은 등록한 약관을 보여주는 영역입니다. 약관은 회사마다, 서비스마다 다르기 때문에 사용하시는 약관으로 등록하여 보여주시면 됩니다. </p>
-                        <p>본 약관은 등록한 약관을 보여주는 영역입니다. 약관은 회사마다, 서비스마다 다르기 때문에 사용하시는 약관으로 등록하여 보여주시면 됩니다. </p>
-                        <p></p>
-                        <p>제3조 (약관의 효력 및 개정)</p>
-                        <p></p>
-                        <p>본 약관은 등록한 약관을 보여주는 영역입니다. 약관은 회사마다, 서비스마다 다르기 때문에 사용하시는 약관으로 등록하여 보여주시면 됩니다.</p> -->
+                        
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
 
         <div style="height: 50px;"></div>
         <footer class="footer">
 
         </footer>
     </div>
-
-
-    <!-- SCRIPTS -->
-
-    <script>
-        function toggleMenu() {
-            var menuItems = document.getElementsByClassName('menu-item');
-            for (var i = 0; i < menuItems.length; i++) {
-                var menuItem = menuItems[i];
-                menuItem.classList.toggle("hidden");
-            }
-        }
-    </script>
-
-    <!-- -->
-
 
 </body>
 

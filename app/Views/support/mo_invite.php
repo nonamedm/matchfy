@@ -19,7 +19,7 @@
 
         <?php $title = lang('Korean.friendsInvite');
         $prevUrl = "/support/menu";//변경 필요
-        include 'header.php'; ?>
+        include 'spheader.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">

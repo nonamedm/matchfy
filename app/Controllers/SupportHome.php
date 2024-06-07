@@ -103,10 +103,11 @@ class SupportHome extends BaseController
         ]);
     }
 
-    public function spmenu(): string
+    public function spmenu()
     {
         return view('/support/sp_menu');
     }
+
     public function noticeList()
     {
         $value = $this->request->getGet('value');

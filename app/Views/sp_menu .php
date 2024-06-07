@@ -20,9 +20,9 @@
 
         <?php $title = "서포터즈 전체 메뉴";
         $prevUrl = "/support";
-        include 'spheader.php'; ?>
+        include 'header.php'; ?>
 
-        <div class="sub_wrap">
+        <!-- <div class="sub_wrap">
             <div class="content_wrap">
                 <div class="menu_wrap">
                     <div class="menu_title">
@@ -58,7 +58,7 @@
                     서포터즈 나가기
                 </button>
             </footer>
-        </div>
+        </div> -->
 
 
 

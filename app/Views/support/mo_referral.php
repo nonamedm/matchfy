@@ -19,8 +19,8 @@
 
 
         <?php $title = "내부 서포터 추천하기";
-        $prevUrl = "/mo/pass";
-        include 'header.php'; ?>
+        $prevUrl = "/support/pass";
+        include 'spheader.php'; ?>
 
         <?php
         $word_file_path = APPPATH . 'Data/MemberCode.php';
