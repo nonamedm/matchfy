@@ -27,7 +27,7 @@
                 <div class="content_title">
                     <h2><?= lang('Korean.agreeCon') ?></h2>
                 </div>
-                <form class="" method="post" action="/support/mo/signin">
+                <form class="" method="post" action="/support/signin">
                     <legend></legend>
                     <div class="login_box">
                         <div class="chk_box">

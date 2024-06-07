@@ -21,7 +21,7 @@
 
         <?php $title = "포인트 환전";
         $prevUrl = "/support/mypage/wallet";
-        include 'header.php'; ?>
+        include 'spheader.php'; ?>
 
         <div class="sub_wrap">
             <div class="loading"><img src="/static/images/loading.gif" /></div>

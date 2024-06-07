@@ -251,7 +251,7 @@ $routes->get('/proxy/getResultIdpwValue', 'ProxyController::getResultIdpwValue')
 
 /*support*/
 $routes->get('/support', 'SupportHome::spindex');
-$routes->get('/support/menu', 'SupportHome::menu');
+$routes->get('/support/menu', 'SupportHome::spmenu');
 $routes->get('/support/notice', 'SupportHome::noticeList');
 $routes->get('/support/mypage/wallet', 'SupportHome::mypageWallet');
 $routes->post('/support/mypage/walletTypeList', 'SupportHome::walletTypeList');
@@ -259,26 +259,23 @@ $routes->get('/support/exchange', 'SupportHome::allianceExchange');
 $routes->post('/support/exchangepointSubmit', 'SupportHome::allianceExchangePoint');
 $routes->get('/sp_mypage_excharge_success', 'SupportHome::exchangePoint_success');
 $routes->get('/sp_mypage_excharge_fail', 'SupportHome::exchangePoint_fail');
-
-$routes->get('/support/mo', 'SupportHome::index');
-$routes->get('/support/mo/pass', 'SupportHome::pass');
-$routes->post('/support/mo/agree', 'SupportHome::agree');
-$routes->post('/support/mo/signin', 'SupportHome::signin');
 $routes->get('/support/notice/view/(:num)', 'SupportHome::noticeView/$1');
 $routes->get('/support/faq', 'SupportHome::faq');
 $routes->get('/support/terms', 'SupportHome::terms');
 $routes->get('/support/privacy', 'SupportHome::privacy');
 
-$routes->get('/support/mo/signinSuccess', 'SupportHome::signinSuccess');
-$routes->get('/support/mo/invite', 'SupportHome::invite');
-$routes->get('/support/mo/referral', 'SupportHome::referral');
-$routes->get('/support/mo/referralSuccess', 'SupportHome::referralSuccess');
-
+$routes->get('/support/mo', 'SupportHome::index');
+$routes->get('/support/pass', 'SupportHome::pass');
+$routes->post('/support/agree', 'SupportHome::agree');
+$routes->post('/support/signin', 'SupportHome::signin');
+$routes->get('/support/signinSuccess', 'SupportHome::signinSuccess');
+$routes->get('/support/invite', 'SupportHome::invite');
+$routes->get('/support/referral', 'SupportHome::referral');
+$routes->get('/support/referralSuccess', 'SupportHome::referralSuccess');
 $routes->post('/ajax/support/login', 'MoAjax::supportLogin');
 $routes->post('/ajax/support/signUp', 'MoAjax::signUpSupporters');
 $routes->post('/ajax/support/isValidRecommendCode', 'MoAjax::isValidSupportRecommendCode');
 $routes->post('/ajax/support/referral', 'MoAjax::referralRegistration');
-
 $routes->post('/support/proxy/createPassWeb', 'ProxyController::createSupportPassWeb');
 $routes->get('/support/proxy/getResultValue', 'ProxyController::getSupportResultValue');
 

@@ -19,8 +19,8 @@
 
 
         <?php $title = "공지사항";
-        $prevUrl = "/mo/notice";
-        include 'header.php'; ?>
+        $prevUrl = "/support/notice";
+        include 'spheader.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">

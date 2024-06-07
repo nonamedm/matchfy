@@ -422,7 +422,7 @@ const signUpSupporters = () => {
                     console.log(data);
                     if (data.status === 'success') {
                         // 성공
-                        moveToUrl('/support/mo/signinSuccess');
+                        moveToUrl('/support/signinSuccess');
                     } else if (data.status === 'error') {
                         if (data.result === '2') {
                             // 중복이메일
@@ -2229,7 +2229,7 @@ const referralRegistration = () => {
                 console.log(data);
                 if (data.status === 'success') {
                     // 성공
-                    moveToUrl('/support/mo/signinSuccess');
+                    moveToUrl('/support/signinSuccess');
                 } else if (data.status === 'error') {
                     
                     // 한번만 출력되게 함

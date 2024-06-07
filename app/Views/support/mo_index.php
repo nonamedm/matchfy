@@ -51,7 +51,7 @@
                 </form>
                 <img src="/static/images/main_login_hr.png" style="position: relative; margin: 40px 0px 30px 0px;left: calc(50% - 302px / 2 + 0.5px);" />
                 <div class="btn_group">
-                    <button type="button" style="width: 301px;" class="btn type00" onclick="moveToUrl('/support/mo/pass')"><?= lang('Korean.supportSignup') ?></button>
+                    <button type="button" style="width: 301px;" class="btn type00" onclick="moveToUrl('/support/pass')"><?= lang('Korean.supportSignup') ?></button>
                 </div>
                 <div class="btn_group">
                     <img src="/static/images/oauth/kakao_login_medium_wide.png" class="oauth_login" onclick="location.href='/auth/kakao/login'" />

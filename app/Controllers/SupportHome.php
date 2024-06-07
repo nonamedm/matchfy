@@ -30,16 +30,82 @@ class SupportHome extends BaseController
         $session = session();
         $ci = $session->get('ci');
 
-        // if ($ci) {
-        //     return redirect()->to("/");
-        // } else {
-        //     return view('sp_index');
-        // }
-        return view('sp_index');
+        /* 보유포인트 */
+        $my_point_value = $this->mypageGetPoint();
+        
+        /* 포인트 적립내역 */
+        $page = 1;
+        $perPage = 3;
+
+        $pointModel = new PointModel();
+
+        $points = $pointModel->where('member_ci', $ci)
+                            ->where('point_type', 'A')
+                            ->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 week')))
+                            ->orderBy('create_at', 'DESC')
+                            ->findAll($perPage * $page, 0);
+
+        /* 서포터즈 공지사항 */
+        $value = $this->request->getGet('value');
+        $fileData = new BoardFileModel();
+        $query = $fileData->select('bo.id AS notice_id,
+                                    bo.title AS title,
+                                    bo.content AS content,
+                                    bo.author AS author,
+                                    bo.update_author AS update_author,
+                                    bo.created_at AS created_at,
+                                    bo.updated_at AS updated_at,
+                                    bo.hit AS hit,
+                                    bo.board_type AS board_type,
+                                    bf.id AS file_id,
+                                    bf.board_idx AS board_idx,
+                                    bf.board_type AS file_board_type,
+                                    bf.file_name AS file_name,
+                                    bf.file_path AS file_path,
+                                    bf.org_name AS org_name,
+                                    (SELECT CONCAT(DATE_FORMAT(MIN(created_at), "%y.%m.%d"), " ~ ", DATE_FORMAT(MAX(created_at), "%y.%m.%d")) FROM wh_support_board_notice) AS created_at_range')
+                        ->from('wh_support_board_notice bo')
+                        ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
+                        ->groupBy('bo.id');
+
+        if ($value == 'recent') {
+            $query->orderBy('bo.id', 'DESC');
+        } else if ($value == 'popular') {
+            $query->orderBy('bo.hit', 'DESC');
+        } else {
+            $query->orderBy('bo.id', 'DESC');
+        }
+
+        // Limit to 3 results
+        $query->limit(3);
+
+        $data['datas'] = $query->get()->getResultArray();
+
+        $BoardModel = new BoardModel();
+        $BoardModel->setTableName('wh_support_board_notice');
+
+        $min_date_query = $BoardModel->query('SELECT MIN(created_at) AS min_date FROM wh_support_board_notice');
+        $max_date_query = $BoardModel->query('SELECT MAX(created_at) AS max_date FROM wh_support_board_notice');
+
+        $min_date_row = $min_date_query->getRow();
+        $max_date_row = $max_date_query->getRow();
+
+        $min_date = date('y.m.d', strtotime($min_date_row->min_date));
+        $max_date = date('y.m.d', strtotime($max_date_row->max_date));
+
+        $data['min_date'] = $min_date;
+        $data['max_date'] = $max_date;
+
+        return view('/support/sp_index', [
+            'my_point' => $my_point_value,
+            'points' => $points,
+            'data' => $data
+        ]);
     }
-    public function menu(): string
+
+    public function spmenu(): string
     {
-        return view('sp_menu');
+        return view('/support/sp_menu');
     }
     public function noticeList()
     {
@@ -92,7 +158,7 @@ class SupportHome extends BaseController
         if ($this->request->isAJAX()) {
             return $this->response->setJSON($data);
         } else {
-             return view('sp_notice',$data);
+             return view('/support/sp_notice',$data);
         }
     }
 
@@ -108,7 +174,7 @@ class SupportHome extends BaseController
         $data['file'] = $fileData->where('board_idx', $id)->first();
 
 
-        return view('sp_notice_view', $data);
+        return view('/support/sp_notice_view', $data);
 
     }
 
@@ -118,7 +184,7 @@ class SupportHome extends BaseController
         $BoardModel->setTableName('wh_support_board_faq');
         $data['faqs'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
 
-        return view('sp_faq', $data);
+        return view('/support/sp_faq', $data);
     }
     public function terms(): string
     {
@@ -126,7 +192,7 @@ class SupportHome extends BaseController
         $BoardModel->setTableName('wh_board_terms');
         $terms = $BoardModel->orderBy('created_at', 'DESC')->first();
 
-        return view('sp_terms', ['terms' => $terms]);
+        return view('/support/sp_terms', ['terms' => $terms]);
     }
     public function privacy(): string
     {
@@ -134,7 +200,7 @@ class SupportHome extends BaseController
         $BoardModel->setTableName('wh_board_privacy');
         $privacy = $BoardModel->orderBy('created_at', 'DESC')->first();
 
-        return view('sp_privacy', ['privacy' => $privacy]);
+        return view('/support/sp_privacy', ['privacy' => $privacy]);
     }
 
     public function mypageWallet()
@@ -152,7 +218,7 @@ class SupportHome extends BaseController
         $points->orderBy('create_at', 'DESC');
         $points = $points->findAll($perPage * $page, 0);
 
-        return view('sp_mypage_wallet', ['points' => $points]);
+        return view('/support/sp_mypage_wallet', ['points' => $points]);
     }
 
     public function walletTypeList()
@@ -231,7 +297,7 @@ class SupportHome extends BaseController
     public function allianceExchange(): string
     {
         $my_point_value = $this->mypageGetPoint();
-        return view('sp_alliance_exchange', ['my_point' => $my_point_value]);
+        return view('/support/sp_alliance_exchange', ['my_point' => $my_point_value]);
     }
     /*환전 프로세스 */
     public function allianceExchangePoint()
@@ -284,13 +350,13 @@ class SupportHome extends BaseController
     /*환전 성공페이지 */
     public function exchangePoint_success(): string
     {
-        return view('sp_mypage_excharge_success');
+        return view('/support/sp_mypage_excharge_success');
     }
 
     /*환전 실패페이지 */
     public function exchangePoint_fail(): string
     {
-        return view('sp_mypage_excharge_fail');
+        return view('/support/sp_mypage_excharge_fail');
     }
 
     public function index()
