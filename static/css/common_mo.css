@@ -65,7 +65,11 @@ input[type='checkbox'] + label:hover {
     background: #ffffff;
     position: relative;
     margin: 0 auto;
-    padding: 0.4rem 0 0;
+    /* padding: 0.4rem 0 0; */
+    padding:0;
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
 }
 header.ci_header {
     width: 400px;
@@ -101,12 +105,107 @@ header.ci_header .logo_menu ul .menu_left button {
     border: none;
     background-color: transparent;
 }
+header.ci_header .logo_menu ul button {
+    border: none;
+    background-color: transparent;
+}
 header.ci_header .logo_menu ul .menu_item {
     position: absolute;
     right: 10px;
     top: 13px;
 }
 header.ci_header .logo_menu ul .item {
+    display: inline-flex;
+    position: absolute;
+    right: 10px;
+}
+
+header.ci_header .logo_menu {
+    padding: 0.4rem 2rem;
+    background-color: rgba(247, 248, 249, 1);
+}
+header.ci_header .logo_menu ul {
+    border-bottom: 1px solid rgba(242, 242, 242, 1);
+    list-style-type: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    text-align: center !important;
+    display: block;
+}
+header.ci_header .logo_menu ul .logo {
+    height: 44px;
+    padding: 0.4rem 0.5rem;
+}
+header.ci_header .logo_menu ul li {
+    cursor: pointer;
+}
+header.ci_header .logo_menu ul .menu_left {
+    display: inline-flex;
+    position: absolute;
+    left: 10px;
+    top: 20px;
+}
+header.ci_header .logo_menu ul .menu_left button {
+    border: none;
+    background-color: transparent;
+}
+header.ci_header .logo_menu ul button {
+    border: none;
+    background-color: transparent;
+}
+header.ci_header .logo_menu ul .menu_item {
+    position: absolute;
+    right: 10px;
+    top: 13px;
+}
+header.ci_header .logo_menu ul .item {
+    display: inline-flex;
+    position: absolute;
+    right: 10px;
+}
+
+/*support header*/
+header.spci_header .logo_menu {
+    padding: 0.4rem 0.8rem;
+    background-color: rgba(247, 248, 249, 1);
+}
+header.spci_header .logo_menu ul {
+    border-bottom: 1px solid rgba(242, 242, 242, 1);
+    list-style-type: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    text-align: center !important;
+    display: block;
+}
+header.spci_header .logo_menu ul .logo {
+    height: 44px;
+    padding: 0.4rem 0.5rem;
+}
+header.spci_header .logo_menu ul .logo img {
+    padding-top: 5px;
+}
+header.spci_header .logo_menu ul li {
+    cursor: pointer;
+}
+header.spci_header .logo_menu ul .menu_left {
+    display: inline-flex;
+}
+header.spci_header .logo_menu ul .menu_left button {
+    border: none;
+    background-color: transparent;
+}
+header.spci_header .logo_menu ul button {
+    border: none;
+    background-color: transparent;
+}
+header.spci_header .logo_menu ul .menu_item {
+    position: absolute;
+    right: 10px;
+    top: 13px;
+}
+header.spci_header .logo_menu ul .item {
     display: inline-flex;
     position: absolute;
     right: 10px;
@@ -153,6 +252,8 @@ header .menu {
     display: flex;
     justify-content: space-between;
     padding: 10px 20px 0px 20px;
+    height: 50px;
+    line-height: 50px;
 }
 header ul {
     list-style-type: none;
@@ -160,6 +261,7 @@ header ul {
     overflow: hidden;
     padding: 0;
     display: flex;
+    line-height: 50px;
 }
 header .left_arrow {
 }
@@ -167,8 +269,7 @@ header .header_title {
     font-family: 'Pretendard-Bold';
     font-weight: 700;
     font-size: 16px;
-    line-height: 22px;
-
+    line-height: 43px;
     margin-left: 20px;
 }
 header .menu_right.edit {

@@ -18,9 +18,9 @@
         <!-- HEADER: MENU + HEROE SECTION -->
 
 
-        <?php $title = "<?=lang('Korean.all')?>서포터즈 전체 메뉴";
+        <?php $title = "서포터즈 전체 메뉴";
         $prevUrl = "/support";
-        include 'header.php'; ?>
+        include 'spheader.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">
@@ -29,10 +29,10 @@
                         <span>리워드 관리</span>
                     </div>
                     <div class="menu_cont">
-                        <p onclick="moveToUrl('/mo/matchFeed')"><a>포인트 지갑</a></p>
-                        <p onclick="moveToUrl('/mo/alliance/list')"><a>리워드 내역 확인</a></p>
-                        <p onclick="moveToUrl('/mo/upgradeGrade')"><a>친구초대 코드 발급</a></p>
-                        <p onclick="moveToUrl('/mo/alliance/pass')"><a>내부 서포터 추천하기</a></p>
+                        <p onclick="moveToUrl('/support/mypage/wallet')"><a>포인트 지갑</a></p>
+                        <p onclick="moveToUrl('')"><a>리워드 내역 확인</a></p>
+                        <p onclick="moveToUrl('')"><a>친구초대 코드 발급</a></p>
+                        <p onclick="moveToUrl('')"><a>내부 서포터 추천하기</a></p>
                     </div>
                 </div>
                 <hr class="hoz_part" />

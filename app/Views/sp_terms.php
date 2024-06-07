@@ -18,7 +18,7 @@
 
         <?php $title = "이용약관";
         $prevUrl = "/support/menu";
-        include 'header.php'; ?>
+        include 'spheader.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">

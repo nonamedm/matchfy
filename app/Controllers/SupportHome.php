@@ -5,43 +5,11 @@ namespace App\Controllers;
 use App\Models\BoardModel;
 use App\Models\BoardFileModel;
 use App\Models\SupportBoardModel;
-
+use App\Models\PointModel;
+use App\Models\PointExchangeModel;
 
 class SupportHome extends BaseController
 {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // public function index()
     // {
@@ -56,6 +24,18 @@ class SupportHome extends BaseController
 
     //     return view('sp_index');
     // }
+    public function spindex()
+    {
+        $session = session();
+        $ci = $session->get('ci');
+
+        // if ($ci) {
+        //     return redirect()->to("/");
+        // } else {
+        //     return view('sp_index');
+        // }
+        return view('sp_index');
+    }
     public function menu(): string
     {
         return view('sp_menu');
@@ -156,7 +136,161 @@ class SupportHome extends BaseController
         return view('sp_privacy', ['privacy' => $privacy]);
     }
 
+    public function mypageWallet()
+    {
+        $session = session();
+        $ci = $session->get('ci');
+        $page = 1;
+        $perPage = 6;
 
+        $pointModel = new PointModel();
+
+        $points = $pointModel->where('member_ci', $ci);
+        $points->where('point_type', 'A');
+        $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 week')));
+        $points->orderBy('create_at', 'DESC');
+        $points = $points->findAll($perPage * $page, 0);
+
+        return view('sp_mypage_wallet', ['points' => $points]);
+    }
+
+    public function walletTypeList()
+    {
+        $session = session();
+        $ci = $session->get('ci');
+        $type = $this->request->getPost('walletType');
+        $date = $this->request->getPost('date');
+        $value = $this->request->getPost('value');
+        $page = intval($this->request->getPost('page'));
+        $perPage = intval($this->request->getPost('perPage'));
+        $pointModel = new PointModel();
+
+        $points = $pointModel->where('member_ci', $ci);
+
+        if ($type == 'add' || $type == 'spadd') {
+            $points->where('point_type', 'A');
+        } else if($type == 'use'){
+            $points->where('point_type', 'U');
+        } else if($type == 'spexchange'){
+            $points->where('point_type', 'E');
+        } 
+
+        if ($date == '1week') {
+            $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 week')));
+        } else if ($date == '1month') {
+            $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 month')));
+        } else if ($date == '3month') {
+            $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-3 month')));
+        }
+
+        if ($value == 'latest') {
+            $points->orderBy('create_at', 'DESC');
+        } else if ($value == 'oldest') {
+            $points->orderBy('create_at', 'ASC');
+        } else if ($value == 'highest_amount') {
+            if ($type == 'add') {
+                $points->orderBy('add_point', 'DESC');
+            } else {
+                $points->orderBy('use_point', 'DESC');
+            }
+        } else if ($value == 'lowest_amount') {
+            if ($type == 'add') {
+                $points->orderBy('add_point', 'ASC');
+            } else {
+                $points->orderBy('use_point', 'ASC');
+            }
+        } else {
+            $points->orderBy('create_at', 'DESC');
+        }
+
+        $points = $points->findAll($perPage * $page, 0);
+
+        if ($points) {
+            return $this->response->setJSON(['success' => true, 'points' => $points]);
+        } else {
+            return $this->response->setJSON(['success' => false]);
+        }
+    }
+    /*나의 보유 포인트*/
+    public function mypageGetPoint()
+    {
+        $session = session();
+        $ci = $session->get('ci');
+        $pointModel = new PointModel();
+
+        $my_point = $pointModel->select('my_point')
+            ->where('member_ci', $ci)
+            ->orderBy('create_at', 'DESC')
+            ->first();
+
+        $my_point_value = isset($my_point['my_point']) ? $my_point['my_point'] : 0;
+        return $my_point_value;
+    }
+    /*환전 페이지 */
+    public function allianceExchange(): string
+    {
+        $my_point_value = $this->mypageGetPoint();
+        return view('sp_alliance_exchange', ['my_point' => $my_point_value]);
+    }
+    /*환전 프로세스 */
+    public function allianceExchangePoint()
+    {
+        $session = session();
+        $ci = $session->get('ci');
+
+        $amount = $this->request->getPost('amount');
+        $bank = $this->request->getPost('bank');
+        $acount_number = $this->request->getPost('acount_number');
+
+        $pointExchange = new PointExchangeModel();
+        $data = [
+            'member_ci' => $ci,
+            'point_exchange' => $amount,
+            'bank' => $bank,
+            'bank_number' => $acount_number,
+            'create_at' => date('Y-m-d H:i:s'),
+            'exchange_level' => '0',
+            'exchange_type' => 'E',
+        ];
+
+        $result = $pointExchange->insert($data);
+
+        $point = new PointModel();
+        $my_point = $point->select('my_point')
+            ->where('member_ci', $ci)
+            ->orderBy('create_at', 'DESC')
+            ->first();
+
+        $my_point_value = isset($my_point['my_point']) ? $my_point['my_point'] : 0;
+
+        $data = [
+            'member_ci' => $ci,
+            'my_point' => $my_point_value - $amount,
+            'use_point' => $amount,
+            'point_details' => '환전신청',
+            'create_at' => date('Y-m-d H:i:s'),
+            'point_type' => 'U',
+        ];
+
+        $result2 = $point->insert($data);
+
+        if ($result) {
+            return $this->response->setJSON(['success' => true]);
+        } else {
+            return $this->response->setJSON(['success' => false]);
+        }
+    }
+    /*환전 성공페이지 */
+    public function exchangePoint_success(): string
+    {
+        return view('sp_mypage_excharge_success');
+    }
+
+    /*환전 실패페이지 */
+    public function exchangePoint_fail(): string
+    {
+        return view('sp_mypage_excharge_fail');
+    }
 
     public function index()
     {

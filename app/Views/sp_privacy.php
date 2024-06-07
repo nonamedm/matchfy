@@ -19,7 +19,7 @@
 
         <?php $title = "개인정보처리방침";
         $prevUrl = "/support/menu";
-        include 'header.php'; ?>
+        include 'spheader.php'; ?>
 
         <div class="sub_wrap">
             <div class="content_wrap">

@@ -249,9 +249,15 @@ $routes->post('/proxy/idpwFind', 'ProxyController::idpwFind');
 $routes->get('/proxy/getResultIdpwValue', 'ProxyController::getResultIdpwValue');
 
 /*support*/
-$routes->get('/support', 'SupportHome::index');
+$routes->get('/support', 'SupportHome::spindex');
 $routes->get('/support/menu', 'SupportHome::menu');
 $routes->get('/support/notice', 'SupportHome::noticeList');
+$routes->get('/support/mypage/wallet', 'SupportHome::mypageWallet');
+$routes->post('/support/mypage/walletTypeList', 'SupportHome::walletTypeList');
+$routes->get('/support/exchange', 'SupportHome::allianceExchange');
+$routes->post('/support/exchangepointSubmit', 'SupportHome::allianceExchangePoint');
+$routes->get('/sp_mypage_excharge_success', 'SupportHome::exchangePoint_success');
+$routes->get('/sp_mypage_excharge_fail', 'SupportHome::exchangePoint_fail');
 
 $routes->get('/support/mo', 'SupportHome::index');
 $routes->get('/support/mo/pass', 'SupportHome::pass');
