@@ -32,7 +32,7 @@
                 <div style="height: 50px;"></div>
                 <footer class="footer" style="text-align: center;">
                     <div class="btn_group">
-                        <button type="button" class="btn type01" onclick='moveToUrl("/")'><?= lang('Korean.rootBtn2') ?></button><!--변경필요-->
+                        <button type="button" class="btn type01" onclick='moveToUrl("/support/mo")'><?= lang('Korean.rootBtn2') ?></button><!--변경필요-->
                     </div>
                 </footer>
             </div>

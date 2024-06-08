@@ -152,13 +152,13 @@ if ($ci) {
                                 
                             <?php
                             } else { ?>
-                                <button class="login_btn" onclick="moveToUrl('/mo')">
+                                <button class="login_btn" onclick="moveToUrl('/support/mo')">
                                     <img src="/static/images/login_ico.png" />
                                     <p><?= lang('Korean.login') ?></p>
                                 </button>
                             <?php
                             }
-                            ?>
+                            ?>  
                         </li>
                     </ul>
                 </div>
@@ -171,7 +171,7 @@ if ($ci) {
                         <div class="main_bg_center_box">
                             <h2><?= lang('Korean.mainCon') ?></h2>
                             <p><?= lang('Korean.mainCon2') ?></p>
-                            <button onclick="moveToUrl('/mo')"><?= lang('Korean.mainConBtn') ?></button>
+                            <button onclick="moveToUrl('/support/mo')"><?= lang('Korean.mainConBtn') ?></button>
                         </div>
                     </div>
 
@@ -317,14 +317,21 @@ if ($ci) {
                             <span><a href="/support/mypage/wallet">더보기</a></span>
                         </div>
                         <div class="sp_main_content">
-                            <?php foreach ($points as $point) : ?>
+                            <?php if (!empty($points)) : ?>
+                                <?php foreach ($points as $point) : ?>
+                                    <div class="sp_mywallet_list">
+                                        <span><?= date('Y-m-d', strtotime($point['create_at'])) ?></span>
+                                        <span><?= $point['point_details'] ?></span>
+                                        <span>+ <?= number_format($point['add_point']) ?></span>
+                                    </div>
+                                <?php endforeach ?>
+                            <?php else : ?>
                                 <div class="sp_mywallet_list">
-                                    <span><?= date('Y-m-d', strtotime($point['create_at'])) ?></span>
-                                    <span><?= $point['point_details'] ?></span>
-                                    <span>+ <?= number_format($point['add_point']) ?></span>
-                                </div>
-                            <?php endforeach ?>
-                            
+                                        <span></span>
+                                        <span style="font-weight: 100;">포인트 내역이 없습니다.</span>
+                                        <span></span>
+                                    </div>
+                            <?php endif ?>
                         </div>
                     </div>
                     <br/>
@@ -373,8 +380,8 @@ if ($ci) {
                     </div>
                     <div class="footer_link mb40">
                         <a href="/intro/main" target="_blank"><?= lang('Korean.companyName') ?></a>
-                        <a href="/mo/privacy"><?= lang('Korean.pravacyName') ?></a>
-                        <a href="/mo/terms"><?= lang('Korean.serviceName') ?></a>
+                        <a href="/support/privacy"><?= lang('Korean.pravacyName') ?></a>
+                        <a href="/support/terms"><?= lang('Korean.serviceName') ?></a>
                         <!-- <a href="#"><?= lang('Korean.supporterName') ?></a> -->
                     </div>
                     <div class="footer_info mb40">

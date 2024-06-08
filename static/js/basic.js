@@ -107,7 +107,7 @@ const supportUserLogin = () => {
         success: function (data) {
             console.log(data);
             if (data.status === 'success') {
-                moveToUrl('/');//변경 필요
+                moveToUrl('/support');//변경 필요
                 console.log(data);
                 // $.ajax({
                 //     url: '/ajax/calcMatchRate',
