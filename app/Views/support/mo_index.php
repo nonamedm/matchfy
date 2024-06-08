@@ -23,7 +23,7 @@
 
         <div class="">
             <div class=" login_wrap" style="height:100%;">
-                <div class="main_logo">
+                <div class="sp_main_logo">
                     matchfy supporters
                 </div>
                 <form class="main_login_form">
@@ -45,7 +45,9 @@
                         <div class="btn_group">
                             <button type="button" style="width: 301px;" class="btn type01" onclick="supportUserLogin()"><?= lang('Korean.login') ?></button>
                             <div class="login_idpw_find">
-                                <span><a href="/mo/idpwfind/pass">아이디 | 비밀번호 찾기</a></span>
+                                <span><a href="/support/idpwfind/pass">이메일 찾기</a></span> 
+                                <span> | </span>
+                                <span><a href="/support/idpwfind/pass">비밀번호 찾기</a></span>
                             </div>
                         </div>
                 </form>

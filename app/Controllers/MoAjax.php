@@ -4389,4 +4389,32 @@ class MoAjax extends BaseController
             return $this->response->setJSON(['status' => 'error', 'message' => 'Email Duplication', 'result' => '0']);
         }
     }
+    /*서포터즈 비밀번호 재설정 */
+    public function supportPasswordUpdate()
+    {
+
+        $SupportMemberModel = new SupportMemberModel();
+        $email = $this->request->getPost('email');
+
+        //이메일 가입되어있는지 확인
+        $emailDupChkQuery = "SELECT email FROM wh_support_members WHERE email='" . $email . "' AND delete_yn='n'";
+        $emailDupChk = $SupportMemberModel->query($emailDupChkQuery)->getResultArray();
+
+        if ($emailDupChk) {
+            // 패스워드 단방향 암호화 필요
+            $pswd = "" . $this->request->getPost('pswd');
+            $pswdEncode = password_hash($pswd, PASSWORD_DEFAULT);
+            $data = [
+                'email' => $email,
+                'password' => $pswdEncode,
+            ];
+            // 비밀번호 업데이트 쿼리
+            $updateQuery = "UPDATE wh_support_members SET password='" . $pswdEncode . "' WHERE email='" . $email . "' AND delete_yn='n'";
+            $SupportMemberModel->query($updateQuery);
+
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '1']);
+        } else {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Email Duplication', 'result' => '0']);
+        }
+    }
 }

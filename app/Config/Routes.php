@@ -251,6 +251,13 @@ $routes->get('/proxy/getResultIdpwValue', 'ProxyController::getResultIdpwValue')
 
 /*support*/
 $routes->get('/support', 'SupportHome::spindex');
+$routes->get('/support/idpwfind/pass', 'SupportHome::idpwFindPass');
+$routes->post('/support/idpwfind/passwordReset', 'SupportHome::passworldReset');
+// $routes->get('/support/idpwfind/passwordReset', 'SupportHome::passworldReset');
+$routes->post('/support/proxy/spIdPwFind', 'ProxyController::spIdPwFind');
+$routes->get('/support/proxy/getResultSupportIdpwValue', 'ProxyController::getResultSupportIdpwValue');
+$routes->post('/support/ajax/supportPasswordUpdate', 'MoAjax::supportPasswordUpdate');
+
 $routes->get('/support/menu', 'SupportHome::spmenu');
 $routes->get('/support/notice', 'SupportHome::noticeList');
 $routes->get('/support/mypage/wallet', 'SupportHome::mypageWallet');

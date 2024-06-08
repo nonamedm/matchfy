@@ -12,19 +12,19 @@ use App\Models\PointExchangeModel;
 class SupportHome extends BaseController
 {
 
-    // public function index()
-    // {
-    //     // $session = session();
-    //     // $ci = $session->get('ci');
+    //로그인페이지
+    public function index()
+    {
+        $session = session();
+        $ci = $session->get('ci');
 
-    //     // if ($ci) {
-    //     //     return redirect()->to("/support");
-    //     // } else {
-    //     //     return view('sp_index');
-    //     // }
+        if ($ci) {
+            return redirect()->to("/");
+        } else {
+            return view('/support/mo_index');
+        }
+    }
 
-    //     return view('sp_index');
-    // }
     public function spindex()
     {
         $session = session();
@@ -101,6 +101,18 @@ class SupportHome extends BaseController
             'points' => $points,
             'data' => $data
         ]);
+    }
+
+    public function idpwFindPass(): string
+    {
+        $data['params'] = '';
+        return view('/support/sp_idpw_find_pass', $data);
+    }
+    public function passworldReset(): string
+    {
+        // $postData['email']='inbv4311@naver.com';
+        $postData = $this->request->getPost();
+        return view('/support/sp_password_reset', $postData);
     }
 
     public function spmenu()
@@ -358,18 +370,6 @@ class SupportHome extends BaseController
     public function exchangePoint_fail(): string
     {
         return view('/support/sp_mypage_excharge_fail');
-    }
-
-    public function index()
-    {
-        $session = session();
-        $ci = $session->get('ci');
-
-        if ($ci) {
-            return redirect()->to("/");
-        } else {
-            return view('/support/mo_index');
-        }
     }
     
     public function pass(): string

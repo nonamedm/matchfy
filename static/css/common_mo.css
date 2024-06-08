@@ -2050,16 +2050,26 @@ a:active {
     height: 46px;
     left: calc(50% - 148px / 2 + 0.5px);
     top: 135px;
-
     font-family: 'Tium';
     font-weight: 700;
     font-size: 40px;
     line-height: 46px;
     text-align: center;
-
     color: #ff0267;
 }
-
+.sp_main_logo {
+    position: relative;
+    width: 200px;
+    height: 46px;
+    left: calc(50% - 200px / 2 + 0.5px);
+    top: 135px;
+    font-family: 'Tium';
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 46px;
+    text-align: center;
+    color: #ff0267;
+}
 .main_login_form {
     position: relative;
     top: 225px;

@@ -38,7 +38,7 @@
                         <p onclick="moveToUrl('/mo/upgradeGrade')"><a><?= lang('Korean.matchUpgrade') ?></a></p>
                         <p onclick="moveToUrl('/mo/alliance/pass')"><a><?= lang('Korean.matchAllianceAppli') ?></a></p>
                         <p onclick="moveToUrl('/mo/invite')"><a>친구 초대</a></p>
-                        <p onclick="moveToUrl('/support/pass')"><a>서포터즈</a></p>
+                        <p onclick="moveToUrl('/support/mo')"><a>서포터즈</a></p>
 
                     </div>
                 </div>
