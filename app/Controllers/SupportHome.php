@@ -9,6 +9,7 @@ use App\Models\SupportMemberModel;
 use App\Models\PointModel;
 use App\Models\PointExchangeModel;
 use App\Models\MemberModel;
+use App\Models\SupportRewardModel;
 
 class SupportHome extends BaseController
 {
@@ -447,6 +448,7 @@ class SupportHome extends BaseController
                     m.nickname,
                     wsr.ci,
                     wsr.reward_type,
+                    wsr.recommender_gender,
                     wsr.recommender_ci,
                     m.email,
                     wsr.reward_title,
@@ -460,7 +462,7 @@ class SupportHome extends BaseController
                 LEFT JOIN members m on
                     wsr.ci = m.ci
                 WHERE 
-                    wsr.ci = 'xhknT/tmjNoOCZvbQU4iafXFGPnh5PaYoZRrIPAw1CIeb6hE33NuWTn5pVm0XwWK8uk8VFHYMTdL6/REt2VnRzRV9MHqQyVSBzl4iynU2tS/rbDmceEvcIfMEw=='
+                    wsr.ci = '".$ci."'
                 ORDER BY wsr.idx desc, wsr.check ASC";
 
         $data['datas'] = $MemberModel->query($query)->getResultArray();

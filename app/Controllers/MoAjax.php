@@ -31,7 +31,7 @@ use App\Models\SupportMemberModel;
 use App\Models\ReferralModel;
 use App\Models\SupportMemberFileModel;
 use App\Config\Email;
-use App\Models\SupportRewordModel;
+use App\Models\SupportRewardModel;
 
 class MoAjax extends BaseController
 {
@@ -690,6 +690,7 @@ class MoAjax extends BaseController
                     $invitedata = [
                         'ci' => $ci,
                         'recommender_ci' => $inviteCodeRow->ci,
+                        'recommender_gender' => $gender,
                         'reward_type' => 'invite',
                         'reward_title' =>'추천인 정회원 가입',
                         'reward_date' => date('Y-m-d H:i:s')
@@ -705,8 +706,8 @@ class MoAjax extends BaseController
                 // 데이터 저장
                 $inserted = $SupportMemberModel->insert($data);
                 if($inviteCode){
-                    $SupportRewordModel = new SupportRewordModel();
-                    $SupportRewordModel->insert($invitedata);
+                    $SupportRewardModel = new SupportRewardModel();
+                    $SupportRewardModel->insert($invitedata);
                 }
                 // 회원가입 완료 되었을 떄
                 if ($inserted) {
@@ -2378,6 +2379,32 @@ class MoAjax extends BaseController
             $meeting_members = new MeetingMembersModel();
             $meetingMembersIdx = $meeting_members->insert($meetMemdata);
 
+            //리워드내역 확인
+            $group1 = 0;
+            $group2 = 0;
+
+            if ($number_of_people % 2 == 0) {
+                $group1 = $number_of_people / 2;
+                $group2 = $number_of_people / 2;
+            } else {
+                $group1 = ceil($number_of_people / 2);
+                $group2 = floor($number_of_people / 2);
+            }
+
+            $dividePeople = $group1 . ':' . $group2;
+
+            $meetRewardData = [
+                'ci' => $member_ci,
+                'reward_type' => 'meeting',
+                'reward_title' =>$dividePeople.'오프라인 미팅 주최',
+                'reward_meeting_idx'=> $insertedMeetingIdx,
+                'reward_meeting_members'=>$number_of_people,
+                'reward_meeting_percent' => '0',
+                'reward_date' => date('Y-m-d H:i:s')
+            ];
+            
+            $SupportRewardModel = new SupportRewardModel();
+            $SupportRewardModel->insert($meetRewardData);
 
             $ChatRoomModel = new ChatRoomModel();
             $ChatRoomMemberModel = new ChatRoomMemberModel();
@@ -2414,6 +2441,24 @@ class MoAjax extends BaseController
                 ]);
             }
         }
+    }
+
+    function dividePeople($number_of_people) {
+        // 두 그룹의 사람 수를 초기화
+        $group1 = 0;
+        $group2 = 0;
+    
+        if ($number_of_people % 2 == 0) {
+            // 짝수일 경우
+            $group1 = $number_of_people / 2;
+            $group2 = $number_of_people / 2;
+        } else {
+            // 홀수일 경우
+            $group1 = ceil($number_of_people / 2);
+            $group2 = floor($number_of_people / 2);
+        }
+    
+        return $group1 . ':' . $group2;
     }
 
     public function meetingFiltering()

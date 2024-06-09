@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class SupportRewordModel extends Model
+class SupportRewardModel extends Model
 {
     // protected $tableName;
     protected $table = 'wh_support_reward';
@@ -18,6 +18,7 @@ class SupportRewordModel extends Model
         'idx',
         'ci',
         'recommender_ci',
+        'recommender_gender',
         'reward_type',
         'check',
         'reward_title',

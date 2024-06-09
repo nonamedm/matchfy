@@ -63,6 +63,13 @@ function formatDateTime($value)
 
     return $formattedDateTime;
 }
+function getGender($value){
+    if($value == 0){
+        return "남성";
+    }else if($value == 1){
+        return "여성";
+    }
+}
 ?>
 
 <body class="mo_wrap">
@@ -92,7 +99,7 @@ function formatDateTime($value)
                                     <?php
                                         if($data['reward_type'] != 1){
                                             if($data['reward_type'] == 'meeting'){
-                                                echo '<a href="/mo/mypage/group/detail/"'.$data['reward_meeting_idx'].'>';    
+                                                echo '<a href="/mo/mypage/group/detail/'.$data['reward_meeting_idx'].'">';    
                                                 echo '<img src="/static/images/right_arrow.png" />';
                                                 echo '</a>';
                                             }
@@ -108,7 +115,7 @@ function formatDateTime($value)
                                          참석자 동일 비율 <?=number_format($data['reward_meeting_percent'], 0);?>%
                                     </span>
                                 <?php }else if($data['reward_type'] == 'invite'){ ?>
-                                    <span class=""><?=$data['recommender_ci']?> 여성</span>
+                                    <span class=""><?=getGender($data['recommender_gender'])?></span>
                                 <?php } ?>
                                 
                             </div>
