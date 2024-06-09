@@ -1209,6 +1209,7 @@ class AdminHome extends BaseController
                     m.email,
                     wsr.reword_title,
                     wsr.reword_date,
+                    wsr.reword_meeting_idx,
                     wsr.reword_meeting_members,
                     wsr.reword_meeting_percent,
                     wsr.check

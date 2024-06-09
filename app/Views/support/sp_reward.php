@@ -14,61 +14,34 @@
     <link rel="stylesheet" href="/static/css/common_mo.css">
 </head>
 <?php
-function getDday($endDate, $startDate, $deleteYn)
+function getChkType($chkValue)
 {
-    $currentTimestamp = time();
-    $endDateTimestamp = strtotime($endDate);
-    $startDateTimestamp = strtotime($startDate);
-    $dday = '';
+    $value='';
 
-    if ($deleteYn == 'N' || $deleteYn == 'n') {
-        if ($currentTimestamp > $endDateTimestamp) {
-            $dday = '종료';
-        } elseif ($currentTimestamp < $startDateTimestamp) {
-            $timeDiff = $startDateTimestamp - $currentTimestamp + (24 * 60 * 60); // 하루를 느리게 계산
-            $days = floor($timeDiff / (60 * 60 * 24));
-            if ($days == 1) {
-                $dday = '내일';
-            } else if ($days == 0) {
-                $dday = '당일';
-            } else {
-                $dday = $days . '일전';
-            }
-        } else {
-            $timeDiff = $endDateTimestamp - $currentTimestamp;
-            $days = floor($timeDiff / (60 * 60 * 24));
-            if ($days == 1) {
-                $dday = '내일';
-            } else if ($days == 0) {
-                $dday = '당일';
-            } else {
-                $dday = $days . '일전';
-            }
-        }
+    if ($chkValue == 0) {
+        $value = '확인중';
+    } elseif ($chkValue == 1) {
+        $value = '지급완료';
     } else {
-        $dday = '취소';
+        $value = '지급불가';
     }
-
-    return $dday;
+    return $value;
 }
-function getClass($endDate, $deleteYn)
+
+function getChkClass($chkValue)
 {
-    $currentTimestamp = time();
-    $endDateTimestamp = strtotime($endDate);
-    $dday = '';
+    $className='';
 
-    if ($deleteYn == 'N' || $deleteYn == 'n') {
-        if ($currentTimestamp > $endDateTimestamp) {
-            $dday = 'finish';
-        } else {
-            $dday = '';
-        }
+    if ($chkValue == 0) {
+        $className = 'reward01';
+    } elseif ($chkValue == 1) {
+        $className = 'reward02';
     } else {
-        $dday = 'cancel';
+        $className = 'reward03';
     }
-
-    return $dday;
+    return $className;
 }
+
 function formatDateTime($value)
 {
     $date = new DateTime($value);
@@ -110,22 +83,40 @@ function formatDateTime($value)
                     </select>
                 </div>
                 <div class="mygroup_list" id="mygroup_list_body">
-                    <?php foreach ($meetings as $meeting) : ?>
-                        <?php $today = date('Y-m-d'); ?>
-                        <div class="alliance_sch_list" onclick="javascript:MygroupPopup(<?= $meeting->meeting_idx ?>,'cancel_rsv_<?= $meeting->meeting_idx ?>','<?= $meeting->meeting_master ?>')">
+                <?php if (!empty($datas)) : ?>
+                    <?php foreach ($datas as $data) : ?>
+                        <div class="alliance_sch_list">
                             <div class="alliance_sch_item">
-                                <div class="alliance_sch_sts">
-                                    <div class="<?= getClass($meeting->meeting_end_date, $meeting->delete_yn) ?>" id="cancel_rsv_<?= $meeting->meeting_idx ?>"><?= getDday($meeting->meeting_end_date, $meeting->meeting_start_date, $meeting->delete_yn) ?></div>
-                                    <?php if ($meeting->meeting_end_date > $today) : ?>
-                                        <img src="/static/images/right_arrow.png" />
-                                    <?php endif; ?>
+                                <div class="reward_type">
+                                    <div class="<?=getChkClass($data['check'])?>"><?= getChkType($data['check'])?></div>
+                                    <?php
+                                        if($data['reword_type'] != 1){
+                                            if($data['reword_type'] == 'meeting'){
+                                                echo '<a href="/mo/mypage/group/detail/"'.$data['reword_meeting_idx'].'>';    
+                                                echo '<img src="/static/images/right_arrow.png" />';
+                                                echo '</a>';
+                                            }
+                                        }
+                                    ?>
                                 </div>
-                                <h2><?= $meeting->meeting_place ?></h2>
-                                <p class=""><?= formatDateTime($meeting->meeting_start_date) ?></p>
-                                <span class=""><?= lang('Korean.personnel') ?> <?= $meeting->meeting_idx_count ?><?= lang('Korean.people') ?></span>
+                                <h2><?= esc($data['reword_title']) ?></h2>
+                                <p class=""><?= formatDateTime($data['reword_date']) ?></p>
+                                <?php if($data['reword_type'] == 'meeting'){?>
+                                    <span class="">
+                                        <?= lang('Korean.personnel') ?> <?= esc($data['reword_meeting_members']) ?><?= lang('Korean.people') ?>
+                                         |
+                                         참석자 동일 비율 <?=number_format($data['reword_meeting_percent'], 0);?>%
+                                    </span>
+                                <?php }else if($data['reword_type'] == 'invite'){ ?>
+                                    <span class=""><?=$data['recommender_ci']?> 여성</span>
+                                <?php } ?>
+                                
                             </div>
                         </div>
                     <?php endforeach; ?>
+                <?php else : ?>
+                    <p>데이터가 없습니다.</p>
+                <?php endif; ?>
                 </div>
                 <!-- <div class="alliance_sch_list">
                     <div class="alliance_sch_item">

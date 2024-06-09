@@ -22,6 +22,7 @@ class SupportRewordModel extends Model
         'check',
         'reword_title',
         'reword_date',
+        'reword_meeting_idx',
         'reword_meeting_members',
         'reword_meeting_percent',
         'created_at',

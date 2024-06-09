@@ -8,6 +8,7 @@ use App\Models\SupportBoardModel;
 use App\Models\SupportMemberModel;
 use App\Models\PointModel;
 use App\Models\PointExchangeModel;
+use App\Models\MemberModel;
 
 class SupportHome extends BaseController
 {
@@ -439,40 +440,33 @@ class SupportHome extends BaseController
 
         $session = session();
         $ci = $session->get('ci');
-        $meeting_idx = $this->request->getPost('meetingIdx');
+        $MemberModel = new MemberModel();
+        $query = "SELECT
+                    wsr.idx,
+                    m.name,
+                    m.nickname,
+                    wsr.ci,
+                    wsr.reword_type,
+                    wsr.recommender_ci,
+                    m.email,
+                    wsr.reword_title,
+                    wsr.reword_date,
+                    wsr.reword_meeting_idx,
+                    wsr.reword_meeting_members,
+                    wsr.reword_meeting_percent,
+                    wsr.check
+                FROM
+                    wh_support_reword wsr
+                LEFT JOIN members m on
+                    wsr.ci = m.ci
+                WHERE 
+                    wsr.ci = 'xhknT/tmjNoOCZvbQU4iafXFGPnh5PaYoZRrIPAw1CIeb6hE33NuWTn5pVm0XwWK8uk8VFHYMTdL6/REt2VnRzRV9MHqQyVSBzl4iynU2tS/rbDmceEvcIfMEw=='
+                ORDER BY wsr.idx desc, wsr.check ASC";
 
-        $query = $db->table('wh_meeting_members a')
-            ->select('a.meeting_idx, 
-                            b.category, 
-                            b.meeting_start_date, 
-                            b.meeting_end_date, 
-                            b.number_of_people, 
-                            b.title, 
-                            b.meeting_place, 
-                            b.membership_fee,
-                            b.chat_room_ci,
-                            (
-                                SELECT SUM(CASE WHEN wmm.delete_yn = \'N\' THEN 1 ELSE 0 END) 
-                                FROM wh_meeting_members wmm 
-                                WHERE wmm.meeting_idx = a.meeting_idx
-                            ) AS meeting_idx_count,
-                            MAX(CASE WHEN d.member_ci = "' . $ci . '" THEN d.meeting_master END) AS meeting_master,
-                            a.delete_yn')
-            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
-            ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
-            ->where('a.member_ci', $ci)
-            ->where('b.delete_yn', 'N')
-            ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn,a.create_at')
-            ->orderBy('CASE WHEN b.meeting_start_date > NOW() THEN 0 ELSE 1 END', 'ASC')
-            ->orderBy('CASE WHEN a.delete_yn = \'Y\' THEN 0 ELSE 1 END', 'DESC')
-            ->orderBy('b.meeting_start_date', 'DESC')
-            ->orderBy('a.delete_yn', 'DESC');
+        $data['datas'] = $MemberModel->query($query)->getResultArray();
+        $data['query'] = $MemberModel->getLastQuery()->getQuery();
 
-        $result = $query->get()->getResult();
-
-        $data['meetings'] = $result;
-        $data['query'] = $db->getLastQuery();
-        return view('/support/sp_reward', $data);
+        return view('support/sp_reward', $data);
     }
     
 }
