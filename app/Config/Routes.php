@@ -227,6 +227,7 @@ $routes->get('/ad/intro/newsView/(:num)', 'AdminHome::newsView/$1');
 $routes->get('/ad/intro/newsModify/(:num)', 'AdminHome::newsModify/$1');
 $routes->post('/ad/intro/newsUpdate', 'AdminHome::newsUpdate');
 
+
 $routes->get('/ad/support/noticeMenuSelect', 'AdminHome::spNoticeMenuSelect');
 $routes->get('/ad/support/noticeEdit', 'AdminHome::spNoticeEdit');
 $routes->post('/ad/support/noticeUpload', 'AdminHome::spNoticeUpload');
@@ -242,6 +243,8 @@ $routes->get('/ad/support/faqList', 'AdminHome::spFaqList');
 $routes->get('/ad/support/faqView/(:num)', 'AdminHome::spFaqView/$1');
 $routes->get('/ad/support/faqModify/(:num)', 'AdminHome::spFaqModify/$1');
 $routes->post('/ad/support/faqUpdate', 'AdminHome::spFaqUpdate');
+$routes->get('/ad/support/rewordList', 'AdminHome::rewordList');
+$routes->post('/ad/support/rewordChkApprove', 'AdminHome::rewordChkApprove');
 
 $routes->post('/proxy/createToken', 'ProxyController::createToken');
 $routes->post('/proxy/createPassWeb', 'ProxyController::createPassWeb');
@@ -257,7 +260,6 @@ $routes->post('/support/idpwfind/passwordReset', 'SupportHome::passworldReset');
 $routes->post('/support/proxy/spIdPwFind', 'ProxyController::spIdPwFind');
 $routes->get('/support/proxy/getResultSupportIdpwValue', 'ProxyController::getResultSupportIdpwValue');
 $routes->post('/support/ajax/supportPasswordUpdate', 'MoAjax::supportPasswordUpdate');
-
 $routes->get('/support/menu', 'SupportHome::spmenu');
 $routes->get('/support/notice', 'SupportHome::noticeList');
 $routes->get('/support/mypage/wallet', 'SupportHome::mypageWallet');
@@ -271,7 +273,6 @@ $routes->get('/support/faq', 'SupportHome::faq');
 $routes->get('/support/terms', 'SupportHome::terms');
 $routes->get('/support/privacy', 'SupportHome::privacy');
 $routes->get('/support/reward', 'SupportHome::reward');
-
 $routes->get('/support/mo', 'SupportHome::index');
 $routes->get('/support/pass', 'SupportHome::pass');
 $routes->post('/support/agree', 'SupportHome::agree');

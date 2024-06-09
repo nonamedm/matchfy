@@ -40,4 +40,7 @@
     <li class="menu_item">
         <a href="/ad/support/faqList">서포터즈 FAQ목록</a>
     </li>
+    <li class="menu_item">
+        <a href="/ad/support/rewordList">서포터즈 리워드 관리</a>
+    </li>
 </ul>

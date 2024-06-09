@@ -30,6 +30,14 @@ $(document).ready(function(){
         memberPaymentApprove(tempGrade,idx);
     });
 
+    $('.reword_approve_btn').click(function() {
+        var value = $(this).text();
+        var level = $(this).data('approve-level');
+        var id =$(this).data('id');
+
+        rewordChkApprove(level,id);
+    });
+
     CKEDITOR.replace('content');
 });
 
@@ -278,6 +286,25 @@ function memberPaymentApprove(tempGrade,idx){
     });
 }
 
+function rewordChkApprove(level,id){
+    console.log(level);
+    console.log(id);
+    $.ajax({
+        url: '/ad/support/rewordChkApprove',
+        data:{
+            level:level,
+            id:id,
+        },
+        type: 'post',
+        success: function(data) {
+            alert(data.msg);
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
 function mediaRadio(){
     $('input[name="bigo1"]').change(function() {
         var selectedValue = $(this).val();

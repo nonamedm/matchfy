@@ -11,6 +11,7 @@ use App\Models\AllianceModel;
 use App\Models\MemberModel;
 use App\Models\MemberFileModel;
 use App\Models\ReportMemberModel;
+use App\Models\SupportRewordModel;
 
 
 class AdminHome extends BaseController
@@ -1181,5 +1182,74 @@ class AdminHome extends BaseController
         $data['faq'] = $BoardModel->find($id); 
 
         return view('admin/ad_sp_faq_view', $data);
+    }
+
+    /*서포터즈 리워드 내역확인*/
+    public function rewordList($page = null){
+
+        if ($page === null || !is_numeric($page)) {
+            $page = 1;
+        } else {
+            $page = 2;
+        }
+
+        $perPage = 20;
+        $MemberModel = new MemberModel();
+
+        $total = $MemberModel->query("SELECT COUNT(*) as total FROM wh_support_reword")->getRow()->total;
+
+        $offset = ($page - 1) * $perPage;
+        $query = "SELECT
+                    wsr.idx,
+                    m.name,
+                    m.nickname,
+                    wsr.ci,
+                    wsr.reword_type,
+                    wsr.recommender_ci,
+                    m.email,
+                    wsr.reword_title,
+                    wsr.reword_date,
+                    wsr.reword_meeting_members,
+                    wsr.reword_meeting_percent,
+                    wsr.check
+                FROM
+                    wh_support_reword wsr
+                LEFT JOIN members m on
+                    wsr.ci = m.ci
+                ORDER BY wsr.idx desc, wsr.check ASC
+                LIMIT $perPage OFFSET $offset";
+
+        $data['datas'] = $MemberModel->query($query)->getResultArray();
+        $data['query'] = $MemberModel->getLastQuery()->getQuery();
+
+        $pager = service('pager');
+        $data['pager'] = $pager->makeLinks($page, $perPage, $total);
+
+        return view('admin/ad_reword_list', $data);
+    }
+
+    public function rewordChkApprove(){
+        $level = $this->request->getPost('level');
+        $idx = $this->request->getPost('id');
+    
+        $SupportRewordModel = new SupportRewordModel();
+
+        $updated = $SupportRewordModel
+                ->where('idx', $idx)
+                ->set(['check' => $level])
+                ->update();
+
+        if ($updated) {
+            if($level =='1'){
+                return $this->response->setJSON(['success' => true, 'msg' => '지급 확인 되었습니다.']);
+            }else if($level =='2'){
+                return $this->response->setJSON(['success' => true, 'msg' => '지급 불가 되었습니다.']);
+            }else if($level =='0'){
+                return $this->response->setJSON(['success' => true, 'msg' => '확인 처리 되었습니다.']);
+            }
+        } else {
+            return $this->response->setJSON(['error' => true, 'msg' => '승인 실패.']);
+        }
+    
     }
 }
