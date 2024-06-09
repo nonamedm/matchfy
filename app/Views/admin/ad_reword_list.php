@@ -46,19 +46,19 @@
                             <td class="td"><?= $data['name'] ?></td>
                             <td class="td"><?= $data['email'] ?></td>
                             <td class="td">
-                                <?= $data['reword_title'] ?><br>
+                                <?= $data['reward_title'] ?><br>
                                 <?php
-                                    if($data['reword_type']=='meeting'){
-                                        echo "<span>인원 </span>".$data['reword_meeting_members']."명";
-                                        echo "<span>참석자 동일 비율 </span>".$data['reword_meeting_percent']."%";
-                                    }else if($data['reword_type']=='invite'){
+                                    if($data['reward_type']=='meeting'){
+                                        echo "<span>인원 </span>".$data['reward_meeting_members']."명";
+                                        echo "<span>참석자 동일 비율 </span>".$data['reward_meeting_percent']."%";
+                                    }else if($data['reward_type']=='invite'){
                                         echo "<span>초대코드 입력한 분 </span>".$data['recommender_ci']." 님";
                                     }
                                 ?>
                         
                             </td>
 
-                            <td class="td"><?= $data['reword_date'] ?></td>
+                            <td class="td"><?= $data['reward_date'] ?></td>
                             <td class="td">
                             <?php
                                 $exchange_level = $data['check'];

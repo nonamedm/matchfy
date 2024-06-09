@@ -608,8 +608,11 @@ class MoAjax extends BaseController
             ]);
         } else {
             $SupportMemberModel = new SupportMemberModel();
-
-            $unique_code = $this->generateUniqueCode($SupportMemberModel);
+            $session = session();
+            $ci = $session->get('ci');
+            //**기존에 있는 유니크코드 들고오기 */
+            $unique_code = "SELECT unique_code FROM members WHERE ci='" . $ci . "' AND delete_yn='n'";
+            // $unique_code = $this->generateUniqueCode($SupportMemberModel);
             // $random_word = $this->request->getPost('nickname');
 
             // if (empty($random_word)) {
@@ -650,7 +653,8 @@ class MoAjax extends BaseController
             $pswd = "" . $this->request->getPost('pswd');
 
             $encrypter = \Config\Services::encrypter();
-            $ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 32]));
+            //기존 ci 로 변경************************************
+            // $ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 32]));
             $pswdEncode = password_hash($pswd, PASSWORD_DEFAULT);
 
             // $ci = $this->request->getPost('ci');

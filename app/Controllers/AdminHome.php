@@ -1196,7 +1196,7 @@ class AdminHome extends BaseController
         $perPage = 20;
         $MemberModel = new MemberModel();
 
-        $total = $MemberModel->query("SELECT COUNT(*) as total FROM wh_support_reword")->getRow()->total;
+        $total = $MemberModel->query("SELECT COUNT(*) as total FROM wh_support_reward")->getRow()->total;
 
         $offset = ($page - 1) * $perPage;
         $query = "SELECT
@@ -1204,17 +1204,17 @@ class AdminHome extends BaseController
                     m.name,
                     m.nickname,
                     wsr.ci,
-                    wsr.reword_type,
+                    wsr.reward_type,
                     wsr.recommender_ci,
                     m.email,
-                    wsr.reword_title,
-                    wsr.reword_date,
-                    wsr.reword_meeting_idx,
-                    wsr.reword_meeting_members,
-                    wsr.reword_meeting_percent,
+                    wsr.reward_title,
+                    wsr.reward_date,
+                    wsr.reward_meeting_idx,
+                    wsr.reward_meeting_members,
+                    wsr.reward_meeting_percent,
                     wsr.check
                 FROM
-                    wh_support_reword wsr
+                    wh_support_reward wsr
                 LEFT JOIN members m on
                     wsr.ci = m.ci
                 ORDER BY wsr.idx desc, wsr.check ASC

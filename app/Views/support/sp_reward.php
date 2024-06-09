@@ -90,24 +90,24 @@ function formatDateTime($value)
                                 <div class="reward_type">
                                     <div class="<?=getChkClass($data['check'])?>"><?= getChkType($data['check'])?></div>
                                     <?php
-                                        if($data['reword_type'] != 1){
-                                            if($data['reword_type'] == 'meeting'){
-                                                echo '<a href="/mo/mypage/group/detail/"'.$data['reword_meeting_idx'].'>';    
+                                        if($data['reward_type'] != 1){
+                                            if($data['reward_type'] == 'meeting'){
+                                                echo '<a href="/mo/mypage/group/detail/"'.$data['reward_meeting_idx'].'>';    
                                                 echo '<img src="/static/images/right_arrow.png" />';
                                                 echo '</a>';
                                             }
                                         }
                                     ?>
                                 </div>
-                                <h2><?= esc($data['reword_title']) ?></h2>
-                                <p class=""><?= formatDateTime($data['reword_date']) ?></p>
-                                <?php if($data['reword_type'] == 'meeting'){?>
+                                <h2><?= esc($data['reward_title']) ?></h2>
+                                <p class=""><?= formatDateTime($data['reward_date']) ?></p>
+                                <?php if($data['reward_type'] == 'meeting'){?>
                                     <span class="">
-                                        <?= lang('Korean.personnel') ?> <?= esc($data['reword_meeting_members']) ?><?= lang('Korean.people') ?>
+                                        <?= lang('Korean.personnel') ?> <?= esc($data['reward_meeting_members']) ?><?= lang('Korean.people') ?>
                                          |
-                                         참석자 동일 비율 <?=number_format($data['reword_meeting_percent'], 0);?>%
+                                         참석자 동일 비율 <?=number_format($data['reward_meeting_percent'], 0);?>%
                                     </span>
-                                <?php }else if($data['reword_type'] == 'invite'){ ?>
+                                <?php }else if($data['reward_type'] == 'invite'){ ?>
                                     <span class=""><?=$data['recommender_ci']?> 여성</span>
                                 <?php } ?>
                                 

@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class SupportRewordModel extends Model
 {
     // protected $tableName;
-    protected $table = 'wh_support_reword';
+    protected $table = 'wh_support_reward';
     protected $primaryKey = 'idx';
     protected $useAutoIncrement = true;
     protected $returnType = 'array';
@@ -18,13 +18,13 @@ class SupportRewordModel extends Model
         'idx',
         'ci',
         'recommender_ci',
-        'reword_type',
+        'reward_type',
         'check',
-        'reword_title',
-        'reword_date',
-        'reword_meeting_idx',
-        'reword_meeting_members',
-        'reword_meeting_percent',
+        'reward_title',
+        'reward_date',
+        'reward_meeting_idx',
+        'reward_meeting_members',
+        'reward_meeting_percent',
         'created_at',
         'updated_at'
     ];
