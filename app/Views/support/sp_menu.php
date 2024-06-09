@@ -30,7 +30,7 @@
                     </div>
                     <div class="menu_cont">
                         <p onclick="moveToUrl('/support/mypage/wallet')"><a>포인트 지갑</a></p>
-                        <p onclick="moveToUrl('')"><a>리워드 내역 확인</a></p>
+                        <p onclick="moveToUrl('/support/reward')"><a>리워드 내역 확인</a></p>
                         <p onclick="moveToUrl('/support/invite')"><a>친구초대 코드 발급</a></p>
                         <p onclick="moveToUrl('/support/referral')"><a>내부 서포터 추천하기</a></p>
                     </div>

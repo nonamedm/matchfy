@@ -19,9 +19,9 @@ class SupportHome extends BaseController
         $ci = $session->get('ci');
 
         if ($ci) {
-            return redirect()->to("/");
-        } else {
             return view('/support/mo_index');
+        } else {
+            return redirect()->to("/");
         }
     }
 
@@ -427,5 +427,52 @@ class SupportHome extends BaseController
     {
         return view('/support/mo_referral_success');
     }
+    
+    // public function reward(): string
+    // {
+    //     return view('/support/sp_reward');
+    // }
 
+    public function reward()
+    {
+        $db = db_connect();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $meeting_idx = $this->request->getPost('meetingIdx');
+
+        $query = $db->table('wh_meeting_members a')
+            ->select('a.meeting_idx, 
+                            b.category, 
+                            b.meeting_start_date, 
+                            b.meeting_end_date, 
+                            b.number_of_people, 
+                            b.title, 
+                            b.meeting_place, 
+                            b.membership_fee,
+                            b.chat_room_ci,
+                            (
+                                SELECT SUM(CASE WHEN wmm.delete_yn = \'N\' THEN 1 ELSE 0 END) 
+                                FROM wh_meeting_members wmm 
+                                WHERE wmm.meeting_idx = a.meeting_idx
+                            ) AS meeting_idx_count,
+                            MAX(CASE WHEN d.member_ci = "' . $ci . '" THEN d.meeting_master END) AS meeting_master,
+                            a.delete_yn')
+            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+            ->join('wh_meeting_members d', 'a.meeting_idx = d.meeting_idx', 'left')
+            ->where('a.member_ci', $ci)
+            ->where('b.delete_yn', 'N')
+            ->groupBy('a.meeting_idx, a.member_ci, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, a.delete_yn,a.create_at')
+            ->orderBy('CASE WHEN b.meeting_start_date > NOW() THEN 0 ELSE 1 END', 'ASC')
+            ->orderBy('CASE WHEN a.delete_yn = \'Y\' THEN 0 ELSE 1 END', 'DESC')
+            ->orderBy('b.meeting_start_date', 'DESC')
+            ->orderBy('a.delete_yn', 'DESC');
+
+        $result = $query->get()->getResult();
+
+        $data['meetings'] = $result;
+        $data['query'] = $db->getLastQuery();
+        return view('/support/sp_reward', $data);
+    }
+    
 }

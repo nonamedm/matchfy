@@ -203,7 +203,7 @@ header.spci_header .logo_menu ul button {
 header.spci_header .logo_menu ul .menu_item {
     position: absolute;
     right: 10px;
-    top: 13px;
+    top: 22px;
 }
 header.spci_header .logo_menu ul .item {
     display: inline-flex;

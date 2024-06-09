@@ -8,8 +8,8 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/static/js/board.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/basic.js"></script>
     <link rel="stylesheet" href="/static/css/common_mo.css">
 </head>
 
@@ -51,7 +51,7 @@
             <footer class="footer">
 
                 <div class="btn_group">
-                    <button type="button" class="btn type01" onclick="fn_clickList('notice');"><?= lang('Korean.btnList') ?></button>
+                    <button type="button" class="btn type01" onclick="fn_clickList('spnotice');"><?= lang('Korean.btnList') ?></button>
                 </div>
             </footer>
         </div>

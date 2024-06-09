@@ -270,6 +270,7 @@ $routes->get('/support/notice/view/(:num)', 'SupportHome::noticeView/$1');
 $routes->get('/support/faq', 'SupportHome::faq');
 $routes->get('/support/terms', 'SupportHome::terms');
 $routes->get('/support/privacy', 'SupportHome::privacy');
+$routes->get('/support/reward', 'SupportHome::reward');
 
 $routes->get('/support/mo', 'SupportHome::index');
 $routes->get('/support/pass', 'SupportHome::pass');
