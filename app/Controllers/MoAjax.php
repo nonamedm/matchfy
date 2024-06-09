@@ -31,7 +31,7 @@ use App\Models\SupportMemberModel;
 use App\Models\ReferralModel;
 use App\Models\SupportMemberFileModel;
 use App\Config\Email;
-
+use App\Models\SupportRewordModel;
 
 class MoAjax extends BaseController
 {
@@ -608,36 +608,17 @@ class MoAjax extends BaseController
             ]);
         } else {
             $SupportMemberModel = new SupportMemberModel();
+            $MemberModel = new MemberModel();
             $session = session();
             $ci = $session->get('ci');
-            //**기존에 있는 유니크코드 들고오기 */
-            $unique_code = "SELECT unique_code FROM members WHERE ci='" . $ci . "' AND delete_yn='n'";
-            // $unique_code = $this->generateUniqueCode($SupportMemberModel);
-            // $random_word = $this->request->getPost('nickname');
+            /**기존에 있는 유니크코드 들고오기 */
+            $unique_code_chk = "SELECT unique_code FROM members WHERE ci='" . $ci . "' AND delete_yn='n' limit 1";
+            $unique_code_row = $MemberModel->query($unique_code_chk)->getRow();
 
-            // if (empty($random_word)) {
-            //     $is_duplicate = true;
-            //     $random_word = '';
-            //     // 닉네임 중복확인
-            //     while ($is_duplicate) {
-            //         // 닉네임 랜덤 생성
-            //         $word_file_path = APPPATH . 'Data/RandomWord.php';
-            //         require($word_file_path);
-            //         $random_word = $randomadj[array_rand($randomadj)] . $randomword[array_rand($randomword)] . '@' . mt_rand(100000, 999999);
-            //         $is_duplicate = $SupportMemberModel->where(['nickname' => $random_word])->first();
-            //     }
-            // } else {
-            //     $is_duplicate = true;
-            //     $is_duplicate = $SupportMemberModel->where(['nickname' => $random_word])->first();
-            //     // 닉네임 중복확인
-            //     while ($is_duplicate) {
-            //         // 닉네임 랜덤 생성
-            //         $word_file_path = APPPATH . 'Data/RandomWord.php';
-            //         require($word_file_path);
-            //         $random_word = $random_word . '@' . mt_rand(100000, 999999);
-            //         $is_duplicate = $SupportMemberModel->where(['nickname' => $random_word])->first();
-            //     }
-            // }
+            // $unique_code = $this->generateUniqueCode($SupportMemberModel);
+            /**기존 닉네임 들고오기 */
+            $nickname_chk = "SELECT nickname FROM members WHERE ci='" . $ci . "' AND delete_yn='n' limit 1";
+            $nickname_row = $MemberModel->query($nickname_chk)->getRow();
 
             $mobile_no = $this->request->getPost('mobile_no');
             $email = $this->request->getPost('email');
@@ -685,65 +666,51 @@ class MoAjax extends BaseController
                 'gender' => $gender,
                 'city' => $city,
                 'town' => $town,
-                'nickname' => $random_word,
-                'unique_code' => $unique_code,
+                'nickname' => $nickname_row->nickname,
+                'unique_code' => $unique_code_row->unique_code,
                 'sns_type' => $snsType,
                 'oauth_id' => $oauthId
             ];
 
             // 정말 추천인 코드가 유효한지 insert 전에 체크
-            $SupportMemberModel = new SupportMemberModel();
-            $result = $SupportMemberModel
+            $MemberModel = new MemberModel();
+            $result = $MemberModel
                 ->select('unique_code')
                 ->where('unique_code', $inviteCode)
                 ->where('delete_yn', 'N')
                 ->first();
-
             //초대코드 있을때만 insert
+            $invitedata=[];
             if (!empty($result)) {
                 $data['invite_code'] = $inviteCode;
-            }
+                $inviteCodeChk = "SELECT ci FROM members WHERE unique_code='" . $inviteCode . "' AND delete_yn='n' LIMIT 1";
+                $inviteCodeRow = $MemberModel->query($inviteCodeChk)->getRow();
 
+                if ($inviteCodeRow) {
+                    $invitedata = [
+                        'ci' => $ci,
+                        'recommender_ci' => $inviteCodeRow->ci,
+                        'reward_type' => 'invite',
+                        'reward_title' =>'추천인 정회원 가입',
+                        'reward_date' => date('Y-m-d H:i:s')
+                    ];
+                }
+            }
+            
             // 이메일과 전화번호로 verify_yn = y 인 항목을 한번 조회한다
             $query = "SELECT * FROM wh_email_register WHERE mobile_no='" . $mobile_no . "' AND member_email='" . $email . "' AND verify_yn='y' AND delete_yn='n'";
             $chkMailPhoneYn = $SupportMemberModel->query($query)->getResultArray();
             if ($chkMailPhoneYn) {
+                
                 // 데이터 저장
                 $inserted = $SupportMemberModel->insert($data);
-
+                if($inviteCode){
+                    $SupportRewordModel = new SupportRewordModel();
+                    $SupportRewordModel->insert($invitedata);
+                }
                 // 회원가입 완료 되었을 떄
                 if ($inserted) {
-                    // 프로필 사진 DB 업로드
-                    // $MemberFileModel = new MemberFileModel();
-                    // $org_name = $this->request->getPost('org_name');
-                    // $file_name = $this->request->getPost('file_name');
-                    // $file_path = $this->request->getPost('file_path');
-                    // $ext = $this->request->getPost('ext');
-                    // if ($org_name) {
-                    //     // 프로필 첨부 있을때만 file db 저장
-                    //     $data2 = [
-                    //         'member_ci' => $ci,
-                    //         'org_name' => $org_name,
-                    //         'file_name' => $file_name,
-                    //         'file_path' => $file_path,
-                    //         'ext' => $ext,
-                    //         'board_type' => 'main_photo',
-                    //     ];
-                    //     $data = array_merge($data, $data2);
-                    //     $MemberFileModel->insert($data2);
-                    // } else {
-                    //     // 프로필 첨부 없을때는 기본이미지로 저장
-                    //     $data2 = [
-                    //         'member_ci' => $ci,
-                    //         'org_name' => 'profile_noimg.png',
-                    //         'file_name' => 'profile_noimg.png',
-                    //         'file_path' => 'static/images/',
-                    //         'ext' => 'png',
-                    //         'board_type' => 'main_photo',
-                    //     ];
-                    //     $data = array_merge($data, $data2);
-                    //     $MemberFileModel->insert($data2);
-                    // }
+                    
                     if ($inserted) {
                         return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
                     } else {

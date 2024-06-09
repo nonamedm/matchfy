@@ -30,6 +30,7 @@ use App\Models\ChatRoomMsgModel;
 use App\Models\ChatRoomMsgAiModel;
 use App\Models\ChatRoomMemberModel;
 use App\Models\ChatRoomMemberAiModel;
+use App\Models\SupportRewordModel;
 use CodeIgniter\Session\Session;
 use Kint\Zval\Value;
 
@@ -105,6 +106,22 @@ class MoHome extends BaseController
             $MemberModel->set('recommender_code', $invite_code)
                 ->where('ci', $ci)
                 ->update();
+            
+            //추천코드 입력시 서포터즈 리워드 추가
+            $inviteCodeChk = "SELECT ci FROM members WHERE unique_code='" . $invite_code . "' AND delete_yn='n' LIMIT 1";
+                $inviteCodeRow = $MemberModel->query($inviteCodeChk)->getRow();
+
+                if ($inviteCodeRow) {
+                    $invitedata = [
+                        'ci' => $ci,
+                        'recommender_ci' => $inviteCodeRow->ci,
+                        'reward_type' => 'invite',
+                        'reward_title' =>'추천인 정회원 가입',
+                        'reward_date' => date('Y-m-d H:i:s')
+                    ];
+                    $SupportRewordModel = new SupportRewordModel();
+                    $SupportRewordModel->insert($invitedata);
+                }
         }
         //계좌 : member에서 조회해오는건?
         $data['isDiscounted'] = $isDiscounted;
