@@ -179,6 +179,7 @@ const signUp = () => {
     }
 
     if (
+        $('#main_photo').val() !== '' &&
         $('#name').val() !== '' &&
         $('#birthday').val() !== '' &&
         $('#city').val() !== '' &&
