@@ -486,7 +486,7 @@ function meetingApplication(idx) {
                 html += '<a href="#" class="btn_close" onclick="btnClose();" style="float: right;">닫기</a>';
                 html += '</div>';
                 html += '<div class="apply_group">';
-                html += '<div style="padding:20px; height:400px; overflow: scroll;">';
+                html += '<div style="padding:20px; height:400px; overflow: scroll;scrollbar-width: none;-ms-overflow-style: none;overflow: -moz-scrollbars-none;">';
                 html += '<div class="apply_group_detail">';
                 if (metdata[0].file_path === null || metdata[0].file_path === '') {
                     html += '<img src="/static/images/group_list_1.png" />';
@@ -512,7 +512,7 @@ function meetingApplication(idx) {
                 html += '<div class="group_location" style="margin-top: 10px;"><b>결제방법</b><br>';
                 html +=
                     '1. 계좌입금<br>예금주 : 주식회사 큐브베리<br>기업은행 013-143753-04-011</div><div class="group_location">2. 네이버스토어 결제</div></div></div>';
-                html += `<div class="group_location" style="text-align: center;"><img src="/static/images/smartstore.png" style="width: 120px;height: 40px;border-radius: 5px; margin: 20px 0px 40px 0px;" onclick="location.href='https://smartstore.naver.com/cuberry/products/10311169421'"></div>`;
+                html += `<div class="group_location" style="text-align: center;"><img src="/static/images/smartstore.png" style="cursor:pointer; width: 120px;height: 40px;border-radius: 5px; margin: 20px 0px 40px 0px;" onclick="window.open('https://smartstore.naver.com/cuberry/products/10311169421')"></div>`;
                 // html += '<div class="apply_group_point">';
                 // html += '<p>보유 포인트</p>';
                 // html += '<h2>' + Number(data.my_point).toLocaleString() + '원</h2>';
