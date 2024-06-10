@@ -8,7 +8,8 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="/static/css/common_mo.css">
+    <link rel="stylesheet" href="/static/css/common_mo.css">\
+    <script src="/static/js/basic.js"></script>
 </head>
 
 <body class="mo_wrap">
