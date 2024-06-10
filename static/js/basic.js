@@ -148,6 +148,10 @@ const signUp = () => {
         fn_alert('이름을 입력해 주세요');
         tempValidation = false;
         $('#name').focus();
+    } else if ($('#main_photo').val().trim() === '') {
+        fn_alert('프로필 사진을 등록해 주세요');
+        tempValidation = false;
+        $('#main_photo').focus();
     } else if ($('#birthday').val().trim() === '') {
         fn_alert('생년월일을 입력해 주세요');
         tempValidation = false;

@@ -30,7 +30,7 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <form class="main_signin_form">
-                    <div class="content_body">
+                    <!-- <div class="content_body">
                         <a id="profileArea" class="profile_area" onclick="editPhoto()">
                             <?php
                             if ($file_path) {
@@ -45,7 +45,7 @@
                     <div class="btn_group">
                         <button type="button" class="btn type02" onclick="editPhoto()"><?= lang('Korean.profilePhoto') ?></button>
                         <input type="file" id="main_photo" name="main_photo" style="display:none;" accept="image/*" />
-                    </div>
+                    </div> -->
                     <legend></legend>
                     <div class="">
                         <div class="form_row signin_form">

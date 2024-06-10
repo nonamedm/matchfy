@@ -78,7 +78,6 @@
                     <input type="hidden" name="name" value="<?= urldecode($decrypted['utf8_name']) ?>" />
                     <input type="hidden" name="birthday" value="<?= $decrypted['birthdate'] ?>" />
                     <input type="hidden" name="gender" value="<?= $decrypted['gender'] ?>" />
-                    <input type="hidden" name="nickname" value="<?= $nickname ?>" />
                     <input type="hidden" name="sns_type" value="<?= $sns_type ?>" />
                     <input type="hidden" name="oauth_id" value="<?= $oauth_id ?>" />
                 </form>
