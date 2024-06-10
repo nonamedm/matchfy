@@ -16,9 +16,22 @@ use App\Models\ReportMemberModel;
 class AdminHome extends BaseController
 {
     /*관리자 header*/
-    public function header(): string
+    public function header()
     {
-        return view('admin/header');
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT * FROM members WHERE ci='" . $ci . "'";
+
+        $adminVerify = $MemberModel->query($query)->getResultArray();
+        if ($adminVerify) {
+            $adminId = $adminVerify[0]['email'];
+            if ($adminId === 'admin' || $adminId === 'develop') {
+                return view('admin/header');
+            } else {
+                return redirect()->to("/");
+            }
+        }
     }
 
     /*공지사항*/
@@ -27,10 +40,11 @@ class AdminHome extends BaseController
         return view('admin/ad_notice_edit');
     }
 
-    public function noticeList() :string{
+    public function noticeList(): string
+    {
         $fileData = new BoardFileModel();
-        $query = $fileData->
-            select('bo.id AS notice_id,
+        $query = $fileData->select(
+            'bo.id AS notice_id,
                     bo.title AS title,
                     bo.content AS content,
                     bo.author AS author,
@@ -45,15 +59,15 @@ class AdminHome extends BaseController
                     bf.file_name AS file_name,
                     bf.file_path AS file_path,
                     bf.org_name AS org_name'
-                    )
-            ->from('wh_board_notice bo')  
+        )
+            ->from('wh_board_notice bo')
             ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
             ->groupBy('bo.id')
             ->orderBy('bo.id', 'DESC')
             ->get();
 
-        $data['datas'] = $query->getResultArray(); 
-        
+        $data['datas'] = $query->getResultArray();
+
         return view('admin/ad_notice_list', $data);
     }
 
@@ -62,13 +76,13 @@ class AdminHome extends BaseController
         $title = $this->request->getPost('title');
         $content = $this->request->getPost('content');
         $file = $this->request->getFile('userfile');
-   
+
         if ($file->isValid()) {
-            $upload= new Upload();
-            $fileData = $upload->Boardupload($file,'wh_board_notice','notice',$title,$content);
-            
+            $upload = new Upload();
+            $fileData = $upload->Boardupload($file, 'wh_board_notice', 'notice', $title, $content);
+
             if ($fileData) {
-                return redirect()->to("/ad/notice/noticeList")->with('msg', '등록이 완료되었습니다.');    
+                return redirect()->to("/ad/notice/noticeList")->with('msg', '등록이 완료되었습니다.');
             } else {
                 return redirect()->to("/ad/notice/noticeList")->with('msg', '등록이 실패 되었습니다.');
             }
@@ -92,12 +106,11 @@ class AdminHome extends BaseController
             } else {
                 return redirect()->to('/ad/notice/noticeEdit')->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
             }
-
-        
         }
     }
 
-    public function noticeView($id){
+    public function noticeView($id)
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_notice');
         $data['notice'] = $BoardModel->find($id);
@@ -108,7 +121,8 @@ class AdminHome extends BaseController
         return view('admin/ad_notice_view', $data);
     }
 
-    public function noticeModify($id){
+    public function noticeModify($id)
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_notice');
         $data['notice'] = $BoardModel->find($id);
@@ -122,37 +136,38 @@ class AdminHome extends BaseController
         return view('admin/ad_notice_modify', $data);
     }
 
-    public function noticeUpdate(){
+    public function noticeUpdate()
+    {
         $boardId = $this->request->getPost('notice_id');
         $fileId = $this->request->getPost('file_id');
         $boardType = $this->request->getPost('board_type');
         $title = $this->request->getPost('title');
         $content = $this->request->getPost('content');
         $newFile = $this->request->getFile('userfile');
-        
+
         if ($newFile->isValid()) {
-            $upload= new Upload();
-            if($fileId){//있던 파일 수정
+            $upload = new Upload();
+            if ($fileId) { //있던 파일 수정
                 $fileType = 'udtFile';
-            }else if(!$fileId){//없던 파일 등록
+            } else if (!$fileId) { //없던 파일 등록
                 $fileType = 'newFile';
             }
-            
-            $fileData = $upload->BoardUpdate($newFile,'wh_board_notice',$boardType,$title,$content,$boardId,$fileId,$fileType);
-            
+
+            $fileData = $upload->BoardUpdate($newFile, 'wh_board_notice', $boardType, $title, $content, $boardId, $fileId, $fileType);
+
             if ($fileData) {
-                return redirect()->to("/ad/notice/noticeList")->with('msg', '등록이 완료되었습니다.');    
+                return redirect()->to("/ad/notice/noticeList")->with('msg', '등록이 완료되었습니다.');
             } else {
                 return redirect()->to("/ad/notice/noticeList")->with('msg', '등록이 실패 되었습니다.');
             }
-        }else{
+        } else {
             $BoardModel = new BoardModel();
             $BoardModel->setTableName('wh_board_notice');
 
             $updated = $BoardModel->update($boardId, [
                 'title' => $title,
                 'content' => $content,
-                'updated_at'=>'admin'
+                'updated_at' => 'admin'
             ]);
 
             if ($updated) {
@@ -160,19 +175,19 @@ class AdminHome extends BaseController
             } else {
                 return redirect()->to("/ad/notice/noticeEdit/{$boardId}")->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
             }
-            
         }
     }
 
-    public function noticeDelete(){
+    public function noticeDelete()
+    {
         $BoardId = $this->request->getPost('BoardId');
         $fileId = $this->request->getPost('fileId');
 
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_notice');
-        $deleted = $BoardModel->delete($BoardId);   
+        $deleted = $BoardModel->delete($BoardId);
 
-        if($fileId){
+        if ($fileId) {
             $BoardFileModel = new BoardFileModel();
             $BoardFileModel->delete($fileId);
         }
@@ -184,11 +199,12 @@ class AdminHome extends BaseController
         }
     }
 
-    public function fileDelete(){
+    public function fileDelete()
+    {
         $fileId = $this->request->getPost('fileId');
 
         $BoardFileModel = new BoardFileModel();
-        
+
         $deleted = $BoardFileModel->delete($fileId);
 
         if ($deleted) {
@@ -204,17 +220,19 @@ class AdminHome extends BaseController
         return view('admin/ad_privacy_edit');
     }
 
-    public function privacyList(){
+    public function privacyList()
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_privacy');
 
         $data['privacys'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
 
-        return view('admin/ad_privacy_list',$data);
+        return view('admin/ad_privacy_list', $data);
     }
-    
-    public function privacyMenuSelect(){
-        
+
+    public function privacyMenuSelect()
+    {
+
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_privacy');
         $privacy = $BoardModel->orderBy('created_at', 'DESC')->first();
@@ -225,10 +243,10 @@ class AdminHome extends BaseController
         } else {
             return redirect()->to('/ad/privacy/privacyEdit');
         }
-     
     }
 
-    public function privacyUpload(){
+    public function privacyUpload()
+    {
         $title = $this->request->getPost('title');
         $content = $this->request->getPost('content');
 
@@ -252,7 +270,8 @@ class AdminHome extends BaseController
         }
     }
 
-    public function privacyView($id){
+    public function privacyView($id)
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_privacy');
         $data['privacy'] = $BoardModel->find($id);
@@ -260,12 +279,13 @@ class AdminHome extends BaseController
         return view('admin/ad_privacy_view', $data);
     }
 
-    public function privacyModify($id){
+    public function privacyModify($id)
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_privacy');
-        $data['privacy'] = $BoardModel->find($id); 
+        $data['privacy'] = $BoardModel->find($id);
 
-        
+
         if ($data['privacy'] === null) {
             return redirect()->to('/ad/privacy/privacyList')->with('msg', '해당 데이터를 찾을 수 없습니다.');
         }
@@ -273,7 +293,8 @@ class AdminHome extends BaseController
         return view('admin/ad_privacy_modify', $data);
     }
 
-    public function privacyUpdate(){
+    public function privacyUpdate()
+    {
         $id = $this->request->getPost('privacy_id');
         $title = $this->request->getPost('title');
         $content = $this->request->getPost('content');
@@ -284,11 +305,11 @@ class AdminHome extends BaseController
         $updated = $BoardModel->update($id, [
             'title' => $title,
             'content' => $content,
-            'updated_at'=>'admin'
+            'updated_at' => 'admin'
         ]);
 
         if ($updated) {
-            
+
             return redirect()->to("/ad/privacy/privacyView/{$id}")->with('msg', '수정이 완료되었습니다.');
         } else {
             return redirect()->to("/ad/privacy/privacyEdit/{$id}")->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
@@ -300,34 +321,36 @@ class AdminHome extends BaseController
     {
         return view('admin/ad_terms_edit');
     }
-    
-    public function termsList(){
+
+    public function termsList()
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_terms');
 
         $data['termss'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
 
-        return view('admin/ad_terms_list',$data);
+        return view('admin/ad_terms_list', $data);
     }
-    
-    public function termsMenuSelect(){
-        
+
+    public function termsMenuSelect()
+    {
+
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_terms');
         $terms = $BoardModel->orderBy('created_at', 'DESC')->first();
 
         if ($terms) {
-            
+
             $insertedId = $terms['id'];
             return redirect()->to("/ad/terms/termsView/{$insertedId}");
         } else {
-            
+
             return redirect()->to('/ad/terms/termsEdit');
         }
-     
     }
 
-    public function termsUpload(){
+    public function termsUpload()
+    {
         $title = $this->request->getPost('title');
         $content = $this->request->getPost('content');
 
@@ -351,20 +374,22 @@ class AdminHome extends BaseController
         }
     }
 
-    public function termsView($id){
+    public function termsView($id)
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_terms');
-        $data['terms'] = $BoardModel->find($id); 
+        $data['terms'] = $BoardModel->find($id);
 
         return view('admin/ad_terms_view', $data);
     }
 
-    public function termsModify($id){
+    public function termsModify($id)
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_terms');
-        $data['terms'] = $BoardModel->find($id); 
+        $data['terms'] = $BoardModel->find($id);
 
-        
+
         if ($data['terms'] === null) {
             return redirect()->to('/ad/terms/termsList')->with('msg', '해당 데이터를 찾을 수 없습니다.');
         }
@@ -372,7 +397,8 @@ class AdminHome extends BaseController
         return view('admin/ad_terms_modify', $data);
     }
 
-    public function termsUpdate(){
+    public function termsUpdate()
+    {
         $id = $this->request->getPost('terms_id');
         $title = $this->request->getPost('title');
         $content = $this->request->getPost('content');
@@ -387,17 +413,17 @@ class AdminHome extends BaseController
         $updated = $BoardModel->update($id, [
             'title' => $title,
             'content' => $content,
-            'updated_at'=>'admin'
+            'updated_at' => 'admin'
         ]);
 
         if ($updated) {
-            
+
             return redirect()->to("/ad/terms/termsView/{$id}")->with('msg', '수정이 완료되었습니다.');
         } else {
             return redirect()->to("/ad/terms/termsEdit/{$id}")->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
         }
     }
-    
+
     /*faq 확인*/
     public function faqEdit(): string
     {
@@ -423,27 +449,28 @@ class AdminHome extends BaseController
 
         if ($inserted) {
             return redirect()->to('/ad/faq/faqList')->with('msg', '등록이 완료 되었습니다.');
-
-        }else{
+        } else {
             return redirect()->to('/ad/faq/faqEdit')->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
         }
     }
 
-    public function faqList(){
+    public function faqList()
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_faq');
 
         $data['faqs'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
 
-        return view('admin/ad_faq_list',$data);
+        return view('admin/ad_faq_list', $data);
     }
 
-    public function faqModify($id){
+    public function faqModify($id)
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_faq');
-        $data['faq'] = $BoardModel->find($id); 
+        $data['faq'] = $BoardModel->find($id);
 
-        
+
         if ($data['faq'] === null) {
             return redirect()->to('/ad/faq/faqList')->with('msg', '해당 데이터를 찾을 수 없습니다.');
         }
@@ -451,25 +478,26 @@ class AdminHome extends BaseController
         return view('admin/ad_faq_modify', $data);
     }
 
-    public function faqUpdate(){
+    public function faqUpdate()
+    {
         $id = $this->request->getPost('faq_id');
         $title = $this->request->getPost('title');
         $content = $this->request->getPost('content');
-    
+
         if (!$id || !is_numeric($id)) {
             return redirect()->to('/ad/faq/faqList')->with('msg', '잘못된 요청입니다.');
         }
-    
+
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_faq');
 
         $updated = $BoardModel->update($id, [
             'title' => $title,
             'content' => $content,
-            'updated_at'=>date('Y-m-d H:i:s'),
-            'updated_at'=>'admin'
+            'updated_at' => date('Y-m-d H:i:s'),
+            'updated_at' => 'admin'
         ]);
-    
+
         if ($updated) {
             return redirect()->to('/ad/faq/faqList')->with('msg', 'FAQ가 업데이트 되었습니다.');
         } else {
@@ -477,39 +505,41 @@ class AdminHome extends BaseController
         }
     }
 
-    public function faqView($id){
+    public function faqView($id)
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_faq');
-        $data['faq'] = $BoardModel->find($id); 
+        $data['faq'] = $BoardModel->find($id);
 
         return view('admin/ad_faq_view', $data);
     }
 
-    public function boardDelete(){
+    public function boardDelete()
+    {
         $id = $this->request->getPost('id');
         $board_name = $this->request->getPost('boardName');
-        
+
         $BoardModel = new BoardModel();
-        if($board_name == 'faq'){
+        if ($board_name == 'faq') {
             $BoardModel->setTableName('wh_board_faq');
-        }else if($board_name=='privacy'){
+        } else if ($board_name == 'privacy') {
             $BoardModel->setTableName('wh_board_privacy');
-        }else if($board_name=='terms'){
+        } else if ($board_name == 'terms') {
             $BoardModel->setTableName('wh_board_terms');
-        }else if($board_name=='news'){
+        } else if ($board_name == 'news') {
             $BoardModel->setTableName('wh_board_news');
         }
 
         $deleted = $BoardModel->delete($id);
 
         if ($deleted) {
-            if($board_name == 'faq'){
+            if ($board_name == 'faq') {
                 return redirect()->to('/ad/faq/faqList')->with('msg', '삭제되었습니다.');
-            }else if($board_name=='privacy'){
+            } else if ($board_name == 'privacy') {
                 return redirect()->to('/ad/privacy/privacyList')->with('msg', '삭제되었습니다.');
-            }else if($board_name=='terms'){
+            } else if ($board_name == 'terms') {
                 return redirect()->to('/ad/terms/termsList')->with('msg', '삭제되었습니다.');
-            }else if($board_name=='news'){
+            } else if ($board_name == 'news') {
                 return redirect()->to('/ad/intro/newsList')->with('msg', '삭제되었습니다.');
             }
         } else {
@@ -521,7 +551,7 @@ class AdminHome extends BaseController
     {
         $exchangePoint = new PointExchangeModel();
         $query = $exchangePoint
-                ->select('e.idx as idx,
+            ->select('e.idx as idx,
                         e.member_ci as member_ci,
                         m.name as name,
                         m.mobile_no as mobile_no,
@@ -531,28 +561,29 @@ class AdminHome extends BaseController
                         e.exchange_type as exchange_type,
                         e.exchange_level as exchange_level,
                         e.create_at as create_at')
-                ->from('wh_points_exchange e')
-                ->join('members m', 'e.member_ci = m.ci', 'left')
-                ->orderBy('e.exchange_level', 'asc')
-                ->orderBy('e.create_at', 'DESC')
-                ->get();
-            $results = $query->getResultArray();
-            // 중복된 데이터 제거
-            $uniqueResults = [];
-            $uniqueIdxs = [];
-            foreach ($results as $result) {
-                if (!in_array($result['idx'], $uniqueIdxs)) {
-                    $uniqueResults[] = $result;
-                    $uniqueIdxs[] = $result['idx'];
-                }
+            ->from('wh_points_exchange e')
+            ->join('members m', 'e.member_ci = m.ci', 'left')
+            ->orderBy('e.exchange_level', 'asc')
+            ->orderBy('e.create_at', 'DESC')
+            ->get();
+        $results = $query->getResultArray();
+        // 중복된 데이터 제거
+        $uniqueResults = [];
+        $uniqueIdxs = [];
+        foreach ($results as $result) {
+            if (!in_array($result['idx'], $uniqueIdxs)) {
+                $uniqueResults[] = $result;
+                $uniqueIdxs[] = $result['idx'];
             }
+        }
 
-            $data['datas'] = $uniqueResults;
+        $data['datas'] = $uniqueResults;
 
         return view('admin/ad_exchange_list', $data);
     }
 
-    public function exchangeCheck(){
+    public function exchangeCheck()
+    {
         $exchange_level = $this->request->getPost('exchange_level');
         $idx = $this->request->getPost('idx');
 
@@ -561,21 +592,20 @@ class AdminHome extends BaseController
         $updated = $exchangePoint->update($idx, [
             'exchange_type' => 'E',
             'exchange_level' => $exchange_level,
-            'updated_at'=>date('Y-m-d H:i:s')
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
-    
+
         if ($updated) {
-            if($exchange_level =='1'){
+            if ($exchange_level == '1') {
                 return $this->response->setJSON(['success' => true, 'msg' => '환전 승인 되었습니다.']);
-            }else if($exchange_level =='2'){
+            } else if ($exchange_level == '2') {
                 return $this->response->setJSON(['success' => true, 'msg' => '환전 완료 되었습니다.']);
             }
         } else {
             return $this->response->setJSON(['error' => true, 'msg' => '환전 실패 되었습니다.']);
         }
-
     }
-    
+
     public function allianceList()
     {
         $AllianceModel = new AllianceModel();
@@ -617,30 +647,31 @@ class AdminHome extends BaseController
 
         return view('admin/ad_alliance_list', $data);
     }
-    
-    public function allianceCheck(){
+
+    public function allianceCheck()
+    {
         $level = $this->request->getPost('level');
         $idx = $this->request->getPost('idx');
-    
+
         $AllianceModel = new AllianceModel();
 
         $updated = $AllianceModel->update($idx, [
             'alliance_application' => $level,
-            'updated_at'=>date('Y-m-d H:i:s')
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
-    
+
         if ($updated) {
-            if($level =='2'){
+            if ($level == '2') {
                 return $this->response->setJSON(['success' => true, 'msg' => '제휴 승인 되었습니다.']);
             }
         } else {
             return $this->response->setJSON(['error' => true, 'msg' => '제휴승인 실패 되었습니다.']);
         }
-    
     }
 
     /*회원 인증 정보 승인*/
-    public function memberApproveList($page = null){
+    public function memberApproveList($page = null)
+    {
 
         // 페이지가 없으면 기본값으로 1을 사용
         if ($page === null || !is_numeric($page)) {
@@ -691,28 +722,29 @@ class AdminHome extends BaseController
         return view('admin/ad_member_list', $data);
     }
 
-    public function memberCertificateCheck(){
+    public function memberCertificateCheck()
+    {
         $level = $this->request->getPost('level');
         $id = $this->request->getPost('id');
-    
+
         $MemberFileModel = new MemberFileModel();
 
         $updated = $MemberFileModel
             ->where('id', $id)
             ->update(null, ['extra1' => $level]);
-    
+
         if ($updated) {
-            if($level =='y'){
+            if ($level == 'y') {
                 return $this->response->setJSON(['success' => true, 'msg' => '승인 되었습니다.']);
             }
         } else {
             return $this->response->setJSON(['error' => true, 'msg' => '승인 실패.']);
         }
-    
     }
 
     /*회원 계좌이체 승인 목록*/
-    public function memberPaymentList($page = null){
+    public function memberPaymentList($page = null)
+    {
 
         // 페이지가 없으면 기본값으로 1을 사용
         // if ($page === null || !is_numeric($page)) {
@@ -759,10 +791,11 @@ class AdminHome extends BaseController
         return view('admin/ad_payment_list', $data);
     }
 
-    public function memberPaymentCheck(){
+    public function memberPaymentCheck()
+    {
         $tempGrade = $this->request->getPost('tempGrade');
         $idx = $this->request->getPost('idx');
-    
+
         $MemberModel = new MemberModel();
 
         $query = "UPDATE members SET grade='" . $tempGrade . "' WHERE idx='" . $idx . "'";
@@ -773,7 +806,6 @@ class AdminHome extends BaseController
         } else {
             return $this->response->setJSON(['error' => true, 'msg' => '승인 실패.']);
         }
-    
     }
 
     /*회원 신고*/
@@ -782,26 +814,29 @@ class AdminHome extends BaseController
         return view('admin/ad_privacy_edit');
     }
 
-    public function reportList(){
+    public function reportList()
+    {
         $ReportMemberModel = new ReportMemberModel();
 
         $data['reports'] = $ReportMemberModel->orderBy('created_at', 'DESC')->findAll();
 
-        return view('admin/ad_report_member_list',$data);
+        return view('admin/ad_report_member_list', $data);
     }
 
-    public function reportView($idx){
+    public function reportView($idx)
+    {
         $ReportMemberModel = new ReportMemberModel();
         $data['report'] = $ReportMemberModel->find($idx);
 
         return view('admin/ad_report_view', $data);
     }
 
-    public function reportDelete(){
+    public function reportDelete()
+    {
         $reportId = $this->request->getPost('reportId');
 
         $ReportMemberModel = new ReportMemberModel();
-        $deleted = $ReportMemberModel->delete($reportId);   
+        $deleted = $ReportMemberModel->delete($reportId);
 
         if ($deleted) {
             return $this->response->setJSON(['success' => true]);
@@ -809,22 +844,24 @@ class AdminHome extends BaseController
             return $this->response->setJSON(['success' => false]);
         }
     }
-/*회사소개 - media */
+    /*회사소개 - media */
     public function newsEdit(): string
     {
         return view('admin/ad_news_edit');
     }
 
-    public function newsList(){
+    public function newsList()
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_news');
 
         $data['newss'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
 
-        return view('admin/ad_news_list',$data);
+        return view('admin/ad_news_list', $data);
     }
 
-    public function newsUpload(){
+    public function newsUpload()
+    {
         $title = $this->request->getPost('title');
         $content = $this->request->getPost('content');
         $type = $this->request->getPost('bigo1');
@@ -832,13 +869,13 @@ class AdminHome extends BaseController
 
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_news');
-        
-        if($type =='01'){
+
+        if ($type == '01') {
             $content = '';
-        }else{
-            $link ='';
+        } else {
+            $link = '';
         }
-        
+
         $data = [
             'title' => $title,
             'content' => $content,
@@ -859,20 +896,22 @@ class AdminHome extends BaseController
         }
     }
 
-    public function newsView($id){
+    public function newsView($id)
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_news');
-        $data['news'] = $BoardModel->find($id); 
+        $data['news'] = $BoardModel->find($id);
 
         return view('admin/ad_news_view', $data);
     }
 
-    public function newsModify($id){
+    public function newsModify($id)
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_news');
-        $data['news'] = $BoardModel->find($id); 
+        $data['news'] = $BoardModel->find($id);
 
-        
+
         if ($data['news'] === null) {
             return redirect()->to('/ad/intro/newsList')->with('msg', '해당 데이터를 찾을 수 없습니다.');
         }
@@ -880,7 +919,8 @@ class AdminHome extends BaseController
         return view('admin/ad_news_modify', $data);
     }
 
-    public function newsUpdate(){
+    public function newsUpdate()
+    {
         $id = $this->request->getPost('news_id');
         $title = $this->request->getPost('title');
         $content = $this->request->getPost('content');
@@ -893,19 +933,19 @@ class AdminHome extends BaseController
 
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_board_news');
-        
-        if($type =='01'){
+
+        if ($type == '01') {
             $content = '';
-        }else{
-            $link ='';
+        } else {
+            $link = '';
         }
 
         $updated = $BoardModel->update($id, [
             'title' => $title,
             'content' => $content,
-            'bigo1'=>$type,
-            'bigo2'=>$link,
-            'updated_at'=>'admin'
+            'bigo1' => $type,
+            'bigo2' => $link,
+            'updated_at' => 'admin'
         ]);
 
         if ($updated) {
