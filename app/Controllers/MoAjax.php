@@ -41,18 +41,25 @@ class MoAjax extends BaseController
         $member_ci = $session->get('ci');
         $filter = $this->request->getPost('value');
 
+        $MemberModel = new MemberModel();
+
+        $query = "SELECT gender FROM members WHERE ci='" . $member_ci . "'";
+        $genderQuery = $MemberModel
+            ->query($query)->getResultArray();
+
+
         $query = "SELECT mr.match_rate, mf.file_path, mf.file_name, mb.city, mb.mbti, mb.nickname, SUBSTRING(mb.birthday, 1, 4) as birthyear FROM wh_match_rate mr
         LEFT JOIN members mb on mr.your_nickname = mb.nickname
         LEFT JOIN member_files mf on mb.ci = mf.member_ci";
         $query .= " WHERE mr.member_ci = '" . $member_ci . "'";
-        if ($filter !== "9") {
-            $query .= " AND mb.gender = '" . $filter . "'";
+        if ($genderQuery) {
+            $query .= " AND mb.gender != '" . $genderQuery[0]['gender'] . "'";
         }
         $query .= " AND mr.match_score > '0'";
         $query .= " AND mf.board_type = 'main_photo' AND mf.delete_yn='n'";
         $query .= " ORDER BY CONVERT(mr.match_rate, SIGNED) DESC LIMIT 20;";
 
-        $MemberModel = new MemberModel();
+
         $result = $MemberModel
             ->query($query)->getResultArray();
 
@@ -82,18 +89,23 @@ class MoAjax extends BaseController
         $member_ci = $session->get('ci');
         $filter = $this->request->getPost('value');
 
+        $MemberModel = new MemberModel();
+
+        $query = "SELECT gender FROM members WHERE ci='" . $member_ci . "'";
+        $genderQuery = $MemberModel
+            ->query($query)->getResultArray();
+
         $query = "SELECT mr.ideal_rate, mf.file_path, mf.file_name, mb.city, mb.mbti, mb.nickname, SUBSTRING(mb.birthday, 1, 4) as birthyear FROM wh_match_rate mr
         LEFT JOIN members mb on mr.your_nickname = mb.nickname
         LEFT JOIN member_files mf on mb.ci = mf.member_ci";
         $query .= " WHERE mr.member_ci = '" . $member_ci . "'";
-        if ($filter !== "9") {
-            $query .= " AND mb.gender = '" . $filter . "'";
+        if ($genderQuery) {
+            $query .= " AND mb.gender != '" . $genderQuery[0]['gender'] . "'";
         }
         $query .= " AND mr.ideal_rate > '0'";
         $query .= " AND mf.board_type = 'main_photo' AND mf.delete_yn='n'";
         $query .= " ORDER BY CONVERT(mr.ideal_rate, SIGNED) DESC LIMIT 20;";
 
-        $MemberModel = new MemberModel();
         $result = $MemberModel
             ->query($query)->getResultArray();
 
