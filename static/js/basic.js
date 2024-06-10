@@ -1276,6 +1276,11 @@ const meetingSave = (postData) => {
         $('#datepicker2').focus();
         return;
     }
+    if ($('#meeting_start_time').val().trim() === '') {
+        fn_alert('모임시간을 선택해 주세요.');
+        $('#meeting_start_time').focus();
+        return;
+    }
     // if ($('#datepicker3').val().trim() === '') {
     //     alert('모임일자 종료일을 입력해 주세요.');
     //     $('#datepicker3').focus();

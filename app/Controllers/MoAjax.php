@@ -1882,6 +1882,7 @@ class MoAjax extends BaseController
             $recruitment_start_date = $this->request->getPost('recruitment_start_date');
             $recruitment_end_date = $this->request->getPost('recruitment_end_date');
             $meeting_start_date = $this->request->getPost('meeting_start_date');
+            $meeting_start_time = $this->request->getPost('meeting_start_time');
             $meeting_end_date = $this->request->getPost('meeting_start_date'); // 모임일자 시작/끝 동일하게 변경
             $number_of_people = $this->request->getPost('number_of_people');
             $group_min_age = $this->request->getPost('group_min_age');
@@ -1904,8 +1905,8 @@ class MoAjax extends BaseController
                 'category' => $category,
                 'recruitment_start_date' => $recruitment_start_date,
                 'recruitment_end_date' => $recruitment_end_date,
-                'meeting_start_date' => $meeting_start_date,
-                'meeting_end_date' => $meeting_end_date,
+                'meeting_start_date' => $meeting_start_date . " " . $meeting_start_time . ":00:00",
+                'meeting_end_date' => $meeting_end_date . " " . $meeting_start_time . ":00:00",
                 'number_of_people' => $number_of_people,
                 'group_min_age' => $group_min_age,
                 'group_max_age' => $group_max_age,

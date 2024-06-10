@@ -1321,9 +1321,9 @@ a:active {
 .group_create .schedule_calendar .hasDatepicker {
     width: 146px;
 }
-.group_create .schedule_calendar .hasDatepicker.datepicker2 {
+/* .group_create .schedule_calendar .hasDatepicker.datepicker2 {
     width: 325px;
-}
+} */
 /* wallet*/
 .amount_pay {
     display: flex;
