@@ -133,7 +133,7 @@ input[type='checkbox'] + label:hover {
 .content_no_img.login_main .login_main_title h2 {
     font-family: 'Pretendard-Bold';
     /* font-size: 50px; */
-    font-size: 35px;
+    font-size: 24px;
     line-height: 35px;
     /* line-height: 60px; */
     color: #000000;
@@ -303,7 +303,7 @@ input[type='checkbox'] + label:hover {
     /* line-height: 48px; */
     color: #000000;
 }
-.content_no_img.login_main .group_type .main_title_btn button {
+.content_no_img.login_main .main_title_btn button {
     /* margin-top: 20px; */
     background: #333333;
     border-radius: 30px;
@@ -316,13 +316,13 @@ input[type='checkbox'] + label:hover {
     color: #ffffff;
     border: none;
 }
-.content_no_img.login_main .group_type .main_title_btn button.total {
-    width: 92px;
+.content_no_img.login_main .main_title_btn button.total {
+    width: 65px;
     background: #333333;
     border-radius: 30px;
     margin-right: 20px;
 }
-.content_no_img.login_main .group_type .main_title_btn button.disabled {
+.content_no_img.login_main .main_title_btn button.disabled {
     background: #dddddd;
 }
 
@@ -761,8 +761,8 @@ header .menu_item {
     .content_no_img.login_main .group_row {
         margin: 0 0 20px 0;
     }
-    .content_no_img.login_main .group_type .main_title_btn {
-        display: none;
+    .content_no_img.login_main .main_title_btn {
+        display: none !important;
     }
     .content_no_img.login_main .ai_mat_card h2 {
         font-size: 15px;

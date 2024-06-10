@@ -273,7 +273,6 @@ if ($ci) {
                                 },
                                 async: false,
                                 success: function(data) {
-                                    console.log(data);
                                     if (data.message === 'success') {
                                         $(".AImatch_list").html("");
                                         $(".AImatch_list").css("display", "flex");
@@ -322,7 +321,6 @@ if ($ci) {
                                 },
                                 async: false,
                                 success: function(data) {
-                                    console.log(data);
                                     if (data.message === 'success') {
                                         $(".AImatch2_list").html("");
                                         $(".AImatch2_list").css("display", "flex");
@@ -381,7 +379,6 @@ if ($ci) {
                                 type: 'POST',
                                 async: false,
                                 success: function(data) {
-                                    console.log(data);
                                     data.result.forEach(function(item) {
                                         $(".category" + item.category).html("");
                                         $(".category" + item.category).css("display", "flex");
@@ -422,7 +419,7 @@ if ($ci) {
                             if (scrollLeft !== 0) {
                                 container.animate({
                                     scrollLeft: '-=250px'
-                                }, 500);
+                                }, 200);
                             }
                         }
 
@@ -435,7 +432,7 @@ if ($ci) {
                             if (scrollLeft < maxScroll) {
                                 container.animate({
                                     scrollLeft: '+=250px'
-                                }, 500);
+                                }, 200);
                             }
                         }
 
@@ -524,6 +521,48 @@ if ($ci) {
                                     $(".category04_right").addClass('disabled');
                                 }
                             });
+                            $('.AImatch_list').scroll(function() {
+                                var scrollLeft = $(this).scrollLeft();
+                                var container = $('.AImatch_list');
+                                var containerWidth = container.outerWidth();
+                                var maxScroll = container[0].scrollWidth - containerWidth;
+                                if ((scrollLeft - 5) <= '0') {
+                                    $(".AImatch_list_left").addClass('disabled');
+                                } else {
+                                    $(".AImatch_list_left").removeClass('disabled');
+                                }
+                                if ((scrollLeft + 5) >= maxScroll) {
+                                    $(".AImatch_list_right").addClass('disabled');
+                                } else {
+                                    $(".AImatch_list_right").removeClass('disabled');
+                                }
+
+                                if (scrollLeft === '0' && (scrollLeft + 5) >= maxScroll) {
+                                    $(".category04_left").addClass('disabled');
+                                    $(".category04_right").addClass('disabled');
+                                }
+                            });
+                            $('.AImatch2_list').scroll(function() {
+                                var scrollLeft = $(this).scrollLeft();
+                                var container = $('.AImatch2_list');
+                                var containerWidth = container.outerWidth();
+                                var maxScroll = container[0].scrollWidth - containerWidth;
+                                if ((scrollLeft - 5) <= '0') {
+                                    $(".AImatch2_list_left").addClass('disabled');
+                                } else {
+                                    $(".AImatch2_list_left").removeClass('disabled');
+                                }
+                                if ((scrollLeft + 5) >= maxScroll) {
+                                    $(".AImatch2_list_right").addClass('disabled');
+                                } else {
+                                    $(".AImatch2_list_right").removeClass('disabled');
+                                }
+
+                                if (scrollLeft === '0' && (scrollLeft + 5) >= maxScroll) {
+                                    $(".AImatch2_list_left").addClass('disabled');
+                                    $(".AImatch2_list_right").addClass('disabled');
+                                }
+                            });
                         }
                         $(function() {
                             AImatch('9');
@@ -540,9 +579,12 @@ if ($ci) {
                         <div class="login_main_title">
                             <h2><?= lang('Korean.mainTitle') ?></h2>
                             <div class="main_title_btn">
-                                <!-- <button onclick="clickOn(this)" class="on" value="9"><?= lang('Korean.all') ?></button>
-                    <button onclick="clickOn(this)" value="0"><?= lang('Korean.woman') ?></button>
-                    <button onclick="clickOn(this)" value="1"><?= lang('Korean.man') ?></button> -->
+                                <button class="AImatch_list_left slide_btn disabled" onclick="clickLeft('AImatch_list')">
+                                    <img src="/static/images/slide_left.png" />
+                                </button>
+                                <button class="AImatch_list_right slide_btn" onclick="clickRight('AImatch_list')">
+                                    <img src="/static/images/slide_right.png" />
+                                </button>
                             </div>
                         </div>
                         <div class="login_main_list AImatch_list">
@@ -560,9 +602,12 @@ if ($ci) {
                         <div class="login_main_title">
                             <h2><?= lang('Korean.mainTitle2') ?></h2>
                             <div class="main_title_btn">
-                                <!-- <button onclick="clickOn(this)" class="on" value="9"><?= lang('Korean.all') ?></button>
-                    <button onclick="clickOn(this)" value="0"><?= lang('Korean.woman') ?></button>
-                    <button onclick="clickOn(this)" value="1"><?= lang('Korean.man') ?></button> -->
+                                <button class="AImatch2_list_left slide_btn disabled" onclick="clickLeft('AImatch2_list')">
+                                    <img src="/static/images/slide_left.png" />
+                                </button>
+                                <button class="AImatch2_list_right slide_btn" onclick="clickRight('AImatch2_list')">
+                                    <img src="/static/images/slide_right.png" />
+                                </button>
                             </div>
                         </div>
                         <div class="login_main_list AImatch2_list">
@@ -587,7 +632,7 @@ if ($ci) {
                                     <?= lang('Korean.indexCon11') ?>
                                 </h2>
                                 <div class="main_title_btn">
-                                    <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?>보기</button>
+                                    <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?></button>
                                     <button class="category01_left slide_btn disabled" onclick="clickLeft('category01')">
                                         <img src="/static/images/slide_left.png" />
                                     </button>
@@ -616,7 +661,7 @@ if ($ci) {
                                     <?= lang('Korean.trip') ?>
                                 </h2>
                                 <div class="main_title_btn">
-                                    <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?>보기</button>
+                                    <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?></button>
                                     <button class="category02_left slide_btn disabled" onclick="clickLeft('category02')">
                                         <img src="/static/images/slide_left.png" />
                                     </button>
@@ -650,7 +695,7 @@ if ($ci) {
                                     <?= lang('Korean.indexCon11') ?>
                                 </h2>
                                 <div class="main_title_btn">
-                                    <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?>보기</button>
+                                    <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?></button>
                                     <button class="category03_left slide_btn disabled" onclick="clickLeft('category03')">
                                         <img src="/static/images/slide_left.png" />
                                     </button>
@@ -679,7 +724,7 @@ if ($ci) {
                                     <?= lang('Korean.trip') ?>
                                 </h2>
                                 <div class="main_title_btn">
-                                    <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?>보기</button>
+                                    <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?></button>
                                     <button class="category04_left slide_btn disabled" onclick="clickLeft('category04')">
                                         <img src="/static/images/slide_left.png" />
                                     </button>
