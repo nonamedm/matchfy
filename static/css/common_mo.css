@@ -135,17 +135,17 @@ header.ci_header .logo_menu ul .item {
     text-transform: capitalize;
     justify-content: center;
 }
-.login_idpw_find{
+.login_idpw_find {
     margin-top: 22px;
     font-size: 14px;
 }
-.login_idpw_find span{
+.login_idpw_find span {
     color: #ffffff;
 }
-.login_idpw_find span a{
+.login_idpw_find span a {
     color: #ffffff;
 }
-.login_idpw_find span a:hover{
+.login_idpw_find span a:hover {
     font-weight: 900;
     color: #ffffff;
 }
@@ -654,6 +654,22 @@ td {
     height: 600px;
     overflow: auto;
     transition: all 0.3s;
+}
+.chat_wrap .no_ai_msg h2 {
+    margin-top: 50px;
+    font-family: 'Pretendard-Bold';
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+    color: #424141;
+}
+.chat_wrap .no_ai_msg p {
+    margin-top: 50px;
+    font-family: 'Pretendard-Medium';
+    font-weight: 400;
+    font-size: 15px;
+    text-align: center;
+    color: #999999;
 }
 .chat_wrap.on {
     height: 380px;
@@ -1204,12 +1220,12 @@ a:active {
     margin-top: 6px;
     padding: 2px 4px;
     text-align: center;
-    width: 54px;
-    height: 14px;
+    width: 60px;
+    height: 15px;
     border: 1px solid #fadee6;
     border-radius: 4px;
     font-weight: 500;
-    font-size: 11px;
+    font-size: 10px;
     line-height: 130%;
     cursor: pointer;
 }

@@ -137,6 +137,7 @@
             });
             scrollToBottom();
             // mymsgPhotoListener();
+            reloadMsg();
             setInterval(function() {
                 reloadMsg();
 
@@ -165,37 +166,45 @@
                         // 성공
                         $("#chat_wrap").html("");
                         var html = "";
-                        data.data.reulst_value.allMsg.forEach(item => {
-                            if (item.chk === 'me') {
-                                html += '<div class="send_msg">';
-                                html += '<div class="send_text">';
-                                html += '<div class="receive_time"><p>';
-                                html += item.created_at + '</p></div>';
-                                html += '<div class = "send_msg_area" ><p>';
-                                html += item.msg_cont + '</p></div></div></div>';
-                            } else {
-                                html += '<div class="receive_msg">';
-                                html += '<div class="receive_profile">';
-                                html += `<a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/` + item.nickname + `')">`;
-                                if (item.file_name) {
-                                    html += '<img src="/' + item.file_path + item.file_name + '" />';
+                        console.log(data.data.reulst_value.allMsg.length);
+                        if (data.data.reulst_value.allMsg.length !== 0) {
+                            data.data.reulst_value.allMsg.forEach(item => {
+                                if (item.chk === 'me') {
+                                    html += '<div class="send_msg">';
+                                    html += '<div class="send_text">';
+                                    html += '<div class="receive_time"><p>';
+                                    html += item.created_at + '</p></div>';
+                                    html += '<div class = "send_msg_area" ><p>';
+                                    html += item.msg_cont + '</p></div></div></div>';
                                 } else {
-                                    html += '<img src="/static/images/profile_noimg.png" />';
-                                }
-                                html += '</a>';
-                                html += '</div>';
-                                html += '<div class="receive_text">';
-                                html += '<p class="receive_profile_name">' + item.nickname;
+                                    html += '<div class="receive_msg">';
+                                    html += '<div class="receive_profile">';
+                                    html += `<a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/` + item.nickname + `')">`;
+                                    if (item.file_name) {
+                                        html += '<img src="/' + item.file_path + item.file_name + '" />';
+                                    } else {
+                                        html += '<img src="/static/images/profile_noimg.png" />';
+                                    }
+                                    html += '</a>';
+                                    html += '</div>';
+                                    html += '<div class="receive_text">';
+                                    html += '<p class="receive_profile_name">' + item.nickname;
 
-                                html += '</p>';
-                                html += '<div style="display: flex;">';
-                                html += '<div class="receive_msg_area"><p>' + item.msg_cont + '</p></div>';
-                                html += '<div class="receive_time"><p>' + item.created_at + '</p></div>';
-                                html += '</div>';
-                                html += '</div>';
-                                html += '</div>';
-                            }
-                        });
+                                    html += '</p>';
+                                    html += '<div style="display: flex;">';
+                                    html += '<div class="receive_msg_area"><p>' + item.msg_cont + '</p></div>';
+                                    html += '<div class="receive_time"><p>' + item.created_at + '</p></div>';
+                                    html += '</div>';
+                                    html += '</div>';
+                                    html += '</div>';
+                                }
+                            });
+                        } else {
+                            html += '<div class="no_ai_msg">';
+                            html += '<h2>아직 AI커플매니저와<br/>대화하신 내용이 없습니다</h2>';
+                            html += '<p>※ AI커플매니저는 AI가 직접<br/>연애에 관련된 가벼운 상담, 조언 등을 <br/>제공하며,  <br/><br/>더 만족할 수 있는 매칭을 주선하기 위해 <br/>회원님의 데이터 및  연애 관련 자료들을 <br/>꾸준히 딥러닝해 나갈 계획입니다.</p>';
+                            html += '</div>';
+                        }
                         $("#chat_wrap").html(html);
                         // scrollToBottom();
                         // moveToUrl('/mo/factorInfo');

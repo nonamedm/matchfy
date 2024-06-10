@@ -170,14 +170,14 @@ input[type='checkbox'] + label:hover {
 }
 .content_no_img.login_main .ai_group_card .group_particpnt {
     margin-top: 6px;
-    padding: 2px 4px;
+    padding: 3px 4px;
     text-align: center;
     width: 72px;
     height: 16px;
     border: 1px solid #fadee6;
     border-radius: 4px;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 10px;
     line-height: 130%;
 }
 .content_no_img.login_main .ai_group_card .group_particpnt span {
