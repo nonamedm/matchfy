@@ -34,9 +34,9 @@
                         </p>
                         <!-- <p><a onclick="moveToUrl('/mo/partner')"><?= lang('Korean.matchInfoBtn') ?></a></p> -->
                         <p onclick="moveToUrl('/mo/matchFeed')"><a><?= lang('Korean.matchFeed') ?></a></p>
-                        <p onclick="moveToUrl('/mo/alliance/list')"><a><?= lang('Korean.matchAliiance') ?></a></p>
+                        <!-- <p onclick="moveToUrl('/mo/alliance/list')"><a><?= lang('Korean.matchAliiance') ?></a></p> -->
                         <p onclick="moveToUrl('/mo/upgradeGrade')"><a><?= lang('Korean.matchUpgrade') ?></a></p>
-                        <p onclick="moveToUrl('/mo/alliance/pass')"><a><?= lang('Korean.matchAllianceAppli') ?></a></p>
+                        <!-- <p onclick="moveToUrl('/mo/alliance/pass')"><a><?= lang('Korean.matchAllianceAppli') ?></a></p> -->
                         <p onclick="moveToUrl('/mo/invite')"><a>친구 초대</a></p>
 
                     </div>
