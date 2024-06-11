@@ -2669,7 +2669,9 @@ class MoAjax extends BaseController
                         // 'my_nickname' => $mydata['nickname'], 닉네임 수정할 수 있어서 조건 삭제
                         'your_ci' => $item['ci'],
                     ];
-                    $selected = $MatchRateModel->where($selectParam)->first();
+                    $selectQuery = "SELECT * FROM wh_match_rate WHERE member_ci='" . $mydata['ci'] . "' AND your_ci='" . $item['ci'] . "'";
+
+                    $selected = $MatchRateModel->query($selectQuery)->getResultArray();
                     $ideal_rate = number_format(($calc === 0 ? 1 : $calc) / ($calcMax === 0 ? 100 : $calcMax) * 100, 2);
                     $match_rate = $your_rate ? number_format(($your_rate['ideal_rate'] + $ideal_rate) / 2, 2) : number_format(($ideal_rate) / 2, 2);
                     if ($selected) {
@@ -2679,6 +2681,7 @@ class MoAjax extends BaseController
                         $query .= " , match_score_max = '" . $calcMax . "'";
                         $query .= " , match_rate = '" . $match_rate . "'";
                         $query .= " , ideal_rate = '" . $ideal_rate . "'";
+                        $query .= " , updated_at = now()";
                         $query .= " WHERE member_ci = '" . $mydata['ci'] . "'";
                         $query .= " AND your_ci = '" . $item['ci'] . "'";
 
