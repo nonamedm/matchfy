@@ -243,6 +243,10 @@ class MoAjax extends BaseController
                     $session->setTempdata('ci', $user['ci'], 2592000);
                 }
 
+                // 로그인 기록 업데이트
+                $query = "UPDATE members SET last_access_dt=now() WHERE ci='" . $user['ci'] . "';";
+                $MemberModel->query($query);
+
                 return $this->response->setJSON(['status' => 'success', 'message' => "로그인 성공"]);
             } else {
                 return $this->response->setJSON(['status' => 'error', 'message' => '패스워드가 일치하지 않습니다']);

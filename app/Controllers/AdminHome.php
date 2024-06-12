@@ -830,6 +830,31 @@ class AdminHome extends BaseController
         }
     }
 
+    public function memberMngment($page = null)
+    {
+
+        // 페이지가 없으면 기본값으로 1을 사용
+        if ($page === null || !is_numeric($page)) {
+            $page = 1;
+        } else {
+            $page = 2;
+        }
+
+        $perPage = 20;
+        $MemberModel = new MemberModel();
+
+        $total = $MemberModel->query("SELECT COUNT(*) as total FROM members m LEFT JOIN member_files mf ON m.ci = mf.member_ci")->getRow()->total;
+
+        $offset = ($page - 1) * $perPage; // 현재 페이지의 첫 번째 데이터 인덱스
+        $query = "SELECT name, nickname, birthday, gender, email,
+                         mobile_no, grade, temp_grade, sns_type, last_access_dt
+                    FROM members WHERE delete_yn='N' ORDER BY created_at DESC";
+
+        $data['datas'] = $MemberModel->query($query)->getResultArray();
+
+        return view('admin/ad_member_mngment', $data);
+    }
+
     public function memberCertificateCheck()
     {
         $level = $this->request->getPost('level');
