@@ -40,7 +40,7 @@ class AdminHome extends BaseController
         return view('admin/ad_notice_edit');
     }
 
-    public function noticeList(): string
+    public function noticeList()
     {
         $fileData = new BoardFileModel();
         $query = $fileData->select(
@@ -67,8 +67,20 @@ class AdminHome extends BaseController
             ->get();
 
         $data['datas'] = $query->getResultArray();
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT * FROM members WHERE ci='" . $ci . "'";
 
-        return view('admin/ad_notice_list', $data);
+        $adminVerify = $MemberModel->query($query)->getResultArray();
+        if ($adminVerify) {
+            $adminId = $adminVerify[0]['email'];
+            if ($adminId === 'admin' || $adminId === 'develop') {
+                return view('admin/ad_notice_list', $data);
+            } else {
+                return redirect()->to("/");
+            }
+        }
     }
 
     public function noticeUpload()
@@ -118,7 +130,21 @@ class AdminHome extends BaseController
         $fileData = new BoardFileModel();
         $data['file'] = $fileData->where('board_idx', $id)->first();
         // echo $fileData->getLastQuery();
-        return view('admin/ad_notice_view', $data);
+
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT * FROM members WHERE ci='" . $ci . "'";
+
+        $adminVerify = $MemberModel->query($query)->getResultArray();
+        if ($adminVerify) {
+            $adminId = $adminVerify[0]['email'];
+            if ($adminId === 'admin' || $adminId === 'develop') {
+                return view('admin/ad_notice_view', $data);
+            } else {
+                return redirect()->to("/");
+            }
+        }
     }
 
     public function noticeModify($id)
@@ -227,7 +253,20 @@ class AdminHome extends BaseController
 
         $data['privacys'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
 
-        return view('admin/ad_privacy_list', $data);
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT * FROM members WHERE ci='" . $ci . "'";
+
+        $adminVerify = $MemberModel->query($query)->getResultArray();
+        if ($adminVerify) {
+            $adminId = $adminVerify[0]['email'];
+            if ($adminId === 'admin' || $adminId === 'develop') {
+                return view('admin/ad_privacy_list', $data);
+            } else {
+                return redirect()->to("/");
+            }
+        }
     }
 
     public function privacyMenuSelect()
@@ -329,7 +368,20 @@ class AdminHome extends BaseController
 
         $data['termss'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
 
-        return view('admin/ad_terms_list', $data);
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT * FROM members WHERE ci='" . $ci . "'";
+
+        $adminVerify = $MemberModel->query($query)->getResultArray();
+        if ($adminVerify) {
+            $adminId = $adminVerify[0]['email'];
+            if ($adminId === 'admin' || $adminId === 'develop') {
+                return view('admin/ad_terms_list', $data);
+            } else {
+                return redirect()->to("/");
+            }
+        }
     }
 
     public function termsMenuSelect()
@@ -461,7 +513,21 @@ class AdminHome extends BaseController
 
         $data['faqs'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
 
-        return view('admin/ad_faq_list', $data);
+
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT * FROM members WHERE ci='" . $ci . "'";
+
+        $adminVerify = $MemberModel->query($query)->getResultArray();
+        if ($adminVerify) {
+            $adminId = $adminVerify[0]['email'];
+            if ($adminId === 'admin' || $adminId === 'develop') {
+                return view('admin/ad_faq_list', $data);
+            } else {
+                return redirect()->to("/");
+            }
+        }
     }
 
     public function faqModify($id)
@@ -579,7 +645,21 @@ class AdminHome extends BaseController
 
         $data['datas'] = $uniqueResults;
 
-        return view('admin/ad_exchange_list', $data);
+
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT * FROM members WHERE ci='" . $ci . "'";
+
+        $adminVerify = $MemberModel->query($query)->getResultArray();
+        if ($adminVerify) {
+            $adminId = $adminVerify[0]['email'];
+            if ($adminId === 'admin' || $adminId === 'develop') {
+                return view('admin/ad_exchange_list', $data);
+            } else {
+                return redirect()->to("/");
+            }
+        }
     }
 
     public function exchangeCheck()
@@ -645,7 +725,21 @@ class AdminHome extends BaseController
         $data['datas'] = $query->get()->getResultArray();
         $data['query'] = $query->getLastQuery();
 
-        return view('admin/ad_alliance_list', $data);
+
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT * FROM members WHERE ci='" . $ci . "'";
+
+        $adminVerify = $MemberModel->query($query)->getResultArray();
+        if ($adminVerify) {
+            $adminId = $adminVerify[0]['email'];
+            if ($adminId === 'admin' || $adminId === 'develop') {
+                return view('admin/ad_alliance_list', $data);
+            } else {
+                return redirect()->to("/");
+            }
+        }
     }
 
     public function allianceCheck()
@@ -719,7 +813,21 @@ class AdminHome extends BaseController
         $pager = service('pager');
         $data['pager'] = $pager->makeLinks($page, $perPage, $total);
 
-        return view('admin/ad_member_list', $data);
+
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT * FROM members WHERE ci='" . $ci . "'";
+
+        $adminVerify = $MemberModel->query($query)->getResultArray();
+        if ($adminVerify) {
+            $adminId = $adminVerify[0]['email'];
+            if ($adminId === 'admin' || $adminId === 'develop') {
+                return view('admin/ad_member_list', $data);
+            } else {
+                return redirect()->to("/");
+            }
+        }
     }
 
     public function memberCertificateCheck()
@@ -788,7 +896,21 @@ class AdminHome extends BaseController
         // $pager = service('pager');
         // $data['pager'] = $pager->makeLinks($page, $perPage, $total);
 
-        return view('admin/ad_payment_list', $data);
+
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT * FROM members WHERE ci='" . $ci . "'";
+
+        $adminVerify = $MemberModel->query($query)->getResultArray();
+        if ($adminVerify) {
+            $adminId = $adminVerify[0]['email'];
+            if ($adminId === 'admin' || $adminId === 'develop') {
+                return view('admin/ad_payment_list', $data);
+            } else {
+                return redirect()->to("/");
+            }
+        }
     }
 
     public function memberPaymentCheck()
@@ -820,7 +942,20 @@ class AdminHome extends BaseController
 
         $data['reports'] = $ReportMemberModel->orderBy('created_at', 'DESC')->findAll();
 
-        return view('admin/ad_report_member_list', $data);
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT * FROM members WHERE ci='" . $ci . "'";
+
+        $adminVerify = $MemberModel->query($query)->getResultArray();
+        if ($adminVerify) {
+            $adminId = $adminVerify[0]['email'];
+            if ($adminId === 'admin' || $adminId === 'develop') {
+                return view('admin/ad_report_member_list', $data);
+            } else {
+                return redirect()->to("/");
+            }
+        }
     }
 
     public function reportView($idx)
@@ -857,7 +992,20 @@ class AdminHome extends BaseController
 
         $data['newss'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
 
-        return view('admin/ad_news_list', $data);
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT * FROM members WHERE ci='" . $ci . "'";
+
+        $adminVerify = $MemberModel->query($query)->getResultArray();
+        if ($adminVerify) {
+            $adminId = $adminVerify[0]['email'];
+            if ($adminId === 'admin' || $adminId === 'develop') {
+                return view('admin/ad_news_list', $data);
+            } else {
+                return redirect()->to("/");
+            }
+        }
     }
 
     public function newsUpload()
