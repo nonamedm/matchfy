@@ -265,6 +265,8 @@
     <!-- SCRIPTS -->
 
     <script>
+        var offset = 20;
+        var limit = 20;
         $(document).ready(function() {
             $("#msgbox").on("propertychange change keyup paste input", function(e) {
                 if (!($(".message_input_box").hasClass("on")) && !($(".chat_wrap").hasClass("on"))) {
@@ -272,11 +274,17 @@
                     $(e.target).css('height', $(e.target)[0].scrollHeight + 'px');
                 }
             });
+            $('#chat_wrap').scroll(function() {
+                console.log($(this).scrollTop())
+                if ($(this).scrollTop() === 0) {
+                    offset = offset + limit;
+                    reloadMsg();
+                }
+            });
             scrollToBottom();
             mymsgPhotoListener();
             setInterval(function() {
                 reloadMsg();
-
             }, 5000);
             $("#mymsg_menu").on("click", function() {
                 if (!($(".message_input_box").hasClass("on")) && !($(".chat_wrap").hasClass("on"))) {
@@ -294,13 +302,18 @@
                 url: '/ajax/reloadMsg',
                 type: 'POST',
                 data: {
-                    "room_ci": $("#room_ci").val()
+                    "room_ci": $("#room_ci").val(),
+                    "offset": offset
                 },
                 async: false,
                 success: function(data) {
                     if (data.status === 'success') {
-                        console.log('data확인', data)
                         // 성공
+                        var scrollableDiv = $('#chat_wrap');
+                        // 기존 스크롤화면 길이, 스크롤 높이
+                        var previousScrollTop = scrollableDiv.scrollTop();
+                        var previousHeight = scrollableDiv[0].scrollHeight - scrollableDiv[0].clientHeight;
+                        $("#chat_wrap").off('scroll');
                         $("#chat_wrap").html("");
                         var html = "";
                         data.data.reulst_value.allMsg.forEach(item => {
@@ -387,6 +400,20 @@
                             }
                         });
                         $("#chat_wrap").html(html);
+                        var newHeight = scrollableDiv[0].scrollHeight - scrollableDiv[0].clientHeight;
+                        $('#chat_wrap').scroll(function() {
+                            console.log($(this).scrollTop())
+                            if ($(this).scrollTop() === 0) {
+                                offset = offset + limit;
+                                reloadMsg()
+                            }
+                        });
+                        if (newHeight !== previousHeight) {
+                            scrollableDiv.scrollTop(newHeight - (previousHeight - previousScrollTop) - 100);
+                        } else {
+                            scrollableDiv.scrollTop(previousScrollTop);
+                        }
+
                         // scrollToBottom();
                         // moveToUrl('/mo/factorInfo');
                     } else if (data.status === 'error') {

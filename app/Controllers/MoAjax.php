@@ -3146,13 +3146,14 @@ class MoAjax extends BaseController
         $session = session();
         $ci = $session->get('ci');
         $room_ci = $this->request->getPost('room_ci');
+        $offset = $this->request->getPost('offset');
         // 내가 이 방의 참가자가 맞는지 다시 확인
         $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "'";
         $memberYn = $ChatRoomMemberModel
             ->query($query)->getResultArray();
         if ($memberYn) {
             // 내가 방 참가자가 맞으면
-            $query = "SELECT crm.chk_entry_num, crm.chk_num, crm.created_at, crm.entry_num, crm.msg_cont, crm.msg_type, crm.updated_at,
+            $query = "SELECT * FROM (SELECT crm.chk_entry_num, crm.chk_num, crm.created_at, crm.entry_num, crm.msg_cont, crm.msg_type, crm.updated_at,
                             (SELECT nickname FROM members WHERE ci = crm.member_ci) as nickname,
                             (CASE
                                 WHEN member_ci = '" . $ci . "' THEN 'me'
@@ -3161,7 +3162,7 @@ class MoAjax extends BaseController
                                 (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname ORDER BY created_at DESC LIMIT 1) as match_rate,
                             (SELECT file_path FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo' AND delete_yn='n') AS file_path,
                             (SELECT file_name FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo' AND delete_yn='n') AS file_name
-                            FROM wh_chat_room_msg  crm WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at ASC";
+                            FROM wh_chat_room_msg  crm WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at DESC LIMIT " . $offset . ") AS SUB ORDER BY created_at ASC";
             $allMsg = $ChatRoomMsgModel
                 ->query($query)->getResultArray();
             if ($allMsg) {
