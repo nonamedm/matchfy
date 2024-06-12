@@ -1563,7 +1563,7 @@ a:active {
     border: none;
     position: absolute;
     right: 0px;
-    bottom: 15px;
+    bottom: -10px;
 }
 
 .mo_wrap .sub_wrap .content_wrap .content_body.content_mypage {
