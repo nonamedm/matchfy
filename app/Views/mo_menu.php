@@ -8,7 +8,7 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="/static/css/common_mo.css">
+    <link rel="stylesheet" href="/static/css/common_mo.css?ver=1.0">
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/basic.js"></script>
 </head>
@@ -54,7 +54,7 @@
                     </div>
                 </div>
             </div>
-            <div class="commerce_banner"><?= lang('Korean.matchBanner') ?></div>
+            <div class="commerce_banner"><img style="width: 60%;" src="/static/images/footer_logo.png" /></div>
             <div style="height: 50px;"></div>
             <footer class="footer">
 

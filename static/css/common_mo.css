@@ -1554,17 +1554,16 @@ a:active {
 
 /* mapage */
 .content_mypage_logout {
-    font-weight: 600;
-    font-size: 15px;
+    font-family: 'Pretendard-Bold';
+    font-weight: 700;
+    font-size: 13px;
     line-height: 18px;
-    text-align: center;
-    text-decoration-line: underline;
-    color: #777777;
-    position: absolute;
-    bottom: 20px;
-    left: 160px;
+    color: #000000;
     background: transparent;
     border: none;
+    position: absolute;
+    right: 0px;
+    bottom: 15px;
 }
 
 .mo_wrap .sub_wrap .content_wrap .content_body.content_mypage {
@@ -2810,7 +2809,7 @@ input[type='number']::-webkit-inner-spin-button {
     /* width: 375px; */
     width: 100%;
     height: 80px;
-    background-color: #d9d9d9;
+    background-color: #ff0267;
     font-weight: 300;
     font-size: 14px;
     line-height: 17px;
