@@ -33,7 +33,7 @@
                         <li onclick="AImsg()">
                             <?= lang('Korean.AIMsg') ?>
                         </li>
-                        <li class="on">
+                        <li class="on" onclick="moveToUrl('/mo/mymsg/list')">
                             <?= lang('Korean.messageBox') ?>
                         </li>
                     </ul>
