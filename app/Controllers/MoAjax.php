@@ -57,7 +57,7 @@ class MoAjax extends BaseController
         }
         $query .= " AND mr.match_score > '0'";
         $query .= " AND mf.board_type = 'main_photo' AND mf.delete_yn='n'";
-        $query .= " ORDER BY CONVERT(mr.match_rate, SIGNED) DESC LIMIT 20;";
+        $query .= " ORDER BY mb.os_type ASC, CONVERT(mr.match_rate, SIGNED) DESC LIMIT 3;";
 
 
         $result = $MemberModel
@@ -104,7 +104,7 @@ class MoAjax extends BaseController
         }
         $query .= " AND mr.ideal_rate > '0'";
         $query .= " AND mf.board_type = 'main_photo' AND mf.delete_yn='n'";
-        $query .= " ORDER BY CONVERT(mr.ideal_rate, SIGNED) DESC LIMIT 20;";
+        $query .= " ORDER BY mb.os_type ASC, CONVERT(mr.ideal_rate, SIGNED) DESC LIMIT 3;";
 
         $result = $MemberModel
             ->query($query)->getResultArray();
