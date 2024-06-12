@@ -3172,9 +3172,12 @@ class MoAjax extends BaseController
                     $today_date === date('Y-m-d', strtotime($row['created_at'])) ?  $row['created_at'] = date('H:i', strtotime($row['created_at'])) : $row['created_at'] = date('m-d', strtotime($row['created_at']));
                 }
             }
-            $query = "SELECT * FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND member_ci != '" . $ci . "' AND delete_yn='n'";
+            $query = "SELECT member_type FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND member_ci='" . $ci . "';";
+            $memberType = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
 
             $data['allMsg'] = $allMsg;
+            $data['member_type'] = $memberType;
 
             // echo print_r($allMsg);
             return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $data]]);
