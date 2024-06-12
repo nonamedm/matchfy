@@ -852,7 +852,20 @@ class AdminHome extends BaseController
 
         $data['datas'] = $MemberModel->query($query)->getResultArray();
 
-        return view('admin/ad_member_mngment', $data);
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT * FROM members WHERE ci='" . $ci . "'";
+
+        $adminVerify = $MemberModel->query($query)->getResultArray();
+        if ($adminVerify) {
+            $adminId = $adminVerify[0]['email'];
+            if ($adminId === 'admin' || $adminId === 'develop') {
+                return view('admin/ad_member_mngment', $data);
+            } else {
+                return redirect()->to("/");
+            }
+        }
     }
 
     public function memberCertificateCheck()
