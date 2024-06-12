@@ -499,7 +499,7 @@ class MoHome extends BaseController
                 $lastMsg = $ChatRoomMsgModel
                     ->query($query)->getResultArray();
                 if ($lastMsg) {
-                    $today_date === date('Y-m-d', strtotime($lastMsg[0]['created_at'])) ?  $lastMsg[0]['created_at'] = date('H:i', strtotime($lastMsg[0]['created_at'])) : $lastMsg[0]['created_at'] = date('m-d', strtotime($lastMsg[0]['created_at']));
+                    // $today_date === date('Y-m-d', strtotime($lastMsg[0]['created_at'])) ?  $lastMsg[0]['created_at'] = date('H:i', strtotime($lastMsg[0]['created_at'])) : $lastMsg[0]['created_at'] = date('m-d', strtotime($lastMsg[0]['created_at']));
                     $item['last_msg'] = $lastMsg[0];
                 }
                 if ($roomType[0]['room_type'] === '1') {
@@ -550,7 +550,7 @@ class MoHome extends BaseController
                 return $timeB - $timeA;
             });
             $data['my_chat_room'] = $myChatRoom;
-            // echo print_r($data['my_chat_room']);
+            // echo print_r($myChatRoom);
             return view('mo_mymsg_list', $data);
         } else {
             $data['my_chat_room'] = $myChatRoom;
