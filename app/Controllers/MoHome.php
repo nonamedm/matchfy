@@ -408,7 +408,7 @@ class MoHome extends BaseController
             ->query($query)->getResultArray();
         if ($memberYn) {
             // 내가 방 참가자가 맞으면
-            $query = "SELECT crm.chk_entry_num, crm.chk_num, crm.created_at, crm.entry_num, crm.msg_cont, crm.msg_type, crm.updated_at,
+            $query = "SELECT * FROM (SELECT crm.chk_entry_num, crm.chk_num, crm.created_at, crm.entry_num, crm.msg_cont, crm.msg_type, crm.updated_at,
                             (SELECT nickname FROM members WHERE ci = crm.member_ci) as nickname,
                             (CASE
                                 WHEN member_ci = '" . $ci . "' THEN 'me'
@@ -417,7 +417,7 @@ class MoHome extends BaseController
                             (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname AND delete_yn='n' ORDER BY created_at DESC LIMIT 1) as match_rate,
                             (SELECT file_path FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo' AND delete_yn='n') AS file_path,
                             (SELECT file_name FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo' AND delete_yn='n') AS file_name
-                        FROM wh_chat_room_msg  crm WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at ASC";
+                        FROM wh_chat_room_msg  crm WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at DESC LIMIT 20) AS SUB ORDER BY created_at ASC";
             $allMsg = $ChatRoomMsgModel
                 ->query($query)->getResultArray();
             if ($allMsg) {
@@ -499,7 +499,7 @@ class MoHome extends BaseController
                 $lastMsg = $ChatRoomMsgModel
                     ->query($query)->getResultArray();
                 if ($lastMsg) {
-                    $today_date === date('Y-m-d', strtotime($lastMsg[0]['created_at'])) ?  $lastMsg[0]['created_at'] = date('H:i', strtotime($lastMsg[0]['created_at'])) : $lastMsg[0]['created_at'] = date('m-d', strtotime($lastMsg[0]['created_at']));
+                    // $today_date === date('Y-m-d', strtotime($lastMsg[0]['created_at'])) ?  $lastMsg[0]['created_at'] = date('H:i', strtotime($lastMsg[0]['created_at'])) : $lastMsg[0]['created_at'] = date('m-d', strtotime($lastMsg[0]['created_at']));
                     $item['last_msg'] = $lastMsg[0];
                 }
                 if ($roomType[0]['room_type'] === '1') {
@@ -550,7 +550,7 @@ class MoHome extends BaseController
                 return $timeB - $timeA;
             });
             $data['my_chat_room'] = $myChatRoom;
-            // echo print_r($data['my_chat_room']);
+            // echo print_r($myChatRoom);
             return view('mo_mymsg_list', $data);
         } else {
             $data['my_chat_room'] = $myChatRoom;

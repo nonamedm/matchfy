@@ -79,7 +79,7 @@
                                     <div class="receive_time">
                                         <?php if ($row['last_msg']) {
                                         ?>
-                                            <p style="width: 220px;"><?= $row['last_msg']['created_at'] ?></p>
+                                            <p style="width: 220px;"><?= date('m-d', strtotime($row['last_msg']['created_at'])) ?></p>
                                         <?php
                                         } else {
                                         ?>
@@ -139,7 +139,7 @@
                                     <div class="receive_time">
                                         <?php if ($row['last_msg']) {
                                         ?>
-                                            <p style="width: 220px; max-height: 15px;"><?= $row['last_msg']['created_at'] ?></p>
+                                            <p style="width: 220px; max-height: 15px;"><?= date('m-d', strtotime($row['last_msg']['created_at'])) ?></p>
                                         <?php
                                         } else {
                                         ?>
