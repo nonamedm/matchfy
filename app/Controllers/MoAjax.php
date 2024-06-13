@@ -2455,7 +2455,7 @@ class MoAjax extends BaseController
                     // 음주횟수
                     if ($item['drinking'] !== null) {
                         $calcValue = 0;
-                        if ($myPartner['drinking'] === '0') { // 음주횟수 - 무관
+                        if ($myPartner['drinking'] === '9') { // 음주횟수 - 무관
                             $calcValue = $myFactor['group1'] * 1; // 모두에게 점수
                         } else {
                             if ($myPartner['drinking'] === $item['drinking']) {
@@ -2520,7 +2520,7 @@ class MoAjax extends BaseController
                     // 결혼유무
                     if ($item['married'] !== null) {
                         $calcValue = 0;
-                        if ($myPartner['married'] === '0') { // 결혼유무 - 무관
+                        if ($myPartner['married'] === '9') { // 결혼유무 - 무관
                             $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
                         } else {
                             if ($item['married'] === '0') {
@@ -2532,10 +2532,10 @@ class MoAjax extends BaseController
                     // 흡연유무
                     if ($item['smoker'] !== null) {
                         $calcValue = 0;
-                        if ($myPartner['smoker'] === '0') { // 흡연유무 - 무관
+                        if ($myPartner['smoker'] === '9') { // 흡연유무 - 무관
                             $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
                         } else {
-                            if ($item['smoker'] === '0') {
+                            if ($item['smoker'] === '1') {
                                 $calcValue = $myFactor['group2'] * 1; // 금연자만 점수
                             }
                         }
@@ -2544,7 +2544,7 @@ class MoAjax extends BaseController
                     // 종교
                     if ($item['religion'] !== null) {
                         $calcValue = 0;
-                        if ($myPartner['religion'] === '5') { // 종교유무 - 무관
+                        if ($myPartner['religion'] === '9') { // 종교유무 - 무관
                             $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
                         } else {
                             if ($myPartner['religion'] === $item['religion']) {
@@ -2890,7 +2890,7 @@ class MoAjax extends BaseController
                         if ($myPartner['smoker'] === '0') { // 흡연유무 - 무관
                             $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
                         } else {
-                            if ($item['smoker'] === '0') {
+                            if ($item['smoker'] === '1') {
                                 $calcValue = $myFactor['group2'] * 1; // 금연자만 점수
                             }
                         }
