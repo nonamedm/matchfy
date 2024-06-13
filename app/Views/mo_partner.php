@@ -609,10 +609,9 @@
                     success: function(data) {
                         console.log(data);
                         if (data.status === 'success') {
-                            // 성공                        
-                            console.log('저장', data);
+                            // 성공
                             <?php if (isset($grade) && ($grade === 'grade01')) : ?>
-                                fn_confirm('파트너 정보저장 성공! \n홈으로 이동합니다.', 'calcMatchRate')
+                                fn_confirm('파트너 정보저장 성공! \n홈으로 이동합니다.', 'calcMatchRateEdit')
                             <?php endif; ?>
                             <?php if (isset($grade) && ($grade === 'grade02' || $grade === 'grade03')) : ?>
                                 moveToUrl('/mo/factorBasic');
@@ -636,7 +635,7 @@
         function fn_calcMatchRate(value) {
             if (value) {
                 $.ajax({
-                    url: '/ajax/calcMatchRate', // todo : 추후 로그인완료로 이동
+                    url: '/ajax/calcMatchRateEdit', // todo : 추후 로그인완료로 이동
                     type: 'POST',
                     async: false,
                     success: function(data) {

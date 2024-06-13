@@ -1993,6 +1993,8 @@ function fn_confirm(msg, loc) {
         html += '<button class="btn type01" onclick="fn_partScdl(\'true\')">확인</button>';
     } else if (loc == 'calcMatchRate') {
         html += '<button class="btn type01" onclick="fn_calcMatchRate(\'true\')">확인</button>';
+    } else if (loc == 'calcMatchRateEdit') {
+        html += '<button class="btn type01" onclick="fn_calcMatchRate(\'true\')">확인</button>';
     } else if (loc == 'sndRpt') {
         html += '<button class="btn type01" onclick="fn_sndRpt(\'true\')">확인</button>';
     }

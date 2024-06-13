@@ -414,7 +414,7 @@ class MoHome extends BaseController
                                 WHEN member_ci = '" . $ci . "' THEN 'me'
                                 ELSE 'you' 
                             END) AS chk,
-                            (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname ORDER BY created_at DESC LIMIT 1) as match_rate,
+                            (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname AND delete_yn='n' ORDER BY created_at DESC LIMIT 1) as match_rate,
                             (SELECT file_path FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo' AND delete_yn='n') AS file_path,
                             (SELECT file_name FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo' AND delete_yn='n') AS file_name
                         FROM wh_chat_room_msg  crm WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at ASC";
@@ -531,7 +531,7 @@ class MoHome extends BaseController
                             }
                             $query = "SELECT CAST(match_rate AS DECIMAL(10,0)) as match_rate
                             FROM wh_match_rate
-                            WHERE member_ci='" . $ci . "' 
+                            WHERE delete_yn='n' AND member_ci='" . $ci . "' 
                             AND your_nickname=(SELECT nickname FROM members WHERE ci='" . $mbr['mbr_ci'] . "')";
                             $matchRate = $ChatRoomMemberModel
                                 ->query($query)->getResultArray();
@@ -620,7 +620,7 @@ class MoHome extends BaseController
                                 WHEN member_ci = '" . $ci . "' THEN 'me'
                                 ELSE 'you' 
                             END) AS chk,
-                            (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname ORDER BY created_at DESC LIMIT 1) as match_rate,
+                            (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE delete_yn='n' AND member_ci='" . $ci . "' AND your_nickname = nickname ORDER BY created_at DESC LIMIT 1) as match_rate,
                             'static/images/' AS file_path,
                             'ai_send.png' AS file_name
                         FROM wh_chat_room_msg_ai  crm WHERE crm.room_ci = '" . $chat_room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at ASC";

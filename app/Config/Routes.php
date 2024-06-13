@@ -143,6 +143,7 @@ $routes->post('/ajax/saveFactorBasic', 'MoAjax::saveFactorBasic');
 $routes->post('/ajax/saveFactorInfo', 'MoAjax::saveFactorInfo');
 $routes->post('/ajax/chgExcept', 'MoAjax::chgExcept');
 $routes->post('/ajax/calcMatchRate', 'MoAjax::calcMatchRate');
+$routes->post('/ajax/calcMatchRateEdit', 'MoAjax::calcMatchRateEdit');
 $routes->post('/ajax/meetingSave', 'MoAjax::meetingSave');
 $routes->post('/ajax/meetingFilter', 'MoAjax::meetingFiltering');
 $routes->post('/ajax/myMeetingFilter', 'MoAjax::myMeetingFiltering');

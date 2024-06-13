@@ -55,6 +55,7 @@ class MoAjax extends BaseController
         if ($genderQuery) {
             $query .= " AND mb.gender != '" . $genderQuery[0]['gender'] . "'";
         }
+        $query .= " AND mr.delete_yn = 'n'";
         $query .= " AND mr.match_score > '0'";
         $query .= " AND mf.board_type = 'main_photo' AND mf.delete_yn='n'";
         $query .= " ORDER BY CONVERT(mr.match_rate, SIGNED) DESC LIMIT 20;";
@@ -102,6 +103,7 @@ class MoAjax extends BaseController
         if ($genderQuery) {
             $query .= " AND mb.gender != '" . $genderQuery[0]['gender'] . "'";
         }
+        $query .= " AND mr.delete_yn = 'n'";
         $query .= " AND mr.ideal_rate > '0'";
         $query .= " AND mf.board_type = 'main_photo' AND mf.delete_yn='n'";
         $query .= " ORDER BY CONVERT(mr.ideal_rate, SIGNED) DESC LIMIT 20;";
@@ -322,7 +324,7 @@ class MoAjax extends BaseController
             $updateStatus = $MemberModel->query($query);
 
             $data = [
-                'grade' => $grade,
+                'grade' => $selectedGrade,
                 'temp_grade' => $selectedGrade,
                 'mobile_no' => $mobileNo,
                 'ci' => $ci,
@@ -2673,7 +2675,362 @@ class MoAjax extends BaseController
                         // 'my_nickname' => $mydata['nickname'], 닉네임 수정할 수 있어서 조건 삭제
                         'your_ci' => $item['ci'],
                     ];
-                    $selectQuery = "SELECT * FROM wh_match_rate WHERE member_ci='" . $mydata['ci'] . "' AND your_ci='" . $item['ci'] . "'";
+                    $selectQuery = "SELECT * FROM wh_match_rate WHERE member_ci='" . $mydata['ci'] . "' AND your_ci='" . $item['ci'] . "' AND delete_yn='n'";
+
+                    $selected = $MatchRateModel->query($selectQuery)->getResultArray();
+                    $ideal_rate = number_format(($calc === 0 ? 1 : $calc) / ($calcMax === 0 ? 100 : $calcMax) * 100, 2);
+                    $match_rate = $your_rate ? number_format(($your_rate['ideal_rate'] + $ideal_rate) / 2, 2) : number_format(($ideal_rate) / 2, 2);
+                    if ($selected) {
+                        $query = "UPDATE wh_match_rate";
+                        $query .= " SET match_score = '" . $calc . "'";
+                        $query .= " , my_nickname = '" . $mydata['nickname'] . "'";
+                        $query .= " , match_score_max = '" . $calcMax . "'";
+                        $query .= " , match_rate = '" . $match_rate . "'";
+                        $query .= " , ideal_rate = '" . $ideal_rate . "'";
+                        $query .= " , updated_at = now()";
+                        $query .= " WHERE member_ci = '" . $mydata['ci'] . "'";
+                        $query .= " AND your_ci = '" . $item['ci'] . "'";
+
+                        $result = $MatchRateModel
+                            ->query($query);
+                    } else {
+                        $insertParam = [
+                            'member_ci' => $mydata['ci'],
+                            'my_nickname' => $mydata['nickname'],
+                            'your_ci' => $item['ci'],
+                            'your_nickname' => $item['nickname'],
+                            'match_score' => $item['calc'],
+                            'match_score_max' => $item['calc_max'],
+                            'match_rate' => $match_rate,
+                            'ideal_rate' => $ideal_rate,
+                        ];
+                        $result = $MatchRateModel->insert($insertParam);
+                    }
+                }
+            }
+        } else {
+        }
+
+
+        if ($result) {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $datas]);
+        } else {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
+        }
+    }
+    public function calcMatchRateEdit()
+    {
+        // update 시 배제조건이 발생하므로, 기존로직을 삭제(delete_yn=y) 한다
+        $MemberModel = new MemberModel();
+        $MatchPartnerModel = new MatchPartnerModel();
+        $MatchFactorModel = new MatchFactorModel();
+        $MatchRateModel = new MatchRateModel();
+        $session = session();
+        $ci = $session->get('ci');
+
+        $myPartner = $MatchPartnerModel->where(['member_ci' => $ci])->first();
+        $myFactor = $MatchFactorModel->where(['member_ci' => $ci])->first();
+
+        $deleteQuery = "UPDATE wh_match_rate SET delete_yn='y' WHERE member_ci='" . $ci . "' AND delete_yn='n'";
+        // 한번 delete 해준다
+        $MatchRateModel->query($deleteQuery);
+
+
+        $query = "SELECT * FROM members";
+        $query .= " WHERE 1=1";
+        if ($myFactor['except1'] && $myFactor['except1'] !== "" && $myFactor['except1'] !== null) //배제항목 있을 시 조건에서 배제하기
+        {
+            $query .= " AND (" . $myFactor['except1'] . " != '" . $myFactor['except1_detail'] . "'  OR " . $myFactor['except1'] . " IS NULL)";
+        }
+        if ($myFactor['except2'] && $myFactor['except2'] !== "" && $myFactor['except2'] !== null) //배제항목 있을 시 조건에서 배제하기
+        {
+            $query .= " AND (" . $myFactor['except2'] . " != '" . $myFactor['except2_detail'] . "'  OR " . $myFactor['except2'] . " IS NULL)";
+        }
+        if (!empty($myPartner['partner_gender']) || $myPartner['partner_gender'] != '')  // 성별 거르기
+        {
+            $query .= " AND (gender = '" . $myPartner['partner_gender'] . "')";
+        }
+        if ($myPartner && $myFactor) { // 파트너정보 있을때만 계산
+            $datas = $MemberModel
+                ->query($query)->getResultArray();
+            // 세션(또는 파일로 로컬)에 저장한다. 이후 로그인 시 해당 ajax 작동시킨다.
+            $mydata = $MemberModel->where(['ci' => $ci])->first();
+            foreach ($datas as &$item) {
+                // echo print_r($item[0]);
+                // 기본배점 항목 계산
+                $calc = 0;
+                $calcMax = 0;
+                if ($mydata['nickname'] !== $item['nickname']) { // 본인이 아닌 경우만 계산                    
+
+                    $your_rate = $MatchRateModel->where(['member_ci' => $item['ci'], 'your_ci' => $mydata['ci'], 'delete_yn' => 'n'])->first();
+
+                    // group1 -- MBTI, 얼굴형, 스타일, 음주횟수
+                    // MBTI
+                    if ($item['mbti'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['mbti'] === $item['mbti'])
+                        // 원하는 유형이 같을 때
+                        {
+                            $calcValue = $myFactor['group1'] * 1; // 점수
+                        } else if ($myPartner['mbti'] === '16') // 무관일 때
+                        {
+                            $calcValue = $myFactor['group1'] * 1; // 모두에게 점수
+                        } else {
+                            $calcValue = 0;
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 얼굴형
+                    // if (!$item['mbti'] !== null) // 회원가입시 얼굴형 아직 없음
+                    // {
+                    //     $calcValue = 0;
+                    //     if ($myPartner['mbti'] === $item['mbti'])
+                    //     // 원하는 유형이 같을 때
+                    //     {
+                    //         $calcValue = $myFactor['group2'] * 1; // 점수
+                    //     } else
+                    //     {
+                    //         $calcValue = 0;
+                    //     }
+                    //     $calc += $calcValue;
+                    // }
+
+                    // 스타일
+                    if ($item['stylish'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['stylish'] === $item['stylish'])
+                        // 원하는 유형이 같을 때
+                        {
+                            $calcValue = $myFactor['group1'] * 1; // 점수
+                        } else {
+                            $calcValue = 0;
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 음주횟수
+                    if ($item['drinking'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['drinking'] === '0') { // 음주횟수 - 무관
+                            $calcValue = $myFactor['group1'] * 1; // 모두에게 점수
+                        } else {
+                            if ($myPartner['drinking'] === $item['drinking']) {
+                                $calcValue = $myFactor['group1'] * 1; // 그외 일치할 경우 점수
+                            } else {
+                                $calcValue = 0;
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // group2 -- 나이, 체형, 지역, 결혼경험, 흡연유무, 종교
+                    // 나이
+                    if ($item['birthday'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['fromyear'] !== null && $myPartner['toyear']) {
+                            $birthday = $item['birthday'];
+                            $birthYear = substr($birthday, 0, 4);
+                            if ($birthYear >= $myPartner['fromyear'] && $birthYear <= $myPartner['toyear']) {
+                                // 나이조건 적합
+                                $calcValue = $myFactor['group2'] * 1;
+                            } else {
+                                // 나이 부적합
+                                $calcValue = 0;
+                            }
+                        } else {
+                            $calcValue = 0;
+                        }
+
+                        $calc += $calcValue;
+                    }
+                    // 체형
+                    if ($item['bodyshape'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['bodyshape'] === '5')
+                        //무관일 때
+                        {
+                            $calcValue = $myFactor['group2'] * 1; // 점수
+                        } else if ($myPartner['bodyshape'] === $item['bodyshape'])
+                        // 원하는 체형이 같을 때
+                        {
+                            $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
+                        } else if ((($myPartner['bodyshape'] - 1) === $item['bodyshape'] || ($myPartner['bodyshape'] + 1) === $item['bodyshape']))
+                        // 바로옆 체형일 때
+                        {
+                            $calcValue = $myFactor['group2'] * 0.5; // 0.5배점
+                        } else {
+                            $calcValue = 0;
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 지역
+                    if ($item['city'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['region'] === $item['city'])
+                        // 지역이 같을 때
+                        {
+                            $calcValue = $myFactor['group2'] * 1; // 점수
+                        }
+
+                        $calc += $calcValue;
+                    }
+                    // 결혼유무
+                    if ($item['married'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['married'] === '0') { // 결혼유무 - 무관
+                            $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
+                        } else {
+                            if ($item['married'] === '0') {
+                                $calcValue = $myFactor['group2'] * 1; // 미혼에게만 점수
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 흡연유무
+                    if ($item['smoker'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['smoker'] === '0') { // 흡연유무 - 무관
+                            $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
+                        } else {
+                            if ($item['smoker'] === '0') {
+                                $calcValue = $myFactor['group2'] * 1; // 금연자만 점수
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 종교
+                    if ($item['religion'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['religion'] === '5') { // 종교유무 - 무관
+                            $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
+                        } else {
+                            if ($myPartner['religion'] === $item['religion']) {
+                                $calcValue = $myFactor['group2'] * 1; // 원하는 종교만 점수
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // group3 -- 성별, 키, 학력, 직업, 자산구간, 연소득
+                    // 성별은 애초에 거르기 때문에 배점 X
+                    // 키
+                    if ($item['height'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['height'] !== null) {
+                            if ($item['height'] >= $myPartner['height']) {
+                                // 원하는 키보다 클 때
+                                $calcValue = $myFactor['group3'] * 1;
+                            } else {
+                                // 키 부적합
+                                $calcValue = 0;
+                            }
+                        } else {
+                            $calcValue = 0;
+                        }
+
+                        $calc += $calcValue;
+                    }
+                    // 학력
+                    if ($item['education'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['education'] === '5') { // 학력 - 무관
+                            $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
+                        } else {
+                            if ($myPartner['education'] <= $item['education']) {
+                                $calcValue = $myFactor['group3'] * 1; // 원하는 학력 이상이면 점수
+                            } else {
+                                $calcValue = 0;
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 직업(군)
+                    if ($item['job'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['job'] === '3') { // 직업 - 무관
+                            $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
+                        } else {
+                            if ($myPartner['job'] <= $item['job']) {
+                                $calcValue = $myFactor['group3'] * 1; // 원하는 직업 이상이면 점수
+                            } else {
+                                $calcValue = 0;
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 자산
+                    if ($item['asset_range'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['asset_range'] === '6') { // 자산 - 무관
+                            $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
+                        } else {
+                            if ($myPartner['asset_range'] <= $item['asset_range']) {
+                                $calcValue = $myFactor['group3'] * 1; // 원하는 자산 이상이면 점수
+                            } else {
+                                $calcValue = 0;
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 소득
+                    if ($item['income_range'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['income_range'] === '6') { // 소득 - 무관
+                            $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
+                        } else {
+                            if ($myPartner['income_range'] <= $item['income_range']) {
+                                $calcValue = $myFactor['group3'] * 1; // 원하는 소득 이상이면 점수
+                            } else {
+                                $calcValue = 0;
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+
+
+                    // 가중치 항목 계산
+                    if ($myFactor['first_factor'] !== null) {
+                        if ($item[$myFactor['first_factor']] === $myPartner[$myFactor['first_factor']]) {
+                            $calcValue = $myFactor['first_factor_point']; // 가중치1 항목 일치 시 추가점수
+                        }
+                        $calc += $calcValue;
+                        $calcMax += $calcValue;
+                    }
+                    if ($myFactor['second_factor'] !== null) {
+                        if ($item[$myFactor['second_factor']] === $myPartner[$myFactor['second_factor']]) {
+                            $calcValue = $myFactor['second_factor_point']; // 가중치2 항목 일치 시 추가점수
+                        }
+                        $calc += $calcValue;
+                        $calcMax += $calcValue;
+                    }
+                    if ($myFactor['third_factor'] !== null) {
+                        if ($item[$myFactor['third_factor']] === $myPartner[$myFactor['third_factor']]) {
+                            $calcValue = $myFactor['third_factor_point']; // 가중치3 항목 일치 시 추가점수
+                        }
+                        $calc += $calcValue;
+                        $calcMax += $calcValue;
+                    }
+                    if ($myFactor['fourth_factor'] !== null) {
+                        if ($item[$myFactor['fourth_factor']] === $myPartner[$myFactor['fourth_factor']]) {
+                            $calcValue = $myFactor['fourth_factor_point']; // 가중치4 항목 일치 시 추가점수
+                        }
+                        $calc += $calcValue;
+                        $calcMax += $calcValue;
+                    }
+
+                    // group1 항목 총 4개 -- 얼굴형은 현재 제외이므로 3개만 계산
+                    // group2 항목 총 6개
+                    // group3 항목 총 6개 -- 성별은 애초에 거르기 때문에 5개만 계산
+                    $calcMax += $myFactor['group1'] * 3 + $myFactor['group2'] * 6 + $myFactor['group3'] * 5;
+                    $item['calc'] = $calc;
+                    $item['calc_max'] = $calcMax;
+
+
+                    // 계산한 가중치 항목 DB insert -> 회원수 너무 많아지면 python 배치 저장 필요
+
+                    $selectParam = [
+                        'member_ci' => $mydata['ci'],
+                        // 'my_nickname' => $mydata['nickname'], 닉네임 수정할 수 있어서 조건 삭제
+                        'your_ci' => $item['ci'],
+                    ];
+                    $selectQuery = "SELECT * FROM wh_match_rate WHERE member_ci='" . $mydata['ci'] . "' AND your_ci='" . $item['ci'] . "' AND delete_yn='n'";
 
                     $selected = $MatchRateModel->query($selectQuery)->getResultArray();
                     $ideal_rate = number_format(($calc === 0 ? 1 : $calc) / ($calcMax === 0 ? 100 : $calcMax) * 100, 2);
@@ -3158,7 +3515,7 @@ class MoAjax extends BaseController
                                 WHEN member_ci = '" . $ci . "' THEN 'me'
                                 ELSE 'you' 
                                 END) AS chk,
-                                (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname ORDER BY created_at DESC LIMIT 1) as match_rate,
+                                (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname AND delete_yn='n' ORDER BY created_at DESC LIMIT 1) as match_rate,
                             (SELECT file_path FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo' AND delete_yn='n') AS file_path,
                             (SELECT file_name FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo' AND delete_yn='n') AS file_name
                             FROM wh_chat_room_msg  crm WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at ASC";
@@ -3211,7 +3568,7 @@ class MoAjax extends BaseController
                                 WHEN member_ci = '" . $ci . "' THEN 'me'
                                 ELSE 'you' 
                             END) AS chk,
-                            (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname ORDER BY created_at DESC LIMIT 1) as match_rate,
+                            (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname AND delete_yn='n' ORDER BY created_at DESC LIMIT 1) as match_rate,
                             'static/images/' AS file_path,
                             'ai_send.png' AS file_name
                         FROM wh_chat_room_msg_ai  crm WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at ASC";
