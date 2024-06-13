@@ -98,7 +98,7 @@
                                 <label for="email" class="signin_label"><?= lang('Korean.email') ?></label>
                                 <div class="input_btn">
                                     <input id="email" name="email" type="text" placeholder="<?= lang('Korean.signUpEmailPlaceholder') ?>">
-                                    <button type="button" id="emailBtn" class="btn btn_input_form" onclick="regEmail()"><?= lang('Korean.sendcertcode') ?></button>
+                                    <button type="button" id="emailBtn" class="btn btn_input_form" onclick="regEmail()">인증번호<br />발송</button>
                                 </div>
                             </div>
                             <p id="countdown" class="countdown">5:00</p>
