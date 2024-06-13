@@ -318,7 +318,7 @@ class MoAjax extends BaseController
         }
 
         if ($selectedGrade !== $currentGrade) {
-            $query = "UPDATE members SET temp_grade='" . $selectedGrade . "' WHERE ci='" . $ci . "'";
+            $query = "UPDATE members SET grade='" . $selectedGrade . "' WHERE ci='" . $ci . "'";
             $updateStatus = $MemberModel->query($query);
 
             $data = [
@@ -2405,7 +2405,7 @@ class MoAjax extends BaseController
                 if ($mydata['nickname'] !== $item['nickname']) { // 본인이 아닌 경우만 계산
                     $MatchRateModel = new MatchRateModel();
 
-                    $your_rate = $MatchRateModel->where(['member_ci' => $item['ci'], 'your_ci' => $mydata['ci']])->first();
+                    $your_rate = $MatchRateModel->where(['member_ci' => $item['ci'], 'your_ci' => $mydata['ci'], 'delete_yn' => 'n'])->first();
 
                     // group1 -- MBTI, 얼굴형, 스타일, 음주횟수
                     // MBTI
