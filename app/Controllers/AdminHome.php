@@ -11,7 +11,7 @@ use App\Models\AllianceModel;
 use App\Models\MemberModel;
 use App\Models\MemberFileModel;
 use App\Models\ReportMemberModel;
-use App\Models\SupportRewordModel;
+use App\Models\SupportRewardModel;
 
 
 class AdminHome extends BaseController
@@ -30,32 +30,35 @@ class AdminHome extends BaseController
 
     public function noticeList() :string{
         $fileData = new BoardFileModel();
-        $query = $fileData->
-            select('bo.id AS notice_id,
-                    bo.title AS title,
-                    bo.content AS content,
-                    bo.author AS author,
-                    bo.update_author AS update_author,
-                    bo.created_at AS created_at,
-                    bo.updated_at AS updated_at,
-                    bo.hit AS hit,
-                    bo.board_type AS board_type,
-                    bf.id AS file_id,
-                    bf.board_idx AS board_idx,
-                    bf.board_type AS board_type,
-                    bf.file_name AS file_name,
-                    bf.file_path AS file_path,
-                    bf.org_name AS org_name'
-                    )
-            ->from('wh_board_notice bo')  
+        $query = $fileData
+            ->select('
+                bo.id AS notice_id,
+                bo.title AS title,
+                bo.content AS content,
+                bo.author AS author,
+                bo.update_author AS update_author,
+                bo.created_at AS created_at,
+                bo.updated_at AS updated_at,
+                bo.hit AS hit,
+                bo.board_type AS board_type,
+                MAX(bf.id) AS file_id,
+                MAX(bf.board_idx) AS board_idx,
+                MAX(bf.board_type) AS file_board_type,
+                MAX(bf.file_name) AS file_name,
+                MAX(bf.file_path) AS file_path,
+                MAX(bf.org_name) AS org_name'
+            )
+            ->from('wh_board_notice bo')
             ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
-            ->groupBy('bo.id')
+            ->groupBy('bo.id, bo.title, bo.content, bo.author, bo.update_author, bo.created_at, bo.updated_at, bo.hit, bo.board_type')
             ->orderBy('bo.id', 'DESC')
+            // ->limit(3) // 필요한 경우 limit 추가
             ->get();
-
+        
         $data['datas'] = $query->getResultArray(); 
         
         return view('admin/ad_notice_list', $data);
+        
     }
 
     public function noticeUpload()
@@ -1233,13 +1236,14 @@ class AdminHome extends BaseController
         $level = $this->request->getPost('level');
         $idx = $this->request->getPost('id');
     
-        $SupportRewordModel = new SupportRewordModel();
+        $SupportRewardModel = new SupportRewardModel();
 
-        $updated = $SupportRewordModel
+        $updated = $SupportRewardModel
                 ->where('idx', $idx)
                 ->set(['check' => $level])
                 ->update();
-
+        /* 리워드 지급 확인시, 포인트 지급 하는지 내역 추가 해야함 */
+        
         if ($updated) {
             if($level =='1'){
                 return $this->response->setJSON(['success' => true, 'msg' => '지급 확인 되었습니다.']);

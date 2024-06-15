@@ -686,11 +686,13 @@ header .menu_item {
     width: 69%;
     padding-left:25px;
     padding-top: 6px;
+    color: #000;
 }
 .sp_content .sp_main_notice span:nth-child(3){
     width:30%;
     font-size:14px;
     padding-top: 7px;
+    color: #000;
 }
 .sp_content .sp_main_mywallet{
     margin: 50px 0;
@@ -781,6 +783,7 @@ header .menu_item {
 .sp_main_content .sp_notice_list .title{
     font-size: 15px;
     width: 80%;
+    color:#000;
 }
 .sp_main_content .sp_notice_list .date{
     font-size: 14px;

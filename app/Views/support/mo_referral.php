@@ -19,7 +19,7 @@
 
 
         <?php $title = "내부 서포터 추천하기";
-        $prevUrl = "/support/pass";
+        $prevUrl = "/support/menu";
         include 'spheader.php'; ?>
 
         <?php

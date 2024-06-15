@@ -32,77 +32,84 @@ class SupportHome extends BaseController
         $session = session();
         $ci = $session->get('ci');
 
-        /* 보유포인트 */
-        $my_point_value = $this->mypageGetPoint();
-        
-        /* 포인트 적립내역 */
-        $page = 1;
-        $perPage = 3;
-
-        $pointModel = new PointModel();
-
-        $points = $pointModel->where('member_ci', $ci)
-                            ->where('point_type', 'A')
-                            ->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 week')))
-                            ->orderBy('create_at', 'DESC')
-                            ->findAll($perPage * $page, 0);
-
-        /* 서포터즈 공지사항 */
-        $value = $this->request->getGet('value');
-        $fileData = new BoardFileModel();
-        $query = $fileData->select('bo.id AS notice_id,
-                                    bo.title AS title,
-                                    bo.content AS content,
-                                    bo.author AS author,
-                                    bo.update_author AS update_author,
-                                    bo.created_at AS created_at,
-                                    bo.updated_at AS updated_at,
-                                    bo.hit AS hit,
-                                    bo.board_type AS board_type,
-                                    bf.id AS file_id,
-                                    bf.board_idx AS board_idx,
-                                    bf.board_type AS file_board_type,
-                                    bf.file_name AS file_name,
-                                    bf.file_path AS file_path,
-                                    bf.org_name AS org_name,
-                                    (SELECT CONCAT(DATE_FORMAT(MIN(created_at), "%y.%m.%d"), " ~ ", DATE_FORMAT(MAX(created_at), "%y.%m.%d")) FROM wh_support_board_notice) AS created_at_range')
+        if($ci){
+            /* 보유포인트 */
+            $my_point_value = $this->mypageGetPoint();
+    
+            /* 포인트 적립내역 */
+            $page = 1;
+            $perPage = 3;
+    
+            $pointModel = new PointModel();
+    
+            $points = $pointModel->where('member_ci', $ci)
+                                ->where('point_type', 'A')
+                                ->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 week')))
+                                ->orderBy('create_at', 'DESC')
+                                ->findAll($perPage * $page, 0);
+    
+            /* 서포터즈 공지사항 */
+            $value = $this->request->getGet('value');
+            $fileData = new BoardFileModel();
+            $query = $fileData->select('bo.id AS notice_id,
+                                        bo.title AS title,
+                                        bo.content AS content,
+                                        bo.author AS author,
+                                        bo.update_author AS update_author,
+                                        bo.created_at AS created_at,
+                                        bo.updated_at AS updated_at,
+                                        bo.hit AS hit,
+                                        bo.board_type AS board_type,
+                                        MAX(bf.id) AS file_id,
+                                        MAX(bf.board_idx) AS board_idx,
+                                        MAX(bf.board_type) AS file_board_type,
+                                        MAX(bf.file_name) AS file_name,
+                                        MAX(bf.file_path) AS file_path,
+                                        MAX(bf.org_name) AS org_name,
+                                        (SELECT CONCAT(DATE_FORMAT(MIN(created_at), "%y.%m.%d"), " ~ ", DATE_FORMAT(MAX(created_at), "%y.%m.%d")) 
+                                        FROM wh_support_board_notice) AS created_at_range')
                         ->from('wh_support_board_notice bo')
                         ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
-                        ->groupBy('bo.id');
+                        ->groupBy('bo.id, bo.title, bo.content, bo.author, bo.update_author, bo.created_at, bo.updated_at, bo.hit, bo.board_type');
+    
+            if ($value == 'recent') {
+                $query->orderBy('bo.id', 'DESC');
+            } else if ($value == 'popular') {
+                $query->orderBy('bo.hit', 'DESC');
+            } else {
+                $query->orderBy('bo.id', 'DESC');
+            }
+    
+            // Limit to 3 results
+            $query->limit(3);
+    
+            $data['datas'] = $query->get()->getResultArray();
+    
+            $BoardModel = new BoardModel();
+            $BoardModel->setTableName('wh_support_board_notice');
+    
+            $min_date_query = $BoardModel->query('SELECT MIN(created_at) AS min_date FROM wh_support_board_notice');
+            $max_date_query = $BoardModel->query('SELECT MAX(created_at) AS max_date FROM wh_support_board_notice');
+    
+            $min_date_row = $min_date_query->getRow();
+            $max_date_row = $max_date_query->getRow();
+    
+            $min_date = date('y.m.d', strtotime($min_date_row->min_date));
+            $max_date = date('y.m.d', strtotime($max_date_row->max_date));
+    
+            $data['min_date'] = $min_date;
+            $data['max_date'] = $max_date;
+    
+            return view('/support/sp_index', [
+                'my_point' => $my_point_value,
+                'points' => $points,
+                'data' => $data
+            ]);
 
-        if ($value == 'recent') {
-            $query->orderBy('bo.id', 'DESC');
-        } else if ($value == 'popular') {
-            $query->orderBy('bo.hit', 'DESC');
-        } else {
-            $query->orderBy('bo.id', 'DESC');
+        }else{
+            return redirect()->to("/support/mo_index");
         }
 
-        // Limit to 3 results
-        $query->limit(3);
-
-        $data['datas'] = $query->get()->getResultArray();
-
-        $BoardModel = new BoardModel();
-        $BoardModel->setTableName('wh_support_board_notice');
-
-        $min_date_query = $BoardModel->query('SELECT MIN(created_at) AS min_date FROM wh_support_board_notice');
-        $max_date_query = $BoardModel->query('SELECT MAX(created_at) AS max_date FROM wh_support_board_notice');
-
-        $min_date_row = $min_date_query->getRow();
-        $max_date_row = $max_date_query->getRow();
-
-        $min_date = date('y.m.d', strtotime($min_date_row->min_date));
-        $max_date = date('y.m.d', strtotime($max_date_row->max_date));
-
-        $data['min_date'] = $min_date;
-        $data['max_date'] = $max_date;
-
-        return view('/support/sp_index', [
-            'my_point' => $my_point_value,
-            'points' => $points,
-            'data' => $data
-        ]);
     }
 
     public function idpwFindPass(): string
@@ -135,16 +142,17 @@ class SupportHome extends BaseController
                                     bo.updated_at AS updated_at,
                                     bo.hit AS hit,
                                     bo.board_type AS board_type,
-                                    bf.id AS file_id,
+                                    MAX(bf.id) AS file_id,
                                     bf.board_idx AS board_idx,
                                     bf.board_type AS file_board_type,
                                     bf.file_name AS file_name,
                                     bf.file_path AS file_path,
                                     bf.org_name AS org_name,
                                     (SELECT CONCAT(DATE_FORMAT(MIN(created_at), "%y.%m.%d"), " ~ ", DATE_FORMAT(MAX(created_at), "%y.%m.%d")) FROM wh_support_board_notice) AS created_at_range')
-            ->from('wh_support_board_notice bo')
-            ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
-            ->groupBy('bo.id');
+                            ->from('wh_support_board_notice bo')
+                            ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
+                            ->groupBy('bo.id, bo.title, bo.content, bo.author, bo.update_author, bo.created_at, bo.updated_at, bo.hit, bo.board_type, bf.board_idx, bf.board_type, bf.file_name, bf.file_path, bf.org_name');
+
         if ($value == 'recent') {
             $query->orderBy('bo.id', 'DESC');
         } else if ($value == 'popular') {
