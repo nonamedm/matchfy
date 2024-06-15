@@ -33,7 +33,7 @@
                     </div>
                     <div class="btn_group">
                         <button type="button" class="btn type01" onclick="certIdentify()"><?= lang('Korean.passTitle') ?></button>
-                        <button type="button" class="btn type01" onclick="moveToUrl('/support/mo')"><?= lang('Korean.login') ?></button>
+                        <!-- <button type="button" class="btn type01" onclick="moveToUrl('/support/mo')"><?= lang('Korean.login') ?></button> -->
                     </div>
                     <input type="hidden" name="nickname" value="<?= $nickname ?>" />
                     <input type="hidden" name="sns_type" value="<?= $sns_type ?>" />
@@ -79,7 +79,7 @@
             });
             <?php if ($mobile_dup_chk === '0') {
             ?>
-                fn_confirm('회원님의 등록된 이메일 주소는 <?=$email?> 입니다. </br> 비밀번호 재설정을 원하시면 확인을 눌러주세요.','spIdpwFind');
+                fn_confirm('회원님의 등록된 이메일 주소는 <?= $email ?> 입니다. </br> 비밀번호 재설정을 원하시면 확인을 눌러주세요.', 'spIdpwFind');
             <?php
             } ?>
         });

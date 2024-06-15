@@ -36,7 +36,7 @@
                         <div class="form_row" style="text-align:center; margin-top: 20px;">
                             <label for="id" class="blind"><?= lang('Korean.id') ?></label>
                             <input id="pw" type="password" value="" style="width: 301px;" placeholder="<?= lang('Korean.loginPlacehoder2') ?>" onkeypress="handleKeyPress(event)">
-                            <span class="toggle-password" onclick="togglePasswordVisibility()">&#128065;</span> <!-- 눈 모양 아이콘 -->
+                            <!-- <span class="toggle-password" onclick="togglePasswordVisibility()">&#128065;</span> 눈 모양 아이콘 -->
                         </div>
                         <div class="chk_box" style="margin-left: 7px; left: calc(50% - 302px / 2 + 0.5px);">
                             <input type="checkbox" id="keep" name="chkDefault00" checked="">
@@ -45,7 +45,7 @@
                         <div class="btn_group">
                             <button type="button" style="width: 301px;" class="btn type01" onclick="supportUserLogin()"><?= lang('Korean.login') ?></button>
                             <div class="login_idpw_find">
-                                <span><a href="/support/idpwfind/pass">이메일 찾기</a></span> 
+                                <span><a href="/support/idpwfind/pass">이메일 찾기</a></span>
                                 <span> | </span>
                                 <span><a href="/support/idpwfind/pass">비밀번호 찾기</a></span>
                             </div>
@@ -102,7 +102,7 @@
             }
         }
     </script>
-    
+
 
     <!-- -->
 
