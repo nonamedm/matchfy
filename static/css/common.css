@@ -872,6 +872,10 @@ header .menu_item {
     }*/
 }
 @media (max-width: 968px) {
+    .content {
+        background-image: url('/static/images/main_bg_mobile.png');        
+        background-attachment: scroll;
+    }
     .login_btn {
         /* display: none; */
     }
