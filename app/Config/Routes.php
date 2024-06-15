@@ -289,4 +289,4 @@ $routes->post('/ajax/support/signUp', 'MoAjax::signUpSupporters');
 $routes->post('/ajax/support/isValidRecommendCode', 'MoAjax::isValidSupportRecommendCode');
 $routes->post('/ajax/support/referral', 'MoAjax::referralRegistration');
 $routes->post('/support/proxy/createPassWeb', 'ProxyController::createSupportPassWeb');
-$routes->get('/support/proxy/getResultValue', 'ProxyController::getSupportResultValue');
+$routes->get('/support/proxy/getSupportResultValue', 'ProxyController::getSupportResultValue');
