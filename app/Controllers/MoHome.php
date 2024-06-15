@@ -1197,13 +1197,13 @@ class MoHome extends BaseController
                     $masterMember = new MemberModel();
                     $meetingMaster = $masterMember
                         ->distinct()
-                        ->select('m.name as name, m.ci as ci, wp.my_point as k_point')
+                        ->select('m.name as name, m.ci as ci, wp.my_point as k_point, wp.create_at as create_at') // wp.create_at 추가
                         ->from('members m')
                         ->join('wh_points wp', 'wp.member_ci = m.ci', 'left')
                         ->join('wh_meeting_members wmm', 'm.ci = wmm.member_ci', 'left')
                         ->where('wmm.meeting_idx', $meeting_idx)
                         ->where('wmm.meeting_master', 'K')
-                        ->orderBy('wp.create_at', 'desc')
+                        ->orderBy('create_at', 'desc')
                         ->get()
                         ->getRow();
 
