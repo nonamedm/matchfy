@@ -1416,7 +1416,7 @@ class MoHome extends BaseController
                     } else {
                         // 참석 승인 요청 처리
                         $meeting_members_temp->insert($meetMemdata);
-                        $this->rewardUpdate($meeting_idx);
+                        // $this->rewardUpdate($meeting_idx);
 
                         $query = "SELECT * FROM wh_meeting_members WHERE meeting_idx='" . $meeting_idx . "' AND meeting_master='K' AND delete_yn='N'";
                         $meeting_members
@@ -1428,7 +1428,7 @@ class MoHome extends BaseController
                             (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
                             VALUES((SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "'),'" . $ci . "','9','6','" . $msg_cont . "','9','9');";
                             $meeting_members->query($query);
-                            $this->rewardUpdate($meeting_idx);
+                            // $this->rewardUpdate($meeting_idx);
                             return $this->response->setJSON(['success' => true, 'msg' => '참석 신청이 완료 되었습니다.']);
                         } else {
                             return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
