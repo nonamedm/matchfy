@@ -129,6 +129,15 @@
 
     <script>
         $(document).ready(function() {
+            // 엔터키 메세지전송, shift+enter 줄바꿈
+            $('textarea').on('keydown', function(event) {
+                if (event.keyCode == 13)
+                    if (!event.shiftKey) {
+                        event.preventDefault();
+                        sendMsg();
+                    }
+            });
+
             $("#msgbox").on("propertychange change keyup paste input", function(e) {
                 if (!($(".message_input_box").hasClass("on")) && !($(".chat_wrap").hasClass("on"))) {
                     $(e.target).css('height', '26px'); // height 초기화
