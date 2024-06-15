@@ -17,8 +17,8 @@
         <!-- HEADER: MENU + HEROE SECTION -->
 
 
-        <?php $title = "휴대폰 본인인증";
-        $prevUrl = "/support/mo";
+        <?php $title = "서포터즈 이메일/비밀번호찾기";
+        $prevUrl = "/mo";
         include 'header.php'; ?>
 
         <div class="sub_wrap">
@@ -33,6 +33,7 @@
                     </div>
                     <div class="btn_group">
                         <button type="button" class="btn type01" onclick="certIdentify()"><?= lang('Korean.passTitle') ?></button>
+                        <button type="button" class="btn type01" onclick="moveToUrl('/support/mo')"><?= lang('Korean.login') ?></button>
                     </div>
                     <input type="hidden" name="nickname" value="<?= $nickname ?>" />
                     <input type="hidden" name="sns_type" value="<?= $sns_type ?>" />
@@ -57,7 +58,8 @@
     <script>
         $(document).ready(function() {
             $.ajax({
-                url: '/support/proxy/createPassWeb',
+                // url: '/proxy/createPassWeb',
+                url: '/support/proxy/spIdPwFind',
                 type: 'POST',
                 data: {
                     "nickname": "<?= $nickname ?>",
@@ -77,7 +79,7 @@
             });
             <?php if ($mobile_dup_chk === '0') {
             ?>
-                fn_alert('이미 가입된 휴대폰 번호입니다')
+                fn_confirm('회원님의 등록된 이메일 주소는 <?=$email?> 입니다. </br> 비밀번호 재설정을 원하시면 확인을 눌러주세요.','spIdpwFind');
             <?php
             } ?>
         });

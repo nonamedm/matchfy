@@ -36,4 +36,13 @@
     <li class="menu_item">
         <a href="/ad/intro/newsList">회사 소개 MEDIA 목록</a>
     </li>
+    <li class="menu_item">
+        <a href="/ad/support/noticeList">서포터즈 공지목록</a>
+    </li>
+    <li class="menu_item">
+        <a href="/ad/support/faqList">서포터즈 FAQ목록</a>
+    </li>
+    <li class="menu_item">
+        <a href="/ad/support/rewordList">서포터즈 리워드 관리</a>
+    </li>
 </ul>

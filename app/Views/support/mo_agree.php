@@ -27,7 +27,7 @@
                 <div class="content_title">
                     <h2><?= lang('Korean.agreeCon') ?></h2>
                 </div>
-                <form class="" method="post" action="/mo/signin">
+                <form class="" method="post" action="/support/signin">
                     <legend></legend>
                     <div class="login_box">
                         <div class="chk_box">
@@ -74,6 +74,9 @@
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" id="hiddenAgree1" name="agree1">
+                    <input type="hidden" id="hiddenAgree2" name="agree2">
+                    <input type="hidden" id="hiddenAgree3" name="agree3">
                     <input type="hidden" name="mobile_no" value="<?= $decrypted['mobileno'] ?>" />
                     <input type="hidden" name="name" value="<?= urldecode($decrypted['utf8_name']) ?>" />
                     <input type="hidden" name="birthday" value="<?= $decrypted['birthdate'] ?>" />
@@ -87,7 +90,7 @@
                 <footer class="footer">
 
                     <div class="btn_group">
-                        <button type="button" class="btn type01" onclick="submitFormAgree()"><?= lang('Korean.next') ?></button>
+                        <button type="button" class="btn type01" onclick="SupportSubmitFormAgree()"><?= lang('Korean.next') ?></button>
                     </div>
                 </footer>
             </div>

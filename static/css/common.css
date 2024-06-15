@@ -609,7 +609,7 @@ input[type='checkbox'] + label:hover {
     color: #555555;
 }
 
-.menu_left {
+.ci_header .menu_left {
     display: flex;
     position: absolute;
     left: 10px;
@@ -619,7 +619,13 @@ input[type='checkbox'] + label:hover {
     border: none;
     background-color: transparent;
 }
-
+header.spci_header .logo_menu ul .menu_left {
+    display: inline-flex;
+}
+header.spci_header .logo_menu ul .menu_left button {
+    border: none;
+    background-color: transparent;
+}
 .login_btn.mypage_icon {
     display: flex;
 }
@@ -650,6 +656,136 @@ header .menu_item {
 .kakao_chat_btn img {
     width: 60%;
     padding: 21% 21%;
+}
+
+/*support*/
+.sp_content{
+    width: 100%;
+}
+.sp_content .sp_main_notice{
+    display: flex;
+    padding: 11px 0px;
+    background: #EEEDED;
+    position: absolute;
+    width: 100%;
+    top: 83px;
+}
+.sp_content .sp_main_notice span:nth-child(1){
+    padding: 5px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 900;
+    width:11%;
+    color:#ff0267;
+}
+.sp_content .sp_main_notice span:nth-child(2){
+    padding: 5px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 900;
+    width: 69%;
+    padding-left:25px;
+    padding-top: 6px;
+}
+.sp_content .sp_main_notice span:nth-child(3){
+    width:30%;
+    font-size:14px;
+    padding-top: 7px;
+}
+.sp_content .sp_main_mywallet{
+    margin: 50px 0;
+    display: flex;
+}
+.sp_content .sp_main_mywallet span:nth-child(1){
+    text-align: right;
+    font-size: 24px;
+    font-weight: 900;
+    width:50%;
+    color:#ff0267;
+}
+.sp_content .sp_main_mywallet span:nth-child(2){
+    font-size: 20px;
+    font-weight: 900;
+    width: 50%;
+    text-align: left;
+    padding-left:10px
+}
+.sp_content .sp_main_title{
+    display: flex;
+    width: 90%;
+    margin: 0 5%;
+    padding: 12px 0;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #ccc;
+}
+.sp_content .sp_main_title span:nth-child(1){
+    width: 80%;
+    font-weight: 900;
+    font-size: 24px;
+}
+.sp_content .sp_main_title span:nth-child(2){
+    width: 20%;
+    font-size: 15px;
+    text-align: right;
+}
+
+.sp_content .sp_main_title span:nth-child(2) a{
+    color:#aaaaaa;
+    cursor: pointer;
+}
+.sp_content .sp_main_title span:nth-child(2) a:hover{
+    color:#000000;
+}
+.sp_main_content{
+    
+}
+.sp_main_content .sp_mywallet_list{
+    list-style: none;
+    display: flex;
+    width: 90%;
+    flex-direction: row;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 5%;
+    
+}
+.sp_main_content .sp_mywallet_list {
+    
+}
+.sp_main_content .sp_mywallet_list span:nth-child(1){
+    font-size: 15px;
+    width: 30%;
+}
+.sp_main_content .sp_mywallet_list span:nth-child(2){
+    font-size: 15px;
+    font-weight: 900;
+    color: #000;
+    width: 50%;
+}
+.sp_main_content .sp_mywallet_list span:nth-child(3){
+    font-size: 15px;
+    font-weight: 900;
+    color:#ff0267;
+    width: 20%;
+}
+.sp_main_content .sp_notice_list{
+    list-style: none;
+    display: flex;
+    width: 90%;
+    flex-direction: row;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 5%;
+    
+}
+.sp_main_content .sp_notice_list .title{
+    font-size: 15px;
+    width: 80%;
+}
+.sp_main_content .sp_notice_list .date{
+    font-size: 14px;
+    color: #000;
+    width: 20%;
 }
 
 @media (min-width: 1780px) {

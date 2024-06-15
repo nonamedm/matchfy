@@ -30,6 +30,14 @@ $(document).ready(function(){
         memberPaymentApprove(tempGrade,idx);
     });
 
+    $('.reword_approve_btn').click(function() {
+        var value = $(this).text();
+        var level = $(this).data('approve-level');
+        var id =$(this).data('id');
+
+        rewordChkApprove(level,id);
+    });
+
     CKEDITOR.replace('content');
 });
 
@@ -63,6 +71,8 @@ function fn_clickList(board){
         window.location.href = "/ad/report/reportList";
     }else if(board=='news'){
         window.location.href = "/ad/intro/newsList";
+    }else if(board=='spnotice'){
+        window.location.href = "/ad/support/noticeList";
     }
 }
 
@@ -86,9 +96,9 @@ function fn_clickDelete(id,boardName) {
                     window.location.href = '/ad/privacy/privacyList';
                 }else if(boardName=='report') {
                     window.location.href = '/ad/report/reportList';
-                }else if(boardName=='faq'){
-                    window.location.href = '/ad/faq/faqList';
-                }else{
+                }else if(boardName=='spfaq'){
+                    window.location.href = '/ad/support/faqList';
+                }else {
                     window.location.href = '/ad/intro/newsList';
                 }
                 
@@ -175,6 +185,10 @@ function fn_clickUpdate(board,id) {
         window.location.href = "/ad/privacy/privacyModify/" + id;
     }else if(board=='news'){
         window.location.href = "/ad/intro/newsModify/" + id;
+    }else if(board=='spnotice'){
+        window.location.href = "/ad/support/noticeModify/" + id;
+    }else if(board=='spfaq'){
+        window.location.href = "/ad/support/faqModify/" + id;
     }
 }
 
@@ -189,6 +203,10 @@ function fn_EditClick(board) {
         window.location.href = "/ad/privacy/privacyEdit";
     }else if(board=='news'){
         window.location.href = "/ad/intro/newsEdit";
+    }else if(board=='spnotice'){
+        window.location.href = "/ad/support/noticeEdit";
+    }else if(board=='spfaq'){
+        window.location.href = "/ad/support/faqEdit";
     }
 }
 
@@ -268,6 +286,25 @@ function memberPaymentApprove(tempGrade,idx){
     });
 }
 
+function rewordChkApprove(level,id){
+    console.log(level);
+    console.log(id);
+    $.ajax({
+        url: '/ad/support/rewordChkApprove',
+        data:{
+            level:level,
+            id:id,
+        },
+        type: 'post',
+        success: function(data) {
+            alert(data.msg);
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
 function mediaRadio(){
     $('input[name="bigo1"]').change(function() {
         var selectedValue = $(this).val();

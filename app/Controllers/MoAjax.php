@@ -27,8 +27,11 @@ use App\Models\ChatRoomMsgAiModel;
 use App\Models\ChatRoomMemberAiModel;
 use App\Models\PointModel;
 use App\Models\EmailRegisterModel;
+use App\Models\SupportMemberModel;
+use App\Models\ReferralModel;
+use App\Models\SupportMemberFileModel;
 use App\Config\Email;
-
+use App\Models\SupportRewardModel;
 
 class MoAjax extends BaseController
 {
@@ -248,6 +251,43 @@ class MoAjax extends BaseController
                 // 로그인 기록 업데이트
                 $query = "UPDATE members SET last_access_dt=now() WHERE ci='" . $user['ci'] . "';";
                 $MemberModel->query($query);
+
+                return $this->response->setJSON(['status' => 'success', 'message' => "로그인 성공"]);
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'message' => '패스워드가 일치하지 않습니다']);
+            }
+        } else {
+            return $this->response->setJSON(['status' => 'error', 'message' => '일치하는 회원 정보가 없습니다']);
+        }
+    }
+    public function supportLogin()
+    {
+        // $mobile_no = $this->request->getPost('mobile_no');
+        $email = $this->request->getPost('email');
+        $pswd = "" . $this->request->getPost('passwd');
+        $auto_login = $this->request->getPost('auto_login', FILTER_VALIDATE_BOOLEAN);
+
+        $SupportMemberModel = new SupportMemberModel();
+
+        $query = "SELECT * FROM wh_support_members WHERE email = '" . $email . "' AND delete_yn='N';";
+        $userChk = $SupportMemberModel->query($query)->getResultArray();
+       
+        if ($userChk) { // email 이 존재하면 password 체크 시작
+            $pswdEncode = password_hash($pswd, PASSWORD_DEFAULT);
+            $pswdChk = password_verify($pswd, $userChk[0]['password']);
+
+            if ($pswdChk) { // 패스워드 일치하면
+                $user = $userChk[0];
+                $session = session();
+                $session->set([
+                    'ci' => $user['ci'],
+                    'name' => $user['name'],
+                    'isLoggedIn' => true //로그인 상태
+                ]);
+
+                if ($auto_login) {
+                    $session->setTempdata('ci', $user['ci'], 2592000);
+                }
 
                 return $this->response->setJSON(['status' => 'success', 'message' => "로그인 성공"]);
             } else {
@@ -529,6 +569,362 @@ class MoAjax extends BaseController
             }
         }
     }
+    public function signUpSupporters()
+    {
+        $rules = [
+            'name' => [
+                'label' => 'name',
+                'rules' => 'required|min_length[2]',
+                'errors' => [
+                    'required' => '이름을 입력해 주세요.',
+                    'min_length' => '이름은 2글자 이상 입력해 주세요.'
+                ]
+            ],
+            'birthday' => [
+                'label' => 'birthday',
+                'rules' => 'required|regex_match[/^(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$/]',
+                'errors' => [
+                    'required' => '생년월일을 입력해 주세요.',
+                    'regex_match' => '생년월일은 YYYYMMDD 형식으로 입력해 주세요. 예) 20240101'
+                ]
+            ],
+            'gender' => [
+                'label' => 'gender',
+                'rules' => 'required|in_list[0,1]', //'1'(남성) / '0'(여성)
+                'errors' => [
+                    'required' => '성별을 선택해 주세요.',
+                    'in_list' => '성별을 올바르게 선택해 주세요.'
+                ]
+            ],
+            'city' => [
+                'label' => 'city',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '지역을 선택해 주세요.',
+                ]
+            ],
+            'town' => [
+                'label' => 'town',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '도시를 입력해 주세요.',
+                ]
+            ],
+            // 'passwd' => [
+            //     'label' => 'passwd',
+            //     'rules' => 'required',
+            //     'errors' => [
+            //         'required' => '비밀번호를 입력해 주세요.',
+            //     ]
+            // ],
+        ];
+
+        if (!$this->validate($rules)) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'errors' => $this->validator->getErrors(),
+            ]);
+        } else {
+            $SupportMemberModel = new SupportMemberModel();
+            $MemberModel = new MemberModel();
+            $session = session();
+            $ci = $session->get('ci');
+            /**기존에 있는 유니크코드 들고오기 */
+            $unique_code_chk = "SELECT unique_code FROM members WHERE ci='" . $ci . "' AND delete_yn='n' limit 1";
+            $unique_code_row = $MemberModel->query($unique_code_chk)->getRow();
+
+            // $unique_code = $this->generateUniqueCode($SupportMemberModel);
+            /**기존 닉네임 들고오기 */
+            $nickname_chk = "SELECT nickname FROM members WHERE ci='" . $ci . "' AND delete_yn='n' limit 1";
+            $nickname_row = $MemberModel->query($nickname_chk)->getRow();
+
+            $mobile_no = $this->request->getPost('mobile_no');
+            $email = $this->request->getPost('email');
+
+            // 이메일 가입 중복 로직 확인
+            $emailDupChkQuery = "SELECT email FROM wh_support_members WHERE email='" . $email . "' AND delete_yn='n'";
+            $emailDupChk = $SupportMemberModel->query($emailDupChkQuery)->getResultArray();
+            if ($emailDupChk) {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Email Duplication', 'result' => '2']);
+            }
+
+            // 패스워드 단방향 암호화 필요
+            $pswd = "" . $this->request->getPost('pswd');
+
+            $encrypter = \Config\Services::encrypter();
+            //기존 ci 로 변경************************************
+            // $ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 32]));
+            $pswdEncode = password_hash($pswd, PASSWORD_DEFAULT);
+
+            // $ci = $this->request->getPost('ci');
+            $agree1 = $this->request->getPost('agree1');
+            $agree2 = $this->request->getPost('agree2');
+            $agree3 = $this->request->getPost('agree3');
+            $name = $this->request->getPost('name');
+            $birthday = $this->request->getPost('birthday');
+            $gender = $this->request->getPost('gender');
+            $city = $this->request->getPost('city');
+            $town = $this->request->getPost('town');
+            $snsType = $this->request->getPost('sns_type');
+            $oauthId = $this->request->getPost('oauth_id');
+            $inviteCode = $this->request->getPost('invite_code');
+            // $town = $encrypter->decrypt(base64_decode($ci), ['key' => 'nonamedm', 'blockSize' => 32]);
+
+
+            $data = [
+                'mobile_no' => $mobile_no,
+                'email' => $email,
+                'password' => $pswdEncode,
+                'ci' => $ci,
+                'agree1' => $agree1,
+                'agree2' => $agree2,
+                'agree3' => $agree3,
+                'name' => $name,
+                'birthday' => $birthday,
+                'gender' => $gender,
+                'city' => $city,
+                'town' => $town,
+                'nickname' => $nickname_row->nickname,
+                'unique_code' => $unique_code_row->unique_code,
+                'sns_type' => $snsType,
+                'oauth_id' => $oauthId
+            ];
+
+            // 정말 추천인 코드가 유효한지 insert 전에 체크
+            $MemberModel = new MemberModel();
+            $result = $MemberModel
+                ->select('unique_code')
+                ->where('unique_code', $inviteCode)
+                ->where('delete_yn', 'N')
+                ->first();
+            //초대코드 있을때만 insert
+            $invitedata=[];
+            if (!empty($result)) {
+                $data['invite_code'] = $inviteCode;
+                $inviteCodeChk = "SELECT ci FROM members WHERE unique_code='" . $inviteCode . "' AND delete_yn='n' LIMIT 1";
+                $inviteCodeRow = $MemberModel->query($inviteCodeChk)->getRow();
+
+                if ($inviteCodeRow) {
+                    $invitedata = [
+                        'ci' => $ci,
+                        'recommender_ci' => $inviteCodeRow->ci,
+                        'recommender_gender' => $gender,
+                        'reward_type' => 'invite',
+                        'reward_title' =>'추천인 정회원 가입',
+                        'reward_date' => date('Y-m-d H:i:s')
+                    ];
+                }
+            }
+            
+            // 이메일과 전화번호로 verify_yn = y 인 항목을 한번 조회한다
+            $query = "SELECT * FROM wh_email_register WHERE mobile_no='" . $mobile_no . "' AND member_email='" . $email . "' AND verify_yn='y' AND delete_yn='n'";
+            $chkMailPhoneYn = $SupportMemberModel->query($query)->getResultArray();
+            if ($chkMailPhoneYn) {
+                
+                // 데이터 저장
+                $inserted = $SupportMemberModel->insert($data);
+                if($inviteCode){
+                    $SupportRewardModel = new SupportRewardModel();
+                    $SupportRewardModel->insert($invitedata);
+                }
+                // 회원가입 완료 되었을 떄
+                if ($inserted) {
+                    
+                    if ($inserted) {
+                        return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
+                    } else {
+                        return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy fail', 'data' => $data]);
+                    }
+                } else {
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy', 'result' => '4']);
+                }
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to join matchfy', 'result' => '5']);
+            }
+        }
+    }
+    public function referralRegistration()
+    {
+        $rules = [
+            'name' => [
+                'label' => 'name',
+                'rules' => 'required|min_length[2]',
+                'errors' => [
+                    'required' => '이름을 입력해 주세요.',
+                    'min_length' => '이름은 2글자 이상 입력해 주세요.'
+                ]
+            ],
+            'birthday' => [
+                'label' => 'birthday',
+                'rules' => 'required|regex_match[/^(19|20)\d\d(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])$/]',
+                'errors' => [
+                    'required' => '생년월일을 입력해 주세요.',
+                    'regex_match' => '생년월일은 YYYYMMDD 형식으로 입력해 주세요. 예) 20240101'
+                ]
+            ],
+            'gender' => [
+                'label' => 'gender',
+                'rules' => 'required|in_list[0,1]', //'1'(남성) / '0'(여성)
+                'errors' => [
+                    'required' => '성별을 선택해 주세요.',
+                    'in_list' => '성별을 올바르게 선택해 주세요.'
+                ]
+            ],
+            'mobile_no' => [
+                'label' => 'mobile_no',
+                'rules' => 'required|regex_match[/^[0-9]{10,11}$/]',
+                'errors' => [
+                    'required' => '휴대폰 번호를 입력해 주세요.',
+                    'regex_match' => '휴대폰 번호는 10~11자리 숫자로 입력해 주세요.'
+                ]
+            ],
+            'marital' => [
+                'label' => 'marital',
+                'rules' => 'required|in_list[0,1]', // '1'(기혼) / '0'(미혼)
+                'errors' => [
+                    'required' => '결혼경험유무를 선택해 주세요.',
+                    'in_list' => '결혼경험유무를 올바르게 선택해 주세요.'
+                ]
+            ],
+            'city' => [
+                'label' => 'city',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '시/도를 선택해 주세요.',
+                ]
+            ],
+            'town' => [
+                'label' => 'town',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '시/군/구를 선택해 주세요.',
+                ]
+            ],
+            'height' => [
+                'label' => 'height',
+                'rules' => 'required|integer',
+                'errors' => [
+                    'required' => '키를 입력해 주세요.',
+                    'integer' => '키는 정수로 입력해 주세요.'
+                ]
+            ],
+            'education' => [
+                'label' => 'education',
+                'rules' => 'required|in_list[0,1,2,3,4]', // 예: '0'(무학) / '1'(초등) / '2'(중등) / '3'(고등) / '4'(대학)
+                'errors' => [
+                    'required' => '학력을 선택해 주세요.',
+                    'in_list' => '학력을 올바르게 선택해 주세요.'
+                ]
+            ],
+            'job' => [
+                'label' => 'job',
+                'rules' => 'required|in_list[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]',
+                'errors' => [
+                    'required' => '직업을 선택해 주세요.',
+                    'in_list' => '직업을 올바르게 선택해 주세요.'
+                ]
+            ],
+            'detailed_content' => [
+                'label' => 'detailed_content',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '추천이유를 입력해 주세요.'
+                ]
+            ]
+        ];
+
+        if (!$this->validate($rules)) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'errors' => $this->validator->getErrors(),
+            ]);
+        } else {
+            $ReferralModel = new ReferralModel();
+
+            $name = $this->request->getPost('name');
+            $birthday = $this->request->getPost('birthday');
+            $gender = $this->request->getPost('gender');
+            $mobile_no = $this->request->getPost('mobile_no');
+            $marital = $this->request->getPost('marital');
+            $city = $this->request->getPost('city');
+            $town = $this->request->getPost('town');
+            $height = $this->request->getPost('height');
+            $education = $this->request->getPost('education');
+            $job = $this->request->getPost('job');
+            $detailed_content = $this->request->getPost('detailed_content');
+
+            $session = session();
+            $ci = $session->get('ci');
+
+            $SupportMemberModel = new SupportMemberModel();
+            $currentMember  = $SupportMemberModel
+                ->where('ci', $ci)
+                ->first();
+
+            $recommend_member_idx = $currentMember['idx'];
+
+            $data = [
+                'name' => $name,
+                'birthday' => $birthday,
+                'gender' => $gender,
+                'mobile_no' => $mobile_no,
+                'marital' => $marital,
+                'city' => $city,
+                'town' => $town,
+                'height' => $height,
+                'education' => $education,
+                'job' => $job,
+                'reason' => $detailed_content,
+                'recommend_member_idx' => $recommend_member_idx
+            ];
+
+            // 데이터 저장
+            $inserted = $ReferralModel->insert($data);
+
+            // 추천인 저장 완료 되었을 떄
+            if ($inserted) {
+                //프로필 사진 DB 업로드
+                $SupportMemberFileModel = new SupportMemberFileModel();
+                $org_name = $this->request->getPost('org_name');
+                $file_name = $this->request->getPost('file_name');
+                $file_path = $this->request->getPost('file_path');
+                $ext = $this->request->getPost('ext');
+                if ($org_name) {
+                    // 프로필 첨부 있을때만 file db 저장
+                    $data2 = [
+                        'member_ci' => $ci,
+                        'org_name' => $org_name,
+                        'file_name' => $file_name,
+                        'file_path' => $file_path,
+                        'ext' => $ext,
+                        'board_type' => 'referral',
+                    ];
+                    $data = array_merge($data, $data2);
+                    $SupportMemberFileModel->insert($data2);
+                } else {
+                    // 프로필 첨부 없을때는 기본이미지로 저장
+                    $data2 = [
+                        'member_ci' => $ci,
+                        'org_name' => 'profile_noimg.png',
+                        'file_name' => 'profile_noimg.png',
+                        'file_path' => 'static/images/',
+                        'ext' => 'png',
+                        'board_type' => 'referral',
+                    ];
+                    $data = array_merge($data, $data2);
+                    $SupportMemberFileModel->insert($data2);
+                }
+                if ($inserted) {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'referral matchfy successfully', 'data' => $data]);
+                } else {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'referral matchfy fail', 'data' => $data]);
+                }
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to referral matchfy', 'result' => '4']);
+            }
+           
+        }
+    }
     protected function generateUniqueCode($MemberModel)
     {
         $length = 6;
@@ -550,6 +946,57 @@ class MoAjax extends BaseController
     }
 
     public function isValidRecommendCode()
+    {
+        $inviteCode = $this->request->getPost('inviteCode');
+
+        $SupportMemberModel = new SupportMemberModel();
+
+        $result = $SupportMemberModel
+            ->select('unique_code')
+            ->where('unique_code', $inviteCode)
+            ->where('delete_yn', 'N')
+            ->first();
+
+        $isValid = $result !== null;
+        // $isValid = false;
+        $code_array = [
+            'm_UABE', 'm_6PSW42',
+            'm_Z1VG27',
+            'm_5E6Y8B',
+            'm_XRVEXD',
+            'm_RCNR3B',
+            'm_ZI35IV',
+            'm_8Q638S',
+            'm_SAW6JI',
+            'm_9KRST9',
+            'm_A0P74X',
+            'm_TF55B3',
+            'm_BEBF8Q',
+            'm_ULV9UC',
+            'm_BGXW8P',
+            'm_7VK7ZP',
+            'm_OEP5N8',
+            'm_PSKKNX',
+            'm_9ECTTZ',
+            'm_ZEA8WF',
+            'm_UPY7EB',
+            'm_H2DSZ1',
+            'm_KM1WD8',
+            'm_E2I0U3',
+            'm_OBOUOX',
+            'm_H8EODZ'
+        ];
+
+        if (!$isValid) {
+            in_array($inviteCode, $code_array) ? $isValid = true : $isValid = false;
+        }
+
+        return $this->response->setJSON([
+            'isValid' => $isValid, 'data1' => ($result !== null), 'data2' => in_array($inviteCode, $code_array)
+        ]);
+    }
+
+    public function isValidSupportRecommendCode()
     {
         $inviteCode = $this->request->getPost('inviteCode');
 
@@ -1952,6 +2399,40 @@ class MoAjax extends BaseController
             $meetingMembersIdx = $meeting_members->insert($meetMemdata);
 
 
+            //리워드내역 확인
+            $SupportRewardModel = new SupportRewardModel();
+            $rewardChk = "SELECT ci 
+                        FROM wh_support_members
+                        WHERE ci = $member_ci";
+            $rewardChkRow = $SupportRewardModel->query($rewardChk)->getRow();
+            if($rewardChkRow){
+                $group1 = 0;
+                $group2 = 0;
+    
+                if ($number_of_people % 2 == 0) {
+                    $group1 = $number_of_people / 2;
+                    $group2 = $number_of_people / 2;
+                } else {
+                    $group1 = ceil($number_of_people / 2);
+                    $group2 = floor($number_of_people / 2);
+                }
+    
+                $dividePeople = $group1 . ':' . $group2;
+    
+                $meetRewardData = [
+                    'ci' => $member_ci,
+                    'reward_type' => 'meeting',
+                    'reward_title' =>$dividePeople.'오프라인 미팅 주최',
+                    'reward_meeting_idx'=> $insertedMeetingIdx,
+                    'reward_meeting_members'=>$number_of_people,
+                    'reward_meeting_percent' => '0',
+                    'reward_date' => date('Y-m-d H:i:s')
+                ];
+                
+                $SupportRewardModel = new SupportRewardModel();
+                $SupportRewardModel->insert($meetRewardData);
+            }
+
             $ChatRoomModel = new ChatRoomModel();
             $ChatRoomMemberModel = new ChatRoomMemberModel();
             $MemberModel = new MemberModel();
@@ -1987,6 +2468,24 @@ class MoAjax extends BaseController
                 ]);
             }
         }
+    }
+
+    function dividePeople($number_of_people) {
+        // 두 그룹의 사람 수를 초기화
+        $group1 = 0;
+        $group2 = 0;
+    
+        if ($number_of_people % 2 == 0) {
+            // 짝수일 경우
+            $group1 = $number_of_people / 2;
+            $group2 = $number_of_people / 2;
+        } else {
+            // 홀수일 경우
+            $group1 = ceil($number_of_people / 2);
+            $group2 = floor($number_of_people / 2);
+        }
+    
+        return $group1 . ':' . $group2;
     }
 
     public function meetingFiltering()
@@ -4289,6 +4788,34 @@ class MoAjax extends BaseController
             // 비밀번호 업데이트 쿼리
             $updateQuery = "UPDATE members SET password='" . $pswdEncode . "' WHERE email='" . $email . "' AND delete_yn='n'";
             $MemberModel->query($updateQuery);
+
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '1']);
+        } else {
+            return $this->response->setJSON(['status' => 'error', 'message' => 'Email Duplication', 'result' => '0']);
+        }
+    }
+    /*서포터즈 비밀번호 재설정 */
+    public function supportPasswordUpdate()
+    {
+
+        $SupportMemberModel = new SupportMemberModel();
+        $email = $this->request->getPost('email');
+
+        //이메일 가입되어있는지 확인
+        $emailDupChkQuery = "SELECT email FROM wh_support_members WHERE email='" . $email . "' AND delete_yn='n'";
+        $emailDupChk = $SupportMemberModel->query($emailDupChkQuery)->getResultArray();
+
+        if ($emailDupChk) {
+            // 패스워드 단방향 암호화 필요
+            $pswd = "" . $this->request->getPost('pswd');
+            $pswdEncode = password_hash($pswd, PASSWORD_DEFAULT);
+            $data = [
+                'email' => $email,
+                'password' => $pswdEncode,
+            ];
+            // 비밀번호 업데이트 쿼리
+            $updateQuery = "UPDATE wh_support_members SET password='" . $pswdEncode . "' WHERE email='" . $email . "' AND delete_yn='n'";
+            $SupportMemberModel->query($updateQuery);
 
             return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '1']);
         } else {

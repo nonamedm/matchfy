@@ -23,7 +23,7 @@
 
         <div class="">
             <div class=" login_wrap" style="height:100%;">
-                <div class="main_logo">
+                <div class="sp_main_logo">
                     matchfy supporters
                 </div>
                 <form class="main_login_form">
@@ -43,15 +43,17 @@
                             <label for="keep"><?= lang('Korean.autoId') ?></label>
                         </div>
                         <div class="btn_group">
-                            <button type="button" style="width: 301px;" class="btn type01" onclick="userLogin()"><?= lang('Korean.login') ?></button>
+                            <button type="button" style="width: 301px;" class="btn type01" onclick="supportUserLogin()"><?= lang('Korean.login') ?></button>
                             <div class="login_idpw_find">
-                                <span><a href="/mo/idpwfind/pass">아이디 | 비밀번호 찾기</a></span>
+                                <span><a href="/support/idpwfind/pass">이메일 찾기</a></span> 
+                                <span> | </span>
+                                <span><a href="/support/idpwfind/pass">비밀번호 찾기</a></span>
                             </div>
                         </div>
                 </form>
                 <img src="/static/images/main_login_hr.png" style="position: relative; margin: 40px 0px 30px 0px;left: calc(50% - 302px / 2 + 0.5px);" />
                 <div class="btn_group">
-                    <button type="button" style="width: 301px;" class="btn type00" onclick="moveToUrl('/mo/pass')"><?= lang('Korean.supportSignup') ?></button>
+                    <button type="button" style="width: 301px;" class="btn type00" onclick="moveToUrl('/support/pass')"><?= lang('Korean.supportSignup') ?></button>
                 </div>
                 <div class="btn_group">
                     <img src="/static/images/oauth/kakao_login_medium_wide.png" class="oauth_login" onclick="location.href='/auth/kakao/login'" />
@@ -85,7 +87,7 @@
         function handleKeyPress(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                userLogin();
+                supportUserLogin();
             }
         }
 

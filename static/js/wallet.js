@@ -11,11 +11,20 @@ $(document).ready(function () {
     getMyPoint();
     chk_formChargePoint();
     getPointDateSearch();
-
+    fullValueChk();
     $('#alliance_exchange_amount').on('change', function () {
         pointsValueCheck();
+        fullValueChk();
     });
-
+    $('#alliance_exchange_account').on('change', function () {
+        fullValueChk();
+    });
+    $('#alliance_exchange_bank').on('change', function () {
+        fullValueChk();
+    });
+    $('#agree02').on('change', function() {
+        fullValueChk();
+    });
     $('.point_date').change(function () {
         if ($('.1week').hasClass('on')) {
             point_date = '1week';
@@ -39,11 +48,27 @@ function loc_pointCharge() {
 function loc_pointExchange() {
     window.location = '/mo/alliance/exchange';
 }
-
+function loc_spPointExchange() {
+    window.location = '/support/exchange';
+}
 function loc_WalletLocation() {
     window.location = '/mo/mypage/wallet';
 }
-
+function loc_spWalletLocation() {
+    window.location = '/support/mypage/wallet';
+}
+function fullValueChk(){
+    var amount = $('#alliance_exchange_amount').val();
+    var bank = $('#alliance_exchange_bank').val();
+    var account_number = $('#alliance_exchange_account').val();
+    var chk = $('#agree02').prop('checked');
+    if(amount&&bank&&account_number&&chk){
+        $('#exchangeBtn').css('background','#ff0267')
+        $('#exchangeBtn').prop('disabled', false);
+    }else{
+        $('#exchangeBtn').css('background','#dddddd')
+    }
+}
 /* 포인트 충전시 form 체크 */
 function chk_formChargePoint() {
     $('.mypage_wallet_select > div').click(function () {
@@ -285,11 +310,46 @@ function exchangePointSubmit() {
         });
     }else{
         $('.loading').hide();
+        $('.loading_bg').hide();
     }
 }
-
+/*환전 submit */
+function spExchangePointSubmit() {
+    $('.loading').show();
+    $('.loading_bg').show();
+    var amount = $('#alliance_exchange_amount').val();
+    var bank = $('#alliance_exchange_bank').val();
+    var account_number = $('#alliance_exchange_account').val();
+    if (chk_exchangeCheck() == true) {
+        $.ajax({
+            url: '/support/exchangepointSubmit',
+            data: {
+                amount: amount,
+                bank: bank,
+                acount_number: account_number,
+            },
+            type: 'post',
+            success: function (data) {
+                $('.loading').hide();
+                $('.loading_bg').hide();
+                if (data.success == true) {
+                    window.location = '/sp_mypage_excharge_success';
+                } else {
+                    window.location = '/sp_mypage_excharge_fail';
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            },
+        });
+    }else{
+        $('.loading').hide();
+        $('.loading_bg').hide();
+    }
+}
 /*입금,사용 페이지 전환*/
 function WalletPage(type) {
+    var url='';
     loading = true;
     walletType = type;
     $('.loading').show();
@@ -298,12 +358,20 @@ function WalletPage(type) {
 
     if (type === 'add') {
         $('#wallet_tab ul li:nth-child(1)').addClass('on');
-    } else {
+        url = '/mo/mypage/walletTypeList';
+    } else if(type === 'use') {
         $('#wallet_tab ul li:nth-child(2)').addClass('on');
+        url = '/mo/mypage/walletTypeList';
+    } else if(type === 'spadd'){
+        $('#wallet_tab ul li:nth-child(1)').addClass('on');
+        url = '/support/mypage/walletTypeList';
+    }else if(type === 'spexchange'){
+        $('#wallet_tab ul li:nth-child(2)').addClass('on');
+        url = '/support/mypage/walletTypeList';
     }
 
     $.ajax({
-        url: '/mo/mypage/walletTypeList',
+        url: url,
         type: 'post',
         data: {
             value: point_order,

@@ -65,7 +65,11 @@ input[type='checkbox'] + label:hover {
     background: #ffffff;
     position: relative;
     margin: 0 auto;
-    padding: 0.4rem 0 0;
+    /* padding: 0.4rem 0 0; */
+    padding:0;
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
 }
 header.ci_header {
     width: 400px;
@@ -101,12 +105,107 @@ header.ci_header .logo_menu ul .menu_left button {
     border: none;
     background-color: transparent;
 }
+header.ci_header .logo_menu ul button {
+    border: none;
+    background-color: transparent;
+}
 header.ci_header .logo_menu ul .menu_item {
     position: absolute;
     right: 10px;
     top: 13px;
 }
 header.ci_header .logo_menu ul .item {
+    display: inline-flex;
+    position: absolute;
+    right: 10px;
+}
+
+header.ci_header .logo_menu {
+    padding: 0.4rem 2rem;
+    background-color: rgba(247, 248, 249, 1);
+}
+header.ci_header .logo_menu ul {
+    border-bottom: 1px solid rgba(242, 242, 242, 1);
+    list-style-type: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    text-align: center !important;
+    display: block;
+}
+header.ci_header .logo_menu ul .logo {
+    height: 44px;
+    padding: 0.4rem 0.5rem;
+}
+header.ci_header .logo_menu ul li {
+    cursor: pointer;
+}
+header.ci_header .logo_menu ul .menu_left {
+    display: inline-flex;
+    position: absolute;
+    left: 10px;
+    top: 20px;
+}
+header.ci_header .logo_menu ul .menu_left button {
+    border: none;
+    background-color: transparent;
+}
+header.ci_header .logo_menu ul button {
+    border: none;
+    background-color: transparent;
+}
+header.ci_header .logo_menu ul .menu_item {
+    position: absolute;
+    right: 10px;
+    top: 13px;
+}
+header.ci_header .logo_menu ul .item {
+    display: inline-flex;
+    position: absolute;
+    right: 10px;
+}
+
+/*support header*/
+header.spci_header .logo_menu {
+    padding: 0.4rem 0.8rem;
+    background-color: rgba(247, 248, 249, 1);
+}
+header.spci_header .logo_menu ul {
+    border-bottom: 1px solid rgba(242, 242, 242, 1);
+    list-style-type: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    text-align: center !important;
+    display: block;
+}
+header.spci_header .logo_menu ul .logo {
+    height: 44px;
+    padding: 0.4rem 0.5rem;
+}
+header.spci_header .logo_menu ul .logo img {
+    padding-top: 5px;
+}
+header.spci_header .logo_menu ul li {
+    cursor: pointer;
+}
+header.spci_header .logo_menu ul .menu_left {
+    display: inline-flex;
+}
+header.spci_header .logo_menu ul .menu_left button {
+    border: none;
+    background-color: transparent;
+}
+header.spci_header .logo_menu ul button {
+    border: none;
+    background-color: transparent;
+}
+header.spci_header .logo_menu ul .menu_item {
+    position: absolute;
+    right: 10px;
+    top: 22px;
+}
+header.spci_header .logo_menu ul .item {
     display: inline-flex;
     position: absolute;
     right: 10px;
@@ -153,6 +252,8 @@ header .menu {
     display: flex;
     justify-content: space-between;
     padding: 10px 20px 0px 20px;
+    height: 50px;
+    line-height: 50px;
 }
 header ul {
     list-style-type: none;
@@ -160,6 +261,7 @@ header ul {
     overflow: hidden;
     padding: 0;
     display: flex;
+    line-height: 50px;
 }
 header .left_arrow {
 }
@@ -167,8 +269,7 @@ header .header_title {
     font-family: 'Pretendard-Bold';
     font-weight: 700;
     font-size: 16px;
-    line-height: 22px;
-
+    line-height: 43px;
     margin-left: 20px;
 }
 header .menu_right.edit {
@@ -184,8 +285,7 @@ header .menu_right.edit {
     height: 100%;
     margin: 0;
 }
-.mo_wrap .wrap {
-    max-width: 400px;
+.mo_wrap .wrap {max-width: 400px;
     margin: 0 auto;
     min-height: 100%;
     background-color: #f5f5f5;
@@ -1565,7 +1665,17 @@ a:active {
     right: 0px;
     bottom: -10px;
 }
-
+.content_spmypage_logout {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 18px;
+    text-align: center;
+    text-decoration-line: underline;
+    color: #777777;
+    background: transparent;
+    border: none;
+    width: 50%;
+}
 .mo_wrap .sub_wrap .content_wrap .content_body.content_mypage {
     margin: 35px 0px;
     text-align: left;
@@ -1714,6 +1824,37 @@ a:active {
     color: #999999;
 }
 .alliance_sch_sts .finish {
+    background: #555555;
+}
+.reward_type {
+    display: flex;
+    justify-content: space-between;
+}
+.reward_type img {
+    width: 12px;
+    height: 12px;
+    margin-right: 20px;
+}
+.reward_type div{
+    padding: 2px 6px;
+    width: 48px;
+    height: 16px;
+    background: #ff0267;
+    border-radius: 3px;
+    font-weight: 100;
+    font-size: 12px;
+    line-height: 130%;
+    color: #ffffff;
+    text-align: center;
+}
+.reward_type .reward01 {
+    background: #ff0267;
+}
+.reward_type .reward02 {
+    background: #f1f1f1;
+    color: #999999;
+}
+.reward_type .reward03 {
     background: #555555;
 }
 .alliance_address1 {
@@ -1955,16 +2096,26 @@ a:active {
     height: 46px;
     left: calc(50% - 148px / 2 + 0.5px);
     top: 135px;
-
     font-family: 'Tium';
     font-weight: 700;
     font-size: 40px;
     line-height: 46px;
     text-align: center;
-
     color: #ff0267;
 }
-
+.sp_main_logo {
+    position: relative;
+    width: 200px;
+    height: 46px;
+    left: calc(50% - 200px / 2 + 0.5px);
+    top: 135px;
+    font-family: 'Tium';
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 46px;
+    text-align: center;
+    color: #ff0267;
+}
 .main_login_form {
     position: relative;
     top: 225px;
@@ -2594,6 +2745,13 @@ form input[type='file'] {
 }
 .footer {
     background-color: #ffffff;
+}
+.footer_display {
+    width: 100%;
+    height: 80px;
+    position: absolute;
+    bottom: 0;
+    display: flex;
 }
 .footer .btn_group {
     position: relative;
@@ -3978,6 +4136,7 @@ input[type='number']::-webkit-inner-spin-button {
     right: 20px;
     cursor: pointer;
 }
+
 @media (max-width: 968px) {
     header.ci_header {
         width: 100%;

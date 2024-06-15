@@ -174,6 +174,7 @@ $routes->post('/ajax/partScdl', 'MoAjax::partScdl');
 $routes->post('/ajax/usablePoint', 'MoAjax::usablePoint');
 $routes->post('/ajax/sndDeposit', 'MoAjax::sndDeposit');
 
+
 /*관리자페이지*/
 $routes->get('/downloadFile/(:num)', 'download::downloadFile/$1');
 $routes->get('/downloadCeonumFile/(:num)', 'download::downloadCeonumFile/$1');
@@ -186,8 +187,6 @@ $routes->get('/ad/faq/faqList', 'AdminHome::faqList');
 $routes->get('/ad/faq/faqView/(:num)', 'AdminHome::faqView/$1');
 $routes->get('/ad/faq/faqModify/(:num)', 'AdminHome::faqModify/$1');
 $routes->post('/ad/faq/faqUpdate', 'AdminHome::faqUpdate');
-
-
 $routes->get('/ad/terms/termsMenuSelect', 'AdminHome::termsMenuSelect');
 $routes->get('/ad/terms/termsEdit', 'AdminHome::termsEdit');
 $routes->post('/ad/terms/termsUpload', 'AdminHome::termsUpload');
@@ -195,8 +194,6 @@ $routes->get('/ad/terms/termsList', 'AdminHome::termsList');
 $routes->get('/ad/terms/termsView/(:num)', 'AdminHome::termsView/$1');
 $routes->get('/ad/terms/termsModify/(:num)', 'AdminHome::termsModify/$1');
 $routes->post('/ad/terms/termsUpdate', 'AdminHome::termsUpdate');
-
-
 $routes->get('/ad/privacy/privacyMenuSelect', 'AdminHome::privacyMenuSelect');
 $routes->get('/ad/privacy/privacyEdit', 'AdminHome::privacyEdit');
 $routes->post('/ad/privacy/privacyUpload', 'AdminHome::privacyUpload');
@@ -204,8 +201,6 @@ $routes->get('/ad/privacy/privacyList', 'AdminHome::privacyList');
 $routes->get('/ad/privacy/privacyView/(:num)', 'AdminHome::privacyView/$1');
 $routes->get('/ad/privacy/privacyModify/(:num)', 'AdminHome::privacyModify/$1');
 $routes->post('/ad/privacy/privacyUpdate', 'AdminHome::privacyUpdate');
-
-
 $routes->get('/ad/notice/noticeMenuSelect', 'AdminHome::noticeMenuSelect');
 $routes->get('/ad/notice/noticeEdit', 'AdminHome::noticeEdit');
 $routes->post('/ad/notice/noticeUpload', 'AdminHome::noticeUpload');
@@ -215,29 +210,44 @@ $routes->get('/ad/notice/noticeModify/(:num)', 'AdminHome::noticeModify/$1');
 $routes->post('/ad/notice/noticeUpdate', 'AdminHome::noticeUpdate');
 $routes->post('/ad/notice/noticeDelete', 'AdminHome::noticeDelete');
 $routes->post('/ad/FileDelete', 'AdminHome::fileDelete');
-
 $routes->get('/ad/exchange/exchangeList', 'AdminHome::exchangeList');
 $routes->post('/ad/exchangeCheck', 'AdminHome::exchangeCheck');
 $routes->get('/ad/alliance/allianceList', 'AdminHome::allianceList');
 $routes->post('/ad/allianceCheck', 'AdminHome::allianceCheck');
-
 $routes->get('/ad/member/memberApproveList', 'AdminHome::memberApproveList');
 $routes->get('/ad/member/memberMngment', 'AdminHome::memberMngment');
 $routes->post('/ad/memberCertificateCheck', 'AdminHome::memberCertificateCheck');
-
 $routes->get('/ad/member/memberPaymentList', 'AdminHome::memberPaymentList');
 $routes->post('/ad/memberPaymentCheck', 'AdminHome::memberPaymentCheck');
-
 $routes->get('/ad/report/reportList', 'AdminHome::reportList');
 $routes->get('/ad/report/reportView/(:num)', 'AdminHome::reportView/$1');
 $routes->post('/ad/report/reportDelete', 'AdminHome::reportDelete');
-
 $routes->get('/ad/intro/newsEdit', 'AdminHome::newsEdit');
 $routes->post('/ad/intro/newsUpload', 'AdminHome::newsUpload');
 $routes->get('/ad/intro/newsList', 'AdminHome::newsList');
 $routes->get('/ad/intro/newsView/(:num)', 'AdminHome::newsView/$1');
 $routes->get('/ad/intro/newsModify/(:num)', 'AdminHome::newsModify/$1');
 $routes->post('/ad/intro/newsUpdate', 'AdminHome::newsUpdate');
+
+
+$routes->get('/ad/support/noticeMenuSelect', 'AdminHome::spNoticeMenuSelect');
+$routes->get('/ad/support/noticeEdit', 'AdminHome::spNoticeEdit');
+$routes->post('/ad/support/noticeUpload', 'AdminHome::spNoticeUpload');
+$routes->get('/ad/support/noticeList', 'AdminHome::spNoticeList');
+$routes->get('/ad/support/noticeView/(:num)', 'AdminHome::spNoticeView/$1');
+$routes->get('/ad/support/noticeModify/(:num)', 'AdminHome::spNoticeModify/$1');
+$routes->post('/ad/support/noticeUpdate', 'AdminHome::spNoticeUpdate');
+$routes->post('/ad/support/noticeDelete', 'AdminHome::spNoticeDelete');
+$routes->post('/ad/FileDelete', 'AdminHome::fileDelete');
+$routes->get('/ad/support/faqEdit', 'AdminHome::spFaqEdit');
+$routes->post('/ad/support/faqUpload', 'AdminHome::spFaqUpload');
+$routes->get('/ad/support/faqList', 'AdminHome::spFaqList');
+$routes->get('/ad/support/faqView/(:num)', 'AdminHome::spFaqView/$1');
+$routes->get('/ad/support/faqModify/(:num)', 'AdminHome::spFaqModify/$1');
+$routes->post('/ad/support/faqUpdate', 'AdminHome::spFaqUpdate');
+$routes->get('/ad/support/rewordList', 'AdminHome::rewordList');
+$routes->post('/ad/support/rewordChkApprove', 'AdminHome::rewordChkApprove');
+
 $routes->post('/proxy/createToken', 'ProxyController::createToken');
 $routes->post('/proxy/createPassWeb', 'ProxyController::createPassWeb');
 $routes->get('/proxy/getResultValue', 'ProxyController::getResultValue');
@@ -245,9 +255,38 @@ $routes->post('/proxy/idpwFind', 'ProxyController::idpwFind');
 $routes->get('/proxy/getResultIdpwValue', 'ProxyController::getResultIdpwValue');
 
 /*support*/
+$routes->get('/support', 'SupportHome::spindex');
+$routes->get('/support/idpwfind/pass', 'SupportHome::idpwFindPass');
+$routes->post('/support/idpwfind/passwordReset', 'SupportHome::passworldReset');
+// $routes->get('/support/idpwfind/passwordReset', 'SupportHome::passworldReset');
+$routes->post('/support/proxy/spIdPwFind', 'ProxyController::spIdPwFind');
+$routes->get('/support/proxy/getResultSupportIdpwValue', 'ProxyController::getResultSupportIdpwValue');
+$routes->post('/support/ajax/supportPasswordUpdate', 'MoAjax::supportPasswordUpdate');
+$routes->get('/support/menu', 'SupportHome::spmenu');
 $routes->get('/support/notice', 'SupportHome::noticeList');
-
+$routes->get('/support/mypage/wallet', 'SupportHome::mypageWallet');
+$routes->post('/support/mypage/walletTypeList', 'SupportHome::walletTypeList');
+$routes->get('/support/exchange', 'SupportHome::allianceExchange');
+$routes->post('/support/exchangepointSubmit', 'SupportHome::allianceExchangePoint');
+$routes->get('/sp_mypage_excharge_success', 'SupportHome::exchangePoint_success');
+$routes->get('/sp_mypage_excharge_fail', 'SupportHome::exchangePoint_fail');
+$routes->get('/support/notice/view/(:num)', 'SupportHome::noticeView/$1');
+$routes->get('/support/faq', 'SupportHome::faq');
+$routes->get('/support/terms', 'SupportHome::terms');
+$routes->get('/support/privacy', 'SupportHome::privacy');
+$routes->get('/support/reward', 'SupportHome::reward');
 $routes->get('/support/mo', 'SupportHome::index');
-$routes->get('/support/mo/pass', 'SupportHome::pass');
-$routes->post('/support/mo/agree', 'SupportHome::agree');
-$routes->post('/support/mo/signin', 'SupportHome::signin');
+$routes->get('/support/pass', 'SupportHome::pass');
+$routes->post('/support/agree', 'SupportHome::agree');
+$routes->post('/support/signin', 'SupportHome::signin');
+//$routes->get('/support/signin', 'SupportHome::signin');
+$routes->get('/support/signinSuccess', 'SupportHome::signinSuccess');
+$routes->get('/support/invite', 'SupportHome::invite');
+$routes->get('/support/referral', 'SupportHome::referral');
+$routes->get('/support/referralSuccess', 'SupportHome::referralSuccess');
+$routes->post('/ajax/support/login', 'MoAjax::supportLogin');
+$routes->post('/ajax/support/signUp', 'MoAjax::signUpSupporters');
+$routes->post('/ajax/support/isValidRecommendCode', 'MoAjax::isValidSupportRecommendCode');
+$routes->post('/ajax/support/referral', 'MoAjax::referralRegistration');
+$routes->post('/support/proxy/createPassWeb', 'ProxyController::createSupportPassWeb');
+$routes->get('/support/proxy/getResultValue', 'ProxyController::getSupportResultValue');

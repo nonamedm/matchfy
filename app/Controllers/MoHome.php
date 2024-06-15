@@ -30,6 +30,7 @@ use App\Models\ChatRoomMsgModel;
 use App\Models\ChatRoomMsgAiModel;
 use App\Models\ChatRoomMemberModel;
 use App\Models\ChatRoomMemberAiModel;
+use App\Models\SupportRewardModel;
 use CodeIgniter\Session\Session;
 use Kint\Zval\Value;
 
@@ -105,6 +106,26 @@ class MoHome extends BaseController
             $MemberModel->set('recommender_code', $invite_code)
                 ->where('ci', $ci)
                 ->update();
+            
+            //추천코드 입력시 서포터즈 리워드 추가
+            $inviteCodeChk = "SELECT ci FROM members WHERE unique_code='" . $invite_code . "' AND delete_yn='n' LIMIT 1";
+            $inviteCodeRow = $MemberModel->query($inviteCodeChk)->getRow();
+
+            $genderChk = "SELECT gender FROM members WHERE ci='" . $ci . "' AND delete_yn='n' LIMIT 1";
+            $gender = $MemberModel->query($genderChk)->getRow();
+
+                if ($inviteCodeRow) {
+                    $invitedata = [
+                        'ci' => $ci,
+                        'recommender_ci' => $inviteCodeRow->ci,
+                        'recommender_gender' => $gender,
+                        'reward_type' => 'invite',
+                        'reward_title' =>'추천인 정회원 가입',
+                        'reward_date' => date('Y-m-d H:i:s')
+                    ];
+                    $SupportRewardModel = new SupportRewardModel();
+                    $SupportRewardModel->insert($invitedata);
+                }
         }
         //계좌 : member에서 조회해오는건?
         $data['isDiscounted'] = $isDiscounted;
@@ -1395,6 +1416,7 @@ class MoHome extends BaseController
                     } else {
                         // 참석 승인 요청 처리
                         $meeting_members_temp->insert($meetMemdata);
+                        $this->rewardUpdate($meeting_idx);
 
                         $query = "SELECT * FROM wh_meeting_members WHERE meeting_idx='" . $meeting_idx . "' AND meeting_master='K' AND delete_yn='N'";
                         $meeting_members
@@ -1406,6 +1428,7 @@ class MoHome extends BaseController
                             (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
                             VALUES((SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "'),'" . $ci . "','9','6','" . $msg_cont . "','9','9');";
                             $meeting_members->query($query);
+                            $this->rewardUpdate($meeting_idx);
                             return $this->response->setJSON(['success' => true, 'msg' => '참석 신청이 완료 되었습니다.']);
                         } else {
                             return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
@@ -1455,6 +1478,48 @@ class MoHome extends BaseController
         }
     }
 
+    /*서포터즈 리워드 업데이트*/
+    public function rewardUpdate($meeting_idx){
+        $SupportRewardModel = new SupportRewardModel();
+        $meetRewardChk = "SELECT m.gender 
+                        FROM wh_meeting_members wmm 
+                        LEFT JOIN members m ON wmm.member_ci = m.ci 
+                        WHERE wmm.meeting_idx = $meeting_idx
+                        ORDER BY wmm.meeting_idx DESC";
+        $meetRewardRow = $SupportRewardModel->query($meetRewardChk)->getResultArray();
+
+        $rewardTotalChk = "SELECT reward_meeting_members 
+                        FROM wh_support_reward
+                        WHERE reward_meeting_percent = $meeting_idx";
+        $rewardTotalRow = $SupportRewardModel->query($rewardTotalChk)->getRow();
+
+        // 총 인원 수 설정
+        $total = $rewardTotalRow;
+        $expectedHalf = $total / 2;
+        $maleCount = 0;
+        $femaleCount = 0;
+
+        // 남자와 여자의 수 계산
+        foreach ($meetRewardRow as $row) {
+            if ($row['gender'] == 0) {
+                $maleCount++;
+            } elseif ($row['gender'] == 1) {
+                $femaleCount++;
+            }
+        }
+
+        $maleDiff = abs($expectedHalf - $maleCount);
+        $femaleDiff = abs($expectedHalf - $femaleCount);
+
+        $maleDiffPercentage = ($maleDiff / $expectedHalf) * 100;
+        $femaleDiffPercentage = ($femaleDiff / $expectedHalf) * 100;
+
+        $accuracyPercentage = 100 - (($maleDiffPercentage + $femaleDiffPercentage) / 2);
+
+        // 리워드 내역 업데이트
+        $meetRewardQuery = "UPDATE wh_support_reward SET reward_meeting_percent = '".$accuracyPercentage."' WHERE reward_meeting_idx = '".$meeting_idx."'";
+        $SupportRewardModel->query($meetRewardQuery);
+    }
     public function mypageGroupApplyPopup()
     {
         $session = session();
