@@ -198,11 +198,11 @@ if ($ci) {
                         </div>
                         <div class="main_cont chat_div chat_div_left">
                             <div class="chat_profile_div">
-                                <img src="/static/images/chat_img_1.png" />
-                                <span>뽀로로<?= lang('Korean.sir') ?></span>
+                                <img style="width:50px; height:50px; border-radius: 50%;" src="/static/files/uploads/김도현.png" />
+                                <span>김도현<?= lang('Korean.sir') ?></span>
                             </div>
                             <div class="chat_talk_div">
-                                <p><?= lang('Korean.indexCon8') ?></p>
+                                <p>상대방 정보를 찔끔찔끔 보여주는게 아니라 알고싶은정보를 한번에 다 보여줘서 마음에 들어요 시원시원하네요.</p>
                                 <img src="/static/images/review_star.png" />
                                 <img src="/static/images/review_star.png" />
                                 <img src="/static/images/review_star.png" />
@@ -212,11 +212,11 @@ if ($ci) {
                         </div>
                         <div class="main_cont chat_div chat_div_right">
                             <div class="chat_profile_div">
-                                <img src="/static/images/chat_img_2.png" />
-                                <span>홍길동<?= lang('Korean.sir') ?></span>
+                                <img style="width:50px; height:50px; border-radius: 50%;" src="/static/files/uploads/정하준.png" />
+                                <span>정하준<?= lang('Korean.sir') ?></span>
                             </div>
                             <div class="chat_talk_div">
-                                <p><?= lang('Korean.indexCon8') ?></p>
+                                <p>베타오픈 기간 중 사용하고있어요. 날이 갈 수록 여기저기 채워지는 느낌이고 앞으로도 계속 좋아진다면 계속 사용할 것 같아요.</p>
                                 <img src="/static/images/review_star.png" />
                                 <img src="/static/images/review_star.png" />
                                 <img src="/static/images/review_star.png" />
@@ -226,11 +226,11 @@ if ($ci) {
                         </div>
                         <div class="main_cont chat_div chat_div_left">
                             <div class="chat_profile_div">
-                                <img src="/static/images/chat_img_3.png" />
-                                <span>손흥민<?= lang('Korean.sir') ?></span>
+                                <img style="width:50px; height:50px; border-radius: 50%;" src="/static/files/uploads/한지연.png" />
+                                <span>한지연<?= lang('Korean.sir') ?></span>
                             </div>
                             <div class="chat_talk_div">
-                                <p><?= lang('Korean.indexCon8') ?></p>
+                                <p>상대방 프로필을 확인하거나 메세지를 보낼 때 따로 포인트가 지불된다던가 과금된다던가 아니면 횟수제한이 있다던가 그런게 없어서 좋아요.</p>
                                 <img src="/static/images/review_star.png" />
                                 <img src="/static/images/review_star.png" />
                                 <img src="/static/images/review_star.png" />
@@ -240,11 +240,11 @@ if ($ci) {
                         </div>
                         <div class="main_cont chat_div chat_div_right no_margin">
                             <div class="chat_profile_div">
-                                <img src="/static/images/chat_img_4.png" />
-                                <span>김철수<?= lang('Korean.sir') ?></span>
+                                <img style="width:50px; height:50px; border-radius: 50%;" src="/static/files/uploads/최지혜.png" />
+                                <span>최지혜<?= lang('Korean.sir') ?></span>
                             </div>
                             <div class="chat_talk_div">
-                                <p><?= lang('Korean.indexCon8') ?></p>
+                                <p>사용한지 얼마 안되었는데 썸 타고 있어요ㅎ 뭔가 안심하고 새로운 사람을 만날 수 있는 서비스인것 같아서 마음에 들어요.</p>
                                 <img src="/static/images/review_star.png" />
                                 <img src="/static/images/review_star.png" />
                                 <img src="/static/images/review_star.png" />
