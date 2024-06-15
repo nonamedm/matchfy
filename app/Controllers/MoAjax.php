@@ -271,7 +271,7 @@ class MoAjax extends BaseController
 
         $query = "SELECT * FROM wh_support_members WHERE email = '" . $email . "' AND delete_yn='N';";
         $userChk = $SupportMemberModel->query($query)->getResultArray();
-       
+
         if ($userChk) { // email 이 존재하면 password 체크 시작
             $pswdEncode = password_hash($pswd, PASSWORD_DEFAULT);
             $pswdChk = password_verify($pswd, $userChk[0]['password']);
@@ -698,7 +698,7 @@ class MoAjax extends BaseController
                 ->where('delete_yn', 'N')
                 ->first();
             //초대코드 있을때만 insert
-            $invitedata=[];
+            $invitedata = [];
             if (!empty($result)) {
                 $data['invite_code'] = $inviteCode;
                 $inviteCodeChk = "SELECT ci FROM members WHERE unique_code='" . $inviteCode . "' AND delete_yn='n' LIMIT 1";
@@ -710,26 +710,26 @@ class MoAjax extends BaseController
                         'recommender_ci' => $inviteCodeRow->ci,
                         'recommender_gender' => $gender,
                         'reward_type' => 'invite',
-                        'reward_title' =>'추천인 정회원 가입',
+                        'reward_title' => '추천인 정회원 가입',
                         'reward_date' => date('Y-m-d H:i:s')
                     ];
                 }
             }
-            
+
             // 이메일과 전화번호로 verify_yn = y 인 항목을 한번 조회한다
             $query = "SELECT * FROM wh_email_register WHERE mobile_no='" . $mobile_no . "' AND member_email='" . $email . "' AND verify_yn='y' AND delete_yn='n'";
             $chkMailPhoneYn = $SupportMemberModel->query($query)->getResultArray();
             if ($chkMailPhoneYn) {
-                
+
                 // 데이터 저장
                 $inserted = $SupportMemberModel->insert($data);
-                if($inviteCode){
+                if ($inviteCode) {
                     $SupportRewardModel = new SupportRewardModel();
                     $SupportRewardModel->insert($invitedata);
                 }
                 // 회원가입 완료 되었을 떄
                 if ($inserted) {
-                    
+
                     if ($inserted) {
                         return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
                     } else {
@@ -922,7 +922,6 @@ class MoAjax extends BaseController
             } else {
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to referral matchfy', 'result' => '4']);
             }
-           
         }
     }
     protected function generateUniqueCode($MemberModel)
@@ -2403,12 +2402,12 @@ class MoAjax extends BaseController
             $SupportRewardModel = new SupportRewardModel();
             $rewardChk = "SELECT ci 
                         FROM wh_support_members
-                        WHERE ci = $member_ci";
+                        WHERE ci = '" . $member_ci . "'";
             $rewardChkRow = $SupportRewardModel->query($rewardChk)->getRow();
-            if($rewardChkRow){
+            if ($rewardChkRow) {
                 $group1 = 0;
                 $group2 = 0;
-    
+
                 if ($number_of_people % 2 == 0) {
                     $group1 = $number_of_people / 2;
                     $group2 = $number_of_people / 2;
@@ -2416,19 +2415,19 @@ class MoAjax extends BaseController
                     $group1 = ceil($number_of_people / 2);
                     $group2 = floor($number_of_people / 2);
                 }
-    
+
                 $dividePeople = $group1 . ':' . $group2;
-    
+
                 $meetRewardData = [
                     'ci' => $member_ci,
                     'reward_type' => 'meeting',
-                    'reward_title' =>$dividePeople.'오프라인 미팅 주최',
-                    'reward_meeting_idx'=> $insertedMeetingIdx,
-                    'reward_meeting_members'=>$number_of_people,
+                    'reward_title' => $dividePeople . '오프라인 미팅 주최',
+                    'reward_meeting_idx' => $insertedMeetingIdx,
+                    'reward_meeting_members' => $number_of_people,
                     'reward_meeting_percent' => '0',
                     'reward_date' => date('Y-m-d H:i:s')
                 ];
-                
+
                 $SupportRewardModel = new SupportRewardModel();
                 $SupportRewardModel->insert($meetRewardData);
             }
@@ -2470,11 +2469,12 @@ class MoAjax extends BaseController
         }
     }
 
-    function dividePeople($number_of_people) {
+    function dividePeople($number_of_people)
+    {
         // 두 그룹의 사람 수를 초기화
         $group1 = 0;
         $group2 = 0;
-    
+
         if ($number_of_people % 2 == 0) {
             // 짝수일 경우
             $group1 = $number_of_people / 2;
@@ -2484,7 +2484,7 @@ class MoAjax extends BaseController
             $group1 = ceil($number_of_people / 2);
             $group2 = floor($number_of_people / 2);
         }
-    
+
         return $group1 . ':' . $group2;
     }
 
