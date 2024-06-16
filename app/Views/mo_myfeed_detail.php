@@ -7,7 +7,9 @@
             <p id="feed_title" class="txt"><?=lang('Korean.feedDetail')?></p>
 
             <div class="myfeed_detail">
-                <img id="myfeed_detail_img" src="/static/images/profile_img_detail.png" style="display:none"/>
+                <div class="myfeed_detail_feed_box scroll_body">
+                    <img id="myfeed_detail_img" src="/static/images/profile_img_detail.png" style="display:none"/>
+                </div>
                 <video id="myfeed_detail_mov" src="/static/images/profile_img_detail.png" style="display:none"></video>
             </div>
             <div class="myfeed_cont">

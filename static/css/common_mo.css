@@ -3956,6 +3956,12 @@ input[type='number']::-webkit-inner-spin-button {
 .layerPopup_content .myfeed_detail video {
     width: 295px;
     height: 295px;
+    }
+.layerPopup_content .myfeed_detail .myfeed_detail_feed_box {
+    width: 100%;
+    height: 400px;
+    overflow: scroll;
+    overflow-x: visible;
 }
 .layerPopup_content .myfeed_cont {
     height: 100%;
