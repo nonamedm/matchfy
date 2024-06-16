@@ -11,7 +11,7 @@
                 ?>
                     <div class="chat_member">
                         <div class="chat_member_profile">
-                            <?php if ($row['chk'] !== 'me' && $row['member_gender'] !== $my_gender) {
+                            <?php if ($row['chk'] !== 'me' && $row['member_gender'] !== $my_gender && $fork_onoff === 'on') {
                                 if ($row['forked']) {
                             ?>
                                     <img onclick="fn_click_fork(<?= $row['entry_num'] ?>)" class="fork_img" src="/static/images/forked.png" />
@@ -23,7 +23,7 @@
                                 }
                             } else {
                                 ?>
-                                <img class="fork_img" src="" /><?= $fork_onoff ?>
+                                <img class="fork_img" src="" />
                             <?php
                             } ?>
                             <a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/<?= $row['nickname'] ?>')">

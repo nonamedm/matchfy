@@ -4258,7 +4258,7 @@ class MoAjax extends BaseController
             ->query($query)->getResultArray();
         if ($memberYn) {
             // 내가 방 참가자가 맞으면
-            $query = "UPDATE wh_chat_room_member SET DELETE_YN='y' WHERE room_ci='" . $room_ci . "' AND entry_num='" . $entry_num . "'";
+            $query = "UPDATE wh_chat_room_member SET delete_yn='y' WHERE room_ci='" . $room_ci . "' AND entry_num='" . $entry_num . "'";
             $banUsr = $ChatRoomMemberModel
                 ->query($query);
             $query = "UPDATE wh_chat_room SET room_count = (CAST(room_count AS UNSIGNED) - 1)
@@ -4274,6 +4274,37 @@ class MoAjax extends BaseController
             // echo print_r($allMsg);
         } else {
             echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
+    public function changeOnoff()
+    {
+        $MemberModel = new MemberModel();
+        $num = $this->request->getPost('num');
+        // 현재상태 확인
+        $query = "SELECT wm.idx, wm.title as title, wmf.onoff as onoff, wm.chat_room_ci as chat_room_ci
+        FROM wh_meetings wm 
+        LEFT OUTER JOIN wh_chat_room_member_forked_onoff wmf ON wm.chat_room_ci = wmf.room_ci 
+        WHERE wm.idx = '" . $num . "' 
+        ORDER BY wm.idx DESC;";
+        $onoffYn = $MemberModel
+            ->query($query)->getResultArray();
+
+        // onoff 값이 있으면
+        if ($onoffYn[0]['onoff'] === 'on') {
+            $query = "UPDATE wh_chat_room_member_forked_onoff SET onoff='off' WHERE room_ci='" . $onoffYn[0]['chat_room_ci'] . "'";
+        } else if ($onoffYn[0]['onoff'] === 'off') {
+            $query = "UPDATE wh_chat_room_member_forked_onoff SET onoff='on' WHERE room_ci='" . $onoffYn[0]['chat_room_ci'] . "'";
+        } else {
+            $query = "INSERT INTO wh_chat_room_member_forked_onoff
+                    (room_ci, onoff)
+                    VALUES('" . $onoffYn[0]['chat_room_ci'] . "', 'on');";
+        }
+        $onoffResult = $MemberModel
+            ->query($query);
+        if ($onoffResult) {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $onoffYn[0]['chat_room_ci']]]);
+        } else {
             return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
         }
     }

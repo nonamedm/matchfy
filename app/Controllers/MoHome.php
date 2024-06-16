@@ -461,7 +461,7 @@ class MoHome extends BaseController
                             (SELECT gender FROM members WHERE ci=where_ci) AS member_gender,
                             (SELECT idx FROM wh_chat_room_member_forked WHERE partner_ci=where_ci AND member_ci='" . $ci . "' AND room_ci='" . $room_ci . "' AND delete_yn='n') AS forked
                             FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
-            log_message('1', $query);
+
             $memberInfo = $ChatRoomMemberModel
                 ->query($query)->getResultArray();
             $query = "SELECT room_type FROM wh_chat_room WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
@@ -478,7 +478,7 @@ class MoHome extends BaseController
             $query = "SELECT onoff FROM wh_chat_room_member_forked_onoff WHERE room_ci='" . $room_ci . "';";
             $forkOnoff = $MemberModel
                 ->query($query)->getResultArray();
-
+            log_message('1', $query);
             $data['room_ci'] = $room_ci;
             $data['allMsg'] = $allMsg;
             $data['member_info'] = $memberInfo;

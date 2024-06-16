@@ -595,7 +595,7 @@ class AdminHome extends BaseController
             $BoardModel->setTableName('wh_board_terms');
         } else if ($board_name == 'news') {
             $BoardModel->setTableName('wh_board_news');
-        }else if($board_name == 'spfaq'){
+        } else if ($board_name == 'spfaq') {
             $BoardModel->setTableName('wh_support_board_faq');
         }
 
@@ -610,7 +610,7 @@ class AdminHome extends BaseController
                 return redirect()->to('/ad/terms/termsList')->with('msg', '삭제되었습니다.');
             } else if ($board_name == 'news') {
                 return redirect()->to('/ad/intro/newsList')->with('msg', '삭제되었습니다.');
-            }else if($board_name == 'spfaq'){
+            } else if ($board_name == 'spfaq') {
                 return redirect()->to('/ad/support/faqList')->with('msg', '삭제되었습니다.');
             }
         } else {
@@ -867,6 +867,41 @@ class AdminHome extends BaseController
             $adminId = $adminVerify[0]['email'];
             if ($adminId === 'admin' || $adminId === 'develop') {
                 return view('admin/ad_member_mngment', $data);
+            } else {
+                return redirect()->to("/");
+            }
+        }
+    }
+    public function forkMngment($page = null)
+    {
+
+        // 페이지가 없으면 기본값으로 1을 사용
+        if ($page === null || !is_numeric($page)) {
+            $page = 1;
+        } else {
+            $page = 2;
+        }
+
+        $perPage = 20;
+        $MemberModel = new MemberModel();
+
+        $total = $MemberModel->query("SELECT COUNT(*) as total FROM members m LEFT JOIN member_files mf ON m.ci = mf.member_ci")->getRow()->total;
+
+        $offset = ($page - 1) * $perPage; // 현재 페이지의 첫 번째 데이터 인덱스
+        $query = "SELECT wm.idx, wm.title as title, wmf.onoff as onoff FROM wh_meetings wm LEFT OUTER JOIN wh_chat_room_member_forked_onoff wmf ON wm.chat_room_ci = wmf.room_ci ORDER BY wm.idx DESC;";
+
+        $data['datas'] = $MemberModel->query($query)->getResultArray();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT * FROM members WHERE ci='" . $ci . "'";
+
+        $adminVerify = $MemberModel->query($query)->getResultArray();
+        if ($adminVerify) {
+            $adminId = $adminVerify[0]['email'];
+            if ($adminId === 'admin' || $adminId === 'develop') {
+                return view('admin/ad_fork_mngment', $data);
             } else {
                 return redirect()->to("/");
             }
@@ -1152,10 +1187,11 @@ class AdminHome extends BaseController
         return view('admin/ad_sp_notice_edit');
     }
 
-    public function spNoticeList() :string{
+    public function spNoticeList(): string
+    {
         $fileData = new BoardFileModel();
-        $query = $fileData->
-            select('bo.id AS notice_id,
+        $query = $fileData->select(
+            'bo.id AS notice_id,
                     bo.title AS title,
                     bo.content AS content,
                     bo.author AS author,
@@ -1170,15 +1206,15 @@ class AdminHome extends BaseController
                     bf.file_name AS file_name,
                     bf.file_path AS file_path,
                     bf.org_name AS org_name'
-                    )
-            ->from('wh_support_board_notice bo')  
+        )
+            ->from('wh_support_board_notice bo')
             ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
             ->groupBy('bo.id')
             ->orderBy('bo.id', 'DESC')
             ->get();
 
-        $data['datas'] = $query->getResultArray(); 
-        
+        $data['datas'] = $query->getResultArray();
+
         return view('admin/ad_sp_notice_list', $data);
     }
 
@@ -1187,13 +1223,13 @@ class AdminHome extends BaseController
         $title = $this->request->getPost('title');
         $content = $this->request->getPost('content');
         $file = $this->request->getFile('userfile');
-    
+
         if ($file->isValid()) {
-            $upload= new Upload();
-            $fileData = $upload->Boardupload($file,'wh_support_board_notice','notice',$title,$content);
-            
+            $upload = new Upload();
+            $fileData = $upload->Boardupload($file, 'wh_support_board_notice', 'notice', $title, $content);
+
             if ($fileData) {
-                return redirect()->to("/ad/support/noticeList")->with('msg', '등록이 완료되었습니다.');    
+                return redirect()->to("/ad/support/noticeList")->with('msg', '등록이 완료되었습니다.');
             } else {
                 return redirect()->to("/ad/support/noticeList")->with('msg', '등록이 실패 되었습니다.');
             }
@@ -1217,12 +1253,11 @@ class AdminHome extends BaseController
             } else {
                 return redirect()->to('/ad/support/noticeEdit')->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
             }
-
-        
         }
     }
 
-    public function spNoticeView($id){
+    public function spNoticeView($id)
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_support_board_notice');
         $data['notice'] = $BoardModel->find($id);
@@ -1233,7 +1268,8 @@ class AdminHome extends BaseController
         return view('admin/ad_sp_notice_view', $data);
     }
 
-    public function spNoticeModify($id){
+    public function spNoticeModify($id)
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_support_board_notice');
         $data['notice'] = $BoardModel->find($id);
@@ -1247,37 +1283,38 @@ class AdminHome extends BaseController
         return view('admin/ad_sp_notice_modify', $data);
     }
 
-    public function spNoticeUpdate(){
+    public function spNoticeUpdate()
+    {
         $boardId = $this->request->getPost('notice_id');
         $fileId = $this->request->getPost('file_id');
         $boardType = $this->request->getPost('board_type');
         $title = $this->request->getPost('title');
         $content = $this->request->getPost('content');
         $newFile = $this->request->getFile('userfile');
-        
+
         if ($newFile->isValid()) {
-            $upload= new Upload();
-            if($fileId){//있던 파일 수정
+            $upload = new Upload();
+            if ($fileId) { //있던 파일 수정
                 $fileType = 'udtFile';
-            }else if(!$fileId){//없던 파일 등록
+            } else if (!$fileId) { //없던 파일 등록
                 $fileType = 'newFile';
             }
-            
-            $fileData = $upload->BoardUpdate($newFile,'wh_support_board_notice',$boardType,$title,$content,$boardId,$fileId,$fileType);
-            
+
+            $fileData = $upload->BoardUpdate($newFile, 'wh_support_board_notice', $boardType, $title, $content, $boardId, $fileId, $fileType);
+
             if ($fileData) {
-                return redirect()->to("/ad/support/noticeList")->with('msg', '등록이 완료되었습니다.');    
+                return redirect()->to("/ad/support/noticeList")->with('msg', '등록이 완료되었습니다.');
             } else {
                 return redirect()->to("/ad/support/noticeList")->with('msg', '등록이 실패 되었습니다.');
             }
-        }else{
+        } else {
             $BoardModel = new BoardModel();
             $BoardModel->setTableName('wh_support_board_notice');
 
             $updated = $BoardModel->update($boardId, [
                 'title' => $title,
                 'content' => $content,
-                'updated_at'=>'admin'
+                'updated_at' => 'admin'
             ]);
 
             if ($updated) {
@@ -1285,19 +1322,19 @@ class AdminHome extends BaseController
             } else {
                 return redirect()->to("/ad/support/noticeEdit/{$boardId}")->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
             }
-            
         }
     }
 
-    public function spNoticeDelete(){
+    public function spNoticeDelete()
+    {
         $BoardId = $this->request->getPost('BoardId');
         $fileId = $this->request->getPost('fileId');
 
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_support_board_notice');
-        $deleted = $BoardModel->delete($BoardId);   
+        $deleted = $BoardModel->delete($BoardId);
 
-        if($fileId){
+        if ($fileId) {
             $BoardFileModel = new BoardFileModel();
             $BoardFileModel->delete($fileId);
         }
@@ -1309,11 +1346,12 @@ class AdminHome extends BaseController
         }
     }
 
-    public function spfileDelete(){
+    public function spfileDelete()
+    {
         $fileId = $this->request->getPost('fileId');
 
         $BoardFileModel = new BoardFileModel();
-        
+
         $deleted = $BoardFileModel->delete($fileId);
 
         if ($deleted) {
@@ -1348,27 +1386,28 @@ class AdminHome extends BaseController
 
         if ($inserted) {
             return redirect()->to('/ad/support/faqList')->with('msg', '등록이 완료 되었습니다.');
-
-        }else{
+        } else {
             return redirect()->to('/ad/support/faqEdit')->with('msg', '입력을 처리하는 도중 오류가 발생했습니다.');
         }
     }
 
-    public function spFaqList(){
+    public function spFaqList()
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_support_board_faq');
 
         $data['faqs'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
 
-        return view('admin/ad_sp_faq_list',$data);
+        return view('admin/ad_sp_faq_list', $data);
     }
 
-    public function spFaqModify($id){
+    public function spFaqModify($id)
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_support_board_faq');
-        $data['faq'] = $BoardModel->find($id); 
+        $data['faq'] = $BoardModel->find($id);
 
-        
+
         if ($data['faq'] === null) {
             return redirect()->to('/ad/spport/faqList')->with('msg', '해당 데이터를 찾을 수 없습니다.');
         }
@@ -1376,25 +1415,26 @@ class AdminHome extends BaseController
         return view('admin/ad_sp_faq_modify', $data);
     }
 
-    public function spFaqUpdate(){
+    public function spFaqUpdate()
+    {
         $id = $this->request->getPost('faq_id');
         $title = $this->request->getPost('title');
         $content = $this->request->getPost('content');
-    
+
         if (!$id || !is_numeric($id)) {
             return redirect()->to('/ad/support/faqList')->with('msg', '잘못된 요청입니다.');
         }
-    
+
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_support_board_faq');
 
         $updated = $BoardModel->update($id, [
             'title' => $title,
             'content' => $content,
-            'updated_at'=>date('Y-m-d H:i:s'),
-            'updated_at'=>'admin'
+            'updated_at' => date('Y-m-d H:i:s'),
+            'updated_at' => 'admin'
         ]);
-    
+
         if ($updated) {
             return redirect()->to('/ad/support/faqList')->with('msg', 'FAQ가 업데이트 되었습니다.');
         } else {
@@ -1402,16 +1442,18 @@ class AdminHome extends BaseController
         }
     }
 
-    public function spFaqView($id){
+    public function spFaqView($id)
+    {
         $BoardModel = new BoardModel();
         $BoardModel->setTableName('wh_support_board_faq');
-        $data['faq'] = $BoardModel->find($id); 
+        $data['faq'] = $BoardModel->find($id);
 
         return view('admin/ad_sp_faq_view', $data);
     }
 
     /*서포터즈 리워드 내역확인*/
-    public function rewordList($page = null){
+    public function rewordList($page = null)
+    {
 
         if ($page === null || !is_numeric($page)) {
             $page = 1;
@@ -1455,28 +1497,28 @@ class AdminHome extends BaseController
         return view('admin/ad_reword_list', $data);
     }
 
-    public function rewordChkApprove(){
+    public function rewordChkApprove()
+    {
         $level = $this->request->getPost('level');
         $idx = $this->request->getPost('id');
-    
+
         $SupportRewordModel = new SupportRewordModel();
 
         $updated = $SupportRewordModel
-                ->where('idx', $idx)
-                ->set(['check' => $level])
-                ->update();
+            ->where('idx', $idx)
+            ->set(['check' => $level])
+            ->update();
 
         if ($updated) {
-            if($level =='1'){
+            if ($level == '1') {
                 return $this->response->setJSON(['success' => true, 'msg' => '지급 확인 되었습니다.']);
-            }else if($level =='2'){
+            } else if ($level == '2') {
                 return $this->response->setJSON(['success' => true, 'msg' => '지급 불가 되었습니다.']);
-            }else if($level =='0'){
+            } else if ($level == '0') {
                 return $this->response->setJSON(['success' => true, 'msg' => '확인 처리 되었습니다.']);
             }
         } else {
             return $this->response->setJSON(['error' => true, 'msg' => '승인 실패.']);
         }
-    
     }
 }
