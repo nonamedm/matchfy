@@ -2469,3 +2469,24 @@ const supportPasswdUpdate = () => {
     } else {
     }
 };
+const helpJopPopup=() =>{
+    var html = '';
+    html += '<div class="layerPopup alert middle callAlert">';
+    html += '<div class="layerPopup_wrap">';
+    html += '<div class="layerPopup_content medium" style="padding:20px;min-height: 245px;">';
+    html += '<p class="txt">직업 도움말</p>';
+    html += '<div class="apply_group">';
+    html += '<p style="text-align: left;">1군 : 법인대표, 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)</p>';
+    html += '<p style="text-align: left;">2군 : 상장사, 대기업, 공기업 회사원/공무원/개인사업자</p>';
+    html += '<p style="text-align: left;">3군 : 중소기업 회사원/프리랜서 등 기타</p>';
+    html += '</div>';
+    html += '<div class="layerPopup_bottom">';
+    html += '<div class="btn_group multy">';
+    html += '<button class="btn type01" onclick="closePopup();">확인</button>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    $('body').append(html);
+}
