@@ -187,9 +187,10 @@ const submitFormAgree = () => {
     const agree1 = document.getElementById('agree1');
     const agree2 = document.getElementById('agree2');
     const agree3 = document.getElementById('agree3');
+    const agree4 = document.getElementById('agree4');
 
     // agree1, agree2, agree3의 체크 여부 확인
-    const isAllChecked = agree1.checked && agree2.checked && agree3.checked;
+    const isAllChecked = agree1.checked && agree2.checked && agree3.checked && agree4.checked;
 
     // 모든 체크박스의 상태를 변경
     if (isAllChecked) {
@@ -204,15 +205,17 @@ const SupportSubmitFormAgree = () => {
     const agree1 = document.getElementById('agree1');
     const agree2 = document.getElementById('agree2');
     const agree3 = document.getElementById('agree3');
+    const agree4 = document.getElementById('agree4');
 
     // agree1, agree2, agree3의 체크 여부 확인
-    const isAllChecked = agree1.checked && agree2.checked && agree3.checked;
+    const isAllChecked = agree1.checked && agree2.checked && agree3.checked && agree4.checked;
 
     // 모든 체크박스의 상태를 변경
     if (isAllChecked) {
         document.getElementById('hiddenAgree1').value = agree1.checked ? 'Y' : 'N';
         document.getElementById('hiddenAgree2').value = agree2.checked ? 'Y' : 'N';
         document.getElementById('hiddenAgree3').value = agree3.checked ? 'Y' : 'N';
+        document.getElementById('hiddenAgree4').value = agree4.checked ? 'Y' : 'N';
 
         submitForm();
     } else {
@@ -894,14 +897,16 @@ const totalAgree = () => {
     const agree1 = document.getElementById('agree1');
     const agree2 = document.getElementById('agree2');
     const agree3 = document.getElementById('agree3');
+    const agree4 = document.getElementById('agree4');
 
     // agree1, agree2, agree3의 체크 여부 확인
-    const isAllChecked = agree1.checked && agree2.checked && agree3.checked;
+    const isAllChecked = agree1.checked && agree2.checked && agree3.checked && agree4.checked;
 
     // 모든 체크박스의 상태를 변경
     agree1.checked = !isAllChecked;
     agree2.checked = !isAllChecked;
     agree3.checked = !isAllChecked;
+    agree4.checked = !isAllChecked;
 };
 
 const chkAgree = () => {
@@ -909,10 +914,11 @@ const chkAgree = () => {
     const agree1 = document.getElementById('agree1');
     const agree2 = document.getElementById('agree2');
     const agree3 = document.getElementById('agree3');
+    const agree4 = document.getElementById('agree4');
     const totAgree = document.getElementById('totAgree');
 
     // 모든 체크박스가 체크되어 있다면 totAgree도 체크
-    const allChecked = agree1.checked && agree2.checked && agree3.checked;
+    const allChecked = agree1.checked && agree2.checked && agree3.checked && agree4.checked;
     totAgree.checked = allChecked;
 };
 
