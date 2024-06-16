@@ -4167,6 +4167,241 @@ class MoAjax extends BaseController
         }
     }
 
+    public function forked()
+    {
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $room_ci = $this->request->getPost('room_ci');
+        $entry_num = $this->request->getPost('num');
+        // 내가 이 방의 참가자가 맞는지 다시 확인
+        $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "'";
+        $memberYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($memberYn) {
+            // 내가 방 참가자가 맞으면
+            $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND entry_num='" . $entry_num . "' AND delete_yn='n'";
+            $forkUsr = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            // 채팅창 정원 확인하고
+            $query = "SELECT number_of_people FROM wh_meetings WHERE chat_room_ci='" . $room_ci . "'";
+            $forkLimitCnt = $ChatRoomModel->query($query)->getResultArray();
+            if ($forkLimitCnt[0]['number_of_people'] > 6) {
+                $forkLimit = $forkLimitCnt[0]['number_of_people'] * 0.5;
+            } else {
+                $forkLimit = $forkLimitCnt[0]['number_of_people'] * 0.3;
+            }
+
+            // 현재 fork 몇번 찔렀는지부터 확인
+            $query = "SELECT COUNT(*) AS fork_cnt FROM wh_chat_room_member_forked WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "' AND delete_yn='n'";
+            $forkCnt = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            // 정해진 fork 횟수 이하이거나 찌른적이 없으면
+            if (!$forkCnt || $forkCnt[0]['fork_cnt'] <= $forkLimit) {
+                // fork 상대방 ci 가져오기
+                $query = "SELECT * FROM members WHERE ci='" . $forkUsr[0]['member_ci'] . "' AND delete_yn='N'";
+                $forkUsrMbrInfo = $MemberModel->query($query)->getResultArray();
+
+                if ($forkUsrMbrInfo) {
+                    // 상대방이 현재 탈퇴자가 아니면 forked 여부 확인
+                    $query = "SELECT * FROM wh_chat_room_member_forked WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "' AND partner_ci = '" . $forkUsrMbrInfo[0]['ci'] . "' AND delete_yn='n'";
+                    $forkedYn = $MemberModel->query($query)->getResultArray();
+
+                    if ($forkedYn) {
+                        // 찔렀던 적이 있으면 취소시킴 --> 지금은 한번 찌르면 끝
+                        // $query = "UPDATE wh_chat_room_member_forked SET delete_yn='y' WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "' AND partner_ci = '" . $forkUsrMbrInfo[0]['ci'] . "'";
+                        // $MemberModel->query($query);
+                        return $this->response->setJSON(['status' => 're_forked', 'message' => 'failed']);
+                    } else {
+                        // 처음 찌른다
+                        $query = "INSERT INTO wh_chat_room_member_forked (room_ci, member_ci, partner_ci) VALUES('" . $room_ci . "', '" . $ci . "', '" . $forkUsrMbrInfo[0]['ci'] . "')";
+                        $MemberModel->query($query);
+
+                        // 상대방도 날 찔렀는지 확인
+                        $query = "SELECT * FROM wh_chat_room_member_forked WHERE room_ci='" . $room_ci . "' AND member_ci='" . $forkUsrMbrInfo[0]['ci'] . "' AND partner_ci = '" . $ci . "' AND delete_yn='n'";
+                        $forkedYnRev = $MemberModel->query($query)->getResultArray();
+
+
+                        // 서로 찔렀으면
+                        if ($forkedYnRev) {
+                            // 먼저 AI채팅방 생성여부 확인 후 생성부터 하고
+                            $ChatRoomAiModel = new ChatRoomAiModel();
+                            $ChatRoomMemberAiModel = new ChatRoomMemberAiModel();
+                            $ChatRoomMsgAiModel = new ChatRoomMsgAiModel();
+                            $chat_room_ci = $ci; //member_ci와 동일
+
+                            // 내가 이 방의 참가자가 맞는지 다시 확인
+                            $query = "SELECT * FROM wh_chat_room_member_ai WHERE room_ci='" . $chat_room_ci . "' AND member_ci='" . $ci . "'";
+                            $memberYn = $ChatRoomMemberAiModel
+                                ->query($query)->getResultArray();
+                            if ($memberYn) {
+                                // 이미 방이 존재하면
+                            } else {
+                                // 생성된 AI채팅방이 없으면 생성하기
+                                $chatquery = "INSERT INTO wh_chat_room_ai
+                                            (room_ci, room_type, room_count, delete_yn, created_at, updated_at)
+                                            VALUES('" . $chat_room_ci . "', '2', '1', 'n', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                                $createMultyChat = $ChatRoomAiModel->query($chatquery);
+
+                                if ($createMultyChat) {
+                                    // 나를 참가시킴
+                                    $chatquery = "INSERT INTO wh_chat_room_member_ai
+                                                (room_ci, member_ci, entry_num, member_type, delete_yn, entered_at, created_at, updated_at)
+                                                VALUES('" . $chat_room_ci . "', '" . $ci . "', '1','0', 'n', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                                    $enterMultyChat = $ChatRoomMemberAiModel->query($chatquery);
+
+                                    // AI매니저를 참가시킴
+                                    $chatquery = "INSERT INTO wh_chat_room_member_ai
+                                                (room_ci, member_ci, entry_num, member_type, delete_yn, entered_at, created_at, updated_at)
+                                                VALUES('" . $chat_room_ci . "', 'AImanager', '2','8', 'n', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                                    $enterMultyChat = $ChatRoomMemberAiModel->query($chatquery);
+                                }
+                            }
+
+                            // 이후 메세지 생성
+                            $word_file_path = APPPATH . 'Data/MemberCode.php';
+                            require($word_file_path);
+                            // 상대방 정보 쿼리
+                            $query = "SELECT mb.ci, mb.name, SUBSTR(mb.birthday, 1, 4)AS birthday, mb.city, mb.town, mb.nickname, mb.mbti, mf.file_path, mf.file_name
+                                      FROM members mb, member_files mf WHERE mb.ci = mf.member_ci AND mf.board_type='main_photo' AND mf.delete_yn='n' AND mb.ci = '" . $forkUsrMbrInfo[0]['ci'] . "'";
+                            $yourProfile = $MemberModel->query($query)->getResultArray();
+                            $mbtiTxt = '';
+                            $cityTxt = '';
+                            $townTxt = '';
+
+                            foreach ($mbtiCode as $item) {
+                                if ($item['id'] === $yourProfile[0]['mbti']) $mbtiTxt = $item['name'];
+                            }
+                            foreach ($sidoCode as $item) {
+                                if ($item['id'] === $yourProfile[0]['city']) $cityTxt = $item['name'];
+                            }
+                            foreach ($gunguCode as $item) {
+                                if ($item['p_id'] === $yourProfile[0]['city'] && $item['id'] === $yourProfile[0]['town']) $townTxt = $item['name'];
+                            }
+                            // 서로 포크 시 AI 메세지 전송
+                            $aiMsgSend1 = '<div class="recieve_profile">';
+                            $aiMsgSend1 .= '<img style="width:50px; height:50px; border-radius: 50%;" src="/' . $yourProfile[0]['file_path'] . $yourProfile[0]['file_name'] . '">';
+                            $aiMsgSend1 .= '<div class="content_mypage_info">';
+                            $aiMsgSend1 .= '<div class="profile">';
+                            $aiMsgSend1 .= '<h2>' . $yourProfile[0]['name'] . '</h2>';
+                            // $aiMsgSend1 .= `<button class="match_percent">99%</button>`;
+                            $aiMsgSend1 .= '</div>';
+                            $aiMsgSend1 .= '<p>' . $yourProfile[0]['birthday'] . ' · ' . $cityTxt . ' ' . $townTxt . ' · ' . $mbtiTxt . '</p>';
+                            $aiMsgSend1 .= '</div>';
+                            $aiMsgSend1 .= '</div>';
+                            $aiMsgSend1 .= '<p class="receive_match_msg">띵동 AI 소개팅이 도착했어요<br> 정보를 확인하실래요?</p>';
+                            $aiMsgSend1 .= '<button style="width: 200px;" class="receive_profile_view" onclick="moveToUrl(`/mo/viewProfile/' . $yourProfile[0]['nickname'] . '`)">정보보기</button>';
+
+                            $query2 = "INSERT INTO wh_chat_room_msg_ai
+                            (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
+                            VALUES('" . $ci . "','AImanager','1','0','" . $aiMsgSend1 . "','9','9');";
+
+
+                            $sendMsg = $ChatRoomMsgAiModel->query($query2);
+
+                            // 이제부터 상대방에게 내정보도 전송
+                            $chat_room_ci = $forkUsrMbrInfo[0]['ci']; //member_ci와 동일
+
+                            // 내가 이 방의 참가자가 맞는지 다시 확인
+                            $query = "SELECT * FROM wh_chat_room_member_ai WHERE room_ci='" . $chat_room_ci . "' AND member_ci='" . $forkUsrMbrInfo[0]['ci'] . "'";
+                            $memberYn = $ChatRoomMemberAiModel
+                                ->query($query)->getResultArray();
+                            if ($memberYn) {
+                                // 이미 방이 존재하면
+                            } else {
+                                // 생성된 AI채팅방이 없으면 생성하기
+                                $chatquery = "INSERT INTO wh_chat_room_ai
+                                            (room_ci, room_type, room_count, delete_yn, created_at, updated_at)
+                                            VALUES('" . $chat_room_ci . "', '2', '1', 'n', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                                $createMultyChat = $ChatRoomAiModel->query($chatquery);
+
+                                if ($createMultyChat) {
+                                    // 나를 참가시킴
+                                    $chatquery = "INSERT INTO wh_chat_room_member_ai
+                                                (room_ci, member_ci, entry_num, member_type, delete_yn, entered_at, created_at, updated_at)
+                                                VALUES('" . $chat_room_ci . "', '" . $forkUsrMbrInfo[0]['ci'] . "', '1','0', 'n', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                                    $enterMultyChat = $ChatRoomMemberAiModel->query($chatquery);
+
+                                    // AI매니저를 참가시킴
+                                    $chatquery = "INSERT INTO wh_chat_room_member_ai
+                                                (room_ci, member_ci, entry_num, member_type, delete_yn, entered_at, created_at, updated_at)
+                                                VALUES('" . $chat_room_ci . "', 'AImanager', '2','8', 'n', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                                    $enterMultyChat = $ChatRoomMemberAiModel->query($chatquery);
+                                }
+                            }
+
+                            // 이후 메세지 생성
+                            // 상대방에게 보낼 내 정보 쿼리
+                            $query = "SELECT mb.name, SUBSTR(mb.birthday, 1, 4)AS birthday, mb.city, mb.town, mb.nickname, mb.mbti, mf.file_path, mf.file_name
+                                      FROM members mb, member_files mf WHERE mb.ci = mf.member_ci AND mf.board_type='main_photo' AND mf.delete_yn='n' AND mb.ci = '" . $ci . "'";
+                            $yourProfile2 = $MemberModel->query($query)->getResultArray();
+                            $mbtiTxt2 = '';
+                            $cityTxt2 = '';
+                            $townTxt2 = '';
+
+                            foreach ($mbtiCode as $item) {
+                                if ($item['id'] === $yourProfile2[0]['mbti']) $mbtiTxt2 = $item['name'];
+                            }
+                            foreach ($sidoCode as $item) {
+                                if ($item['id'] === $yourProfile2[0]['city']) $cityTxt2 = $item['name'];
+                            }
+                            foreach ($gunguCode as $item) {
+                                if ($item['p_id'] === $yourProfile2[0]['city'] && $item['id'] === $yourProfile2[0]['town']) $townTxt2 = $item['name'];
+                            }
+                            // 서로 포크 시 AI 메세지 전송
+                            $aiMsgSend2 = '<div class="recieve_profile">';
+                            $aiMsgSend2 .= '<img style="width:50px; height:50px; border-radius: 50%;" src="/' . $yourProfile2[0]['file_path'] . $yourProfile2[0]['file_name'] . '">';
+                            $aiMsgSend2 .= '<div class="content_mypage_info">';
+                            $aiMsgSend2 .= '<div class="profile">';
+                            $aiMsgSend2 .= '<h2>' . $yourProfile2[0]['name'] . '</h2>';
+                            // $aiMsgSend2 .= `<button class="match_percent">99%</button>`;
+                            $aiMsgSend2 .= '</div>';
+                            $aiMsgSend2 .= '<p>' . $yourProfile2[0]['birthday'] . ' · ' . $cityTxt2 . ' ' . $townTxt2 . ' · ' . $mbtiTxt2 . '</p>';
+                            $aiMsgSend2 .= '</div>';
+                            $aiMsgSend2 .= '</div>';
+                            $aiMsgSend2 .= '<p class="receive_match_msg">띵동 AI 소개팅이 도착했어요<br> 정보를 확인하실래요?</p>';
+                            $aiMsgSend2 .= '<button style="width: 200px;" class="receive_profile_view" onclick="moveToUrl(`/mo/viewProfile/' . $yourProfile2[0]['nickname'] . '`)">정보보기</button>';
+
+                            $query3 = "INSERT INTO wh_chat_room_msg_ai
+                            (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
+                            VALUES('" . $yourProfile[0]['ci'] . "','AImanager','1','0','" . $aiMsgSend2 . "','9','9');";
+
+                            $sendMsg = $ChatRoomMsgAiModel
+                                ->query($query3);
+
+
+                            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["result_value" => '1']]);
+                        } else {
+                            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["result_value" => '0']]);
+                        }
+                    }
+                } else {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => '0']]);
+                }
+            } else {
+                return $this->response->setJSON(['status' => 'too_many', 'message' => 'failed']);
+            }
+
+
+            if ($forkCnt) {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $forkLimit]]);
+            } else {
+                return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+            }
+
+            // echo print_r($allMsg);
+        } else {
+            echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
+
     public function sndRpt()
     {
         $ChatRoomMemberModel = new ChatRoomMemberModel();
