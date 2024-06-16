@@ -2487,7 +2487,7 @@ const helpJopPopup=() =>{
     html += '<p style="text-align: left;">3군 : 중소기업 회사원/프리랜서 등 기타</p>';
     html += '</div>';
     html += '<div class="layerPopup_bottom">';
-    html += '<div class="btn_group multy">';
+    html += '<div class="btn_group">';
     html += '<button class="btn type01" onclick="closePopup();">확인</button>';
     html += '</div>';
     html += '</div>';
@@ -2514,7 +2514,7 @@ const helpSinupSchoolPopup=() =>{
     html += '확인을 위해 시간이 필요한 점 양해 부탁드립니다.</p>';
     html += '</div>';
     html += '<div class="layerPopup_bottom">';
-    html += '<div class="btn_group multy">';
+    html += '<div class="btn_group">';
     html += '<button class="btn type01" onclick="closePopup();">확인</button>';
     html += '</div>';
     html += '</div>';
@@ -2541,7 +2541,7 @@ const helpSinupJopPopup=() =>{
     html += '확인을 위해 시간이 필요한 점 양해 부탁드립니다.</p>';
     html += '</div>';
     html += '<div class="layerPopup_bottom">';
-    html += '<div class="btn_group multy">';
+    html += '<div class="btn_group">';
     html += '<button class="btn type01" onclick="closePopup();">확인</button>';
     html += '</div>';
     html += '</div>';

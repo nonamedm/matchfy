@@ -275,7 +275,7 @@ header .header_title {
 header .menu_right.edit {
     font-weight: 700;
     font-size: 14px;
-    line-height: 17px;
+    line-height: 41px;
     text-align: right;
     color: #ff0267;
     cursor: pointer;
@@ -400,7 +400,7 @@ header .menu_right.edit {
     color: #555555;
 }
 .mo_wrap .sub_wrap .content_wrap .content_body {
-    margin: 35px 18px 35px;
+    margin: 35px 0px;
     text-align: center;
 }
 .mo_wrap .sub_wrap .content_wrap .content_partner.except_header {
@@ -1517,6 +1517,10 @@ a:active {
     margin: 0 auto;
     margin-bottom: 20px;
 }
+.content_wrap .mypage_wallet .mypage_wallet_list {
+    position: relative;
+    top: -50;
+}
 .content_wrap .mypage_wallet .mypage_wallet_list .mypage_wallet_filter {
     display: flex;
     justify-content: space-between;
@@ -2138,7 +2142,7 @@ a:active {
 }
 
 .form_row.signin_form {
-    padding: 20px 20px;
+    padding: 20px 0px;
 }
 .form_row.signin_form .signin_form_div {
     display: flex;
@@ -2592,8 +2596,7 @@ form input[type='file'] {
     /* padding: 10px; */
 }
 .btn_group.multy {
-    /* display: contents; */
-    display: flex;
+    display: contents;
     margin: 0 auto;
     width: 315px;
 }
@@ -2660,6 +2663,7 @@ form input[type='file'] {
     font-weight: 700;
     font-size: 14px;
     line-height: 22px;
+    margin-top: 30px;
 }
 
 .btn.type02 {
@@ -2713,6 +2717,7 @@ form input[type='file'] {
     color: #ffffff;
     text-align: center;
     line-height: 48px;
+    font-size: 15px;
 }
 
 .hoz_part {
@@ -4189,6 +4194,12 @@ input[type='number']::-webkit-inner-spin-button {
     .btn_group.multy {
         display: flex;
     }
+    .layerPopup_wrap .btn_group.multy2 {
+        display: contents;
+    }
+    .btn_group.multy2 {
+        display: flex;
+    }
     /*alliance apply*/
     .temp_input_text {
         border: 1px solid #dddddd;
@@ -4234,4 +4245,5 @@ input[type='number']::-webkit-inner-spin-button {
     color: #ff0267;
     display: none;
     font-size: 15px;
+    padding-right: 18px;
 }
