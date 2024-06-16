@@ -908,6 +908,93 @@ class AdminHome extends BaseController
         }
     }
 
+    public function partyMngment($page = null)
+    {
+
+        // 페이지가 없으면 기본값으로 1을 사용
+        if ($page === null || !is_numeric($page)) {
+            $page = 1;
+        } else {
+            $page = 2;
+        }
+
+
+
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT
+                    wmr.member_ci,
+                    wmr.my_nickname,
+                    wmr.your_ci AS your_ci,
+                    wmr.your_nickname,
+                    wmr.match_score,
+                    wmr.match_score_max,
+                    wmr.match_rate,
+                    wmr.ideal_rate,
+                    wmr.delete_yn,
+                    (SELECT extra1 FROM wh_meeting_members WHERE member_ci=wmr.your_ci AND meeting_idx='169') AS extra1
+                FROM
+                    wh_match_rate wmr
+                JOIN
+                    wh_meeting_members wmm ON wmr.member_ci = wmm.member_ci
+                JOIN
+                    wh_meeting_members wmm2 ON wmr.your_ci = wmm2.member_ci
+                WHERE
+                    wmm.meeting_idx = '169'
+                AND wmr.delete_yn ='n'
+                group by member_ci , your_ci ;";
+        $members = $MemberModel->query($query)->getResultArray();
+
+        // member_ci를 키로 사용하여 배열을 그룹화합니다.
+        $groupedMembers = [];
+        foreach ($members as $member) {
+            $groupedMembers[$member['member_ci']][] = $member;
+        }
+
+        // 각 그룹 내에서 match_rate에 따라 내림차순 정렬하고, 조건에 맞는 사람을 선택합니다.
+        $selectedMembers = [];
+        foreach ($groupedMembers as $memberCi => $membersArray) {
+            // match_rate로 내림차순 정렬
+            usort($membersArray, function ($a, $b) {
+                return $b['match_rate'] <=> $a['match_rate'];
+            });
+
+            // 조건에 맞는 첫 번째 인원을 찾습니다.
+            foreach ($membersArray as $member) {
+                if (strpos($member['member_ci'], 'testmember_email') === false && strpos($member['your_ci'], 'testmember_email') === false) { //더미데이터는 제외
+                    $query2 = "SELECT extra1 FROM wh_meeting_members WHERE meeting_idx='169' AND member_ci='" . $member['your_ci'] . "';";
+                    $partyMember = $MemberModel->query($query2)->getResultArray();
+                    if ($partyMember[0]['extra1'] === '' || $partyMember[0]['extra1'] === null) { // 찜 당하지 않은 사람만
+                        echo "<br/> " . $member['my_nickname'] . " -> " . $member['your_nickname'];
+                        $query = "UPDATE wh_meeting_members SET extra1='" . $member['my_nickname'] . "' WHERE member_ci='" . $member['your_ci'] . "' AND meeting_idx='169' AND delete_yn='n'";
+                        $MemberModel->query($query);
+                        $selectedMembers[$memberCi] = $member;
+                        break; // 조건에 맞는 첫 번째 사람을 찾으면 루프를 종료합니다.
+                    }
+                }
+            }
+        }
+        print_r($groupedMembers);
+
+
+
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT * FROM members WHERE ci='" . $ci . "'";
+
+        $adminVerify = $MemberModel->query($query)->getResultArray();
+        if ($adminVerify) {
+            $adminId = $adminVerify[0]['email'];
+            if ($adminId === 'admin' || $adminId === 'develop') {
+                return view('admin/ad_party_mngment');
+            } else {
+                return redirect()->to("/");
+            }
+        }
+    }
+
     public function memberCertificateCheck()
     {
         $level = $this->request->getPost('level');

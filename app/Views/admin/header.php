@@ -48,4 +48,7 @@
     <li class="menu_item">
         <a href="/ad/forkMngment">포크기능 on/off 관리</a>
     </li>
+    <li class="menu_item">
+        <a href="/ad/partyMngment">파티관리자 기능</a>
+    </li>
 </ul>
