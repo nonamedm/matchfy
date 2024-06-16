@@ -161,6 +161,7 @@ $routes->post('/ajax/chkVerifyCode', 'MoAjax::chkVerifyCode');
 
 /* 채팅 */
 $routes->post('/ajax/createChat', 'MoAjax::createChat');
+$routes->post('/ajax/createChatFork', 'MoAjax::createChatFork');
 $routes->post('/ajax/createMultyChat', 'MoAjax::createMultyChat');
 $routes->post('/ajax/sendMsg', 'MoAjax::sendMsg');
 $routes->post('/ajax/sendMsgAi', 'MoAjax::sendMsgAi');
@@ -168,6 +169,7 @@ $routes->post('/ajax/reloadMsg', 'MoAjax::reloadMsg');
 $routes->post('/ajax/reloadMsgAi', 'MoAjax::reloadMsgAi');
 $routes->post('/ajax/extRm', 'MoAjax::extRm');
 $routes->post('/ajax/banUsr', 'MoAjax::banUsr');
+$routes->post('/ajax/forked', 'MoAjax::forked');
 $routes->post('/ajax/sndRpt', 'MoAjax::sndRpt');
 $routes->post('/ajax/submitScdl', 'MoAjax::submitScdl');
 $routes->post('/ajax/partScdl', 'MoAjax::partScdl');

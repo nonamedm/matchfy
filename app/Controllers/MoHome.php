@@ -457,8 +457,11 @@ class MoHome extends BaseController
                                 WHEN member_ci = '" . $ci . "' THEN 'me'
                                 ELSE 'you' 
                             END) AS chk,
-                            entry_num
+                            entry_num,
+                            (SELECT gender FROM members WHERE ci=where_ci) AS member_gender,
+                            (SELECT idx FROM wh_chat_room_member_forked WHERE partner_ci=where_ci AND member_ci='" . $ci . "' AND room_ci='" . $room_ci . "' AND delete_yn='n') AS forked
                             FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
+            log_message('1', $query);
             $memberInfo = $ChatRoomMemberModel
                 ->query($query)->getResultArray();
             $query = "SELECT room_type FROM wh_chat_room WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
@@ -467,11 +470,22 @@ class MoHome extends BaseController
             $query = "SELECT member_type FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND member_ci='" . $ci . "';";
             $memberType = $ChatRoomMemberModel
                 ->query($query)->getResultArray();
+            $query = "SELECT gender FROM members WHERE ci='" . $ci . "';";
+            $myGender = $MemberModel
+                ->query($query)->getResultArray();
+
+            // 포크 onoff 여부 확인
+            $query = "SELECT onoff FROM wh_chat_room_member_forked_onoff WHERE room_ci='" . $room_ci . "';";
+            $forkOnoff = $MemberModel
+                ->query($query)->getResultArray();
+
             $data['room_ci'] = $room_ci;
             $data['allMsg'] = $allMsg;
             $data['member_info'] = $memberInfo;
             $data['room_type'] = $roomType;
             $data['member_type'] = $memberType;
+            $data['my_gender'] = $myGender[0]['gender'];
+            $data['fork_onoff'] = $forkOnoff[0]['onoff'];
             // echo print_r($allMsg);
             return view('mo_mymsg', $data);
         } else {

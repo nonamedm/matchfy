@@ -3431,7 +3431,13 @@ input[type='number']::-webkit-inner-spin-button {
 .layerPopup_content .chat_member .chat_member_profile {
     display: flex;
 }
-.layerPopup_content .chat_member .chat_member_profile img {
+.layerPopup_content .chat_member .chat_member_profile .fork_img {
+    width: 10px;
+    height: 20px;
+    margin: 10px 10px 0 0;
+    cursor: pointer;
+}
+.layerPopup_content .chat_member .chat_member_profile .nicknameBtnBox img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -3497,20 +3503,18 @@ input[type='number']::-webkit-inner-spin-button {
     text-align: left;
 }
 .layerPopup_content .chat_member .chat_member_report .type01 {
-    padding: 10px 20px;
     background: #ff0267;
     border-radius: 5px;
-    width: 75px;
+    width: 60px;
     height: 35px;
     color: #ffffff;
     border: none;
     font-size: 13px;
 }
 .layerPopup_content .chat_member .chat_member_report .type02 {
-    padding: 10px 20px;
     background: #555555;
     border-radius: 5px;
-    width: 75px;
+    width: 60px;
     height: 35px;
     color: #ffffff;
     border: none;

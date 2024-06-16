@@ -11,7 +11,22 @@
                 ?>
                     <div class="chat_member">
                         <div class="chat_member_profile">
-                            <a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/<?=$row['nickname']?>')">
+                            <?php if ($row['chk'] !== 'me' && $row['member_gender'] !== $my_gender) {
+                                if ($row['forked']) {
+                            ?>
+                                    <img onclick="fn_click_fork(<?= $row['entry_num'] ?>)" class="fork_img" src="/static/images/forked.png" />
+                                <?php
+                                } else {
+                                ?>
+                                    <img onclick="fn_click_fork(<?= $row['entry_num'] ?>)" class="fork_img" src="/static/images/fork_off.png" />
+                                <?php
+                                }
+                            } else {
+                                ?>
+                                <img class="fork_img" src="" /><?= $fork_onoff ?>
+                            <?php
+                            } ?>
+                            <a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/<?= $row['nickname'] ?>')">
                                 <img class="profile_img" src="/<?= $row['file_path'] ?><?= $row['file_name'] ?>" />
                                 <p><?= $row['name'] ?></p>
                             </a>
@@ -42,9 +57,10 @@
 
     });
     const banUsr = (num) => {
-        fn_confirm('강퇴하시겠습니까?','banusr')
+        fn_confirm('강퇴하시겠습니까?', 'banusr')
     }
-    function fn_banUsr(value){
+
+    function fn_banUsr(value) {
         if (value) {
             $.ajax({
                 url: '/ajax/banUsr',
@@ -77,5 +93,68 @@
         $('.layerPopup').css('display', 'none');
         $('.layerPopup.report').css('display', 'flex');
         $('#report_target').val(num);
+    }
+
+    const fn_click_fork = (num) => {
+        $.ajax({
+            url: '/ajax/forked',
+            type: 'POST',
+            data: {
+                "room_ci": $("#room_ci").val(),
+                "num": num
+            },
+            async: false,
+            success: function(data) {
+                console.log(data);
+                if (data.status === 'success') {
+                    // 성공
+                    // moveToUrl('/');
+                    // closePopup();
+                    if (data.data.result_value === '0') {
+                        fn_alert('찔러보기 성공!', '/mo/mymsg');
+                    } else if (data.data.result_value === '1') {
+                        $.ajax({
+                            url: '/ajax/createChatFork',
+                            type: 'POST',
+                            data: {
+                                "nickname": data.data.result_nickname
+                            },
+                            async: false,
+                            success: function(data) {
+                                if (data.status === 'success') {
+                                    // 성공
+                                    console.log(data)
+                                    moveToUrl('/mo/mymsg', {
+                                        room_ci: data.data.room_ci
+                                    });
+                                } else if (data.status === 'error') {
+                                    console.log('메세지 전송 실패', data);
+                                } else {
+                                    fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                                }
+                                return false;
+                            },
+                            error: function(data, status, err) {
+                                console.log(err);
+                                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                            },
+                        });
+                    }
+                } else if (data.status === 'error') {
+                    console.log('실패', data);
+                } else if (data.status === 're_forked') {
+                    fn_alert('이미 찔러본 대상은 중복 선택할 수 없습니다.');
+                } else if (data.status === 'too_many') {
+                    fn_alert('해당 모임의 포크 횟수 한도.');
+                } else {
+                    fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                }
+                return false;
+            },
+            error: function(data, status, err) {
+                console.log(err);
+                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            },
+        });
     }
 </script>
