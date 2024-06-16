@@ -2490,3 +2490,57 @@ const helpJopPopup=() =>{
     html += '</div>';
     $('body').append(html);
 }
+const helpSinupSchoolPopup=() =>{
+    var html = '';
+    html += '<div class="layerPopup alert middle callAlert">';
+    html += '<div class="layerPopup_wrap">';
+    html += '<div class="layerPopup_content medium" style="padding:20px;min-height: 482px;">';
+    html += '<p class="txt" style="color:#ff0267;">학교 인증을 꼭 해야 하나요?</p>';
+    html += '<div class="apply_group">';
+    html += '<p style="text-align: left;">학교 인증은 선택사항입니다.<br><br>';
+    html += '인증 없이 텍스트로 학교명을 입력해주셔도 됩니다.';
+    html += '다만 인증된 정보 옆에는 다른분들이 확인하실 수 있는 인증 뱃지가 부여됩니다.<br> 인증뱃지가 있는 프로필이 신뢰도가 더 높습니다.</p>';
+    html += '</div><br>';
+    html += '<p class="txt" style="color:#ff0267;">학교 인증을 꼭 해야 하나요?</p>';
+    html += '<div class="apply_group">';
+    html += '<p style="text-align: left;">인증버튼을 클릭하시면 이미지를 업로드할 수 있는 창이 나옵니다.<br><br>';
+    html += '졸업증명서, 재학증명서 등 본인의 학교를 인증할 수 있는 서류를 업로드 해 주시면 꼼꼼한 확인 과정을 거쳐 인증 뱃지가 부여됩니다.<br><br>';
+    html += '확인을 위해 시간이 필요한 점 양해 부탁드립니다.</p>';
+    html += '</div>';
+    html += '<div class="layerPopup_bottom">';
+    html += '<div class="btn_group multy">';
+    html += '<button class="btn type01" onclick="closePopup();">확인</button>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    $('body').append(html);
+}
+const helpSinupJopPopup=() =>{
+    var html = '';
+    html += '<div class="layerPopup alert middle callAlert">';
+    html += '<div class="layerPopup_wrap">';
+    html += '<div class="layerPopup_content medium" style="padding:20px;min-height: 482px;">';
+    html += '<p class="txt" style="color:#ff0267;">직업 인증을 꼭 해야 하나요?</p>';
+    html += '<div class="apply_group">';
+    html += '<p style="text-align: left;">직업 인증은 선택사항입니다.<br><br>';
+    html += '인증 없이 직업 분류만 선택해 주셔도 됩니다.<br><br>';
+    html += '다만 인증된 정보 옆에는 다른분들이 확인하실 수 있는 인증 뱃지가 부여됩니다. 인증뱃지가 있는 프로필이 신뢰도가 더 높습니다.</p>';
+    html += '</div><br>';
+    html += '<p class="txt" style="color:#ff0267;">직업  인증은 어떻게 하나요?</p>';
+    html += '<div class="apply_group">';
+    html += '<p style="text-align: left;">인증버튼을 클릭하시면 이미지를 업로드할 수 있는 창이 나옵니다.<br><br>';
+    html += '명함, 재직증명서, 면허 등 본인의 직업 인증할 수 있는 서류를 업로드 해 주시면 꼼꼼한 확인 과정을 거쳐 인증 뱃지가 부여됩니다.<br><br>';
+    html += '확인을 위해 시간이 필요한 점 양해 부탁드립니다.</p>';
+    html += '</div>';
+    html += '<div class="layerPopup_bottom">';
+    html += '<div class="btn_group multy">';
+    html += '<button class="btn type01" onclick="closePopup();">확인</button>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    $('body').append(html);
+}

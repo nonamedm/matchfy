@@ -2138,7 +2138,7 @@ a:active {
 }
 
 .form_row.signin_form {
-    padding: 20px 0px;
+    padding: 20px 20px;
 }
 .form_row.signin_form .signin_form_div {
     display: flex;
