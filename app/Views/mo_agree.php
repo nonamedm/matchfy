@@ -72,6 +72,18 @@
                                     <?= nl2br($privacy['content']); ?>
                                 </p>
                             </div>
+                            <div class="chk_box">
+                                <input type="checkbox" id="agree4" name="agree4" value="4" onclick="chkAgree()">
+                                <label class="agree_cont_label" for="agree4"><?= lang('Korean.agreePravacy5') ?></label>
+                            </div>
+                            <div class="textarea">
+                                <b>
+                                    <?= lang('Korean.agreePravacy5') ?>
+                                </b>
+                                <p>
+                                    프로모션 이벤트, 할인코드,  멤버 혜택 관련 최신 소식을 받아 보세요.
+                                </p>
+                            </div>
                         </div>
                     </div>
                     <input type="hidden" name="mobile_no" value="<?= $decrypted['mobileno'] ?>" />

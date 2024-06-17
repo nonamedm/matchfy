@@ -121,6 +121,7 @@ return [
     'agreePravacy2'   => '개인정보 제3자 제공동의 <span>(필수)</span>',
     'agreePravacy3'   => '주소를 입력해주세요',
     'agreePravacy4'   => '상세주소를 입력해주세요',
+    'agreePravacy5'   => '혜택정보 수신 동의 <span>(필수)</span>',
 
     // feed
     'feedDetail'      => '피드 상세',

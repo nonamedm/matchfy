@@ -319,6 +319,26 @@ class MoAjax extends BaseController
         }
     }
 
+    public function supportLoginParam($param)
+    {
+        $ci = $param;
+        $SupportMemberModel = new SupportMemberModel();
+
+        $user = $SupportMemberModel->where('ci', $ci)->first();
+
+        if ($user) {
+            $session = session();
+            $session->set([
+                'ci' => $user['ci'],
+                'name' => $user['name'],
+                'isLoggedIn' => true //로그인 상태
+            ]);
+            return '0';
+        } else {
+            return '1';
+        }
+    }
+
     public function logout()
     {
         $session = session();

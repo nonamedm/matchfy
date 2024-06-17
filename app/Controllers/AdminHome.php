@@ -11,7 +11,7 @@ use App\Models\AllianceModel;
 use App\Models\MemberModel;
 use App\Models\MemberFileModel;
 use App\Models\ReportMemberModel;
-use App\Models\SupportRewordModel;
+use App\Models\SupportRewardModel;
 
 
 class AdminHome extends BaseController
@@ -63,8 +63,9 @@ class AdminHome extends BaseController
         )
             ->from('wh_board_notice bo')
             ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
-            ->groupBy('bo.id')
+            ->groupBy('bo.id, bo.title, bo.content, bo.author, bo.update_author, bo.created_at, bo.updated_at, bo.hit, bo.board_type')
             ->orderBy('bo.id', 'DESC')
+            // ->limit(3) // 필요한 경우 limit 추가
             ->get();
 
         $data['datas'] = $query->getResultArray();

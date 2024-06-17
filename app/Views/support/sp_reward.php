@@ -122,7 +122,7 @@ function getGender($value){
                         </div>
                     <?php endforeach; ?>
                 <?php else : ?>
-                    <p>데이터가 없습니다.</p>
+                    <p style="color: #000;text-align: center;font-size: 12px;">데이터가 없습니다.</p>
                 <?php endif; ?>
                 </div>
                 <!-- <div class="alliance_sch_list">

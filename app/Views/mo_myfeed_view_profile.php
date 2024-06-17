@@ -186,6 +186,9 @@
                                                 if ($item['id'] === $job) echo  strstr($item['name'], ': ', true);
                                             } ?>
                                         </p>
+                                        <p onclick="helpJopPopup();">
+                                            <img src="/static/images/help_icon.png" style="width:17px;"/>
+                                        </p>
                                         <p>
                                             <?php if ($job_regist[0]['extra1'] === 'y') {
                                                 echo '<img src="/static/images/review_star.png" />';

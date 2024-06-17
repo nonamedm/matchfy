@@ -187,9 +187,10 @@ const submitFormAgree = () => {
     const agree1 = document.getElementById('agree1');
     const agree2 = document.getElementById('agree2');
     const agree3 = document.getElementById('agree3');
+    const agree4 = document.getElementById('agree4');
 
     // agree1, agree2, agree3의 체크 여부 확인
-    const isAllChecked = agree1.checked && agree2.checked && agree3.checked;
+    const isAllChecked = agree1.checked && agree2.checked && agree3.checked && agree4.checked;
 
     // 모든 체크박스의 상태를 변경
     if (isAllChecked) {
@@ -204,15 +205,17 @@ const SupportSubmitFormAgree = () => {
     const agree1 = document.getElementById('agree1');
     const agree2 = document.getElementById('agree2');
     const agree3 = document.getElementById('agree3');
+    const agree4 = document.getElementById('agree4');
 
     // agree1, agree2, agree3의 체크 여부 확인
-    const isAllChecked = agree1.checked && agree2.checked && agree3.checked;
+    const isAllChecked = agree1.checked && agree2.checked && agree3.checked && agree4.checked;
 
     // 모든 체크박스의 상태를 변경
     if (isAllChecked) {
         document.getElementById('hiddenAgree1').value = agree1.checked ? 'Y' : 'N';
         document.getElementById('hiddenAgree2').value = agree2.checked ? 'Y' : 'N';
         document.getElementById('hiddenAgree3').value = agree3.checked ? 'Y' : 'N';
+        document.getElementById('hiddenAgree4').value = agree4.checked ? 'Y' : 'N';
 
         submitForm();
     } else {
@@ -899,14 +902,16 @@ const totalAgree = () => {
     const agree1 = document.getElementById('agree1');
     const agree2 = document.getElementById('agree2');
     const agree3 = document.getElementById('agree3');
+    const agree4 = document.getElementById('agree4');
 
     // agree1, agree2, agree3의 체크 여부 확인
-    const isAllChecked = agree1.checked && agree2.checked && agree3.checked;
+    const isAllChecked = agree1.checked && agree2.checked && agree3.checked && agree4.checked;
 
     // 모든 체크박스의 상태를 변경
     agree1.checked = !isAllChecked;
     agree2.checked = !isAllChecked;
     agree3.checked = !isAllChecked;
+    agree4.checked = !isAllChecked;
 };
 
 const chkAgree = () => {
@@ -914,10 +919,11 @@ const chkAgree = () => {
     const agree1 = document.getElementById('agree1');
     const agree2 = document.getElementById('agree2');
     const agree3 = document.getElementById('agree3');
+    const agree4 = document.getElementById('agree4');
     const totAgree = document.getElementById('totAgree');
 
     // 모든 체크박스가 체크되어 있다면 totAgree도 체크
-    const allChecked = agree1.checked && agree2.checked && agree3.checked;
+    const allChecked = agree1.checked && agree2.checked && agree3.checked && agree4.checked;
     totAgree.checked = allChecked;
 };
 
@@ -2481,3 +2487,78 @@ const supportPasswdUpdate = () => {
     } else {
     }
 };
+const helpJopPopup=() =>{
+    var html = '';
+    html += '<div class="layerPopup alert middle callAlert">';
+    html += '<div class="layerPopup_wrap">';
+    html += '<div class="layerPopup_content medium" style="padding:20px;min-height: 245px;">';
+    html += '<p class="txt">직업 도움말</p>';
+    html += '<div class="apply_group">';
+    html += '<p style="text-align: left;">1군 : 법인대표, 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)</p>';
+    html += '<p style="text-align: left;">2군 : 상장사, 대기업, 공기업 회사원/공무원/개인사업자</p>';
+    html += '<p style="text-align: left;">3군 : 중소기업 회사원/프리랜서 등 기타</p>';
+    html += '</div>';
+    html += '<div class="layerPopup_bottom">';
+    html += '<div class="btn_group">';
+    html += '<button class="btn type01" onclick="closePopup();">확인</button>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    $('body').append(html);
+}
+const helpSinupSchoolPopup=() =>{
+    var html = '';
+    html += '<div class="layerPopup alert middle callAlert">';
+    html += '<div class="layerPopup_wrap">';
+    html += '<div class="layerPopup_content medium" style="padding:20px;min-height: 482px;">';
+    html += '<p class="txt" style="color:#ff0267;">학교 인증을 꼭 해야 하나요?</p>';
+    html += '<div class="apply_group">';
+    html += '<p style="text-align: left;">학교 인증은 선택사항입니다.<br><br>';
+    html += '인증 없이 텍스트로 학교명을 입력해주셔도 됩니다.';
+    html += '다만 인증된 정보 옆에는 다른분들이 확인하실 수 있는 인증 뱃지가 부여됩니다.<br> 인증뱃지가 있는 프로필이 신뢰도가 더 높습니다.</p>';
+    html += '</div><br>';
+    html += '<p class="txt" style="color:#ff0267;">학교 인증을 꼭 해야 하나요?</p>';
+    html += '<div class="apply_group">';
+    html += '<p style="text-align: left;">인증버튼을 클릭하시면 이미지를 업로드할 수 있는 창이 나옵니다.<br><br>';
+    html += '졸업증명서, 재학증명서 등 본인의 학교를 인증할 수 있는 서류를 업로드 해 주시면 꼼꼼한 확인 과정을 거쳐 인증 뱃지가 부여됩니다.<br><br>';
+    html += '확인을 위해 시간이 필요한 점 양해 부탁드립니다.</p>';
+    html += '</div>';
+    html += '<div class="layerPopup_bottom">';
+    html += '<div class="btn_group">';
+    html += '<button class="btn type01" onclick="closePopup();">확인</button>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    $('body').append(html);
+}
+const helpSinupJopPopup=() =>{
+    var html = '';
+    html += '<div class="layerPopup alert middle callAlert">';
+    html += '<div class="layerPopup_wrap">';
+    html += '<div class="layerPopup_content medium" style="padding:20px;min-height: 482px;">';
+    html += '<p class="txt" style="color:#ff0267;">직업 인증을 꼭 해야 하나요?</p>';
+    html += '<div class="apply_group">';
+    html += '<p style="text-align: left;">직업 인증은 선택사항입니다.<br><br>';
+    html += '인증 없이 직업 분류만 선택해 주셔도 됩니다.<br><br>';
+    html += '다만 인증된 정보 옆에는 다른분들이 확인하실 수 있는 인증 뱃지가 부여됩니다. 인증뱃지가 있는 프로필이 신뢰도가 더 높습니다.</p>';
+    html += '</div><br>';
+    html += '<p class="txt" style="color:#ff0267;">직업  인증은 어떻게 하나요?</p>';
+    html += '<div class="apply_group">';
+    html += '<p style="text-align: left;">인증버튼을 클릭하시면 이미지를 업로드할 수 있는 창이 나옵니다.<br><br>';
+    html += '명함, 재직증명서, 면허 등 본인의 직업 인증할 수 있는 서류를 업로드 해 주시면 꼼꼼한 확인 과정을 거쳐 인증 뱃지가 부여됩니다.<br><br>';
+    html += '확인을 위해 시간이 필요한 점 양해 부탁드립니다.</p>';
+    html += '</div>';
+    html += '<div class="layerPopup_bottom">';
+    html += '<div class="btn_group">';
+    html += '<button class="btn type01" onclick="closePopup();">확인</button>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    html += '</div>';
+    $('body').append(html);
+}
