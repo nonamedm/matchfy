@@ -19,11 +19,14 @@ class SupportHome extends BaseController
     {
         $session = session();
         $ci = $session->get('ci_support');
-
-        if ($ci) {
-            return redirect()->to("/support");
-        } else {
-            return view('/support/mo_index');
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
+            if ($result ==='0') {
+                return redirect()->to("/support");
+            } else {
+                return view('/support/mo_index');
+            }
         }
     }
 
@@ -33,83 +36,89 @@ class SupportHome extends BaseController
         $ci = $session->get('ci_support');
 
         if($ci){
-            /* 보유포인트 */
-            $my_point_value = $this->mypageGetPoint();
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
+
+            if($result ==='0'){
+                /* 보유포인트 */
+                $my_point_value = $this->mypageGetPoint();
+        
+                /* 포인트 적립내역 */
+                $page = 1;
+                $perPage = 3;
+        
+                $pointModel = new PointModel();
+        
+                $points = $pointModel->where('member_ci', $ci)
+                                    ->where('point_type', 'A')
+                                    ->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 week')))
+                                    ->orderBy('create_at', 'DESC')
+                                    ->findAll($perPage * $page, 0);
+        
+                /* 서포터즈 공지사항 */
+                $value = $this->request->getGet('value');
+                $fileData = new BoardFileModel();
+                $query = $fileData->select('bo.id AS notice_id,
+                                            bo.title AS title,
+                                            bo.content AS content,
+                                            bo.author AS author,
+                                            bo.update_author AS update_author,
+                                            bo.created_at AS created_at,
+                                            bo.updated_at AS updated_at,
+                                            bo.hit AS hit,
+                                            bo.board_type AS board_type,
+                                            MAX(bf.id) AS file_id,
+                                            MAX(bf.board_idx) AS board_idx,
+                                            MAX(bf.board_type) AS file_board_type,
+                                            MAX(bf.file_name) AS file_name,
+                                            MAX(bf.file_path) AS file_path,
+                                            MAX(bf.org_name) AS org_name,
+                                            (SELECT CONCAT(DATE_FORMAT(MIN(created_at), "%y.%m.%d"), " ~ ", DATE_FORMAT(MAX(created_at), "%y.%m.%d")) 
+                                            FROM wh_support_board_notice) AS created_at_range')
+                            ->from('wh_support_board_notice bo')
+                            ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
+                            ->groupBy('bo.id, bo.title, bo.content, bo.author, bo.update_author, bo.created_at, bo.updated_at, bo.hit, bo.board_type');
+        
+                if ($value == 'recent') {
+                    $query->orderBy('bo.id', 'DESC');
+                } else if ($value == 'popular') {
+                    $query->orderBy('bo.hit', 'DESC');
+                } else {
+                    $query->orderBy('bo.id', 'DESC');
+                }
+        
+                // Limit to 3 results
+                $query->limit(3);
+        
+                $data['datas'] = $query->get()->getResultArray();
+        
+                $BoardModel = new BoardModel();
+                $BoardModel->setTableName('wh_support_board_notice');
+        
+                $min_date_query = $BoardModel->query('SELECT MIN(created_at) AS min_date FROM wh_support_board_notice');
+                $max_date_query = $BoardModel->query('SELECT MAX(created_at) AS max_date FROM wh_support_board_notice');
+        
+                $min_date_row = $min_date_query->getRow();
+                $max_date_row = $max_date_query->getRow();
+        
+                $min_date = date('y.m.d', strtotime($min_date_row->min_date));
+                $max_date = date('y.m.d', strtotime($max_date_row->max_date));
+        
+                $data['min_date'] = $min_date;
+                $data['max_date'] = $max_date;
+        
+                return view('/support/sp_index', [
+                    'my_point' => $my_point_value,
+                    'points' => $points,
+                    'data' => $data
+                ]);
     
-            /* 포인트 적립내역 */
-            $page = 1;
-            $perPage = 3;
-    
-            $pointModel = new PointModel();
-    
-            $points = $pointModel->where('member_ci', $ci)
-                                ->where('point_type', 'A')
-                                ->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 week')))
-                                ->orderBy('create_at', 'DESC')
-                                ->findAll($perPage * $page, 0);
-    
-            /* 서포터즈 공지사항 */
-            $value = $this->request->getGet('value');
-            $fileData = new BoardFileModel();
-            $query = $fileData->select('bo.id AS notice_id,
-                                        bo.title AS title,
-                                        bo.content AS content,
-                                        bo.author AS author,
-                                        bo.update_author AS update_author,
-                                        bo.created_at AS created_at,
-                                        bo.updated_at AS updated_at,
-                                        bo.hit AS hit,
-                                        bo.board_type AS board_type,
-                                        MAX(bf.id) AS file_id,
-                                        MAX(bf.board_idx) AS board_idx,
-                                        MAX(bf.board_type) AS file_board_type,
-                                        MAX(bf.file_name) AS file_name,
-                                        MAX(bf.file_path) AS file_path,
-                                        MAX(bf.org_name) AS org_name,
-                                        (SELECT CONCAT(DATE_FORMAT(MIN(created_at), "%y.%m.%d"), " ~ ", DATE_FORMAT(MAX(created_at), "%y.%m.%d")) 
-                                        FROM wh_support_board_notice) AS created_at_range')
-                        ->from('wh_support_board_notice bo')
-                        ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
-                        ->groupBy('bo.id, bo.title, bo.content, bo.author, bo.update_author, bo.created_at, bo.updated_at, bo.hit, bo.board_type');
-    
-            if ($value == 'recent') {
-                $query->orderBy('bo.id', 'DESC');
-            } else if ($value == 'popular') {
-                $query->orderBy('bo.hit', 'DESC');
-            } else {
-                $query->orderBy('bo.id', 'DESC');
+            }else{
+                return view('/support/mo_index');
             }
-    
-            // Limit to 3 results
-            $query->limit(3);
-    
-            $data['datas'] = $query->get()->getResultArray();
-    
-            $BoardModel = new BoardModel();
-            $BoardModel->setTableName('wh_support_board_notice');
-    
-            $min_date_query = $BoardModel->query('SELECT MIN(created_at) AS min_date FROM wh_support_board_notice');
-            $max_date_query = $BoardModel->query('SELECT MAX(created_at) AS max_date FROM wh_support_board_notice');
-    
-            $min_date_row = $min_date_query->getRow();
-            $max_date_row = $max_date_query->getRow();
-    
-            $min_date = date('y.m.d', strtotime($min_date_row->min_date));
-            $max_date = date('y.m.d', strtotime($max_date_row->max_date));
-    
-            $data['min_date'] = $min_date;
-            $data['max_date'] = $max_date;
-    
-            return view('/support/sp_index', [
-                'my_point' => $my_point_value,
-                'points' => $points,
-                'data' => $data
-            ]);
-
         }else{
-            return redirect()->to("/support/mo_index");
+            return redirect()->to("/");
         }
-
     }
 
     public function idpwFindPass(): string
@@ -126,264 +135,429 @@ class SupportHome extends BaseController
 
     public function spmenu()
     {
-        return view('/support/sp_menu');
+        $session = session();
+        $ci = $session->get('ci');
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
+
+            if($result ==='0'){
+                return view('/support/sp_menu');
+            }else{
+                return view('/support/mo_index');
+            }
+        }else{
+            return redirect()->to("/");
+        }
     }
 
     public function noticeList()
     {
-        $value = $this->request->getGet('value');
-        $fileData = new BoardFileModel();
-        $query = $fileData->select('bo.id AS notice_id,
-                                    bo.title AS title,
-                                    bo.content AS content,
-                                    bo.author AS author,
-                                    bo.update_author AS update_author,
-                                    bo.created_at AS created_at,
-                                    bo.updated_at AS updated_at,
-                                    bo.hit AS hit,
-                                    bo.board_type AS board_type,
-                                    MAX(bf.id) AS file_id,
-                                    bf.board_idx AS board_idx,
-                                    bf.board_type AS file_board_type,
-                                    bf.file_name AS file_name,
-                                    bf.file_path AS file_path,
-                                    bf.org_name AS org_name,
-                                    (SELECT CONCAT(DATE_FORMAT(MIN(created_at), "%y.%m.%d"), " ~ ", DATE_FORMAT(MAX(created_at), "%y.%m.%d")) FROM wh_support_board_notice) AS created_at_range')
-                            ->from('wh_support_board_notice bo')
-                            ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
-                            ->groupBy('bo.id, bo.title, bo.content, bo.author, bo.update_author, bo.created_at, bo.updated_at, bo.hit, bo.board_type, bf.board_idx, bf.board_type, bf.file_name, bf.file_path, bf.org_name');
+        $session = session();
+        $ci = $session->get('ci');
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
+            if($result ==='0'){
+                $value = $this->request->getGet('value');
+                $fileData = new BoardFileModel();
+                $query = $fileData->select('bo.id AS notice_id,
+                                            bo.title AS title,
+                                            bo.content AS content,
+                                            bo.author AS author,
+                                            bo.update_author AS update_author,
+                                            bo.created_at AS created_at,
+                                            bo.updated_at AS updated_at,
+                                            bo.hit AS hit,
+                                            bo.board_type AS board_type,
+                                            MAX(bf.id) AS file_id,
+                                            bf.board_idx AS board_idx,
+                                            bf.board_type AS file_board_type,
+                                            bf.file_name AS file_name,
+                                            bf.file_path AS file_path,
+                                            bf.org_name AS org_name,
+                                            (SELECT CONCAT(DATE_FORMAT(MIN(created_at), "%y.%m.%d"), " ~ ", DATE_FORMAT(MAX(created_at), "%y.%m.%d")) FROM wh_support_board_notice) AS created_at_range')
+                                    ->from('wh_support_board_notice bo')
+                                    ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
+                                    ->groupBy('bo.id, bo.title, bo.content, bo.author, bo.update_author, bo.created_at, bo.updated_at, bo.hit, bo.board_type, bf.board_idx, bf.board_type, bf.file_name, bf.file_path, bf.org_name');
 
-        if ($value == 'recent') {
-            $query->orderBy('bo.id', 'DESC');
-        } else if ($value == 'popular') {
-            $query->orderBy('bo.hit', 'DESC');
-        } else {
-            $query->orderBy('bo.id', 'DESC');
-        }
+                if ($value == 'recent') {
+                    $query->orderBy('bo.id', 'DESC');
+                } else if ($value == 'popular') {
+                    $query->orderBy('bo.hit', 'DESC');
+                } else {
+                    $query->orderBy('bo.id', 'DESC');
+                }
 
-        $data['datas'] = $query->get()->getResultArray();
+                $data['datas'] = $query->get()->getResultArray();
 
-        $BoardModel = new BoardModel();
-        $BoardModel->setTableName('wh_support_board_notice');
+                $BoardModel = new BoardModel();
+                $BoardModel->setTableName('wh_support_board_notice');
 
-        $min_date_query = $BoardModel->query('SELECT MIN(created_at) AS min_date FROM wh_support_board_notice');
-        $max_date_query = $BoardModel->query('SELECT MAX(created_at) AS max_date FROM wh_support_board_notice');
+                $min_date_query = $BoardModel->query('SELECT MIN(created_at) AS min_date FROM wh_support_board_notice');
+                $max_date_query = $BoardModel->query('SELECT MAX(created_at) AS max_date FROM wh_support_board_notice');
 
-        $min_date_row = $min_date_query->getRow();
-        $max_date_row = $max_date_query->getRow();
+                $min_date_row = $min_date_query->getRow();
+                $max_date_row = $max_date_query->getRow();
 
-        $min_date = date('y.m.d', strtotime($min_date_row->min_date));
-        $max_date = date('y.m.d', strtotime($max_date_row->max_date));
+                $min_date = date('y.m.d', strtotime($min_date_row->min_date));
+                $max_date = date('y.m.d', strtotime($max_date_row->max_date));
 
-        $data['min_date'] = $min_date;
-        $data['max_date'] = $max_date;
+                $data['min_date'] = $min_date;
+                $data['max_date'] = $max_date;
 
-        if ($this->request->isAJAX()) {
-            return $this->response->setJSON($data);
-        } else {
-             return view('/support/sp_notice',$data);
+                if ($this->request->isAJAX()) {
+                    return $this->response->setJSON($data);
+                } else {
+                    return view('/support/sp_notice',$data);
+                }
+            }else{
+                return view('/support/mo_index');
+            }
+        }else{
+            return redirect()->to("/");
         }
     }
 
     public function noticeView($id)
     {
-        $BoardModel = new BoardModel();
-        $BoardModel->setTableName('wh_support_board_notice');
-        $data['notice'] = $BoardModel->find($id);
+        $session = session();
+        $ci = $session->get('ci');
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
 
-        $BoardModel->increaseHit($id);
+            if($result ==='0'){
+                $BoardModel = new BoardModel();
+                $BoardModel->setTableName('wh_support_board_notice');
+                $data['notice'] = $BoardModel->find($id);
 
-        $fileData = new BoardFileModel();
-        $data['file'] = $fileData->where('board_idx', $id)->first();
+                $BoardModel->increaseHit($id);
+
+                $fileData = new BoardFileModel();
+                $data['file'] = $fileData->where('board_idx', $id)->first();
 
 
-        return view('/support/sp_notice_view', $data);
+                return view('/support/sp_notice_view', $data);
+            }else{
+                return view('/support/mo_index');
+            }
+        }else{
+            return redirect()->to("/");
+        }
 
     }
 
     public function faq(): string
     {
-        $BoardModel = new BoardModel();
-        $BoardModel->setTableName('wh_support_board_faq');
-        $data['faqs'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
+        $session = session();
+        $ci = $session->get('ci');
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
 
-        return view('/support/sp_faq', $data);
+            if($result ==='0'){
+                $BoardModel = new BoardModel();
+                $BoardModel->setTableName('wh_support_board_faq');
+                $data['faqs'] = $BoardModel->orderBy('created_at', 'DESC')->findAll();
+
+                return view('/support/sp_faq', $data);
+            }else{
+                return view('/support/mo_index');
+            }
+        }else{
+            return redirect()->to("/");
+        }
     }
     public function terms(): string
     {
-        $BoardModel = new BoardModel();
-        $BoardModel->setTableName('wh_board_terms');
-        $terms = $BoardModel->orderBy('created_at', 'DESC')->first();
+        $session = session();
+        $ci = $session->get('ci');
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
 
-        return view('/support/sp_terms', ['terms' => $terms]);
+            if($result ==='0'){
+
+                $BoardModel = new BoardModel();
+                $BoardModel->setTableName('wh_board_terms');
+                $terms = $BoardModel->orderBy('created_at', 'DESC')->first();
+
+                return view('/support/sp_terms', ['terms' => $terms]);
+            }else{
+                return view('/support/mo_index');
+            }
+        }else{
+            return redirect()->to("/");
+        }
     }
     public function privacy(): string
     {
-        $BoardModel = new BoardModel();
-        $BoardModel->setTableName('wh_board_privacy');
-        $privacy = $BoardModel->orderBy('created_at', 'DESC')->first();
+        $session = session();
+        $ci = $session->get('ci');
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
 
-        return view('/support/sp_privacy', ['privacy' => $privacy]);
+            if($result ==='0'){
+                $BoardModel = new BoardModel();
+                $BoardModel->setTableName('wh_board_privacy');
+                $privacy = $BoardModel->orderBy('created_at', 'DESC')->first();
+
+                return view('/support/sp_privacy', ['privacy' => $privacy]);
+            }else{
+                return view('/support/mo_index');
+            }
+        }else{
+            return redirect()->to("/");
+        }
+            
     }
 
     public function mypageWallet()
     {
         $session = session();
         $ci = $session->get('ci_support');
-        $page = 1;
-        $perPage = 6;
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
 
-        $pointModel = new PointModel();
+            if($result ==='0'){
+                $page = 1;
+                $perPage = 6;
 
-        $points = $pointModel->where('member_ci', $ci);
-        $points->where('point_type', 'A');
-        $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 week')));
-        $points->orderBy('create_at', 'DESC');
-        $points = $points->findAll($perPage * $page, 0);
+                $pointModel = new PointModel();
 
-        return view('/support/sp_mypage_wallet', ['points' => $points]);
+                $points = $pointModel->where('member_ci', $ci);
+                $points->where('point_type', 'A');
+                $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 week')));
+                $points->orderBy('create_at', 'DESC');
+                $points = $points->findAll($perPage * $page, 0);
+
+                return view('/support/sp_mypage_wallet', ['points' => $points]);
+            }else{
+                return view('/support/mo_index');
+            }
+        }else{
+            return redirect()->to("/");
+        }
     }
 
     public function walletTypeList()
     {
         $session = session();
         $ci = $session->get('ci_support');
-        $type = $this->request->getPost('walletType');
-        $date = $this->request->getPost('date');
-        $value = $this->request->getPost('value');
-        $page = intval($this->request->getPost('page'));
-        $perPage = intval($this->request->getPost('perPage'));
-        $pointModel = new PointModel();
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
 
-        $points = $pointModel->where('member_ci', $ci);
+            if($result ==='0'){
+                $type = $this->request->getPost('walletType');
+                $date = $this->request->getPost('date');
+                $value = $this->request->getPost('value');
+                $page = intval($this->request->getPost('page'));
+                $perPage = intval($this->request->getPost('perPage'));
+                $pointModel = new PointModel();
 
-        if ($type == 'add' || $type == 'spadd') {
-            $points->where('point_type', 'A');
-        } else if($type == 'use'){
-            $points->where('point_type', 'U');
-        } else if($type == 'spexchange'){
-            $points->where('point_type', 'E');
-        } 
+                $points = $pointModel->where('member_ci', $ci);
 
-        if ($date == '1week') {
-            $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 week')));
-        } else if ($date == '1month') {
-            $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 month')));
-        } else if ($date == '3month') {
-            $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-3 month')));
-        }
+                if ($type == 'add' || $type == 'spadd') {
+                    $points->where('point_type', 'A');
+                } else if($type == 'use'){
+                    $points->where('point_type', 'U');
+                } else if($type == 'spexchange'){
+                    $points->where('point_type', 'E');
+                } 
 
-        if ($value == 'latest') {
-            $points->orderBy('create_at', 'DESC');
-        } else if ($value == 'oldest') {
-            $points->orderBy('create_at', 'ASC');
-        } else if ($value == 'highest_amount') {
-            if ($type == 'add') {
-                $points->orderBy('add_point', 'DESC');
-            } else {
-                $points->orderBy('use_point', 'DESC');
+                if ($date == '1week') {
+                    $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 week')));
+                } else if ($date == '1month') {
+                    $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-1 month')));
+                } else if ($date == '3month') {
+                    $points->where('create_at >', date('Y-m-d H:i:s', strtotime('-3 month')));
+                }
+
+                if ($value == 'latest') {
+                    $points->orderBy('create_at', 'DESC');
+                } else if ($value == 'oldest') {
+                    $points->orderBy('create_at', 'ASC');
+                } else if ($value == 'highest_amount') {
+                    if ($type == 'add') {
+                        $points->orderBy('add_point', 'DESC');
+                    } else {
+                        $points->orderBy('use_point', 'DESC');
+                    }
+                } else if ($value == 'lowest_amount') {
+                    if ($type == 'add') {
+                        $points->orderBy('add_point', 'ASC');
+                    } else {
+                        $points->orderBy('use_point', 'ASC');
+                    }
+                } else {
+                    $points->orderBy('create_at', 'DESC');
+                }
+
+                $points = $points->findAll($perPage * $page, 0);
+
+                if ($points) {
+                    return $this->response->setJSON(['success' => true, 'points' => $points]);
+                } else {
+                    return $this->response->setJSON(['success' => false]);
+                }
+            }else{
+                return view('/support/mo_index');
             }
-        } else if ($value == 'lowest_amount') {
-            if ($type == 'add') {
-                $points->orderBy('add_point', 'ASC');
-            } else {
-                $points->orderBy('use_point', 'ASC');
-            }
-        } else {
-            $points->orderBy('create_at', 'DESC');
-        }
-
-        $points = $points->findAll($perPage * $page, 0);
-
-        if ($points) {
-            return $this->response->setJSON(['success' => true, 'points' => $points]);
-        } else {
-            return $this->response->setJSON(['success' => false]);
+        }else{
+            return redirect()->to("/");
         }
     }
     /*나의 보유 포인트*/
     public function mypageGetPoint()
     {
         $session = session();
-        $ci = $session->get('ci_support');
-        $pointModel = new PointModel();
+        $ci = $session->get('ci');
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
 
-        $my_point = $pointModel->select('my_point')
-            ->where('member_ci', $ci)
-            ->orderBy('create_at', 'DESC')
-            ->first();
+            if($result ==='0'){
+                $session = session();
+                $ci = $session->get('ci_support');
+                $pointModel = new PointModel();
 
-        $my_point_value = isset($my_point['my_point']) ? $my_point['my_point'] : 0;
-        return $my_point_value;
+                $my_point = $pointModel->select('my_point')
+                    ->where('member_ci', $ci)
+                    ->orderBy('create_at', 'DESC')
+                    ->first();
+
+                $my_point_value = isset($my_point['my_point']) ? $my_point['my_point'] : 0;
+                return $my_point_value;
+            }else{
+                return view('/support/mo_index');
+            }
+        }else{
+            return redirect()->to("/");
+        }
     }
     /*환전 페이지 */
     public function allianceExchange(): string
     {
-        $my_point_value = $this->mypageGetPoint();
-        return view('/support/sp_alliance_exchange', ['my_point' => $my_point_value]);
+        $session = session();
+        $ci = $session->get('ci');
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
+
+            if($result ==='0'){
+                $my_point_value = $this->mypageGetPoint();
+                return view('/support/sp_alliance_exchange', ['my_point' => $my_point_value]);
+            }else{
+                return view('/support/mo_index');
+            }
+        }else{
+            return redirect()->to("/");
+        }
     }
     /*환전 프로세스 */
     public function allianceExchangePoint()
     {
         $session = session();
         $ci = $session->get('ci_support');
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $spchk = $moAjax->supportLoginParam($ci);
 
-        $amount = $this->request->getPost('amount');
-        $bank = $this->request->getPost('bank');
-        $acount_number = $this->request->getPost('acount_number');
+            if($spchk ==='0'){
 
-        $pointExchange = new PointExchangeModel();
-        $data = [
-            'member_ci' => $ci,
-            'point_exchange' => $amount,
-            'bank' => $bank,
-            'bank_number' => $acount_number,
-            'create_at' => date('Y-m-d H:i:s'),
-            'exchange_level' => '0',
-            'exchange_type' => 'E',
-        ];
+                $amount = $this->request->getPost('amount');
+                $bank = $this->request->getPost('bank');
+                $acount_number = $this->request->getPost('acount_number');
 
-        $result = $pointExchange->insert($data);
+                $pointExchange = new PointExchangeModel();
+                $data = [
+                    'member_ci' => $ci,
+                    'point_exchange' => $amount,
+                    'bank' => $bank,
+                    'bank_number' => $acount_number,
+                    'create_at' => date('Y-m-d H:i:s'),
+                    'exchange_level' => '0',
+                    'exchange_type' => 'E',
+                ];
 
-        $point = new PointModel();
-        $my_point = $point->select('my_point')
-            ->where('member_ci', $ci)
-            ->orderBy('create_at', 'DESC')
-            ->first();
+                $result = $pointExchange->insert($data);
 
-        $my_point_value = isset($my_point['my_point']) ? $my_point['my_point'] : 0;
+                $point = new PointModel();
+                $my_point = $point->select('my_point')
+                    ->where('member_ci', $ci)
+                    ->orderBy('create_at', 'DESC')
+                    ->first();
 
-        $data = [
-            'member_ci' => $ci,
-            'my_point' => $my_point_value - $amount,
-            'use_point' => $amount,
-            'point_details' => '환전신청',
-            'create_at' => date('Y-m-d H:i:s'),
-            'point_type' => 'U',
-        ];
+                $my_point_value = isset($my_point['my_point']) ? $my_point['my_point'] : 0;
 
-        $result2 = $point->insert($data);
+                $data = [
+                    'member_ci' => $ci,
+                    'my_point' => $my_point_value - $amount,
+                    'use_point' => $amount,
+                    'point_details' => '환전신청',
+                    'create_at' => date('Y-m-d H:i:s'),
+                    'point_type' => 'U',
+                ];
 
-        if ($result) {
-            return $this->response->setJSON(['success' => true]);
-        } else {
-            return $this->response->setJSON(['success' => false]);
+                $result2 = $point->insert($data);
+
+                if ($result) {
+                    return $this->response->setJSON(['success' => true]);
+                } else {
+                    return $this->response->setJSON(['success' => false]);
+                }
+            }else{
+                return view('/support/mo_index');
+            }
+        }else{
+            return redirect()->to("/");
         }
     }
     /*환전 성공페이지 */
     public function exchangePoint_success(): string
     {
-        return view('/support/sp_mypage_excharge_success');
+        $session = session();
+        $ci = $session->get('ci');
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
+
+            if($result ==='0'){
+                return view('/support/sp_mypage_excharge_success');
+            }else{
+                return view('/support/mo_index');
+            }
+        }else{
+            return redirect()->to("/");
+        }
     }
 
     /*환전 실패페이지 */
     public function exchangePoint_fail(): string
     {
-        return view('/support/sp_mypage_excharge_fail');
+        $session = session();
+        $ci = $session->get('ci');
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
+
+            if($result ==='0'){
+                return view('/support/sp_mypage_excharge_fail');
+            }else{
+                return view('/support/mo_index');
+            }
+        }else{
+            return redirect()->to("/");
+        }
     }
     
     public function pass(): string
     {
+        
         $data['params'] = '';
         return view('/support/mo_pass', $data);
     } 
@@ -417,25 +591,62 @@ class SupportHome extends BaseController
     {
         $session = session();
         $ci = $session->get('ci_support');
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
 
-        $SupportMemberModel = new SupportMemberModel();
+            if($result ==='0'){
 
-        $uniqueCode = $SupportMemberModel
-            ->select('unique_code')
-            ->where('ci', $ci)
-            ->first();
+                $SupportMemberModel = new SupportMemberModel();
 
-        return view('/support/mo_invite', $uniqueCode);
+                $uniqueCode = $SupportMemberModel
+                    ->select('unique_code')
+                    ->where('ci', $ci)
+                    ->first();
+
+                return view('/support/mo_invite', $uniqueCode);
+            }else{
+                return view('/support/mo_index');
+            }
+        }else{
+            return redirect()->to("/");
+        }
     }
 
     public function referral()
     {
-        return view('/support/mo_referral');
+        $session = session();
+        $ci = $session->get('ci');
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
+
+            if($result ==='0'){
+                return view('/support/mo_referral');
+            }else{
+                return view('/support/mo_index');
+            }
+        }else{
+            return redirect()->to("/");
+        }
     }
 
     public function referralSuccess(): string
     {
-        return view('/support/mo_referral_success');
+        $session = session();
+        $ci = $session->get('ci');
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
+
+            if($result ==='0'){
+                return view('/support/mo_referral_success');
+            }else{
+                return view('/support/mo_index');
+            }
+        }else{
+            return redirect()->to("/");
+        }
     }
     
     // public function reward(): string
@@ -445,7 +656,13 @@ class SupportHome extends BaseController
 
     public function reward()
     {
-        $db = db_connect();
+        $session = session();
+        $ci = $session->get('ci');
+        if($ci){
+            $moAjax = new \App\Controllers\MoAjax();
+            $result = $moAjax->supportLoginParam($ci);
+
+            if($result ==='0'){
 
         $session = session();
         $ci = $session->get('ci_support');
@@ -473,10 +690,16 @@ class SupportHome extends BaseController
                     wsr.ci = '".$ci."'
                 ORDER BY wsr.idx desc, wsr.check ASC";
 
-        $data['datas'] = $MemberModel->query($query)->getResultArray();
-        $data['query'] = $MemberModel->getLastQuery()->getQuery();
+                $data['datas'] = $MemberModel->query($query)->getResultArray();
+                $data['query'] = $MemberModel->getLastQuery()->getQuery();
 
-        return view('support/sp_reward', $data);
+                return view('support/sp_reward', $data);
+            }else{
+                return view('/support/mo_index');
+            }
+        }else{
+            return redirect()->to("/");
+        }
     }
     
 }
