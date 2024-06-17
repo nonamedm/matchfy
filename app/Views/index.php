@@ -782,7 +782,7 @@ if ($ci) {
                     </div>
                     <div class="footer_info mb40">
                         <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>
-                        <span><?= lang('Korean.footerInfo3') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo4') ?><img src="/static/images/part_line.png" /> gildong@naver.com</span>
+                        <span><?= lang('Korean.footerInfo3') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo4') ?><img src="/static/images/part_line.png" />hi@cuberry.kr</span>
                     </div>
                     <div class="footer_copy">
                         COPYRIGHT 2023. ALL RIGHTS RESERVED.
