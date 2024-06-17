@@ -23,7 +23,7 @@
                                 }
                             } else {
                                 ?>
-                                <img class="fork_img" src="" />
+                                <img class="fork_img" src="/static/images/fork_none.png" />
                             <?php
                             } ?>
                             <a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/<?= $row['nickname'] ?>')">
