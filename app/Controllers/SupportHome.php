@@ -18,19 +18,19 @@ class SupportHome extends BaseController
     public function index()
     {
         $session = session();
-        $ci = $session->get('ci');
+        $ci = $session->get('ci_support');
 
         if ($ci) {
-            return view('/support/mo_index');
+            return redirect()->to("/support");
         } else {
-            return redirect()->to("/");
+            return view('/support/mo_index');
         }
     }
 
     public function spindex()
     {
         $session = session();
-        $ci = $session->get('ci');
+        $ci = $session->get('ci_support');
 
         if($ci){
             /* 보유포인트 */
@@ -229,7 +229,7 @@ class SupportHome extends BaseController
     public function mypageWallet()
     {
         $session = session();
-        $ci = $session->get('ci');
+        $ci = $session->get('ci_support');
         $page = 1;
         $perPage = 6;
 
@@ -247,7 +247,7 @@ class SupportHome extends BaseController
     public function walletTypeList()
     {
         $session = session();
-        $ci = $session->get('ci');
+        $ci = $session->get('ci_support');
         $type = $this->request->getPost('walletType');
         $date = $this->request->getPost('date');
         $value = $this->request->getPost('value');
@@ -305,7 +305,7 @@ class SupportHome extends BaseController
     public function mypageGetPoint()
     {
         $session = session();
-        $ci = $session->get('ci');
+        $ci = $session->get('ci_support');
         $pointModel = new PointModel();
 
         $my_point = $pointModel->select('my_point')
@@ -326,7 +326,7 @@ class SupportHome extends BaseController
     public function allianceExchangePoint()
     {
         $session = session();
-        $ci = $session->get('ci');
+        $ci = $session->get('ci_support');
 
         $amount = $this->request->getPost('amount');
         $bank = $this->request->getPost('bank');
@@ -416,7 +416,7 @@ class SupportHome extends BaseController
     public function invite(): string
     {
         $session = session();
-        $ci = $session->get('ci');
+        $ci = $session->get('ci_support');
 
         $SupportMemberModel = new SupportMemberModel();
 
@@ -448,7 +448,7 @@ class SupportHome extends BaseController
         $db = db_connect();
 
         $session = session();
-        $ci = $session->get('ci');
+        $ci = $session->get('ci_support');
         $MemberModel = new MemberModel();
         $query = "SELECT
                     wsr.idx,
