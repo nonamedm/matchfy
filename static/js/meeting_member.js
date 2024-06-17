@@ -576,6 +576,42 @@ function usePoint(point, mypoint, idx) {
                 html += '</div>';
                 html += '</div>';
                 html += '</div>';
+            } else if (data.success == false) {
+                if (data.result === '0') {
+                    msg = data.data;
+                    html += '<div class="layerPopup alert middle callAlert">';
+                    html += '<div class="layerPopup_wrap">';
+                    html += '<div class="layerPopup_content msmall">';
+                    html += '<p class="txt">모임신청</p>';
+                    html += '<div class="apply_group">';
+                    html += '<p>' + data.msg + '<br/>모임 대화방으로 이동합니다.</p>';
+                    html += '</div>';
+                    html += '<div class="layerPopup_bottom">';
+                    html += '<div class="btn_group">';
+                    html += `<button class="btn type01" onclick="enterCtRm('` + data.ci + `');">확인</button>`;
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                } else if (data.result === '1') {
+                    msg = data.data;
+                    html += '<div class="layerPopup alert middle callAlert">';
+                    html += '<div class="layerPopup_wrap">';
+                    html += '<div class="layerPopup_content msmall">';
+                    html += '<p class="txt">모임신청</p>';
+                    html += '<div class="apply_group">';
+                    html += '<p>' + data.msg + '</p>';
+                    html += '</div>';
+                    html += '<div class="layerPopup_bottom">';
+                    html += '<div class="btn_group">';
+                    html += '<button class="btn type01" onclick="alertCloseReload();">확인</button>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                }
             }
             $('body').append(html);
         },
@@ -584,6 +620,34 @@ function usePoint(point, mypoint, idx) {
         },
     });
 }
+const enterCtRm = (ci) => {
+    $.ajax({
+        url: '/ajax/createMultyChat',
+        type: 'POST',
+        data: {
+            room_ci: ci,
+        },
+        async: false,
+        success: function (data) {
+            if (data.status === 'success') {
+                // 성공
+                console.log(data);
+                moveToUrl('/mo/mymsg', {
+                    room_ci: data.data.room_ci,
+                });
+            } else if (data.status === 'error') {
+                console.log('메세지 전송 실패', data);
+            } else {
+                fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+            }
+            return false;
+        },
+        error: function (data, status, err) {
+            console.log(err);
+            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
+};
 function alertCloseReload() {
     $('.alert').hide();
     $('.callAlert').remove();

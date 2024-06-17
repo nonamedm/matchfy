@@ -1381,16 +1381,16 @@ class MoHome extends BaseController
                     //마스터 유저                  
                     $masterMember = new MemberModel();
                     $meetingMaster = $masterMember
-                                ->distinct()
-                                ->select('m.name as name, m.ci as ci, wp.my_point as k_point,wp.create_at as create_at')
-                                ->from('members m')
-                                ->join('wh_points wp', 'wp.member_ci = m.ci', 'left')
-                                ->join('wh_meeting_members wmm', 'm.ci = wmm.member_ci', 'left')
-                                ->where('wmm.meeting_idx', $meeting_idx)
-                                ->where('wmm.meeting_master', 'K')
-                                ->orderBy('wp.create_at', 'desc')
-                                ->get()
-                                ->getRow();
+                        ->distinct()
+                        ->select('m.name as name, m.ci as ci, wp.my_point as k_point,wp.create_at as create_at')
+                        ->from('members m')
+                        ->join('wh_points wp', 'wp.member_ci = m.ci', 'left')
+                        ->join('wh_meeting_members wmm', 'm.ci = wmm.member_ci', 'left')
+                        ->where('wmm.meeting_idx', $meeting_idx)
+                        ->where('wmm.meeting_master', 'K')
+                        ->orderBy('wp.create_at', 'desc')
+                        ->get()
+                        ->getRow();
 
                     //참석한 멤버 포인트 사용
                     // $mydata = [
@@ -1479,11 +1479,13 @@ class MoHome extends BaseController
                     //     return $this->response->setJSON(['success' => false, 'msg' => '포인트 결제가 실패 하였습니다.']);
                     // }
                 } else { //이미 참석된 멤버 일 경우
-                    return $this->response->setJSON(['success' => true, 'msg' => '이미 참석 신청된 멤버 입니다.']);
+                    return $this->response->setJSON(['success' => false, 'msg' => '이미 참석 신청된 멤버 입니다.', 'result' => '1']);
                 }
                 // }
             } else {
-                return $this->response->setJSON(['success' => true, 'msg' => '이미 참석중인 멤버 입니다.']);
+                $query = "SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "'";
+                $room_ci = $pointModel->query($query)->getResultArray();
+                return $this->response->setJSON(['success' => false, 'msg' => '이미 참석중인 멤버 입니다.', 'result' => '0', 'ci' => $room_ci[0]['chat_room_ci']]);
             }
         } else if ($getMemberCount == 'nodata') {
             return $this->response->setJSON(['success' => true, 'msg' => '존재하지 않는 모임입니다. 다시 시도해 주세요.']);
