@@ -1839,6 +1839,13 @@ class MoHome extends BaseController
 
         $meetPointModel->insert($masterdata);
 
+        // 예약신청내역도 취소하기
+        $query = "UPDATE wh_meeting_members_temp SET delete_yn='y' WHERE meeting_idx='" . $meeting_idx . "' AND member_ci='" . $ci . "'";
+        $MeetingMembersModel->query($query);
+
+        // 대화방 나가기
+        $query = "";
+
         if ($result) {
             return $this->response->setJSON(['success' => true]);
         } else {

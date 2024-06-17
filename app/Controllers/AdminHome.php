@@ -966,6 +966,9 @@ class AdminHome extends BaseController
                     $query2 = "SELECT extra1 FROM wh_meeting_members WHERE meeting_idx='169' AND member_ci='" . $member['your_ci'] . "';";
                     $partyMember = $MemberModel->query($query2)->getResultArray();
                     if ($partyMember[0]['extra1'] === '' || $partyMember[0]['extra1'] === null) { // 찜 당하지 않은 사람만
+
+                        // 여기서 로직 추가, 만약 상대가 나를 이미 지정한 상태이면, 자동으로 매칭 OK하기
+
                         echo "<br/> " . $member['my_nickname'] . " -> " . $member['your_nickname'];
                         $query = "UPDATE wh_meeting_members SET extra1='" . $member['my_nickname'] . "' WHERE member_ci='" . $member['your_ci'] . "' AND meeting_idx='169' AND delete_yn='n'";
                         $MemberModel->query($query);
@@ -975,7 +978,7 @@ class AdminHome extends BaseController
                 }
             }
         }
-        print_r($groupedMembers);
+        print_r($selectedMembers);
 
 
 
