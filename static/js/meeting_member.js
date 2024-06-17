@@ -361,76 +361,7 @@ var cityTownTypes = {
 };
 /*참석멤버 리:스트*/
 function meetingMemberList(idx) {
-    $.ajax({
-        url: '/mo/mypage/group/partcntPopup',
-        data: {
-            meetingIdx: idx,
-        },
-        type: 'post',
-        success: function (data) {
-            var html = '';
-            if (data.success == true) {
-                var data = data.data;
-                html += '<div class="meetingMemPopup layerPopup alert middle">';
-                html += '<div class="layerPopup_wrap">';
-                html += '<div class="layerPopup_content medium">';
-                html += '<div style="position: relative;display: flex;">';
-                html += '<p class="txt" style="width: 90%;padding-left: 5%;">참석멤버</p>';
-                html += '<a href="#" class="btn_close"  onclick="btnClose();" style="float: right;">닫기</a>';
-                html += '</div>';
-                html += '<div class="desc_box">';
-                // html += '<ul>';
-                // html += '<li><a href="#" class="on">매칭률순</a></li>';
-                // html += '<li><a href="#">이상형확률순</a></li>';
-                // html += '</ul>';
-                html += '</div>';
-                html += '<div class="scroll_member_body">';
-                for (var i = 0; i < data.length; i++) {
-                    html += '<div class="chat_member">';
-                    html += '<div class="chat_member_profile">';
-                    // html += '<img class="group_fork" src="/static/images/group_master.png">';
-                    html +=
-                        // '<a class="nicknameBtnBox" onclick="moveToUrl(\'/mo/viewProfile/' + data[i].nickname + '\')">';
-                        '<a class="nicknameBtnBox">';
-                    if (data[i].file_path) {
-                        html += '<img class="profile_img" src="/' + data[i].file_path + data[i].file_name + '" />';
-                    } else {
-                        html += '<img class="profile_img" src="/static/images/mypage_no_pfofile.png" />';
-                    }
-                    html += '<p>' + data[i].name + '</p>';
-                    html += '</a>';
-
-                    if (data[i].meeting_master == 'K') {
-                        html += '<img class="group_master" src="/static/images/group_master.png" />';
-                    }
-                    html += '</div>';
-                    html += '<div class="group_member_detail">';
-                    html +=
-                        data[i].birthday.slice(2, 4) +
-                        ' · ' +
-                        cityTownTypes[data[i].city][data[i].town] +
-                        ' · ' +
-                        mbtiTypes[data[i].mbti];
-                    html += '</div>';
-                    html += '</div>';
-                }
-
-                html += '</div>';
-                html += '<div class="layerPopup_bottom">';
-                html += '<div class="btn_group">';
-                html += '<button class="btn type01" onclick="meetingPopupClose();">확인</button>';
-                html += '</div>';
-                html += '</div>';
-                html += '</div>';
-                html += '</div>';
-                html += '</div>';
-            }
-            $('body').append(html);
-        },
-        error: function (xhr, status, error) {
-            console.log(error);
-        },
-    });
+    $('.meetingMemPopup.layerPopup').css('display', 'flex');
 }
 /*참석멤버 닫기*/
 function meetingPopupClose() {

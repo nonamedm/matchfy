@@ -478,7 +478,7 @@ class MoHome extends BaseController
             $query = "SELECT onoff FROM wh_chat_room_member_forked_onoff WHERE room_ci='" . $room_ci . "';";
             $forkOnoff = $MemberModel
                 ->query($query)->getResultArray();
-            log_message('1', $query);
+
             $data['room_ci'] = $room_ci;
             $data['allMsg'] = $allMsg;
             $data['member_info'] = $memberInfo;
@@ -1021,26 +1021,118 @@ class MoHome extends BaseController
         //모집 마감 확인
         $isRecruitmentFull = $Meeting['number_of_people'] == $memCount;
 
-        $data = [
-            'idx' => $idx,
-            'category' => $Meeting['category'],
-            'recruitment_start_date' => $recruitStartTime,
-            'recruitment_end_date' => $recruitEndTime,
-            'meeting_start_date' => $meetingDateTime, //$Meeting['meeting_start_date'],
-            //'meeting_end_date' => $Meeting['meeting_end_date'],
-            'number_of_people' => $Meeting['number_of_people'],
-            'meeing_count' => $memCount, //현재 모집된 인원 수
-            'matching_rate' => $Meeting['matching_rate'],
-            'meeting_title' => $Meeting['title'],
-            'content' => $Meeting['content'],
-            'meeting_place' => $Meeting['meeting_place'],
-            'membership_fee' => $Meeting['membership_fee'],
-            'image' => $imageInfo,
-            'is_recruitment_full' => $isRecruitmentFull
 
-        ];
 
-        return view('mo_mypage_group_detail', $data);
+        // 팝업호출 영역
+        $session = session();
+        $ci = $session->get('ci');
+
+        // 같은 성별 프로필 조회 막음
+        $member = new MemberModel();
+        $userQuery = "SELECT * FROM members WHERE ci= '" . $ci . "'";
+        $user = $member->query($userQuery)->getResultArray();
+        $user_gender = $user[0]['gender'];
+
+        // 내가 이 방 참석했는지 여부 확인
+        $chkQuery = "SELECT * FROM wh_meeting_members WHERE meeting_idx='" . $idx . "' AND member_ci='" . $ci . "'";
+
+        $meeting_members = new MeetingMembersModel();
+        $chkInmember = $meeting_members->query($chkQuery)->getResultArray();
+        $inMemberChk = $chkInmember ? true : false;
+        $query = $meeting_members->distinct()
+            ->select(
+                '
+                                    a.idx as idx,
+                                    a.meeting_idx as meeting_idx,
+                                    a.delete_yn as delete_yn,
+                                    a.meeting_master as meeting_master,
+                                    d.file_path as file_path,
+                                    d.file_name as file_name,
+                                    c.name as name,
+                                    c.nickname as nickname,
+                                    c.city as city,
+                                    c.town as town,
+                                    c.birthday as birthday,
+                                    c.mbti as mbti,
+                                    c.gender as gender'
+            )
+            ->from('wh_meeting_members a')
+            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+            ->join('members c', 'a.member_ci = c.ci', 'left')
+            ->join('member_files d', 'c.ci = d.member_ci', 'left')
+            ->where('b.idx', $idx)
+            ->where('a.delete_yn', 'N')
+            ->where('d.board_type', 'main_photo')
+            ->where('d.delete_yn', 'n')
+            ->orderBy('a.meeting_master')
+            ->orderBy('a.create_at')
+            ->get();
+
+        $result = $query->getResult();
+
+        if ($result) {
+            $query = "SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $idx . "'";
+            $room_ci = $MeetingModel
+                ->query($query)->getResultArray();
+            $ChatRoomMemberModel = new ChatRoomMemberModel();
+            $query = "SELECT member_ci AS where_ci, (SELECT name FROM members WHERE ci = where_ci) AS name,
+                            (SELECT mbti FROM members WHERE ci = where_ci) AS mbti,
+                            (SELECT city FROM members WHERE ci = where_ci) AS city,
+                            (SELECT birthday FROM members WHERE ci = where_ci) AS birthday,
+                             (SELECT meeting_master FROM wh_meeting_members WHERE member_ci = where_ci AND meeting_idx='" . $idx . "') AS meeting_master,
+                             (SELECT nickname FROM members WHERE ci = where_ci) AS nickname,
+                             (SELECT file_path FROM member_files WHERE member_ci = where_ci AND board_type='main_photo' AND delete_yn='n') AS file_path,
+                             (SELECT file_name FROM member_files WHERE member_ci = where_ci AND board_type='main_photo' AND delete_yn='n') AS file_name,
+                             (CASE
+                                WHEN member_ci = '" . $ci . "' THEN 'me'
+                                ELSE 'you' 
+                            END) AS chk,
+                            entry_num,
+                            (SELECT gender FROM members WHERE ci=where_ci) AS member_gender,
+                            (SELECT idx FROM wh_chat_room_member_forked WHERE partner_ci=where_ci AND member_ci='" . $ci . "' AND room_ci='" . $room_ci[0]['chat_room_ci'] . "' AND delete_yn='n') AS forked
+                            FROM wh_chat_room_member WHERE room_ci = '" . $room_ci[0]['chat_room_ci'] . "' AND delete_yn='n'";
+
+            $memberInfo = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            $query = "SELECT gender FROM members WHERE ci='" . $ci . "';";
+            $myGender = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            // 포크 onoff 여부 확인
+            $query = "SELECT onoff FROM wh_chat_room_member_forked_onoff WHERE room_ci='" . $room_ci[0]['chat_room_ci'] . "';";
+            $forkOnoff = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            $data = [
+                'idx' => $idx,
+                'category' => $Meeting['category'],
+                'recruitment_start_date' => $recruitStartTime,
+                'recruitment_end_date' => $recruitEndTime,
+                'meeting_start_date' => $meetingDateTime, //$Meeting['meeting_start_date'],
+                //'meeting_end_date' => $Meeting['meeting_end_date'],
+                'number_of_people' => $Meeting['number_of_people'],
+                'meeing_count' => $memCount, //현재 모집된 인원 수
+                'matching_rate' => $Meeting['matching_rate'],
+                'meeting_title' => $Meeting['title'],
+                'content' => $Meeting['content'],
+                'meeting_place' => $Meeting['meeting_place'],
+                'membership_fee' => $Meeting['membership_fee'],
+                'image' => $imageInfo,
+                'is_recruitment_full' => $isRecruitmentFull,
+                'popupData' => $result,
+                'inMemberChk' => $inMemberChk,
+                'memberInfo' => $memberInfo,
+                'my_gender' => $myGender[0]['gender'],
+                'fork_onoff' => $forkOnoff[0]['onoff'],
+                'room_ci' => $room_ci[0]['chat_room_ci']
+            ];
+
+            return view('mo_mypage_group_detail', $data);
+        } else {
+            $data = [];
+            return view('mo_mypage_group_detail', $data);
+        }
     }
 
     public function mypageGroupPartcntPopup()
@@ -1053,7 +1145,7 @@ class MoHome extends BaseController
         $member = new MemberModel();
         $userQuery = "SELECT * FROM members WHERE ci= '" . $ci . "'";
         $user = $member->query($userQuery)->getResultArray();
-        $user_gender = $user['gender'];
+        $user_gender = $user[0]['gender'];
 
         // 내가 이 방 참석했는지 여부 확인
         $chkQuery = "SELECT * FROM wh_meeting_members WHERE meeting_idx='" . $meeting_idx . "' AND member_ci='" . $ci . "'";
@@ -1097,9 +1189,40 @@ class MoHome extends BaseController
 
                 if (!$chkInmember && isset($item->name)) {
                     $name = $item->name;
-                    $firstChar = mb_substr($name, 0, 1, "UTF-8"); // 첫 글자 추출
-                    $maskedPart = str_repeat('*', mb_strlen($name, "UTF-8") - 1); // 나머지 글자 수 만큼 * 생성
-                    $item->name = $firstChar . $maskedPart; // 첫 글자와 * 결합
+                    $length = mb_strlen($name, 'UTF-8');
+
+                    if ($length <= 2) {
+                        // 문자열이 두 글자 이하인 경우 그대로 반환
+                        return $name;
+                    }
+
+                    // 첫 글자와 마지막 글자 추출
+                    $firstChar = mb_substr($name, 0, 1, 'UTF-8');
+                    $lastChar = mb_substr($name, -1, 1, 'UTF-8');
+
+                    // 중간 부분을 '*'로 치환
+                    $middlePart = str_repeat('*', $length - 2);
+
+                    // 첫 글자, 중간 부분, 마지막 글자 결합
+                    $item->name = $firstChar . $middlePart . $lastChar;
+                } else {
+                    $name = $item->name;
+                    $length = mb_strlen($name, 'UTF-8');
+
+                    if ($length <= 2) {
+                        // 문자열이 두 글자 이하인 경우 그대로 반환
+                        return $name;
+                    }
+
+                    // 첫 글자와 마지막 글자 추출
+                    $firstChar = mb_substr($name, 0, 1, 'UTF-8');
+                    $lastChar = mb_substr($name, -1, 1, 'UTF-8');
+
+                    // 중간 부분을 '*'로 치환
+                    $middlePart = str_repeat('*', $length - 2);
+
+                    // 첫 글자, 중간 부분, 마지막 글자 결합
+                    $item->name = $firstChar . $middlePart . $lastChar;
                 }
             }
             return $this->response->setJSON(['success' => true, 'data' => $result]);

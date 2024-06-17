@@ -99,7 +99,11 @@
         </div>
     </div>
 
-
+    <?php
+    // if ($room_type[0]['room_type'] === '1') {
+    include 'mo_mypage_group_partcnt_popup.php';
+    // }
+    ?>
     <!-- SCRIPTS -->
 
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=smqlge9tsx&callback=initMap&submodules=geocoder"></script>
