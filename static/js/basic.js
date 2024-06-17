@@ -2245,7 +2245,7 @@ const referralRegistration = () => {
                 console.log(data);
                 if (data.status === 'success') {
                     // 성공
-                    moveToUrl('/support/signinSuccess');
+                    moveToUrl('/support/referralSuccess');
                 } else if (data.status === 'error') {
                     
                     // 한번만 출력되게 함
