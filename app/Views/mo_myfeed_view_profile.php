@@ -310,7 +310,7 @@
 
 
 
-        <div class="layerPopup alert middle alliance" style="display: none;"><!-- class: imgPop 추가 -->
+        <div class="layerPopup alert middle alliance imgPop" style="display: none;"><!-- class: imgPop 추가 -->
             <div class="layerPopup_wrap">
                 <div class="layerPopup_header">
                     <a href="#" class="btn_popup_close" onclick="closePopup();" style="float: right;">닫기</a>
@@ -367,7 +367,7 @@
             });
         }
         const zoomImg = () => {
-            $(".layerPopup").css('display', 'flex')
+            $(".imgPop").css('display', 'flex');
         }
     </script>
 

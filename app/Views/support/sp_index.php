@@ -110,7 +110,7 @@
 </head>
 <?php
 $session = session();
-$ci = $session->get('ci');
+$ci = $session->get('ci_support');
 $name = $session->get('name');
 ?>
 

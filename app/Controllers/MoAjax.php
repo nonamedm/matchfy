@@ -282,13 +282,13 @@ class MoAjax extends BaseController
                 $user = $userChk[0];
                 $session = session();
                 $session->set([
-                    'ci' => $user['ci'],
+                    'ci_support' => $user['ci'],
                     'name' => $user['name'],
                     'isLoggedIn' => true //로그인 상태
                 ]);
 
                 if ($auto_login) {
-                    $session->setTempdata('ci', $user['ci'], 2592000);
+                    $session->setTempdata('ci_support', $user['ci'], 2592000);
                 }
 
                 return $this->response->setJSON(['status' => 'success', 'message' => "로그인 성공"]);
@@ -343,6 +343,7 @@ class MoAjax extends BaseController
     {
         $session = session();
         $session->remove('ci');
+        $session->remove('ci_support');
         $session->remove('name');
         $session->remove('isLoggedIn');
         return $this->response->setJSON(['status' => 'success', 'message' => "로그아웃 성공"]);
@@ -650,7 +651,7 @@ class MoAjax extends BaseController
             $SupportMemberModel = new SupportMemberModel();
             $MemberModel = new MemberModel();
             $session = session();
-            $ci = $session->get('ci');
+            $ci = $session->get('ci_support');
             /**기존에 있는 유니크코드 들고오기 */
             $unique_code_chk = "SELECT unique_code FROM members WHERE ci='" . $ci . "' AND delete_yn='n' limit 1";
             $unique_code_row = $MemberModel->query($unique_code_chk)->getRow();
@@ -876,7 +877,7 @@ class MoAjax extends BaseController
             $detailed_content = $this->request->getPost('detailed_content');
 
             $session = session();
-            $ci = $session->get('ci');
+            $ci = $session->get('ci_support');
 
             $SupportMemberModel = new SupportMemberModel();
             $currentMember  = $SupportMemberModel

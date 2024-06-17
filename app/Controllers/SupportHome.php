@@ -18,7 +18,7 @@ class SupportHome extends BaseController
     public function index()
     {
         $session = session();
-        $ci = $session->get('ci');
+        $ci = $session->get('ci_support');
         if($ci){
             $moAjax = new \App\Controllers\MoAjax();
             $result = $moAjax->supportLoginParam($ci);
@@ -27,15 +27,14 @@ class SupportHome extends BaseController
             } else {
                 return view('/support/mo_index');
             }
-        }else{
-            return redirect()->to("/");
         }
     }
 
     public function spindex()
     {
         $session = session();
-        $ci = $session->get('ci');
+        $ci = $session->get('ci_support');
+
         if($ci){
             $moAjax = new \App\Controllers\MoAjax();
             $result = $moAjax->supportLoginParam($ci);
@@ -318,7 +317,7 @@ class SupportHome extends BaseController
     public function mypageWallet()
     {
         $session = session();
-        $ci = $session->get('ci');
+        $ci = $session->get('ci_support');
         if($ci){
             $moAjax = new \App\Controllers\MoAjax();
             $result = $moAjax->supportLoginParam($ci);
@@ -347,7 +346,7 @@ class SupportHome extends BaseController
     public function walletTypeList()
     {
         $session = session();
-        $ci = $session->get('ci');
+        $ci = $session->get('ci_support');
         if($ci){
             $moAjax = new \App\Controllers\MoAjax();
             $result = $moAjax->supportLoginParam($ci);
@@ -423,7 +422,7 @@ class SupportHome extends BaseController
 
             if($result ==='0'){
                 $session = session();
-                $ci = $session->get('ci');
+                $ci = $session->get('ci_support');
                 $pointModel = new PointModel();
 
                 $my_point = $pointModel->select('my_point')
@@ -463,7 +462,7 @@ class SupportHome extends BaseController
     public function allianceExchangePoint()
     {
         $session = session();
-        $ci = $session->get('ci');
+        $ci = $session->get('ci_support');
         if($ci){
             $moAjax = new \App\Controllers\MoAjax();
             $spchk = $moAjax->supportLoginParam($ci);
@@ -591,7 +590,7 @@ class SupportHome extends BaseController
     public function invite(): string
     {
         $session = session();
-        $ci = $session->get('ci');
+        $ci = $session->get('ci_support');
         if($ci){
             $moAjax = new \App\Controllers\MoAjax();
             $result = $moAjax->supportLoginParam($ci);
@@ -665,31 +664,31 @@ class SupportHome extends BaseController
 
             if($result ==='0'){
 
-                $session = session();
-                $ci = $session->get('ci');
-                $MemberModel = new MemberModel();
-                $query = "SELECT
-                            wsr.idx,
-                            m.name,
-                            m.nickname,
-                            wsr.ci,
-                            wsr.reward_type,
-                            wsr.recommender_gender,
-                            wsr.recommender_ci,
-                            m.email,
-                            wsr.reward_title,
-                            wsr.reward_date,
-                            wsr.reward_meeting_idx,
-                            wsr.reward_meeting_members,
-                            wsr.reward_meeting_percent,
-                            wsr.check
-                        FROM
-                            wh_support_reward wsr
-                        LEFT JOIN members m on
-                            wsr.ci = m.ci
-                        WHERE 
-                            wsr.ci = '".$ci."'
-                        ORDER BY wsr.idx desc, wsr.check ASC";
+        $session = session();
+        $ci = $session->get('ci_support');
+        $MemberModel = new MemberModel();
+        $query = "SELECT
+                    wsr.idx,
+                    m.name,
+                    m.nickname,
+                    wsr.ci,
+                    wsr.reward_type,
+                    wsr.recommender_gender,
+                    wsr.recommender_ci,
+                    m.email,
+                    wsr.reward_title,
+                    wsr.reward_date,
+                    wsr.reward_meeting_idx,
+                    wsr.reward_meeting_members,
+                    wsr.reward_meeting_percent,
+                    wsr.check
+                FROM
+                    wh_support_reward wsr
+                LEFT JOIN members m on
+                    wsr.ci = m.ci
+                WHERE 
+                    wsr.ci = '".$ci."'
+                ORDER BY wsr.idx desc, wsr.check ASC";
 
                 $data['datas'] = $MemberModel->query($query)->getResultArray();
                 $data['query'] = $MemberModel->getLastQuery()->getQuery();
