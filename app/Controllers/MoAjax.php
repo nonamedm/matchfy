@@ -59,6 +59,7 @@ class MoAjax extends BaseController
             $query .= " AND mb.gender != '" . $genderQuery[0]['gender'] . "'";
         }
         $query .= " AND mr.delete_yn = 'n'";
+        $query .= " AND mb.name != '관리자'";
         $query .= " AND mr.match_score > '0'";
         $query .= " AND mf.board_type = 'main_photo' AND mf.delete_yn='n'";
         $query .= " ORDER BY mb.os_type ASC, CONVERT(mr.match_rate, SIGNED) DESC LIMIT 3;";
@@ -107,6 +108,7 @@ class MoAjax extends BaseController
             $query .= " AND mb.gender != '" . $genderQuery[0]['gender'] . "'";
         }
         $query .= " AND mr.delete_yn = 'n'";
+        $query .= " AND mb.name != '관리자'";
         $query .= " AND mr.ideal_rate > '0'";
         $query .= " AND mf.board_type = 'main_photo' AND mf.delete_yn='n'";
         $query .= " ORDER BY mb.os_type ASC, CONVERT(mr.ideal_rate, SIGNED) DESC LIMIT 3;";
