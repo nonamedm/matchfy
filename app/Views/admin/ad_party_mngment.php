@@ -38,6 +38,8 @@
                     </colgroup>
                     <tr class="tr">
                         <th class="th num">idx</th>
+                        <th class="th num">이름</th>
+                        <th class="th num">닉네임</th>
                         <th class="th">1차 매칭</th>
                         <th class="th">2차 매칭</th>
                         <th class="th">3차 매칭</th>
@@ -45,13 +47,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="tr">
-                        <td class="td"></td>
-                        <td class="td">시작</td>
-                        <td class="td">시작</td>
-                        <td class="td">시작</td>
-                        <td class="td">시작</td>
-                    </tr>
+                    <?php
+                    $index = 1;
+                    foreach ($memberData as $row) {
+                    ?>
+                        <tr class="tr">
+                            <td class="td"><?= $index ?></td>
+                            <td class="td"><?= $row['name'] ?></td>
+                            <td class="td"><?= $row['nickname'] ?></td>
+                            <td class="td"><?php
+                                            if ($partyMemberData[$row['ci']]) {
+                                                foreach ($partyMemberData[$row['ci']] as $rrow) {
+                                                    echo $rrow['your_nickname'] . ' - ' . $rrow['match_score'] . '/' . $rrow['match_score_max'] . '(' . $rrow['match_rate'] . '%)<br/>';
+                                                }
+                                            }
+                                            ?></td>
+                            <td class="td"></td>
+                            <td class="td">시작</td>
+                            <td class="td">시작</td>
+                        </tr>
+                    <?php
+                        $index++;
+                    } ?>
                 </tbody>
             </table>
             <!-- <div class="pagination">

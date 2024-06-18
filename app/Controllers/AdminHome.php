@@ -852,10 +852,20 @@ class AdminHome extends BaseController
         $total = $MemberModel->query("SELECT COUNT(*) as total FROM members m LEFT JOIN member_files mf ON m.ci = mf.member_ci")->getRow()->total;
 
         $offset = ($page - 1) * $perPage; // 현재 페이지의 첫 번째 데이터 인덱스
-        $query = "SELECT name, nickname, birthday, gender, email,
-                         mobile_no, grade, temp_grade, sns_type, last_access_dt
-                    FROM members WHERE delete_yn='N' ORDER BY created_at DESC";
-
+        $query = "SELECT name, mb.nickname, 
+                               mb.birthday, 
+                               mb.gender, 
+                               mb.email,
+                               mb.mobile_no, 
+                               mb.grade, 
+                               mb.temp_grade, 
+                               mb.sns_type, 
+                               mb.last_access_dt,
+                               mf.file_path,
+                               mf.file_name,
+                               mf.org_name
+                    FROM members mb, member_files mf WHERE mb.ci = mf.member_ci AND mb.delete_yn='N' AND mf.delete_yn='n' AND mf.board_type='main_photo' ORDER BY created_at DESC";
+        log_message('1', $query);
         $data['datas'] = $MemberModel->query($query)->getResultArray();
 
         $session = session();
@@ -918,81 +928,76 @@ class AdminHome extends BaseController
         } else {
             $page = 2;
         }
-
-
-
-        $session = session();
-        $ci = $session->get('ci');
         $MemberModel = new MemberModel();
-        $query = "SELECT
-                    wmr.member_ci,
-                    wmr.my_nickname,
-                    wmr.your_ci AS your_ci,
-                    wmr.your_nickname,
-                    wmr.match_score,
-                    wmr.match_score_max,
-                    wmr.match_rate,
-                    wmr.ideal_rate,
-                    wmr.delete_yn,
-                    (SELECT extra1 FROM wh_meeting_members WHERE member_ci=wmr.your_ci AND meeting_idx='169') AS extra1
-                FROM
-                    wh_match_rate wmr
-                JOIN
-                    wh_meeting_members wmm ON wmr.member_ci = wmm.member_ci
-                JOIN
-                    wh_meeting_members wmm2 ON wmr.your_ci = wmm2.member_ci
-                WHERE
-                    wmm.meeting_idx = '169'
-                AND wmr.delete_yn ='n'
-                group by member_ci , your_ci ;";
-        $members = $MemberModel->query($query)->getResultArray();
 
-        // member_ci를 키로 사용하여 배열을 그룹화합니다.
-        $groupedMembers = [];
-        foreach ($members as $member) {
-            $groupedMembers[$member['member_ci']][] = $member;
+
+
+        // 참여자 전원 돌면서 해당방 안의 매칭률 있는지 확인하기
+        $query = "SELECT mb.name, mb.nickname, mb.ci FROM wh_meeting_members wmm, members mb WHERE wmm.member_ci = mb.ci AND wmm.meeting_idx='169' AND mb.ci NOT LIKE '%testmember_email%'";
+        $memberData = $MemberModel->query($query)->getResultArray();
+
+        $partyMember = []; //파티 멤버의 ci값 적재
+        foreach ($memberData as $row) {
+            $partyMember[] = $row['ci'];
         }
-
-        // 각 그룹 내에서 match_rate에 따라 내림차순 정렬하고, 조건에 맞는 사람을 선택합니다.
-        $selectedMembers = [];
-        foreach ($groupedMembers as $memberCi => $membersArray) {
-            // match_rate로 내림차순 정렬
-            usort($membersArray, function ($a, $b) {
-                return $b['match_rate'] <=> $a['match_rate'];
-            });
-
-            // 조건에 맞는 첫 번째 인원을 찾습니다.
-            foreach ($membersArray as $member) {
-                if (strpos($member['member_ci'], 'testmember_email') === false && strpos($member['your_ci'], 'testmember_email') === false) { //더미데이터는 제외
-                    $query2 = "SELECT extra1 FROM wh_meeting_members WHERE meeting_idx='169' AND member_ci='" . $member['your_ci'] . "';";
-                    $partyMember = $MemberModel->query($query2)->getResultArray();
-                    if ($partyMember[0]['extra1'] === '' || $partyMember[0]['extra1'] === null) { // 찜 당하지 않은 사람만
-
-                        // 여기서 로직 추가, 만약 상대가 나를 이미 지정한 상태이면, 자동으로 매칭 OK하기
-
-                        echo "<br/> " . $member['my_nickname'] . " -> " . $member['your_nickname'];
-                        $query = "UPDATE wh_meeting_members SET extra1='" . $member['my_nickname'] . "' WHERE member_ci='" . $member['your_ci'] . "' AND meeting_idx='169' AND delete_yn='n'";
-                        $MemberModel->query($query);
-                        $selectedMembers[$memberCi] = $member;
-                        break; // 조건에 맞는 첫 번째 사람을 찾으면 루프를 종료합니다.
+        $partyMemberData = [];
+        foreach ($partyMember as &$row) {
+            $query = "SELECT * FROM wh_match_rate WHERE member_ci='" . $row . "' AND delete_yn='n' AND your_ci NOT LIKE '%testmember_email%'";
+            $matchData = $MemberModel->query($query)->getResultArray();
+            $matchRank = [];
+            if ($matchData) {
+                foreach ($matchData as $matchRow) {
+                    if (in_array($matchRow['your_ci'], $partyMember)) {
+                        $matchRank[] = ['your_nickname' => $matchRow['your_nickname'], 'match_score' => $matchRow['match_score'], 'match_score_max' => $matchRow['match_score_max'], 'match_rate' => $matchRow['match_rate']];
                     }
                 }
             }
+            if ($matchRank) {
+                usort($matchRank, function ($a, $b) {
+                    return $b['match_rate'] - $a['match_rate'];
+                });
+                $matchRank = array_slice($matchRank, 0, 5);
+                $partyMemberData[$row] = $matchRank;
+            }
         }
-        print_r($selectedMembers);
 
+        $uniqueNicknames = []; // 중복을 피하기 위해 이미 사용된 닉네임을 저장할 배열
+
+        foreach ($partyMemberData as $ci => &$matches) {
+            usort($matches, function ($a, $b) {
+                return $b['match_rate'] <=> $a['match_rate']; // 내림차순 정렬
+            });
+            // $matches = array_slice($matches, 0, 1); // 첫 번째 요소만 남김
+
+            // 중복되지 않는 첫 번째 요소 찾기
+            foreach ($matches as $key => $match) {
+                if (!in_array($match['your_nickname'], $uniqueNicknames)) {
+                    $uniqueNicknames[] = $match['your_nickname'];
+                    $matches = [$match]; // 해당 요소만 남김
+                    break;
+                }
+            }
+        }
+
+        //1차를 남자기준으로 매치해버리고
+        //2차는 여자기준으로 매치해버리면 중복 안되지 않을까? --> 그 때 1차의 리스트를 남겨놔서 1차때 매치했던 사람은 매칭되지 않도록 하는거지
+
+
+
+        unset($matches); // 참조 해제
+        print_r($partyMemberData);
+        $data['partyMemberData'] = $partyMemberData;
+        $data['memberData'] = $memberData;
 
 
         $session = session();
         $ci = $session->get('ci');
-        $MemberModel = new MemberModel();
         $query = "SELECT * FROM members WHERE ci='" . $ci . "'";
-
         $adminVerify = $MemberModel->query($query)->getResultArray();
         if ($adminVerify) {
             $adminId = $adminVerify[0]['email'];
             if ($adminId === 'admin' || $adminId === 'develop') {
-                return view('admin/ad_party_mngment');
+                return view('admin/ad_party_mngment', $data);
             } else {
                 return redirect()->to("/");
             }
