@@ -79,9 +79,9 @@
                                 if ($item['id'] === $row['city']) echo $item['name'];
                             } ?>
                             <?php
-                            if ($row['mbti']) {
+                            if ($row['mbti'] !== null || $row['mbti'] !== '') {
                                 foreach ($mbtiCode as $item) {
-                                    if ($item['id'] === $row['mbti']) echo  $item['name'];
+                                    if ($item['id'] === $row['mbti']) echo  ' · ' . $item['name'];
                                 }
                             } else {
                                 echo ' · 없음';

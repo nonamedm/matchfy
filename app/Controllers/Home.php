@@ -18,7 +18,7 @@ class Home extends BaseController
         // 조건에 따라 리다이렉트
         if ($currentDomain == 'cuberry.kr') {
             // 리다이렉트할 URL
-            return view('intro');
+            return view('/intro/main');
         }
 
         // 다른 도메인의 경우 다른 페이지로 리다이렉트

@@ -2276,7 +2276,7 @@ a:active {
     background: #555555;
     border-radius: 10px;
     color: #fff;
-    font-size: 15px;
+    font-size: 13px;
 }
 
 .form_row.signin_form input {
@@ -2693,6 +2693,7 @@ form input[type='file'] {
     font-size: 14px;
     line-height: 17px;
     color: #333333;
+    margin-top: 30px;
 }
 .btn.type03 {
     width: 325px;
