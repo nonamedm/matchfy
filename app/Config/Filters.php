@@ -42,13 +42,17 @@ class Filters extends BaseConfig
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
-            'checkLoginMain' => ['except' => ['/', '/mo', '/publish', '/ajax/*', '/upload', '/auth/*', '/intro/*', '/proxy/*', '/mo/mypage/group/detail/*', '/mo/pass', '/mo/agree', '/mo/signin', '/mo/signinPhoto', '/mo/signinType', '/mo/signinRegular', '/mo/signinPremium', '/mo/signinSuccess', '/mo/signinPopup','/mo/idpwfind/*',
-                                                '/ad/*','/ad/support/*', 
-                                                '/support', '/support/*', '/ajax/support/*']],
-                                                
-            'checkLoginSupport' => ['except' => ['/support/mo', '/ajax/support/*', '/support/ajax/*', '/support/proxy/*', '/support/pass', '/support/agree', '/support/signin', '/support/signinSuccess',
-                                                    '/ad/*','/ad/support/*', 
-                                                    '/', '/intro/*', '/publish', '/index/login', '/mo', '/mo/*', '/ajax/*', '/upload', '/auth/*', '/proxy/*', '/ckeditorUpload']],
+            'checkLoginMain' => ['except' => [
+                '/', '/mo', '/publish', '/ajax/*', '/upload', '/auth/*', '/intro/*', '/proxy/*', '/mo/mypage/group/detail/*', '/mo/pass', '/mo/agree', '/mo/signin', '/mo/signinPhoto', '/mo/signinType', '/mo/signinRegular', '/mo/signinPremium', '/mo/signinSuccess', '/mo/signinPopup', '/mo/idpwfind/*',
+                '/ad/*', '/ad/support/*',
+                '/support', '/support/*', '/ajax/support/*'
+            ]],
+
+            'checkLoginSupport' => ['except' => [
+                '/support/mo', '/ajax/support/*', '/support/ajax/*', '/support/proxy/*', '/support/pass', '/support/agree', '/support/signin', '/support/signinSuccess',
+                '/ad/*', '/ad/support/*',
+                '/', '/intro/*', '/publish', '/index/login', '/mo', '/mo/*', '/ajax/*', '/upload', '/auth/*', '/proxy/*', '/ckeditorUpload', '/downloadFile/*'
+            ]],
         ],
         'after' => [
             'toolbar',

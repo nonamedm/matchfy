@@ -52,6 +52,7 @@
                         <th class="th">전화번호</th>
                         <th class="th">등급</th>
                         <th class="th">등급<br />(임시)</th>
+                        <th class="th">사진</th>
                         <th class="th">소셜유형</th>
                         <th class="th">최근접속</th>
                     </tr>
@@ -74,6 +75,9 @@
                             <td class="td"><?= substr($data['mobile_no'], 0, 3) . "-" . substr($data['mobile_no'], 3, 4) . "-" . substr($data['mobile_no'], 7) ?></td>
                             <td class="td"><?= $data['grade'] ?></td>
                             <td class="td"><?= $data['temp_grade'] ?></td>
+                            <td class="td">
+                                <span class="attatch_file_div"><a class="attach_file" href="<?= '/' . $data['file_path'] . $data['file_name']; ?>" target="_blank"><?= $data['org_name']; ?></a></span>
+                            </td>
                             <td class="td"><?= $data['sns_type'] ?></td>
                             <td class="td"><?= $data['last_access_dt'] ?></td>
                         </tr>
