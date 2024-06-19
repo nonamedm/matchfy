@@ -928,6 +928,18 @@ class AdminHome extends BaseController
         } else {
             $page = 2;
         }
+
+
+        function contains_string($needle, $haystack)
+        {
+            foreach ($haystack as $item) {
+                if (strpos($item, $needle) !== false) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         $MemberModel = new MemberModel();
 
 
@@ -940,30 +952,33 @@ class AdminHome extends BaseController
         foreach ($memberData as $row) {
             $partyMember[] = $row['ci'];
         }
-        $partyMemberData = [];
+        $partyMemberDataMen = [];
         foreach ($partyMember as &$row) {
-            $query = "SELECT * FROM wh_match_rate WHERE member_ci='" . $row . "' AND delete_yn='n' AND your_ci NOT LIKE '%testmember_email%'";
+            $query = "SELECT *, (SELECT gender FROM members WHERE ci='" . $row . "') as gender FROM wh_match_rate WHERE member_ci='" . $row . "' AND delete_yn='n' AND your_ci NOT LIKE '%testmember_email%' ORDER BY match_rate DESC";
             $matchData = $MemberModel->query($query)->getResultArray();
             $matchRank = [];
             if ($matchData) {
                 foreach ($matchData as $matchRow) {
                     if (in_array($matchRow['your_ci'], $partyMember)) {
-                        $matchRank[] = ['your_nickname' => $matchRow['your_nickname'], 'match_score' => $matchRow['match_score'], 'match_score_max' => $matchRow['match_score_max'], 'match_rate' => $matchRow['match_rate']];
+                        // 남자 데이터만 저장
+                        if ($matchRow['gender'] === '1') {
+                            $matchRank[] = ['gender' => $matchRow['gender'], 'my_ci' => $row, 'your_ci' => $matchRow['your_ci'], 'your_nickname' => $matchRow['your_nickname'], 'match_score' => $matchRow['match_score'], 'match_score_max' => $matchRow['match_score_max'], 'match_rate' => $matchRow['match_rate']];
+                        }
                     }
                 }
             }
             if ($matchRank) {
-                usort($matchRank, function ($a, $b) {
-                    return $b['match_rate'] - $a['match_rate'];
-                });
-                $matchRank = array_slice($matchRank, 0, 5);
-                $partyMemberData[$row] = $matchRank;
+                // usort($matchRank, function ($a, $b) {
+                //     return $b['match_rate'] - $a['match_rate'];
+                // }); //ORDER BY 했으니까..
+                // $matchRank = array_slice($matchRank, 0, 5);
+                $partyMemberDataMen[$row] = $matchRank;
             }
         }
 
         $uniqueNicknames = []; // 중복을 피하기 위해 이미 사용된 닉네임을 저장할 배열
 
-        foreach ($partyMemberData as $ci => &$matches) {
+        foreach ($partyMemberDataMen as $ci => &$matches) {
             usort($matches, function ($a, $b) {
                 return $b['match_rate'] <=> $a['match_rate']; // 내림차순 정렬
             });
@@ -971,22 +986,42 @@ class AdminHome extends BaseController
 
             // 중복되지 않는 첫 번째 요소 찾기
             foreach ($matches as $key => $match) {
-                if (!in_array($match['your_nickname'], $uniqueNicknames)) {
-                    $uniqueNicknames[] = $match['your_nickname'];
+                // print_r($match);
+                if (!in_array($match['your_ci'], array_column($uniqueNicknames, 'your_ci'))) {
+                    // 남자의 1순위 매칭상대를 먼저 넣는다
+                    $uniqueNicknames[] = ['your_ci' => $match['your_ci'], 'my_ci' => $ci];
                     $matches = [$match]; // 해당 요소만 남김
                     break;
                 }
             }
+            unset($matches); // 참조 해제
         }
 
-        //1차를 남자기준으로 매치해버리고
-        //2차는 여자기준으로 매치해버리면 중복 안되지 않을까? --> 그 때 1차의 리스트를 남겨놔서 1차때 매치했던 사람은 매칭되지 않도록 하는거지
+
+        // partyMemberDataMen 한번 더 돌면서, 상대방도 매칭에 응해주기
+        foreach ($partyMemberDataMen as $row) {
+            foreach ($row as $rrow) {
+                $query = "SELECT *, (SELECT gender FROM members WHERE ci='" . $rrow['your_ci'] . "') as gender FROM wh_match_rate WHERE member_ci='" .  $rrow['your_ci'] . "' AND delete_yn='n' AND your_ci NOT LIKE '%testmember_email%' ORDER BY match_rate DESC";
+                $matchData = $MemberModel->query($query)->getResultArray();
+                $matchRank = [];
+                foreach ($matchData as $matchRow) {
+                    if ($matchRow['member_ci'] === $rrow['your_ci'] && $matchRow['your_ci'] === $rrow['my_ci']) {
+                        $matchRank[] = ['gender' => $matchRow['gender'], 'my_ci' => $rrow['your_ci'], 'your_ci' => $matchRow['your_ci'], 'your_nickname' => $matchRow['your_nickname'], 'match_score' => $matchRow['match_score'], 'match_score_max' => $matchRow['match_score_max'], 'match_rate' => $matchRow['match_rate']];
+                    }
+                }
+                if ($matchRank) {
+                    $partyMemberDataMen[$rrow['your_ci']] = $matchRank;
+                }
+            }
+        }
+        // echo '<pre>';
+        // print_r($partyMemberDataMen);
+        // echo '</pre>';
 
 
 
-        unset($matches); // 참조 해제
-        print_r($partyMemberData);
-        $data['partyMemberData'] = $partyMemberData;
+        // print_r($partyMemberData);
+        $data['partyMemberData'] = $partyMemberDataMen;
         $data['memberData'] = $memberData;
 
 
