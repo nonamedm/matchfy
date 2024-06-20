@@ -34,39 +34,48 @@
                             } ?>
                             <?php if ($inMemberChk) {
                             ?>
-                                <a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/<?= $row['nickname'] ?>')">
                                 <?php
-                            } else {
+                                if ($row['member_gender'] !== $my_gender) {
                                 ?>
-                                    <a class="nicknameBtnBox">
+                                    <a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/<?= $row['nickname'] ?>')">
                                     <?php
-                                } ?>
-                                    <?php if ($row['file_path']) {
+                                } else {
                                     ?>
-                                        <img class="profile_img" src="/<?= $row['file_path'] ?><?= $row['file_name'] ?>" />
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <img class="profile_img" src="/static/images/mypage_no_pfofile.png" />
-                                    <?php
-                                    }
-                                    ?>
-
-                                    <?php
-                                    $length = mb_strlen($row['name'], 'UTF-8');
-                                    $firstChar = mb_substr($row['name'], 0, 1, 'UTF-8');
-                                    $lastChar = mb_substr($row['name'], -1, 1, 'UTF-8');
-
-                                    // 중간 부분을 '*'로 치환
-                                    $middlePart = str_repeat('*', $length - 2);
-                                    ?>
-                                    <p><?= $firstChar . $middlePart . $lastChar ?></p>
-                                    </a>
-                                    <?php if ($row['meeting_master'] === 'K') {
-                                    ?>
-                                        <img class="group_master" src="/static/images/group_master.png" />
-                                    <?php
+                                        <a class="nicknameBtnBox">
+                                        <?php
                                     } ?>
+                                    <?php
+                                } else {
+                                    ?>
+                                        <a class="nicknameBtnBox">
+                                        <?php
+                                    } ?>
+                                        <?php if ($row['file_path']) {
+                                        ?>
+                                            <img class="profile_img" src="/<?= $row['file_path'] ?><?= $row['file_name'] ?>" />
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <img class="profile_img" src="/static/images/mypage_no_pfofile.png" />
+                                        <?php
+                                        }
+                                        ?>
+
+                                        <?php
+                                        $length = mb_strlen($row['name'], 'UTF-8');
+                                        $firstChar = mb_substr($row['name'], 0, 1, 'UTF-8');
+                                        $lastChar = mb_substr($row['name'], -1, 1, 'UTF-8');
+
+                                        // 중간 부분을 '*'로 치환
+                                        $middlePart = str_repeat('*', $length - 2);
+                                        ?>
+                                        <p><?= $firstChar . $middlePart . $lastChar ?></p>
+                                        </a>
+                                        <?php if ($row['meeting_master'] === 'K') {
+                                        ?>
+                                            <img class="group_master" src="/static/images/group_master.png" />
+                                        <?php
+                                        } ?>
 
                         </div>
                         <div class="group_member_detail">

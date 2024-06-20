@@ -26,10 +26,28 @@
                                 <img class="fork_img" src="/static/images/fork_none.png" />
                             <?php
                             } ?>
-                            <a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/<?= $row['nickname'] ?>')">
-                                <img class="profile_img" src="/<?= $row['file_path'] ?><?= $row['file_name'] ?>" />
-                                <p><?= $row['name'] ?></p>
-                            </a>
+                            <?php if ($row['member_gender'] !== $my_gender) {
+                            ?>
+                                <a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/<?= $row['nickname'] ?>')">
+                            <?php
+                            } else {
+                            ?>
+                                    <a class="nicknameBtnBox">
+                            <?php
+                            } ?>
+                                    <img class="profile_img" src="/<?= $row['file_path'] ?><?= $row['file_name'] ?>" />
+                                    <p>
+                                        <?php
+                                        $length = mb_strlen($row['name'], 'UTF-8');
+                                        $firstChar = mb_substr($row['name'], 0, 1, 'UTF-8');
+                                        $lastChar = mb_substr($row['name'], -1, 1, 'UTF-8');
+
+                                        // 중간 부분을 '*'로 치환
+                                        $middlePart = str_repeat('*', $length - 2);
+                                        ?>
+                                        <?= $firstChar . $middlePart . $lastChar ?>
+                                    </p>
+                                    </a>
                         </div>
                         <div class="chat_member_report">
                             <?php if ($row['chk'] !== 'me') {
