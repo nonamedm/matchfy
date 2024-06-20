@@ -56,15 +56,33 @@
                             <td class="td"><?= $row['name'] ?></td>
                             <td class="td"><?= $row['nickname'] ?></td>
                             <td class="td"><?php
-                                            if ($partyMemberData[$row['ci']]) {
-                                                foreach ($partyMemberData[$row['ci']] as $rrow) {
+                                            if ($partyMemberData1[$row['ci']]) {
+                                                foreach ($partyMemberData1[$row['ci']] as $rrow) {
                                                     echo $rrow['your_nickname'] . ' - ' . $rrow['match_score'] . '/' . $rrow['match_score_max'] . '(' . $rrow['match_rate'] . '%)<br/>';
                                                 }
                                             }
                                             ?></td>
-                            <td class="td"></td>
-                            <td class="td">시작</td>
-                            <td class="td">시작</td>
+                            <td class="td"><?php
+                                            if ($partyMemberData2[$row['ci']]) {
+                                                foreach ($partyMemberData2[$row['ci']] as $rrow) {
+                                                    echo $rrow['your_nickname'] . ' - ' . $rrow['match_score'] . '/' . $rrow['match_score_max'] . '(' . $rrow['match_rate'] . '%)<br/>';
+                                                }
+                                            }
+                                            ?></td>
+                            <td class="td"><?php
+                                            if ($partyMemberData3[$row['ci']]) {
+                                                foreach ($partyMemberData3[$row['ci']] as $rrow) {
+                                                    echo $rrow['your_nickname'] . ' - ' . $rrow['match_score'] . '/' . $rrow['match_score_max'] . '(' . $rrow['match_rate'] . '%)<br/>';
+                                                }
+                                            }
+                                            ?></td>
+                            <td class="td"><?php
+                                            if ($partyMemberData4[$row['ci']]) {
+                                                foreach ($partyMemberData4[$row['ci']] as $rrow) {
+                                                    echo $rrow['your_nickname'] . ' - ' . $rrow['match_score'] . '/' . $rrow['match_score_max'] . '(' . $rrow['match_rate'] . '%)<br/>';
+                                                }
+                                            }
+                                            ?></td>
                         </tr>
                     <?php
                         $index++;
