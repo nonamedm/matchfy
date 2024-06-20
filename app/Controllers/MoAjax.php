@@ -385,6 +385,8 @@ class MoAjax extends BaseController
         if ($selectedGrade !== $currentGrade) {
             $query = "UPDATE members SET grade='" . $selectedGrade . "' WHERE ci='" . $ci . "'";
             $updateStatus = $MemberModel->query($query);
+            $query = "UPDATE members SET temp_grade='" . $selectedGrade . "' WHERE ci='" . $ci . "'";
+            $updateStatus = $MemberModel->query($query);
 
             $data = [
                 'grade' => $selectedGrade,

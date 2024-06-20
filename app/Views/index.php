@@ -365,7 +365,7 @@ if ($ci) {
                                                 html += '<p class="mbti nodata"></p>';
                                             }
                                             // html += '<p class="mat_percent">' + item.match_rate + '%</p>';
-                                            html += matchRateType(item.match_rate);
+                                           // html += matchRateType(item.match_rate);
                                             html += '</div>';
                                             html += '</a>';
                                             html += '</div>';

@@ -922,24 +922,6 @@ class AdminHome extends BaseController
     public function partyMngment($page = null)
     {
 
-        // 페이지가 없으면 기본값으로 1을 사용
-        if ($page === null || !is_numeric($page)) {
-            $page = 1;
-        } else {
-            $page = 2;
-        }
-
-
-        function contains_string($needle, $haystack)
-        {
-            foreach ($haystack as $item) {
-                if (strpos($item, $needle) !== false) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         $MemberModel = new MemberModel();
 
 
