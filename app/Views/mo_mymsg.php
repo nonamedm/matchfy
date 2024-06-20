@@ -265,8 +265,8 @@
     <!-- SCRIPTS -->
 
     <script>
-        var offset = 20;
-        var limit = 20;
+        var offset = 1000;
+        var limit = 100;
         $(document).ready(function() {
             // 엔터키 메세지전송, shift+enter 줄바꿈
             $('textarea').on('keydown', function(event) {
