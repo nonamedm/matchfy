@@ -29,12 +29,12 @@
                             <?php if ($row['member_gender'] !== $my_gender) {
                             ?>
                                 <a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/<?= $row['nickname'] ?>')">
-                            <?php
+                                <?php
                             } else {
-                            ?>
+                                ?>
                                     <a class="nicknameBtnBox">
-                            <?php
-                            } ?>
+                                    <?php
+                                } ?>
                                     <img class="profile_img" src="/<?= $row['file_path'] ?><?= $row['file_name'] ?>" />
                                     <p>
                                         <?php
@@ -75,7 +75,7 @@
 
     });
     const banUsr = (num) => {
-        fn_confirm('강퇴하시겠습니까?', 'banusr')
+        fn_confirm('강퇴하시겠습니까?', 'banusr', num)
     }
 
     function fn_banUsr(value) {
@@ -85,14 +85,14 @@
                 type: 'POST',
                 data: {
                     "room_ci": $("#room_ci").val(),
-                    "num": num
+                    "num": value
                 },
                 async: false,
                 success: function(data) {
                     console.log(data);
                     if (data.status === 'success') {
                         // 성공
-                        // moveToUrl('/');
+                        fn_alert('상대방이 강퇴되었습니다.');
                     } else if (data.status === 'error') {
                         console.log('실패', data);
                     } else {
@@ -105,6 +105,8 @@
                     fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                 },
             });
+        } else {
+            fn_alert('상대방 정보를 확인해 주시기 바랍니다.');
         }
     }
     const reptUsr = (num) => {

@@ -107,7 +107,7 @@ const supportUserLogin = () => {
         success: function (data) {
             console.log(data);
             if (data.status === 'success') {
-                moveToUrl('/support');//변경 필요
+                moveToUrl('/support'); //변경 필요
                 console.log(data);
                 // $.ajax({
                 //     url: '/ajax/calcMatchRate',
@@ -1474,7 +1474,7 @@ const supportRecommendCodeCheck = () => {
             fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
         },
     });
-}
+};
 
 const meetingSave = (postData) => {
     if ($('#group_photo').val().trim() === '') {
@@ -2215,7 +2215,7 @@ const referralRegistration = () => {
         fn_alert('추천이유를 입력해 주세요');
         tempValidation = false;
         $('#detailed_content').focus();
-    } 
+    }
 
     if (
         $('#name').val() !== '' &&
@@ -2233,9 +2233,8 @@ const referralRegistration = () => {
         tempValidation = true;
     }
     if (tempValidation) {
-        
         $.ajax({
-            url: '/ajax/support/referral', 
+            url: '/ajax/support/referral',
             type: 'POST',
             data: postData,
             processData: false,
@@ -2247,7 +2246,6 @@ const referralRegistration = () => {
                     // 성공
                     moveToUrl('/support/referralSuccess');
                 } else if (data.status === 'error') {
-                    
                     // 한번만 출력되게 함
                     $('.alert_validation').remove();
                     // 오류 메시지 표시
@@ -2258,9 +2256,7 @@ const referralRegistration = () => {
                         // 오류 메시지 추가
                         if (!topMostDiv.next().hasClass('alert_validation')) {
                             // 이미 오류 메시지가 있는지 확인
-                            topMostDiv.after(
-                                '<div class="alert alert_validation">' + data.errors[key] + '</div>',
-                            );
+                            topMostDiv.after('<div class="alert alert_validation">' + data.errors[key] + '</div>');
                         }
                         // 처음 validation 포커스
                         if (index === 0) {
@@ -2277,11 +2273,9 @@ const referralRegistration = () => {
                 fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
             },
         });
-        
     } else {
     }
 };
-
 
 /*common alert */
 function fn_alert(msg, loc) {
@@ -2310,7 +2304,7 @@ function fn_alert(msg, loc) {
     $('body').append(html);
 }
 /*common confirm */
-function fn_confirm(msg, loc) {
+function fn_confirm(msg, loc, param) {
     var html = '';
     var value;
     html += '<div class="layerPopup alert middle callAlert">';
@@ -2327,7 +2321,7 @@ function fn_confirm(msg, loc) {
     } else if (loc == 'myfeeddel') {
         html += '<button class="btn type01" onclick="fn_myFeedDelete(\'true\')">확인</button>';
     } else if (loc == 'banusr') {
-        html += '<button class="btn type01" onclick="fn_banUsr(\'true\')">확인</button>';
+        html += '<button class="btn type01" onclick="fn_banUsr(' + param + ')">확인</button>';
     } else if (loc == 'extRm') {
         html += '<button class="btn type01" onclick="fn_extRm(\'true\')">확인</button>';
     } else if (loc == 'submitScdl') {
@@ -2487,14 +2481,15 @@ const supportPasswdUpdate = () => {
     } else {
     }
 };
-const helpJopPopup=() =>{
+const helpJopPopup = () => {
     var html = '';
     html += '<div class="layerPopup alert middle callAlert">';
     html += '<div class="layerPopup_wrap">';
     html += '<div class="layerPopup_content medium" style="padding:20px;min-height: 245px;">';
     html += '<p class="txt">직업 도움말</p>';
     html += '<div class="apply_group">';
-    html += '<p style="text-align: left;">1군 : 법인대표, 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)</p>';
+    html +=
+        '<p style="text-align: left;">1군 : 법인대표, 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)</p>';
     html += '<p style="text-align: left;">2군 : 상장사, 대기업, 공기업 회사원/공무원/개인사업자</p>';
     html += '<p style="text-align: left;">3군 : 중소기업 회사원/프리랜서 등 기타</p>';
     html += '</div>';
@@ -2507,8 +2502,8 @@ const helpJopPopup=() =>{
     html += '</div>';
     html += '</div>';
     $('body').append(html);
-}
-const helpSinupSchoolPopup=() =>{
+};
+const helpSinupSchoolPopup = () => {
     var html = '';
     html += '<div class="layerPopup alert middle callAlert">';
     html += '<div class="layerPopup_wrap">';
@@ -2517,12 +2512,14 @@ const helpSinupSchoolPopup=() =>{
     html += '<div class="apply_group">';
     html += '<p style="text-align: left;">학교 인증은 선택사항입니다.<br><br>';
     html += '인증 없이 텍스트로 학교명을 입력해주셔도 됩니다.';
-    html += '다만 인증된 정보 옆에는 다른분들이 확인하실 수 있는 인증 뱃지가 부여됩니다.<br> 인증뱃지가 있는 프로필이 신뢰도가 더 높습니다.</p>';
+    html +=
+        '다만 인증된 정보 옆에는 다른분들이 확인하실 수 있는 인증 뱃지가 부여됩니다.<br> 인증뱃지가 있는 프로필이 신뢰도가 더 높습니다.</p>';
     html += '</div><br>';
     html += '<p class="txt" style="color:#ff0267;">학교 인증을 꼭 해야 하나요?</p>';
     html += '<div class="apply_group">';
     html += '<p style="text-align: left;">인증버튼을 클릭하시면 이미지를 업로드할 수 있는 창이 나옵니다.<br><br>';
-    html += '졸업증명서, 재학증명서 등 본인의 학교를 인증할 수 있는 서류를 업로드 해 주시면 꼼꼼한 확인 과정을 거쳐 인증 뱃지가 부여됩니다.<br><br>';
+    html +=
+        '졸업증명서, 재학증명서 등 본인의 학교를 인증할 수 있는 서류를 업로드 해 주시면 꼼꼼한 확인 과정을 거쳐 인증 뱃지가 부여됩니다.<br><br>';
     html += '확인을 위해 시간이 필요한 점 양해 부탁드립니다.</p>';
     html += '</div>';
     html += '<div class="layerPopup_bottom">';
@@ -2534,8 +2531,8 @@ const helpSinupSchoolPopup=() =>{
     html += '</div>';
     html += '</div>';
     $('body').append(html);
-}
-const helpSinupJopPopup=() =>{
+};
+const helpSinupJopPopup = () => {
     var html = '';
     html += '<div class="layerPopup alert middle callAlert">';
     html += '<div class="layerPopup_wrap">';
@@ -2544,12 +2541,14 @@ const helpSinupJopPopup=() =>{
     html += '<div class="apply_group">';
     html += '<p style="text-align: left;">직업 인증은 선택사항입니다.<br><br>';
     html += '인증 없이 직업 분류만 선택해 주셔도 됩니다.<br><br>';
-    html += '다만 인증된 정보 옆에는 다른분들이 확인하실 수 있는 인증 뱃지가 부여됩니다. 인증뱃지가 있는 프로필이 신뢰도가 더 높습니다.</p>';
+    html +=
+        '다만 인증된 정보 옆에는 다른분들이 확인하실 수 있는 인증 뱃지가 부여됩니다. 인증뱃지가 있는 프로필이 신뢰도가 더 높습니다.</p>';
     html += '</div><br>';
     html += '<p class="txt" style="color:#ff0267;">직업  인증은 어떻게 하나요?</p>';
     html += '<div class="apply_group">';
     html += '<p style="text-align: left;">인증버튼을 클릭하시면 이미지를 업로드할 수 있는 창이 나옵니다.<br><br>';
-    html += '명함, 재직증명서, 면허 등 본인의 직업 인증할 수 있는 서류를 업로드 해 주시면 꼼꼼한 확인 과정을 거쳐 인증 뱃지가 부여됩니다.<br><br>';
+    html +=
+        '명함, 재직증명서, 면허 등 본인의 직업 인증할 수 있는 서류를 업로드 해 주시면 꼼꼼한 확인 과정을 거쳐 인증 뱃지가 부여됩니다.<br><br>';
     html += '확인을 위해 시간이 필요한 점 양해 부탁드립니다.</p>';
     html += '</div>';
     html += '<div class="layerPopup_bottom">';
@@ -2561,4 +2560,4 @@ const helpSinupJopPopup=() =>{
     html += '</div>';
     html += '</div>';
     $('body').append(html);
-}
+};

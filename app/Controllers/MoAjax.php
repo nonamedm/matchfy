@@ -4236,6 +4236,7 @@ class MoAjax extends BaseController
         $ChatRoomMsgModel = new ChatRoomMsgModel();
         $ChatRoomMemberModel = new ChatRoomMemberModel();
         $MemberModel = new MemberModel();
+        $MeetingModel = new MeetingModel();
 
         $session = session();
         $ci = $session->get('ci');
@@ -4253,6 +4254,15 @@ class MoAjax extends BaseController
                         WHERE room_ci='" . $room_ci . "'";
             $updateChatRoomCount = $ChatRoomModel
                 ->query($query);
+            $query = "SELECT * FROM wh_meetings WHERE chat_room_ci='" . $room_ci . "'";
+            $extMt = $MeetingModel
+                ->query($query)->getResultArray();
+            if ($extMt) {
+                // 단톡방이었으면 모임까지 나가기
+                $query = "UPDATE wh_meeting_members SET DELETE_YN='Y' WHERE meeting_idx='" . $extMt[0]['idx'] . "' AND member_ci='" . $ci . "'";
+                $extRm = $ChatRoomMemberModel
+                    ->query($query);
+            }
             if ($updateChatRoomCount) {
                 return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $extRm]]);
             } else {
@@ -4290,6 +4300,19 @@ class MoAjax extends BaseController
                 WHERE room_ci='" . $room_ci . "'";
             $updateChatRoomCount = $ChatRoomModel
                 ->query($query);
+
+            // 모임도 미참여상태로 변경시킴
+            $query = "SELECT member_ci FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND entry_num='" . $entry_num . "'";
+            $memberCi = $ChatRoomMemberModel->query($query)->getResultArray();
+
+            $query = "SELECT idx FROM wh_meetings WHERE chat_room_ci='" . $room_ci . "'";
+            $meetingIdx = $ChatRoomModel->query($query)->getResultArray();
+
+            $query = "UPDATE wh_meeting_members SET delete_yn='Y' WHERE member_ci = '" . $memberCi[0]['member_ci'] . "' AND meeting_idx='" . $meetingIdx[0]['idx'] . "'";
+            $ChatRoomMemberModel = $ChatRoomModel
+                ->query($query);
+
+
             if ($updateChatRoomCount) {
                 return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $banUsr]]);
             } else {

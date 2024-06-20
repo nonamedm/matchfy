@@ -1551,6 +1551,15 @@ class MoHome extends BaseController
 
                         $meeting_members
                             ->query($query);
+
+                        //대화방도 바로 다시 참석시켜준다
+                        $query = "UPDATE wh_chat_room SET room_count=(CAST(room_count AS UNSIGNED) + 1) WHERE room_ci=(SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "')";
+                        $meeting_members
+                            ->query($query);
+                        $query = "UPDATE wh_chat_room_member SET delete_yn='n' WHERE member_ci='" . $ci . "' AND room_ci=(SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "')";
+                        $meeting_members
+                            ->query($query);
+                        return $this->response->setJSON(['success' => true, 'msg' => '참석이 완료 되었습니다.']);
                     } else {
                         // 참석 승인 요청 처리
                         $meeting_members_temp->insert($meetMemdata);
@@ -1674,7 +1683,7 @@ class MoHome extends BaseController
                                 a.meeting_start_date, 
                                 a.meeting_end_date, 
                                 a.number_of_people, 
-                                (select count(*) from wh_meeting_members c where c.meeting_idx = ' . $meeting_idx . ') as meet_members, 
+                                (select count(*) from wh_meeting_members c where c.meeting_idx = ' . $meeting_idx . ' and c.delete_yn="N") as meet_members, 
                                 a.meeting_place, 
                                 a.membership_fee, 
                                 b.file_path, 
@@ -1966,11 +1975,12 @@ class MoHome extends BaseController
         $meetPointModel->insert($masterdata);
 
         // 예약신청내역도 취소하기
-        $query = "UPDATE wh_meeting_members_temp SET delete_yn='y' WHERE meeting_idx='" . $meeting_idx . "' AND member_ci='" . $ci . "'";
+        $query = "UPDATE wh_meeting_members_temp SET delete_yn='Y' WHERE meeting_idx='" . $meeting_idx . "' AND member_ci='" . $ci . "'";
         $MeetingMembersModel->query($query);
 
         // 대화방 나가기
-        $query = "";
+        $query = "UPDATE wh_chat_room_member SET delete_yn='y' WHERE room_ci=(SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "') AND member_ci='" . $ci . "'";
+        $MeetingMembersModel->query($query);
 
         if ($result) {
             return $this->response->setJSON(['success' => true]);
