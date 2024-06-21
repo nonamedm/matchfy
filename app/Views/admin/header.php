@@ -51,4 +51,7 @@
     <li class="menu_item">
         <a href="/ad/partyMngment">파티관리자 기능</a>
     </li>
+    <li class="menu_item">
+        <a href="/ad/partyMngmentTest">파티관리자 기능(테스트용)</a>
+    </li>
 </ul>
