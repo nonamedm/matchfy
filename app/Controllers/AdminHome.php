@@ -927,7 +927,7 @@ class AdminHome extends BaseController
 
 
         // 참여자 전원 돌면서 해당방 안의 매칭률 있는지 확인하기
-        $query = "SELECT mb.name, mb.nickname, mb.ci FROM wh_meeting_members wmm, members mb WHERE wmm.member_ci = mb.ci AND wmm.meeting_idx='169' AND mb.ci NOT LIKE '%testmember_email%'";
+        $query = "SELECT mb.name, mb.nickname, mb.ci FROM wh_meeting_members wmm, members mb WHERE wmm.member_ci = mb.ci AND wmm.meeting_idx='169' AND mb.ci NOT LIKE '%testmember_email%' AND wmm.delete_yn='N'";
         $memberData = $MemberModel->query($query)->getResultArray();
 
         $partyMember = []; //파티 멤버의 ci값 적재
@@ -960,6 +960,7 @@ class AdminHome extends BaseController
                 $partyMemberDataMen[$row] = $matchRank;
             }
         }
+        unset($row); // 참조 해제
 
         $uniqueNicknames = []; // 중복을 피하기 위해 이미 사용된 닉네임을 저장할 배열
 
@@ -971,13 +972,8 @@ class AdminHome extends BaseController
         }
         foreach ($partyMemberDataMen as $ci => &$matches) {
 
-            // $matches = array_slice($matches, 0, 5); // 첫 번째 요소만 남김
             // 중복되지 않는 첫 번째 요소 찾기
             foreach ($matches as $key => &$match) {
-                // echo '<pre>';
-                // print_r($match);
-                // echo '</pre>';
-                // echo '<br/>';
                 if (!in_array($match['your_ci'], array_column($uniqueNicknames, 'your_ci'))) {
                     // 남자의 1순위 매칭상대를 먼저 넣는다
                     $uniqueNicknames[] = ['your_ci' => $match['your_ci'], 'my_ci' => $ci];
@@ -986,6 +982,7 @@ class AdminHome extends BaseController
                 }
             }
         }
+        unset($matches); // 참조 해제
 
 
         // partyMemberDataMen 한번 더 돌면서, 상대방도 매칭에 응해주기
@@ -1001,6 +998,7 @@ class AdminHome extends BaseController
                 }
                 if ($matchRank) {
                     $partyMemberDataMen[$rrow['your_ci']] = $matchRank;
+                    $uniqueNicknames[] = ['your_ci' => $matchRank[0]['your_ci'], 'my_ci' => $rrow['your_ci']];
                 }
             }
         }
@@ -1015,10 +1013,25 @@ class AdminHome extends BaseController
             $matchRank = [];
             if ($matchData) {
                 foreach ($matchData as $matchRow) {
-                    if (in_array($matchRow['your_ci'], $partyMember)) {
-                        // 남자 데이터만 저장
-                        if ($matchRow['gender'] === '1') {
-                            $matchRank[] = ['gender' => $matchRow['gender'], 'my_ci' => $row, 'my_nickname' => $matchRow['my_nickname'], 'your_ci' => $matchRow['your_ci'], 'your_nickname' => $matchRow['your_nickname'], 'match_score' => $matchRow['match_score'], 'match_score_max' => $matchRow['match_score_max'], 'match_rate' => $matchRow['match_rate']];
+                    $yourCi = $matchRow['your_ci'];
+                    $beforeMatch = array_filter($uniqueNicknames, function ($person) use ($yourCi) {
+                        return $person['your_ci'] === $yourCi;
+                    });
+                    $flattenedArray = [];
+
+                    foreach ($beforeMatch as $innerArray) {
+                        foreach ($innerArray as $key => $value) {
+                            $flattenedArray[$key] = $value;
+                        }
+                    }
+                    if ($flattenedArray && $flattenedArray['my_ci'] === $row) {
+                        // 지난번 매칭에 포함됐던 커플에 대한 매칭률은 저장 안함
+                    } else {
+                        if (in_array($matchRow['your_ci'], $partyMember)) {
+                            // 남자 데이터만 저장
+                            if ($matchRow['gender'] === '1') {
+                                $matchRank[] = ['gender' => $matchRow['gender'], 'my_ci' => $row, 'my_nickname' => $matchRow['my_nickname'], 'your_ci' => $matchRow['your_ci'], 'your_nickname' => $matchRow['your_nickname'], 'match_score' => $matchRow['match_score'], 'match_score_max' => $matchRow['match_score_max'], 'match_rate' => $matchRow['match_rate']];
+                            }
                         }
                     }
                 }
@@ -1031,7 +1044,7 @@ class AdminHome extends BaseController
                 $partyMemberDataMen2[$row] = $matchRank;
             }
         }
-
+        unset($row); // 참조 해제
         $uniqueNicknames2 = []; // 중복을 피하기 위해 이미 사용된 닉네임을 저장할 배열
 
         foreach ($partyMemberDataMen2 as $ci => &$matches) {
@@ -1042,7 +1055,7 @@ class AdminHome extends BaseController
             // 중복되지 않는 첫 번째 요소 찾기
             foreach ($matches as $key => $match) {
                 // print_r($match);
-                if (!in_array($match['your_ci'], array_column($uniqueNicknames, 'your_ci')) && !in_array($match['your_ci'], array_column($uniqueNicknames2, 'your_ci'))) {
+                if (!in_array($match['your_ci'], array_column($uniqueNicknames2, 'your_ci'))) {
                     // 남자의 1순위 매칭상대를 먼저 넣는다
                     $uniqueNicknames2[] = ['your_ci' => $match['your_ci'], 'my_ci' => $ci];
                     $matches = [$match]; // 해당 요소만 남김
@@ -1070,6 +1083,7 @@ class AdminHome extends BaseController
                 }
                 if ($matchRank) {
                     $partyMemberDataMen2[$rrow['your_ci']] = $matchRank;
+                    $uniqueNicknames2[] = ['your_ci' => $matchRank[0]['your_ci'], 'my_ci' => $rrow['your_ci']];
                 }
             }
         }
@@ -1083,10 +1097,42 @@ class AdminHome extends BaseController
             $matchRank = [];
             if ($matchData) {
                 foreach ($matchData as $matchRow) {
-                    if (in_array($matchRow['your_ci'], $partyMember)) {
-                        // 남자 데이터만 저장
-                        if ($matchRow['gender'] === '1') {
-                            $matchRank[] = ['gender' => $matchRow['gender'], 'my_ci' => $row, 'my_nickname' => $matchRow['my_nickname'], 'your_ci' => $matchRow['your_ci'], 'your_nickname' => $matchRow['your_nickname'], 'match_score' => $matchRow['match_score'], 'match_score_max' => $matchRow['match_score_max'], 'match_rate' => $matchRow['ideal_rate']];
+
+                    $yourCi = $matchRow['your_ci'];
+                    $beforeMatch = array_filter($uniqueNicknames, function ($person) use ($yourCi) {
+                        return $person['your_ci'] === $yourCi;
+                    });
+
+                    $flattenedArray = [];
+
+                    foreach ($beforeMatch as $innerArray) {
+                        foreach ($innerArray as $key => $value) {
+                            $flattenedArray[$key] = $value;
+                        }
+                    }
+                    if ($flattenedArray && $flattenedArray['my_ci'] === $row) {
+                        // 지난번 매칭에 포함됐던 커플에 대한 매칭률은 저장 안함
+                    } else {
+                        $beforeMatch = array_filter($uniqueNicknames2, function ($person) use ($yourCi) {
+                            return $person['your_ci'] === $yourCi;
+                        });
+
+                        $flattenedArray = [];
+
+                        foreach ($beforeMatch as $innerArray) {
+                            foreach ($innerArray as $key => $value) {
+                                $flattenedArray[$key] = $value;
+                            }
+                        }
+                        if ($flattenedArray && $flattenedArray['my_ci'] === $row) {
+                            // 지난번 매칭에 포함됐던 커플에 대한 매칭률은 저장 안함
+                        } else {
+                            if (in_array($matchRow['your_ci'], $partyMember)) {
+                                // 남자 데이터만 저장
+                                if ($matchRow['gender'] === '1') {
+                                    $matchRank[] = ['gender' => $matchRow['gender'], 'my_ci' => $row, 'my_nickname' => $matchRow['my_nickname'], 'your_ci' => $matchRow['your_ci'], 'your_nickname' => $matchRow['your_nickname'], 'match_score' => $matchRow['match_score'], 'match_score_max' => $matchRow['match_score_max'], 'match_rate' => $matchRow['match_rate']];
+                                }
+                            }
                         }
                     }
                 }
@@ -1109,7 +1155,6 @@ class AdminHome extends BaseController
 
             // 중복되지 않는 첫 번째 요소 찾기
             foreach ($matches as $key => $match) {
-                // print_r($match);
                 if (!in_array($match['your_ci'], array_column($uniqueNicknames3, 'your_ci'))) {
                     // 남자의 1순위 매칭상대를 먼저 넣는다
                     $uniqueNicknames3[] = ['your_ci' => $match['your_ci'], 'my_ci' => $ci];
@@ -1133,11 +1178,12 @@ class AdminHome extends BaseController
                 $matchRank = [];
                 foreach ($matchData as $matchRow) {
                     if ($matchRow['member_ci'] === $rrow['your_ci'] && $matchRow['your_ci'] === $rrow['my_ci']) {
-                        $matchRank[] = ['gender' => $matchRow['gender'], 'my_ci' => $rrow['your_ci'], 'my_nickname' => $matchRow['my_nickname'], 'your_ci' => $matchRow['your_ci'], 'your_nickname' => $matchRow['your_nickname'], 'match_score' => $matchRow['match_score'], 'match_score_max' => $matchRow['match_score_max'], 'match_rate' => $matchRow['ideal_rate']];
+                        $matchRank[] = ['gender' => $matchRow['gender'], 'my_ci' => $rrow['your_ci'], 'my_nickname' => $matchRow['my_nickname'], 'your_ci' => $matchRow['your_ci'], 'your_nickname' => $matchRow['your_nickname'], 'match_score' => $matchRow['match_score'], 'match_score_max' => $matchRow['match_score_max'], 'match_rate' => $matchRow['match_rate']];
                     }
                 }
                 if ($matchRank) {
                     $partyMemberDataMen3[$rrow['your_ci']] = $matchRank;
+                    $uniqueNicknames3[] = ['your_ci' => $matchRank[0]['your_ci'], 'my_ci' => $rrow['your_ci']];
                 }
             }
         }
@@ -1151,10 +1197,56 @@ class AdminHome extends BaseController
             $matchRank = [];
             if ($matchData) {
                 foreach ($matchData as $matchRow) {
-                    if (in_array($matchRow['your_ci'], $partyMember)) {
-                        // 남자 데이터만 저장
-                        if ($matchRow['gender'] === '0') {
-                            $matchRank[] = ['gender' => $matchRow['gender'], 'my_ci' => $row, 'my_nickname' => $matchRow['my_nickname'], 'your_ci' => $matchRow['your_ci'], 'your_nickname' => $matchRow['your_nickname'], 'match_score' => $matchRow['match_score'], 'match_score_max' => $matchRow['match_score_max'], 'match_rate' => $matchRow['ideal_rate']];
+                    $yourCi = $matchRow['your_ci'];
+                    $beforeMatch = array_filter($uniqueNicknames, function ($person) use ($yourCi) {
+                        return $person['your_ci'] === $yourCi;
+                    });
+
+                    $flattenedArray = [];
+
+                    foreach ($beforeMatch as $innerArray) {
+                        foreach ($innerArray as $key => $value) {
+                            $flattenedArray[$key] = $value;
+                        }
+                    }
+                    if ($flattenedArray && $flattenedArray['my_ci'] === $row) {
+                        // 지난번 매칭에 포함됐던 커플에 대한 매칭률은 저장 안함
+                    } else {
+                        $beforeMatch = array_filter($uniqueNicknames2, function ($person) use ($yourCi) {
+                            return $person['your_ci'] === $yourCi;
+                        });
+
+                        $flattenedArray = [];
+
+                        foreach ($beforeMatch as $innerArray) {
+                            foreach ($innerArray as $key => $value) {
+                                $flattenedArray[$key] = $value;
+                            }
+                        }
+                        if ($flattenedArray && $flattenedArray['my_ci'] === $row) {
+                            // 지난번 매칭에 포함됐던 커플에 대한 매칭률은 저장 안함
+                        } else {
+                            $beforeMatch = array_filter($uniqueNicknames3, function ($person) use ($yourCi) {
+                                return $person['your_ci'] === $yourCi;
+                            });
+
+                            $flattenedArray = [];
+
+                            foreach ($beforeMatch as $innerArray) {
+                                foreach ($innerArray as $key => $value) {
+                                    $flattenedArray[$key] = $value;
+                                }
+                            }
+                            if ($flattenedArray && $flattenedArray['my_ci'] === $row) {
+                                // 지난번 매칭에 포함됐던 커플에 대한 매칭률은 저장 안함
+                            } else {
+                                if (in_array($matchRow['your_ci'], $partyMember)) {
+                                    // 남자 데이터만 저장
+                                    if ($matchRow['gender'] === '1') {
+                                        $matchRank[] = ['gender' => $matchRow['gender'], 'my_ci' => $row, 'my_nickname' => $matchRow['my_nickname'], 'your_ci' => $matchRow['your_ci'], 'your_nickname' => $matchRow['your_nickname'], 'match_score' => $matchRow['match_score'], 'match_score_max' => $matchRow['match_score_max'], 'match_rate' => $matchRow['match_rate']];
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -1201,11 +1293,12 @@ class AdminHome extends BaseController
                 $matchRank = [];
                 foreach ($matchData as $matchRow) {
                     if ($matchRow['member_ci'] === $rrow['your_ci'] && $matchRow['your_ci'] === $rrow['my_ci']) {
-                        $matchRank[] = ['gender' => $matchRow['gender'], 'my_ci' => $rrow['your_ci'], 'my_nickname' => $matchRow['my_nickname'], 'your_ci' => $matchRow['your_ci'], 'your_nickname' => $matchRow['your_nickname'], 'match_score' => $matchRow['match_score'], 'match_score_max' => $matchRow['match_score_max'], 'match_rate' => $matchRow['ideal_rate']];
+                        $matchRank[] = ['gender' => $matchRow['gender'], 'my_ci' => $rrow['your_ci'], 'my_nickname' => $matchRow['my_nickname'], 'your_ci' => $matchRow['your_ci'], 'your_nickname' => $matchRow['your_nickname'], 'match_score' => $matchRow['match_score'], 'match_score_max' => $matchRow['match_score_max'], 'match_rate' => $matchRow['match_rate']];
                     }
                 }
                 if ($matchRank) {
                     $partyMemberDataMen4[$rrow['your_ci']] = $matchRank;
+                    $uniqueNicknames4[] = ['your_ci' => $matchRank[0]['your_ci'], 'my_ci' => $rrow['your_ci']];
                 }
             }
         }
