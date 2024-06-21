@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/ad_board.js"></script>
+
     <link rel="stylesheet" href="/static/css/common_admin.css">
     <link rel="stylesheet" href="/static/css/common.css">
     <title>Matchfy 관리자페이지</title>
@@ -40,10 +40,10 @@
                         <th class="th num">idx</th>
                         <th class="th num">이름</th>
                         <th class="th num">닉네임</th>
-                        <th class="th">1차 매칭</th>
-                        <th class="th">2차 매칭</th>
-                        <th class="th">3차 매칭</th>
-                        <th class="th">4차 매칭</th>
+                        <th class="th">1차 매칭<button onclick="partyMatch(1)">실행</button></th>
+                        <th class="th">2차 매칭<button onclick="partyMatch(2)">실행</button></th>
+                        <th class="th">3차 매칭<button onclick="partyMatch(3)">실행</button></th>
+                        <th class="th">4차 매칭<button onclick="partyMatch(4)">실행</button></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,7 +61,8 @@
                                                     echo $rrow['your_nickname'] . ' - ' . $rrow['match_score'] . '/' . $rrow['match_score_max'] . '(' . $rrow['match_rate'] . '%)<br/>';
                                                 }
                                             }
-                                            ?></td>
+                                            ?>
+                            </td>
                             <td class="td"><?php
                                             if ($partyMemberData2[$row['ci']]) {
                                                 foreach ($partyMemberData2[$row['ci']] as $rrow) {
@@ -94,6 +95,51 @@
             </div> -->
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+
+        });
+        const partyMatch = num => {
+            $.ajax({
+                url: '/ad/partyMngment1',
+                type: 'POST',
+                data: {
+                    'num': num
+                },
+                async: false,
+                success: function(data) {
+                    console.log(data)
+                    alert(data.msg);
+                }
+            });
+        }
+        /*common alert */
+        function fn_alert(msg, loc) {
+            var html = '';
+
+            html += '<div class="layerPopup alert middle callAlert">';
+            html += '<div class="layerPopup_wrap">';
+            html += '<div class="layerPopup_content msmall">';
+            html += '<p class="txt">알림</p>';
+            html += '<div class="apply_group">';
+            html += '<p>' + msg + '</p>';
+            html += '</div>';
+            html += '<div class="layerPopup_bottom">';
+            html += '<div class="btn_group">';
+            if (loc) {
+                html += '<button class="btn type01" onclick="moveToUrl(\'' + loc + '\')">확인</button>';
+            } else {
+                html += '<button class="btn type01" onclick="alertClose()">확인</button>';
+            }
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+
+            $('body').append(html);
+        }
+    </script>
 </body>
 
 </html>
