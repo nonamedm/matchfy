@@ -927,7 +927,7 @@ class AdminHome extends BaseController
 
 
         // 참여자 전원 돌면서 해당방 안의 매칭률 있는지 확인하기
-        $query = "SELECT mb.name, mb.nickname, mb.ci FROM wh_meeting_members wmm, members mb WHERE wmm.member_ci = mb.ci AND wmm.meeting_idx='169' AND mb.ci NOT LIKE '%testmember_email%' AND wmm.delete_yn='N'";
+        $query = "SELECT mb.name, mb.nickname, mb.ci FROM wh_meeting_members wmm, members mb WHERE wmm.member_ci = mb.ci AND wmm.meeting_idx='189' AND wmm.delete_yn='N'";
         $memberData = $MemberModel->query($query)->getResultArray();
 
         $partyMember = []; //파티 멤버의 ci값 적재
@@ -943,7 +943,7 @@ class AdminHome extends BaseController
 
         // 1차매칭 시작
         foreach ($partyMember as &$row) {
-            $query = "SELECT *, (SELECT gender FROM members WHERE ci='" . $row . "') as gender FROM wh_match_rate WHERE member_ci='" . $row . "' AND delete_yn='n' AND your_ci NOT LIKE '%testmember_email%' ORDER BY match_rate DESC";
+            $query = "SELECT *, (SELECT gender FROM members WHERE ci='" . $row . "') as gender FROM wh_match_rate WHERE member_ci='" . $row . "' AND delete_yn='n' ORDER BY match_rate DESC";
             $matchData = $MemberModel->query($query)->getResultArray();
             $matchRank = [];
             if ($matchData) {
@@ -988,7 +988,7 @@ class AdminHome extends BaseController
         // partyMemberDataMen 한번 더 돌면서, 상대방도 매칭에 응해주기
         foreach ($partyMemberDataMen as $row) {
             foreach ($row as $rrow) {
-                $query = "SELECT *, (SELECT gender FROM members WHERE ci='" . $rrow['your_ci'] . "') as gender FROM wh_match_rate WHERE member_ci='" .  $rrow['your_ci'] . "' AND delete_yn='n' AND your_ci NOT LIKE '%testmember_email%' ORDER BY match_rate DESC";
+                $query = "SELECT *, (SELECT gender FROM members WHERE ci='" . $rrow['your_ci'] . "') as gender FROM wh_match_rate WHERE member_ci='" .  $rrow['your_ci'] . "' AND delete_yn='n' ORDER BY match_rate DESC";
                 $matchData = $MemberModel->query($query)->getResultArray();
                 $matchRank = [];
                 foreach ($matchData as $matchRow) {
@@ -1008,7 +1008,7 @@ class AdminHome extends BaseController
         foreach ($partyMember as &$row) {
             $query = "SELECT *, (SELECT gender FROM members WHERE ci='" . $row . "') as gender FROM wh_match_rate 
                         WHERE member_ci='" . $row . "' AND delete_yn='n' 
-                        AND your_ci NOT LIKE '%testmember_email%' ORDER BY match_rate DESC";
+                        ORDER BY match_rate DESC";
             $matchData = $MemberModel->query($query)->getResultArray();
             $matchRank = [];
             if ($matchData) {
@@ -1072,7 +1072,7 @@ class AdminHome extends BaseController
                 $query = "SELECT *, (SELECT gender FROM members WHERE ci='" . $rrow['your_ci'] . "') as gender FROM wh_match_rate 
                             WHERE member_ci='" .  $rrow['your_ci'] . "'
                                      AND delete_yn='n' 
-                                     AND your_ci NOT LIKE '%testmember_email%' ORDER BY match_rate DESC";
+                                     ORDER BY match_rate DESC";
                 $matchData = $MemberModel->query($query)->getResultArray();
 
                 $matchRank = [];
@@ -1092,7 +1092,7 @@ class AdminHome extends BaseController
         foreach ($partyMember as &$row) {
             $query = "SELECT *, (SELECT gender FROM members WHERE ci='" . $row . "') as gender FROM wh_match_rate 
                         WHERE member_ci='" . $row . "' AND delete_yn='n' 
-                        AND your_ci NOT LIKE '%testmember_email%' ORDER BY match_rate DESC";
+                        ORDER BY match_rate DESC";
             $matchData = $MemberModel->query($query)->getResultArray();
             $matchRank = [];
             if ($matchData) {
@@ -1172,7 +1172,7 @@ class AdminHome extends BaseController
                 $query = "SELECT *, (SELECT gender FROM members WHERE ci='" . $rrow['your_ci'] . "') as gender FROM wh_match_rate 
                             WHERE member_ci='" .  $rrow['your_ci'] . "'
                                      AND delete_yn='n' 
-                                     AND your_ci NOT LIKE '%testmember_email%' ORDER BY match_rate DESC";
+                                     ORDER BY match_rate DESC";
                 $matchData = $MemberModel->query($query)->getResultArray();
 
                 $matchRank = [];
@@ -1192,7 +1192,7 @@ class AdminHome extends BaseController
         foreach ($partyMember as &$row) {
             $query = "SELECT *, (SELECT gender FROM members WHERE ci='" . $row . "') as gender FROM wh_match_rate 
                         WHERE member_ci='" . $row . "' AND delete_yn='n' 
-                        AND your_ci NOT LIKE '%testmember_email%' ORDER BY match_rate DESC";
+                        ORDER BY match_rate DESC";
             $matchData = $MemberModel->query($query)->getResultArray();
             $matchRank = [];
             if ($matchData) {
@@ -1287,7 +1287,7 @@ class AdminHome extends BaseController
                 $query = "SELECT *, (SELECT gender FROM members WHERE ci='" . $rrow['your_ci'] . "') as gender FROM wh_match_rate 
                             WHERE member_ci='" .  $rrow['your_ci'] . "'
                                      AND delete_yn='n' 
-                                     AND your_ci NOT LIKE '%testmember_email%' ORDER BY match_rate DESC";
+                                     ORDER BY match_rate DESC";
                 $matchData = $MemberModel->query($query)->getResultArray();
 
                 $matchRank = [];
