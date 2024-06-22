@@ -2906,14 +2906,14 @@ class MoAjax extends BaseController
 
         $query = "SELECT * FROM members";
         $query .= " WHERE 1=1";
-        if ($myFactor['except1'] && $myFactor['except1'] !== "" && $myFactor['except1'] !== null) //배제항목 있을 시 조건에서 배제하기
-        {
-            $query .= " AND (" . $myFactor['except1'] . " != '" . $myFactor['except1_detail'] . "'  OR " . $myFactor['except1'] . " IS NULL)";
-        }
-        if ($myFactor['except2'] && $myFactor['except2'] !== "" && $myFactor['except2'] !== null) //배제항목 있을 시 조건에서 배제하기
-        {
-            $query .= " AND (" . $myFactor['except2'] . " != '" . $myFactor['except2_detail'] . "'  OR " . $myFactor['except2'] . " IS NULL)";
-        }
+        // if ($myFactor['except1'] && $myFactor['except1'] !== "" && $myFactor['except1'] !== null) //배제항목 있을 시 조건에서 배제하기
+        // {
+        //     $query .= " AND (" . $myFactor['except1'] . " != '" . $myFactor['except1_detail'] . "'  OR " . $myFactor['except1'] . " IS NULL)";
+        // }
+        // if ($myFactor['except2'] && $myFactor['except2'] !== "" && $myFactor['except2'] !== null) //배제항목 있을 시 조건에서 배제하기
+        // {
+        //     $query .= " AND (" . $myFactor['except2'] . " != '" . $myFactor['except2_detail'] . "'  OR " . $myFactor['except2'] . " IS NULL)";
+        // }
         if (!empty($myPartner['partner_gender']) || $myPartner['partner_gender'] != '')  // 성별 거르기
         {
             $query .= " AND (gender = '" . $myPartner['partner_gender'] . "')";
@@ -3262,14 +3262,14 @@ class MoAjax extends BaseController
 
         $query = "SELECT * FROM members";
         $query .= " WHERE 1=1";
-        if ($myFactor['except1'] && $myFactor['except1'] !== "" && $myFactor['except1'] !== null) //배제항목 있을 시 조건에서 배제하기
-        {
-            $query .= " AND (" . $myFactor['except1'] . " != '" . $myFactor['except1_detail'] . "'  OR " . $myFactor['except1'] . " IS NULL)";
-        }
-        if ($myFactor['except2'] && $myFactor['except2'] !== "" && $myFactor['except2'] !== null) //배제항목 있을 시 조건에서 배제하기
-        {
-            $query .= " AND (" . $myFactor['except2'] . " != '" . $myFactor['except2_detail'] . "'  OR " . $myFactor['except2'] . " IS NULL)";
-        }
+        // if ($myFactor['except1'] && $myFactor['except1'] !== "" && $myFactor['except1'] !== null) //배제항목 있을 시 조건에서 배제하기
+        // {
+        //     $query .= " AND (" . $myFactor['except1'] . " != '" . $myFactor['except1_detail'] . "'  OR " . $myFactor['except1'] . " IS NULL)";
+        // }
+        // if ($myFactor['except2'] && $myFactor['except2'] !== "" && $myFactor['except2'] !== null) //배제항목 있을 시 조건에서 배제하기
+        // {
+        //     $query .= " AND (" . $myFactor['except2'] . " != '" . $myFactor['except2_detail'] . "'  OR " . $myFactor['except2'] . " IS NULL)";
+        // }
         if (!empty($myPartner['partner_gender']) || $myPartner['partner_gender'] != '')  // 성별 거르기
         {
             $query .= " AND (gender = '" . $myPartner['partner_gender'] . "')";
