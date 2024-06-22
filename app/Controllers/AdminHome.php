@@ -919,6 +919,88 @@ class AdminHome extends BaseController
         }
     }
 
+    public function partyManualMatch($page = null)
+    {
+
+        // 페이지가 없으면 기본값으로 1을 사용
+        if ($page === null || !is_numeric($page)) {
+            $page = 1;
+        } else {
+            $page = 2;
+        }
+        $word_file_path = APPPATH . 'Data/MemberCode.php';
+        require($word_file_path);
+
+        $my_nickname = $this->request->getPost('my_nickname');
+        $your_nickname = $this->request->getPost('your_nickname');
+
+        $MemberModel = new MemberModel();
+
+        $query = "SELECT mb.ci, mb.name, SUBSTR(mb.birthday, 1, 4)AS birthday, mb.city, mb.town, mb.nickname, mb.mbti, mf.file_path, mf.file_name
+        FROM members mb, member_files mf WHERE mb.ci = mf.member_ci AND mf.board_type='main_photo' AND mf.delete_yn='n' AND mb.nickname = '" . trim($my_nickname . "") . "'";
+        $myProfile = $MemberModel->query($query)->getResultArray();
+        log_message('1', $myProfile[0]['ci']);
+        $mbtiTxt = '';
+        $cityTxt = '';
+        $townTxt = '';
+
+        foreach ($mbtiCode as $item) {
+            if ($item['id'] === $myProfile[0]['mbti']) $mbtiTxt = $item['name'];
+        }
+        foreach ($sidoCode as $item) {
+            if ($item['id'] === $myProfile[0]['city']) $cityTxt = $item['name'];
+        }
+        foreach ($gunguCode as $item) {
+            if ($item['p_id'] === $myProfile[0]['city'] && $item['id'] === $myProfile[0]['town']) $townTxt = $item['name'];
+        }
+
+        $query = "SELECT mb.ci, mb.name, SUBSTR(mb.birthday, 1, 4)AS birthday, mb.city, mb.town, mb.nickname, mb.mbti, mf.file_path, mf.file_name
+        FROM members mb, member_files mf WHERE mb.ci = mf.member_ci AND mf.board_type='main_photo' AND mf.delete_yn='n' AND mb.nickname = '" . trim($your_nickname . "") . "'";
+        $yourProfile = $MemberModel->query($query)->getResultArray();
+        $mbtiTxt = '';
+        $cityTxt = '';
+        $townTxt = '';
+
+        foreach ($mbtiCode as $item) {
+            if ($item['id'] === $yourProfile[0]['mbti']) $mbtiTxt = $item['name'];
+        }
+        foreach ($sidoCode as $item) {
+            if ($item['id'] === $yourProfile[0]['city']) $cityTxt = $item['name'];
+        }
+        foreach ($gunguCode as $item) {
+            if ($item['p_id'] === $yourProfile[0]['city'] && $item['id'] === $yourProfile[0]['town']) $townTxt = $item['name'];
+        }
+
+
+        // 서로 포크 시 AI 메세지 전송
+        $aiMsgSend1 = '<div class="recieve_profile">';
+        $aiMsgSend1 .= '<img style="width:50px; height:50px; border-radius: 50%;" src="/' . $yourProfile[0]['file_path'] . $yourProfile[0]['file_name'] . '">';
+        $aiMsgSend1 .= '<div class="content_mypage_info">';
+        $aiMsgSend1 .= '<div class="profile">';
+        $aiMsgSend1 .= '<h2>' . $yourProfile[0]['name'] . '</h2>';
+        // $aiMsgSend1 .= `<button class="match_percent">99%</button>`;
+        $aiMsgSend1 .= '</div>';
+        $aiMsgSend1 .= '<p>' . $yourProfile[0]['birthday'] . ' · ' . $cityTxt . ' ' . $townTxt . ' · ' . $mbtiTxt . '</p>';
+        $aiMsgSend1 .= '</div>';
+        $aiMsgSend1 .= '</div>';
+        $aiMsgSend1 .= '<p class="receive_match_msg">띵동 AI 소개팅이 도착했어요<br> 정보를 확인하실래요?</p>';
+        $aiMsgSend1 .= '<button style="width: 200px;" class="receive_profile_view" onclick="moveToUrl(`/mo/viewProfile/' . $yourProfile[0]['nickname'] . '`)">정보보기</button>';
+
+        $query2 = "INSERT INTO wh_chat_room_msg_ai
+            (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
+            VALUES('" . $myProfile[0]['ci'] . "','AImanager','1','0','" . $aiMsgSend1 . "','9','9');";
+
+
+        // 상대방정보 나에게 전송
+        $sendMsg = $MemberModel->query($query2);
+
+        if ($sendMsg) {
+            return $this->response->setJSON(['success' => true, 'msg' => 'AI 소개팅 메시지가 발송되었습니다.', 'data' => ['nickname' => $your_nickname]]);
+        } else {
+            return $this->response->setJSON(['success' => false, 'msg' => 'AI 소개팅 메시지 발송실패.', 'data' => ['nickname']]);
+        }
+    }
+
     public function partyMngment($page = null)
     {
 
@@ -927,7 +1009,7 @@ class AdminHome extends BaseController
 
 
         // 참여자 전원 돌면서 해당방 안의 매칭률 있는지 확인하기
-        $query = "SELECT mb.name, mb.nickname, mb.ci FROM wh_meeting_members wmm, members mb WHERE wmm.member_ci = mb.ci AND wmm.meeting_idx='169' AND wmm.delete_yn='N'";
+        $query = "SELECT mb.name, mb.nickname, mb.ci,mb.gender,mb.birthday FROM wh_meeting_members wmm, members mb WHERE wmm.member_ci = mb.ci AND wmm.meeting_idx='169' AND wmm.delete_yn='N'";
         $memberData = $MemberModel->query($query)->getResultArray();
 
         $partyMember = []; //파티 멤버의 ci값 적재
@@ -1459,6 +1541,7 @@ class AdminHome extends BaseController
                             $flattenedArray[$key] = $value;
                         }
                     }
+                    echo print_r($matchData);
                     if ($flattenedArray && $flattenedArray['my_ci'] === $row) {
                         // 지난번 매칭에 포함됐던 커플에 대한 매칭률은 저장 안함
                     } else {

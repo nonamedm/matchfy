@@ -24,7 +24,7 @@
             ?>
         </div>
         <!-- <p>쿼리문: <?php echo $query; ?></p> -->
-        <div class="ad_con">
+        <div class="ad_con" style="scrollbar-width: thin;">
             <h2>파티관리자 기능(매칭)</h2>
 
             <table>
@@ -54,8 +54,12 @@
                     ?>
                         <tr class="tr">
                             <td class="td"><?= $index ?></td>
-                            <td class="td"><?= $row['name'] ?></td>
-                            <td class="td"><?= $row['nickname'] ?></td>
+                            <td class="td"><?= $row['name'] ?><?php if ($row['gender'] === '0') {
+                                                                    echo '(여)' . $row['birthday'];
+                                                                } else {
+                                                                    echo '(남)' . $row['birthday'];
+                                                                } ?></td>
+                            <td class="td" id="<?= $row['nickname'] ?>"><?= $row['nickname'] ?></td>
                             <td class="td"><?php
                                             if ($partyMemberData1[$row['ci']]) {
                                                 foreach ($partyMemberData1[$row['ci']] as $rrow) {
@@ -85,7 +89,10 @@
                                                 }
                                             }
                                             ?></td>
-                            <td class="td"><input id="your_nickname" type="text"></td>
+                            <td class="td">
+                                <input id="your_nickname" type="text" placeholder="상대방닉네임 입력" style="width:120px;">
+                                <button onclick="partyManualMatch(event)">수동전송</button>
+                            </td>
                         </tr>
                     <?php
                         $index++;
@@ -112,6 +119,29 @@
                 success: function(data) {
                     console.log(data)
                     alert(data.msg);
+                }
+            });
+        }
+        const partyManualMatch = e => {
+            var $button = $(e.target);
+
+            var $parentTd = $button.parent();
+            var $tr = $parentTd.parent();
+            var my_nickname = $tr.find('td').eq(2).attr('id');
+            var your_nickname = $tr.find('input').val();
+
+
+            $.ajax({
+                url: '/ad/partyManualMatch',
+                type: 'POST',
+                data: {
+                    'my_nickname': my_nickname,
+                    'your_nickname': your_nickname
+                },
+                async: false,
+                success: function(data) {
+                    console.log(data)
+                    alert(data.data.nickname + "님에게 메세지 전송 완료")
                 }
             });
         }
