@@ -44,6 +44,7 @@
                         <th class="th">2차 매칭<button onclick="partyMatch(2)">실행</button></th>
                         <th class="th">3차 매칭<button onclick="partyMatch(3)">실행</button></th>
                         <th class="th">4차 매칭<button onclick="partyMatch(4)">실행</button></th>
+                        <th class="th">수동 매칭</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,6 +85,7 @@
                                                 }
                                             }
                                             ?></td>
+                            <td class="td"><input id="your_nickname" type="text"></td>
                         </tr>
                     <?php
                         $index++;

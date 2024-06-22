@@ -224,6 +224,7 @@ $routes->get('/ad/member/memberMngment', 'AdminHome::memberMngment');
 $routes->get('/ad/forkMngment', 'AdminHome::forkMngment');
 $routes->get('/ad/partyMngment', 'AdminHome::partyMngment');
 $routes->post('/ad/partyMngment1', 'AdminHome::partyMngment1');
+$routes->post('/ad/partyManualMatch', 'AdminHome::partyManualMatch');
 
 $routes->post('/ad/memberCertificateCheck', 'AdminHome::memberCertificateCheck');
 $routes->get('/ad/member/memberPaymentList', 'AdminHome::memberPaymentList');
