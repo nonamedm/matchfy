@@ -1096,10 +1096,12 @@ class AdminHome extends BaseController
             $matchRank = [];
             if ($matchData) {
                 foreach ($matchData as $matchRow) {
+
                     $yourCi = $matchRow['your_ci'];
                     $beforeMatch = array_filter($uniqueNicknames, function ($person) use ($yourCi) {
                         return $person['your_ci'] === $yourCi;
                     });
+
                     $flattenedArray = [];
 
                     foreach ($beforeMatch as $innerArray) {
@@ -1110,6 +1112,7 @@ class AdminHome extends BaseController
                     if ($flattenedArray && $flattenedArray['my_ci'] === $row) {
                         // 지난번 매칭에 포함됐던 커플에 대한 매칭률은 저장 안함
                     } else {
+
                         if (in_array($matchRow['your_ci'], $partyMember)) {
                             // 남자 데이터만 저장
                             if ($matchRow['gender'] === '1') {
@@ -1146,7 +1149,7 @@ class AdminHome extends BaseController
                     break;
                 } else {
                     // 매칭 가능한 상대방이 안남은 경우, 배열오류를 방지하기 위해 비워준다
-                    $matches = [];
+                    // $matches = [];
                 }
             }
         }
