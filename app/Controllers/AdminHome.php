@@ -865,7 +865,7 @@ class AdminHome extends BaseController
                                mf.file_name,
                                mf.org_name
                     FROM members mb, member_files mf WHERE mb.ci = mf.member_ci AND mb.delete_yn='N' AND mf.delete_yn='n' AND mf.board_type='main_photo' ORDER BY created_at DESC";
-        log_message('1', $query);
+
         $data['datas'] = $MemberModel->query($query)->getResultArray();
 
         $session = session();
@@ -939,7 +939,7 @@ class AdminHome extends BaseController
         $query = "SELECT mb.ci, mb.name, SUBSTR(mb.birthday, 1, 4)AS birthday, mb.city, mb.town, mb.nickname, mb.mbti, mf.file_path, mf.file_name
         FROM members mb, member_files mf WHERE mb.ci = mf.member_ci AND mf.board_type='main_photo' AND mf.delete_yn='n' AND mb.nickname = '" . trim($my_nickname . "") . "'";
         $myProfile = $MemberModel->query($query)->getResultArray();
-        log_message('1', $myProfile[0]['ci']);
+
         $mbtiTxt = '';
         $cityTxt = '';
         $townTxt = '';
@@ -1541,7 +1541,6 @@ class AdminHome extends BaseController
                             $flattenedArray[$key] = $value;
                         }
                     }
-                    echo print_r($matchData);
                     if ($flattenedArray && $flattenedArray['my_ci'] === $row) {
                         // 지난번 매칭에 포함됐던 커플에 대한 매칭률은 저장 안함
                     } else {
