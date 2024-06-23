@@ -141,7 +141,7 @@
                 async: false,
                 success: function(data) {
                     console.log(data)
-                    alert(data.data.nickname + "님에게 메세지 전송 완료")
+                    alert(data.data.nickname + "님의 프로필 AI 메세지 전송 완료")
                 }
             });
         }
