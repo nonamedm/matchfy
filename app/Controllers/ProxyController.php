@@ -197,7 +197,7 @@ class ProxyController extends BaseController
         $mobile_no = $resData['mobileno'];
 
         $MemberModel = new MemberModel();
-        $selected = $MemberModel->where('mobile_no', $mobile_no)->first();
+        $selected = $MemberModel->where('mobile_no', $mobile_no)->where('delete_yn', 'N')->first();
 
         if ($selected) {
             // 중복 시 알림 후 메인 이동
@@ -644,7 +644,7 @@ class ProxyController extends BaseController
 
         $SupportMemberModel = new SupportMemberModel();
         $selected = $SupportMemberModel->where('mobile_no', $mobile_no)->first();
-         
+
         if ($selected) {
             $email = $selected['email'];
             $postData['email'] = $email;
@@ -653,6 +653,5 @@ class ProxyController extends BaseController
             // 회원이 아닐때
             return view('/support/mo_pass', $postData);
         }
-
     }
 }
