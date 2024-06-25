@@ -109,16 +109,16 @@ class MoHome extends BaseController
 
             //추천코드 입력시 서포터즈 리워드 추가
             $inviteCodeChk = "SELECT ci FROM members WHERE unique_code='" . $invite_code . "' AND delete_yn='n' LIMIT 1";
-            $inviteCodeRow = $MemberModel->query($inviteCodeChk)->getResultArray();
+            $inviteCodeRow = $MemberModel->query($inviteCodeChk)->getRow();
 
             $genderChk = "SELECT gender FROM members WHERE ci='" . $ci . "' AND delete_yn='n' LIMIT 1";
-            $gender = $MemberModel->query($genderChk)->getResultArray();
+            $gender = $MemberModel->query($genderChk)->getRow();
 
             if ($inviteCodeRow) {
                 $invitedata = [
                     'ci' => $ci,
-                    'recommender_ci' => $inviteCodeRow[0]['ci'],
-                    'recommender_gender' => $gender[0]['gender'],
+                    'recommender_ci' => $inviteCodeRow->ci,
+                    'recommender_gender' => $gender->gender,
                     'reward_type' => 'invite',
                     'reward_title' => '추천인 정회원 가입',
                     'reward_date' => date('Y-m-d H:i:s')
