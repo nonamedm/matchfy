@@ -4989,7 +4989,7 @@ class MoAjax extends BaseController
 
         $email->setSubject('Matchfy 인증코드 발송');
         $msgCont = '
-            <img src="https://nonamedm18.mycafe24.com/static/images/matchfy.png">
+            <img src="https://matchfy.net/static/images/matchfy.png">
             <h2 style="color: #6f6f6f;">
                 이메일 인증코드를 입력하세요 
             </h2>
