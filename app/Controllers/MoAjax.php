@@ -383,8 +383,9 @@ class MoAjax extends BaseController
         }
 
         if ($selectedGrade !== $currentGrade) {
-            $query = "UPDATE members SET grade='" . $selectedGrade . "' WHERE ci='" . $ci . "'";
-            $updateStatus = $MemberModel->query($query);
+            // 개인정보 입력전까지는 임시등급만 업데이트
+            // $query = "UPDATE members SET grade='" . $selectedGrade . "' WHERE ci='" . $ci . "'";
+            // $updateStatus = $MemberModel->query($query);
             $query = "UPDATE members SET temp_grade='" . $selectedGrade . "' WHERE ci='" . $ci . "'";
             $updateStatus = $MemberModel->query($query);
 
@@ -1287,7 +1288,7 @@ class MoAjax extends BaseController
 
             $data = [
                 //'grade' => $grade,
-                'grade' => $temp_grade,
+                'grade' => $temp_grade, // 임시 -> 실제 등급으로 업그레이드
                 'married' => $married,
                 'smoker' => $smoker,
                 'drinking' => $drinking,
