@@ -2088,11 +2088,20 @@ class MoHome extends BaseController
         // $feedFile = $MemberFeedFileModel->where('member_ci', $ci)->findAll();
         $condition = ['board_type' => 'main_photo', 'member_ci' => $user['ci'], 'delete_yn' => 'n'];
         $userFile = $MemberFileModel->where($condition)->first();
+
+        $query = 'SELECT email FROM members WHERE ci="' . $ci . '"';
+        $adminYn = $MemberModel->query($query)->getResultArray();
+        if ($adminYn[0]['email'] === 'admin') {
+            $adminYn = 'Y';
+        } else {
+            $adminYn = 'N';
+        }
         $data = [
             'ci' => $user['ci'],
             'name' => $name,
             'user' => $user,
             'feed_list' => $feedList,
+            'adminYn' => $adminYn,
         ];
         if (!empty($userFile)) {
             $data = array_merge($data, $userFile);

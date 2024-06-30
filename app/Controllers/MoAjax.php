@@ -2045,13 +2045,27 @@ class MoAjax extends BaseController
         $feed_idx = $this->request->getPost('feed_idx');
         $session = session();
         $member_ci = $session->get('ci');
-        $condition = [
-            'idx' => $feed_idx,
-            'member_ci' => $member_ci,
-        ];
-        $update = [
-            'delete_yn' => 'y'
-        ];
+
+        // 관리자여부 확인
+        $query = 'SELECT email FROM members WHERE ci="' . $member_ci . '"';
+        $adminYn = $MemberFeedModel->query($query)->getResultArray();
+
+        if ($adminYn[0]['email'] === 'admin') {
+            $condition = [
+                'idx' => $feed_idx,
+            ];
+            $update = [
+                'delete_yn' => 'y'
+            ];
+        } else {
+            $condition = [
+                'idx' => $feed_idx,
+                'member_ci' => $member_ci,
+            ];
+            $update = [
+                'delete_yn' => 'y'
+            ];
+        }
         $result = $MemberFeedModel->update($condition, $update);
         if ($result) {
             $query = "UPDATE wh_member_feed_files SET delete_yn='y' WHERE feed_idx='" . $feed_idx . "'";
