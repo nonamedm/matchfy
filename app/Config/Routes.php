@@ -228,6 +228,7 @@ $routes->get('/ad/partyMngmentTest', 'AdminHome::partyMngmentTest');
 $routes->post('/ad/partyMngmentTest1', 'AdminHome::partyMngmentTest1');
 $routes->post('/ad/partyManualMatch', 'AdminHome::partyManualMatch');
 
+$routes->post('/ad/resetImg', 'AdminHome::resetImg');
 $routes->post('/ad/memberCertificateCheck', 'AdminHome::memberCertificateCheck');
 $routes->get('/ad/member/memberPaymentList', 'AdminHome::memberPaymentList');
 $routes->post('/ad/memberPaymentCheck', 'AdminHome::memberPaymentCheck');

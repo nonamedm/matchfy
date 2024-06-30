@@ -77,6 +77,7 @@
                             <td class="td"><?= $data['temp_grade'] ?></td>
                             <td class="td">
                                 <span class="attatch_file_div"><a class="attach_file" href="<?= '/' . $data['file_path'] . $data['file_name']; ?>" target="_blank"><?= $data['org_name']; ?></a></span>
+                                <button onclick="resetImg('<?= $data['ci'] ?>')">초기화</button>
                             </td>
                             <td class="td"><?= $data['sns_type'] ?></td>
                             <td class="td"><?= $data['last_access_dt'] ?></td>

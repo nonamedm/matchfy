@@ -854,6 +854,7 @@ class AdminHome extends BaseController
 
         $offset = ($page - 1) * $perPage; // 현재 페이지의 첫 번째 데이터 인덱스
         $query = "SELECT name, mb.nickname, 
+                               mb.ci, 
                                mb.birthday, 
                                mb.gender, 
                                mb.email,
@@ -3410,9 +3411,9 @@ class AdminHome extends BaseController
         $level = $this->request->getPost('level');
         $idx = $this->request->getPost('id');
 
-        $SupportRewordModel = new SupportRewordModel();
+        $SupportRewardModel = new SupportRewardModel();
 
-        $updated = $SupportRewordModel
+        $updated = $SupportRewardModel
             ->where('idx', $idx)
             ->set(['check' => $level])
             ->update();
@@ -3427,6 +3428,29 @@ class AdminHome extends BaseController
             }
         } else {
             return $this->response->setJSON(['error' => true, 'msg' => '승인 실패.']);
+        }
+    }
+    public function resetImg()
+    {
+        $session = session();
+        $ci = $session->get('ci');
+        $MemberModel = new MemberModel();
+        $query = "SELECT email FROM members WHERE ci='" . $ci . "'";
+
+        $adminYn = $MemberModel->query($query)->getResultArray();
+
+        if ($adminYn[0]['email'] === 'admin' || $adminYn[0]['email'] === 'develop') {
+            $postCi = $this->request->getPost('ci');
+            $query = "UPDATE member_files SET file_path='static/images/', file_name='profile_noimg.png', org_name='profile_noimg.png' WHERE member_ci='" . $postCi . "' AND board_type='main_photo' AND delete_yn='n' ";
+            $MemberModel->query($query);
+            if ($MemberModel) {
+                return $this->response->setJSON(['success' => true, 'msg' => '해당 회원의 프로필 사진이 초기화 되었습니다.']);
+            } else {
+                return $this->response->setJSON(['success' => true, 'msg' => '초기화 실패, 데이터베이스 확인필요']);
+            }
+        } else {
+            // 관리자 아닐 때
+            return $this->response->setJSON(['error' => true, 'msg' => '권한이 없습니다.']);
         }
     }
 }
