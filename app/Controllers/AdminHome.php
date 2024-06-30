@@ -63,7 +63,7 @@ class AdminHome extends BaseController
         )
             ->from('wh_board_notice bo')
             ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
-            ->groupBy('bo.id, bo.title, bo.content, bo.author, bo.update_author, bo.created_at, bo.updated_at, bo.hit, bo.board_type')
+            ->groupBy('bo.id, bo.title, bo.content, bo.author, bo.update_author, bo.created_at, bo.updated_at, bo.hit, bo.board_type, bf.id')
             ->orderBy('bo.id', 'DESC')
             // ->limit(3) // 필요한 경우 limit 추가
             ->get();
@@ -715,6 +715,7 @@ class AdminHome extends BaseController
                     a.detailed_content as detailed_content,
                     a.alliance_application as alliance_application,
                     a.delete_yn as delete_yn,
+                    a.create_at as create_at,
                     b.idx as file_idx,
                     b.board_type as board_type,
                     b.file_path as file_path,
@@ -3116,7 +3117,7 @@ class AdminHome extends BaseController
         )
             ->from('wh_support_board_notice bo')
             ->join('wh_board_files bf', 'bo.id = bf.board_idx', 'left')
-            ->groupBy('bo.id')
+            ->groupBy('bo.id, bf.id')
             ->orderBy('bo.id', 'DESC')
             ->get();
 

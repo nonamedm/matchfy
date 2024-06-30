@@ -1047,6 +1047,7 @@ class MoHome extends BaseController
                                     a.meeting_idx as meeting_idx,
                                     a.delete_yn as delete_yn,
                                     a.meeting_master as meeting_master,
+                                    a.create_at as create_at,
                                     d.file_path as file_path,
                                     d.file_name as file_name,
                                     c.name as name,
@@ -1160,6 +1161,7 @@ class MoHome extends BaseController
                                     a.meeting_idx as meeting_idx,
                                     a.delete_yn as delete_yn,
                                     a.meeting_master as meeting_master,
+                                    a.create_at as create_at,
                                     d.file_path as file_path,
                                     d.file_name as file_name,
                                     c.name as name,
@@ -1763,7 +1765,7 @@ class MoHome extends BaseController
         $meeting_idx = $this->request->getPost('meetingIdx');
 
         $query = $db->table('wh_meeting_members a')
-            ->select('a.meeting_idx, 
+            ->select('a.meeting_idx, a.create_at,
                             b.category, 
                             b.meeting_start_date, 
                             b.meeting_end_date, 
@@ -1816,7 +1818,7 @@ class MoHome extends BaseController
         $selectedValue = $this->request->getPost('selectedValue');
 
         $query = $db->table('wh_meeting_members a')
-            ->select('a.meeting_idx, 
+            ->select('a.meeting_idx, a.create_at,
                                 b.category, 
                                 b.meeting_start_date, 
                                 b.meeting_end_date, 
