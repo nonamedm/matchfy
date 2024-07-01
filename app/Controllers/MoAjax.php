@@ -653,8 +653,13 @@ class MoAjax extends BaseController
         } else {
             $SupportMemberModel = new SupportMemberModel();
             $MemberModel = new MemberModel();
-            $session = session();
-            $ci = $session->get('ci_support');
+
+            $mobile_no = $this->request->getPost('mobile_no');
+            $email = $this->request->getPost('email');
+
+            $encrypter = \Config\Services::encrypter();
+            $ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 32]));
+
             /**기존에 있는 유니크코드 들고오기 */
             $unique_code_chk = "SELECT unique_code FROM members WHERE ci='" . $ci . "' AND delete_yn='n' limit 1";
             $unique_code_row = $MemberModel->query($unique_code_chk)->getRow();
@@ -664,8 +669,6 @@ class MoAjax extends BaseController
             $nickname_chk = "SELECT nickname FROM members WHERE ci='" . $ci . "' AND delete_yn='n' limit 1";
             $nickname_row = $MemberModel->query($nickname_chk)->getRow();
 
-            $mobile_no = $this->request->getPost('mobile_no');
-            $email = $this->request->getPost('email');
 
             // 이메일 가입 중복 로직 확인
             $emailDupChkQuery = "SELECT email FROM wh_support_members WHERE email='" . $email . "' AND delete_yn='n'";

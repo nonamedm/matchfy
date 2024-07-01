@@ -1740,7 +1740,7 @@ class MoHome extends BaseController
                     ->where('d.member_ci', $ci);
             })
             ->where('b.delete_yn', 'N')
-            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
+            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, c.file_path, c.file_name');
 
         $results = $query->get()->getResult();
 
