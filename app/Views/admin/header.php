@@ -27,9 +27,9 @@
     <li class="menu_item">
         <a href="/ad/member/memberMngment">회원 관리</a>
     </li>
-    <li class="menu_item">
+    <!-- <li class="menu_item">
         <a href="/ad/member/memberPaymentList">회원 계좌이체 승인 목록</a>
-    </li>
+    </li> -->
     <li class="menu_item">
         <a href="/ad/report/reportList">회원 신고 목록</a>
     </li>
@@ -48,10 +48,10 @@
     <li class="menu_item">
         <a href="/ad/forkMngment">포크기능 on/off 관리</a>
     </li>
-    <li class="menu_item">
+    <!-- <li class="menu_item">
         <a href="/ad/partyMngment">파티관리자 기능</a>
     </li>
     <li class="menu_item">
         <a href="/ad/partyMngmentTest">파티관리자 기능(테스트용)</a>
-    </li>
+    </li> -->
 </ul>
