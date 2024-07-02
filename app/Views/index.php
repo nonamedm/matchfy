@@ -279,55 +279,44 @@ if ($ci) {
                         // }
                         const AImatch = (v) => {
                             $.ajax({
-                                url: '/ajax/calcMatchRate',
+                                url: '/ajax/AImatch',
                                 type: 'POST',
+                                data: {
+                                    "value": v
+                                },
                                 async: false,
                                 success: function(data) {
-                                    $.ajax({
-                                        url: '/ajax/AImatch',
-                                        type: 'POST',
-                                        data: {
-                                            "value": v
-                                        },
-                                        async: false,
-                                        success: function(data) {
-                                            if (data.message === 'success') {
-                                                $(".AImatch_list").html("");
-                                                $(".AImatch_list").css("display", "flex");
-                                                data.result.forEach(function(item) {
-                                                    var html = '<div class="ai_mat_card">';
-                                                    html += `<a onclick="moveToUrl('/mo/viewProfile/` + item.nickname + `')">`;
-                                                    if (item.file_path !== "" && item.file_path !== null) {
-                                                        html += '<img src="/' + item.file_path + item.file_name + '" />';
-                                                    } else {
-                                                        html += '<img src="/static/images/profile_noimg_main.png" />';
-                                                    }
-                                                    html += '<h2>' + item.birthyear + ', ' + item.city + '</h2>';
-                                                    html += '<div class="profile_row">';
-                                                    if (item.mbti !== "" && item.mbti !== null) {
-                                                        html += '<p class="mbti">' + item.mbti + '</p>';
-                                                    } else {
-                                                        html += '<p class="mbti nodata"></p>';
-                                                    }
-                                                    // html += '<p class="mat_percent">' + item.match_rate + '%</p>';
-                                                    html += matchRateType(item.match_rate);
-                                                    html += '</div>';
-                                                    html += '</a>';
-                                                    html += '</div>';
-
-                                                    $(".AImatch_list").append(html);
-                                                });
+                                    if (data.message === 'success') {
+                                        $(".AImatch_list").html("");
+                                        $(".AImatch_list").css("display", "flex");
+                                        data.result.forEach(function(item) {
+                                            var html = '<div class="ai_mat_card">';
+                                            html += `<a onclick="moveToUrl('/mo/viewProfile/` + item.nickname + `')">`;
+                                            if (item.file_path !== "" && item.file_path !== null) {
+                                                html += '<img src="/' + item.file_path + item.file_name + '" />';
                                             } else {
-                                                // fn_alert('검색결과가 없습니다');
-                                                // $(".AImatch_list").css("text-align", "center");
-                                                // $(".AImatch_list").removeClass("login_main_list");
+                                                html += '<img src="/static/images/profile_noimg_main.png" />';
                                             }
-                                        },
-                                        error: function(data, status, err) {
-                                            console.log(err);
-                                            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-                                        },
-                                    });
+                                            html += '<h2>' + item.birthyear + ', ' + item.city + '</h2>';
+                                            html += '<div class="profile_row">';
+                                            if (item.mbti !== "" && item.mbti !== null) {
+                                                html += '<p class="mbti">' + item.mbti + '</p>';
+                                            } else {
+                                                html += '<p class="mbti nodata"></p>';
+                                            }
+                                            // html += '<p class="mat_percent">' + item.match_rate + '%</p>';
+                                            html += matchRateType(item.match_rate);
+                                            html += '</div>';
+                                            html += '</a>';
+                                            html += '</div>';
+
+                                            $(".AImatch_list").append(html);
+                                        });
+                                    } else {
+                                        // fn_alert('검색결과가 없습니다');
+                                        // $(".AImatch_list").css("text-align", "center");
+                                        // $(".AImatch_list").removeClass("login_main_list");
+                                    }
                                 },
                                 error: function(data, status, err) {
                                     console.log(err);
@@ -365,7 +354,7 @@ if ($ci) {
                                                 html += '<p class="mbti nodata"></p>';
                                             }
                                             // html += '<p class="mat_percent">' + item.match_rate + '%</p>';
-                                           // html += matchRateType(item.match_rate);
+                                            // html += matchRateType(item.match_rate);
                                             html += '</div>';
                                             html += '</a>';
                                             html += '</div>';
@@ -594,7 +583,6 @@ if ($ci) {
                             AImatch2('9');
                             meetingList();
                             scrollAction();
-
                         })
                     </script>
                     <div class="content_banner_top" onclick="moveToUrl('/mo/mypage/group/detail/169')">
