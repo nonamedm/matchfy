@@ -5000,7 +5000,7 @@ class MoAjax extends BaseController
         $email->initialize($config);
         $email->clear();
 
-        $email->setFrom('mail@cuberry.kr', 'Matchfy 관리자');
+        $email->setFrom('cuberry2024@daum.net', 'Matchfy 관리자');
         $email->setTo($emailAddr);
         // $email->setCC('another@another-example.com');
         // $email->setBCC('them@their-example.com');
