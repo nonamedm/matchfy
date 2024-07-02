@@ -4987,9 +4987,9 @@ class MoAjax extends BaseController
 
         $email = \Config\Services::email();
         $config['protocol'] = 'smtp';
-        $config['SMTPHost'] = 'smtp.naver.com';
-        $config['SMTPUser'] = 'nonamedm@naver.com';
-        $config['SMTPPass'] = '6U829H5WJDZP';
+        $config['SMTPHost'] = 'smtp.daum.net';
+        $config['SMTPUser'] = 'cuberry2024@daum.net';
+        $config['SMTPPass'] = 'egcpxhjywvqbuqaq';
         $config['SMTPPort'] = '465';
         $config['SMTPCrypto'] = 'ssl';
         $config['SMTPTimeout'] = '10';
@@ -5000,7 +5000,7 @@ class MoAjax extends BaseController
         $email->initialize($config);
         $email->clear();
 
-        $email->setFrom('nonamedm@naver.com', 'Matchfy 관리자');
+        $email->setFrom('mail@cuberry.kr', 'Matchfy 관리자');
         $email->setTo($emailAddr);
         // $email->setCC('another@another-example.com');
         // $email->setBCC('them@their-example.com');
