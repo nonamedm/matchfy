@@ -78,6 +78,25 @@
 $session = session();
 $ci = $session->get('ci');
 $name = $session->get('name');
+
+$db = \Config\Database::connect();
+$query = $db->query("SELECT created_at FROM members WHERE ci = '$ci'");
+$result = $query->getRow();
+
+if ($result) {
+    $created_at = $result->created_at;
+    $created_at_time = strtotime($created_at);
+    $current_time = time();
+    $time_diff = $current_time - $created_at_time;
+    $time_limit = 60 * 60; 
+
+    $cookie_name = 'guide_popup_shown';
+
+    if ($time_diff <= $time_limit && !isset($_COOKIE[$cookie_name])) {
+        echo "<script> $(document).ready(function() {guidePopup();});</script>";
+        setcookie($cookie_name, '1', strtotime('tomorrow'), '/');
+    }
+}
 ?>
 
 
@@ -86,7 +105,7 @@ $name = $session->get('name');
 if ($ci) {
 ?>
 
-    <body style="max-width: 400px; margin: 0 auto;position: relative;">
+    <body class="main_wrap" style="max-width: 400px; margin: 0 auto;position: relative;">
         <header class="ci_header">
         <?php
     } else {

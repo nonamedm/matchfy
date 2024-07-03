@@ -49,6 +49,7 @@
                     </div>
                     <div class="menu_cont">
                         <p onclick="moveToUrl('/mo/notice')"><a><?= lang('Korean.matchNotice') ?></a></p>
+                        <p onclick="guidePopup();"><a>이용가이드</a></p>
                         <p onclick="moveToUrl('/mo/faq')"><a>FAQ</a></p>
                         <p onclick="moveToUrl('/mo/terms')"><a><?= lang('Korean.matchTerms') ?></a></p>
                         <p onclick="moveToUrl('/mo/privacy')"><a><?= lang('Korean.matchPravacy') ?></a></p>
