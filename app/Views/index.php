@@ -401,6 +401,8 @@ if ($ci) {
                                         var html = `<div class="ai_group_card">`;
                                         if (item.overtime) {
                                             html += '<div class="overtime">종료</div>';
+                                        } else {
+                                            html += '<div class="nowtime">진행중</div>';
                                         }
                                         html += `<a onclick="moveToUrl('/mo/mypage/group/detail/` + item.idx + `')" >`
                                         if (item.file_path !== "" && item.file_path !== null) {
