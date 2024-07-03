@@ -168,14 +168,13 @@ class MoAjax extends BaseController
             SELECT *
             FROM wh_meetings
             LEFT JOIN wh_meetings_files ON wh_meetings_files.meeting_idx = wh_meetings.idx
-            WHERE wh_meetings.meeting_start_date >= ?
-            AND wh_meetings.delete_yn = 'N'
+            WHERE wh_meetings.delete_yn = 'N'
             AND wh_meetings.group_min_age <= ?
             AND wh_meetings.group_max_age >= ?
-            ORDER BY wh_meetings.meeting_start_date ASC
+            ORDER BY wh_meetings.meeting_start_date DESC
         ";
 
-        $meetings = $MeetingModel->query($sql, [$currentTime, $age, $age])->getResultArray();
+        $meetings = $MeetingModel->query($sql, [$age, $age])->getResultArray();
 
         $days = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -190,6 +189,12 @@ class MoAjax extends BaseController
             $dayName = $days[$meetingDay]; //요일
             $meetingDateTime = date("Y.m.d ", $meetingDateTimestamp) . ' (' . $dayName . ') ' . date(" H:i", $meetingDateTimestamp);
             $meeting['meetingDateTime'] = $meetingDateTime;
+
+            if ($currentTime > date("Y-m-d H:i:s", $meetingDateTimestamp)) {
+                $meeting['overtime'] = true;
+            } else {
+                $meeting['overtime'] = false;
+            }
 
             $memCount = $MeetingMembersModel
                 ->where('meeting_idx', $meeting['idx'])
@@ -2562,7 +2567,7 @@ class MoAjax extends BaseController
                 $MeetingModel->orderBy('membership_fee', 'ASC');
                 break;
             default:
-                $MeetingModel->orderBy('create_at', 'DESC');
+                $MeetingModel->orderBy('meeting_start_date', 'DESC');
         }
 
         $session = session();
@@ -2581,7 +2586,7 @@ class MoAjax extends BaseController
 
         $meetings = $MeetingModel
             ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
-            ->where('wh_meetings.meeting_start_date >=', $currentTime)
+            // ->where('wh_meetings.meeting_start_date >=', $currentTime)
             ->where('wh_meetings.delete_yn', 'N')
             ->where('wh_meetings.group_min_age <=', $age)
             ->where('wh_meetings.group_max_age >=', $age)
@@ -2601,6 +2606,11 @@ class MoAjax extends BaseController
             $meetingDateTime = date("Y.m.d ", $meetingDateTimestamp) . ' (' . $dayName . ') ' . date(" H:i", $meetingDateTimestamp);
             $meeting['meetingDateTime'] = $meetingDateTime;
 
+            if ($currentTime > date("Y-m-d H:i:s", $meetingDateTimestamp)) {
+                $meeting['overtime'] = true;
+            } else {
+                $meeting['overtime'] = false;
+            }
             $memCount = $MeetingMembersModel
                 ->where('meeting_idx', $meeting['idx'])
                 ->where('delete_yn', 'N')

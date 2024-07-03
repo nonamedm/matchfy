@@ -1632,7 +1632,13 @@ const meetingFiltering = (category, searchText, filterOption) => {
                         ? '/' + meeting.file_path + meeting.file_name
                         : '/static/images/group_list_1.png';
                     listHtml += `
-                        <a href="/mo/mypage/group/detail/${meeting.idx}">
+                        <a href="/mo/mypage/group/detail/${meeting.idx}">`;
+                    if (meeting.overtime) {
+                        listHtml += `<div class="overtime">종료</div>`;
+                    } else {
+                        listHtml += `<div class="nowtime">진행중</div>`;
+                    }
+                    listHtml += `
                             <div class="group_list_item">
                                 <img class="profile_img" src="${imagePath}" />
                                 <div class="group_particpnt">

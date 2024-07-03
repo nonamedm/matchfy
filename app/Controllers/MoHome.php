@@ -936,13 +936,12 @@ class MoHome extends BaseController
             SELECT *
             FROM wh_meetings
             LEFT JOIN wh_meetings_files ON wh_meetings_files.meeting_idx = wh_meetings.idx
-            WHERE wh_meetings.meeting_start_date >= ?
-            AND wh_meetings.delete_yn = 'N'
+            WHERE wh_meetings.delete_yn = 'N'
             AND wh_meetings.group_min_age <= ?
             AND wh_meetings.group_max_age >= ?
-            ORDER BY wh_meetings.meeting_start_date ASC
+            ORDER BY wh_meetings.meeting_start_date DESC
         ";
-        $meetings = $MeetingModel->query($sql, [$currentTime, $age, $age])->getResultArray();
+        $meetings = $MeetingModel->query($sql, [$age, $age])->getResultArray();
 
 
         $days = ['일', '월', '화', '수', '목', '금', '토'];
@@ -958,6 +957,12 @@ class MoHome extends BaseController
             $dayName = $days[$meetingDay]; //요일
             $meetingDateTime = date("Y.m.d ", $meetingDateTimestamp) . ' (' . $dayName . ') ' . date(" H:i", $meetingDateTimestamp);
             $meeting['meetingDateTime'] = $meetingDateTime;
+
+            if ($currentTime > date("Y-m-d H:i:s", $meetingDateTimestamp)) {
+                $meeting['overtime'] = true;
+            } else {
+                $meeting['overtime'] = false;
+            }
 
             $memCount = $MeetingMembersModel
                 ->where('meeting_idx', $meeting['idx'])
@@ -1121,6 +1126,7 @@ class MoHome extends BaseController
                 'meeting_place' => $Meeting['meeting_place'],
                 'membership_fee' => $Meeting['membership_fee'],
                 'image' => $imageInfo,
+                'meeting_date_time_stamp' => $meetingDateTimestamp,
                 'is_recruitment_full' => $isRecruitmentFull,
                 'popupData' => $result,
                 'inMemberChk' => $inMemberChk,
