@@ -64,6 +64,15 @@
                 <div class="group_search_list">
                     <?php foreach ($meetings as $meeting) : ?>
                         <a href="/mo/mypage/group/detail/<?= $meeting['idx'] ?>">
+                            <?php if ($meeting['overtime']) {
+                            ?>
+                                <div class="overtime">종료</div>
+                            <?php
+                            } else {
+                            ?>
+                                <div class="nowtime">진행중</div>
+                            <?php
+                            } ?>
                             <div class="group_list_item">
                                 <?php if ($meeting['meeting_idx']) : ?>
                                     <img class="profile_img" src="/<?= $meeting['file_path'] ?><?= $meeting['file_name'] ?>" />

@@ -57,11 +57,20 @@
                         </div>
                     </div>
                     <div class="btn_group" style="margin: 30px 0px">
-                        <?php if ($is_recruitment_full) : ?>
-                            <button type="button" class="btn type01 disabled"><?= lang('Korean.recruitmentDeadline') ?></button>
-                        <?php else : ?>
+                        <?php
+                        $currentDate = date('Y-m-d H:i:s');
+                        $eventDate = date('Y-m-d H:i:s', $meeting_date_time_stamp);
+
+                        if ($is_recruitment_full) {
+                        ?>
+                            <button type="button" class="btn type02 "><?= lang('Korean.recruitmentDeadline') ?></button>
+                        <?php } else if ($currentDate > $eventDate) { ?>
+                            <button type="button" class="btn type02 "><?= lang('Korean.recruitmentDeadline') ?></button>
+                        <?php } else {
+                        ?>
                             <button type="button" class="btn type01" onclick="meetingApplication('<?= $idx ?>')"><?= lang('Korean.withBtn') ?></button>
-                        <?php endif; ?>
+                        <?php
+                        } ?>
                     </div>
                     <hr class="hoz_part" />
                     <div class="group_detail_cont">
@@ -89,11 +98,20 @@
             <div style="height: 50px;"></div>
             <footer class="footer">
                 <div class="btn_group">
-                    <?php if ($is_recruitment_full) : ?>
-                        <button type="button" class="btn type01 disabled"><?= lang('Korean.recruitmentDeadline') ?></button>
-                    <?php else : ?>
+                    <?php
+                    $currentDate = new DateTime();
+                    $eventDate = DateTime::createFromFormat('Y.m.d H:i (D)', $meeting_start_date);
+
+                    if ($is_recruitment_full) {
+                    ?>
+                        <button type="button" class="btn type02 "><?= lang('Korean.recruitmentDeadline') ?></button>
+                    <?php } else if ($currentDate > $eventDate) { ?>
+                        <button type="button" class="btn type02 "><?= lang('Korean.recruitmentDeadline') ?></button>
+                    <?php } else {
+                    ?>
                         <button type="button" class="btn type01" onclick="meetingApplication('<?= $idx ?>')"><?= lang('Korean.withBtn') ?></button>
-                    <?php endif; ?>
+                    <?php
+                    } ?>
                 </div>
             </footer>
         </div>
