@@ -450,6 +450,7 @@ class MoHome extends BaseController
                     $today_date === date('Y-m-d', strtotime($row['created_at'])) ?  $row['created_at'] = date('H:i', strtotime($row['created_at'])) : $row['created_at'] = date('m-d', strtotime($row['created_at']));
                 }
             }
+
             $query = "SELECT member_ci AS where_ci, (SELECT name FROM members WHERE ci = where_ci) AS name,
                              (SELECT nickname FROM members WHERE ci = where_ci) AS nickname,
                              (SELECT file_path FROM member_files WHERE member_ci = where_ci AND board_type='main_photo' AND delete_yn='n') AS file_path,
@@ -480,6 +481,23 @@ class MoHome extends BaseController
             $forkOnoff = $MemberModel
                 ->query($query)->getResultArray();
 
+            // 1:1 대화 상대방 닉네임
+            $query = "SELECT DISTINCT (SELECT nickname FROM members WHERE ci = crm.member_ci) AS nickname
+                        FROM wh_chat_room_member crm 
+                        WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' AND crm.member_type = 0 and crm.member_ci != '" . $ci . "'";
+            $partnerInfo = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            // 총 인원
+            $query = "SELECT room_count FROM wh_chat_room WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
+            $roomCount = $ChatRoomModel
+                ->query($query)->getResultArray();
+
+            // 대화방 (모임)명
+            $query = "SELECT title as room_title FROM wh_meetings WHERE chat_room_ci = '" . $room_ci . "'";
+            $roomTitle = $ChatRoomModel
+                ->query($query)->getResultArray();
+
             $data['room_ci'] = $room_ci;
             $data['allMsg'] = $allMsg;
             $data['member_info'] = $memberInfo;
@@ -487,6 +505,13 @@ class MoHome extends BaseController
             $data['member_type'] = $memberType;
             $data['my_gender'] = $myGender[0]['gender'];
             $data['fork_onoff'] = $forkOnoff[0]['onoff'];
+            $data['roomCount'] = $roomCount[0]['room_count'];
+
+            if($roomCount[0]['room_count'] > 2) {
+                $data['partnerInfo'] = $roomTitle[0]['room_title'];
+            } else {
+                $data['partnerInfo'] = $partnerInfo[0]['nickname'];
+            }
             // echo print_r($allMsg);
             return view('mo_mymsg', $data);
         } else {

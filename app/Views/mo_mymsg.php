@@ -18,8 +18,10 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
 
-
-        <?php $title = "메시지";
+        <?php $title = $partnerInfo;
+        if ($room_type[0]['room_type'] === '1') {
+            $title .= " [참석자(" . $roomCount . "명)]";
+        }
         $prevUrl = "/mo/mymsg/list";
         include 'header.php'; ?>
         <?php $session = session();
