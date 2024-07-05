@@ -2568,20 +2568,20 @@ const helpSinupJopPopup = () => {
     $('body').append(html);
 };
 const guideBtn = () => {
-    $('.guide-btn').click(function() {
+    $('.guide-btn').click(function () {
         var targetIndex = $(this).index();
         var newLeft = -(targetIndex * 100) + '%';
-        
+
         $('.apply_group').animate({ left: newLeft }, 500);
-        
+
         $('.guide-btn').removeClass('selected');
         $(this).addClass('selected');
     });
-    
+
     $('.guide-btn').first().addClass('selected');
-}
-const guidePopup =() =>{
-    var html ='';
+};
+const guidePopup = () => {
+    var html = '';
     html += '<div class="layerPopup alert middle">';
     html += '    <div id="" class="layerPopup_wrap">';
     html += '        <div class="layerPopup_content guidePopup_content medium">';
@@ -2595,15 +2595,18 @@ const guidePopup =() =>{
     html += '                    <img src="/static/images/guide1.png" />';
     html += '                    <div style="text-align:left;padding:0 40px;">';
     html += '                        <p>무료로 정회원 가입 후 서비스를 이용하세요.</p>';
-    html += '                        <p>나와 내가 원하는 상대의 직업, 학력, 종교 등 정보를 상세히 입력할 수 있어요.</p>';
+    html +=
+        '                        <p>나와 내가 원하는 상대의 직업, 학력, 종교 등 정보를 상세히 입력할 수 있어요.</p>';
     html += '                        <p>AI매니저가 이 정보를 바탕으로 나와 잘 맞는 상대를 추천해 드려요.</p>';
     html += '                    </div>';
     html += '                </div>';
     html += '                <div class="guide2 guide-content">';
-    html += '                    <h2 class="guide_title" style="font-size: 17px;">프로모션 파티 참석자는 정회원 가입 필수</h2>';
+    html +=
+        '                    <h2 class="guide_title" style="font-size: 17px;">프로모션 파티 참석자는 정회원 가입 필수</h2>';
     html += '                    <img src="/static/images/guide2.png" />';
     html += '                    <div style="text-align:left;padding:0 40px;">';
-    html += '                       <p>프로모션 파티 참석 승인 및 대화 상대 매칭을 위해 다음 세 가지를 꼭 지켜주세요!</p>';
+    html +=
+        '                       <p>프로모션 파티 참석 승인 및 대화 상대 매칭을 위해 다음 세 가지를 꼭 지켜주세요!</p>';
     html += '                       <p>1.  정회원 정보 입력</p>';
     html += '                       <p>     학교, 직업 인증 시 인증뱃지 부여(선택사항)</p>';
     html += '                       <p>2. 얼굴이 잘 나온 프로필 사진 업로드</p>';
@@ -2611,22 +2614,28 @@ const guidePopup =() =>{
     html += '                    </div>';
     html += '                </div>';
     html += '                <div class="guide3 guide-content">';
-    html += '                    <h2 class="guide_title" style="font-size: 16px;"> 매칭시그널로 나와 잘 맞는 상대 빠르게 확인</h2>';
+    html +=
+        '                    <h2 class="guide_title" style="font-size: 16px;"> 매칭시그널로 나와 잘 맞는 상대 빠르게 확인</h2>';
     html += '                    <div style="text-align:left;padding:0 40px;">';
     html += '                        <p>이건 혹시 그린라이트?</br>';
-    html += '                        메인 화면 및 메시지함에서 이름 옆에 나타나는  매칭사인을 보고 나와 잘 맞는 상대를 빠르게 확인할 수 있어요.</br>';
-    html += '                        <div style="width: 100px;margin: 0 auto;padding: 0px 10px;">';
-    html += '                            <img class="face_icon" src="/static/images/blue_face_icon.png" />아주 잘 맞음</br>';
-    html += '                            <img class="face_icon" src="/static/images/green_face_icon.png" />잘 맞음</br>';
+    html +=
+        '                        메인 화면 및 메시지함에서 이름 옆에 나타나는  매칭사인을 보고 나와 잘 맞는 상대를 빠르게 확인할 수 있어요.</br>';
+    html += '                        <div style="width: 100px;margin: 0 auto;padding: 0px 10px;line-height: 25px;">';
+    html +=
+        '                            <img class="face_icon" src="/static/images/blue_face_icon.png" />아주 잘 맞음</br>';
+    html +=
+        '                            <img class="face_icon" src="/static/images/green_face_icon.png" />잘 맞음</br>';
     html += '                            <img class="face_icon" src="/static/images/yellow_face_icon.png" />보통</br>';
-    html += '                            <img class="face_icon" src="/static/images/orange_face_icon.png" />조금 안 맞음</br>';
+    html +=
+        '                            <img class="face_icon" src="/static/images/orange_face_icon.png" />조금 안 맞음</br>';
     html += '                            <img class="face_icon" src="/static/images/red_face_icon.png" />안 맞음';
     html += '                        </div>';
     html += '                        </p>';
     html += '                    </div>';
     html += '                </div>';
     html += '                <div class="guide4 guide-content">';
-    html += '                    <h2 class="guide_title" style="font-size: 16px;">마음에 드는 상대와 대화 시작 어떻게 할까요?</h2>';
+    html +=
+        '                    <h2 class="guide_title" style="font-size: 16px;">마음에 드는 상대와 대화 시작 어떻게 할까요?</h2>';
     html += '                    <div style="text-align:left;padding:0 40px;">';
     html += '                        <p>상대를 클릭하면 상세 프로필을 확인할 수 있어요.</p>';
     html += '                        <p>대화를 시작하기 전 상대의 정보 잘 살펴보기!</p>';
@@ -2645,7 +2654,8 @@ const guidePopup =() =>{
     html += '                        마음에 드는 사람과 내일 처음 만나는 날!</br>';
     html += '                        어떤 옷을 입고 나가야 하는지, 만나면 무슨 대화를 해야 하는지 걱정되나요? ';
     html += '                        매치파이 AI매니저에게 물어보세요.</br>';
-    html += '                        적절한 옷차림, 부담스럽지 않으면서도 친밀도를</br>높여가는 대화 주제를 조언해드립니다.</br>';
+    html +=
+        '                        적절한 옷차림, 부담스럽지 않으면서도 친밀도를</br>높여가는 대화 주제를 조언해드립니다.</br>';
     html += '                        마치 연애고수 친구처럼요!</p>';
     html += '                    </div>';
     html += '                </div>';
@@ -2662,4 +2672,4 @@ const guidePopup =() =>{
     html += '</div>';
     $('body').append(html);
     guideBtn();
-}
+};

@@ -80,21 +80,15 @@ $ci = $session->get('ci');
 $name = $session->get('name');
 
 $db = \Config\Database::connect();
-$query = $db->query("SELECT created_at FROM members WHERE ci = '$ci'");
+$query = $db->query("SELECT guide_yn FROM members WHERE ci = '$ci'");
 $result = $query->getRow();
 
 if ($result) {
-    $created_at = $result->created_at;
-    $created_at_time = strtotime($created_at);
-    $current_time = time();
-    $time_diff = $current_time - $created_at_time;
-    $time_limit = 60 * 60; 
+    $guide_yn = $result->guide_yn;
 
-    $cookie_name = 'guide_popup_shown';
-
-    if ($time_diff <= $time_limit && !isset($_COOKIE[$cookie_name])) {
+    if ($guide_yn === 'N') {
         echo "<script> $(document).ready(function() {guidePopup();});</script>";
-        setcookie($cookie_name, '1', strtotime('tomorrow'), '/');
+        $query = $db->query("UPDATE members SET guide_yn='Y' WHERE ci = '$ci'");
     }
 }
 ?>

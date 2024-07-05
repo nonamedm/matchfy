@@ -33,7 +33,7 @@
                             <a><?= lang('Korean.matchMeet') ?></a>
                         </p>
                         <!-- <p><a onclick="moveToUrl('/mo/partner')"><?= lang('Korean.matchInfoBtn') ?></a></p> -->
-                        <p onclick="moveToUrl('/mo/matchFeed')"><a><?= lang('Korean.matchFeed') ?></a></p>
+                        <!-- <p onclick="moveToUrl('/mo/matchFeed')"><a><?= lang('Korean.matchFeed') ?></a></p> -->
                         <!-- <p onclick="moveToUrl('/mo/alliance/list')"><a><?= lang('Korean.matchAliiance') ?></a></p> -->
                         <p onclick="moveToUrl('/mo/upgradeGrade')"><a><?= lang('Korean.matchUpgrade') ?></a></p>
                         <!-- <p onclick="moveToUrl('/mo/alliance/pass')"><a><?= lang('Korean.matchAllianceAppli') ?></a></p> -->
@@ -55,8 +55,8 @@
                         <p onclick="moveToUrl('/mo/privacy')"><a><?= lang('Korean.matchPravacy') ?></a></p>
                     </div>
                 </div>
+                <div class="commerce_banner"><img style="width: 60%;" src="/static/images/footer_logo.png" /></div>
             </div>
-            <div class="commerce_banner"><img style="width: 60%;" src="/static/images/footer_logo.png" /></div>
             <div style="height: 50px;"></div>
             <footer class="footer">
 
