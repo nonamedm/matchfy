@@ -28,7 +28,7 @@
         ?>
         <div class="sub_wrap">
             <div class="content_wrap">
-                <div class="tab_wrap">
+                <!-- <div class="tab_wrap">
                     <ul>
                         <li class="on">
                             <?= lang('Korean.AIMsg') ?>
@@ -37,7 +37,7 @@
                             <?= lang('Korean.messageBox') ?>
                         </li>
                     </ul>
-                </div>
+                </div> -->
                 <div id="chat_wrap" class="chat_wrap scroll_body">
                     <?php foreach ($allMsg as $row) {
                         if ($row['chk'] === 'me') {
@@ -129,6 +129,8 @@
 
     <script>
         $(document).ready(function() {
+            const chatWrapHeight = window.innerHeight - 276;
+            $('.chat_wrap').css('height', chatWrapHeight);
             // 엔터키 메세지전송, shift+enter 줄바꿈
             $('textarea').on('keydown', function(event) {
                 if (event.keyCode == 13)

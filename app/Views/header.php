@@ -10,6 +10,13 @@ if ($get_ci) {
     <!-- <header class="header"> -->
 <?php
 } ?>
+<script>
+    $(document).ready(function() {
+        $('.sub_wrap').css('min-height', window.innerHeight - 130);
+        $('.sub_wrap').css('height', window.innerHeight - 130);
+    });
+</script>
+
 <header class="header ci_header">
 
     <div class="logo_menu">
