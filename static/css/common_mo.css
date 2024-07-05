@@ -898,6 +898,7 @@ td {
 .message_input_box.on .chat_menu_open {
     display: flex;
     width: 335px;
+    background-color: #fff;
 }
 .message_input_box .chat_menu_open .chat_menu_func {
     width: 54px;

@@ -24,7 +24,7 @@
         include 'header.php'; ?>
 
         <div class="sub_wrap">
-            <div class="content_wrap">
+            <div class="content_wrap" style="overflow:scroll">
                 <div class="tab_wrap">
                     <ul>
                         <li onclick="AImsg()">
