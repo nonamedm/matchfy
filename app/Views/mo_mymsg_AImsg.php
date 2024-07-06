@@ -27,8 +27,6 @@
 
         ?>
         <div class="sub_wrap">
-            <div class="loading"><img src="/static/images/loading.gif" /></div>
-            <div class="loading_bg"></div>
             <div class="content_wrap">
                 <!-- <div class="tab_wrap">
                     <ul>
@@ -224,8 +222,6 @@
             });
         }
         const sendMsg = () => {
-            $('.loading').show();
-            $('.loading_bg').show();
             var sendMsg = $("#msgbox").val();
             if (sendMsg !== "") {
                 $.ajax({
@@ -243,6 +239,24 @@
                             // 성공
                             $('#msgbox').css('height', '26px'); // height 초기화
                             reloadMsg();
+                            $("#chat_wrap").append(`<div class="receive_msg">
+                                                    <div class="receive_profile">
+                                                        <a class="nicknameBtnBox">
+                                                            <img src="/static/images/ai_send.png">
+                                                        </a>
+                                                    </div>
+                                                    <div class="receive_text">
+                                                        <p class="receive_profile_name">AI 매니저</p>
+                                                        <div style="display: flex;">
+                                                            <div class="receive_msg_area">
+                                                                <p><img src="/static/images/loading.gif" style="width: 20px;height: 15px;" /> </p>
+                                                            </div>
+                                                            <div class="receive_time">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>`);
+
                             scrollToBottom();
                             setTimeout(function() {
                                 returnMsg();
@@ -256,8 +270,6 @@
                         return false;
                     },
                     error: function(data, status, err) {
-                        $('.loading').hide();
-                        $('.loading_bg').hide();
                         console.log(err);
                         fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                     },
@@ -280,8 +292,6 @@
                     success: function(data) {
                         console.log(data);
                         if (data.status === 'success') {
-                            $('.loading').hide();
-                            $('.loading_bg').hide();
                             // 성공
                             $('#msgbox').css('height', '26px'); // height 초기화
                             reloadMsg();
