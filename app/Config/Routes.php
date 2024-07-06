@@ -165,6 +165,7 @@ $routes->post('/ajax/createChatFork', 'MoAjax::createChatFork');
 $routes->post('/ajax/createMultyChat', 'MoAjax::createMultyChat');
 $routes->post('/ajax/sendMsg', 'MoAjax::sendMsg');
 $routes->post('/ajax/sendMsgAi', 'MoAjax::sendMsgAi');
+$routes->post('/ajax/sendMsgAiReturn', 'MoAjax::sendMsgAiReturn');
 $routes->post('/ajax/reloadMsg', 'MoAjax::reloadMsg');
 $routes->post('/ajax/reloadMsgAi', 'MoAjax::reloadMsgAi');
 $routes->post('/ajax/extRm', 'MoAjax::extRm');

@@ -4110,46 +4110,82 @@ class MoAjax extends BaseController
                 ->query($query);
 
             if ($sendMsg) {
-                // 메세지 날리고 답변 확인하기
-                $url = 'http://3.34.3.18:5000/api/chat';
-                // POST Data
-                $postData = [
-                    'data' => ['user_message' => $msg_cont, 'user_id' => $member_ci]
-                ];
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $msg_cont]]);
+            } else {
+                echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+                return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+            }
+        } else {
+            echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
+    public function sendMsgAiReturn()
+    {
+        // 1:1 채팅 생성하기
+        $ChatRoomMsgAiModel = new ChatRoomMsgAiModel();
+        $ChatRoomMemberAiModel = new ChatRoomMemberAiModel();
 
-                $ch = curl_init($url);
+        $session = session();
+        $member_ci = $session->get('ci');
 
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
-                curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                    'Content-Type: application/json',
-                ]);
+        $room_ci = $this->request->getPost('room_ci');
+        // 여기서 member_ci로 내가 방 참가자 맞는지 조회 한번 해야함
+        $query = "SELECT * FROM wh_chat_room_member_ai WHERE member_ci = '" . $member_ci . "'
+                  AND room_ci = '" . $room_ci . "'";
+        $checkYn = $ChatRoomMemberAiModel
+            ->query($query)->getResultArray();
+        if ($checkYn) {
+            // 해당 채팅방의 멤버가 맞다면 메세지 전송
+            $msg_cont = $this->request->getPost('msg_cont');
+            $msg_type = $this->request->getPost('msg_type');
 
-                // Execute cURL
-                $response = curl_exec($ch);
+            if ($msg_type == '0') {
+                $msg_cont = htmlspecialchars($msg_cont, ENT_QUOTES);
+                $msg_cont = str_replace("\n", "<br>", $msg_cont);
+            }
 
-                if (curl_errno($ch)) {
-                    $error_msg = curl_error($ch);
-                    curl_close($ch);
-                    return $this->response->setJSON(['status' => 'failed', 'message' => 'failed', 'data' => ["reulst_value" => "error"]]);
-                }
+            // 메세지 날리고 답변 확인하기
+            $url = 'http://3.34.3.18:5000/api/chat';
+            // POST Data
+            $postData = [
+                'data' => ['user_message' => $msg_cont, 'user_id' => $member_ci]
+            ];
 
+            $ch = curl_init($url);
+
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+            ]);
+
+            // Execute cURL
+            $response = curl_exec($ch);
+
+            if (curl_errno($ch)) {
+                $error_msg = curl_error($ch);
                 curl_close($ch);
+                return $this->response->setJSON(['status' => 'failed', 'message' => 'failed', 'data' => ["reulst_value" => "error"]]);
+            }
 
-                // Decode the response
-                $responseData = json_decode($response, true);
-                if ($responseData) {
-                    $query = "INSERT INTO wh_chat_room_msg_ai
+            curl_close($ch);
+
+            // Decode the response
+            $responseData = json_decode($response, true);
+            if ($responseData) {
+                $msg_cont = htmlspecialchars($responseData['result'], ENT_QUOTES);
+                $msg_cont = str_replace("\n", "<br>", $responseData['result']);
+                $query = "INSERT INTO wh_chat_room_msg_ai
                         (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
-                        VALUES('" . $room_ci . "','AImanager','2','0','" . $responseData['result'] . "','9','9');";
-                    $sendMsg = $ChatRoomMsgAiModel
-                        ->query($query);
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $responseData]]);
-                } else {
-                    echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
-                    return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
-                }
+                        VALUES(?,'AImanager','2','0',?,'9','9');";
+                $sendMsg = $ChatRoomMsgAiModel
+                    ->query($query, [$room_ci, $msg_cont]);
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $responseData]]);
+            } else {
+                echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+                return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
             }
         } else {
             echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";

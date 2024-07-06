@@ -27,6 +27,8 @@
 
         ?>
         <div class="sub_wrap">
+            <div class="loading"><img src="/static/images/loading.gif" /></div>
+            <div class="loading_bg"></div>
             <div class="content_wrap">
                 <!-- <div class="tab_wrap">
                     <ul>
@@ -151,18 +153,7 @@
             reloadMsg();
             setInterval(function() {
                 reloadMsg();
-
             }, 5000);
-            // $("#mymsg_menu").on("click", function() {
-            //     if (!($(".message_input_box").hasClass("on")) && !($(".chat_wrap").hasClass("on"))) {
-            //         $(".message_input_box").addClass("on");
-            //         $(".chat_wrap").addClass("on");
-            //     } else {
-            //         $(".message_input_box").removeClass("on");
-            //         $(".chat_wrap").removeClass("on");
-            //     }
-            // });
-
         });
         const reloadMsg = () => {
             $.ajax({
@@ -233,6 +224,8 @@
             });
         }
         const sendMsg = () => {
+            $('.loading').show();
+            $('.loading_bg').show();
             var sendMsg = $("#msgbox").val();
             if (sendMsg !== "") {
                 $.ajax({
@@ -251,7 +244,48 @@
                             $('#msgbox').css('height', '26px'); // height 초기화
                             reloadMsg();
                             scrollToBottom();
+                            setTimeout(function() {
+                                returnMsg();
+                            }, 200);
                             // moveToUrl('/mo/factorInfo');
+                        } else if (data.status === 'error') {
+                            console.log('실패', data);
+                        } else {
+                            fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        }
+                        return false;
+                    },
+                    error: function(data, status, err) {
+                        $('.loading').hide();
+                        $('.loading_bg').hide();
+                        console.log(err);
+                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    },
+                });
+            }
+            // $("#msgbox").val("");
+        }
+        const returnMsg = () => {
+            var sendMsg = $("#msgbox").val();
+            if (sendMsg !== "") {
+                $.ajax({
+                    url: '/ajax/sendMsgAiReturn',
+                    type: 'POST',
+                    data: {
+                        "room_ci": $("#room_ci").val(),
+                        "msg_cont": sendMsg,
+                        "msg_type": "0"
+                    },
+                    async: false,
+                    success: function(data) {
+                        console.log(data);
+                        if (data.status === 'success') {
+                            $('.loading').hide();
+                            $('.loading_bg').hide();
+                            // 성공
+                            $('#msgbox').css('height', '26px'); // height 초기화
+                            reloadMsg();
+                            scrollToBottom();
                         } else if (data.status === 'error') {
                             console.log('실패', data);
                         } else {
