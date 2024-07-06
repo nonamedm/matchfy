@@ -507,7 +507,7 @@ class MoHome extends BaseController
             $data['fork_onoff'] = $forkOnoff[0]['onoff'];
             $data['roomCount'] = $roomCount[0]['room_count'];
 
-            if($roomCount[0]['room_count'] > 2) {
+            if ($roomCount[0]['room_count'] > 2) {
                 $data['partnerInfo'] = $roomTitle[0]['room_title'];
             } else {
                 $data['partnerInfo'] = $partnerInfo[0]['nickname'];
@@ -1708,33 +1708,42 @@ class MoHome extends BaseController
         $session = session();
         $ci = $session->get('ci');
         $meeting_idx = $this->request->getPost('meetingIdx');
-
         $meeting_members = new MeetingMembersModel();
-        $query = $meeting_members->distinct()
-            ->select('a.idx, 
-                                a.category, 
-                                a.meeting_start_date, 
-                                a.meeting_end_date, 
-                                a.number_of_people, 
-                                (select count(*) from wh_meeting_members c where c.meeting_idx = ' . $meeting_idx . ' and c.delete_yn="N") as meet_members, 
-                                a.meeting_place, 
-                                a.membership_fee, 
-                                b.file_path, 
-                                b.file_name')
-            ->from('wh_meetings a')
-            ->join('wh_meetings_files b', 'a.idx = b.meeting_idx', 'left')
-            ->where('a.idx', $meeting_idx)
-            ->get();
 
-        $result = $query->getResult();
-
-        $my_point_value = $this->mypageGetPoint();
-
-        if ($result) {
-            return $this->response->setJSON(['success' => true, 'data' => $result, 'my_point' => $my_point_value]);
+        $query = "SELECT * FROM wh_meeting_members WHERE member_ci='" . $ci . "' AND meeting_idx='" . $meeting_idx . "'";
+        $member_yn = $meeting_members->query($query)->getResultArray();
+        if ($member_yn) {
+            $query = "SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "'";
+            $room_info = $meeting_members->query($query)->getResultArray();
+            return $this->response->setJSON(['success' => true, 'data' => $room_info, 'result' => '1']);
         } else {
-            return $this->response->setJSON(['success' => false,]);
+            $query = $meeting_members->distinct()
+                ->select('a.idx, 
+                                    a.category, 
+                                    a.meeting_start_date, 
+                                    a.meeting_end_date, 
+                                    a.number_of_people, 
+                                    (select count(*) from wh_meeting_members c where c.meeting_idx = ' . $meeting_idx . ' and c.delete_yn="N") as meet_members, 
+                                    a.meeting_place, 
+                                    a.membership_fee, 
+                                    b.file_path, 
+                                    b.file_name')
+                ->from('wh_meetings a')
+                ->join('wh_meetings_files b', 'a.idx = b.meeting_idx', 'left')
+                ->where('a.idx', $meeting_idx)
+                ->get();
+
+            $result = $query->getResult();
+
+            $my_point_value = $this->mypageGetPoint();
+
+            if ($result) {
+                return $this->response->setJSON(['success' => true, 'data' => $result, 'my_point' => $my_point_value, 'result' => '0']);
+            } else {
+                return $this->response->setJSON(['success' => false,]);
+            }
         }
+
         // return view('mo_mypage_group_apply_popup');
     }
     public function mypageGroupCreate(): string

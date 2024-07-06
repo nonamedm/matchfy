@@ -149,9 +149,9 @@
             scrollToBottom();
             // mymsgPhotoListener();
             reloadMsg();
-            setInterval(function() {
-                reloadMsg();
-            }, 5000);
+            // setInterval(function() {
+            //     reloadMsg();
+            // }, 5000);
         });
         const reloadMsg = () => {
             $.ajax({
