@@ -507,12 +507,18 @@ class MoHome extends BaseController
             $data['fork_onoff'] = $forkOnoff[0]['onoff'];
             $data['roomCount'] = $roomCount[0]['room_count'];
 
-            if ($roomCount[0]['room_count'] > 2) {
+            if ($roomType[0]['room_type'] === '1') {
                 $data['partnerInfo'] = $roomTitle[0]['room_title'];
             } else {
                 $data['partnerInfo'] = $partnerInfo[0]['nickname'];
             }
+            if (mb_strlen($data['partnerInfo']) > 10) {
+                $data['partnerInfo'] = mb_substr($data['partnerInfo'], 0, 15) . '...';
+            }
             // echo print_r($allMsg);
+            // echo '<pre>';
+            // print_r($data['room_type']);
+            // echo '</pre>';
             return view('mo_mymsg', $data);
         } else {
             echo '<script src="/static/js/basic.js"></script>';

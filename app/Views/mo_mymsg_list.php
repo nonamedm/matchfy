@@ -64,7 +64,13 @@
                                     </div>
                                     <div class="receive_text">
                                         <p class="receive_profile_name">
-                                            <?= $row['room_title'] ?>
+                                            <?php
+                                            if (mb_strlen($row['room_title']) > 10) {
+                                                echo mb_substr($row['room_title'], 0, 15) . '...';
+                                            } else {
+                                                echo $row['room_title'];
+                                            }
+                                            ?>
                                             <!-- <?= $row['member_name'] ?> -->
                                             <!-- <span class="match_percent btw8090">89%</span> -->
                                         </p>
