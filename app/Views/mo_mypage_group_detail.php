@@ -99,8 +99,8 @@
             <footer class="footer">
                 <div class="btn_group">
                     <?php
-                    $currentDate = new DateTime();
-                    $eventDate = DateTime::createFromFormat('Y.m.d H:i (D)', $meeting_start_date);
+                    $currentDate = date('Y-m-d H:i:s');
+                    $eventDate = date('Y-m-d H:i:s', $meeting_date_time_stamp);
 
                     if ($is_recruitment_full) {
                     ?>
