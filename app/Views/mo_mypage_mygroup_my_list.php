@@ -115,9 +115,7 @@ function formatDateTime($value)
                             <div class="alliance_sch_item">
                                 <div class="alliance_sch_sts">
                                     <div class="<?= getClass($meeting->meeting_end_date, $meeting->delete_yn) ?>" id="cancel_rsv_<?= $meeting->meeting_idx ?>"><?= getDday($meeting->meeting_end_date, $meeting->meeting_start_date, $meeting->delete_yn) ?></div>
-                                    <?php if ($meeting->meeting_end_date > $today) : ?>
-                                        <img src="/static/images/right_arrow.png" />
-                                    <?php endif; ?>
+                                    <img src="/static/images/right_arrow.png" />
                                 </div>
                                 <h2><?= $meeting->meeting_place ?></h2>
                                 <p class=""><?= formatDateTime($meeting->meeting_start_date) ?></p>
@@ -126,61 +124,6 @@ function formatDateTime($value)
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <!-- <div class="alliance_sch_list">
-                    <div class="alliance_sch_item">
-                        <div class="alliance_sch_sts">
-                            <div class="">3일전</div>
-                            <img src="/static/images/right_arrow.png" />
-                        </div>
-                        <h2>레드버튼 (이수점)</h2>
-                        <p class="">12.8 (금) 11:00</p>
-                        <span class=""><?= lang('Korean.personnel') ?> 2<?= lang('Korean.people') ?></span>
-                    </div>
-                </div>
-                <div class="alliance_sch_list">
-                    <div class="alliance_sch_item">
-                        <div class="alliance_sch_sts">
-                            <div class="">1일전</div>
-                            <img src="/static/images/right_arrow.png" />
-                        </div>
-                        <h2>레드버튼 (이수점)</h2>
-                        <p class="">12.8 (금) 11:00</p>
-                        <span class=""><?= lang('Korean.personnel') ?> 2<?= lang('Korean.people') ?></span>
-                    </div>
-                </div>
-                <div class="alliance_sch_list">
-                    <div class="alliance_sch_item">
-                        <div class="alliance_sch_sts">
-                            <div class="finish"><?= lang('Korean.close') ?></div>
-                            <img src="/static/images/right_arrow.png" />
-                        </div>
-                        <h2>레드버튼 (이수점)</h2>
-                        <p class="">12.8 (금) 11:00</p>
-                        <span class=""><?= lang('Korean.personnel') ?> 2<?= lang('Korean.people') ?></span>
-                    </div>
-                </div>
-                <div class="alliance_sch_list">
-                    <div class="alliance_sch_item">
-                        <div class="alliance_sch_sts">
-                            <div class="finish"><?= lang('Korean.close') ?></div>
-                            <img src="/static/images/right_arrow.png" />
-                        </div>
-                        <h2>레드버튼 (이수점)</h2>
-                        <p class="">12.8 (금) 11:00</p>
-                        <span class=""><?= lang('Korean.personnel') ?> 2<?= lang('Korean.people') ?></span>
-                    </div>
-                </div>
-                <div class="alliance_sch_list">
-                    <div class="alliance_sch_item">
-                        <div class="alliance_sch_sts">
-                            <div class="finish"><?= lang('Korean.close') ?></div>
-                            <img src="/static/images/right_arrow.png" />
-                        </div>
-                        <h2>레드버튼 (이수점)</h2>
-                        <p class="">12.8 (금) 11:00</p>
-                        <span class=""><?= lang('Korean.personnel') ?> 2<?= lang('Korean.people') ?></span>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>

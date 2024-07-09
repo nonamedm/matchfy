@@ -149,20 +149,9 @@
             scrollToBottom();
             // mymsgPhotoListener();
             reloadMsg();
-            setInterval(function() {
-                reloadMsg();
-
-            }, 5000);
-            // $("#mymsg_menu").on("click", function() {
-            //     if (!($(".message_input_box").hasClass("on")) && !($(".chat_wrap").hasClass("on"))) {
-            //         $(".message_input_box").addClass("on");
-            //         $(".chat_wrap").addClass("on");
-            //     } else {
-            //         $(".message_input_box").removeClass("on");
-            //         $(".chat_wrap").removeClass("on");
-            //     }
-            // });
-
+            // setInterval(function() {
+            //     reloadMsg();
+            // }, 5000);
         });
         const reloadMsg = () => {
             $.ajax({
@@ -250,8 +239,63 @@
                             // 성공
                             $('#msgbox').css('height', '26px'); // height 초기화
                             reloadMsg();
+                            $("#chat_wrap").append(`<div class="receive_msg">
+                                                    <div class="receive_profile">
+                                                        <a class="nicknameBtnBox">
+                                                            <img src="/static/images/ai_send.png">
+                                                        </a>
+                                                    </div>
+                                                    <div class="receive_text">
+                                                        <p class="receive_profile_name">AI 매니저</p>
+                                                        <div style="display: flex;">
+                                                            <div class="receive_msg_area">
+                                                                <p><img src="/static/images/loading.gif" style="width: 20px;height: 15px;" /> </p>
+                                                            </div>
+                                                            <div class="receive_time">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>`);
+
                             scrollToBottom();
+                            setTimeout(function() {
+                                returnMsg();
+                            }, 200);
                             // moveToUrl('/mo/factorInfo');
+                        } else if (data.status === 'error') {
+                            console.log('실패', data);
+                        } else {
+                            fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+                        }
+                        return false;
+                    },
+                    error: function(data, status, err) {
+                        console.log(err);
+                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    },
+                });
+            }
+            // $("#msgbox").val("");
+        }
+        const returnMsg = () => {
+            var sendMsg = $("#msgbox").val();
+            if (sendMsg !== "") {
+                $.ajax({
+                    url: '/ajax/sendMsgAiReturn',
+                    type: 'POST',
+                    data: {
+                        "room_ci": $("#room_ci").val(),
+                        "msg_cont": sendMsg,
+                        "msg_type": "0"
+                    },
+                    async: false,
+                    success: function(data) {
+                        console.log(data);
+                        if (data.status === 'success') {
+                            // 성공
+                            $('#msgbox').css('height', '26px'); // height 초기화
+                            reloadMsg();
+                            scrollToBottom();
                         } else if (data.status === 'error') {
                             console.log('실패', data);
                         } else {
