@@ -4,7 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0,  user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -18,7 +18,7 @@
         <!-- HEADER: MENU + HEROE SECTION -->
 
         <?php $title = lang('Korean.friendsInvite');
-        $prevUrl = "/support/menu";//변경 필요
+        $prevUrl = "/support/menu"; //변경 필요
         include 'spheader.php'; ?>
 
         <div class="sub_wrap">
@@ -73,7 +73,7 @@
 
         document.getElementById('shareButton').addEventListener('click', function() {
             var code = this.getAttribute('data-code');
-            var inviteURL = 'https://matchfy.net';//서포터즈로 변경 필요
+            var inviteURL = 'https://matchfy.net'; //서포터즈로 변경 필요
             if (navigator.share) {
                 navigator.share({
                     title: 'Matchfy 초대',

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Matchfy</title>
     <meta name="description" content="The small framework with powerful features">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
     <link rel="stylesheet" href="/static/css/intro.css">
     <link rel="stylesheet" href="/static/css/scroll.css">
@@ -44,19 +44,29 @@
 
     <nav role="navigation" class="mobileHedaer">
         <div id="menuToggle">
-            
+
             <input type="checkbox" />
-            
+
             <span></span>
             <span></span>
             <span></span>
-            
+
             <ul id="menu">
-            <a href="/intro/main"><li>Home</li></a>
-            <a href="/intro/animatedAi"><li>애니메틱 AI</li></a>
-            <a href="/intro/company"><li>company</li></a>
-            <a href="/intro/media"><li>Media</li></a>
-            <a href="#" onclick="concatBtn();"><li>Contact</li></a>
+                <a href="/intro/main">
+                    <li>Home</li>
+                </a>
+                <a href="/intro/animatedAi">
+                    <li>애니메틱 AI</li>
+                </a>
+                <a href="/intro/company">
+                    <li>company</li>
+                </a>
+                <a href="/intro/media">
+                    <li>Media</li>
+                </a>
+                <a href="#" onclick="concatBtn();">
+                    <li>Contact</li>
+                </a>
             </ul>
         </div>
     </nav>
@@ -69,27 +79,31 @@
             </span>
 
             <ul class="contents-media-ul">
-            <?php foreach ($newss as $news): ?>
-                <li class="contents-media-li hidden">
-                    <a href="<?php if($news['bigo2']){echo $news['bigo2']; }else{ echo "/intro/mediaView/".$news['id']; }?>"  target="_blank">
-                        <?php
-                            if($news['bigo1']){
+                <?php foreach ($newss as $news) : ?>
+                    <li class="contents-media-li hidden">
+                        <a href="<?php if ($news['bigo2']) {
+                                        echo $news['bigo2'];
+                                    } else {
+                                        echo "/intro/mediaView/" . $news['id'];
+                                    } ?>" target="_blank">
+                            <?php
+                            if ($news['bigo1']) {
                                 $typename;
                                 $typeclass;
-                                if($news['bigo1']=='01') {
-                                    $typename ='언론보도';
+                                if ($news['bigo1'] == '01') {
+                                    $typename = '언론보도';
                                     $typeclass = 'media-type';
-                                }else{
-                                    $typename ='보도자료';
+                                } else {
+                                    $typename = '보도자료';
                                     $typeclass = 'media-type2';
                                 }
-                                echo "<div class='".$typeclass."'>". $typename."</div>";
+                                echo "<div class='" . $typeclass . "'>" . $typename . "</div>";
                             }
-                        ?>
-                        <div class="media-box">
-                            <?php
+                            ?>
+                            <div class="media-box">
+                                <?php
                                 $title = $news['title'];
-                                $max_length = 20; 
+                                $max_length = 20;
 
                                 if (mb_strlen($title) > $max_length) {
                                     $title = mb_substr($title, 0, $max_length);
@@ -97,13 +111,13 @@
                                     $title = preg_replace('/\r?\n|\r/', '', $title);
                                     $title .= '...';
                                 }
-                            ?>
-                            <span class="media-title"> <strong><?= $title ?></strong></span>
-                            <span class="media-date"><i class="fa-solid fa-calendar-days"></i><?= date('Y년 m월 d일', strtotime($news['created_at'])) ?></span>
-                        </div>
-                    </a>
-                </li>
-            <?php endforeach; ?>
+                                ?>
+                                <span class="media-title"> <strong><?= $title ?></strong></span>
+                                <span class="media-date"><i class="fa-solid fa-calendar-days"></i><?= date('Y년 m월 d일', strtotime($news['created_at'])) ?></span>
+                            </div>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
                 <!-- <div class="page-box">
                     <ul>
                         <li class="on">1</li>

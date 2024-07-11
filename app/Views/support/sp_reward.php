@@ -4,7 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0,  user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -16,7 +16,7 @@
 <?php
 function getChkType($chkValue)
 {
-    $value='';
+    $value = '';
 
     if ($chkValue == 0) {
         $value = '확인중';
@@ -30,7 +30,7 @@ function getChkType($chkValue)
 
 function getChkClass($chkValue)
 {
-    $className='';
+    $className = '';
 
     if ($chkValue == 0) {
         $className = 'reward01';
@@ -63,10 +63,11 @@ function formatDateTime($value)
 
     return $formattedDateTime;
 }
-function getGender($value){
-    if($value == 0){
+function getGender($value)
+{
+    if ($value == 0) {
         return "남성";
-    }else if($value == 1){
+    } else if ($value == 1) {
         return "여성";
     }
 }
@@ -90,40 +91,40 @@ function getGender($value){
                     </select>
                 </div>
                 <div class="mygroup_list" id="mygroup_list_body">
-                <?php if (!empty($datas)) : ?>
-                    <?php foreach ($datas as $data) : ?>
-                        <div class="alliance_sch_list">
-                            <div class="alliance_sch_item">
-                                <div class="reward_type">
-                                    <div class="<?=getChkClass($data['check'])?>"><?= getChkType($data['check'])?></div>
-                                    <?php
-                                        if($data['reward_type'] != 1){
-                                            if($data['reward_type'] == 'meeting'){
-                                                echo '<a href="/mo/mypage/group/detail/'.$data['reward_meeting_idx'].'">';    
+                    <?php if (!empty($datas)) : ?>
+                        <?php foreach ($datas as $data) : ?>
+                            <div class="alliance_sch_list">
+                                <div class="alliance_sch_item">
+                                    <div class="reward_type">
+                                        <div class="<?= getChkClass($data['check']) ?>"><?= getChkType($data['check']) ?></div>
+                                        <?php
+                                        if ($data['reward_type'] != 1) {
+                                            if ($data['reward_type'] == 'meeting') {
+                                                echo '<a href="/mo/mypage/group/detail/' . $data['reward_meeting_idx'] . '">';
                                                 echo '<img src="/static/images/right_arrow.png" />';
                                                 echo '</a>';
                                             }
                                         }
-                                    ?>
+                                        ?>
+                                    </div>
+                                    <h2><?= esc($data['reward_title']) ?></h2>
+                                    <p class=""><?= formatDateTime($data['reward_date']) ?></p>
+                                    <?php if ($data['reward_type'] == 'meeting') { ?>
+                                        <span class="">
+                                            <?= lang('Korean.personnel') ?> <?= esc($data['reward_meeting_members']) ?><?= lang('Korean.people') ?>
+                                            |
+                                            참석자 동일 비율 <?= number_format($data['reward_meeting_percent'], 0); ?>%
+                                        </span>
+                                    <?php } else if ($data['reward_type'] == 'invite') { ?>
+                                        <span class=""><?= getGender($data['recommender_gender']) ?></span>
+                                    <?php } ?>
+
                                 </div>
-                                <h2><?= esc($data['reward_title']) ?></h2>
-                                <p class=""><?= formatDateTime($data['reward_date']) ?></p>
-                                <?php if($data['reward_type'] == 'meeting'){?>
-                                    <span class="">
-                                        <?= lang('Korean.personnel') ?> <?= esc($data['reward_meeting_members']) ?><?= lang('Korean.people') ?>
-                                         |
-                                         참석자 동일 비율 <?=number_format($data['reward_meeting_percent'], 0);?>%
-                                    </span>
-                                <?php }else if($data['reward_type'] == 'invite'){ ?>
-                                    <span class=""><?=getGender($data['recommender_gender'])?></span>
-                                <?php } ?>
-                                
                             </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else : ?>
-                    <p style="color: #000;text-align: center;font-size: 12px;">데이터가 없습니다.</p>
-                <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php else : ?>
+                        <p style="color: #000;text-align: center;font-size: 12px;">데이터가 없습니다.</p>
+                    <?php endif; ?>
                 </div>
                 <!-- <div class="alliance_sch_list">
                     <div class="alliance_sch_item">

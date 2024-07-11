@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0,  user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -16,7 +15,7 @@
     <div class="layerPopup alert"><!-- class: imgPop 추가 -->
         <div class="layerPopup_wrap">
             <div class="layerPopup_content small">
-                <p class="txt"><?=lang('Korean.reservChk')?></p>
+                <p class="txt"><?= lang('Korean.reservChk') ?></p>
 
                 <div class="alliance_sch_list popup">
                     <div class="alliance_sch_item">
@@ -26,14 +25,14 @@
                         </div>
                         <h2>박효신 연말 콘서트</h2>
                         <p class="">12.8 (금) 11:00</p>
-                        <span class=""><?=lang('Korean.personnel')?> 2<?=lang('Korean.people')?></span>
+                        <span class=""><?= lang('Korean.personnel') ?> 2<?= lang('Korean.people') ?></span>
                     </div>
                 </div>
                 <div style="height: 50px;"></div>
                 <div class="layerPopup_bottom">
                     <div class="btn_group multy">
-                        <button class="btn type03"><?=lang('Korean.reserv')?> <?=lang('Korean.cancel')?></button>
-                        <button class="btn type01"><?=lang('Korean.chatRoom')?></button>
+                        <button class="btn type03"><?= lang('Korean.reserv') ?> <?= lang('Korean.cancel') ?></button>
+                        <button class="btn type01"><?= lang('Korean.chatRoom') ?></button>
                     </div>
                 </div>
             </div>

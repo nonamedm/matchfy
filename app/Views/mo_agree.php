@@ -4,7 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0,  user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -81,7 +81,7 @@
                                     <?= lang('Korean.agreePravacy5') ?>
                                 </b>
                                 <p>
-                                    프로모션 이벤트, 할인코드,  멤버 혜택 관련 최신 소식을 받아 보세요.
+                                    프로모션 이벤트, 할인코드, 멤버 혜택 관련 최신 소식을 받아 보세요.
                                 </p>
                             </div>
                         </div>

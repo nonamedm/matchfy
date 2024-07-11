@@ -4,7 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0,  user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -197,7 +197,7 @@
                                 <h4 class="profile_photo_label"><?= lang('Korean.schoolNname') ?></h4>
                                 <div>
                                     <p class="profile_photo_desc"><?= lang('Korean.premiumCon2') ?><span onclick="helpSinupSchoolPopup();" style="float:right;cursor:pointer;"><img src="/static/images/help_icon.png"></span></p>
-                                    
+
                                 </div>
                                 <div class="input_btn">
                                     <input id="school" name="school" type="text" value="" placeholder="<?= lang('Korean.sinupSchoolPlaceholder') ?>">
