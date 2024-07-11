@@ -284,16 +284,17 @@ header .menu_right.edit {
 .mo_wrap {
     height: 100%;
     margin: 0;
+    overflow-y: hidden;
 }
 .mo_wrap .wrap {
     max-width: 400px;
     margin: 0 auto;
     min-height: 100%;
     background-color: #f5f5f5;
-    /* overflow-y: scroll;
+    /* overflow-y: scroll;*/
     scrollbar-width: none; 
     -ms-overflow-style: none;
-    overflow: -moz-scrollbars-none;  */
+    overflow: -moz-scrollbars-none;
 }
 .mo_wrap .main_wrap {
     max-width: 400px;
