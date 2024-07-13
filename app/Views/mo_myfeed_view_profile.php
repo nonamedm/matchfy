@@ -315,7 +315,16 @@
                 <div class="layerPopup_header">
                     <a href="#" class="btn_popup_close" onclick="closePopup();" style="float: right;">닫기</a>
                 </div>
-                <div class="layerPopup_content">
+                <div class="feed_img_btn">
+                    <a onclick="moveToUrl('/mo/myfeed/<?= $nickname?>')">
+                        <?php if ($image_feeds) : ?>
+                            <img class="profile_img" src="/<?= $image_feeds['file_path'] ?>/<?= $image_feeds['file_name'] ?>" style="width: 100%;" />
+                        <?php else : ?>
+                            <img class="profile_img" src="/static/images/profile_noimg.png" style="width: 100%;" />
+                        <?php endif; ?>
+                    </a>
+                </div>
+                <div class="layerPopup_content" style="min-height: 100%;">
                     <div class="">
                         <?php if ($image) : ?>
                             <img class="profile_img" src="/<?= $image['file_path'] ?>/<?= $image['file_name'] ?>" style="width: 85%;" />
@@ -323,11 +332,11 @@
                             <img class="profile_img" src="/static/images/profile_noimg.png" style="width: 85%;" />
                         <?php endif; ?>
                     </div>
-                    <div class="layerPopup_bottom">
+                    <!-- <div class="layerPopup_bottom">
                         <div class="btn_group">
                             <button class="btn type01" onclick="closePopup();"><?= lang('Korean.check') ?></button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

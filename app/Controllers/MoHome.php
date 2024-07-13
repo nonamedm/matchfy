@@ -2239,6 +2239,15 @@ class MoHome extends BaseController
             ->where('board_type', 'main_photo')
             ->where('delete_yn', 'n')
             ->first();
+
+        $MemberFeedFileModel = new MemberFeedFileModel();
+        $imageFeedInfo = $MemberFeedFileModel
+            ->where('member_ci', $user['ci'])
+            ->where('board_type', 'feeds')
+            ->where('delete_yn', 'n')
+            ->orderBy('feed_idx', 'desc')
+            ->first();
+
         $mygradequery = "SELECT grade FROM members WHERE ci='" . $ci . "'";
         $mygrade = $MemberModel->query($mygradequery)->getResultArray();
 
@@ -2261,6 +2270,7 @@ class MoHome extends BaseController
             'mobile_no' => $user['mobile_no'],
             'grade' => $user['grade'],
             'image' => $imageInfo,
+            'image_feeds' => $imageFeedInfo,
             'job_regist' => $jobRegistData,
             'school_regist' => $schoolRegistData,
             'asset_regist' => $assetRegistData,
