@@ -264,9 +264,11 @@
                         </div>
                     </div>
                 </form>
+                <div class="withdrawal_div" onclick="withdrawal()">회원탈퇴</div>
             </div>
         </div>
         <?php include 'mo_signin_popup.php'; ?>
+        <?php include 'mo_withdrawal_popup.php'; ?>
 
 
 

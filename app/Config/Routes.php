@@ -124,6 +124,7 @@ $routes->post('/ckeditorUpload', 'Upload::ckeditorUpload');
 
 // ajax
 $routes->post('/ajax/signUp', 'MoAjax::signUp');
+$routes->post('/ajax/withdrawal', 'MoAjax::withdrawal');
 $routes->post('/ajax/alianceUp', 'MoAjax::alianceUp');
 $routes->post('/ajax/signUpdate', 'MoAjax::signUpdate');
 $routes->post('/ajax/myinfoUpdate', 'MoAjax::myinfoUpdate');

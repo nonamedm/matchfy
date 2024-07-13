@@ -5173,4 +5173,59 @@ class MoAjax extends BaseController
             return $this->response->setJSON(['status' => 'error', 'message' => 'Email Duplication', 'result' => '0']);
         }
     }
+    // 회원탈퇴
+    public function withdrawal()
+    {
+        $MemberModel = new MemberModel();
+        $session = session();
+        $ci = $session->get('ci');
+
+        $withdrwlTxt = $this->request->getPost('withdrwlTxt');
+
+        $query = "UPDATE members SET delete_yn='Y' WHERE ci=?";
+        $MemberModel->query($query, $ci);
+
+        $query = "INSERT INTO wh_withdrwl_history (ci, withdrwl_txt) VALUES(?, ?);";
+        $MemberModel->query($query, [$ci, $withdrwlTxt]);
+
+        // 회원 탈퇴 시 처리해야 하는 데이터들 -> 상의 후 선택해서 DELETE 또는 UPDATE 처리 필요
+        // 일부는 즉시 DELETE 필요(개인정보 이슈) 및 일부는 데이터 보관 필요할 수 있으니 정책 협의 필요합니다.
+
+        // $query = "DELETE FROM member_files WHERE member_ci  = ?";
+        // $MemberModel->query($query, $ci);
+        // $query = "DELETE FROM wh_chat_room_member WHERE member_ci  = ?";
+        // $MemberModel->query($query, $ci);
+        // $query = "DELETE FROM wh_chat_room_member_ai WHERE member_ci  = ?";
+        // $MemberModel->query($query, $ci);
+        // $query = "DELETE FROM wh_chat_room_member_forked WHERE member_ci  = ?";
+        // $MemberModel->query($query, $ci);
+        // $query = "DELETE FROM wh_chat_room_msg WHERE member_ci  = ?";
+        // $MemberModel->query($query, $ci);
+        // $query = "DELETE FROM wh_chat_room_msg_ai WHERE member_ci  = ?";
+        // $MemberModel->query($query, $ci);
+        // $query = "DELETE FROM wh_match_factor WHERE member_ci  = ?";
+        // $MemberModel->query($query, $ci);
+        // $query = "DELETE FROM wh_match_partner WHERE member_ci  = ?";
+        // $MemberModel->query($query, $ci);
+        $query = "UPDATE wh_match_rate SET delete_yn='y' WHERE member_ci  = ? OR your_ci= ?";
+        $MemberModel->query($query, [$ci, $ci]);
+        $query = "UPDATE wh_meeting_members SET delete_yn='Y' WHERE member_ci  = ?";
+        $MemberModel->query($query, $ci);
+        // $query = "DELETE FROM wh_meeting_members_temp WHERE member_ci  = ?";
+        // $MemberModel->query($query, $ci);
+        // $query = "DELETE FROM wh_meeting_person WHERE member_ci  = ?";
+        // $MemberModel->query($query, $ci);
+        // $query = "DELETE FROM wh_meeting_points WHERE member_ci  = ?";
+        // $MemberModel->query($query, $ci);
+        $query = "UPDATE wh_member_feed SET delete_yn='y' WHERE member_ci  = ?";
+        $MemberModel->query($query, $ci);
+        // $query = "DELETE FROM wh_member_feed_files WHERE member_ci  = ?";
+        // $MemberModel->query($query, $ci);
+        // $query = "DELETE FROM wh_points WHERE member_ci  = ?";
+        // $MemberModel->query($query, $ci);
+        // $query = "DELETE FROM wh_points_exchange WHERE member_ci  = ?";
+        // $MemberModel->query($query, $ci);
+
+        return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'result' => '1']);
+    }
 }

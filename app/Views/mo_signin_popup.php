@@ -1,4 +1,4 @@
-<div class="layerPopup alert middle" style="display:none;"><!-- class: imgPop 추가 -->
+<div class="layerPopup alert middle cert_layer" style="display:none;"><!-- class: imgPop 추가 -->
     <div class="layerPopup_wrap">
         <div class="layerPopup_header">
             <a href="#" class="btn_popup_close" onclick="closePopup();" style="float: right;">닫기</a>

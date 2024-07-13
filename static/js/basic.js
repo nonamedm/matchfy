@@ -1334,7 +1334,7 @@ const showPopupRgt = (contents, ci) => {
     }
     $('#type').text(title);
     $('#certifi_con').html(value);
-    $('.layerPopup').css('display', 'flex');
+    $('.cert_layer').css('display', 'flex');
 };
 
 const closePopup = () => {
@@ -2672,4 +2672,40 @@ const guidePopup = () => {
     html += '</div>';
     $('body').append(html);
     guideBtn();
+};
+
+const withdrawal = () => {
+    $('.withdrawal_layer').css('display', 'flex');
+};
+const submitWithdrawal = () => {
+    const withdrwlTxt = $('#withdrwlTxt').val();
+    $.ajax({
+        url: '/ajax/withdrawal',
+        type: 'POST',
+        data: { withdrwlTxt: withdrwlTxt },
+        async: false,
+        success: function (data) {
+            console.log(data);
+            if (data.result === '1') {
+                $.ajax({
+                    url: '/ajax/logout',
+                    type: 'POST',
+                    async: false,
+                    success: function (data) {
+                    },
+                    error: function (data, status, err) {
+                        console.log(err);
+                        fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                    },
+                });
+                fn_alert('탈퇴가 완료되었습니다.', '/');
+            } else {
+                fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            }
+        },
+        error: function (data, status, err) {
+            console.log(err);
+            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
 };
