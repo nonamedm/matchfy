@@ -1557,46 +1557,59 @@ const meetingSave = (postData) => {
 
     var postData = new FormData(document.querySelector('form'));
     postData.append('content', content);
-    $.ajax({
-        url: '/ajax/meetingSave',
-        type: 'POST',
-        data: postData,
-        processData: false,
-        contentType: false,
-        async: false,
-        success: function (data) {
-            console.log(data);
-            if (data.status === 'success') {
-                // 성공
-                moveToUrl('/mo/mypage/group/detail/' + data.inserted_id);
-            } else if (data.status === 'error') {
-                // 한번만 출력되게 함
-                $('.alert_validation').remove();
-                // 오류 메시지 표시
-                Object.keys(data.errors).forEach(function (key, index) {
-                    var field = $('[name="' + key + '"]');
-                    var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div
 
-                    // 오류 메시지 추가
-                    if (!topMostDiv.next().hasClass('alert_validation')) {
-                        // 이미 오류 메시지가 있는지 확인
-                        topMostDiv.after('<div class="alert alert_validation">' + data.errors[key] + '</div>');
-                    }
-                    // 처음 validation 포커스
-                    if (index === 0) {
-                        field.focus();
-                    }
-                });
-            } else {
+    $('.loading').show();
+    $('.loading_bg').show();
+    setTimeout(function () {
+        $.ajax({
+            url: '/ajax/meetingSave',
+            type: 'POST',
+            data: postData,
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function (data) {
+                console.log(data);
+                if (data.status === 'success') {
+                    // 성공
+                    moveToUrl('/mo/mypage/group/detail/' + data.inserted_id);
+                    $('.loading').hide();
+                    $('.loading_bg').hide();
+                } else if (data.status === 'error') {
+                    $('.loading').hide();
+                    $('.loading_bg').hide();
+                    // 한번만 출력되게 함
+                    $('.alert_validation').remove();
+                    // 오류 메시지 표시
+                    Object.keys(data.errors).forEach(function (key, index) {
+                        var field = $('[name="' + key + '"]');
+                        var topMostDiv = field.closest('.form_row'); // form_row 클래스를 가진 최상위 div
+
+                        // 오류 메시지 추가
+                        if (!topMostDiv.next().hasClass('alert_validation')) {
+                            // 이미 오류 메시지가 있는지 확인
+                            topMostDiv.after('<div class="alert alert_validation">' + data.errors[key] + '</div>');
+                        }
+                        // 처음 validation 포커스
+                        if (index === 0) {
+                            field.focus();
+                        }
+                    });
+                } else {
+                    $('.loading').hide();
+                    $('.loading_bg').hide();
+                    fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+                }
+                return false;
+            },
+            error: function (data, status, err) {
+                $('.loading').hide();
+                $('.loading_bg').hide();
+                console.log(err);
                 fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-            }
-            return false;
-        },
-        error: function (data, status, err) {
-            console.log(err);
-            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
-        },
-    });
+            },
+        });
+    }, 200);
 
     return false;
 };

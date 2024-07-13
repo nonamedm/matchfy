@@ -28,6 +28,8 @@
         include 'header.php'; ?>
 
         <div class="sub_wrap">
+            <div class="loading"><img src="/static/images/loading.gif" /></div>
+            <div class="loading_bg"></div>
             <div class="content_wrap">
                 <form class="main_signin_form group_create" method="post" enctype="multipart/form-data">
                     <legend></legend>
