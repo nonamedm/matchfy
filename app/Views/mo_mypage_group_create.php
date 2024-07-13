@@ -4,7 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0,  user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -75,11 +75,25 @@
                             <div class="form_row signin_form">
                                 <div class="signin_form_div">
                                     <label for="name" class="signin_label"><?= lang('Korean.recruitmentDate') ?></label>
-                                    <div class="schedule_calendar">
+                                    <div class="schedule_calendar multy_select">
                                         <div class="schedule_calendar">
                                             <div class="schedule_calendar_div">
                                                 <input type="text" id="datepicker2" name="meeting_start_date" class="datepicker2" />
                                             </div>
+                                            <select id="meeting_start_time" class="custom_select" name="meeting_start_time" value="">
+                                                <option value=""><?= lang('Korean.selected') ?></option>
+                                                <?php
+                                                $time00 = 0;
+                                                $time23 = 23;
+                                                for ($time = $time00; $time <= $time23; $time++) {
+                                                    if ($time < 10) {
+                                                        echo '<option value="0' . $time . '">0' . $time . '시</option>';
+                                                    } else {
+                                                        echo '<option value="' . $time . '">' . $time . '시</option>';
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

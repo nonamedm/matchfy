@@ -4,11 +4,24 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0,  user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/common_mo.css">
+    <style>
+        .chat_list {
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .chat_list::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari, Opera*/
+        }
+    </style>
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/basic.js"></script>
     <script src="/static/js/myfeed.js"></script>
@@ -24,7 +37,7 @@
         include 'header.php'; ?>
 
         <div class="sub_wrap">
-            <div class="content_wrap">
+            <div class="content_wrap chat_list" style="overflow:scroll">
                 <div class="tab_wrap">
                     <ul>
                         <li onclick="AImsg()">
@@ -51,7 +64,13 @@
                                     </div>
                                     <div class="receive_text">
                                         <p class="receive_profile_name">
-                                            <?= $row['room_title'] ?>
+                                            <?php
+                                            if (mb_strlen($row['room_title']) > 10) {
+                                                echo mb_substr($row['room_title'], 0, 15) . '...';
+                                            } else {
+                                                echo $row['room_title'];
+                                            }
+                                            ?>
                                             <!-- <?= $row['member_name'] ?> -->
                                             <!-- <span class="match_percent btw8090">89%</span> -->
                                         </p>
@@ -79,7 +98,7 @@
                                     <div class="receive_time">
                                         <?php if ($row['last_msg']) {
                                         ?>
-                                            <p style="width: 220px;"><?= $row['last_msg']['created_at'] ?></p>
+                                            <p style="width: 220px;"><?= date('m-d', strtotime($row['last_msg']['created_at'])) ?></p>
                                         <?php
                                         } else {
                                         ?>
@@ -139,7 +158,7 @@
                                     <div class="receive_time">
                                         <?php if ($row['last_msg']) {
                                         ?>
-                                            <p style="width: 220px; max-height: 15px;"><?= $row['last_msg']['created_at'] ?></p>
+                                            <p style="width: 220px; max-height: 15px;"><?= date('m-d', strtotime($row['last_msg']['created_at'])) ?></p>
                                         <?php
                                         } else {
                                         ?>

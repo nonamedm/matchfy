@@ -4,7 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0,  user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -376,9 +376,8 @@
                     async: false,
                     success: function(data) {
                         console.log(data);
-                        if (data.status === 'success') { // 성공                        
-                            console.log('저장', data);
-                            fn_confirm('파트너 정보저장 성공! \n홈으로 이동합니다.', 'calcMatchRate')
+                        if (data.status === 'success') { // 성공
+                            fn_confirm('파트너 정보저장 성공! \n홈으로 이동합니다.', 'calcMatchRateEdit')
                         } else if (data.status === 'error') {
                             console.log('실패', data);
                         } else {
@@ -397,7 +396,7 @@
         function fn_calcMatchRate(value) {
             if (value) {
                 $.ajax({
-                    url: '/ajax/calcMatchRate', // todo : 추후 로그인완료로 이동
+                    url: '/ajax/calcMatchRateEdit', // todo : 추후 로그인완료로 이동
                     type: 'POST',
                     async: false,
                     success: function(data) {

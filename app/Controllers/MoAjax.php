@@ -44,18 +44,27 @@ class MoAjax extends BaseController
         $member_ci = $session->get('ci');
         $filter = $this->request->getPost('value');
 
+        $MemberModel = new MemberModel();
+
+        $query = "SELECT gender FROM members WHERE ci='" . $member_ci . "'";
+        $genderQuery = $MemberModel
+            ->query($query)->getResultArray();
+
+
         $query = "SELECT mr.match_rate, mf.file_path, mf.file_name, mb.city, mb.mbti, mb.nickname, SUBSTRING(mb.birthday, 1, 4) as birthyear FROM wh_match_rate mr
         LEFT JOIN members mb on mr.your_nickname = mb.nickname
         LEFT JOIN member_files mf on mb.ci = mf.member_ci";
         $query .= " WHERE mr.member_ci = '" . $member_ci . "'";
-        if ($filter !== "9") {
-            $query .= " AND mb.gender = '" . $filter . "'";
+        if ($genderQuery) {
+            $query .= " AND mb.gender != '" . $genderQuery[0]['gender'] . "'";
         }
+        $query .= " AND mr.delete_yn = 'n'";
+        $query .= " AND mb.name != '관리자'";
         $query .= " AND mr.match_score > '0'";
         $query .= " AND mf.board_type = 'main_photo' AND mf.delete_yn='n'";
-        $query .= " ORDER BY CONVERT(mr.match_rate, SIGNED) DESC LIMIT 20;";
+        $query .= " ORDER BY mb.os_type ASC, CONVERT(mr.match_rate, SIGNED) DESC LIMIT 3;";
 
-        $MemberModel = new MemberModel();
+
         $result = $MemberModel
             ->query($query)->getResultArray();
 
@@ -85,18 +94,25 @@ class MoAjax extends BaseController
         $member_ci = $session->get('ci');
         $filter = $this->request->getPost('value');
 
+        $MemberModel = new MemberModel();
+
+        $query = "SELECT gender FROM members WHERE ci='" . $member_ci . "'";
+        $genderQuery = $MemberModel
+            ->query($query)->getResultArray();
+
         $query = "SELECT mr.ideal_rate, mf.file_path, mf.file_name, mb.city, mb.mbti, mb.nickname, SUBSTRING(mb.birthday, 1, 4) as birthyear FROM wh_match_rate mr
         LEFT JOIN members mb on mr.your_nickname = mb.nickname
         LEFT JOIN member_files mf on mb.ci = mf.member_ci";
         $query .= " WHERE mr.member_ci = '" . $member_ci . "'";
-        if ($filter !== "9") {
-            $query .= " AND mb.gender = '" . $filter . "'";
+        if ($genderQuery) {
+            $query .= " AND mb.gender != '" . $genderQuery[0]['gender'] . "'";
         }
+        $query .= " AND mr.delete_yn = 'n'";
+        $query .= " AND mb.name != '관리자'";
         $query .= " AND mr.ideal_rate > '0'";
         $query .= " AND mf.board_type = 'main_photo' AND mf.delete_yn='n'";
-        $query .= " ORDER BY CONVERT(mr.ideal_rate, SIGNED) DESC LIMIT 20;";
+        $query .= " ORDER BY mb.os_type ASC, CONVERT(mr.ideal_rate, SIGNED) DESC LIMIT 3;";
 
-        $MemberModel = new MemberModel();
         $result = $MemberModel
             ->query($query)->getResultArray();
 
@@ -152,14 +168,13 @@ class MoAjax extends BaseController
             SELECT *
             FROM wh_meetings
             LEFT JOIN wh_meetings_files ON wh_meetings_files.meeting_idx = wh_meetings.idx
-            WHERE wh_meetings.meeting_start_date >= ?
-            AND wh_meetings.delete_yn = 'N'
+            WHERE wh_meetings.delete_yn = 'N'
             AND wh_meetings.group_min_age <= ?
             AND wh_meetings.group_max_age >= ?
-            ORDER BY wh_meetings.meeting_start_date ASC
+            ORDER BY wh_meetings.meeting_start_date DESC
         ";
 
-        $meetings = $MeetingModel->query($sql, [$currentTime, $age, $age])->getResultArray();
+        $meetings = $MeetingModel->query($sql, [$age, $age])->getResultArray();
 
         $days = ['일', '월', '화', '수', '목', '금', '토'];
 
@@ -174,6 +189,12 @@ class MoAjax extends BaseController
             $dayName = $days[$meetingDay]; //요일
             $meetingDateTime = date("Y.m.d ", $meetingDateTimestamp) . ' (' . $dayName . ') ' . date(" H:i", $meetingDateTimestamp);
             $meeting['meetingDateTime'] = $meetingDateTime;
+
+            if ($currentTime > date("Y-m-d H:i:s", $meetingDateTimestamp)) {
+                $meeting['overtime'] = true;
+            } else {
+                $meeting['overtime'] = false;
+            }
 
             $memCount = $MeetingMembersModel
                 ->where('meeting_idx', $meeting['idx'])
@@ -234,6 +255,10 @@ class MoAjax extends BaseController
                     $session->setTempdata('ci', $user['ci'], 2592000);
                 }
 
+                // 로그인 기록 업데이트
+                $query = "UPDATE members SET last_access_dt=now() WHERE ci='" . $user['ci'] . "';";
+                $MemberModel->query($query);
+
                 return $this->response->setJSON(['status' => 'success', 'message' => "로그인 성공"]);
             } else {
                 return $this->response->setJSON(['status' => 'error', 'message' => '패스워드가 일치하지 않습니다']);
@@ -253,7 +278,7 @@ class MoAjax extends BaseController
 
         $query = "SELECT * FROM wh_support_members WHERE email = '" . $email . "' AND delete_yn='N';";
         $userChk = $SupportMemberModel->query($query)->getResultArray();
-       
+
         if ($userChk) { // email 이 존재하면 password 체크 시작
             $pswdEncode = password_hash($pswd, PASSWORD_DEFAULT);
             $pswdChk = password_verify($pswd, $userChk[0]['password']);
@@ -363,11 +388,14 @@ class MoAjax extends BaseController
         }
 
         if ($selectedGrade !== $currentGrade) {
+            // 개인정보 입력전까지는 임시등급만 업데이트
+            // $query = "UPDATE members SET grade='" . $selectedGrade . "' WHERE ci='" . $ci . "'";
+            // $updateStatus = $MemberModel->query($query);
             $query = "UPDATE members SET temp_grade='" . $selectedGrade . "' WHERE ci='" . $ci . "'";
             $updateStatus = $MemberModel->query($query);
 
             $data = [
-                'grade' => $grade,
+                'grade' => $selectedGrade,
                 'temp_grade' => $selectedGrade,
                 'mobile_no' => $mobileNo,
                 'ci' => $ci,
@@ -473,7 +501,7 @@ class MoAjax extends BaseController
             $email = $this->request->getPost('email');
 
             // 이메일 가입 중복 로직 확인
-            $emailDupChkQuery = "SELECT email FROM members WHERE email='" . $email . "' AND delete_yn='n'";
+            $emailDupChkQuery = "SELECT email FROM members WHERE email='" . $email . "' AND delete_yn='N'";
             $emailDupChk = $MemberModel->query($emailDupChkQuery)->getResultArray();
             if ($emailDupChk) {
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Email Duplication', 'result' => '2']);
@@ -630,8 +658,13 @@ class MoAjax extends BaseController
         } else {
             $SupportMemberModel = new SupportMemberModel();
             $MemberModel = new MemberModel();
-            $session = session();
-            $ci = $session->get('ci_support');
+
+            $mobile_no = $this->request->getPost('mobile_no');
+            $email = $this->request->getPost('email');
+
+            $encrypter = \Config\Services::encrypter();
+            $ci = base64_encode($encrypter->encrypt($mobile_no, ['key' => 'nonamedm', 'blockSize' => 32]));
+
             /**기존에 있는 유니크코드 들고오기 */
             $unique_code_chk = "SELECT unique_code FROM members WHERE ci='" . $ci . "' AND delete_yn='n' limit 1";
             $unique_code_row = $MemberModel->query($unique_code_chk)->getRow();
@@ -641,8 +674,6 @@ class MoAjax extends BaseController
             $nickname_chk = "SELECT nickname FROM members WHERE ci='" . $ci . "' AND delete_yn='n' limit 1";
             $nickname_row = $MemberModel->query($nickname_chk)->getRow();
 
-            $mobile_no = $this->request->getPost('mobile_no');
-            $email = $this->request->getPost('email');
 
             // 이메일 가입 중복 로직 확인
             $emailDupChkQuery = "SELECT email FROM wh_support_members WHERE email='" . $email . "' AND delete_yn='n'";
@@ -701,7 +732,7 @@ class MoAjax extends BaseController
                 ->where('delete_yn', 'N')
                 ->first();
             //초대코드 있을때만 insert
-            $invitedata=[];
+            $invitedata = [];
             if (!empty($result)) {
                 $data['invite_code'] = $inviteCode;
                 $inviteCodeChk = "SELECT ci FROM members WHERE unique_code='" . $inviteCode . "' AND delete_yn='n' LIMIT 1";
@@ -713,26 +744,26 @@ class MoAjax extends BaseController
                         'recommender_ci' => $inviteCodeRow->ci,
                         'recommender_gender' => $gender,
                         'reward_type' => 'invite',
-                        'reward_title' =>'추천인 정회원 가입',
+                        'reward_title' => '추천인 정회원 가입',
                         'reward_date' => date('Y-m-d H:i:s')
                     ];
                 }
             }
-            
+
             // 이메일과 전화번호로 verify_yn = y 인 항목을 한번 조회한다
             $query = "SELECT * FROM wh_email_register WHERE mobile_no='" . $mobile_no . "' AND member_email='" . $email . "' AND verify_yn='y' AND delete_yn='n'";
             $chkMailPhoneYn = $SupportMemberModel->query($query)->getResultArray();
             if ($chkMailPhoneYn) {
-                
+
                 // 데이터 저장
                 $inserted = $SupportMemberModel->insert($data);
-                if($inviteCode){
+                if ($inviteCode) {
                     $SupportRewardModel = new SupportRewardModel();
                     $SupportRewardModel->insert($invitedata);
                 }
                 // 회원가입 완료 되었을 떄
                 if ($inserted) {
-                    
+
                     if ($inserted) {
                         return $this->response->setJSON(['status' => 'success', 'message' => 'Join matchfy successfully', 'data' => $data]);
                     } else {
@@ -925,7 +956,6 @@ class MoAjax extends BaseController
             } else {
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Failed to referral matchfy', 'result' => '4']);
             }
-           
         }
     }
     protected function generateUniqueCode($MemberModel)
@@ -1266,7 +1296,7 @@ class MoAjax extends BaseController
 
             $data = [
                 //'grade' => $grade,
-                'grade' => $temp_grade,
+                'grade' => $temp_grade, // 임시 -> 실제 등급으로 업그레이드
                 'married' => $married,
                 'smoker' => $smoker,
                 'drinking' => $drinking,
@@ -2023,13 +2053,27 @@ class MoAjax extends BaseController
         $feed_idx = $this->request->getPost('feed_idx');
         $session = session();
         $member_ci = $session->get('ci');
-        $condition = [
-            'idx' => $feed_idx,
-            'member_ci' => $member_ci,
-        ];
-        $update = [
-            'delete_yn' => 'y'
-        ];
+
+        // 관리자여부 확인
+        $query = 'SELECT email FROM members WHERE ci="' . $member_ci . '"';
+        $adminYn = $MemberFeedModel->query($query)->getResultArray();
+
+        if ($adminYn[0]['email'] === 'admin') {
+            $condition = [
+                'idx' => $feed_idx,
+            ];
+            $update = [
+                'delete_yn' => 'y'
+            ];
+        } else {
+            $condition = [
+                'idx' => $feed_idx,
+                'member_ci' => $member_ci,
+            ];
+            $update = [
+                'delete_yn' => 'y'
+            ];
+        }
         $result = $MemberFeedModel->update($condition, $update);
         if ($result) {
             $query = "UPDATE wh_member_feed_files SET delete_yn='y' WHERE feed_idx='" . $feed_idx . "'";
@@ -2350,6 +2394,7 @@ class MoAjax extends BaseController
             $recruitment_start_date = $this->request->getPost('recruitment_start_date');
             $recruitment_end_date = $this->request->getPost('recruitment_end_date');
             $meeting_start_date = $this->request->getPost('meeting_start_date');
+            $meeting_start_time = $this->request->getPost('meeting_start_time');
             $meeting_end_date = $this->request->getPost('meeting_start_date'); // 모임일자 시작/끝 동일하게 변경
             $number_of_people = $this->request->getPost('number_of_people');
             $group_min_age = $this->request->getPost('group_min_age');
@@ -2372,8 +2417,8 @@ class MoAjax extends BaseController
                 'category' => $category,
                 'recruitment_start_date' => $recruitment_start_date,
                 'recruitment_end_date' => $recruitment_end_date,
-                'meeting_start_date' => $meeting_start_date,
-                'meeting_end_date' => $meeting_end_date,
+                'meeting_start_date' => $meeting_start_date . " " . $meeting_start_time . ":00:00",
+                'meeting_end_date' => $meeting_end_date . " " . $meeting_start_time . ":00:00",
                 'number_of_people' => $number_of_people,
                 'group_min_age' => $group_min_age,
                 'group_max_age' => $group_max_age,
@@ -2402,38 +2447,38 @@ class MoAjax extends BaseController
 
 
             //리워드내역 확인
-            // $SupportRewardModel = new SupportRewardModel();
-            // $rewardChk = "SELECT ci 
-            //             FROM wh_support_members
-            //             WHERE ci = '$member_ci'";
-            // $rewardChkRow = $SupportRewardModel->query($rewardChk)->getRow();
-            // if($rewardChkRow){
-            //     $group1 = 0;
-            //     $group2 = 0;
-    
-            //     if ($number_of_people % 2 == 0) {
-            //         $group1 = $number_of_people / 2;
-            //         $group2 = $number_of_people / 2;
-            //     } else {
-            //         $group1 = ceil($number_of_people / 2);
-            //         $group2 = floor($number_of_people / 2);
-            //     }
-    
-            //     $dividePeople = $group1 . ':' . $group2;
-    
-            //     $meetRewardData = [
-            //         'ci' => $member_ci,
-            //         'reward_type' => 'meeting',
-            //         'reward_title' =>$dividePeople.'오프라인 미팅 주최',
-            //         'reward_meeting_idx'=> $insertedMeetingIdx,
-            //         'reward_meeting_members'=>$number_of_people,
-            //         'reward_meeting_percent' => '0',
-            //         'reward_date' => date('Y-m-d H:i:s')
-            //     ];
-                
-            //     $SupportRewardModel = new SupportRewardModel();
-            //     $SupportRewardModel->insert($meetRewardData);
-            // }
+            $SupportRewardModel = new SupportRewardModel();
+            $rewardChk = "SELECT ci 
+                        FROM wh_support_members
+                        WHERE ci = '" . $member_ci . "'";
+            $rewardChkRow = $SupportRewardModel->query($rewardChk)->getRow();
+            if ($rewardChkRow) {
+                $group1 = 0;
+                $group2 = 0;
+
+                if ($number_of_people % 2 == 0) {
+                    $group1 = $number_of_people / 2;
+                    $group2 = $number_of_people / 2;
+                } else {
+                    $group1 = ceil($number_of_people / 2);
+                    $group2 = floor($number_of_people / 2);
+                }
+
+                $dividePeople = $group1 . ':' . $group2;
+
+                $meetRewardData = [
+                    'ci' => $member_ci,
+                    'reward_type' => 'meeting',
+                    'reward_title' => $dividePeople . '오프라인 미팅 주최',
+                    'reward_meeting_idx' => $insertedMeetingIdx,
+                    'reward_meeting_members' => $number_of_people,
+                    'reward_meeting_percent' => '0',
+                    'reward_date' => date('Y-m-d H:i:s')
+                ];
+
+                $SupportRewardModel = new SupportRewardModel();
+                $SupportRewardModel->insert($meetRewardData);
+            }
 
             $ChatRoomModel = new ChatRoomModel();
             $ChatRoomMemberModel = new ChatRoomMemberModel();
@@ -2472,11 +2517,12 @@ class MoAjax extends BaseController
         }
     }
 
-    function dividePeople($number_of_people) {
+    function dividePeople($number_of_people)
+    {
         // 두 그룹의 사람 수를 초기화
         $group1 = 0;
         $group2 = 0;
-    
+
         if ($number_of_people % 2 == 0) {
             // 짝수일 경우
             $group1 = $number_of_people / 2;
@@ -2486,7 +2532,7 @@ class MoAjax extends BaseController
             $group1 = ceil($number_of_people / 2);
             $group2 = floor($number_of_people / 2);
         }
-    
+
         return $group1 . ':' . $group2;
     }
 
@@ -2521,7 +2567,7 @@ class MoAjax extends BaseController
                 $MeetingModel->orderBy('membership_fee', 'ASC');
                 break;
             default:
-                $MeetingModel->orderBy('create_at', 'DESC');
+                $MeetingModel->orderBy('meeting_start_date', 'DESC');
         }
 
         $session = session();
@@ -2540,7 +2586,7 @@ class MoAjax extends BaseController
 
         $meetings = $MeetingModel
             ->join('wh_meetings_files', 'wh_meetings_files.meeting_idx = wh_meetings.idx', 'left')
-            ->where('wh_meetings.meeting_start_date >=', $currentTime)
+            // ->where('wh_meetings.meeting_start_date >=', $currentTime)
             ->where('wh_meetings.delete_yn', 'N')
             ->where('wh_meetings.group_min_age <=', $age)
             ->where('wh_meetings.group_max_age >=', $age)
@@ -2560,6 +2606,11 @@ class MoAjax extends BaseController
             $meetingDateTime = date("Y.m.d ", $meetingDateTimestamp) . ' (' . $dayName . ') ' . date(" H:i", $meetingDateTimestamp);
             $meeting['meetingDateTime'] = $meetingDateTime;
 
+            if ($currentTime > date("Y-m-d H:i:s", $meetingDateTimestamp)) {
+                $meeting['overtime'] = true;
+            } else {
+                $meeting['overtime'] = false;
+            }
             $memCount = $MeetingMembersModel
                 ->where('meeting_idx', $meeting['idx'])
                 ->where('delete_yn', 'N')
@@ -2883,14 +2934,14 @@ class MoAjax extends BaseController
 
         $query = "SELECT * FROM members";
         $query .= " WHERE 1=1";
-        if ($myFactor['except1'] && $myFactor['except1'] !== "" && $myFactor['except1'] !== null) //배제항목 있을 시 조건에서 배제하기
-        {
-            $query .= " AND (" . $myFactor['except1'] . " != '" . $myFactor['except1_detail'] . "'  OR " . $myFactor['except1'] . " IS NULL)";
-        }
-        if ($myFactor['except2'] && $myFactor['except2'] !== "" && $myFactor['except2'] !== null) //배제항목 있을 시 조건에서 배제하기
-        {
-            $query .= " AND (" . $myFactor['except2'] . " != '" . $myFactor['except2_detail'] . "'  OR " . $myFactor['except2'] . " IS NULL)";
-        }
+        // if ($myFactor['except1'] && $myFactor['except1'] !== "" && $myFactor['except1'] !== null) //배제항목 있을 시 조건에서 배제하기
+        // {
+        //     $query .= " AND (" . $myFactor['except1'] . " != '" . $myFactor['except1_detail'] . "'  OR " . $myFactor['except1'] . " IS NULL)";
+        // }
+        // if ($myFactor['except2'] && $myFactor['except2'] !== "" && $myFactor['except2'] !== null) //배제항목 있을 시 조건에서 배제하기
+        // {
+        //     $query .= " AND (" . $myFactor['except2'] . " != '" . $myFactor['except2_detail'] . "'  OR " . $myFactor['except2'] . " IS NULL)";
+        // }
         if (!empty($myPartner['partner_gender']) || $myPartner['partner_gender'] != '')  // 성별 거르기
         {
             $query .= " AND (gender = '" . $myPartner['partner_gender'] . "')";
@@ -2908,7 +2959,362 @@ class MoAjax extends BaseController
                 if ($mydata['nickname'] !== $item['nickname']) { // 본인이 아닌 경우만 계산
                     $MatchRateModel = new MatchRateModel();
 
-                    $your_rate = $MatchRateModel->where(['member_ci' => $item['ci'], 'your_ci' => $mydata['ci']])->first();
+                    $your_rate = $MatchRateModel->where(['member_ci' => $item['ci'], 'your_ci' => $mydata['ci'], 'delete_yn' => 'n'])->first();
+
+                    // group1 -- MBTI, 얼굴형, 스타일, 음주횟수
+                    // MBTI
+                    if ($item['mbti'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['mbti'] === $item['mbti'])
+                        // 원하는 유형이 같을 때
+                        {
+                            $calcValue = $myFactor['group1'] * 1; // 점수
+                        } else if ($myPartner['mbti'] === '16') // 무관일 때
+                        {
+                            $calcValue = $myFactor['group1'] * 1; // 모두에게 점수
+                        } else {
+                            $calcValue = 0;
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 얼굴형
+                    // if (!$item['mbti'] !== null) // 회원가입시 얼굴형 아직 없음
+                    // {
+                    //     $calcValue = 0;
+                    //     if ($myPartner['mbti'] === $item['mbti'])
+                    //     // 원하는 유형이 같을 때
+                    //     {
+                    //         $calcValue = $myFactor['group2'] * 1; // 점수
+                    //     } else
+                    //     {
+                    //         $calcValue = 0;
+                    //     }
+                    //     $calc += $calcValue;
+                    // }
+
+                    // 스타일
+                    if ($item['stylish'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['stylish'] === $item['stylish'])
+                        // 원하는 유형이 같을 때
+                        {
+                            $calcValue = $myFactor['group1'] * 1; // 점수
+                        } else {
+                            $calcValue = 0;
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 음주횟수
+                    if ($item['drinking'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['drinking'] === '9') { // 음주횟수 - 무관
+                            $calcValue = $myFactor['group1'] * 1; // 모두에게 점수
+                        } else {
+                            if ($myPartner['drinking'] === $item['drinking']) {
+                                $calcValue = $myFactor['group1'] * 1; // 그외 일치할 경우 점수
+                            } else {
+                                $calcValue = 0;
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // group2 -- 나이, 체형, 지역, 결혼경험, 흡연유무, 종교
+                    // 나이
+                    if ($item['birthday'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['fromyear'] !== null && $myPartner['toyear']) {
+                            $birthday = $item['birthday'];
+                            $birthYear = substr($birthday, 0, 4);
+                            if ($birthYear >= $myPartner['fromyear'] && $birthYear <= $myPartner['toyear']) {
+                                // 나이조건 적합
+                                $calcValue = $myFactor['group2'] * 1;
+                            } else {
+                                // 나이 부적합
+                                $calcValue = 0;
+                            }
+                        } else {
+                            $calcValue = 0;
+                        }
+
+                        $calc += $calcValue;
+                    }
+                    // 체형
+                    if ($item['bodyshape'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['bodyshape'] === '5')
+                        //무관일 때
+                        {
+                            $calcValue = $myFactor['group2'] * 1; // 점수
+                        } else if ($myPartner['bodyshape'] === $item['bodyshape'])
+                        // 원하는 체형이 같을 때
+                        {
+                            $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
+                        } else if ((($myPartner['bodyshape'] - 1) === $item['bodyshape'] || ($myPartner['bodyshape'] + 1) === $item['bodyshape']))
+                        // 바로옆 체형일 때
+                        {
+                            $calcValue = $myFactor['group2'] * 0.5; // 0.5배점
+                        } else {
+                            $calcValue = 0;
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 지역
+                    if ($item['city'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['region'] === $item['city'])
+                        // 지역이 같을 때
+                        {
+                            $calcValue = $myFactor['group2'] * 1; // 점수
+                        }
+
+                        $calc += $calcValue;
+                    }
+                    // 결혼유무
+                    if ($item['married'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['married'] === '9') { // 결혼유무 - 무관
+                            $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
+                        } else {
+                            if ($item['married'] === '0') {
+                                $calcValue = $myFactor['group2'] * 1; // 미혼에게만 점수
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 흡연유무
+                    if ($item['smoker'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['smoker'] === '9') { // 흡연유무 - 무관
+                            $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
+                        } else {
+                            if ($item['smoker'] === '1') {
+                                $calcValue = $myFactor['group2'] * 1; // 금연자만 점수
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 종교
+                    if ($item['religion'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['religion'] === '9') { // 종교유무 - 무관
+                            $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
+                        } else {
+                            if ($myPartner['religion'] === $item['religion']) {
+                                $calcValue = $myFactor['group2'] * 1; // 원하는 종교만 점수
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // group3 -- 성별, 키, 학력, 직업, 자산구간, 연소득
+                    // 성별은 애초에 거르기 때문에 배점 X
+                    // 키
+                    if ($item['height'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['height'] !== null) {
+                            if ($item['height'] >= $myPartner['height']) {
+                                // 원하는 키보다 클 때
+                                $calcValue = $myFactor['group3'] * 1;
+                            } else {
+                                // 키 부적합
+                                $calcValue = 0;
+                            }
+                        } else {
+                            $calcValue = 0;
+                        }
+
+                        $calc += $calcValue;
+                    }
+                    // 학력
+                    if ($item['education'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['education'] === '5') { // 학력 - 무관
+                            $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
+                        } else {
+                            if ($myPartner['education'] <= $item['education']) {
+                                $calcValue = $myFactor['group3'] * 1; // 원하는 학력 이상이면 점수
+                            } else {
+                                $calcValue = 0;
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 직업(군)
+                    if ($item['job'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['job'] === '3') { // 직업 - 무관
+                            $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
+                        } else {
+                            if ($myPartner['job'] <= $item['job']) {
+                                $calcValue = $myFactor['group3'] * 1; // 원하는 직업 이상이면 점수
+                            } else {
+                                $calcValue = 0;
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 자산
+                    if ($item['asset_range'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['asset_range'] === '6') { // 자산 - 무관
+                            $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
+                        } else {
+                            if ($myPartner['asset_range'] <= $item['asset_range']) {
+                                $calcValue = $myFactor['group3'] * 1; // 원하는 자산 이상이면 점수
+                            } else {
+                                $calcValue = 0;
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+                    // 소득
+                    if ($item['income_range'] !== null) {
+                        $calcValue = 0;
+                        if ($myPartner['income_range'] === '6') { // 소득 - 무관
+                            $calcValue = $myFactor['group3'] * 1; // 모두에게 점수
+                        } else {
+                            if ($myPartner['income_range'] <= $item['income_range']) {
+                                $calcValue = $myFactor['group3'] * 1; // 원하는 소득 이상이면 점수
+                            } else {
+                                $calcValue = 0;
+                            }
+                        }
+                        $calc += $calcValue;
+                    }
+
+
+                    // 가중치 항목 계산
+                    if ($myFactor['first_factor'] !== null) {
+                        if ($item[$myFactor['first_factor']] === $myPartner[$myFactor['first_factor']]) {
+                            $calcValue = $myFactor['first_factor_point']; // 가중치1 항목 일치 시 추가점수
+                        }
+                        $calc += $calcValue;
+                        $calcMax += $calcValue;
+                    }
+                    if ($myFactor['second_factor'] !== null) {
+                        if ($item[$myFactor['second_factor']] === $myPartner[$myFactor['second_factor']]) {
+                            $calcValue = $myFactor['second_factor_point']; // 가중치2 항목 일치 시 추가점수
+                        }
+                        $calc += $calcValue;
+                        $calcMax += $calcValue;
+                    }
+                    if ($myFactor['third_factor'] !== null) {
+                        if ($item[$myFactor['third_factor']] === $myPartner[$myFactor['third_factor']]) {
+                            $calcValue = $myFactor['third_factor_point']; // 가중치3 항목 일치 시 추가점수
+                        }
+                        $calc += $calcValue;
+                        $calcMax += $calcValue;
+                    }
+                    if ($myFactor['fourth_factor'] !== null) {
+                        if ($item[$myFactor['fourth_factor']] === $myPartner[$myFactor['fourth_factor']]) {
+                            $calcValue = $myFactor['fourth_factor_point']; // 가중치4 항목 일치 시 추가점수
+                        }
+                        $calc += $calcValue;
+                        $calcMax += $calcValue;
+                    }
+
+                    // group1 항목 총 4개 -- 얼굴형은 현재 제외이므로 3개만 계산
+                    // group2 항목 총 6개
+                    // group3 항목 총 6개 -- 성별은 애초에 거르기 때문에 5개만 계산
+                    $calcMax += $myFactor['group1'] * 3 + $myFactor['group2'] * 6 + $myFactor['group3'] * 5;
+                    $item['calc'] = $calc;
+                    $item['calc_max'] = $calcMax;
+
+
+                    // 계산한 가중치 항목 DB insert -> 회원수 너무 많아지면 python 배치 저장 필요
+
+                    $selectParam = [
+                        'member_ci' => $mydata['ci'],
+                        // 'my_nickname' => $mydata['nickname'], 닉네임 수정할 수 있어서 조건 삭제
+                        'your_ci' => $item['ci'],
+                    ];
+                    $selectQuery = "SELECT * FROM wh_match_rate WHERE member_ci='" . $mydata['ci'] . "' AND your_ci='" . $item['ci'] . "' AND delete_yn='n'";
+
+                    $selected = $MatchRateModel->query($selectQuery)->getResultArray();
+                    $ideal_rate = number_format(($calc === 0 ? 1 : $calc) / ($calcMax === 0 ? 100 : $calcMax) * 100, 2);
+                    $match_rate = $your_rate ? number_format(($your_rate['ideal_rate'] + $ideal_rate) / 2, 2) : number_format(($ideal_rate) / 2, 2);
+                    if ($selected) {
+                        $query = "UPDATE wh_match_rate";
+                        $query .= " SET match_score = '" . $calc . "'";
+                        $query .= " , my_nickname = '" . $mydata['nickname'] . "'";
+                        $query .= " , match_score_max = '" . $calcMax . "'";
+                        $query .= " , match_rate = '" . $match_rate . "'";
+                        $query .= " , ideal_rate = '" . $ideal_rate . "'";
+                        $query .= " , updated_at = now()";
+                        $query .= " WHERE member_ci = '" . $mydata['ci'] . "'";
+                        $query .= " AND your_ci = '" . $item['ci'] . "'";
+
+                        $result = $MatchRateModel
+                            ->query($query);
+                    } else {
+                        $insertParam = [
+                            'member_ci' => $mydata['ci'],
+                            'my_nickname' => $mydata['nickname'],
+                            'your_ci' => $item['ci'],
+                            'your_nickname' => $item['nickname'],
+                            'match_score' => $item['calc'],
+                            'match_score_max' => $item['calc_max'],
+                            'match_rate' => $match_rate,
+                            'ideal_rate' => $ideal_rate,
+                        ];
+                        $result = $MatchRateModel->insert($insertParam);
+                    }
+                }
+            }
+        } else {
+        }
+
+
+        if ($result) {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => $datas]);
+        } else {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'failed']);
+        }
+    }
+    public function calcMatchRateEdit()
+    {
+        // update 시 배제조건이 발생하므로, 기존로직을 삭제(delete_yn=y) 한다
+        $MemberModel = new MemberModel();
+        $MatchPartnerModel = new MatchPartnerModel();
+        $MatchFactorModel = new MatchFactorModel();
+        $MatchRateModel = new MatchRateModel();
+        $session = session();
+        $ci = $session->get('ci');
+
+        $myPartner = $MatchPartnerModel->where(['member_ci' => $ci])->first();
+        $myFactor = $MatchFactorModel->where(['member_ci' => $ci])->first();
+
+        $deleteQuery = "UPDATE wh_match_rate SET delete_yn='y' WHERE member_ci='" . $ci . "' AND delete_yn='n'";
+        // 한번 delete 해준다
+        $MatchRateModel->query($deleteQuery);
+
+
+        $query = "SELECT * FROM members";
+        $query .= " WHERE 1=1";
+        // if ($myFactor['except1'] && $myFactor['except1'] !== "" && $myFactor['except1'] !== null) //배제항목 있을 시 조건에서 배제하기
+        // {
+        //     $query .= " AND (" . $myFactor['except1'] . " != '" . $myFactor['except1_detail'] . "'  OR " . $myFactor['except1'] . " IS NULL)";
+        // }
+        // if ($myFactor['except2'] && $myFactor['except2'] !== "" && $myFactor['except2'] !== null) //배제항목 있을 시 조건에서 배제하기
+        // {
+        //     $query .= " AND (" . $myFactor['except2'] . " != '" . $myFactor['except2_detail'] . "'  OR " . $myFactor['except2'] . " IS NULL)";
+        // }
+        if (!empty($myPartner['partner_gender']) || $myPartner['partner_gender'] != '')  // 성별 거르기
+        {
+            $query .= " AND (gender = '" . $myPartner['partner_gender'] . "')";
+        }
+        if ($myPartner && $myFactor) { // 파트너정보 있을때만 계산
+            $datas = $MemberModel
+                ->query($query)->getResultArray();
+            // 세션(또는 파일로 로컬)에 저장한다. 이후 로그인 시 해당 ajax 작동시킨다.
+            $mydata = $MemberModel->where(['ci' => $ci])->first();
+            foreach ($datas as &$item) {
+                // echo print_r($item[0]);
+                // 기본배점 항목 계산
+                $calc = 0;
+                $calcMax = 0;
+                if ($mydata['nickname'] !== $item['nickname']) { // 본인이 아닌 경우만 계산                    
+
+                    $your_rate = $MatchRateModel->where(['member_ci' => $item['ci'], 'your_ci' => $mydata['ci'], 'delete_yn' => 'n'])->first();
 
                     // group1 -- MBTI, 얼굴형, 스타일, 음주횟수
                     // MBTI
@@ -3036,7 +3442,7 @@ class MoAjax extends BaseController
                         if ($myPartner['smoker'] === '0') { // 흡연유무 - 무관
                             $calcValue = $myFactor['group2'] * 1; // 모두에게 점수
                         } else {
-                            if ($item['smoker'] === '0') {
+                            if ($item['smoker'] === '1') {
                                 $calcValue = $myFactor['group2'] * 1; // 금연자만 점수
                             }
                         }
@@ -3176,7 +3582,9 @@ class MoAjax extends BaseController
                         // 'my_nickname' => $mydata['nickname'], 닉네임 수정할 수 있어서 조건 삭제
                         'your_ci' => $item['ci'],
                     ];
-                    $selected = $MatchRateModel->where($selectParam)->first();
+                    $selectQuery = "SELECT * FROM wh_match_rate WHERE member_ci='" . $mydata['ci'] . "' AND your_ci='" . $item['ci'] . "' AND delete_yn='n'";
+
+                    $selected = $MatchRateModel->query($selectQuery)->getResultArray();
                     $ideal_rate = number_format(($calc === 0 ? 1 : $calc) / ($calcMax === 0 ? 100 : $calcMax) * 100, 2);
                     $match_rate = $your_rate ? number_format(($your_rate['ideal_rate'] + $ideal_rate) / 2, 2) : number_format(($ideal_rate) / 2, 2);
                     if ($selected) {
@@ -3186,6 +3594,7 @@ class MoAjax extends BaseController
                         $query .= " , match_score_max = '" . $calcMax . "'";
                         $query .= " , match_rate = '" . $match_rate . "'";
                         $query .= " , ideal_rate = '" . $ideal_rate . "'";
+                        $query .= " , updated_at = now()";
                         $query .= " WHERE member_ci = '" . $mydata['ci'] . "'";
                         $query .= " AND your_ci = '" . $item['ci'] . "'";
 
@@ -3464,6 +3873,117 @@ class MoAjax extends BaseController
             }
         }
     }
+    public function createChatFork()
+    {
+        // 1:1 채팅 생성하기
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $member_ci = $session->get('ci');
+
+        $nickname = $this->request->getPost('nickname');
+        $query = "SELECT * FROM members WHERE nickname = '" . $nickname . "'";
+        $sendto = $MemberModel
+            ->query($query)->getResultArray();
+
+        // 보내는사람, 받는사람의 member_ci 를 알파벳순으로 정렬 후
+        // 두 값을 조합해서 room_ci를 생성함
+        $sorted_values = [$member_ci, $sendto[0]['ci']];
+        sort($sorted_values);
+        $combined = implode('', $sorted_values);
+        $room_ci = hash('sha256', $combined);
+
+        $query = "SELECT * FROM wh_chat_room WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
+        $chatroom = $ChatRoomModel
+            ->query($query)->getResultArray();
+
+        if ($chatroom) {
+            // 기존에 채팅이 존재할 경우
+            $query = "SELECT * FROM wh_chat_room_member WHERE delete_yn = 'n' AND room_ci='" . $room_ci . "' AND member_ci='" . $member_ci . "'";
+            $checkYn = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            if ($checkYn) {
+                // 내가 이 채팅에 참여중인 상태이면 바로 이동한다
+
+                // AI 메세지 날려주고
+                $aiMsgSend1 = '서로 마음이 통하셨네요. 두 분이 서로를 포크 했어요. 여기서 더 대화를 나눠보세요.';
+
+                $query2 = "INSERT INTO wh_chat_room_msg
+                            (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
+                            VALUES('" . $room_ci . "','AImanager','1','0','" . $aiMsgSend1 . "','9','9');";
+                $sendMsg = $ChatRoomMemberModel->query($query2);
+
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["room_ci" => $room_ci]]);
+            } else {
+                // 내가 이 채팅에서 나간 상태이면 참가 상태를 참여로 바꿔준다
+                $query = "UPDATE wh_chat_room_member
+                SET delete_yn='n', updated_at=CURRENT_TIMESTAMP
+                WHERE room_ci='" . $room_ci . "' AND member_ci='" . $member_ci . "'";
+                $updateChatRoom1 = $ChatRoomMemberModel
+                    ->query($query);
+                // $query = "UPDATE wh_chat_room_member
+                // SET delete_yn='n', entered_at=CURRENT_TIMESTAMP, updated_at=CURRENT_TIMESTAMP
+                // WHERE room_ci='" . $room_ci . "' AND member_ci='" . $sendto[0]['ci'] . "'";
+                // $updateChatRoom2 = $ChatRoomMemberModel
+                // ->query($query);
+                $query = "UPDATE wh_chat_room SET room_count = (CAST(room_count AS UNSIGNED) + 1)
+                           WHERE room_ci='" . $room_ci . "'";
+                $updateChatRoomCount = $ChatRoomModel
+                    ->query($query);
+                if ($updateChatRoomCount) {
+                    // AI 메세지 날려주고
+                    $aiMsgSend1 = '서로 마음이 통하셨네요. 두 분이 서로를 포크 했어요. 여기서 더 대화를 나눠보세요.';
+
+                    $query2 = "INSERT INTO wh_chat_room_msg
+                            (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
+                            VALUES('" . $room_ci . "','AImanager','1','0','" . $aiMsgSend1 . "','9','9');";
+                    $sendMsg = $ChatRoomMemberModel->query($query2);
+
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["room_ci" => $room_ci]]);
+                } else {
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
+                }
+            }
+        } else {
+            // 없는 경우 신규 채팅방 생성
+            $query = "INSERT INTO wh_chat_room (room_ci, room_type, room_count) VALUES('" . $room_ci . "','0','2');";
+            $createChat = $ChatRoomModel
+                ->query($query);
+
+            // 채팅방 멤버 업데이트
+            if ($createChat) {
+                $query = "INSERT INTO wh_chat_room_member
+                            (room_ci, member_ci, entry_num, member_type, entered_at, updated_at)
+                            VALUES('" . $room_ci . "','" . $member_ci . "','1','0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                $enterChatRoom1 = $ChatRoomMemberModel
+                    ->query($query);
+                $query = "INSERT INTO wh_chat_room_member
+                            (room_ci, member_ci, entry_num, member_type, entered_at, updated_at)
+                            VALUES('" . $room_ci . "','" . $sendto[0]['ci'] . "','2','0', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
+                $enterChatRoom2 = $ChatRoomMemberModel
+                    ->query($query);
+                if ($enterChatRoom1 && $enterChatRoom2) {
+                    // AI 메세지 날려주고
+                    $aiMsgSend1 = '서로 마음이 통하셨네요. 두 분이 서로를 포크 했어요. 여기서 더 대화를 나눠보세요.';
+
+                    $query2 = "INSERT INTO wh_chat_room_msg
+                            (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
+                            VALUES('" . $room_ci . "','AImanager','1','0','" . $aiMsgSend1 . "','9','9');";
+                    $sendMsg = $ChatRoomMemberModel->query($query2);
+
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["room_ci" => $room_ci]]);
+                } else {
+                    return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 참여 실패']);
+                }
+            } else {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'failed', 'data' => '채팅방 생성 실패']);
+            }
+        }
+    }
     public function createMultyChat()
     {
         // 다중 채팅 생성하기
@@ -3590,46 +4110,82 @@ class MoAjax extends BaseController
                 ->query($query);
 
             if ($sendMsg) {
-                // 메세지 날리고 답변 확인하기
-                $url = 'http://3.34.3.18:5000/api/chat';
-                // POST Data
-                $postData = [
-                    'data' => ['user_message' => $msg_cont, 'user_id' => $member_ci]
-                ];
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $msg_cont]]);
+            } else {
+                echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+                return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+            }
+        } else {
+            echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
+    public function sendMsgAiReturn()
+    {
+        // 1:1 채팅 생성하기
+        $ChatRoomMsgAiModel = new ChatRoomMsgAiModel();
+        $ChatRoomMemberAiModel = new ChatRoomMemberAiModel();
 
-                $ch = curl_init($url);
+        $session = session();
+        $member_ci = $session->get('ci');
 
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
-                curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                    'Content-Type: application/json',
-                ]);
+        $room_ci = $this->request->getPost('room_ci');
+        // 여기서 member_ci로 내가 방 참가자 맞는지 조회 한번 해야함
+        $query = "SELECT * FROM wh_chat_room_member_ai WHERE member_ci = '" . $member_ci . "'
+                  AND room_ci = '" . $room_ci . "'";
+        $checkYn = $ChatRoomMemberAiModel
+            ->query($query)->getResultArray();
+        if ($checkYn) {
+            // 해당 채팅방의 멤버가 맞다면 메세지 전송
+            $msg_cont = $this->request->getPost('msg_cont');
+            $msg_type = $this->request->getPost('msg_type');
 
-                // Execute cURL
-                $response = curl_exec($ch);
+            if ($msg_type == '0') {
+                $msg_cont = htmlspecialchars($msg_cont, ENT_QUOTES);
+                $msg_cont = str_replace("\n", "<br>", $msg_cont);
+            }
 
-                if (curl_errno($ch)) {
-                    $error_msg = curl_error($ch);
-                    curl_close($ch);
-                    return $this->response->setJSON(['status' => 'failed', 'message' => 'failed', 'data' => ["reulst_value" => "error"]]);
-                }
+            // 메세지 날리고 답변 확인하기
+            $url = 'http://3.34.3.18:5000/api/chat';
+            // POST Data
+            $postData = [
+                'data' => ['user_message' => $msg_cont, 'user_id' => $member_ci]
+            ];
 
+            $ch = curl_init($url);
+
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/json',
+            ]);
+
+            // Execute cURL
+            $response = curl_exec($ch);
+
+            if (curl_errno($ch)) {
+                $error_msg = curl_error($ch);
                 curl_close($ch);
+                return $this->response->setJSON(['status' => 'failed', 'message' => 'failed', 'data' => ["reulst_value" => "error"]]);
+            }
 
-                // Decode the response
-                $responseData = json_decode($response, true);
-                if ($responseData) {
-                    $query = "INSERT INTO wh_chat_room_msg_ai
+            curl_close($ch);
+
+            // Decode the response
+            $responseData = json_decode($response, true);
+            if ($responseData) {
+                $msg_cont = htmlspecialchars($responseData['result'], ENT_QUOTES);
+                $msg_cont = str_replace("\n", "<br>", $responseData['result']);
+                $query = "INSERT INTO wh_chat_room_msg_ai
                         (room_ci, member_ci, entry_num, msg_type, msg_cont, chk_num, chk_entry_num)
-                        VALUES('" . $room_ci . "','AImanager','2','0','" . $responseData['result'] . "','9','9');";
-                    $sendMsg = $ChatRoomMsgAiModel
-                        ->query($query);
-                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $responseData]]);
-                } else {
-                    echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
-                    return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
-                }
+                        VALUES(?,'AImanager','2','0',?,'9','9');";
+                $sendMsg = $ChatRoomMsgAiModel
+                    ->query($query, [$room_ci, $msg_cont]);
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $responseData]]);
+            } else {
+                echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+                return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
             }
         } else {
             echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
@@ -3646,22 +4202,23 @@ class MoAjax extends BaseController
         $session = session();
         $ci = $session->get('ci');
         $room_ci = $this->request->getPost('room_ci');
+        $offset = $this->request->getPost('offset');
         // 내가 이 방의 참가자가 맞는지 다시 확인
         $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "'";
         $memberYn = $ChatRoomMemberModel
             ->query($query)->getResultArray();
         if ($memberYn) {
             // 내가 방 참가자가 맞으면
-            $query = "SELECT crm.chk_entry_num, crm.chk_num, crm.created_at, crm.entry_num, crm.msg_cont, crm.msg_type, crm.updated_at,
+            $query = "SELECT * FROM (SELECT crm.chk_entry_num, crm.chk_num, crm.created_at, crm.entry_num, crm.msg_cont, crm.msg_type, crm.updated_at,
                             (SELECT nickname FROM members WHERE ci = crm.member_ci) as nickname,
                             (CASE
                                 WHEN member_ci = '" . $ci . "' THEN 'me'
                                 ELSE 'you' 
                                 END) AS chk,
-                                (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname ORDER BY created_at DESC LIMIT 1) as match_rate,
+                                (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname AND delete_yn='n' ORDER BY created_at DESC LIMIT 1) as match_rate,
                             (SELECT file_path FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo' AND delete_yn='n') AS file_path,
                             (SELECT file_name FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo' AND delete_yn='n') AS file_name
-                            FROM wh_chat_room_msg  crm WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at ASC";
+                            FROM wh_chat_room_msg  crm WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at DESC LIMIT " . $offset . ") AS SUB ORDER BY created_at ASC";
             $allMsg = $ChatRoomMsgModel
                 ->query($query)->getResultArray();
             if ($allMsg) {
@@ -3672,9 +4229,12 @@ class MoAjax extends BaseController
                     $today_date === date('Y-m-d', strtotime($row['created_at'])) ?  $row['created_at'] = date('H:i', strtotime($row['created_at'])) : $row['created_at'] = date('m-d', strtotime($row['created_at']));
                 }
             }
-            $query = "SELECT * FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND member_ci != '" . $ci . "' AND delete_yn='n'";
+            $query = "SELECT member_type FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND member_ci='" . $ci . "';";
+            $memberType = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
 
             $data['allMsg'] = $allMsg;
+            $data['member_type'] = $memberType;
 
             // echo print_r($allMsg);
             return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $data]]);
@@ -3708,7 +4268,7 @@ class MoAjax extends BaseController
                                 WHEN member_ci = '" . $ci . "' THEN 'me'
                                 ELSE 'you' 
                             END) AS chk,
-                            (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname ORDER BY created_at DESC LIMIT 1) as match_rate,
+                            (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname AND delete_yn='n' ORDER BY created_at DESC LIMIT 1) as match_rate,
                             'static/images/' AS file_path,
                             'ai_send.png' AS file_name
                         FROM wh_chat_room_msg_ai  crm WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at ASC";
@@ -3740,6 +4300,7 @@ class MoAjax extends BaseController
         $ChatRoomMsgModel = new ChatRoomMsgModel();
         $ChatRoomMemberModel = new ChatRoomMemberModel();
         $MemberModel = new MemberModel();
+        $MeetingModel = new MeetingModel();
 
         $session = session();
         $ci = $session->get('ci');
@@ -3757,6 +4318,15 @@ class MoAjax extends BaseController
                         WHERE room_ci='" . $room_ci . "'";
             $updateChatRoomCount = $ChatRoomModel
                 ->query($query);
+            $query = "SELECT * FROM wh_meetings WHERE chat_room_ci='" . $room_ci . "'";
+            $extMt = $MeetingModel
+                ->query($query)->getResultArray();
+            if ($extMt) {
+                // 단톡방이었으면 모임까지 나가기
+                $query = "UPDATE wh_meeting_members SET DELETE_YN='Y' WHERE meeting_idx='" . $extMt[0]['idx'] . "' AND member_ci='" . $ci . "'";
+                $extRm = $ChatRoomMemberModel
+                    ->query($query);
+            }
             if ($updateChatRoomCount) {
                 return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $extRm]]);
             } else {
@@ -3787,15 +4357,156 @@ class MoAjax extends BaseController
             ->query($query)->getResultArray();
         if ($memberYn) {
             // 내가 방 참가자가 맞으면
-            $query = "UPDATE wh_chat_room_member SET DELETE_YN='y' WHERE room_ci='" . $room_ci . "' AND entry_num='" . $entry_num . "'";
+            $query = "UPDATE wh_chat_room_member SET delete_yn='y' WHERE room_ci='" . $room_ci . "' AND entry_num='" . $entry_num . "'";
             $banUsr = $ChatRoomMemberModel
                 ->query($query);
             $query = "UPDATE wh_chat_room SET room_count = (CAST(room_count AS UNSIGNED) - 1)
                 WHERE room_ci='" . $room_ci . "'";
             $updateChatRoomCount = $ChatRoomModel
                 ->query($query);
+
+            // 모임도 미참여상태로 변경시킴
+            $query = "SELECT member_ci FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND entry_num='" . $entry_num . "'";
+            $memberCi = $ChatRoomMemberModel->query($query)->getResultArray();
+
+            $query = "SELECT idx FROM wh_meetings WHERE chat_room_ci='" . $room_ci . "'";
+            $meetingIdx = $ChatRoomModel->query($query)->getResultArray();
+
+            $query = "UPDATE wh_meeting_members SET delete_yn='Y' WHERE member_ci = '" . $memberCi[0]['member_ci'] . "' AND meeting_idx='" . $meetingIdx[0]['idx'] . "'";
+            $ChatRoomMemberModel = $ChatRoomModel
+                ->query($query);
+
+
             if ($updateChatRoomCount) {
                 return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $banUsr]]);
+            } else {
+                return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+            }
+
+            // echo print_r($allMsg);
+        } else {
+            echo "<script>fn_alert('잘못된 접근입니다'); moveToUrl('/');</script>";
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
+    public function changeOnoff()
+    {
+        $MemberModel = new MemberModel();
+        $num = $this->request->getPost('num');
+        // 현재상태 확인
+        $query = "SELECT wm.idx, wm.title as title, wmf.onoff as onoff, wm.chat_room_ci as chat_room_ci
+        FROM wh_meetings wm 
+        LEFT OUTER JOIN wh_chat_room_member_forked_onoff wmf ON wm.chat_room_ci = wmf.room_ci 
+        WHERE wm.idx = '" . $num . "' 
+        ORDER BY wm.idx DESC;";
+        $onoffYn = $MemberModel
+            ->query($query)->getResultArray();
+
+        // onoff 값이 있으면
+        if ($onoffYn[0]['onoff'] === 'on') {
+            $query = "UPDATE wh_chat_room_member_forked_onoff SET onoff='off' WHERE room_ci='" . $onoffYn[0]['chat_room_ci'] . "'";
+        } else if ($onoffYn[0]['onoff'] === 'off') {
+            $query = "UPDATE wh_chat_room_member_forked_onoff SET onoff='on' WHERE room_ci='" . $onoffYn[0]['chat_room_ci'] . "'";
+        } else {
+            $query = "INSERT INTO wh_chat_room_member_forked_onoff
+                    (room_ci, onoff)
+                    VALUES('" . $onoffYn[0]['chat_room_ci'] . "', 'on');";
+        }
+        $onoffResult = $MemberModel
+            ->query($query);
+        if ($onoffResult) {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $onoffYn[0]['chat_room_ci']]]);
+        } else {
+            return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
+        }
+    }
+
+    public function forked()
+    {
+        $ChatRoomModel = new ChatRoomModel();
+        $ChatRoomMsgModel = new ChatRoomMsgModel();
+        $ChatRoomMemberModel = new ChatRoomMemberModel();
+        $MemberModel = new MemberModel();
+
+        $session = session();
+        $ci = $session->get('ci');
+        $room_ci = $this->request->getPost('room_ci');
+        $entry_num = $this->request->getPost('num');
+        // 내가 이 방의 참가자가 맞는지 다시 확인
+        $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "'";
+        $memberYn = $ChatRoomMemberModel
+            ->query($query)->getResultArray();
+        if ($memberYn) {
+            // 내가 방 참가자가 맞으면
+            $query = "SELECT * FROM wh_chat_room_member WHERE room_ci='" . $room_ci . "' AND entry_num='" . $entry_num . "' AND delete_yn='n'";
+            $forkUsr = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            // 채팅창 정원 확인하고
+            $query = "SELECT number_of_people FROM wh_meetings WHERE chat_room_ci='" . $room_ci . "'";
+            $forkLimitCnt = $ChatRoomModel->query($query)->getResultArray();
+            if ($forkLimitCnt[0]['number_of_people'] > 6) {
+                $forkLimit = $forkLimitCnt[0]['number_of_people'] * 0.5;
+            } else {
+                $forkLimit = $forkLimitCnt[0]['number_of_people'] * 0.3;
+            }
+
+            // 현재 fork 몇번 찔렀는지부터 확인
+            $query = "SELECT COUNT(*) AS fork_cnt FROM wh_chat_room_member_forked WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "' AND delete_yn='n'";
+            $forkCnt = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            // 정해진 fork 횟수 이하이거나 찌른적이 없으면
+            if (!$forkCnt || $forkCnt[0]['fork_cnt'] <= $forkLimit) {
+                // fork 상대방 ci 가져오기
+                $query = "SELECT * FROM members WHERE ci='" . $forkUsr[0]['member_ci'] . "' AND delete_yn='N'";
+                $forkUsrMbrInfo = $MemberModel->query($query)->getResultArray();
+
+                if ($forkUsrMbrInfo) {
+                    // 상대방이 현재 탈퇴자가 아니면 forked 여부 확인
+                    $query = "SELECT * FROM wh_chat_room_member_forked WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "' AND partner_ci = '" . $forkUsrMbrInfo[0]['ci'] . "' AND delete_yn='n'";
+                    $forkedYn = $MemberModel->query($query)->getResultArray();
+
+                    if ($forkedYn) {
+                        // 찔렀던 적이 있으면 취소시킴 --> 지금은 한번 찌르면 끝
+                        // $query = "UPDATE wh_chat_room_member_forked SET delete_yn='y' WHERE room_ci='" . $room_ci . "' AND member_ci='" . $ci . "' AND partner_ci = '" . $forkUsrMbrInfo[0]['ci'] . "'";
+                        // $MemberModel->query($query);
+                        return $this->response->setJSON(['status' => 're_forked', 'message' => 'failed']);
+                    } else {
+                        // 처음 찌른다
+                        $query = "INSERT INTO wh_chat_room_member_forked (room_ci, member_ci, partner_ci) VALUES('" . $room_ci . "', '" . $ci . "', '" . $forkUsrMbrInfo[0]['ci'] . "')";
+                        $MemberModel->query($query);
+
+                        // 상대방도 날 찔렀는지 확인
+                        $query = "SELECT * FROM wh_chat_room_member_forked WHERE room_ci='" . $room_ci . "' AND member_ci='" . $forkUsrMbrInfo[0]['ci'] . "' AND partner_ci = '" . $ci . "' AND delete_yn='n'";
+                        $forkedYnRev = $MemberModel->query($query)->getResultArray();
+
+
+                        // 서로 찔렀으면
+                        if ($forkedYnRev) {
+
+                            // 상대방 정보 쿼리
+                            $query = "SELECT mb.ci, mb.name, SUBSTR(mb.birthday, 1, 4)AS birthday, mb.city, mb.town, mb.nickname, mb.mbti, mf.file_path, mf.file_name
+                                      FROM members mb, member_files mf WHERE mb.ci = mf.member_ci AND mf.board_type='main_photo' AND mf.delete_yn='n' AND mb.ci = '" . $forkUsrMbrInfo[0]['ci'] . "'";
+                            $yourProfile = $MemberModel->query($query)->getResultArray();
+
+
+
+                            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["result_value" => '1', 'result_nickname' => $yourProfile[0]['nickname']]]);
+                        } else {
+                            return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["result_value" => '0']]);
+                        }
+                    }
+                } else {
+                    return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => '0']]);
+                }
+            } else {
+                return $this->response->setJSON(['status' => 'too_many', 'message' => 'failed']);
+            }
+
+
+            if ($forkCnt) {
+                return $this->response->setJSON(['status' => 'success', 'message' => 'success', 'data' => ["reulst_value" => $forkLimit]]);
             } else {
                 return $this->response->setJSON(['status' => 'failed', 'message' => 'failed']);
             }
@@ -4322,9 +5033,9 @@ class MoAjax extends BaseController
 
         $email = \Config\Services::email();
         $config['protocol'] = 'smtp';
-        $config['SMTPHost'] = 'smtp.naver.com';
-        $config['SMTPUser'] = 'nonamedm@naver.com';
-        $config['SMTPPass'] = '6U829H5WJDZP';
+        $config['SMTPHost'] = 'smtp.daum.net';
+        $config['SMTPUser'] = 'cuberry2024@daum.net';
+        $config['SMTPPass'] = 'egcpxhjywvqbuqaq';
         $config['SMTPPort'] = '465';
         $config['SMTPCrypto'] = 'ssl';
         $config['SMTPTimeout'] = '10';
@@ -4335,14 +5046,14 @@ class MoAjax extends BaseController
         $email->initialize($config);
         $email->clear();
 
-        $email->setFrom('nonamedm@naver.com', 'Matchfy 관리자');
+        $email->setFrom('cuberry2024@daum.net', 'Matchfy 관리자');
         $email->setTo($emailAddr);
         // $email->setCC('another@another-example.com');
         // $email->setBCC('them@their-example.com');
 
         $email->setSubject('Matchfy 인증코드 발송');
         $msgCont = '
-            <img src="https://nonamedm18.mycafe24.com/static/images/matchfy.png">
+            <img src="https://matchfy.net/static/images/matchfy.png">
             <h2 style="color: #6f6f6f;">
                 이메일 인증코드를 입력하세요 
             </h2>

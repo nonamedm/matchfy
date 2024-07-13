@@ -1,29 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0">
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/ad_board.js"></script>
     <link rel="stylesheet" href="/static/css/common_admin.css">
     <link rel="stylesheet" href="/static/css/common.css">
     <title>Matchfy 관리자페이지</title>
     <style>
-        
+
 
     </style>
-    
+
 </head>
+
 <body>
     <div class="ad_box">
         <div>
             <?php
-                include 'header.php';
+            include 'header.php';
             ?>
         </div>
         <!-- <p>쿼리문: <?php echo $query; ?></p> -->
         <div class="ad_con">
-            <h2>회원 승인 목록</h2> 
+            <h2>회원 승인 목록</h2>
 
             <table>
                 <thead>
@@ -40,9 +42,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php 
+                    <?php
                     $index = 1;
-                    foreach ($datas as $data): ?>
+                    foreach ($datas as $data) : ?>
                         <tr class="tr">
                             <td class="td"><?= $index ?></td>
                             <td class="td"><?= $data['name'] ?></td>
@@ -55,18 +57,18 @@
                                 <span class="attatch_file_div"><a class="attach_file" href="<?= '/' . $data['file_path'] . $data['file_name']; ?>" target="_blank"><?= $data['org_name']; ?></a></span>
                             </td>
                             <td class="td">
-                            <?php
+                                <?php
                                 $exchange_level = $data['extra1'];
                                 if ($exchange_level == 'n') {
-                                    echo "<button class='member_approve_btn btn00 btn type01' data-id='".$data['id']."' data-approve-level='y'>승인</button>";
+                                    echo "<button class='member_approve_btn btn00 btn type01' data-id='" . $data['id'] . "' data-approve-level='y'>승인</button>";
                                 } elseif ($exchange_level == 'y') {
                                     echo "<button class='member_approve_btn btn00 btn type02'>완료</button>";
                                 }
-                                ?>  
+                                ?>
                             </td>
                         </tr>
-                    <?php 
-                    $index++;
+                    <?php
+                        $index++;
                     endforeach; ?>
                 </tbody>
             </table>
@@ -76,4 +78,5 @@
         </div>
     </div>
 </body>
+
 </html>

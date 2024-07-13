@@ -4,7 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0,  user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -18,8 +18,10 @@
     <div class="wrap">
         <!-- HEADER: MENU + HEROE SECTION -->
 
-
-        <?php $title = "메시지";
+        <?php $title = $partnerInfo;
+        if ($room_type[0]['room_type'] === '1') {
+            $title .= " [참석자(" . $roomCount . "명)]";
+        }
         $prevUrl = "/mo/mymsg/list";
         include 'header.php'; ?>
         <?php $session = session();
@@ -28,16 +30,16 @@
         ?>
         <div class="sub_wrap">
             <div class="content_wrap">
-                <div class="tab_wrap">
+                <!-- <div class="tab_wrap">
                     <ul>
                         <li onclick="AImsg()">
                             <?= lang('Korean.AIMsg') ?>
                         </li>
-                        <li class="on">
+                        <li class="on" onclick="moveToUrl('/mo/mymsg/list')">
                             <?= lang('Korean.messageBox') ?>
                         </li>
                     </ul>
-                </div>
+                </div> -->
                 <div id="chat_wrap" class="chat_wrap scroll_body">
                     <?php foreach ($allMsg as $row) {
                         if ($row['chk'] === 'me') {
@@ -54,56 +56,109 @@
                                     </div>
                                 </div>
                             </div>
-                        <?php
+                            <?php
                         } else {
-                        ?>
-                            <div class="receive_msg">
-                                <div class="receive_profile">
-                                    <a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/<?= $row['nickname'] ?>')">
-                                        <?php if ($row['file_name']) {
-                                        ?>
-                                            <img src="/<?= $row['file_path'] ?><?= $row['file_name'] ?>" />
-                                        <?php
-                                        } else {
-                                        ?>
-                                            <img src="/static/images/profile_noimg.png" />
-                                        <?php
-                                        } ?>
-                                    </a>
-                                </div>
-                                <div class="receive_text">
-                                    <p class="receive_profile_name">
-                                        <?php
-                                        echo $row['nickname'];
-                                        if ($row['match_rate'] && $row['match_rate'] !== null && $row['match_rate'] !== "") {
-                                            if (80 <= $row['match_rate']) {
-                                                echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/blue_face_icon.png" /></span>';
-                                            } else if ($row['match_rate'] >= 65 || $row['match_rate'] < 80) {
-                                                echo  '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/green_face_icon.png" /></span>';
-                                            } else if ($row['match_rate'] >= 50 || $row['match_rate'] < 65) {
-                                                echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/yellow_face_icon.png" /></span>';
-                                            } else if ($row['match_rate'] >= 35 || $row['match_rate'] < 50) {
-                                                echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/orange_face_icon.png" /></span>';
+                            if ($row['msg_type'] !== '6') { // 승인신청 메세지는 제외
+                            ?>
+                                <div class="receive_msg">
+                                    <div class="receive_profile">
+                                        <a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/<?= $row['nickname'] ?>')">
+                                            <?php if ($row['file_name']) {
+                                            ?>
+                                                <img src="/<?= $row['file_path'] ?><?= $row['file_name'] ?>" />
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <img src="/static/images/profile_noimg.png" />
+                                            <?php
+                                            } ?>
+                                        </a>
+                                    </div>
+                                    <div class="receive_text">
+                                        <p class="receive_profile_name">
+                                            <?php
+                                            echo $row['nickname'];
+                                            if ($row['match_rate'] && $row['match_rate'] !== null && $row['match_rate'] !== "") {
+                                                if (80 <= $row['match_rate']) {
+                                                    echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/blue_face_icon.png" /></span>';
+                                                } else if ($row['match_rate'] >= 65 || $row['match_rate'] < 80) {
+                                                    echo  '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/green_face_icon.png" /></span>';
+                                                } else if ($row['match_rate'] >= 50 || $row['match_rate'] < 65) {
+                                                    echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/yellow_face_icon.png" /></span>';
+                                                } else if ($row['match_rate'] >= 35 || $row['match_rate'] < 50) {
+                                                    echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/orange_face_icon.png" /></span>';
+                                                }
+                                            } else {
+                                                echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/red_face_icon.png" /></span>';
                                             }
-                                        } else {
-                                            echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/red_face_icon.png" /></span>';
-                                        }
-                                        ?>
-                                    </p>
-                                    <div style="display: flex;">
-                                        <div class=" receive_msg_area">
-                                            <p><?= $row['msg_cont'] ?></p>
-                                        </div>
-                                        <div class="receive_time">
-                                            <p>
-                                                <?= $row['created_at'] ?>
-                                            </p>
-                                        </div>
+                                            ?>
+                                        </p>
+                                        <div style="display: flex;">
+                                            <div class=" receive_msg_area">
+                                                <p><?= $row['msg_cont'] ?></p>
+                                            </div>
+                                            <div class="receive_time">
+                                                <p>
+                                                    <?= $row['created_at'] ?>
+                                                </p>
+                                            </div>
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                <?php
+                            } else {
+                                if ($member_type[0]['member_type'] === '1') { // 승인신청 메세지는 방장에게만 표시
+                                ?>
+                                    <div class="receive_msg">
+                                        <div class="receive_profile">
+                                            <a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/<?= $row['nickname'] ?>')">
+                                                <?php if ($row['file_name']) {
+                                                ?>
+                                                    <img src="/<?= $row['file_path'] ?><?= $row['file_name'] ?>" />
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <img src="/static/images/profile_noimg.png" />
+                                                <?php
+                                                } ?>
+                                            </a>
+                                        </div>
+                                        <div class="receive_text">
+                                            <p class="receive_profile_name">
+                                                <?php
+                                                echo $row['nickname'];
+                                                if ($row['match_rate'] && $row['match_rate'] !== null && $row['match_rate'] !== "") {
+                                                    if (80 <= $row['match_rate']) {
+                                                        echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/blue_face_icon.png" /></span>';
+                                                    } else if ($row['match_rate'] >= 65 || $row['match_rate'] < 80) {
+                                                        echo  '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/green_face_icon.png" /></span>';
+                                                    } else if ($row['match_rate'] >= 50 || $row['match_rate'] < 65) {
+                                                        echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/yellow_face_icon.png" /></span>';
+                                                    } else if ($row['match_rate'] >= 35 || $row['match_rate'] < 50) {
+                                                        echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px" src="/static/images/orange_face_icon.png" /></span>';
+                                                    }
+                                                } else {
+                                                    echo '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/red_face_icon.png" /></span>';
+                                                }
+                                                ?>
+                                            </p>
+                                            <div style="display: flex;">
+                                                <div class=" receive_msg_area">
+                                                    <p><?= $row['msg_cont'] ?></p>
+                                                </div>
+                                                <div class="receive_time">
+                                                    <p>
+                                                        <?= $row['created_at'] ?>
+                                                    </p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                     <?php
+                                }
+                            }
                         }
                     } ?>
                 </div>
@@ -212,18 +267,36 @@
     <!-- SCRIPTS -->
 
     <script>
+        var offset = 1000;
+        var limit = 100;
         $(document).ready(function() {
+            const chatWrapHeight = window.innerHeight - 276;
+            $('.chat_wrap').css('height', chatWrapHeight);
+            // 엔터키 메세지전송, shift+enter 줄바꿈
+            $('textarea').on('keydown', function(event) {
+                if (event.keyCode == 13)
+                    if (!event.shiftKey) {
+                        event.preventDefault();
+                        sendMsg();
+                    }
+            });
             $("#msgbox").on("propertychange change keyup paste input", function(e) {
                 if (!($(".message_input_box").hasClass("on")) && !($(".chat_wrap").hasClass("on"))) {
                     $(e.target).css('height', '26px'); // height 초기화
                     $(e.target).css('height', $(e.target)[0].scrollHeight + 'px');
                 }
             });
+            $('#chat_wrap').scroll(function() {
+                console.log($(this).scrollTop())
+                if ($(this).scrollTop() === 0) {
+                    offset = offset + limit;
+                    reloadMsg();
+                }
+            });
             scrollToBottom();
             mymsgPhotoListener();
             setInterval(function() {
                 reloadMsg();
-
             }, 5000);
             $("#mymsg_menu").on("click", function() {
                 if (!($(".message_input_box").hasClass("on")) && !($(".chat_wrap").hasClass("on"))) {
@@ -241,12 +314,18 @@
                 url: '/ajax/reloadMsg',
                 type: 'POST',
                 data: {
-                    "room_ci": $("#room_ci").val()
+                    "room_ci": $("#room_ci").val(),
+                    "offset": offset
                 },
                 async: false,
                 success: function(data) {
                     if (data.status === 'success') {
                         // 성공
+                        var scrollableDiv = $('#chat_wrap');
+                        // 기존 스크롤화면 길이, 스크롤 높이
+                        var previousScrollTop = scrollableDiv.scrollTop();
+                        var previousHeight = scrollableDiv[0].scrollHeight - scrollableDiv[0].clientHeight;
+                        $("#chat_wrap").off('scroll');
                         $("#chat_wrap").html("");
                         var html = "";
                         data.data.reulst_value.allMsg.forEach(item => {
@@ -258,42 +337,95 @@
                                 html += '<div class = "send_msg_area" ><p>';
                                 html += item.msg_cont + '</p></div></div></div>';
                             } else {
-                                html += '<div class="receive_msg">';
-                                html += '<div class="receive_profile">';
-                                html += `<a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/` + item.nickname + `')">`;
-                                if (item.file_name) {
-                                    html += '<img src="/' + item.file_path + item.file_name + '" />';
-                                } else {
-                                    html += '<img src="/static/images/profile_noimg.png" />';
-                                }
-                                html += '</a>';
-                                html += '</div>';
-                                html += '<div class="receive_text">';
-                                html += '<p class="receive_profile_name">' + item.nickname;
-                                if (item.match_rate) {
-                                    if (80 <= item.match_rate) {
-                                        html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/blue_face_icon.png" /></span>';
-                                    } else if (item.match_rate >= 65 || item.match_rate < 80) {
-                                        html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/green_face_icon.png" /></span>';
-                                    } else if (item.match_rate >= 50 || item.match_rate < 65) {
-                                        html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/yellow_face_icon.png" /></span>';
-                                    } else if (item.match_rate >= 35 || item.match_rate < 50) {
-                                        html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/orange_face_icon.png" /></span>';
+                                if (item.msg_type !== '6') {
+                                    html += '<div class="receive_msg">';
+                                    html += '<div class="receive_profile">';
+                                    html += `<a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/` + item.nickname + `')">`;
+                                    if (item.file_name) {
+                                        html += '<img src="/' + item.file_path + item.file_name + '" />';
+                                    } else {
+                                        html += '<img src="/static/images/profile_noimg.png" />';
                                     }
-                                    // html += '<span class="match_percent">' + item.match_rate + '%</span>';
+                                    html += '</a>';
+                                    html += '</div>';
+                                    html += '<div class="receive_text">';
+                                    html += '<p class="receive_profile_name">' + item.nickname;
+                                    if (item.match_rate) {
+                                        if (80 <= item.match_rate) {
+                                            html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/blue_face_icon.png" /></span>';
+                                        } else if (item.match_rate >= 65 || item.match_rate < 80) {
+                                            html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/green_face_icon.png" /></span>';
+                                        } else if (item.match_rate >= 50 || item.match_rate < 65) {
+                                            html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/yellow_face_icon.png" /></span>';
+                                        } else if (item.match_rate >= 35 || item.match_rate < 50) {
+                                            html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/orange_face_icon.png" /></span>';
+                                        }
+                                        // html += '<span class="match_percent">' + item.match_rate + '%</span>';
+                                    } else {
+                                        html += '<span class="mat_percent"><img class="faceIcon" style="width:12px;margin-left:5px" src="/static/images/red_face_icon.png"></span>';
+                                    }
+                                    html += '</p>';
+                                    html += '<div style="display: flex;">';
+                                    html += '<div class="receive_msg_area"><p>' + item.msg_cont + '</p></div>';
+                                    html += '<div class="receive_time"><p>' + item.created_at + '</p></div>';
+                                    html += '</div>';
+                                    html += '</div>';
+                                    html += '</div>';
                                 } else {
-                                    html += '<span class="mat_percent"><img class="faceIcon" style="width:12px;margin-left:5px" src="/static/images/red_face_icon.png"></span>';
+                                    if (data.data.reulst_value.member_type[0].member_type === '1') {
+                                        html += '<div class="receive_msg">';
+                                        html += '<div class="receive_profile">';
+                                        html += `<a class="nicknameBtnBox" onclick="moveToUrl('/mo/viewProfile/` + item.nickname + `')">`;
+                                        if (item.file_name) {
+                                            html += '<img src="/' + item.file_path + item.file_name + '" />';
+                                        } else {
+                                            html += '<img src="/static/images/profile_noimg.png" />';
+                                        }
+                                        html += '</a>';
+                                        html += '</div>';
+                                        html += '<div class="receive_text">';
+                                        html += '<p class="receive_profile_name">' + item.nickname;
+                                        if (item.match_rate) {
+                                            if (80 <= item.match_rate) {
+                                                html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/blue_face_icon.png" /></span>';
+                                            } else if (item.match_rate >= 65 || item.match_rate < 80) {
+                                                html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/green_face_icon.png" /></span>';
+                                            } else if (item.match_rate >= 50 || item.match_rate < 65) {
+                                                html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/yellow_face_icon.png" /></span>';
+                                            } else if (item.match_rate >= 35 || item.match_rate < 50) {
+                                                html += '<span class="mat_percent"><img class="faceIcon" style="width:12px; margin-left:5px;" src="/static/images/orange_face_icon.png" /></span>';
+                                            }
+                                            // html += '<span class="match_percent">' + item.match_rate + '%</span>';
+                                        } else {
+                                            html += '<span class="mat_percent"><img class="faceIcon" style="width:12px;margin-left:5px" src="/static/images/red_face_icon.png"></span>';
+                                        }
+                                        html += '</p>';
+                                        html += '<div style="display: flex;">';
+                                        html += '<div class="receive_msg_area"><p>' + item.msg_cont + '</p></div>';
+                                        html += '<div class="receive_time"><p>' + item.created_at + '</p></div>';
+                                        html += '</div>';
+                                        html += '</div>';
+                                        html += '</div>';
+
+                                    }
                                 }
-                                html += '</p>';
-                                html += '<div style="display: flex;">';
-                                html += '<div class="receive_msg_area"><p>' + item.msg_cont + '</p></div>';
-                                html += '<div class="receive_time"><p>' + item.created_at + '</p></div>';
-                                html += '</div>';
-                                html += '</div>';
-                                html += '</div>';
                             }
                         });
                         $("#chat_wrap").html(html);
+                        var newHeight = scrollableDiv[0].scrollHeight - scrollableDiv[0].clientHeight;
+                        $('#chat_wrap').scroll(function() {
+                            console.log($(this).scrollTop())
+                            if ($(this).scrollTop() === 0) {
+                                offset = offset + limit;
+                                reloadMsg()
+                            }
+                        });
+                        if (newHeight !== previousHeight) {
+                            scrollableDiv.scrollTop(newHeight - (previousHeight - previousScrollTop) - 100);
+                        } else {
+                            scrollableDiv.scrollTop(previousScrollTop);
+                        }
+
                         // scrollToBottom();
                         // moveToUrl('/mo/factorInfo');
                     } else if (data.status === 'error') {

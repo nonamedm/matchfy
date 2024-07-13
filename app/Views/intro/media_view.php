@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Matchfy</title>
     <meta name="description" content="The small framework with powerful features">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
     <link rel="stylesheet" href="/static/css/intro.css">
     <link rel="stylesheet" href="/static/css/scroll.css">
@@ -44,19 +44,29 @@
 
     <nav role="navigation" class="mobileHedaer">
         <div id="menuToggle">
-            
+
             <input type="checkbox" />
-            
+
             <span></span>
             <span></span>
             <span></span>
-            
+
             <ul id="menu">
-            <a href="/intro/main"><li>Home</li></a>
-            <a href="/intro/animatedAi"><li>애니메틱 AI</li></a>
-            <a href="/intro/company"><li>company</li></a>
-            <a href="/intro/media"><li>Media</li></a>
-            <a href="#" onclick="concatBtn();"><li>Contact</li></a>
+                <a href="/intro/main">
+                    <li>Home</li>
+                </a>
+                <a href="/intro/animatedAi">
+                    <li>애니메틱 AI</li>
+                </a>
+                <a href="/intro/company">
+                    <li>company</li>
+                </a>
+                <a href="/intro/media">
+                    <li>Media</li>
+                </a>
+                <a href="#" onclick="concatBtn();">
+                    <li>Contact</li>
+                </a>
             </ul>
         </div>
     </nav>
@@ -65,37 +75,37 @@
         <div class="media-view">
             <div class="media-title">
                 <?php
-                    if($news['bigo1']){
-                        $typename;
-                        $typeclass;
-                        if($news['bigo1']=='01') {
-                            $typename ='언론보도';
-                            $typeclass = 'media-type';
-                        }else{
-                            $typename ='보도자료';
-                            $typeclass = 'media-type2';
-                        }
-                        echo "<h3 class='".$typeclass."'>". $typename."</h3>";
+                if ($news['bigo1']) {
+                    $typename;
+                    $typeclass;
+                    if ($news['bigo1'] == '01') {
+                        $typename = '언론보도';
+                        $typeclass = 'media-type';
+                    } else {
+                        $typename = '보도자료';
+                        $typeclass = 'media-type2';
                     }
+                    echo "<h3 class='" . $typeclass . "'>" . $typename . "</h3>";
+                }
                 ?>
                 <h3><?= $news['title'] ?></h3>
                 <p class="date"><?= date('Y년 m월 d일', strtotime($news['created_at'])) ?></p>
             </div>
             <div class="media-content">
-            <?php
+                <?php
                 $img = $news['content'];
-                if(!empty($img)){
+                if (!empty($img)) {
                     // 정규 표현식을 사용하여 width 값 추출
                     preg_match('/width:(\d+)px/', $img, $width_matches);
                     preg_match('/height:(\d+)px/', $img, $height_matches);
 
-                    if(isset($width_matches[1])) {
+                    if (isset($width_matches[1])) {
                         $width = intval($width_matches[1]);
                         if ($width >= 900) {
                             // width가 900 이상일 경우 width를 100%로 변경
                             $img = preg_replace('/width:(\d+)px/', 'width:100%', $img);
                             // height가 있으면 값을 auto로 변경
-                            if(isset($height_matches[1])){
+                            if (isset($height_matches[1])) {
                                 $img = preg_replace('/height:(\d+)px/', 'height:auto', $img);
                             }
                         }
@@ -105,8 +115,8 @@
                 <p><?= $img ?></p>
             </div>
         </div>
-    </div>            
-        
+    </div>
+
 
     <div class="footer">
         <div class="section">

@@ -143,6 +143,7 @@ $routes->post('/ajax/saveFactorBasic', 'MoAjax::saveFactorBasic');
 $routes->post('/ajax/saveFactorInfo', 'MoAjax::saveFactorInfo');
 $routes->post('/ajax/chgExcept', 'MoAjax::chgExcept');
 $routes->post('/ajax/calcMatchRate', 'MoAjax::calcMatchRate');
+$routes->post('/ajax/calcMatchRateEdit', 'MoAjax::calcMatchRateEdit');
 $routes->post('/ajax/meetingSave', 'MoAjax::meetingSave');
 $routes->post('/ajax/meetingFilter', 'MoAjax::meetingFiltering');
 $routes->post('/ajax/myMeetingFilter', 'MoAjax::myMeetingFiltering');
@@ -160,13 +161,17 @@ $routes->post('/ajax/chkVerifyCode', 'MoAjax::chkVerifyCode');
 
 /* 채팅 */
 $routes->post('/ajax/createChat', 'MoAjax::createChat');
+$routes->post('/ajax/createChatFork', 'MoAjax::createChatFork');
 $routes->post('/ajax/createMultyChat', 'MoAjax::createMultyChat');
 $routes->post('/ajax/sendMsg', 'MoAjax::sendMsg');
 $routes->post('/ajax/sendMsgAi', 'MoAjax::sendMsgAi');
+$routes->post('/ajax/sendMsgAiReturn', 'MoAjax::sendMsgAiReturn');
 $routes->post('/ajax/reloadMsg', 'MoAjax::reloadMsg');
 $routes->post('/ajax/reloadMsgAi', 'MoAjax::reloadMsgAi');
 $routes->post('/ajax/extRm', 'MoAjax::extRm');
 $routes->post('/ajax/banUsr', 'MoAjax::banUsr');
+$routes->post('/ajax/changeOnoff', 'MoAjax::changeOnoff');
+$routes->post('/ajax/forked', 'MoAjax::forked');
 $routes->post('/ajax/sndRpt', 'MoAjax::sndRpt');
 $routes->post('/ajax/submitScdl', 'MoAjax::submitScdl');
 $routes->post('/ajax/partScdl', 'MoAjax::partScdl');
@@ -214,6 +219,17 @@ $routes->post('/ad/exchangeCheck', 'AdminHome::exchangeCheck');
 $routes->get('/ad/alliance/allianceList', 'AdminHome::allianceList');
 $routes->post('/ad/allianceCheck', 'AdminHome::allianceCheck');
 $routes->get('/ad/member/memberApproveList', 'AdminHome::memberApproveList');
+$routes->get('/ad/member/memberMngment', 'AdminHome::memberMngment');
+
+// 파티관련 관리자 기능
+$routes->get('/ad/forkMngment', 'AdminHome::forkMngment');
+$routes->get('/ad/partyMngment', 'AdminHome::partyMngment');
+$routes->post('/ad/partyMngment1', 'AdminHome::partyMngment1');
+$routes->get('/ad/partyMngmentTest', 'AdminHome::partyMngmentTest');
+$routes->post('/ad/partyMngmentTest1', 'AdminHome::partyMngmentTest1');
+$routes->post('/ad/partyManualMatch', 'AdminHome::partyManualMatch');
+
+$routes->post('/ad/resetImg', 'AdminHome::resetImg');
 $routes->post('/ad/memberCertificateCheck', 'AdminHome::memberCertificateCheck');
 $routes->get('/ad/member/memberPaymentList', 'AdminHome::memberPaymentList');
 $routes->post('/ad/memberPaymentCheck', 'AdminHome::memberPaymentCheck');
@@ -276,7 +292,7 @@ $routes->get('/support/reward', 'SupportHome::reward');
 $routes->get('/support/mo', 'SupportHome::index');
 $routes->get('/support/pass', 'SupportHome::pass');
 $routes->post('/support/agree', 'SupportHome::agree');
- $routes->post('/support/signin', 'SupportHome::signin');
+$routes->post('/support/signin', 'SupportHome::signin');
 //$routes->get('/support/signin', 'SupportHome::signin');
 $routes->get('/support/signinSuccess', 'SupportHome::signinSuccess');
 $routes->get('/support/invite', 'SupportHome::invite');
@@ -287,5 +303,4 @@ $routes->post('/ajax/support/signUp', 'MoAjax::signUpSupporters');
 $routes->post('/ajax/support/isValidRecommendCode', 'MoAjax::isValidSupportRecommendCode');
 $routes->post('/ajax/support/referral', 'MoAjax::referralRegistration');
 $routes->post('/support/proxy/createPassWeb', 'ProxyController::createSupportPassWeb');
-$routes->get('/support/proxy/getResultValue', 'ProxyController::getSupportResultValue');
-
+$routes->get('/support/proxy/getSupportResultValue', 'ProxyController::getSupportResultValue');

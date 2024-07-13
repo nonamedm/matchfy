@@ -4,7 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0,  user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -98,7 +98,7 @@
                                 <label for="email" class="signin_label"><?= lang('Korean.email') ?></label>
                                 <div class="input_btn">
                                     <input id="email" name="email" type="text" placeholder="<?= lang('Korean.signUpEmailPlaceholder') ?>">
-                                    <button type="button" id="emailBtn" class="btn btn_input_form" onclick="regEmail()"><?= lang('Korean.sendcertcode') ?></button>
+                                    <button type="button" id="emailBtn" class="btn btn_input_form" onclick="regEmail()">인증번호<br />발송</button>
                                 </div>
                             </div>
                             <p id="countdown" class="countdown">5:00</p>

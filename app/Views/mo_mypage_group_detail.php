@@ -4,7 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0,  user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -57,11 +57,20 @@
                         </div>
                     </div>
                     <div class="btn_group" style="margin: 30px 0px">
-                        <?php if ($is_recruitment_full) : ?>
-                            <button type="button" class="btn type01 disabled"><?= lang('Korean.recruitmentDeadline') ?></button>
-                        <?php else : ?>
+                        <?php
+                        $currentDate = date('Y-m-d H:i:s');
+                        $eventDate = date('Y-m-d H:i:s', $meeting_date_time_stamp);
+
+                        if ($is_recruitment_full) {
+                        ?>
+                            <button type="button" class="btn type02 "><?= lang('Korean.recruitmentDeadline') ?></button>
+                        <?php } else if ($currentDate > $eventDate) { ?>
+                            <button type="button" class="btn type02 "><?= lang('Korean.recruitmentDeadline') ?></button>
+                        <?php } else {
+                        ?>
                             <button type="button" class="btn type01" onclick="meetingApplication('<?= $idx ?>')"><?= lang('Korean.withBtn') ?></button>
-                        <?php endif; ?>
+                        <?php
+                        } ?>
                     </div>
                     <hr class="hoz_part" />
                     <div class="group_detail_cont">
@@ -89,17 +98,30 @@
             <div style="height: 50px;"></div>
             <footer class="footer">
                 <div class="btn_group">
-                    <?php if ($is_recruitment_full) : ?>
-                        <button type="button" class="btn type01 disabled"><?= lang('Korean.recruitmentDeadline') ?></button>
-                    <?php else : ?>
+                    <?php
+                    $currentDate = date('Y-m-d H:i:s');
+                    $eventDate = date('Y-m-d H:i:s', $meeting_date_time_stamp);
+
+                    if ($is_recruitment_full) {
+                    ?>
+                        <button type="button" class="btn type02 "><?= lang('Korean.recruitmentDeadline') ?></button>
+                    <?php } else if ($currentDate > $eventDate) { ?>
+                        <button type="button" class="btn type02 "><?= lang('Korean.recruitmentDeadline') ?></button>
+                    <?php } else {
+                    ?>
                         <button type="button" class="btn type01" onclick="meetingApplication('<?= $idx ?>')"><?= lang('Korean.withBtn') ?></button>
-                    <?php endif; ?>
+                    <?php
+                    } ?>
                 </div>
             </footer>
         </div>
     </div>
 
-
+    <?php
+    // if ($room_type[0]['room_type'] === '1') {
+    include 'mo_mypage_group_partcnt_popup.php';
+    // }
+    ?>
     <!-- SCRIPTS -->
 
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=smqlge9tsx&callback=initMap&submodules=geocoder"></script>

@@ -106,7 +106,7 @@ class MoHome extends BaseController
             $MemberModel->set('recommender_code', $invite_code)
                 ->where('ci', $ci)
                 ->update();
-            
+
             //추천코드 입력시 서포터즈 리워드 추가
             $inviteCodeChk = "SELECT ci FROM members WHERE unique_code='" . $invite_code . "' AND delete_yn='n' LIMIT 1";
             $inviteCodeRow = $MemberModel->query($inviteCodeChk)->getRow();
@@ -114,18 +114,18 @@ class MoHome extends BaseController
             $genderChk = "SELECT gender FROM members WHERE ci='" . $ci . "' AND delete_yn='n' LIMIT 1";
             $gender = $MemberModel->query($genderChk)->getRow();
 
-                if ($inviteCodeRow) {
-                    $invitedata = [
-                        'ci' => $ci,
-                        'recommender_ci' => $inviteCodeRow->ci,
-                        'recommender_gender' => $gender,
-                        'reward_type' => 'invite',
-                        'reward_title' =>'추천인 정회원 가입',
-                        'reward_date' => date('Y-m-d H:i:s')
-                    ];
-                    $SupportRewardModel = new SupportRewardModel();
-                    $SupportRewardModel->insert($invitedata);
-                }
+            if ($inviteCodeRow) {
+                $invitedata = [
+                    'ci' => $ci,
+                    'recommender_ci' => $inviteCodeRow->ci,
+                    'recommender_gender' => $gender->gender,
+                    'reward_type' => 'invite',
+                    'reward_title' => '추천인 정회원 가입',
+                    'reward_date' => date('Y-m-d H:i:s')
+                ];
+                $SupportRewardModel = new SupportRewardModel();
+                $SupportRewardModel->insert($invitedata);
+            }
         }
         //계좌 : member에서 조회해오는건?
         $data['isDiscounted'] = $isDiscounted;
@@ -429,18 +429,19 @@ class MoHome extends BaseController
             ->query($query)->getResultArray();
         if ($memberYn) {
             // 내가 방 참가자가 맞으면
-            $query = "SELECT crm.chk_entry_num, crm.chk_num, crm.created_at, crm.entry_num, crm.msg_cont, crm.msg_type, crm.updated_at,
+            $query = "SELECT * FROM (SELECT crm.chk_entry_num, crm.chk_num, crm.created_at, crm.entry_num, crm.msg_cont, crm.msg_type, crm.updated_at,
                             (SELECT nickname FROM members WHERE ci = crm.member_ci) as nickname,
                             (CASE
                                 WHEN member_ci = '" . $ci . "' THEN 'me'
                                 ELSE 'you' 
                             END) AS chk,
-                            (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname ORDER BY created_at DESC LIMIT 1) as match_rate,
+                            (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname AND delete_yn='n' ORDER BY created_at DESC LIMIT 1) as match_rate,
                             (SELECT file_path FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo' AND delete_yn='n') AS file_path,
                             (SELECT file_name FROM member_files WHERE member_ci = crm.member_ci AND board_type='main_photo' AND delete_yn='n') AS file_name
-                        FROM wh_chat_room_msg  crm WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at ASC";
+                        FROM wh_chat_room_msg  crm WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at DESC LIMIT 1000) AS SUB ORDER BY created_at ASC";
             $allMsg = $ChatRoomMsgModel
                 ->query($query)->getResultArray();
+
             if ($allMsg) {
                 date_default_timezone_set('Asia/Seoul');
                 $current_time = time();
@@ -449,6 +450,7 @@ class MoHome extends BaseController
                     $today_date === date('Y-m-d', strtotime($row['created_at'])) ?  $row['created_at'] = date('H:i', strtotime($row['created_at'])) : $row['created_at'] = date('m-d', strtotime($row['created_at']));
                 }
             }
+
             $query = "SELECT member_ci AS where_ci, (SELECT name FROM members WHERE ci = where_ci) AS name,
                              (SELECT nickname FROM members WHERE ci = where_ci) AS nickname,
                              (SELECT file_path FROM member_files WHERE member_ci = where_ci AND board_type='main_photo' AND delete_yn='n') AS file_path,
@@ -457,8 +459,11 @@ class MoHome extends BaseController
                                 WHEN member_ci = '" . $ci . "' THEN 'me'
                                 ELSE 'you' 
                             END) AS chk,
-                            entry_num
+                            entry_num,
+                            (SELECT gender FROM members WHERE ci=where_ci) AS member_gender,
+                            (SELECT idx FROM wh_chat_room_member_forked WHERE partner_ci=where_ci AND member_ci='" . $ci . "' AND room_ci='" . $room_ci . "' AND delete_yn='n') AS forked
                             FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
+
             $memberInfo = $ChatRoomMemberModel
                 ->query($query)->getResultArray();
             $query = "SELECT room_type FROM wh_chat_room WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
@@ -467,12 +472,53 @@ class MoHome extends BaseController
             $query = "SELECT member_type FROM wh_chat_room_member WHERE room_ci = '" . $room_ci . "' AND member_ci='" . $ci . "';";
             $memberType = $ChatRoomMemberModel
                 ->query($query)->getResultArray();
+            $query = "SELECT gender FROM members WHERE ci='" . $ci . "';";
+            $myGender = $MemberModel
+                ->query($query)->getResultArray();
+
+            // 포크 onoff 여부 확인
+            $query = "SELECT onoff FROM wh_chat_room_member_forked_onoff WHERE room_ci='" . $room_ci . "';";
+            $forkOnoff = $MemberModel
+                ->query($query)->getResultArray();
+
+            // 1:1 대화 상대방 닉네임
+            $query = "SELECT DISTINCT (SELECT nickname FROM members WHERE ci = crm.member_ci) AS nickname
+                        FROM wh_chat_room_member crm 
+                        WHERE crm.room_ci = '" . $room_ci . "' AND crm.delete_yn='n' AND crm.member_type = 0 and crm.member_ci != '" . $ci . "'";
+            $partnerInfo = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            // 총 인원
+            $query = "SELECT room_count FROM wh_chat_room WHERE room_ci = '" . $room_ci . "' AND delete_yn='n'";
+            $roomCount = $ChatRoomModel
+                ->query($query)->getResultArray();
+
+            // 대화방 (모임)명
+            $query = "SELECT title as room_title FROM wh_meetings WHERE chat_room_ci = '" . $room_ci . "'";
+            $roomTitle = $ChatRoomModel
+                ->query($query)->getResultArray();
+
             $data['room_ci'] = $room_ci;
             $data['allMsg'] = $allMsg;
             $data['member_info'] = $memberInfo;
             $data['room_type'] = $roomType;
             $data['member_type'] = $memberType;
+            $data['my_gender'] = $myGender[0]['gender'];
+            $data['fork_onoff'] = $forkOnoff[0]['onoff'];
+            $data['roomCount'] = $roomCount[0]['room_count'];
+
+            if ($roomType[0]['room_type'] === '1') {
+                $data['partnerInfo'] = $roomTitle[0]['room_title'];
+            } else {
+                $data['partnerInfo'] = $partnerInfo[0]['nickname'];
+            }
+            if (mb_strlen($data['partnerInfo']) > 10) {
+                $data['partnerInfo'] = mb_substr($data['partnerInfo'], 0, 15) . '...';
+            }
             // echo print_r($allMsg);
+            // echo '<pre>';
+            // print_r($data['room_type']);
+            // echo '</pre>';
             return view('mo_mymsg', $data);
         } else {
             echo '<script src="/static/js/basic.js"></script>';
@@ -520,7 +566,7 @@ class MoHome extends BaseController
                 $lastMsg = $ChatRoomMsgModel
                     ->query($query)->getResultArray();
                 if ($lastMsg) {
-                    $today_date === date('Y-m-d', strtotime($lastMsg[0]['created_at'])) ?  $lastMsg[0]['created_at'] = date('H:i', strtotime($lastMsg[0]['created_at'])) : $lastMsg[0]['created_at'] = date('m-d', strtotime($lastMsg[0]['created_at']));
+                    // $today_date === date('Y-m-d', strtotime($lastMsg[0]['created_at'])) ?  $lastMsg[0]['created_at'] = date('H:i', strtotime($lastMsg[0]['created_at'])) : $lastMsg[0]['created_at'] = date('m-d', strtotime($lastMsg[0]['created_at']));
                     $item['last_msg'] = $lastMsg[0];
                 }
                 if ($roomType[0]['room_type'] === '1') {
@@ -552,7 +598,7 @@ class MoHome extends BaseController
                             }
                             $query = "SELECT CAST(match_rate AS DECIMAL(10,0)) as match_rate
                             FROM wh_match_rate
-                            WHERE member_ci='" . $ci . "' 
+                            WHERE delete_yn='n' AND member_ci='" . $ci . "' 
                             AND your_nickname=(SELECT nickname FROM members WHERE ci='" . $mbr['mbr_ci'] . "')";
                             $matchRate = $ChatRoomMemberModel
                                 ->query($query)->getResultArray();
@@ -571,7 +617,7 @@ class MoHome extends BaseController
                 return $timeB - $timeA;
             });
             $data['my_chat_room'] = $myChatRoom;
-            // echo print_r($data['my_chat_room']);
+            // echo print_r($myChatRoom);
             return view('mo_mymsg_list', $data);
         } else {
             $data['my_chat_room'] = $myChatRoom;
@@ -641,7 +687,7 @@ class MoHome extends BaseController
                                 WHEN member_ci = '" . $ci . "' THEN 'me'
                                 ELSE 'you' 
                             END) AS chk,
-                            (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE member_ci='" . $ci . "' AND your_nickname = nickname ORDER BY created_at DESC LIMIT 1) as match_rate,
+                            (SELECT CAST(match_rate AS DECIMAL(10,0)) FROM wh_match_rate WHERE delete_yn='n' AND member_ci='" . $ci . "' AND your_nickname = nickname ORDER BY created_at DESC LIMIT 1) as match_rate,
                             'static/images/' AS file_path,
                             'ai_send.png' AS file_name
                         FROM wh_chat_room_msg_ai  crm WHERE crm.room_ci = '" . $chat_room_ci . "' AND crm.delete_yn='n' ORDER BY crm.created_at ASC";
@@ -921,13 +967,12 @@ class MoHome extends BaseController
             SELECT *
             FROM wh_meetings
             LEFT JOIN wh_meetings_files ON wh_meetings_files.meeting_idx = wh_meetings.idx
-            WHERE wh_meetings.meeting_start_date >= ?
-            AND wh_meetings.delete_yn = 'N'
+            WHERE wh_meetings.delete_yn = 'N'
             AND wh_meetings.group_min_age <= ?
             AND wh_meetings.group_max_age >= ?
-            ORDER BY wh_meetings.meeting_start_date ASC
+            ORDER BY wh_meetings.meeting_start_date DESC
         ";
-        $meetings = $MeetingModel->query($sql, [$currentTime, $age, $age])->getResultArray();
+        $meetings = $MeetingModel->query($sql, [$age, $age])->getResultArray();
 
 
         $days = ['일', '월', '화', '수', '목', '금', '토'];
@@ -943,6 +988,12 @@ class MoHome extends BaseController
             $dayName = $days[$meetingDay]; //요일
             $meetingDateTime = date("Y.m.d ", $meetingDateTimestamp) . ' (' . $dayName . ') ' . date(" H:i", $meetingDateTimestamp);
             $meeting['meetingDateTime'] = $meetingDateTime;
+
+            if ($currentTime > date("Y-m-d H:i:s", $meetingDateTimestamp)) {
+                $meeting['overtime'] = true;
+            } else {
+                $meeting['overtime'] = false;
+            }
 
             $memCount = $MeetingMembersModel
                 ->where('meeting_idx', $meeting['idx'])
@@ -1007,26 +1058,120 @@ class MoHome extends BaseController
         //모집 마감 확인
         $isRecruitmentFull = $Meeting['number_of_people'] == $memCount;
 
-        $data = [
-            'idx' => $idx,
-            'category' => $Meeting['category'],
-            'recruitment_start_date' => $recruitStartTime,
-            'recruitment_end_date' => $recruitEndTime,
-            'meeting_start_date' => $meetingDateTime, //$Meeting['meeting_start_date'],
-            //'meeting_end_date' => $Meeting['meeting_end_date'],
-            'number_of_people' => $Meeting['number_of_people'],
-            'meeing_count' => $memCount, //현재 모집된 인원 수
-            'matching_rate' => $Meeting['matching_rate'],
-            'meeting_title' => $Meeting['title'],
-            'content' => $Meeting['content'],
-            'meeting_place' => $Meeting['meeting_place'],
-            'membership_fee' => $Meeting['membership_fee'],
-            'image' => $imageInfo,
-            'is_recruitment_full' => $isRecruitmentFull
 
-        ];
 
-        return view('mo_mypage_group_detail', $data);
+        // 팝업호출 영역
+        $session = session();
+        $ci = $session->get('ci');
+
+        // 같은 성별 프로필 조회 막음
+        $member = new MemberModel();
+        $userQuery = "SELECT * FROM members WHERE ci= '" . $ci . "'";
+        $user = $member->query($userQuery)->getResultArray();
+        $user_gender = $user[0]['gender'];
+
+        // 내가 이 방 참석했는지 여부 확인
+        $chkQuery = "SELECT * FROM wh_meeting_members WHERE meeting_idx='" . $idx . "' AND member_ci='" . $ci . "'";
+
+        $meeting_members = new MeetingMembersModel();
+        $chkInmember = $meeting_members->query($chkQuery)->getResultArray();
+        $inMemberChk = $chkInmember ? true : false;
+        $query = $meeting_members->distinct()
+            ->select(
+                '
+                                    a.idx as idx,
+                                    a.meeting_idx as meeting_idx,
+                                    a.delete_yn as delete_yn,
+                                    a.meeting_master as meeting_master,
+                                    a.create_at as create_at,
+                                    d.file_path as file_path,
+                                    d.file_name as file_name,
+                                    c.name as name,
+                                    c.nickname as nickname,
+                                    c.city as city,
+                                    c.town as town,
+                                    c.birthday as birthday,
+                                    c.mbti as mbti,
+                                    c.gender as gender'
+            )
+            ->from('wh_meeting_members a')
+            ->join('wh_meetings b', 'a.meeting_idx = b.idx', 'left')
+            ->join('members c', 'a.member_ci = c.ci', 'left')
+            ->join('member_files d', 'c.ci = d.member_ci', 'left')
+            ->where('b.idx', $idx)
+            ->where('a.delete_yn', 'N')
+            ->where('d.board_type', 'main_photo')
+            ->where('d.delete_yn', 'n')
+            ->orderBy('a.meeting_master')
+            ->orderBy('a.create_at')
+            ->get();
+
+        $result = $query->getResult();
+
+        if ($result) {
+            $query = "SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $idx . "'";
+            $room_ci = $MeetingModel
+                ->query($query)->getResultArray();
+            $ChatRoomMemberModel = new ChatRoomMemberModel();
+            $query = "SELECT member_ci AS where_ci, (SELECT name FROM members WHERE ci = where_ci) AS name,
+                            (SELECT mbti FROM members WHERE ci = where_ci) AS mbti,
+                            (SELECT city FROM members WHERE ci = where_ci) AS city,
+                            (SELECT birthday FROM members WHERE ci = where_ci) AS birthday,
+                             (SELECT meeting_master FROM wh_meeting_members WHERE member_ci = where_ci AND meeting_idx='" . $idx . "') AS meeting_master,
+                             (SELECT nickname FROM members WHERE ci = where_ci) AS nickname,
+                             (SELECT file_path FROM member_files WHERE member_ci = where_ci AND board_type='main_photo' AND delete_yn='n') AS file_path,
+                             (SELECT file_name FROM member_files WHERE member_ci = where_ci AND board_type='main_photo' AND delete_yn='n') AS file_name,
+                             (CASE
+                                WHEN member_ci = '" . $ci . "' THEN 'me'
+                                ELSE 'you' 
+                            END) AS chk,
+                            entry_num,
+                            (SELECT gender FROM members WHERE ci=where_ci) AS member_gender,
+                            (SELECT idx FROM wh_chat_room_member_forked WHERE partner_ci=where_ci AND member_ci='" . $ci . "' AND room_ci='" . $room_ci[0]['chat_room_ci'] . "' AND delete_yn='n') AS forked
+                            FROM wh_chat_room_member WHERE room_ci = '" . $room_ci[0]['chat_room_ci'] . "' AND delete_yn='n'";
+
+            $memberInfo = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            $query = "SELECT gender FROM members WHERE ci='" . $ci . "';";
+            $myGender = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            // 포크 onoff 여부 확인
+            $query = "SELECT onoff FROM wh_chat_room_member_forked_onoff WHERE room_ci='" . $room_ci[0]['chat_room_ci'] . "';";
+            $forkOnoff = $ChatRoomMemberModel
+                ->query($query)->getResultArray();
+
+            $data = [
+                'idx' => $idx,
+                'category' => $Meeting['category'],
+                'recruitment_start_date' => $recruitStartTime,
+                'recruitment_end_date' => $recruitEndTime,
+                'meeting_start_date' => $meetingDateTime, //$Meeting['meeting_start_date'],
+                //'meeting_end_date' => $Meeting['meeting_end_date'],
+                'number_of_people' => $Meeting['number_of_people'],
+                'meeing_count' => $memCount, //현재 모집된 인원 수
+                'matching_rate' => $Meeting['matching_rate'],
+                'meeting_title' => $Meeting['title'],
+                'content' => $Meeting['content'],
+                'meeting_place' => $Meeting['meeting_place'],
+                'membership_fee' => $Meeting['membership_fee'],
+                'image' => $imageInfo,
+                'meeting_date_time_stamp' => $meetingDateTimestamp,
+                'is_recruitment_full' => $isRecruitmentFull,
+                'popupData' => $result,
+                'inMemberChk' => $inMemberChk,
+                'memberInfo' => $memberInfo,
+                'my_gender' => $myGender[0]['gender'],
+                'fork_onoff' => $forkOnoff[0]['onoff'],
+                'room_ci' => $room_ci[0]['chat_room_ci']
+            ];
+
+            return view('mo_mypage_group_detail', $data);
+        } else {
+            $data = [];
+            return view('mo_mypage_group_detail', $data);
+        }
     }
 
     public function mypageGroupPartcntPopup()
@@ -1039,7 +1184,7 @@ class MoHome extends BaseController
         $member = new MemberModel();
         $userQuery = "SELECT * FROM members WHERE ci= '" . $ci . "'";
         $user = $member->query($userQuery)->getResultArray();
-        $user_gender = $user['gender'];
+        $user_gender = $user[0]['gender'];
 
         // 내가 이 방 참석했는지 여부 확인
         $chkQuery = "SELECT * FROM wh_meeting_members WHERE meeting_idx='" . $meeting_idx . "' AND member_ci='" . $ci . "'";
@@ -1053,6 +1198,7 @@ class MoHome extends BaseController
                                     a.meeting_idx as meeting_idx,
                                     a.delete_yn as delete_yn,
                                     a.meeting_master as meeting_master,
+                                    a.create_at as create_at,
                                     d.file_path as file_path,
                                     d.file_name as file_name,
                                     c.name as name,
@@ -1083,9 +1229,40 @@ class MoHome extends BaseController
 
                 if (!$chkInmember && isset($item->name)) {
                     $name = $item->name;
-                    $firstChar = mb_substr($name, 0, 1, "UTF-8"); // 첫 글자 추출
-                    $maskedPart = str_repeat('*', mb_strlen($name, "UTF-8") - 1); // 나머지 글자 수 만큼 * 생성
-                    $item->name = $firstChar . $maskedPart; // 첫 글자와 * 결합
+                    $length = mb_strlen($name, 'UTF-8');
+
+                    if ($length <= 2) {
+                        // 문자열이 두 글자 이하인 경우 그대로 반환
+                        return $name;
+                    }
+
+                    // 첫 글자와 마지막 글자 추출
+                    $firstChar = mb_substr($name, 0, 1, 'UTF-8');
+                    $lastChar = mb_substr($name, -1, 1, 'UTF-8');
+
+                    // 중간 부분을 '*'로 치환
+                    $middlePart = str_repeat('*', $length - 2);
+
+                    // 첫 글자, 중간 부분, 마지막 글자 결합
+                    $item->name = $firstChar . $middlePart . $lastChar;
+                } else {
+                    $name = $item->name;
+                    $length = mb_strlen($name, 'UTF-8');
+
+                    if ($length <= 2) {
+                        // 문자열이 두 글자 이하인 경우 그대로 반환
+                        return $name;
+                    }
+
+                    // 첫 글자와 마지막 글자 추출
+                    $firstChar = mb_substr($name, 0, 1, 'UTF-8');
+                    $lastChar = mb_substr($name, -1, 1, 'UTF-8');
+
+                    // 중간 부분을 '*'로 치환
+                    $middlePart = str_repeat('*', $length - 2);
+
+                    // 첫 글자, 중간 부분, 마지막 글자 결합
+                    $item->name = $firstChar . $middlePart . $lastChar;
                 }
             }
             return $this->response->setJSON(['success' => true, 'data' => $result]);
@@ -1367,16 +1544,16 @@ class MoHome extends BaseController
                     //마스터 유저                  
                     $masterMember = new MemberModel();
                     $meetingMaster = $masterMember
-                                ->distinct()
-                                ->select('m.name as name, m.ci as ci, wp.my_point as k_point,wp.create_at as create_at')
-                                ->from('members m')
-                                ->join('wh_points wp', 'wp.member_ci = m.ci', 'left')
-                                ->join('wh_meeting_members wmm', 'm.ci = wmm.member_ci', 'left')
-                                ->where('wmm.meeting_idx', $meeting_idx)
-                                ->where('wmm.meeting_master', 'K')
-                                ->orderBy('wp.create_at', 'desc')
-                                ->get()
-                                ->getRow();
+                        ->distinct()
+                        ->select('m.name as name, m.ci as ci, wp.my_point as k_point,wp.create_at as create_at')
+                        ->from('members m')
+                        ->join('wh_points wp', 'wp.member_ci = m.ci', 'left')
+                        ->join('wh_meeting_members wmm', 'm.ci = wmm.member_ci', 'left')
+                        ->where('wmm.meeting_idx', $meeting_idx)
+                        ->where('wmm.meeting_master', 'K')
+                        ->orderBy('wp.create_at', 'desc')
+                        ->get()
+                        ->getRow();
 
                     //참석한 멤버 포인트 사용
                     // $mydata = [
@@ -1413,6 +1590,15 @@ class MoHome extends BaseController
 
                         $meeting_members
                             ->query($query);
+
+                        //대화방도 바로 다시 참석시켜준다
+                        $query = "UPDATE wh_chat_room SET room_count=(CAST(room_count AS UNSIGNED) + 1) WHERE room_ci=(SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "')";
+                        $meeting_members
+                            ->query($query);
+                        $query = "UPDATE wh_chat_room_member SET delete_yn='n' WHERE member_ci='" . $ci . "' AND room_ci=(SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "')";
+                        $meeting_members
+                            ->query($query);
+                        return $this->response->setJSON(['success' => true, 'msg' => '참석이 완료 되었습니다.']);
                     } else {
                         // 참석 승인 요청 처리
                         $meeting_members_temp->insert($meetMemdata);
@@ -1465,11 +1651,13 @@ class MoHome extends BaseController
                     //     return $this->response->setJSON(['success' => false, 'msg' => '포인트 결제가 실패 하였습니다.']);
                     // }
                 } else { //이미 참석된 멤버 일 경우
-                    return $this->response->setJSON(['success' => true, 'msg' => '이미 참석 신청된 멤버 입니다.']);
+                    return $this->response->setJSON(['success' => false, 'msg' => '이미 참석 신청된 멤버 입니다.', 'result' => '1']);
                 }
                 // }
             } else {
-                return $this->response->setJSON(['success' => true, 'msg' => '이미 참석중인 멤버 입니다.']);
+                $query = "SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "'";
+                $room_ci = $pointModel->query($query)->getResultArray();
+                return $this->response->setJSON(['success' => false, 'msg' => '이미 참석중인 멤버 입니다.', 'result' => '0', 'ci' => $room_ci[0]['chat_room_ci']]);
             }
         } else if ($getMemberCount == 'nodata') {
             return $this->response->setJSON(['success' => true, 'msg' => '존재하지 않는 모임입니다. 다시 시도해 주세요.']);
@@ -1479,7 +1667,8 @@ class MoHome extends BaseController
     }
 
     /*서포터즈 리워드 업데이트*/
-    public function rewardUpdate($meeting_idx){
+    public function rewardUpdate($meeting_idx)
+    {
         $SupportRewardModel = new SupportRewardModel();
         $meetRewardChk = "SELECT m.gender 
                         FROM wh_meeting_members wmm 
@@ -1517,7 +1706,7 @@ class MoHome extends BaseController
         $accuracyPercentage = 100 - (($maleDiffPercentage + $femaleDiffPercentage) / 2);
 
         // 리워드 내역 업데이트
-        $meetRewardQuery = "UPDATE wh_support_reward SET reward_meeting_percent = '".$accuracyPercentage."' WHERE reward_meeting_idx = '".$meeting_idx."'";
+        $meetRewardQuery = "UPDATE wh_support_reward SET reward_meeting_percent = '" . $accuracyPercentage . "' WHERE reward_meeting_idx = '" . $meeting_idx . "'";
         $SupportRewardModel->query($meetRewardQuery);
     }
     public function mypageGroupApplyPopup()
@@ -1525,33 +1714,42 @@ class MoHome extends BaseController
         $session = session();
         $ci = $session->get('ci');
         $meeting_idx = $this->request->getPost('meetingIdx');
-
         $meeting_members = new MeetingMembersModel();
-        $query = $meeting_members->distinct()
-            ->select('a.idx, 
-                                a.category, 
-                                a.meeting_start_date, 
-                                a.meeting_end_date, 
-                                a.number_of_people, 
-                                (select count(*) from wh_meeting_members c where c.meeting_idx = ' . $meeting_idx . ') as meet_members, 
-                                a.meeting_place, 
-                                a.membership_fee, 
-                                b.file_path, 
-                                b.file_name')
-            ->from('wh_meetings a')
-            ->join('wh_meetings_files b', 'a.idx = b.meeting_idx', 'left')
-            ->where('a.idx', $meeting_idx)
-            ->get();
 
-        $result = $query->getResult();
-
-        $my_point_value = $this->mypageGetPoint();
-
-        if ($result) {
-            return $this->response->setJSON(['success' => true, 'data' => $result, 'my_point' => $my_point_value]);
+        $query = "SELECT * FROM wh_meeting_members WHERE member_ci='" . $ci . "' AND meeting_idx='" . $meeting_idx . "'";
+        $member_yn = $meeting_members->query($query)->getResultArray();
+        if ($member_yn) {
+            $query = "SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "'";
+            $room_info = $meeting_members->query($query)->getResultArray();
+            return $this->response->setJSON(['success' => true, 'data' => $room_info, 'result' => '1']);
         } else {
-            return $this->response->setJSON(['success' => false,]);
+            $query = $meeting_members->distinct()
+                ->select('a.idx, 
+                                    a.category, 
+                                    a.meeting_start_date, 
+                                    a.meeting_end_date, 
+                                    a.number_of_people, 
+                                    (select count(*) from wh_meeting_members c where c.meeting_idx = ' . $meeting_idx . ' and c.delete_yn="N") as meet_members, 
+                                    a.meeting_place, 
+                                    a.membership_fee, 
+                                    b.file_path, 
+                                    b.file_name')
+                ->from('wh_meetings a')
+                ->join('wh_meetings_files b', 'a.idx = b.meeting_idx', 'left')
+                ->where('a.idx', $meeting_idx)
+                ->get();
+
+            $result = $query->getResult();
+
+            $my_point_value = $this->mypageGetPoint();
+
+            if ($result) {
+                return $this->response->setJSON(['success' => true, 'data' => $result, 'my_point' => $my_point_value, 'result' => '0']);
+            } else {
+                return $this->response->setJSON(['success' => false,]);
+            }
         }
+
         // return view('mo_mypage_group_apply_popup');
     }
     public function mypageGroupCreate(): string
@@ -1588,7 +1786,7 @@ class MoHome extends BaseController
                     ->where('d.member_ci', $ci);
             })
             ->where('b.delete_yn', 'N')
-            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee');
+            ->groupBy('a.meeting_idx, b.category, b.meeting_start_date, b.number_of_people, b.title, b.meeting_place, b.membership_fee, c.file_path, c.file_name');
 
         $results = $query->get()->getResult();
 
@@ -1613,7 +1811,7 @@ class MoHome extends BaseController
         $meeting_idx = $this->request->getPost('meetingIdx');
 
         $query = $db->table('wh_meeting_members a')
-            ->select('a.meeting_idx, 
+            ->select('a.meeting_idx, a.create_at,
                             b.category, 
                             b.meeting_start_date, 
                             b.meeting_end_date, 
@@ -1666,7 +1864,7 @@ class MoHome extends BaseController
         $selectedValue = $this->request->getPost('selectedValue');
 
         $query = $db->table('wh_meeting_members a')
-            ->select('a.meeting_idx, 
+            ->select('a.meeting_idx, a.create_at,
                                 b.category, 
                                 b.meeting_start_date, 
                                 b.meeting_end_date, 
@@ -1824,6 +2022,14 @@ class MoHome extends BaseController
 
         $meetPointModel->insert($masterdata);
 
+        // 예약신청내역도 취소하기
+        $query = "UPDATE wh_meeting_members_temp SET delete_yn='Y' WHERE meeting_idx='" . $meeting_idx . "' AND member_ci='" . $ci . "'";
+        $MeetingMembersModel->query($query);
+
+        // 대화방 나가기
+        $query = "UPDATE wh_chat_room_member SET delete_yn='y' WHERE room_ci=(SELECT chat_room_ci FROM wh_meetings WHERE idx='" . $meeting_idx . "') AND member_ci='" . $ci . "'";
+        $MeetingMembersModel->query($query);
+
         if ($result) {
             return $this->response->setJSON(['success' => true]);
         } else {
@@ -1928,11 +2134,20 @@ class MoHome extends BaseController
         // $feedFile = $MemberFeedFileModel->where('member_ci', $ci)->findAll();
         $condition = ['board_type' => 'main_photo', 'member_ci' => $user['ci'], 'delete_yn' => 'n'];
         $userFile = $MemberFileModel->where($condition)->first();
+
+        $query = 'SELECT email FROM members WHERE ci="' . $ci . '"';
+        $adminYn = $MemberModel->query($query)->getResultArray();
+        if ($adminYn[0]['email'] === 'admin') {
+            $adminYn = 'Y';
+        } else {
+            $adminYn = 'N';
+        }
         $data = [
             'ci' => $user['ci'],
             'name' => $name,
             'user' => $user,
             'feed_list' => $feedList,
+            'adminYn' => $adminYn,
         ];
         if (!empty($userFile)) {
             $data = array_merge($data, $userFile);
@@ -2082,6 +2297,10 @@ class MoHome extends BaseController
                 'residence3' => $user['residence3']
             ]);
         };
+
+        $masked_chars = mb_substr($user['name'], 0, 1) . '**';
+        $data['profile_name'] = $masked_chars;
+        $data['birthday'] = mb_substr($user['birthday'], 0, 4) . "****";
         $data['mygrade'] = $mygrade[0]['grade'];
         return view('mo_myfeed_view_profile', $data);
     }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Matchfy</title>
     <meta name="description" content="The small framework with powerful features">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
 
     <link rel="stylesheet" href="/static/css/common.css">
@@ -60,11 +60,37 @@
             }
         }
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16592783156">
+    </script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'AW-16592783156');
+    </script>
 </head>
 <?php
 $session = session();
 $ci = $session->get('ci');
 $name = $session->get('name');
+
+$db = \Config\Database::connect();
+$query = $db->query("SELECT guide_yn FROM members WHERE ci = '$ci'");
+$result = $query->getRow();
+
+if ($result) {
+    $guide_yn = $result->guide_yn;
+
+    if ($guide_yn === 'N') {
+        echo "<script> $(document).ready(function() {guidePopup();});</script>";
+        $query = $db->query("UPDATE members SET guide_yn='Y' WHERE ci = '$ci'");
+    }
+}
 ?>
 
 
@@ -73,7 +99,7 @@ $name = $session->get('name');
 if ($ci) {
 ?>
 
-    <body style="max-width: 400px; margin: 0 auto;position: relative;">
+    <body class="main_wrap" style="max-width: 400px; margin: 0 auto;position: relative;">
         <header class="ci_header">
         <?php
     } else {
@@ -185,11 +211,11 @@ if ($ci) {
                         </div>
                         <div class="main_cont chat_div chat_div_left">
                             <div class="chat_profile_div">
-                                <img src="/static/images/chat_img_1.png" />
-                                <span>뽀로로<?= lang('Korean.sir') ?></span>
+                                <img style="width:50px; height:50px; border-radius: 50%;" src="/static/files/uploads/김도현.png" />
+                                <span>김도현<?= lang('Korean.sir') ?></span>
                             </div>
                             <div class="chat_talk_div">
-                                <p><?= lang('Korean.indexCon8') ?></p>
+                                <p>상대방 정보를 찔끔찔끔 보여주는게 아니라 알고싶은정보를 한번에 다 보여줘서 마음에 들어요 시원시원하네요.</p>
                                 <img src="/static/images/review_star.png" />
                                 <img src="/static/images/review_star.png" />
                                 <img src="/static/images/review_star.png" />
@@ -199,11 +225,11 @@ if ($ci) {
                         </div>
                         <div class="main_cont chat_div chat_div_right">
                             <div class="chat_profile_div">
-                                <img src="/static/images/chat_img_2.png" />
-                                <span>홍길동<?= lang('Korean.sir') ?></span>
+                                <img style="width:50px; height:50px; border-radius: 50%;" src="/static/files/uploads/정하준.png" />
+                                <span>정하준<?= lang('Korean.sir') ?></span>
                             </div>
                             <div class="chat_talk_div">
-                                <p><?= lang('Korean.indexCon8') ?></p>
+                                <p>베타오픈 기간 중 사용하고있어요. 날이 갈 수록 여기저기 채워지는 느낌이고 앞으로도 계속 좋아진다면 계속 사용할 것 같아요.</p>
                                 <img src="/static/images/review_star.png" />
                                 <img src="/static/images/review_star.png" />
                                 <img src="/static/images/review_star.png" />
@@ -213,11 +239,11 @@ if ($ci) {
                         </div>
                         <div class="main_cont chat_div chat_div_left">
                             <div class="chat_profile_div">
-                                <img src="/static/images/chat_img_3.png" />
-                                <span>손흥민<?= lang('Korean.sir') ?></span>
+                                <img style="width:50px; height:50px; border-radius: 50%;" src="/static/files/uploads/한지연.png" />
+                                <span>한지연<?= lang('Korean.sir') ?></span>
                             </div>
                             <div class="chat_talk_div">
-                                <p><?= lang('Korean.indexCon8') ?></p>
+                                <p>상대방 프로필을 확인하거나 메세지를 보낼 때 따로 포인트가 지불된다던가 과금된다던가 아니면 횟수제한이 있다던가 그런게 없어서 좋아요.</p>
                                 <img src="/static/images/review_star.png" />
                                 <img src="/static/images/review_star.png" />
                                 <img src="/static/images/review_star.png" />
@@ -227,11 +253,11 @@ if ($ci) {
                         </div>
                         <div class="main_cont chat_div chat_div_right no_margin">
                             <div class="chat_profile_div">
-                                <img src="/static/images/chat_img_4.png" />
-                                <span>김철수<?= lang('Korean.sir') ?></span>
+                                <img style="width:50px; height:50px; border-radius: 50%;" src="/static/files/uploads/최지혜.png" />
+                                <span>최지혜<?= lang('Korean.sir') ?></span>
                             </div>
                             <div class="chat_talk_div">
-                                <p><?= lang('Korean.indexCon8') ?></p>
+                                <p>사용한지 얼마 안되었는데 썸 타고 있어요ㅎ 뭔가 안심하고 새로운 사람을 만날 수 있는 서비스인것 같아서 마음에 들어요.</p>
                                 <img src="/static/images/review_star.png" />
                                 <img src="/static/images/review_star.png" />
                                 <img src="/static/images/review_star.png" />
@@ -273,7 +299,6 @@ if ($ci) {
                                 },
                                 async: false,
                                 success: function(data) {
-                                    console.log(data);
                                     if (data.message === 'success') {
                                         $(".AImatch_list").html("");
                                         $(".AImatch_list").css("display", "flex");
@@ -311,6 +336,7 @@ if ($ci) {
                                     fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
                                 },
                             });
+
                         }
 
                         const AImatch2 = (v) => {
@@ -322,7 +348,6 @@ if ($ci) {
                                 },
                                 async: false,
                                 success: function(data) {
-                                    console.log(data);
                                     if (data.message === 'success') {
                                         $(".AImatch2_list").html("");
                                         $(".AImatch2_list").css("display", "flex");
@@ -342,7 +367,7 @@ if ($ci) {
                                                 html += '<p class="mbti nodata"></p>';
                                             }
                                             // html += '<p class="mat_percent">' + item.match_rate + '%</p>';
-                                            html += matchRateType(item.match_rate);
+                                            // html += matchRateType(item.match_rate);
                                             html += '</div>';
                                             html += '</a>';
                                             html += '</div>';
@@ -381,13 +406,17 @@ if ($ci) {
                                 type: 'POST',
                                 async: false,
                                 success: function(data) {
-                                    console.log(data);
                                     data.result.forEach(function(item) {
                                         $(".category" + item.category).html("");
                                         $(".category" + item.category).css("display", "flex");
                                     });
                                     data.result.forEach(function(item) {
                                         var html = `<div class="ai_group_card">`;
+                                        if (item.overtime) {
+                                            html += '<div class="overtime">종료</div>';
+                                        } else {
+                                            html += '<div class="nowtime">진행중</div>';
+                                        }
                                         html += `<a onclick="moveToUrl('/mo/mypage/group/detail/` + item.idx + `')" >`
                                         if (item.file_path !== "" && item.file_path !== null) {
                                             html += '<img src="/' + item.file_path + item.file_name + '" />';
@@ -422,7 +451,7 @@ if ($ci) {
                             if (scrollLeft !== 0) {
                                 container.animate({
                                     scrollLeft: '-=250px'
-                                }, 500);
+                                }, 200);
                             }
                         }
 
@@ -435,7 +464,7 @@ if ($ci) {
                             if (scrollLeft < maxScroll) {
                                 container.animate({
                                     scrollLeft: '+=250px'
-                                }, 500);
+                                }, 200);
                             }
                         }
 
@@ -524,13 +553,54 @@ if ($ci) {
                                     $(".category04_right").addClass('disabled');
                                 }
                             });
+                            $('.AImatch_list').scroll(function() {
+                                var scrollLeft = $(this).scrollLeft();
+                                var container = $('.AImatch_list');
+                                var containerWidth = container.outerWidth();
+                                var maxScroll = container[0].scrollWidth - containerWidth;
+                                if ((scrollLeft - 5) <= '0') {
+                                    $(".AImatch_list_left").addClass('disabled');
+                                } else {
+                                    $(".AImatch_list_left").removeClass('disabled');
+                                }
+                                if ((scrollLeft + 5) >= maxScroll) {
+                                    $(".AImatch_list_right").addClass('disabled');
+                                } else {
+                                    $(".AImatch_list_right").removeClass('disabled');
+                                }
+
+                                if (scrollLeft === '0' && (scrollLeft + 5) >= maxScroll) {
+                                    $(".category04_left").addClass('disabled');
+                                    $(".category04_right").addClass('disabled');
+                                }
+                            });
+                            $('.AImatch2_list').scroll(function() {
+                                var scrollLeft = $(this).scrollLeft();
+                                var container = $('.AImatch2_list');
+                                var containerWidth = container.outerWidth();
+                                var maxScroll = container[0].scrollWidth - containerWidth;
+                                if ((scrollLeft - 5) <= '0') {
+                                    $(".AImatch2_list_left").addClass('disabled');
+                                } else {
+                                    $(".AImatch2_list_left").removeClass('disabled');
+                                }
+                                if ((scrollLeft + 5) >= maxScroll) {
+                                    $(".AImatch2_list_right").addClass('disabled');
+                                } else {
+                                    $(".AImatch2_list_right").removeClass('disabled');
+                                }
+
+                                if (scrollLeft === '0' && (scrollLeft + 5) >= maxScroll) {
+                                    $(".AImatch2_list_left").addClass('disabled');
+                                    $(".AImatch2_list_right").addClass('disabled');
+                                }
+                            });
                         }
                         $(function() {
                             AImatch('9');
                             AImatch2('9');
                             meetingList();
                             scrollAction();
-
                         })
                     </script>
                     <div class="content_banner_top" onclick="moveToUrl('/mo/mypage/group/detail/169')">
@@ -540,9 +610,12 @@ if ($ci) {
                         <div class="login_main_title">
                             <h2><?= lang('Korean.mainTitle') ?></h2>
                             <div class="main_title_btn">
-                                <!-- <button onclick="clickOn(this)" class="on" value="9"><?= lang('Korean.all') ?></button>
-                    <button onclick="clickOn(this)" value="0"><?= lang('Korean.woman') ?></button>
-                    <button onclick="clickOn(this)" value="1"><?= lang('Korean.man') ?></button> -->
+                                <button class="AImatch_list_left slide_btn disabled" onclick="clickLeft('AImatch_list')">
+                                    <img src="/static/images/slide_left.png" />
+                                </button>
+                                <button class="AImatch_list_right slide_btn" onclick="clickRight('AImatch_list')">
+                                    <img src="/static/images/slide_right.png" />
+                                </button>
                             </div>
                         </div>
                         <div class="login_main_list AImatch_list">
@@ -560,9 +633,12 @@ if ($ci) {
                         <div class="login_main_title">
                             <h2><?= lang('Korean.mainTitle2') ?></h2>
                             <div class="main_title_btn">
-                                <!-- <button onclick="clickOn(this)" class="on" value="9"><?= lang('Korean.all') ?></button>
-                    <button onclick="clickOn(this)" value="0"><?= lang('Korean.woman') ?></button>
-                    <button onclick="clickOn(this)" value="1"><?= lang('Korean.man') ?></button> -->
+                                <button class="AImatch2_list_left slide_btn disabled" onclick="clickLeft('AImatch2_list')">
+                                    <img src="/static/images/slide_left.png" />
+                                </button>
+                                <button class="AImatch2_list_right slide_btn" onclick="clickRight('AImatch2_list')">
+                                    <img src="/static/images/slide_right.png" />
+                                </button>
                             </div>
                         </div>
                         <div class="login_main_list AImatch2_list">
@@ -587,7 +663,7 @@ if ($ci) {
                                     <?= lang('Korean.indexCon11') ?>
                                 </h2>
                                 <div class="main_title_btn">
-                                    <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?>보기</button>
+                                    <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?></button>
                                     <button class="category01_left slide_btn disabled" onclick="clickLeft('category01')">
                                         <img src="/static/images/slide_left.png" />
                                     </button>
@@ -616,7 +692,7 @@ if ($ci) {
                                     <?= lang('Korean.trip') ?>
                                 </h2>
                                 <div class="main_title_btn">
-                                    <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?>보기</button>
+                                    <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?></button>
                                     <button class="category02_left slide_btn disabled" onclick="clickLeft('category02')">
                                         <img src="/static/images/slide_left.png" />
                                     </button>
@@ -650,7 +726,7 @@ if ($ci) {
                                     <?= lang('Korean.indexCon11') ?>
                                 </h2>
                                 <div class="main_title_btn">
-                                    <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?>보기</button>
+                                    <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?></button>
                                     <button class="category03_left slide_btn disabled" onclick="clickLeft('category03')">
                                         <img src="/static/images/slide_left.png" />
                                     </button>
@@ -679,7 +755,7 @@ if ($ci) {
                                     <?= lang('Korean.trip') ?>
                                 </h2>
                                 <div class="main_title_btn">
-                                    <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?>보기</button>
+                                    <button class="total" onclick="moveToUrl('/mo/mypage/group/list')"><?= lang('Korean.all') ?></button>
                                     <button class="category04_left slide_btn disabled" onclick="clickLeft('category04')">
                                         <img src="/static/images/slide_left.png" />
                                     </button>
@@ -724,7 +800,7 @@ if ($ci) {
                     </div>
                     <div class="footer_info mb40">
                         <span><?= lang('Korean.footerInfo1') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo2') ?></span>
-                        <span><?= lang('Korean.footerInfo3') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo4') ?><img src="/static/images/part_line.png" /> gildong@naver.com</span>
+                        <span><?= lang('Korean.footerInfo3') ?> <img src="/static/images/part_line.png" /> <?= lang('Korean.footerInfo4') ?><img src="/static/images/part_line.png" />hi@cuberry.kr</span>
                     </div>
                     <div class="footer_copy">
                         COPYRIGHT 2023. ALL RIGHTS RESERVED.

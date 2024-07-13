@@ -107,7 +107,7 @@ const supportUserLogin = () => {
         success: function (data) {
             console.log(data);
             if (data.status === 'success') {
-                moveToUrl('/support');//변경 필요
+                moveToUrl('/support'); //변경 필요
                 console.log(data);
                 // $.ajax({
                 //     url: '/ajax/calcMatchRate',
@@ -232,6 +232,10 @@ const signUp = () => {
         fn_alert('이름을 입력해 주세요');
         tempValidation = false;
         $('#name').focus();
+    } else if ($('#main_photo').val().trim() === '') {
+        fn_alert('프로필 사진을 등록해 주세요');
+        tempValidation = false;
+        $('#main_photo').focus();
     } else if ($('#birthday').val().trim() === '') {
         fn_alert('생년월일을 입력해 주세요');
         tempValidation = false;
@@ -259,6 +263,7 @@ const signUp = () => {
     }
 
     if (
+        $('#main_photo').val() !== '' &&
         $('#name').val() !== '' &&
         $('#birthday').val() !== '' &&
         $('#city').val() !== '' &&
@@ -1469,7 +1474,7 @@ const supportRecommendCodeCheck = () => {
             fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
         },
     });
-}
+};
 
 const meetingSave = (postData) => {
     if ($('#group_photo').val().trim() === '') {
@@ -1495,6 +1500,11 @@ const meetingSave = (postData) => {
     if ($('#datepicker2').val().trim() === '') {
         fn_alert('모임일자를 입력해 주세요.');
         $('#datepicker2').focus();
+        return;
+    }
+    if ($('#meeting_start_time').val().trim() === '') {
+        fn_alert('모임시간을 선택해 주세요.');
+        $('#meeting_start_time').focus();
         return;
     }
     // if ($('#datepicker3').val().trim() === '') {
@@ -1622,7 +1632,13 @@ const meetingFiltering = (category, searchText, filterOption) => {
                         ? '/' + meeting.file_path + meeting.file_name
                         : '/static/images/group_list_1.png';
                     listHtml += `
-                        <a href="/mo/mypage/group/detail/${meeting.idx}">
+                        <a href="/mo/mypage/group/detail/${meeting.idx}">`;
+                    if (meeting.overtime) {
+                        listHtml += `<div class="overtime">종료</div>`;
+                    } else {
+                        listHtml += `<div class="nowtime">진행중</div>`;
+                    }
+                    listHtml += `
                             <div class="group_list_item">
                                 <img class="profile_img" src="${imagePath}" />
                                 <div class="group_particpnt">
@@ -2205,7 +2221,7 @@ const referralRegistration = () => {
         fn_alert('추천이유를 입력해 주세요');
         tempValidation = false;
         $('#detailed_content').focus();
-    } 
+    }
 
     if (
         $('#name').val() !== '' &&
@@ -2223,9 +2239,8 @@ const referralRegistration = () => {
         tempValidation = true;
     }
     if (tempValidation) {
-        
         $.ajax({
-            url: '/ajax/support/referral', 
+            url: '/ajax/support/referral',
             type: 'POST',
             data: postData,
             processData: false,
@@ -2237,7 +2252,6 @@ const referralRegistration = () => {
                     // 성공
                     moveToUrl('/support/referralSuccess');
                 } else if (data.status === 'error') {
-                    
                     // 한번만 출력되게 함
                     $('.alert_validation').remove();
                     // 오류 메시지 표시
@@ -2248,9 +2262,7 @@ const referralRegistration = () => {
                         // 오류 메시지 추가
                         if (!topMostDiv.next().hasClass('alert_validation')) {
                             // 이미 오류 메시지가 있는지 확인
-                            topMostDiv.after(
-                                '<div class="alert alert_validation">' + data.errors[key] + '</div>',
-                            );
+                            topMostDiv.after('<div class="alert alert_validation">' + data.errors[key] + '</div>');
                         }
                         // 처음 validation 포커스
                         if (index === 0) {
@@ -2267,11 +2279,9 @@ const referralRegistration = () => {
                 fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
             },
         });
-        
     } else {
     }
 };
-
 
 /*common alert */
 function fn_alert(msg, loc) {
@@ -2300,7 +2310,7 @@ function fn_alert(msg, loc) {
     $('body').append(html);
 }
 /*common confirm */
-function fn_confirm(msg, loc) {
+function fn_confirm(msg, loc, param) {
     var html = '';
     var value;
     html += '<div class="layerPopup alert middle callAlert">';
@@ -2317,7 +2327,7 @@ function fn_confirm(msg, loc) {
     } else if (loc == 'myfeeddel') {
         html += '<button class="btn type01" onclick="fn_myFeedDelete(\'true\')">확인</button>';
     } else if (loc == 'banusr') {
-        html += '<button class="btn type01" onclick="fn_banUsr(\'true\')">확인</button>';
+        html += '<button class="btn type01" onclick="fn_banUsr(' + param + ')">확인</button>';
     } else if (loc == 'extRm') {
         html += '<button class="btn type01" onclick="fn_extRm(\'true\')">확인</button>';
     } else if (loc == 'submitScdl') {
@@ -2325,6 +2335,8 @@ function fn_confirm(msg, loc) {
     } else if (loc == 'partScdl') {
         html += '<button class="btn type01" onclick="fn_partScdl(\'true\')">확인</button>';
     } else if (loc == 'calcMatchRate') {
+        html += '<button class="btn type01" onclick="fn_calcMatchRate(\'true\')">확인</button>';
+    } else if (loc == 'calcMatchRateEdit') {
         html += '<button class="btn type01" onclick="fn_calcMatchRate(\'true\')">확인</button>';
     } else if (loc == 'sndRpt') {
         html += '<button class="btn type01" onclick="fn_sndRpt(\'true\')">확인</button>';
@@ -2475,14 +2487,15 @@ const supportPasswdUpdate = () => {
     } else {
     }
 };
-const helpJopPopup=() =>{
+const helpJopPopup = () => {
     var html = '';
     html += '<div class="layerPopup alert middle callAlert">';
     html += '<div class="layerPopup_wrap">';
     html += '<div class="layerPopup_content medium" style="padding:20px;min-height: 245px;">';
     html += '<p class="txt">직업 도움말</p>';
     html += '<div class="apply_group">';
-    html += '<p style="text-align: left;">1군 : 법인대표, 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)</p>';
+    html +=
+        '<p style="text-align: left;">1군 : 법인대표, 전문직(의사, 변호사, 변리사, 한의사, 수의사, 회계사, 세무사, 법무사)</p>';
     html += '<p style="text-align: left;">2군 : 상장사, 대기업, 공기업 회사원/공무원/개인사업자</p>';
     html += '<p style="text-align: left;">3군 : 중소기업 회사원/프리랜서 등 기타</p>';
     html += '</div>';
@@ -2495,8 +2508,8 @@ const helpJopPopup=() =>{
     html += '</div>';
     html += '</div>';
     $('body').append(html);
-}
-const helpSinupSchoolPopup=() =>{
+};
+const helpSinupSchoolPopup = () => {
     var html = '';
     html += '<div class="layerPopup alert middle callAlert">';
     html += '<div class="layerPopup_wrap">';
@@ -2505,12 +2518,14 @@ const helpSinupSchoolPopup=() =>{
     html += '<div class="apply_group">';
     html += '<p style="text-align: left;">학교 인증은 선택사항입니다.<br><br>';
     html += '인증 없이 텍스트로 학교명을 입력해주셔도 됩니다.';
-    html += '다만 인증된 정보 옆에는 다른분들이 확인하실 수 있는 인증 뱃지가 부여됩니다.<br> 인증뱃지가 있는 프로필이 신뢰도가 더 높습니다.</p>';
+    html +=
+        '다만 인증된 정보 옆에는 다른분들이 확인하실 수 있는 인증 뱃지가 부여됩니다.<br> 인증뱃지가 있는 프로필이 신뢰도가 더 높습니다.</p>';
     html += '</div><br>';
     html += '<p class="txt" style="color:#ff0267;">학교 인증을 꼭 해야 하나요?</p>';
     html += '<div class="apply_group">';
     html += '<p style="text-align: left;">인증버튼을 클릭하시면 이미지를 업로드할 수 있는 창이 나옵니다.<br><br>';
-    html += '졸업증명서, 재학증명서 등 본인의 학교를 인증할 수 있는 서류를 업로드 해 주시면 꼼꼼한 확인 과정을 거쳐 인증 뱃지가 부여됩니다.<br><br>';
+    html +=
+        '졸업증명서, 재학증명서 등 본인의 학교를 인증할 수 있는 서류를 업로드 해 주시면 꼼꼼한 확인 과정을 거쳐 인증 뱃지가 부여됩니다.<br><br>';
     html += '확인을 위해 시간이 필요한 점 양해 부탁드립니다.</p>';
     html += '</div>';
     html += '<div class="layerPopup_bottom">';
@@ -2522,8 +2537,8 @@ const helpSinupSchoolPopup=() =>{
     html += '</div>';
     html += '</div>';
     $('body').append(html);
-}
-const helpSinupJopPopup=() =>{
+};
+const helpSinupJopPopup = () => {
     var html = '';
     html += '<div class="layerPopup alert middle callAlert">';
     html += '<div class="layerPopup_wrap">';
@@ -2532,12 +2547,14 @@ const helpSinupJopPopup=() =>{
     html += '<div class="apply_group">';
     html += '<p style="text-align: left;">직업 인증은 선택사항입니다.<br><br>';
     html += '인증 없이 직업 분류만 선택해 주셔도 됩니다.<br><br>';
-    html += '다만 인증된 정보 옆에는 다른분들이 확인하실 수 있는 인증 뱃지가 부여됩니다. 인증뱃지가 있는 프로필이 신뢰도가 더 높습니다.</p>';
+    html +=
+        '다만 인증된 정보 옆에는 다른분들이 확인하실 수 있는 인증 뱃지가 부여됩니다. 인증뱃지가 있는 프로필이 신뢰도가 더 높습니다.</p>';
     html += '</div><br>';
     html += '<p class="txt" style="color:#ff0267;">직업  인증은 어떻게 하나요?</p>';
     html += '<div class="apply_group">';
     html += '<p style="text-align: left;">인증버튼을 클릭하시면 이미지를 업로드할 수 있는 창이 나옵니다.<br><br>';
-    html += '명함, 재직증명서, 면허 등 본인의 직업 인증할 수 있는 서류를 업로드 해 주시면 꼼꼼한 확인 과정을 거쳐 인증 뱃지가 부여됩니다.<br><br>';
+    html +=
+        '명함, 재직증명서, 면허 등 본인의 직업 인증할 수 있는 서류를 업로드 해 주시면 꼼꼼한 확인 과정을 거쳐 인증 뱃지가 부여됩니다.<br><br>';
     html += '확인을 위해 시간이 필요한 점 양해 부탁드립니다.</p>';
     html += '</div>';
     html += '<div class="layerPopup_bottom">';
@@ -2549,4 +2566,110 @@ const helpSinupJopPopup=() =>{
     html += '</div>';
     html += '</div>';
     $('body').append(html);
-}
+};
+const guideBtn = () => {
+    $('.guide-btn').click(function () {
+        var targetIndex = $(this).index();
+        var newLeft = -(targetIndex * 100) + '%';
+
+        $('.apply_group').animate({ left: newLeft }, 500);
+
+        $('.guide-btn').removeClass('selected');
+        $(this).addClass('selected');
+    });
+
+    $('.guide-btn').first().addClass('selected');
+};
+const guidePopup = () => {
+    var html = '';
+    html += '<div class="layerPopup alert middle">';
+    html += '    <div id="" class="layerPopup_wrap">';
+    html += '        <div class="layerPopup_content guidePopup_content medium">';
+    html += '            <div style="position: relative;display: flex;">';
+    html += '                <p class="txt" style="width: 90%;padding-left: 5%;">매치파이 이용가이드</p>';
+    html += '                <a href="#" class="btn_close" onclick="btnClose();" style="float: right;">닫기</a>';
+    html += '            </div>';
+    html += '            <div class="apply_group guide_group">';
+    html += '                <div class="guide1 guide-content">';
+    html += '                    <h2 class="guide_title">지금은 매치파이 베타서비스 기간!</h2>';
+    html += '                    <img src="/static/images/guide1.png" />';
+    html += '                    <div style="text-align:left;padding:0 40px;">';
+    html += '                        <p>무료로 정회원 가입 후 서비스를 이용하세요.</p>';
+    html +=
+        '                        <p>나와 내가 원하는 상대의 직업, 학력, 종교 등 정보를 상세히 입력할 수 있어요.</p>';
+    html += '                        <p>AI매니저가 이 정보를 바탕으로 나와 잘 맞는 상대를 추천해 드려요.</p>';
+    html += '                    </div>';
+    html += '                </div>';
+    html += '                <div class="guide2 guide-content">';
+    html +=
+        '                    <h2 class="guide_title" style="font-size: 17px;">프로모션 파티 참석자는 정회원 가입 필수</h2>';
+    html += '                    <img src="/static/images/guide2.png" />';
+    html += '                    <div style="text-align:left;padding:0 40px;">';
+    html +=
+        '                       <p>프로모션 파티 참석 승인 및 대화 상대 매칭을 위해 다음 세 가지를 꼭 지켜주세요!</p>';
+    html += '                       <p>1.  정회원 정보 입력</p>';
+    html += '                       <p>     학교, 직업 인증 시 인증뱃지 부여(선택사항)</p>';
+    html += '                       <p>2. 얼굴이 잘 나온 프로필 사진 업로드</p>';
+    html += '                       <p>3. 마이페이지>내상대(이상형) 정보 입력</p>';
+    html += '                    </div>';
+    html += '                </div>';
+    html += '                <div class="guide3 guide-content">';
+    html +=
+        '                    <h2 class="guide_title" style="font-size: 16px;"> 매칭시그널로 나와 잘 맞는 상대 빠르게 확인</h2>';
+    html += '                    <div style="text-align:left;padding:0 40px;">';
+    html += '                        <p>이건 혹시 그린라이트?</br>';
+    html +=
+        '                        메인 화면 및 메시지함에서 이름 옆에 나타나는  매칭사인을 보고 나와 잘 맞는 상대를 빠르게 확인할 수 있어요.</br>';
+    html += '                        <div style="width: 100px;margin: 0 auto;padding: 0px 10px;line-height: 25px;">';
+    html +=
+        '                            <img class="face_icon" src="/static/images/blue_face_icon.png" />아주 잘 맞음</br>';
+    html +=
+        '                            <img class="face_icon" src="/static/images/green_face_icon.png" />잘 맞음</br>';
+    html += '                            <img class="face_icon" src="/static/images/yellow_face_icon.png" />보통</br>';
+    html +=
+        '                            <img class="face_icon" src="/static/images/orange_face_icon.png" />조금 안 맞음</br>';
+    html += '                            <img class="face_icon" src="/static/images/red_face_icon.png" />안 맞음';
+    html += '                        </div>';
+    html += '                        </p>';
+    html += '                    </div>';
+    html += '                </div>';
+    html += '                <div class="guide4 guide-content">';
+    html +=
+        '                    <h2 class="guide_title" style="font-size: 16px;">마음에 드는 상대와 대화 시작 어떻게 할까요?</h2>';
+    html += '                    <div style="text-align:left;padding:0 40px;">';
+    html += '                        <p>상대를 클릭하면 상세 프로필을 확인할 수 있어요.</p>';
+    html += '                        <p>대화를 시작하기 전 상대의 정보 잘 살펴보기!</p>';
+    html += '                        <p>그리고 하단의 “메세지 보내기”버튼을 클릭하면 메세지를 보낼 수 있어요.</p>';
+    html += '                        <img src="/static/images/guide3.png" />';
+    html += '                        <p>서로를 배려하는 매너있는 대화 부탁드려요.</p>';
+    html += '                    </div>';
+    html += '                </div>';
+    html += '                <div class="guide5 guide-content">';
+    html += '                    <h2 class="guide_title">AI매니저의 도움은 어떻게 받죠? </h2>';
+    html += '                    <div style="text-align:left;padding:0 40px;">';
+    html += '                        <p>당신을 위해 24시간 대기중인 AI매니저!</br>';
+    html += '                        마이페이지 > “AI메세지함” 버튼을 클릭하면</br>';
+    html += '                        AI매니저와 대화할 수 있어요.</br>';
+    html += '                        <p style="text-align: center;"><img src="/static/images/guide4.png" /></p></br>';
+    html += '                        마음에 드는 사람과 내일 처음 만나는 날!</br>';
+    html += '                        어떤 옷을 입고 나가야 하는지, 만나면 무슨 대화를 해야 하는지 걱정되나요? ';
+    html += '                        매치파이 AI매니저에게 물어보세요.</br>';
+    html +=
+        '                        적절한 옷차림, 부담스럽지 않으면서도 친밀도를</br>높여가는 대화 주제를 조언해드립니다.</br>';
+    html += '                        마치 연애고수 친구처럼요!</p>';
+    html += '                    </div>';
+    html += '                </div>';
+    html += '            </div>';
+    html += '            <div class="layerPopup_bottom guide_bottom">';
+    html += '                <button class="guide-btn selected" data-target="guide1"></button>';
+    html += '                <button class="guide-btn" data-target="guide2"></button>';
+    html += '                <button class="guide-btn" data-target="guide3"></button>';
+    html += '                <button class="guide-btn" data-target="guide4"></button>';
+    html += '                <button class="guide-btn" data-target="guide5"></button>';
+    html += '            </div>';
+    html += '        </div>';
+    html += '    </div>';
+    html += '</div>';
+    $('body').append(html);
+    guideBtn();
+};

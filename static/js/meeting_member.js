@@ -361,76 +361,7 @@ var cityTownTypes = {
 };
 /*참석멤버 리:스트*/
 function meetingMemberList(idx) {
-    $.ajax({
-        url: '/mo/mypage/group/partcntPopup',
-        data: {
-            meetingIdx: idx,
-        },
-        type: 'post',
-        success: function (data) {
-            var html = '';
-            if (data.success == true) {
-                var data = data.data;
-                html += '<div class="meetingMemPopup layerPopup alert middle">';
-                html += '<div class="layerPopup_wrap">';
-                html += '<div class="layerPopup_content medium">';
-                html += '<div style="position: relative;display: flex;">';
-                html += '<p class="txt" style="width: 90%;padding-left: 5%;">참석멤버</p>';
-                html += '<a href="#" class="btn_close"  onclick="btnClose();" style="float: right;">닫기</a>';
-                html += '</div>';
-                html += '<div class="desc_box">';
-                // html += '<ul>';
-                // html += '<li><a href="#" class="on">매칭률순</a></li>';
-                // html += '<li><a href="#">이상형확률순</a></li>';
-                // html += '</ul>';
-                html += '</div>';
-                html += '<div class="scroll_member_body">';
-                for (var i = 0; i < data.length; i++) {
-                    html += '<div class="chat_member">';
-                    html += '<div class="chat_member_profile">';
-                    // html += '<img class="group_fork" src="/static/images/group_master.png">';
-                    html +=
-                        // '<a class="nicknameBtnBox" onclick="moveToUrl(\'/mo/viewProfile/' + data[i].nickname + '\')">';
-                        '<a class="nicknameBtnBox">';
-                    if (data[i].file_path) {
-                        html += '<img class="profile_img" src="/' + data[i].file_path + data[i].file_name + '" />';
-                    } else {
-                        html += '<img class="profile_img" src="/static/images/mypage_no_pfofile.png" />';
-                    }
-                    html += '<p>' + data[i].name + '</p>';
-                    html += '</a>';
-
-                    if (data[i].meeting_master == 'K') {
-                        html += '<img class="group_master" src="/static/images/group_master.png" />';
-                    }
-                    html += '</div>';
-                    html += '<div class="group_member_detail">';
-                    html +=
-                        data[i].birthday.slice(2, 4) +
-                        ' · ' +
-                        cityTownTypes[data[i].city][data[i].town] +
-                        ' · ' +
-                        mbtiTypes[data[i].mbti];
-                    html += '</div>';
-                    html += '</div>';
-                }
-
-                html += '</div>';
-                html += '<div class="layerPopup_bottom">';
-                html += '<div class="btn_group">';
-                html += '<button class="btn type01" onclick="meetingPopupClose();">확인</button>';
-                html += '</div>';
-                html += '</div>';
-                html += '</div>';
-                html += '</div>';
-                html += '</div>';
-            }
-            $('body').append(html);
-        },
-        error: function (xhr, status, error) {
-            console.log(error);
-        },
-    });
+    $('.meetingMemPopup.layerPopup').css('display', 'flex');
 }
 /*참석멤버 닫기*/
 function meetingPopupClose() {
@@ -475,7 +406,7 @@ function meetingApplication(idx) {
         success: function (data) {
             var html = '';
             var metdata;
-            if (data.success == true) {
+            if (data.success == true && data.result === '0') {
                 metdata = data.data;
                 html += '<div class="layerPopup alert middle">';
                 html += '<div id="meetAppliPopup" class="layerPopup_wrap">';
@@ -486,7 +417,8 @@ function meetingApplication(idx) {
                 html += '<a href="#" class="btn_close" onclick="btnClose();" style="float: right;">닫기</a>';
                 html += '</div>';
                 html += '<div class="apply_group">';
-                html += '<div style="padding:20px; height:400px; overflow: scroll;">';
+                html +=
+                    '<div style="padding:20px; height:200px; overflow: scroll;scrollbar-width: none;-ms-overflow-style: none;overflow: -moz-scrollbars-none;">';
                 html += '<div class="apply_group_detail">';
                 if (metdata[0].file_path === null || metdata[0].file_path === '') {
                     html += '<img src="/static/images/group_list_1.png" />';
@@ -506,22 +438,22 @@ function meetingApplication(idx) {
                 html += '</div>';
                 html += '</div>';
                 html += '<hr class="hoz_part" />';
-                html +=
-                    '<div class="apply_group_detail"><div class="group_apply_item"><div class="group_location"><b>참가비</b><br>남성 99,000원 / 여성 59,000원</div>';
-                html += '<div class="group_location">모임 신청 후 결제까지 완료되어야 신청이 접수됩니다.<br></div>';
-                html += '<div class="group_location" style="margin-top: 10px;"><b>결제방법</b><br>';
-                html +=
-                    '1. 계좌입금<br>예금주 : 주식회사 큐브베리<br>기업은행 013-143753-04-011</div><div class="group_location">2. 네이버스토어 결제</div></div></div>';
-                html += `<div class="group_location" style="text-align: center;"><img src="/static/images/smartstore.png" style="width: 120px;height: 40px;border-radius: 5px; margin: 20px 0px 40px 0px;" onclick="location.href='https://smartstore.naver.com/cuberry/products/10311169421'"></div>`;
-                // html += '<div class="apply_group_point">';
-                // html += '<p>보유 포인트</p>';
-                // html += '<h2>' + Number(data.my_point).toLocaleString() + '원</h2>';
-                // html += '</div>';
-                // html += '<div class="apply_group_point">';
-                // html += '<p>모임 금액</p>';
-                // html += '<h2 class="minus">-' + Number(metdata[0].membership_fee).toLocaleString() + ' 원</h2>';
-                // html += '</div>';
-                html += '</div>';
+                //                html +=
+                //                    '<div class="apply_group_detail"><div class="group_apply_item"><div class="group_location"><b>참가비</b><br>남성 99,000원 / 여성 59,000원</div>';
+                //                html += '<div class="group_location">모임 신청 후 결제까지 완료되어야 신청이 접수됩니다.<br></div>';
+                //                html += '<div class="group_location" style="margin-top: 10px;"><b>결제방법</b><br>';
+                //                html +=
+                //                    '1. 계좌입금<br>예금주 : 주식회사 큐브베리<br>기업은행 013-143753-04-029</div><div class="group_location">2. 네이버스토어 결제</div></div></div>';
+                //                html += `<div class="group_location" style="text-align: center;"><img src="/static/images/smartstore.png" style="cursor:pointer; width: 120px;height: 40px;border-radius: 5px; margin: 20px 0px 40px 0px;" onclick="window.open('https://smartstore.naver.com/cuberry/products/10311169421')"></div>`;
+                //                // html += '<div class="apply_group_point">';
+                //                // html += '<p>보유 포인트</p>';
+                //                // html += '<h2>' + Number(data.my_point).toLocaleString() + '원</h2>';
+                //                // html += '</div>';
+                //                // html += '<div class="apply_group_point">';
+                //                // html += '<p>모임 금액</p>';
+                //                // html += '<h2 class="minus">-' + Number(metdata[0].membership_fee).toLocaleString() + ' 원</h2>';
+                //                // html += '</div>';
+                //                html += '</div>';
                 html += '<div class="layerPopup_bottom">';
                 html += '<div class="btn_group">';
                 html +=
@@ -537,6 +469,8 @@ function meetingApplication(idx) {
                 html += '</div>';
                 html += '</div>';
                 html += '</div>';
+            } else if (data.success == true && data.result === '1') {
+                enterCtRm(data.data[0].chat_room_ci);
             }
             $('body').append(html);
         },
@@ -575,6 +509,42 @@ function usePoint(point, mypoint, idx) {
                 html += '</div>';
                 html += '</div>';
                 html += '</div>';
+            } else if (data.success == false) {
+                if (data.result === '0') {
+                    msg = data.data;
+                    html += '<div class="layerPopup alert middle callAlert">';
+                    html += '<div class="layerPopup_wrap">';
+                    html += '<div class="layerPopup_content msmall">';
+                    html += '<p class="txt">모임신청</p>';
+                    html += '<div class="apply_group">';
+                    html += '<p>' + data.msg + '<br/>모임 대화방으로 이동합니다.</p>';
+                    html += '</div>';
+                    html += '<div class="layerPopup_bottom">';
+                    html += '<div class="btn_group">';
+                    html += `<button class="btn type01" onclick="enterCtRm('` + data.ci + `');">확인</button>`;
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                } else if (data.result === '1') {
+                    msg = data.data;
+                    html += '<div class="layerPopup alert middle callAlert">';
+                    html += '<div class="layerPopup_wrap">';
+                    html += '<div class="layerPopup_content msmall">';
+                    html += '<p class="txt">모임신청</p>';
+                    html += '<div class="apply_group">';
+                    html += '<p>' + data.msg + '</p>';
+                    html += '</div>';
+                    html += '<div class="layerPopup_bottom">';
+                    html += '<div class="btn_group">';
+                    html += '<button class="btn type01" onclick="alertCloseReload();">확인</button>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                }
             }
             $('body').append(html);
         },
@@ -583,6 +553,34 @@ function usePoint(point, mypoint, idx) {
         },
     });
 }
+const enterCtRm = (ci) => {
+    $.ajax({
+        url: '/ajax/createMultyChat',
+        type: 'POST',
+        data: {
+            room_ci: ci,
+        },
+        async: false,
+        success: function (data) {
+            if (data.status === 'success') {
+                // 성공
+                console.log(data);
+                moveToUrl('/mo/mymsg', {
+                    room_ci: data.data.room_ci,
+                });
+            } else if (data.status === 'error') {
+                console.log('메세지 전송 실패', data);
+            } else {
+                fn_alert('알 수 없는 오류가 발생하였습니다. \n다시 시도해 주세요.');
+            }
+            return false;
+        },
+        error: function (data, status, err) {
+            console.log(err);
+            fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+        },
+    });
+};
 function alertCloseReload() {
     $('.alert').hide();
     $('.callAlert').remove();

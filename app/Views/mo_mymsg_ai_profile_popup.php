@@ -4,8 +4,7 @@
     <title>Matchfy</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=3.0,  user-scalable=no, viewport-fit=cover">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="pragma" content="no-cache">
     <meta name="format-detection" content="telephone=no">
@@ -16,18 +15,18 @@
     <div class="layerPopup alert middle"><!-- class: imgPop 추가 -->
         <div class="layerPopup_wrap">
             <div class="layerPopup_content">
-                <p class="txt"><?=lang('Korean.viewInfo')?></p>
+                <p class="txt"><?= lang('Korean.viewInfo') ?></p>
                 <!-- <em class="desc">인증을 위한 혼인관계증명서를<br/>등록해주세요</em> -->
                 <div class="content_mypage">
                     <img class="profile_img" src="/static/images/mypage_pfofile.png" />
                     <div class="content_mypage_info">
                         <div class="profile">
-                            <h2>장원영<span style="font-size:15px;"> <?=lang('Korean.sir')?></span></h2>
+                            <h2>장원영<span style="font-size:15px;"> <?= lang('Korean.sir') ?></span></h2>
                         </div>
-                        <p>96 · <?=lang('Korean.seoul')?> 강남 · ESTJ</p>
+                        <p>96 · <?= lang('Korean.seoul') ?> 강남 · ESTJ</p>
                     </div>
                     <div>
-                        <button class="popup_view_profile"><?=lang('Korean.profile')?></button>
+                        <button class="popup_view_profile"><?= lang('Korean.profile') ?></button>
                     </div>
                 </div>
 
@@ -44,7 +43,7 @@
                 </div>
                 <!-- <div class="layerPopup_bottom">
                     <div class="btn_group">
-                        <button class="btn type01"><?=lang('Korean.check')?></button>
+                        <button class="btn type01"><?= lang('Korean.check') ?></button>
                     </div>
                 </div> -->
             </div>
