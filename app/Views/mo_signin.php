@@ -126,6 +126,12 @@
                                 <input id="pswdChk" name="pswdChk" type="password" placeholder="<?= lang('Korean.pswdChkPlaceholder') ?>">
                             </div>
                         </div>
+                        <div class="form_row signin_form">
+                            <div class="signin_form_div">
+                                <label for="introduce" class="signin_label"><?= lang('Korean.introduce') ?></label>
+                                <textarea  id="introduce" name="introduce" placeholder="<?= lang('Korean.sinupIntroducePlaceholder') ?>"></textarea>
+                            </div>
+                        </div>
 
                         <input type="hidden" id="mobile_no" name="mobile_no" value="<?= $mobile_no ?>" />
                         <input type="hidden" name="nickname" value="<?= $nickname ?>" />

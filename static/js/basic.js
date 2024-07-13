@@ -260,6 +260,10 @@ const signUp = () => {
         fn_alert('비밀번호를 다시 입력해 주세요');
         tempValidation = false;
         $('#pswdChk').focus();
+    } else if ($('#introduce').val().trim() === '') {
+        fn_alert('간단한 자기소개를 입력해 주세요');
+        tempValidation = false;
+        $('#introduce').focus();
     }
 
     if (
@@ -270,7 +274,8 @@ const signUp = () => {
         $('#town').val() !== '' &&
         $('#pswd').val() !== '' &&
         $('#pswdChk').val() !== '' &&
-        $('#gender').val() !== ''
+        $('#gender').val() !== '' &&
+        $('#introduce').val() !== ''
     ) {
         tempValidation = true;
     }
@@ -709,6 +714,10 @@ const myinfoUpdate = (grade) => {
             fn_alert('연소득을 선택해 주세요');
             tempValidation = false;
             $('#income_range').focus();
+        } else if ($('#introduce').val().trim() === '') {
+            fn_alert('간단한 자기소개를 입력해 주세요');
+            tempValidation = false;
+            $('#introduce').focus();
         }
 
         if (
@@ -725,7 +734,8 @@ const myinfoUpdate = (grade) => {
             $('#school').val() !== '' &&
             $('#job').val() !== '' &&
             $('#asset_range').val() !== '' &&
-            $('#income_range').val() !== ''
+            $('#income_range').val() !== '' &&
+            $('#introduce').val() !== ''
         ) {
             tempValidation = true;
         }

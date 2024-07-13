@@ -54,6 +54,7 @@ return [
     'occupational'       => '직업',
     'assetGroup'         => '자산구간',
     'incomeGroup'        => '연소득',
+    'introduce'          => '자기소개',
     'noSelected'         => '미선택',
     'exclusionItems'     => '제외항목',
     'sir'                => '님',
@@ -394,6 +395,7 @@ return [
     //placeholder
     'sinupNickPlaceholder'  => '닉네임 입력',
     'sinupHeightPlaceholder'  => '키 입력',
+    'sinupIntroducePlaceholder' => '간단한 자기 소개를 입력해주세요',
     'sinupMajorPlaceholder'   => '전공을 입력해주세요',
     'sinupSchoolPlaceholder'  => '학교를 입력해 주세요',
     'recommendCodePlaceholder'=> '추천인코드를 입력해주세요',

@@ -2325,6 +2325,7 @@ a:active {
 }
 .profile_photo_div {
     display: flex;
+    flex-direction: column;
 }
 .layerPopup_content .profile_photo_div {
     margin: 0 auto;

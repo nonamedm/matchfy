@@ -359,6 +359,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form_row signin_form">
+                            <div class="signin_form_div">
+                                <label for="introduce" class="signin_label"><?= lang('Korean.introduce') ?></label>
+                                <textarea  id="introduce" name="introduce" value="" placeholder="<?= lang('Korean.sinupIntroducePlaceholder') ?>"><?= $introduce ?></textarea>
+                            </div>
+                        </div>
                         <input type="hidden" name="ci" value="<?php echo $ci ?>" />
                         <input type="hidden" name="grade" value="<?php echo $grade ?>" />
                         <div id="main_photo_uploaded" style="display:none;"></div>

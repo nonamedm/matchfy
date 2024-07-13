@@ -79,6 +79,14 @@
                                     } ?>
                                 </p>
                             </div>
+                            <?php if (!empty($introduce)) : ?>
+                            <div class="profile_content">
+                                <h2><?= lang('Korean.introduce') ?></h2>
+                                <p>
+                                    <?= $introduce ?>
+                                </p>
+                            </div>
+                            <?php endif; ?>
                             <!-- <div class="profile_content">
                                 <h2>관심사</h2>
                                 <p> </p>

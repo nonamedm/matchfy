@@ -40,8 +40,8 @@
                                 <div class="profile_photo_div">
                                     <label for="group_photo" class="signin_label profile_photo_input group_photo_input"></label>
                                     <input id="group_photo" name="meeting_photo" type="file" value="" placeholder="" multiple accept="image/*">
-                                    <div id="meeting_photo_view" class="meeting_photo_view" style="margin-top: 10px;">
-                                    </div>
+                                    <div style="margin-top: 2px; font-size: 11px; color: gray; font-style: italic;">* 사진은 100MB 이하, 375*248px 이하만 가능합니다.</div>
+                                    <div id="meeting_photo_view" class="meeting_photo_view" style="margin-top: 10px;"></div>
                                 </div>
                             </div>
                             <div class="form_row signin_form">

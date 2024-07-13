@@ -453,6 +453,13 @@ class MoAjax extends BaseController
                     'required' => '도시를 입력해 주세요.',
                 ]
             ],
+            'introduce' => [
+                'label' => 'introduce',
+                'rules' => 'required',
+                'errors' => [
+                    'required' => '자기소개를 간단히 입력해주세요.',
+                ]
+            ],
             // 'passwd' => [
             //     'label' => 'passwd',
             //     'rules' => 'required',
@@ -525,6 +532,7 @@ class MoAjax extends BaseController
             $town = $this->request->getPost('town');
             $snsType = $this->request->getPost('sns_type');
             $oauthId = $this->request->getPost('oauth_id');
+            $introduce = $this->request->getPost('introduce');
             // $town = $encrypter->decrypt(base64_decode($ci), ['key' => 'nonamedm', 'blockSize' => 32]);
 
 
@@ -544,7 +552,8 @@ class MoAjax extends BaseController
                 'nickname' => $random_word,
                 'unique_code' => $unique_code,
                 'sns_type' => $snsType,
-                'oauth_id' => $oauthId
+                'oauth_id' => $oauthId,
+                'introduce' => $introduce,
             ];
 
             // 이메일과 전화번호로 verify_yn = y 인 항목을 한번 조회한다
@@ -1411,6 +1420,7 @@ class MoAjax extends BaseController
         $job = $this->request->getPost('job');
         $asset_range = $this->request->getPost('asset_range');
         $income_range = $this->request->getPost('income_range');
+        $introduce = $this->request->getPost('introduce');
         $nickname = $this->request->getPost('nickname');
 
 
@@ -1517,6 +1527,13 @@ class MoAjax extends BaseController
                         'required' => '연소득을 선택해주세요.',
                     ]
                 ],
+                'introduce' => [
+                    'label' => 'introduce',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => '자기소개를 간단히 입력해주세요.',
+                    ]
+                ],
             ];
 
             // 프리미엄 회원
@@ -1613,7 +1630,8 @@ class MoAjax extends BaseController
                 'school' => $school,
                 'job' => $job,
                 'asset_range' => $asset_range,
-                'income_range' => $income_range
+                'income_range' => $income_range,
+                'introduce' => $introduce,
             ];
 
             // nickname 필드가 있다면 $data 배열에 추가

@@ -38,6 +38,7 @@ class MemberModel extends Model
         'sns_type',
         'oauth_id',
         'os_type',
+        'introduce',
         // 정회원 구간
         'married',
         'smoker',

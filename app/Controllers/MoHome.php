@@ -2260,6 +2260,7 @@ class MoHome extends BaseController
             'town' => $user['town'],
             'mobile_no' => $user['mobile_no'],
             'grade' => $user['grade'],
+            'introduce' => $user['introduce'],
             'image' => $imageInfo,
             'job_regist' => $jobRegistData,
             'school_regist' => $schoolRegistData,
