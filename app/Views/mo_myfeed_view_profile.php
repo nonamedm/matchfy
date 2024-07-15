@@ -26,7 +26,7 @@
         <div class="sub_wrap">
             <div class="content_wrap">
                 <!-- <div class="feed_img_btn">
-                    <a onclick="moveToUrl('/mo/myfeed/<?= $nickname?>')">
+                    <a onclick="moveToUrl('/mo/myfeed/<?= $nickname ?>')">
                         <?php if ($image_feeds) : ?>
                             <img class="profile_img" src="/<?= $image_feeds['file_path'] ?>/<?= $image_feeds['file_name'] ?>" style="width: 100%;" />
                         <?php else : ?>
@@ -34,7 +34,7 @@
                         <?php endif; ?>
                     </a>
                 </div> -->
-                
+
                 <div class="content_body content_profile" onclick="zoomImg()">
                     <?php if ($image) : ?>
                         <img class="profile_img" src="/<?= $image['file_path'] ?>/<?= $image['file_name'] ?>" />
@@ -46,7 +46,7 @@
                 <div class="content_mypage_list">
                     <ul>
                         <div class="feed_img_btn_02">
-                            <a onclick="moveToUrl('/mo/myfeed/<?= $nickname?>')">
+                            <a onclick="moveToUrl('/mo/myfeed/<?= $nickname ?>')">
                                 피드 보러가기
                             </a>
                         </div>
@@ -95,12 +95,12 @@
                                 </p>
                             </div>
                             <?php if (!empty($introduce)) : ?>
-                            <div class="profile_content">
-                                <h2><?= lang('Korean.introduce') ?></h2>
-                                <p>
-                                    <?= $introduce ?>
-                                </p>
-                            </div>
+                                <div class="profile_content">
+                                    <h2><?= lang('Korean.introduce') ?></h2>
+                                    <p>
+                                        <?= $introduce ?>
+                                    </p>
+                                </div>
                             <?php endif; ?>
                             <!-- <div class="profile_content">
                                 <h2>관심사</h2>
@@ -339,11 +339,11 @@
                     <a href="#" class="btn_popup_close" onclick="closePopup();" style="float: right;">닫기</a>
                 </div>
                 <div class="feed_img_btn">
-                    <a onclick="moveToUrl('/mo/myfeed/<?= $nickname?>')">
+                    <a onclick="moveToUrl('/mo/myfeed/<?= $nickname ?>')">
                         <?php if ($image_feeds) : ?>
                             <img class="profile_img" src="/<?= $image_feeds['file_path'] ?>/<?= $image_feeds['file_name'] ?>" style="width: 100%;" />
                         <?php else : ?>
-                            <img class="profile_img" src="/static/images/profile_noimg.png" style="width: 100%;" />
+                            <img class="profile_img" src="/static/images/feed_noimg.png" style="width: 100%;" />
                         <?php endif; ?>
                     </a>
                 </div>
