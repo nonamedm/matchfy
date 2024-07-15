@@ -25,6 +25,16 @@
         require($word_file_path); ?>
         <div class="sub_wrap">
             <div class="content_wrap">
+                <!-- <div class="feed_img_btn">
+                    <a onclick="moveToUrl('/mo/myfeed/<?= $nickname?>')">
+                        <?php if ($image_feeds) : ?>
+                            <img class="profile_img" src="/<?= $image_feeds['file_path'] ?>/<?= $image_feeds['file_name'] ?>" style="width: 100%;" />
+                        <?php else : ?>
+                            <img class="profile_img" src="/static/images/profile_noimg.png" style="width: 100%;" />
+                        <?php endif; ?>
+                    </a>
+                </div> -->
+                
                 <div class="content_body content_profile" onclick="zoomImg()">
                     <?php if ($image) : ?>
                         <img class="profile_img" src="/<?= $image['file_path'] ?>/<?= $image['file_name'] ?>" />
@@ -35,6 +45,11 @@
 
                 <div class="content_mypage_list">
                     <ul>
+                        <div class="feed_img_btn_02">
+                            <a onclick="moveToUrl('/mo/myfeed/<?= $nickname?>')">
+                                피드 보러가기
+                            </a>
+                        </div>
                         <li class="profile_header">
                             <h2>
                                 <?= $nickname ?>
@@ -323,7 +338,16 @@
                 <div class="layerPopup_header">
                     <a href="#" class="btn_popup_close" onclick="closePopup();" style="float: right;">닫기</a>
                 </div>
-                <div class="layerPopup_content">
+                <div class="feed_img_btn">
+                    <a onclick="moveToUrl('/mo/myfeed/<?= $nickname?>')">
+                        <?php if ($image_feeds) : ?>
+                            <img class="profile_img" src="/<?= $image_feeds['file_path'] ?>/<?= $image_feeds['file_name'] ?>" style="width: 100%;" />
+                        <?php else : ?>
+                            <img class="profile_img" src="/static/images/profile_noimg.png" style="width: 100%;" />
+                        <?php endif; ?>
+                    </a>
+                </div>
+                <div class="layerPopup_content" style="min-height: 100%;">
                     <div class="">
                         <?php if ($image) : ?>
                             <img class="profile_img" src="/<?= $image['file_path'] ?>/<?= $image['file_name'] ?>" style="width: 85%;" />
@@ -331,11 +355,11 @@
                             <img class="profile_img" src="/static/images/profile_noimg.png" style="width: 85%;" />
                         <?php endif; ?>
                     </div>
-                    <div class="layerPopup_bottom">
+                    <!-- <div class="layerPopup_bottom">
                         <div class="btn_group">
                             <button class="btn type01" onclick="closePopup();"><?= lang('Korean.check') ?></button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
