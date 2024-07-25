@@ -34,6 +34,10 @@ li {
     padding: 0;
     border-right: 1px solid #ccc;
 }
+.menu_panel .menu_binder {
+    padding: 10px;
+    margin: 10px 0 10px 0;
+}
 
 .menu_item {
     padding: 10px 0;
