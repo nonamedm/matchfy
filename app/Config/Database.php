@@ -28,6 +28,7 @@ class Database extends Config
         'DSN'          => '',
         //운영
         // 'hostname'     => 'localhost',
+        'username'     => 'nonamedm18',
         // 'password'     => '88751423aA!',
 
         //개발
