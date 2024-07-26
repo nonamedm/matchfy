@@ -852,6 +852,12 @@ class AdminHome extends BaseController
 
         $total = $MemberModel->query("SELECT COUNT(*) as total FROM members m LEFT JOIN member_files mf ON m.ci = mf.member_ci")->getRow()->total;
 
+        $pager = service('pager');
+        $page = (int) ($this->request->getGet('page') ?? 1);
+        $perPage = 20;
+        $total = '9999999';
+
+        $pager_links = $pager->makeLinks($page, $perPage, $total, 'default_now');
         $offset = ($page - 1) * $perPage; // 현재 페이지의 첫 번째 데이터 인덱스
         $query = "SELECT name, mb.nickname, 
                                mb.ci, 
@@ -868,7 +874,12 @@ class AdminHome extends BaseController
                                mf.org_name
                     FROM members mb, member_files mf WHERE mb.ci = mf.member_ci AND mb.delete_yn='N' AND mf.delete_yn='n' AND mf.board_type='main_photo' ORDER BY created_at DESC";
 
-        $data['datas'] = $MemberModel->query($query)->getResultArray();
+        //$data['datas'] = $MemberModel->query($query)->getResultArray();
+
+        $data = [
+            'datas' => $MemberModel->paginate(),
+            'pager_links' => $pager_links,
+        ];
 
         $session = session();
         $ci = $session->get('ci');

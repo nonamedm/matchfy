@@ -314,3 +314,59 @@ table {
 .label_input_text .content_text {
     width: 100%;
 }
+
+.admin_top_func {
+    display: flex;
+    padding: 30px;
+}
+.admin_top_func .admin_top_label{
+    width: 75px;
+}
+.admin_top_func .admin_top_submit{
+    width: 125px;
+    height: 35px;
+    border: none;
+    border-radius: 50px;
+    background-color: #ff0267;
+    font-family: 'Pretendard-Bold';
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: #eee;
+}
+.admin_top_func td {
+    width: 275px;
+    height: 40px;
+}
+.admin_top_func tr {
+    display: flex;
+    align-items: center;
+}
+.admin_top_func td {
+    display: flex;
+    align-items: center;
+}
+.admin_top_func td input {
+    width: 125px;
+    height: 20px;
+}
+.admin_top_func td select {
+    width: 132px;
+    height: 24px;
+}
+.admin_top_func td .hasDatepicker {
+    width: 60px;
+}
+.admin_top_func td .ui-datepicker-trigger {
+    display: none;
+}
+
+
+
+.ad_con .pagination {
+    display: flex;
+    justify-content: center;
+}
+.ad_con .pagination li {
+    width: 50px;
+}
