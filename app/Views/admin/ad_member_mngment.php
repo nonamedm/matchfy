@@ -55,8 +55,8 @@
                                 <label>타입</label>
                             </div>
                             <div>
-                                <select>
-                                    <option>선택</option>
+                                <select id="userGrade">
+                                    <option value="">선택</option>
                                     <option value="grade01">준회원</option>
                                     <option value="grade02">정회원</option>
                                     <option value="grade03">프리미엄</option>
@@ -68,7 +68,7 @@
                                 <label>ID</label>
                             </div>
                             <div>
-                                <input type="text" placeholder="ID 입력" />
+                                <input id="userId" type="text" placeholder="ID 입력" />
                             </div>
                         </td>
                         <td>
@@ -81,7 +81,7 @@
                                 <label>이름</label>
                             </div>
                             <div>
-                                <input type="text" placeholder="이름 입력" />
+                                <input id="userName" type="text" placeholder="이름 입력" />
                             </div>
                         </td>
                         <td>
@@ -89,7 +89,7 @@
                                 <label>휴대폰번호</label>
                             </div>
                             <div>
-                                <input type="text" placeholder="휴대폰 번호 입력" />
+                                <input id="userPhone" type="text" placeholder="휴대폰 번호 입력" />
                             </div>
                         </td>
                         <td>
@@ -97,15 +97,15 @@
                                 <label>상태</label>
                             </div>
                             <div>
-                                <select>
-                                    <option>전체</option>
+                                <select id="userStatus">
+                                    <option value="">전체</option>
                                     <option value="">정상</option>
                                     <option value="">정지</option>
                                 </select>
                             </div>
                         </td>
                         <td>
-                            <button class="admin_top_submit" onclick="">조회</button>
+                            <button class="admin_top_submit" onclick="searchSubmit()">조회</button>
                         </td>
                     </tr>
                 </tbody>
@@ -122,7 +122,7 @@
                         <th class="th">이메일(ID)</th>
                         <th class="th">전화번호</th>
                         <th class="th">등급<br />(임시)</th>
-                        <th class="th">사진</th>
+                        <!-- <th class="th">사진</th> -->
                         <th class="th">소셜유형</th>
                         <th class="th">최근접속</th>
                     </tr>
@@ -133,7 +133,15 @@
                     foreach ($datas as $data) : ?>
                         <tr class="tr">
                             <td class="td"><?= $index ?></td>
-                            <td class="td"><?= $data['grade'] === 'grade01' ? '준회원' : $data['grade'] === 'grade02' ? '정회원' : '프리미엄' ?></td>
+                            <td class="td">
+                                <?php $grade = '준회원';
+                                if ($data['grade'] === 'grade02') {
+                                    $grade = '정회원';
+                                } else if ($data['grade'] === 'grade03') {
+                                    $grade = '프리미엄';
+                                }
+                                ?>
+                                <?= $grade  ?></td>
                             <td class="td"><?= $data['name'] ?></td>
                             <td class="td"><?= $data['nickname'] ?></td>
                             <td class="td"><?= $data['birthday'] ?></td>
@@ -145,10 +153,10 @@
                             <td class="td"><?= $data['email'] ?></td>
                             <td class="td"><?= substr($data['mobile_no'], 0, 3) . "-" . substr($data['mobile_no'], 3, 4) . "-" . substr($data['mobile_no'], 7) ?></td>
                             <td class="td"><?= $data['temp_grade'] ?></td>
-                            <td class="td">
+                            <!-- <td class="td">
                                 <span class="attatch_file_div"><a class="attach_file" href="<?= '/' . $data['file_path'] . $data['file_name']; ?>" target="_blank"><?= $data['org_name']; ?></a></span>
                                 <button onclick="resetImg('<?= $data['ci'] ?>')">초기화</button>
-                            </td>
+                            </td> -->
                             <td class="td"><?= $data['sns_type'] ?></td>
                             <td class="td"><?= $data['last_access_dt'] ?></td>
                         </tr>
@@ -232,6 +240,77 @@
             //초기값을 오늘 날짜로 설정
             // $('#datepicker2').datepicker('setDate', '+1D'); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)            
         });
+        const searchSubmit = () => {
+            const startDate = $("#datepicker1").val();
+            const endDate = $("#datepicker2").val();
+            const userGrade = $("#userGrade").val();
+            const userId = $("#userId").val();
+            const userName = $("#userName").val();
+            const userPhone = $("#userPhone").val();
+            const userStatus = $("#userStatus").val();
+
+            var searchUrl = '/ad/member/memberMngment';
+            searchUrl = searchUrl + '?search=true';
+            if (startDate !== '') {
+                searchUrl = searchUrl + '&startDate=' + startDate;
+            }
+            if (endDate !== '') {
+                searchUrl = searchUrl + '&endDate=' + endDate;
+            }
+            if (userGrade !== '') {
+                searchUrl = searchUrl + '&userGrade=' + userGrade;
+            }
+            if (userId !== '') {
+                searchUrl = searchUrl + '&userId=' + userId;
+            }
+            if (userName !== '') {
+                searchUrl = searchUrl + '&userName=' + userName;
+            }
+            if (userPhone !== '') {
+                searchUrl = searchUrl + '&userPhone=' + userPhone;
+            }
+            if (userStatus !== '') {
+                searchUrl = searchUrl + '&userStatus=' + userStatus;
+            }
+
+            moveToUrl(searchUrl);
+
+            // $.ajax({
+            //     url: searchUrl,
+            //     type: 'GET',
+            //     async: false,
+            //     success: function(data) {
+
+            //     },
+            //     error: function(data, status, err) {
+            //         console.log(err);
+            //         fn_alert('오류가 발생하였습니다. \n다시 시도해 주세요.');
+            //     },
+            // });
+        }
+        const moveToUrl = (url, param) => {
+            if (!param) {
+                location.href = url;
+            } else {
+                //json 형태의 param 전송 시
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = url;
+
+                for (var key in param) {
+                    if (param.hasOwnProperty(key)) {
+                        var input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = key;
+                        input.value = param[key];
+                        form.appendChild(input);
+                    }
+                }
+                document.body.appendChild(form);
+
+                form.submit();
+            }
+        };
     </script>
 </body>
 

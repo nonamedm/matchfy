@@ -355,7 +355,7 @@ table {
     height: 24px;
 }
 .admin_top_func td .hasDatepicker {
-    width: 60px;
+    width: 75px;
 }
 .admin_top_func td .ui-datepicker-trigger {
     display: none;

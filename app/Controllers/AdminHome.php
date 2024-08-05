@@ -847,15 +847,49 @@ class AdminHome extends BaseController
             $page = 2;
         }
 
-        $perPage = 20;
         $MemberModel = new MemberModel();
-
-        $total = $MemberModel->query("SELECT COUNT(*) as total FROM members m LEFT JOIN member_files mf ON m.ci = mf.member_ci")->getRow()->total;
-
         $pager = service('pager');
         $page = (int) ($this->request->getGet('page') ?? 1);
-        $perPage = 20;
-        $total = '9999999';
+        $perPage = 10;
+
+        $startDate = $this->request->getGet('startDate') ?? '';
+        $endDate = $this->request->getGet('endDate') ?? '';
+        $userGrade = $this->request->getGet('userGrade') ?? '';
+        $userId = $this->request->getGet('userId') ?? '';
+        $userName = $this->request->getGet('userName') ?? '';
+        $userPhone = $this->request->getGet('userPhone') ?? '';
+        $userStatus = $this->request->getGet('userStatus') ?? '';
+
+        $queryCnt = "SELECT COUNT(*) AS total FROM members m WHERE m.delete_yn='N'";
+        if ($startDate !== '') {
+            $date = \DateTime::createFromFormat('Y-m-d', $startDate);
+            $formatDate = $date->format('Y-m-d H:i:s');
+            $queryCnt = $queryCnt . " AND created_at > '" . $formatDate . "'";
+        }
+        if ($endDate !== '') {
+            $date = \DateTime::createFromFormat('Y-m-d', $endDate);
+            $formatDate = $date->format('Y-m-d H:i:s');
+            $queryCnt = $queryCnt . " AND created_at < '" . $formatDate . "'";
+        }
+        if ($userGrade !== '') {
+            $queryCnt = $queryCnt . " AND grade = '" . $userGrade . "'";
+        }
+        if ($userId !== '') {
+            $queryCnt = $queryCnt . " AND email LIKE '%" . $userId . "%'";
+        }
+        if ($userName !== '') {
+            $queryCnt = $queryCnt . " AND name LIKE '%" . $userName . "%'";
+        }
+        if ($userPhone !== '') {
+            $queryCnt = $queryCnt . " AND mobile_no LIKE '%" . $userPhone . "%'";
+        }
+        if ($userStatus !== '') {
+            $queryCnt = $queryCnt . " AND status = '" . $userStatus . "'";
+        }
+        // log_message('1', $queryCnt);
+        $total = $MemberModel->query($queryCnt)->getRow()->total;
+
+        //$total = '9999999';
 
         $pager_links = $pager->makeLinks($page, $perPage, $total, 'default_now');
         $offset = ($page - 1) * $perPage; // 현재 페이지의 첫 번째 데이터 인덱스
@@ -868,13 +902,54 @@ class AdminHome extends BaseController
                                mb.grade, 
                                mb.temp_grade, 
                                mb.sns_type, 
-                               mb.last_access_dt,
-                               mf.file_path,
-                               mf.file_name,
-                               mf.org_name
-                    FROM members mb, member_files mf WHERE mb.ci = mf.member_ci AND mb.delete_yn='N' AND mf.delete_yn='n' AND mf.board_type='main_photo' ORDER BY created_at DESC";
+                               mb.last_access_dt
+                    FROM members mb WHERE mb.delete_yn='N'";
 
+        $condition = ['delete_yn' => 'N'];
+        $likeCondition = [];
+        if ($startDate !== '') {
+            $date = \DateTime::createFromFormat('Y-m-d', $startDate);
+            $formatDate = $date->format('Y-m-d H:i:s');
+            $condition['created_at >='] = $formatDate;
+            // $query = $query . " AND created_at > '" . $formatDate . "'";
+        }
+        if ($endDate !== '') {
+            $date = \DateTime::createFromFormat('Y-m-d', $endDate);
+            $formatDate = $date->format('Y-m-d H:i:s');
+            $condition['created_at <='] = $formatDate;
+            // $query = $query . " AND created_at < '" . $formatDate . "'";
+        }
+        if ($userGrade !== '') {
+            $condition['grade'] = $userGrade;
+            // $query = $query . " AND grade = '" . $userGrade . "'";
+        }
+        if ($userId !== '') {
+            $likeCondition['email'] = $userId;
+            // $query = $query . " AND email LIKE '%" . $userId . "%'";
+        }
+        if ($userName !== '') {
+            $likeCondition['name'] = $userName;
+            // $query = $query . " AND name LIKE '%" . $userName . "%'";
+        }
+        if ($userPhone !== '') {
+            $likeCondition['mobile_no'] = $userPhone;
+            // $query = $query . " AND mobile_no LIKE '%" . $userPhone . "%'";
+        }
+        if ($userStatus !== '') {
+            $condition['status'] = $userStatus;
+            // $query = $query . " AND status = '" . $userStatus . "'";
+        }
         //$data['datas'] = $MemberModel->query($query)->getResultArray();
+        if (!empty($condition)) {
+            $MemberModel->where($condition);
+        }
+
+        if (!empty($likeCondition)) {
+            foreach ($likeCondition as $field => $value) {
+                log_message('1', $field . $value);
+                $MemberModel->like($field, $value);
+            }
+        }
 
         $data = [
             'datas' => $MemberModel->paginate(),
