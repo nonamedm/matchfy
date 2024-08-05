@@ -366,6 +366,7 @@ table {
 .ad_con .pagination {
     display: flex;
     justify-content: center;
+    margin-bottom: 50px;
 }
 .ad_con .pagination li {
     width: 50px;
